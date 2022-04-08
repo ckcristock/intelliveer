@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CONFIG } from '@src/app/config';
 import { AuthService } from '@src/app/services/auth/auth.service';
+import { environment } from '@src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({
@@ -18,7 +19,7 @@ export class NavbarComponent implements OnInit {
   logOut() {
     this.authService.logout().subscribe({
       next: (res) => {
-        this.cookieService.delete('isLoggedIn', '/');
+        this.cookieService.delete('isLoggedIn', '/', environment.domain);
         window.location.href = CONFIG.auth.host;
       },
       error: (err) => {
