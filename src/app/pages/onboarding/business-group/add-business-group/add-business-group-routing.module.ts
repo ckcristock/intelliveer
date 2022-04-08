@@ -1,0 +1,16 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AddBusinessGroupComponent } from './add-business-group.component';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: AddBusinessGroupComponent,
+  },
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class AddBusinessGroupRoutingModule {}

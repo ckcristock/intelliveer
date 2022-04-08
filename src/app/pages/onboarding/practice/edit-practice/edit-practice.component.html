@@ -1,0 +1,7 @@
+<div class="container" *ngIf="data">
+  <app-practice-form
+    [formData]="data"
+    (onCancel)="handleCancel()"
+    (onSubmit)="update($event)"
+  ></app-practice-form>
+</div>

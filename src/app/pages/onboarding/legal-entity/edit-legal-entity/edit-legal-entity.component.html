@@ -1,0 +1,7 @@
+<div class="container" *ngIf="data">
+  <app-legal-entity-form
+    [formData]="data"
+    (onCancel)="handleCancel()"
+    (onSubmit)="update($event)"
+  ></app-legal-entity-form>
+</div>

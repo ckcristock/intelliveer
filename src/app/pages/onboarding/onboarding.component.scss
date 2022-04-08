@@ -1,0 +1,10 @@
+ul {
+  li {
+    line-height: 3;
+  }
+}
+.component-view {
+  height: calc(100vh - 200px);
+  overflow-x: hidden;
+  overflow-y: auto;
+}

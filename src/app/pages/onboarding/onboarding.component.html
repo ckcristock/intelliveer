@@ -1,0 +1,24 @@
+<div class="container content">
+  <!-- <div class="row">
+    <div class="col">
+      <h4 class="heading-muted">Onboarding</h4>
+    </div>
+  </div> -->
+  <div class="row">
+    <div class="col-2">
+      <ul class="ul">
+        <li
+          class="pointer"
+          *ngFor="let item of menuItems"
+          routerLinkActive="active"
+          [routerLink]="item.url"
+        >
+          {{ item.title }}
+        </li>
+      </ul>
+    </div>
+    <div class="col-10 component-view">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

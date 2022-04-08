@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="d-flex justify-content-between call-to-actions">
+    <div class="col-4">
+      <input type="text" class="form-control" placeholder="Search" />
+    </div>
+    <div class="d-flex gap-2">
+      <button
+        class="btn btn-dark btn-sm"
+        routerLink="/dashboard/onboarding/business-group/add"
+      >
+        New
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-3">
+  <div class="row">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="data">
+        <tr *ngFor="let d of data; let i = index">
+          <td>{{ d?._id }}</td>
+          <td>{{ d?.name }}</td>
+          <td>{{ d?.description }}</td>
+          <td>
+            <div ngbDropdown container="body" placement="bottom-end">
+              <button class="btn btn-light btn-sm" ngbDropdownToggle>
+                <i class="bi bi-three-dots-vertical"></i>
+              </button>
+              <div ngbDropdownMenu>
+                <button
+                  ngbDropdownItem
+                  (click)="navigateTo(d._id, 'legal-entity')"
+                >
+                  Manage Legal Entity
+                </button>
+                <button ngbDropdownItem (click)="navigateTo(d._id, 'location')">
+                  Manage Location
+                </button>
+                <button ngbDropdownItem (click)="navigateTo(d._id, 'practice')">
+                  Manage Practice
+                </button>
+                <div class="dropdown-divider"></div>
+                <button
+                  ngbDropdownItem
+                  routerLink="/dashboard/onboarding/business-group/edit/{{
+                    d._id
+                  }}"
+                >
+                  Edit
+                </button>
+                <button ngbDropdownItem (click)="deleteBG(d._id)">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

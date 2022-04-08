@@ -1,0 +1,7 @@
+<div class="container" *ngIf="data">
+  <app-business-group-form
+    [formData]="data"
+    (onCancel)="handleCancel()"
+    (onSubmit)="updateBG($event)"
+  ></app-business-group-form>
+</div>
