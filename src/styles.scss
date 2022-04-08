@@ -27,7 +27,15 @@ body {
 * {
   outline: none !important;
 }
+form {
+  .form-control {
+    margin-bottom: 0.5rem;
+  }
+}
 
+label {
+  color: #696969;
+}
 // Remove dropdown arrow icon
 .dropdown-toggle::after {
   content: initial;
