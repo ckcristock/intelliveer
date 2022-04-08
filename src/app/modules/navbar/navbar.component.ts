@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { CONFIG } from '@src/app/config';
-import { AuthService } from '@src/app/services/auth/auth.service';
-import { environment } from '@src/environments/environment';
+import { CONFIG } from '@config/index';
+import { AuthService } from '@services/auth/auth.service';
+import { environment } from '@environment/environment';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({

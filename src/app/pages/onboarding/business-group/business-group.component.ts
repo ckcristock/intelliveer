@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CONFIG } from '@src/app/config';
+import { CONFIG } from '@config/index';
 import { BusinessGroupDropdownService } from '@services/business-group-dropdown/business-group-dropdown.service';
 import { Subscription } from 'rxjs';
 

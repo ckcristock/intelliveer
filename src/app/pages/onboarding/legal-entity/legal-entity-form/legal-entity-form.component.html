@@ -1,4 +1,4 @@
-<div class="row" *ngIf="Form && staticData">
+<div class="row" *ngIf="Form">
   <div class="col-12 d-flex mb-3">
     <div class="col d-flex align-items-center">
       <span class="text-uppercase fw-bold">{{ title }}</span>
@@ -68,53 +68,18 @@
         </div>
       </div>
       <!-- Physical Address -->
-      <div class="section" #physicalAddress formGroupName="physicalAddress">
+      <div class="section" #physicalAddress>
         <div class="row">
           <h6 class="heading">Physical Address</h6>
         </div>
-        <div class="row">
-          <div class="col">
-            <label class="required">Address Line 1</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="addressLine1"
-            />
-          </div>
-          <div class="col">
-            <label class="required">Address Line 2</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="addressLine2"
-            />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <label class="required">Country</label>
-            <input type="text" class="form-control" formControlName="country" />
-          </div>
-          <div class="col">
-            <label class="required">State</label>
-            <input type="text" class="form-control" formControlName="state" />
-          </div>
-          <div class="col">
-            <label class="required">City</label>
-            <input type="text" class="form-control" formControlName="city" />
-          </div>
-          <div class="col">
-            <label class="required">Zip Code</label>
-            <input
-              type="number"
-              class="form-control"
-              formControlName="zipCode"
-            />
-          </div>
-        </div>
+        <app-address-form
+          [parentGroup]="Form"
+          [formGroupName]="'physicalAddress'"
+          [formGroupControls]="Form.get('physicalAddress')"
+        ></app-address-form>
       </div>
       <!-- Mailing Address -->
-      <div class="section" #mailingAddress formGroupName="mailingAddress">
+      <div class="section" #mailingAddress>
         <div class="row">
           <h6 class="heading">Mailing Address</h6>
         </div>
@@ -129,53 +94,14 @@
             </button>
           </div>
         </div>
-        <div class="row">
-          <div class="col">
-            <label class="required">Address Line 1</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="addressLine1"
-            />
-          </div>
-          <div class="col">
-            <label class="required">Address Line 2</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="addressLine2"
-            />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <label class="required">Country</label>
-            <input type="text" class="form-control" formControlName="country" />
-          </div>
-          <div class="col">
-            <label class="required">State</label>
-            <input type="text" class="form-control" formControlName="state" />
-          </div>
-          <div class="col">
-            <label class="required">City</label>
-            <input type="text" class="form-control" formControlName="city" />
-          </div>
-          <div class="col">
-            <label class="required">Zip Code</label>
-            <input
-              type="number"
-              class="form-control"
-              formControlName="zipCode"
-            />
-          </div>
-        </div>
+        <app-address-form
+          [parentGroup]="Form"
+          [formGroupName]="'mailingAddress'"
+          [formGroupControls]="Form.get('mailingAddress')"
+        ></app-address-form>
       </div>
       <!-- Insurance Billing Address -->
-      <div
-        class="section"
-        #insuranceBillingAddress
-        formGroupName="insuranceBillingAddress"
-      >
+      <div class="section" #insuranceBillingAddress>
         <div class="row">
           <h6 class="heading">Insurance Billing Address</h6>
         </div>
@@ -190,198 +116,33 @@
             </button>
           </div>
         </div>
-        <div class="row">
-          <div class="col">
-            <label class="required">Address Line 1</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="addressLine1"
-            />
-          </div>
-          <div class="col">
-            <label class="required">Address Line 2</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="addressLine2"
-            />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <label class="required">Country</label>
-            <input type="text" class="form-control" formControlName="country" />
-          </div>
-          <div class="col">
-            <label class="required">State</label>
-            <input type="text" class="form-control" formControlName="state" />
-          </div>
-          <div class="col">
-            <label class="required">City</label>
-            <input type="text" class="form-control" formControlName="city" />
-          </div>
-          <div class="col">
-            <label class="required">Zip Code</label>
-            <input
-              type="number"
-              class="form-control"
-              formControlName="zipCode"
-            />
-          </div>
-        </div>
+        <app-address-form
+          [parentGroup]="Form"
+          [formGroupName]="'insuranceBillingAddress'"
+          [formGroupControls]="Form.get('insuranceBillingAddress')"
+        ></app-address-form>
       </div>
       <!-- Contact -->
-      <div class="section" #contactDetails formGroupName="contactDetails">
+      <div class="section" #contactDetails>
         <div class="row">
           <h6 class="heading">Contact Details</h6>
         </div>
-        <div class="row">
-          <div class="col">
-            <label class="required">Email</label>
-            <input type="text" class="form-control" formControlName="email" />
-          </div>
-          <div class="col">
-            <label class="required">Website</label>
-            <input type="text" class="form-control" formControlName="website" />
-          </div>
-          <div class="col">
-            <label class="required">Prefered Mail Method</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="preferedMailMethod"
-            />
-          </div>
-        </div>
-        <div class="row" formGroupName="primaryPhone">
-          <div class="col">
-            <label class="required">Primary Phone Type</label>
-            <select class="form-select" formControlName="type">
-              <option
-                [value]="type.value"
-                *ngFor="let type of staticData.phone"
-              >
-                {{ type.label }}
-              </option>
-            </select>
-          </div>
-          <div class="col">
-            <label class="required">Country Code</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="countryCode"
-            />
-          </div>
-          <div class="col">
-            <label class="required">Number</label>
-            <input type="text" class="form-control" formControlName="number" />
-          </div>
-        </div>
-        <div class="row" formGroupName="secondaryPhone">
-          <div class="col">
-            <label class="required">Secondary Phone Type</label>
-            <select class="form-select" formControlName="type">
-              <option
-                [value]="type.value"
-                *ngFor="let type of staticData.phone"
-              >
-                {{ type.label }}
-              </option>
-            </select>
-          </div>
-          <div class="col">
-            <label class="required">Country Code</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="countryCode"
-            />
-          </div>
-          <div class="col">
-            <label class="required">Number</label>
-            <input type="text" class="form-control" formControlName="number" />
-          </div>
-        </div>
+        <app-contact-details-form
+          [parentGroup]="Form"
+          [formGroupName]="'contactDetails'"
+          [formGroupControls]="Form.get('contactDetails')"
+        ></app-contact-details-form>
       </div>
       <!-- Contact Person-->
-      <div class="section" #contactPerson formGroupName="contactPerson">
+      <div class="section" #contactPerson>
         <div class="row">
           <h6 class="heading">Contact Person</h6>
         </div>
-        <div class="row">
-          <div class="col">
-            <label class="required">Party ID</label>
-            <input type="text" class="form-control" formControlName="partyId" />
-          </div>
-          <div class="col">
-            <label class="required">Designation</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="designation"
-            />
-          </div>
-          <div class="col">
-            <label class="required">Title</label>
-            <select class="form-select" formControlName="title">
-              <option
-                [value]="type.value"
-                *ngFor="let type of staticData.title"
-              >
-                {{ type.label }}
-              </option>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <label class="required">First Name</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="firstName"
-            />
-          </div>
-          <div class="col">
-            <label class="required">Last Name</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="lastName"
-            />
-          </div>
-          <div class="col">
-            <label class="required">Email</label>
-            <input type="email" class="form-control" formControlName="email" />
-          </div>
-        </div>
-        <div class="row" formGroupName="phone">
-          <div class="col">
-            <label class="required">Phone Type</label>
-            <select class="form-select" formControlName="type">
-              <option
-                [value]="type.value"
-                *ngFor="let type of staticData.phone"
-              >
-                {{ type.label }}
-              </option>
-            </select>
-          </div>
-          <div class="col">
-            <label class="required">Country Code</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="countryCode"
-            />
-          </div>
-          <div class="col">
-            <label class="required">Number</label>
-            <input type="text" class="form-control" formControlName="number" />
-          </div>
-        </div>
+        <app-contact-person-form
+          [parentGroup]="Form"
+          [formGroupName]="'contactPerson'"
+          [formGroupControls]="Form.get('contactPerson')"
+        ></app-contact-person-form>
       </div>
       <div class="d-flex border-top pt-3 gap-2">
         <button class="btn btn-dark" type="submit" [disabled]="Form.invalid">

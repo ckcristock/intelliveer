@@ -1,0 +1,64 @@
+<div *ngIf="parentGroup && formGroupControls && staticData">
+  <div [formGroup]="parentGroup">
+    <div [formGroupName]="formGroupName">
+      <div class="row">
+        <div class="col">
+          <label class="required">Party ID</label>
+          <input type="text" class="form-control" formControlName="partyId" />
+        </div>
+        <div class="col">
+          <label class="required">Designation</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="designation"
+          />
+        </div>
+        <div class="col">
+          <label class="required">Title</label>
+          <select class="form-select" formControlName="title">
+            <option [value]="type.value" *ngFor="let type of staticData.title">
+              {{ type.label }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label class="required">First Name</label>
+          <input type="text" class="form-control" formControlName="firstName" />
+        </div>
+        <div class="col">
+          <label class="required">Last Name</label>
+          <input type="text" class="form-control" formControlName="lastName" />
+        </div>
+        <div class="col">
+          <label class="required">Email</label>
+          <input type="email" class="form-control" formControlName="email" />
+        </div>
+      </div>
+      <div class="row" formGroupName="phone">
+        <div class="col">
+          <label class="required">Phone Type</label>
+          <select class="form-select" formControlName="type">
+            <option [value]="type.value" *ngFor="let type of staticData.phone">
+              {{ type.label }}
+            </option>
+          </select>
+        </div>
+        <div class="col">
+          <label class="required">Country Code</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="countryCode"
+          />
+        </div>
+        <div class="col">
+          <label class="required">Number</label>
+          <input type="text" class="form-control" formControlName="number" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CONFIG } from '@src/app/config';
+import { CONFIG } from '@config/index';
 
 interface SignedURLResponse {
   signedUrl: string;

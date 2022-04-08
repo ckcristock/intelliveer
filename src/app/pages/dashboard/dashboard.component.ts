@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { BusinessGroupDropdownService } from '@src/app/services/business-group-dropdown/business-group-dropdown.service';
+import { BusinessGroupDropdownService } from '@services/business-group-dropdown/business-group-dropdown.service';
 import { Subscription } from 'rxjs';
 import { IMenuItem, menuItems } from './menu';
 

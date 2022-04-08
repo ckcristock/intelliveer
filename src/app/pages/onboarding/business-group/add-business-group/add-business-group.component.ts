@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CONFIG } from '@src/app/config';
-import { AlertService } from '@src/app/services/alert/alert.service';
-import { BusinessGroupDropdownService } from '@src/app/services/business-group-dropdown/business-group-dropdown.service';
+import { CONFIG } from '@config/index';
+import { AlertService } from '@services/alert/alert.service';
+import { BusinessGroupDropdownService } from '@services/business-group-dropdown/business-group-dropdown.service';
 
 @Component({
   selector: 'app-add-business-group',
