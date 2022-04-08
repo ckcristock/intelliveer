@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  backendHost: 'http://52.8.77.112',
+  backendHost: 'https://ivapi.apresp.net',
   authAppHost: 'https://ivauth.apresp.net',
 };
