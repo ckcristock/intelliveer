@@ -1,5 +1,6 @@
 <div class="container" *ngIf="data">
   <app-legal-entity-form
+    [title]="'Edit Legal Entity'"
     [formData]="data"
     (onCancel)="handleCancel()"
     (onSubmit)="update($event)"

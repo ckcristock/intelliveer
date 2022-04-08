@@ -1,4 +1,19 @@
 <div class="row" *ngIf="Form && staticData">
+  <div class="col-12 d-flex mb-3">
+    <div class="col d-flex align-items-center">
+      <span class="text-uppercase fw-bold">{{ title }}</span>
+    </div>
+    <div class="col d-flex justify-content-end align-content-center">
+      <button
+        class="btn btn-dark"
+        [disabled]="Form.invalid"
+        (click)="save(Form.value)"
+      >
+        Save Changes
+      </button>
+      <button class="btn btn-light" (click)="cancel()">Cancel</button>
+    </div>
+  </div>
   <div class="col-12">
     <div class="col pills">
       <a class="active" (click)="scroll(overview)">Overview</a>

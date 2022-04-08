@@ -9,6 +9,7 @@ import { CONFIG } from '@src/app/config';
   styleUrls: ['./business-group-form.component.scss'],
 })
 export class BusinessGroupFormComponent implements OnInit {
+  @Input() title: string = '';
   @Input() formData: any | undefined = undefined;
   @Output() onCancel = new EventEmitter();
   @Output() onSubmit = new EventEmitter();

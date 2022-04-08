@@ -11,6 +11,7 @@ import { CONFIG } from '@src/app/config';
 export class PracticeFormComponent implements OnInit {
   Form: FormGroup | undefined;
   staticData: any;
+  @Input() title: string = '';
   @Input() formData: any | undefined = undefined;
   @Output() onCancel = new EventEmitter();
   @Output() onSubmit = new EventEmitter();

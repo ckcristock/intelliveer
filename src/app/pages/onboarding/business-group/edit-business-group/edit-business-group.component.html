@@ -1,5 +1,6 @@
 <div class="container" *ngIf="data">
   <app-business-group-form
+    [title]="'Edit Business Group'"
     [formData]="data"
     (onCancel)="handleCancel()"
     (onSubmit)="updateBG($event)"
