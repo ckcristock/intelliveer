@@ -8,7 +8,6 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 })
 export class AddressFormComponent implements OnInit {
   @Input() parentGroup!: FormGroup;
-  @Input() formGroupControls!: AbstractControl | null;
   @Input() formGroupName!: string;
   ngOnInit(): void {}
 }

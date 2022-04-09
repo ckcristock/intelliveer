@@ -10,7 +10,6 @@ import { CONFIG } from '@config/index';
 })
 export class ContactPersonFormComponent implements OnInit {
   @Input() parentGroup!: FormGroup;
-  @Input() formGroupControls!: AbstractControl | null;
   @Input() formGroupName!: string;
   staticData: any;
   constructor(private http: HttpClient) {}

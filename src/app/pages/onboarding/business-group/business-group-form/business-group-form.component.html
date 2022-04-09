@@ -98,7 +98,6 @@
         <app-address-form
           [parentGroup]="BGForm"
           [formGroupName]="'physicalAddress'"
-          [formGroupControls]="BGForm.get('physicalAddress')"
         ></app-address-form>
       </div>
       <!-- Mailing Address -->
@@ -120,7 +119,6 @@
         <app-address-form
           [parentGroup]="BGForm"
           [formGroupName]="'mailingAddress'"
-          [formGroupControls]="BGForm.get('mailingAddress')"
         ></app-address-form>
       </div>
       <!-- Insurance Billing Address -->
@@ -142,7 +140,6 @@
         <app-address-form
           [parentGroup]="BGForm"
           [formGroupName]="'insuranceBillingAddress'"
-          [formGroupControls]="BGForm.get('insuranceBillingAddress')"
         ></app-address-form>
       </div>
       <!-- Contact -->
@@ -153,7 +150,6 @@
         <app-contact-details-form
           [parentGroup]="BGForm"
           [formGroupName]="'contactDetails'"
-          [formGroupControls]="BGForm.get('contactDetails')"
         ></app-contact-details-form>
       </div>
       <!-- Contact Person-->
@@ -164,7 +160,6 @@
         <app-contact-person-form
           [parentGroup]="BGForm"
           [formGroupName]="'contactPerson'"
-          [formGroupControls]="BGForm.get('contactPerson')"
         ></app-contact-person-form>
       </div>
       <div class="d-flex border-top pt-3 gap-2">
