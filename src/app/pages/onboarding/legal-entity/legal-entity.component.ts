@@ -1,11 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CONFIG } from '@config/index';
 import {
   BusinessGroupDropdownService,
   SelectedBusinessGroup,
 } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { LegalEntityService } from '@services/onboarding/legal-entity/legal-entity.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -19,8 +18,8 @@ export class LegalEntityComponent implements OnInit, OnDestroy {
   selectedBusinessGroup: SelectedBusinessGroup | undefined;
   constructor(
     private router: Router,
-    private http: HttpClient,
-    private businessGroupDropdownService: BusinessGroupDropdownService
+    private businessGroupDropdownService: BusinessGroupDropdownService,
+    private legalEntityService: LegalEntityService
   ) {
     this.businessGroupDropdownSupscription = this.businessGroupDropdownService
       .businessGroup()
@@ -37,13 +36,11 @@ export class LegalEntityComponent implements OnInit, OnDestroy {
   }
   fetchList() {
     if (this.selectedBusinessGroup) {
-      this.http
-        .get(
-          `${CONFIG.backend.host}/bg-auth/api/v1/legal-entity?bg=${this.selectedBusinessGroup.bgId}`
-        )
+      this.legalEntityService
+        .getLegalEntites(this.selectedBusinessGroup.bgId)
         .subscribe({
-          next: (data) => {
-            this.data = data;
+          next: (res) => {
+            this.data = res;
           },
           error: () => {},
         });
@@ -51,12 +48,10 @@ export class LegalEntityComponent implements OnInit, OnDestroy {
   }
   delete(id: string) {
     if (this.selectedBusinessGroup && id) {
-      this.http
-        .delete(
-          `${CONFIG.backend.host}/bg-auth/api/v1/legal-entity/${id}?bg=${this.selectedBusinessGroup.bgId}`
-        )
+      this.legalEntityService
+        .deleteLegalEntity(this.selectedBusinessGroup.bgId, id)
         .subscribe({
-          next: (data) => {
+          next: (res) => {
             this.fetchList();
           },
           error: () => {},

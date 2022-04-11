@@ -1,9 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CONFIG } from '@config/index';
 import { AlertService } from '@services/alert/alert.service';
 import { BusinessGroupDropdownService } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { BusinessGroupService } from '@services/onboarding/business-group/business-group.service';
 
 @Component({
   selector: 'app-edit-business-group',
@@ -14,11 +13,11 @@ export class EditBusinessGroupComponent implements OnInit {
   id: string | undefined;
   data: any;
   constructor(
-    private http: HttpClient,
     private router: Router,
     private activeRoute: ActivatedRoute,
     private bgDropdownService: BusinessGroupDropdownService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private businessGroupService: BusinessGroupService
   ) {}
 
   ngOnInit(): void {
@@ -30,33 +29,26 @@ export class EditBusinessGroupComponent implements OnInit {
     });
   }
   getBG(id: string) {
-    this.http
-      .get(`${CONFIG.backend.host}/auth/api/v1/business-group/${id}`)
-      .subscribe({
-        next: (data: any) => {
-          this.data = data;
-        },
-        error: () => {},
-      });
+    this.businessGroupService.getBusinessGroup(id).subscribe({
+      next: (data: any) => {
+        this.data = data;
+      },
+      error: () => {},
+    });
   }
   updateBG(data: any) {
     if (data && this.id) {
-      this.http
-        .patch(
-          `${CONFIG.backend.host}/auth/api/v1/business-group/${this.id}`,
-          data
-        )
-        .subscribe({
-          next: (data) => {
-            this.bgDropdownService.reload();
-            this.alertService.success(
-              'Success',
-              'Business group has been updated successfully'
-            );
-            this.router.navigate(['/dashboard/onboarding/business-group']);
-          },
-          error: (err) => {},
-        });
+      this.businessGroupService.updateBusinessGroup(this.id, data).subscribe({
+        next: (res) => {
+          this.bgDropdownService.reload();
+          this.alertService.success(
+            'Success',
+            'Business group has been updated successfully'
+          );
+          this.router.navigate(['/dashboard/onboarding/business-group']);
+        },
+        error: (err) => {},
+      });
     }
   }
   handleCancel() {

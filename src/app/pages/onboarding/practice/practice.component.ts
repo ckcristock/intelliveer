@@ -1,10 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CONFIG } from '@config/index';
 import {
   BusinessGroupDropdownService,
   SelectedBusinessGroup,
 } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { PracticeService } from '@services/onboarding/practice/practice.service';
 import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-practice',
@@ -16,8 +15,8 @@ export class PracticeComponent implements OnInit {
   businessGroupDropdownSupscription: Subscription;
   selectedBusinessGroup: SelectedBusinessGroup | undefined;
   constructor(
-    private http: HttpClient,
-    private businessGroupDropdownService: BusinessGroupDropdownService
+    private businessGroupDropdownService: BusinessGroupDropdownService,
+    private practiceLocation: PracticeService
   ) {
     this.businessGroupDropdownSupscription = this.businessGroupDropdownService
       .businessGroup()
@@ -35,13 +34,11 @@ export class PracticeComponent implements OnInit {
   }
   fetchList() {
     if (this.selectedBusinessGroup) {
-      this.http
-        .get(
-          `${CONFIG.backend.host}/bg-auth/api/v1/practice?bg=${this.selectedBusinessGroup.bgId}`
-        )
+      this.practiceLocation
+        .getPractices(this.selectedBusinessGroup.bgId)
         .subscribe({
-          next: (data) => {
-            this.data = data;
+          next: (res) => {
+            this.data = res;
           },
           error: () => {},
         });
@@ -49,12 +46,10 @@ export class PracticeComponent implements OnInit {
   }
   delete(id: string) {
     if (this.selectedBusinessGroup && id) {
-      this.http
-        .delete(
-          `${CONFIG.backend.host}/bg-auth/api/v1/practice/${id}?bg=${this.selectedBusinessGroup.bgId}`
-        )
+      this.practiceLocation
+        .deletePractice(this.selectedBusinessGroup.bgId, id)
         .subscribe({
-          next: (data) => {
+          next: (res) => {
             this.fetchList();
           },
           error: () => {},

@@ -1,11 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CONFIG } from '@config/index';
 import {
   BusinessGroupDropdownService,
   SelectedBusinessGroup,
 } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { PracticeService } from '@services/onboarding/practice/practice.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -20,9 +19,9 @@ export class EditPracticeComponent implements OnInit, OnDestroy {
   selectedBusinessGroup: SelectedBusinessGroup | undefined;
   constructor(
     private router: Router,
-    private http: HttpClient,
     private activeRoute: ActivatedRoute,
-    private bgDropdownService: BusinessGroupDropdownService
+    private bgDropdownService: BusinessGroupDropdownService,
+    private practiceLocation: PracticeService
   ) {
     this.bgDropdownSubscription = this.bgDropdownService
       .businessGroup()
@@ -38,7 +37,7 @@ export class EditPracticeComponent implements OnInit, OnDestroy {
     this.activeRoute.params.subscribe((params) => {
       if (params['id']) {
         this.id = params['id'];
-        this.getLOC(params['id']);
+        this.getPractice(params['id']);
       }
     });
   }
@@ -46,15 +45,13 @@ export class EditPracticeComponent implements OnInit, OnDestroy {
     this.bgDropdownService.disable(false);
     this.bgDropdownSubscription.unsubscribe();
   }
-  getLOC(id: string) {
+  getPractice(id: string) {
     if (this.selectedBusinessGroup && id) {
-      this.http
-        .get(
-          `${CONFIG.backend.host}/bg-auth/api/v1/practice/${id}?bg=${this.selectedBusinessGroup.bgId}`
-        )
+      this.practiceLocation
+        .getPractice(this.selectedBusinessGroup.bgId, id)
         .subscribe({
-          next: (data) => {
-            this.data = data;
+          next: (res) => {
+            this.data = res;
           },
           error: () => {},
         });
@@ -62,13 +59,10 @@ export class EditPracticeComponent implements OnInit, OnDestroy {
   }
   update(data: any) {
     if (this.id && this.selectedBusinessGroup) {
-      this.http
-        .patch(
-          `${CONFIG.backend.host}/bg-auth/api/v1/practice/${this.id}?bg=${this.selectedBusinessGroup.bgId}`,
-          data
-        )
+      this.practiceLocation
+        .updatePractice(this.selectedBusinessGroup.bgId, this.id, data)
         .subscribe({
-          next: (data) => {
+          next: (res) => {
             this.router.navigate(['/dashboard/onboarding/practice']);
           },
           error: () => {},

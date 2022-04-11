@@ -1,11 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CONFIG } from '@config/index';
 import {
   BusinessGroupDropdownService,
   SelectedBusinessGroup,
 } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { LegalEntityService } from '@services/onboarding/legal-entity/legal-entity.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -20,9 +19,9 @@ export class EditLegalEntityComponent implements OnInit, OnDestroy {
   selectedBusinessGroup: SelectedBusinessGroup | undefined;
   constructor(
     private router: Router,
-    private http: HttpClient,
     private activeRoute: ActivatedRoute,
-    private bgDropdownService: BusinessGroupDropdownService
+    private bgDropdownService: BusinessGroupDropdownService,
+    private legalEntityService: LegalEntityService
   ) {
     this.bgDropdownSubscription = this.bgDropdownService
       .businessGroup()
@@ -48,13 +47,11 @@ export class EditLegalEntityComponent implements OnInit, OnDestroy {
   }
   getLE(id: string) {
     if (this.selectedBusinessGroup && id) {
-      this.http
-        .get(
-          `${CONFIG.backend.host}/bg-auth/api/v1/legal-entity/${id}?bg=${this.selectedBusinessGroup.bgId}`
-        )
+      this.legalEntityService
+        .getLegalEntity(this.selectedBusinessGroup.bgId, id)
         .subscribe({
-          next: (data) => {
-            this.data = data;
+          next: (res) => {
+            this.data = res;
           },
           error: () => {},
         });
@@ -62,13 +59,10 @@ export class EditLegalEntityComponent implements OnInit, OnDestroy {
   }
   update(data: any) {
     if (this.id && this.selectedBusinessGroup) {
-      this.http
-        .patch(
-          `${CONFIG.backend.host}/bg-auth/api/v1/legal-entity/${this.id}?bg=${this.selectedBusinessGroup.bgId}`,
-          data
-        )
+      this.legalEntityService
+        .updateLegalEntity(this.selectedBusinessGroup.bgId, this.id, data)
         .subscribe({
-          next: (data) => {
+          next: (res) => {
             this.router.navigate(['/dashboard/onboarding/legal-entity']);
           },
           error: () => {},

@@ -1,11 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CONFIG } from '@config/index';
 import {
   BusinessGroupDropdownService,
   SelectedBusinessGroup,
 } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { PracticeService } from '@services/onboarding/practice/practice.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -17,9 +16,9 @@ export class AddPracticeComponent implements OnInit, OnDestroy {
   bgDropdownSubscription: Subscription;
   selectedBusinessGroup: SelectedBusinessGroup | undefined;
   constructor(
-    private http: HttpClient,
     private router: Router,
-    private bgDropdownService: BusinessGroupDropdownService
+    private bgDropdownService: BusinessGroupDropdownService,
+    private practiceLocation: PracticeService
   ) {
     this.bgDropdownSubscription = this.bgDropdownService
       .businessGroup()
@@ -36,13 +35,10 @@ export class AddPracticeComponent implements OnInit, OnDestroy {
   }
   create(data: any) {
     if (this.selectedBusinessGroup) {
-      this.http
-        .post(
-          `${CONFIG.backend.host}/bg-auth/api/v1/practice?bg=${this.selectedBusinessGroup.bgId}`,
-          data
-        )
+      this.practiceLocation
+        .createPractice(this.selectedBusinessGroup.bgId, data)
         .subscribe({
-          next: (data) => {
+          next: (res) => {
             this.router.navigate(['/dashboard/onboarding/practice']);
           },
           error: () => {},
