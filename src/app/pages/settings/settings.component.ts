@@ -1,23 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  QueryList,
-  ViewChild,
-  ViewChildren,
-} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { CONFIG } from '@app/config';
-import { AlertService } from '@src/app/services/alert/alert.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   BusinessGroupDropdownService,
   SelectedBusinessGroup,
-} from '@src/app/services/business-group-dropdown/business-group-dropdown.service';
-import { startWith, Subscription } from 'rxjs';
+} from '@services/business-group-dropdown/business-group-dropdown.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-settings',
@@ -29,8 +15,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
   businessGroupDropdownSupscription: Subscription;
   selectedBusinessGroup: SelectedBusinessGroup | undefined;
   constructor(
-    private router: Router,
-    private http: HttpClient,
     private businessGroupDropdownService: BusinessGroupDropdownService
   ) {
     this.businessGroupDropdownSupscription = this.businessGroupDropdownService
@@ -38,26 +22,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
       .subscribe((bg) => {
         if (bg) {
           this.selectedBusinessGroup = bg;
-          this.fetchList();
         }
       });
   }
   ngOnInit(): void {}
   ngOnDestroy(): void {
     this.businessGroupDropdownSupscription.unsubscribe();
-  }
-  fetchList() {
-    if (this.selectedBusinessGroup) {
-      this.http
-        .get(
-          `${CONFIG.backend.host}/bg-auth/api/v1/legal-entity?bg=${this.selectedBusinessGroup.bgId}`
-        )
-        .subscribe({
-          next: (data) => {
-            this.data = data;
-          },
-          error: () => {},
-        });
-    }
   }
 }

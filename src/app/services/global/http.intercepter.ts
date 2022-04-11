@@ -8,9 +8,9 @@ import {
 import { Injectable } from '@angular/core';
 import { catchError, finalize, Observable, throwError } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
-import { environment } from '@src/environments/environment';
+import { environment } from '@environment/environment';
 import { LoaderService } from '@services/loader/loader.service';
-import { CONFIG } from '@src/app/config';
+import { CONFIG } from '@config/index';
 import { ErrorHandlerService } from '@services/error-handler/error-handler.service';
 
 @Injectable()

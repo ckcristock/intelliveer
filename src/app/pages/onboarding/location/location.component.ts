@@ -1,10 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CONFIG } from '@src/app/config';
 import {
   BusinessGroupDropdownService,
   SelectedBusinessGroup,
-} from '@src/app/services/business-group-dropdown/business-group-dropdown.service';
+} from '@services/business-group-dropdown/business-group-dropdown.service';
+import { LocationService } from '@services/onboarding/location/location.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -17,8 +16,8 @@ export class LocationComponent implements OnInit, OnDestroy {
   businessGroupDropdownSupscription: Subscription;
   selectedBusinessGroup: SelectedBusinessGroup | undefined;
   constructor(
-    private http: HttpClient,
-    private businessGroupDropdownService: BusinessGroupDropdownService
+    private businessGroupDropdownService: BusinessGroupDropdownService,
+    private locationService: LocationService
   ) {
     this.businessGroupDropdownSupscription = this.businessGroupDropdownService
       .businessGroup()
@@ -36,13 +35,11 @@ export class LocationComponent implements OnInit, OnDestroy {
   }
   fetchList() {
     if (this.selectedBusinessGroup) {
-      this.http
-        .get(
-          `${CONFIG.backend.host}/bg-auth/api/v1/location?bg=${this.selectedBusinessGroup.bgId}`
-        )
+      this.locationService
+        .getLocations(this.selectedBusinessGroup.bgId)
         .subscribe({
-          next: (data) => {
-            this.data = data;
+          next: (res) => {
+            this.data = res;
           },
           error: () => {},
         });
@@ -50,12 +47,10 @@ export class LocationComponent implements OnInit, OnDestroy {
   }
   delete(id: string) {
     if (this.selectedBusinessGroup && id) {
-      this.http
-        .delete(
-          `${CONFIG.backend.host}/bg-auth/api/v1/location/${id}?bg=${this.selectedBusinessGroup.bgId}`
-        )
+      this.locationService
+        .deleteLocation(this.selectedBusinessGroup.bgId, id)
         .subscribe({
-          next: (data) => {
+          next: (res) => {
             this.fetchList();
           },
           error: () => {},

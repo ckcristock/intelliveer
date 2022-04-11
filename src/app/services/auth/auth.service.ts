@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CONFIG } from '@src/app/config';
+import { CONFIG } from '@config/index';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
