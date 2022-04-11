@@ -8,16 +8,16 @@ import { ContactPersonFormModule } from '@modules/forms/contact-person-form/cont
 import { ContactDetailsFormModule } from '@modules/forms/contact-details-form/contact-details-form.module';
 
 @NgModule({
-  declarations: [PracticeFormComponent],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AddressFormModule,
-    ContactPersonFormModule,
-    ContactDetailsFormModule,
-    ImageUploaderModule,
-  ],
-  exports: [PracticeFormComponent],
+	declarations: [PracticeFormComponent],
+	imports: [
+		CommonModule,
+		FormsModule,
+		ReactiveFormsModule,
+		AddressFormModule,
+		ContactPersonFormModule,
+		ContactDetailsFormModule,
+		ImageUploaderModule,
+	],
+	exports: [PracticeFormComponent],
 })
 export class PracticeFormModule {}

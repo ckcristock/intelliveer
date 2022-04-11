@@ -1,8 +1,8 @@
 <div class="container" *ngIf="data">
-  <app-practice-form
-    [title]="'Edit Practice'"
-    [formData]="data"
-    (onCancel)="handleCancel()"
-    (onSubmit)="update($event)"
-  ></app-practice-form>
+    <app-practice-form
+        [title]="'Edit Practice'"
+        [formData]="data"
+        (onCancel)="handleCancel()"
+        (onSubmit)="update($event)"
+    ></app-practice-form>
 </div>

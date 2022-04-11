@@ -4,26 +4,26 @@ import { PageNotFoundComponent } from '@pages/common/page-not-found/page-not-fou
 import { AuthGuard } from '@services/auth/auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  {
-    path: 'dashboard',
-    canActivate: [AuthGuard],
-    loadChildren: () =>
-      import('@pages/dashboard/dashboard.module').then(
-        (m) => m.DashboardModule
-      ),
-  },
-  {
-    path: '**',
-    loadChildren: () =>
-      import('@pages/common/page-not-found/page-not-found.module').then(
-        (e) => e.PageNotFoundModule
-      ),
-  },
+	{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+	{
+		path: 'dashboard',
+		canActivate: [AuthGuard],
+		loadChildren: () =>
+			import('@pages/dashboard/dashboard.module').then(
+				(m) => m.DashboardModule
+			),
+	},
+	{
+		path: '**',
+		loadChildren: () =>
+			import('@pages/common/page-not-found/page-not-found.module').then(
+				(e) => e.PageNotFoundModule
+			),
+	},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+	imports: [RouterModule.forRoot(routes)],
+	exports: [RouterModule],
 })
 export class AppRoutingModule {}
