@@ -1,120 +1,120 @@
 /* You can add global styles to this file, and also import other style files */
 
 // Importing Bootstrap SCSS file
-@import "~bootstrap/scss/bootstrap";
+@import '~bootstrap/scss/bootstrap';
 
 // Bootstrap icons - https://icons.getbootstrap.com
-@import "~bootstrap-icons/font/bootstrap-icons.css";
+@import '~bootstrap-icons/font/bootstrap-icons.css';
 
 // Toast plugin - https://github.com/scttcper/ngx-toastr
-@import "~ngx-toastr/toastr";
+@import '~ngx-toastr/toastr';
 // custom styles for Toast Plugin
 .toast-container .ngx-toastr {
-  box-shadow: none !important;
+	box-shadow: none !important;
 }
 
 // ng-select - https://www.npmjs.com/package/@ng-select/ng-select
-@import "~@ng-select/ng-select/themes/default.theme.css";
+@import '~@ng-select/ng-select/themes/default.theme.css';
 
 // Fonts
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans+Narrow:wght@400;700&display=swap');
 
 html,
 body {
-  font-family: "Lato", sans-serif;
-  font-size: 14px;
+	font-family: 'PT Sans', sans-serif;
+	font-size: 14px;
 }
 * {
-  outline: none !important;
+	outline: none !important;
 }
 form {
-  .form-control {
-    margin-bottom: 0.5rem;
-  }
+	.form-control {
+		margin-bottom: 0.5rem;
+	}
 }
 
 label {
-  color: #696969;
+	color: #696969;
 }
 // Remove dropdown arrow icon
 .dropdown-toggle::after {
-  content: initial;
+	content: initial;
 }
 //
 
 :root {
-  --primary: #ff4500;
+	--primary: #ff4500;
 }
 .ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 .content {
-  background: #fff;
-  min-height: 500px;
-  padding: 2rem;
+	background: #fff;
+	min-height: 500px;
+	padding: 2rem;
 }
 .active {
-  color: var(--primary);
-  font-weight: bold;
+	color: var(--primary);
+	font-weight: bold;
 }
 .pointer {
-  cursor: pointer;
+	cursor: pointer;
 }
 .heading-muted {
-  text-transform: uppercase;
-  color: #bdbdbd;
-  letter-spacing: 2px;
-  position: relative;
-  margin-bottom: 20px;
-  &::after {
-    content: " ";
-    border-bottom: 2px dotted #d8d8d8;
-    position: absolute;
-    bottom: -10px;
-    width: 100%;
-    left: 0;
-  }
+	text-transform: uppercase;
+	color: #bdbdbd;
+	letter-spacing: 2px;
+	position: relative;
+	margin-bottom: 20px;
+	&::after {
+		content: ' ';
+		border-bottom: 2px dotted #d8d8d8;
+		position: absolute;
+		bottom: -10px;
+		width: 100%;
+		left: 0;
+	}
 }
 
 .section {
-  background-color: #f9f9f9;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border-radius: 0.5rem;
-  .heading {
-    font-weight: bold;
-    margin-bottom: 1.5rem;
-  }
+	background-color: #f9f9f9;
+	padding: 1rem;
+	margin-bottom: 1rem;
+	border-radius: 0.5rem;
+	.heading {
+		font-weight: bold;
+		margin-bottom: 1.5rem;
+	}
 }
 label.required {
-  &::after {
-    content: "*";
-    color: #ff6e6e;
-    margin-left: 5px;
-  }
+	&::after {
+		content: '*';
+		color: #ff6e6e;
+		margin-left: 5px;
+	}
 }
 .pills {
-  font-size: 14px;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
-  background: #f9f9f9;
-  padding: 0 10px;
-  border-radius: 5px;
-  line-height: 3;
-  .active {
-    text-decoration: none;
-    line-height: 3;
-    border-bottom: 2px solid var(--primary);
-    color: var(--primary);
-  }
-  a {
-    &:hover {
-      cursor: pointer;
-      border-bottom: 2px solid var(--primary);
-      color: var(--primary) !important;
-    }
-  }
+	font-size: 14px;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 15px;
+	background: #f9f9f9;
+	padding: 0 10px;
+	border-radius: 5px;
+	line-height: 3;
+	.active {
+		text-decoration: none;
+		line-height: 3;
+		border-bottom: 2px solid var(--primary);
+		color: var(--primary);
+	}
+	a {
+		&:hover {
+			cursor: pointer;
+			border-bottom: 2px solid var(--primary);
+			color: var(--primary) !important;
+		}
+	}
 }

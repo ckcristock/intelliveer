@@ -1,51 +1,68 @@
-<div class="dashboard-layout">
-  <div class="__navbar">
-    <top-navbar></top-navbar>
-  </div>
-  <div class="__sidebar">
-    <ul>
-      <li
-        *ngFor="let item of menuItems"
-        routerLinkActive="active"
-        [routerLink]="item.url"
-      >
-        <div class="icon">
-          <i [class]="item.icon"></i>
-        </div>
-        <div class="title">{{ item.title }}</div>
-      </li>
-    </ul>
-    <!-- <a routerLink="/dashboard/settings">
+<div
+	class="dashboard-layout"
+	[ngStyle]="{
+		'grid-auto-columns': showCompactSidebar
+			? '42px 1fr 200px'
+			: '200px 1fr 200px'
+	}"
+>
+	<div class="__navbar">
+		<top-navbar></top-navbar>
+	</div>
+	<div class="__sidebar">
+		<ul>
+			<li
+				*ngFor="let item of menuItems"
+				routerLinkActive="active"
+				[routerLink]="item.url"
+				placement="right"
+			>
+				<div
+					class="icon"
+					*ngIf="showCompactSidebar"
+					[ngbTooltip]="item.title"
+				>
+					<i [class]="item.icon"></i>
+				</div>
+				<div class="icon" *ngIf="!showCompactSidebar">
+					<i [class]="item.icon"></i>
+				</div>
+				<div class="title" *ngIf="!showCompactSidebar">
+					{{ item.title }}
+				</div>
+			</li>
+		</ul>
+		<!-- <a routerLink="/dashboard/settings">
 
     </a> -->
-  </div>
-  <div class="__content">
-    <div
-      class="container d-flex justify-content-end align-items-center global-bg-dropdown"
-    >
-      <div class="col-md-5 ps-2">
-        <span class="fw-bold text-uppercase text-black-50">{{
-          moduleName
-        }}</span>
-      </div>
-      <div class="col-3 text-end me-2">
-        <label class="fw-bold">Business Group:</label>
-      </div>
-      <div class="col-4">
-        <select
-          class="form-select"
-          [(ngModel)]="selectedBusinessGroup"
-          (change)="setBusinessGroup($event)"
-          [disabled]="disableBGDropdown"
-        >
-          <option *ngFor="let bg of businessGroups" [value]="bg._id">
-            {{ bg.name }}
-          </option>
-        </select>
-      </div>
-    </div>
+	</div>
+	<div class="__content">
+		<div
+			class="container d-flex justify-content-end align-items-center global-bg-dropdown"
+		>
+			<div class="col-md-5 ps-2">
+				<span class="fw-bold text-uppercase text-black-50">{{
+					moduleName
+				}}</span>
+			</div>
+			<div class="col-3 text-end me-2">
+				<label class="fw-bold">Business Group:</label>
+			</div>
+			<div class="col-4">
+				<select
+					class="form-select"
+					[(ngModel)]="selectedBusinessGroup"
+					(change)="setBusinessGroup($event)"
+					[disabled]="disableBGDropdown"
+				>
+					<option *ngFor="let bg of businessGroups" [value]="bg._id">
+						{{ bg.name }}
+					</option>
+				</select>
+			</div>
+		</div>
 
-    <router-outlet></router-outlet>
-  </div>
-  <div class="__tray"></div>
+		<router-outlet></router-outlet>
+	</div>
+	<div class="__tray"></div>
 </div>
