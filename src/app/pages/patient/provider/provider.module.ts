@@ -4,6 +4,7 @@ import { ProviderComponent } from './provider.component';
 import { ProviderRoutingModule } from './provider-routing.module';
 import { ImageUploaderModule } from '@modules/image-uploader/image-uploader.module';
 import { AddressFormModule } from '@modules/forms/address-form/address-form.module';
+import { PipesModule } from 'src/app/pipes/pipes/pipes.module';
 
 
 
@@ -13,7 +14,8 @@ import { AddressFormModule } from '@modules/forms/address-form/address-form.modu
     CommonModule,
     ProviderRoutingModule,
     ImageUploaderModule,
-    AddressFormModule
+    AddressFormModule,
+    PipesModule
   ]
 })
 export class ProviderModule { }

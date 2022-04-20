@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AddressFormService } from '@services/forms/address-form/address-form.service';
 
 @Component({
   selector: 'app-insurance-subscriber',
@@ -13,7 +14,8 @@ export class InsuranceSubscriberComponent implements OnInit {
   Form!: FormGroup;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private addressFormService: AddressFormService
   ) {
     this.idForm = this.fb.group({
       // name: '',
@@ -31,7 +33,10 @@ export class InsuranceSubscriberComponent implements OnInit {
       name: [data?.name || '', Validators.required],
       description: [data?.description || '', Validators.required],
       abbreviation: [data?.abbreviation || '', Validators.required],
-      logo: [data?.logo || 'null']
+      logo: [data?.logo || 'null'],
+      address: this.addressFormService.getAddressForm(
+        data?.address || {}
+      )
     });
   }
 

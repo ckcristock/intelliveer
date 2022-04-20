@@ -1,4 +1,9 @@
-<div class="row" style="position: -webkit-sticky; position: sticky; top: 0;">
+<div class="row sticky">
+    <div class="col d-flex justify-content-end align-content-center">
+        <button class="btn_icon" disabled>
+            <i class="bi bi-plus-lg"></i>
+        </button>
+    </div>
     <div class="col-12">
         <div class="col pills">
             <a class="active" (click)="scroll(overview)">Overview</a>
@@ -7,9 +12,6 @@
             <a (click)="scroll(contact)">Contact</a>
             <a (click)="scroll(referredPatients)">Referred Patients</a>
             <a (click)="scroll(notes)">Notes</a>
-            <button class="btn_icon" disabled>
-                <i class="bi bi-plus-lg"></i>
-            </button>
         </div>
     </div>
 </div>
@@ -23,13 +25,13 @@
                     <app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
                     </app-image-uploader>
                 </div>
-                <div class="col-2" style="font-size: 8px;">
+                <div class="col-2">
                     <p>Olivia Doe <span>(P1001)</span> </p>
                     <p>Female</p>
                     <p>May 10, 1992</p>
                     <p>29y, 10m</p>
                 </div>
-                <div class="col-2" style="font-size: 8px;">
+                <div class="col-2">
                     <div class="row">
                         <div class="col">
                             <p>Phase:</p>
@@ -45,7 +47,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-3" style="font-size: 8px;">
+                <div class="col-3">
                     <div class="row">
                         <div class="col">
                             <p>Language:</p>
@@ -61,7 +63,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-3" style="font-size: 8px;">
+                <div class="col-3">
                     <div class="row">
                         <div class="col">
                             <p>Chart Number:</p>
@@ -85,58 +87,58 @@
                 <h6 class="heading">Profile</h6>
                 <div class="row">
                     <div class="col">
-                        <label class="form-label">Is prefered provider</label>
+                        <label class="required">{{ 'Is prefered provider' | shortened : 10 }}</label>
                         <select class="form-control">  
                             <option disabled>Select Website</option>  
                             <option>Choose Website</option>  
                         </select>
                     </div>
                     <div class="col">
-                        <label class="form-label">Title</label>
+                        <label class="required">Title</label>
                         <select class="form-control">  
                             <option disabled>Select Website</option>  
                             <option>Choose Website</option>  
                         </select>
                     </div>
                     <div class="col">
-                        <label class="form-label">First Name</label>
+                        <label class="required">First Name</label>
                         <input class="form-control" type="text" placeholder="" name="firstName" />
                     </div>
 
                     <div class="col">
-                        <label class="form-label">Middle Name</label>
+                        <label class="required">Middle Name</label>
                         <input class="form-control" type="text" placeholder="" name="name" />
                     </div>
                     <div class="col">
-                        <label class="form-label">Last Name</label>
+                        <label class="required">Last Name</label>
                         <input class="form-control" type="text" placeholder="" name="lastName" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <label class="form-label">Practice Name</label>
+                        <label class="required">{{ 'Practice Name' | shortened : 10 }}</label>
                         <input class="form-control" type="text" placeholder="" name="name" />
                     </div>
                     <div class="col">
-                        <label class="form-label">Degree</label>
+                        <label class="required">Degree</label>
                         <input class="form-control" type="text" placeholder="" name="name" />
                     </div>
                     <div class="col">
-                        <label class="form-label">Dental/Medical School</label>
+                        <label class="required">{{ 'Dental/Medical School' | shortened: 10 }}</label>
                         <input class="form-control" type="text" placeholder="" name="name" />
                     </div>
                     <div class="col">
-                        <label class="form-label">Specialty</label>
+                        <label class="required">Specialty</label>
                         <input class="form-control" type="text" placeholder="" name="name" />
                     </div>
                     <div class="col">
-                        <label class="form-label">Specialty School</label>
+                        <label class="required">{{ 'Specialty School' | shortened: 10 }}</label>
                         <input class="form-control" type="text" placeholder="" name="name" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-2">
-                        <label class="form-label">Greeting</label>
+                        <label class="required">Greeting</label>
                         <input class="form-control" type="text" placeholder="" name="name" />
                     </div>
                 </div>
@@ -154,7 +156,7 @@
 
         <div class="section" #address>
             <h6 class="heading">Address</h6>
-            <app-address-form [parentGroup]="Form" [formGroupName]="'physicalAddress'"></app-address-form>
+            <app-address-form [parentGroup]="Form" [formGroupName]="'address'"></app-address-form>
         </div>
 
         <div class="section" #contact>
@@ -162,12 +164,12 @@
             <div class="row">
                     
                 <div class="col">
-                    <label class="form-label">Email</label>
+                    <label class="required">Email</label>
                     <input class="form-control" type="text" placeholder="" name="id">
                 </div>
     
                 <div class="col">
-                    <label class="form-label">Primary Phone Type</label>
+                    <label class="required">Primary Phone Type</label>
                     <select class="form-control">
                         <option disabled>Select Website</option>
                         <option>Choose Website</option>
@@ -175,14 +177,14 @@
                 </div>
     
                 <div class="col">
-                    <label class="form-label">Primary Phone Number</label>
+                    <label class="required">Primary Phone Number</label>
                     <input class="form-control" type="text" placeholder="" name="name" />
                 </div>
             </div>
     
             <div class="row">
                 <div class="col">
-                    <label class="form-label">Secondary Phone Type</label>
+                    <label class="required">{{ 'Secondary Phone Type' | shortened: 10 }}</label>
                     <select class="form-control">
                         <option disabled>Select Website</option>
                         <option>Choose Website</option>
@@ -190,12 +192,12 @@
                 </div>
     
                 <div class="col">
-                    <label class="form-label">Secondary Phone Number</label>
+                    <label class="required">{{ 'Secondary Phone Number' | shortened: 10 }}</label>
                     <input class="form-control" type="text" placeholder="" name="name" />
                 </div>
     
                 <div class="col">
-                    <label class="form-label">Preferred Mail Method</label>
+                    <label class="required">{{ 'Preferred Mail Method' | shortened: 10 }}</label>
                     <select class="form-control">  
                         <option disabled>Select Website</option>  
                         <option>Choose Website</option>  
@@ -203,7 +205,7 @@
                 </div>
     
                 <div class="col">
-                    <label class="form-label">Website</label>
+                    <label class="required">Website</label>
                     <div class="input-group mb-3">
                         <span class="form-control" id="basic-addon3">https://</span>
                         <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="website" placeholder="www.example.com">
@@ -228,12 +230,12 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
+                                <th scope="col">{{ 'First Name' | shortened: 8 }}</th>
+                                <th scope="col">{{ 'Last Name' | shortened: 8 }}</th>
                                 <th scope="col">Phase</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Treatment Start Date</th>
-                                <th scope="col">Treatment End Date</th>
+                                <th scope="col">{{ 'Treatment Start Date' | shortened: 8 }}</th>
+                                <th scope="col">{{ 'Treatment End Date' | shortened: 8 }}</th>
                             </tr>
                         </thead>
                         <tbody *ngIf="bussinessGroups">

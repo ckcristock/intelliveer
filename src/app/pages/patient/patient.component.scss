@@ -9,9 +9,8 @@ ul {
     overflow-x: hidden;
     overflow-y: auto;
   }
-
-  a {
-    color: --primary;
-    text-decoration: none;
+  .ol {
+    margin-left: 8px;
+    padding: 2px;
+    list-style: none;
   }
-  

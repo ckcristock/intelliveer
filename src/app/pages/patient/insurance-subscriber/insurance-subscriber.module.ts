@@ -4,6 +4,7 @@ import { InsuranceSubscriberComponent } from './insurance-subscriber.component';
 import { InsuranceSubscriberRoutingModule } from './insurance-subscriber-routing.module';
 import { AddressFormModule } from '@modules/forms/address-form/address-form.module';
 import { ImageUploaderModule } from '@modules/image-uploader/image-uploader.module';
+import { PipesModule } from 'src/app/pipes/pipes/pipes.module';
 
 
 
@@ -15,7 +16,8 @@ import { ImageUploaderModule } from '@modules/image-uploader/image-uploader.modu
     CommonModule,
     InsuranceSubscriberRoutingModule,
     ImageUploaderModule,
-    AddressFormModule
+    AddressFormModule,
+    PipesModule
   ]
 })
 export class InsuranceSubscriberModule { }

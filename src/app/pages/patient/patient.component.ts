@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { patientMenuItem } from './patient-menu';
 
 @Component({
   selector: 'app-patient',
@@ -8,7 +7,6 @@ import { patientMenuItem } from './patient-menu';
 })
 export class PatientComponent implements OnInit {
 
-  patientMenuItems: any[] = patientMenuItem;
   navbarOpen = false;
   // navbarOpen = !navbarOpen;
 

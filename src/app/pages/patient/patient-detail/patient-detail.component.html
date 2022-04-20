@@ -1,4 +1,9 @@
-<div class="row" style="position: -webkit-sticky; position: sticky; top: 0;">
+<div class="row sticky">
+    <div class="col d-flex justify-content-end align-content-center">
+        <button class="btn_icon" disabled>
+            <i class="bi bi-plus-lg"></i>
+        </button>
+    </div>
     <div class="col-12">
         <div class="col pills">
             <a class="active" (click)="scroll(overview)">Overview</a>
@@ -7,9 +12,6 @@
             <a (click)="scroll(preferences)">Preferences</a>
             <a (click)="scroll(emergencyContact)">Emergency Contact</a>
             <a (click)="scroll(notes)">Notes</a>
-            <button class="btn_icon" disabled>
-                <i class="bi bi-plus-lg"></i>
-            </button>
         </div>
     </div>
 </div>
@@ -18,17 +20,17 @@
     <div class="col-12" id="main">
         <div class="section" #overview>
             <div class="row">
-                <div class="col-1">
+                <div class="col-2">
                     <app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
                     </app-image-uploader>
                 </div>
-                <div class="col-2" style="font-size: 8px;">
+                <div class="col-2">
                     <p>Olivia Doe <span>(P1001)</span> </p>
                     <p>Female</p>
                     <p>May 10, 1992</p>
                     <p>29y, 10m</p>
                 </div>
-                <div class="col-3" style="font-size: 8px;">
+                <div class="col-2">
                     <div class="row">
                         <div class="col">
                             <p>Phase:</p>
@@ -44,7 +46,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-3" style="font-size: 8px;">
+                <div class="col-3">
                     <div class="row">
                         <div class="col">
                             <p>Language:</p>
@@ -60,7 +62,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-3" style="font-size: 8px;">
+                <div class="col-3">
                     <div class="row">
                         <div class="col">
                             <p>Chart Number:</p>
@@ -84,51 +86,51 @@
                 <h6 class="heading">Profile</h6>
                 <div class="row">
                     <div class="col">
-                        <label class="form-label">Title</label>
+                        <label class="required">Title</label>
                         <select class="form-control">  
                             <option disabled>Select Website</option>  
                             <option>Choose Website</option>  
                         </select>
                     </div>
                     <div class="col">
-                        <label class="form-label">First Name</label>
+                        <label class="required">First Name</label>
                         <input class="form-control" type="text" placeholder="" name="firstName" />
                     </div>
 
                     <div class="col">
-                        <label class="form-label">Middle Name</label>
+                        <label class="required">Middle Name</label>
                         <input class="form-control" type="text" placeholder="" name="name" />
                     </div>
                     <div class="col">
-                        <label class="form-label">Last Name</label>
+                        <label class="required">Last Name</label>
                         <input class="form-control" type="text" placeholder="" name="lastName" />
                     </div>
                     <div class="col">
-                        <label class="form-label">Date of Birth</label>
+                        <label class="required">Date of Birth</label>
                         <input class="form-control" type="date" placeholder="" name="DOB" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <label class="form-label">Gender</label>
+                        <label class="required">Gender</label>
                         <select class="form-control">  
                             <option value="M">Male</option>  
                             <option value="F">Female</option>  
                         </select>
                     </div>
                     <div class="col">
-                        <label class="form-label">Preferred Pronoun</label>
+                        <label class="required">Preferred Pronoun</label>
                         <select class="form-control">  
                             <option disabled>Select Website</option>  
                             <option>Choose Website</option>  
                         </select>
                     </div>
                     <div class="col">
-                        <label class="form-label">Language</label>
+                        <label class="required">Language</label>
                         <input class="form-control" type="text" placeholder="" name="name" />
                     </div>
                     <div class="col">
-                        <label class="form-label">Marital Status</label>
+                        <label class="required">Marital Status</label>
                         <input class="form-control" type="text" placeholder="" name="name" />
                     </div>
                 </div>
@@ -149,27 +151,27 @@
                 <h6 class="heading">Information</h6>
                 <div class="row">
                     <div class="col">
-                        <label class="form-label">Preferred Name</label>
+                        <label class="required">{{ 'Preferred Name' | shortened : 10 }}</label>
                         <input class="form-control" type="text" placeholder="" name="id">
                     </div>
                     <div class="col">
-                        <label class="form-label">Pronounciation</label>
+                        <label class="required">Pronounciation</label>
                         <input class="form-control" type="text" placeholder="" name="name" />
                     </div>
         
                     <div class="col">
-                        <label class="form-label">School</label>
+                        <label class="required">School</label>
                         <input class="form-control" type="text" placeholder="" name="name" />
                     </div>
                     <div class="col">
-                        <label class="form-label">Interests</label>
+                        <label class="required">Interests</label>
                         <select class="form-control">  
                             <option disabled>Select Website</option>  
                             <option>Choose Website</option>  
                         </select>
                     </div>
                     <div class="col">
-                        <label class="form-label">Tags</label>
+                        <label class="required">Tags</label>
                         <select class="form-control">  
                             <option disabled>Select Website</option>  
                             <option>Choose Website</option>  
@@ -180,12 +182,12 @@
                     <div *ngFor="let inf of ids.controls; let i=index">
                         <div class="row">
                             <div class="col">
-                                <label class="form-label">ID Type</label>
+                                <label class="required">ID Type</label>
                                 <input class="form-control" formControlName="idType" type="text" placeholder="" name="name" />
                             </div>
         
                             <div class="col">
-                                <label class="form-label">ID Number</label>
+                                <label class="required">ID Number</label>
                                 <input class="form-control" formControlName="idNumber" type="text" placeholder="" name="name" />
                             </div>
 
@@ -198,7 +200,7 @@
         
                     </div>
                     <div class="space2"></div>
-                    <div class="row" style="font-size: 8px;" (click)="addId()">
+                    <div class="row" (click)="addId()">
                         <div class="col">
                             <button class="btn_icon bt" style="padding: 1px; margin: 0px 5px 0px 12px;">
                                 <i class="bi bi-plus-lg"></i>
@@ -226,14 +228,14 @@
                     <h6 class="heading">Preferences</h6>
                     <div class="row">
                         <div class="col">
-                            <label class="form-label">Location</label>
+                            <label class="required">Location</label>
                             <select class="form-control">  
                                 <option disabled>Select Website</option>  
                                 <option>Choose Website</option>  
                             </select>
                         </div>
                         <div class="col">
-                            <label class="form-label">Practice</label>
+                            <label class="required">Practice</label>
                             <select class="form-control">  
                                 <option disabled>Select Website</option>  
                                 <option>Choose Website</option>  
@@ -241,7 +243,7 @@
                         </div>
 
                         <div class="col">
-                            <label class="form-label">Provider</label>
+                            <label class="required">Provider</label>
                             <select class="form-control">  
                                 <option disabled>Select Website</option>  
                                 <option>Choose Website</option>  
@@ -250,14 +252,14 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <label class="form-label">New Patient Coordinator</label>
+                            <label class="required">New Patient Coordinator</label>
                             <select class="form-control">  
                                 <option disabled>Select Website</option>  
                                 <option>Choose Website</option>  
                             </select>
                         </div>
                         <div class="col">
-                            <label class="form-label">Treatment Coordinator</label>
+                            <label class="required">Treatment Coordinator</label>
                             <select class="form-control">  
                                 <option disabled>Select Website</option>  
                                 <option>Choose Website</option>  
@@ -265,7 +267,7 @@
                         </div>
 
                         <div class="col">
-                            <label class="form-label">Chair Side Assistant</label>
+                            <label class="required">Chair Side Assistant</label>
                             <select class="form-control">  
                                 <option disabled>Select Website</option>  
                                 <option>Choose Website</option>  
@@ -291,7 +293,7 @@
                 <h6 class="heading">Emergency Contact</h6>
                 <div class="row">
                     <div class="col">
-                        <label class="form-label">Contact Person</label>
+                        <label class="required">Contact Person</label>
                         <select class="form-control">  
                             <option disabled>Select Website</option>  
                             <option>Choose Website</option>  
@@ -300,11 +302,11 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <label class="form-label">Name</label>
+                        <label class="required">Name</label>
                         <input class="form-control" type="text" placeholder="" name="id">
                     </div>
                     <div class="col">
-                        <label class="form-label">Emergency Contact</label>
+                        <label class="required">Emergency Contact</label>
                         <input class="form-control" type="text" placeholder="" name="name" />
                     </div>
                 </div>

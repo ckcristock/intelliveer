@@ -2,22 +2,21 @@
     <div class="row">
         <div class="col-2">
             <ul class="ul">
-                <li class="pointer" *ngFor="let item of patientMenuItems" 
-                    [routerLink]="item.url">
-                    {{ item.title }}
-                    <ol class="ol">
-                        <li class="pointer" *ngFor="let list of item.subMenuItem" routerLinkActive="active"
-                        [routerLink]="list.url">
-                            {{ list.title }}
-                            <ol class="ol">
-                                <li class="pointer" *ngFor="let subMenu of list.subSubMenuItem" routerLinkActive="active"
-                                [routerLink]="subMenu.url">
-                                    {{ subMenu.title }}
-                                </li>
-                            </ol>
-                        </li>
-                    </ol>
-                </li>
+                <li class="pointer">Consultation Phase</li>
+                <ol class="ol">
+                    <li class="pointer" routerLinkActive="active" [routerLink]="'/dashboard/patient/patient-detail'">Patient</li>
+                    <li class="pointer">Responsible Party</li>
+                    <ul class="ol">
+                        <li class="pointer" routerLinkActive="active" [routerLink]="'/dashboard/patient/legal-guardian'">Legal Guardian</li>
+                        <li class="pointer" routerLinkActive="active" [routerLink]="'/dashboard/patient/payment-party'">Payment Party</li>
+                        <li class="pointer" routerLinkActive="active" [routerLink]="'/dashboard/patient/insurance-subscriber'">Insurance Subscriber</li>    
+                    </ul>
+                    <li class="pointer" routerLinkActive="active" [routerLink]="'/dashboard/patient/provider'">Provider</li>
+                    <li class="pointer" routerLinkActive="active" [routerLink]="'/dashboard/patient/referer'">Referer</li>
+                    <li class="pointer" routerLinkActive="active" [routerLink]="'/dashboard/patient/family_members'">Family Members</li>
+                    <li class="pointer" routerLinkActive="active" [routerLink]="'/dashboard/patient/family_members'">Achieve Patient</li>
+                    <li class="pointer" routerLinkActive="active" [routerLink]="'/dashboard/patient/family_members'">Delete Patient</li>
+                </ol>
             </ul>
         </div>
         <div class="col-10 component-view">
