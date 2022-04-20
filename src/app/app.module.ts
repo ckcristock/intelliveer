@@ -13,28 +13,28 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AppComponent, DialogComponent, ErrorHandlerComponent],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    AppRoutingModule,
-    BrowserAnimationsModule, // required by ToasterModule
-    ToastrModule.forRoot(),
-  ],
-  providers: [
-    {
-      provide: ErrorHandler,
-      useClass: GlobalErrorHandler,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpCallsInterceptor,
-      multi: true,
-    },
-    CookieService,
-  ],
-  bootstrap: [AppComponent],
+	declarations: [AppComponent, DialogComponent, ErrorHandlerComponent],
+	imports: [
+		BrowserModule,
+		FormsModule,
+		ReactiveFormsModule,
+		HttpClientModule,
+		AppRoutingModule,
+		BrowserAnimationsModule, // required by ToasterModule
+		ToastrModule.forRoot(),
+	],
+	providers: [
+		// {
+		//   provide: ErrorHandler,
+		//   useClass: GlobalErrorHandler,
+		// },
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: HttpCallsInterceptor,
+			multi: true,
+		},
+		CookieService,
+	],
+	bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -6,6 +6,7 @@ import { ImageUploaderModule } from '@modules/image-uploader/image-uploader.modu
 import { AddressFormModule } from '@modules/forms/address-form/address-form.module';
 import { ContactPersonFormModule } from '@modules/forms/contact-person-form/contact-person-form.module';
 import { ContactDetailsFormModule } from '@modules/forms/contact-details-form/contact-details-form.module';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
 	declarations: [PracticeFormComponent],
@@ -17,6 +18,7 @@ import { ContactDetailsFormModule } from '@modules/forms/contact-details-form/co
 		ContactPersonFormModule,
 		ContactDetailsFormModule,
 		ImageUploaderModule,
+		NgSelectModule,
 	],
 	exports: [PracticeFormComponent],
 })

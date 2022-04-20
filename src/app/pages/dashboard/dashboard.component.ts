@@ -5,6 +5,11 @@ import { MenuBarService } from '@services/menu-bar/menu-bar.service';
 import { Subscription } from 'rxjs';
 import { IMenuItem, menuItems } from './menu';
 
+interface MenuItems {
+	top: IMenuItem[];
+	bottom: IMenuItem[];
+}
+
 @Component({
 	selector: 'app-dashboard',
 	templateUrl: './dashboard.component.html',
@@ -14,11 +19,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	selectedBusinessGroup: string | undefined;
 	businessGroupDropdownSupscription: Subscription;
 	menuStatsSubscription: Subscription;
-	menuItems: IMenuItem[] = menuItems;
+	menuItems: MenuItems = menuItems;
 	businessGroups: any;
 	disableBGDropdown: boolean = false;
 	moduleName: string = '';
-	showCompactSidebar: boolean = false;
+	showCompactSidebar: boolean = true;
 	constructor(
 		private router: Router,
 		private businessGroupDropdownService: BusinessGroupDropdownService,

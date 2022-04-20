@@ -24,6 +24,9 @@ $navbar-height: 40px;
 		background-color: #fff;
 		height: calc(100vh - $navbar-height);
 		padding: 1rem;
+		justify-content: space-between;
+		display: flex;
+		flex-direction: column;
 		ul {
 			display: flex;
 			list-style: none;

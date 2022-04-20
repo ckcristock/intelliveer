@@ -4,6 +4,7 @@ import { AuthService } from '@services/auth/auth.service';
 import { environment } from '@environment/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { MenuBarService } from '@services/menu-bar/menu-bar.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'top-navbar',
@@ -11,13 +12,12 @@ import { MenuBarService } from '@services/menu-bar/menu-bar.service';
 	styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-	private compactSidebar = false;
+	private compactSidebar: boolean = true;
 	constructor(
 		private authService: AuthService,
 		private cookieService: CookieService,
 		private menuBarService: MenuBarService
 	) {}
-
 	ngOnInit(): void {}
 	logOut() {
 		this.authService.logout().subscribe({

@@ -1,1 +1,62 @@
-<p>Org Mapping Page</p>
+<div class="container">
+	<div class="row mb-3">
+		<span class="text-uppercase fw-bold">Manage Mapping</span>
+	</div>
+	<div class="row">
+		<div class="col">
+			<table class="table">
+				<thead>
+					<tr>
+						<th style="width: 150px">Location(s)</th>
+						<th>Legal Entites/Practices</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let le of locations">
+						<td>
+							<div class="d-flex flex-column">
+								<span>
+									{{ le._id }}
+								</span>
+								<span class="fw-bold">
+									{{ le.name }}
+								</span>
+							</div>
+						</td>
+						<td>
+							<label for="">Legal Entities</label>
+							<ng-select
+								[multiple]="true"
+								[(ngModel)]="le.legalEntities"
+							>
+								<ng-option
+									*ngFor="let le of legalEntities"
+									[value]="le._id"
+									>{{ le.name }} [{{ le._id }}]</ng-option
+								>
+							</ng-select>
+							<label for="">Practices</label>
+							<ng-select
+								[multiple]="true"
+								[(ngModel)]="le.practices"
+							>
+								<ng-option
+									*ngFor="let pr of practices"
+									[value]="pr._id"
+									>{{ pr.name }} [{{ pr._id }}]</ng-option
+								>
+							</ng-select>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<button class="btn btn-dark" (click)="saveMapping()">
+				Save Mapping
+			</button>
+		</div>
+	</div>
+</div>
