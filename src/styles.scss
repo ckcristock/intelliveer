@@ -50,6 +50,12 @@ label {
   padding: 0;
   list-style: none;
 }
+.ol {
+  margin-left: 8px;
+  padding: 2px;
+  list-style: none;
+  font-size: 11px;
+}
 .content {
   background: #fff;
   min-height: 500px;
@@ -117,4 +123,13 @@ label.required {
       color: var(--primary) !important;
     }
   }
+}
+
+.form-label {
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.form-control {
+  font-size: 10px !important;
 }

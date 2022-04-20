@@ -1,0 +1,27 @@
+<div class="container content">
+    <div class="row">
+        <div class="col-2">
+            <ul class="ul">
+                <li class="pointer" *ngFor="let item of patientMenuItems" 
+                    [routerLink]="item.url">
+                    {{ item.title }}
+                    <ol class="ol">
+                        <li class="pointer" *ngFor="let list of item.subMenuItem" routerLinkActive="active"
+                        [routerLink]="list.url">
+                            {{ list.title }}
+                            <ol class="ol">
+                                <li class="pointer" *ngFor="let subMenu of list.subSubMenuItem" routerLinkActive="active"
+                                [routerLink]="subMenu.url">
+                                    {{ subMenu.title }}
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+                </li>
+            </ul>
+        </div>
+        <div class="col-10 component-view">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

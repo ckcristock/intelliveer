@@ -1,0 +1,256 @@
+<div class="row" style="position: -webkit-sticky; position: sticky; top: 0;">
+    <div class="col-12">
+        <div class="col pills">
+            <a class="active" (click)="scroll(overview)">Overview</a>
+            <a (click)="scroll(profile)">Profile</a>
+            <a (click)="scroll(address)">Address</a>
+            <a (click)="scroll(contact)">Contact</a>
+            <a (click)="scroll(referredPatients)">Referred Patients</a>
+            <a (click)="scroll(notes)">Notes</a>
+            <button class="btn_icon" disabled>
+                <i class="bi bi-plus-lg"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12" id="main">
+
+        <div class="section" #overview>
+            <div class="row">
+                <div class="col-1">
+                    <app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
+                    </app-image-uploader>
+                </div>
+                <div class="col-2" style="font-size: 8px;">
+                    <p>Olivia Doe <span>(P1001)</span> </p>
+                    <p>Female</p>
+                    <p>May 10, 1992</p>
+                    <p>29y, 10m</p>
+                </div>
+                <div class="col-3" style="font-size: 8px;">
+                    <div class="row">
+                        <div class="col">
+                            <p>Phase:</p>
+                            <p>Status:</p>
+                            <p>Dentist:</p>
+                            <p>Referrer:</p>
+                        </div>
+                        <div class="col">
+                            <p>2</p>
+                            <p>Active</p>
+                            <p>Kim Doe</p>
+                            <p>John Doe</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3" style="font-size: 8px;">
+                    <div class="row">
+                        <div class="col">
+                            <p>Language:</p>
+                            <p>Provider:</p>
+                            <p>Practice:</p>
+                            <p>Location:</p>
+                        </div>
+                        <div class="col">
+                            <p>English</p>
+                            <p>Provider Name</p>
+                            <p>Practice Name</p>
+                            <p>330 2nd Street Huntington Beach, CA 92646</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3" style="font-size: 8px;">
+                    <div class="row">
+                        <div class="col">
+                            <p>Chart Number:</p>
+                            <p>Creation Date:</p>
+                            <p>Treatement Start Date:</p>
+                            <p>Treatement End Date:</p>
+                        </div>
+                        <div class="col">
+                            <p>US-10001</p>
+                            <p>Feb 15, 2022</p>
+                            <p>Feb 20, 2022</p>
+                            <p>March 20, 2022</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" #profile>
+            <form autocomplete="off">
+                <h6 class="heading">Profile</h6>
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label">Company Name</label>
+                        <input class="form-control" type="text" placeholder="" name="name" />
+                    </div>
+                    <div class="col">
+                        <label class="form-label">Title</label>
+                        <select class="form-control">  
+                            <option disabled>Select Website</option>  
+                            <option>Choose Website</option>  
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label class="form-label">First Name</label>
+                        <input class="form-control" type="text" placeholder="" name="firstName" />
+                    </div>
+
+                    <div class="col">
+                        <label class="form-label">Middle Name</label>
+                        <input class="form-control" type="text" placeholder="" name="name" />
+                    </div>
+                    <div class="col">
+                        <label class="form-label">Last Name</label>
+                        <input class="form-control" type="text" placeholder="" name="lastName" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <label class="form-label">Greeting</label>
+                        <input class="form-control" type="text" placeholder="" name="name" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <label class="form-label">Greeting</label>
+                        <input class="form-control" type="text" placeholder="" name="name" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-dark">
+                            Save Changes
+                        </button>
+                        <button type="button" class="btn btn-light">Cancel</button>
+                    </div>
+                    
+                </div>
+            </form>
+        </div>
+
+        <div class="section" #address>
+            <h6 class="heading">Address</h6>
+            <app-address-form [parentGroup]="Form" [formGroupName]="'physicalAddress'"></app-address-form>
+        </div>
+
+        <div class="section" #contact>
+            <h6 class="heading">Contact</h6>
+            <div class="row">
+                    
+                <div class="col">
+                    <label class="form-label">Email</label>
+                    <input class="form-control" type="text" placeholder="" name="id">
+                </div>
+    
+                <div class="col">
+                    <label class="form-label">Primary Phone Type</label>
+                    <select class="form-control">
+                        <option disabled>Select Website</option>
+                        <option>Choose Website</option>
+                    </select>
+                </div>
+    
+                <div class="col">
+                    <label class="form-label">Primary Phone Number</label>
+                    <input class="form-control" type="text" placeholder="" name="name" />
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col">
+                    <label class="form-label">Secondary Phone Type</label>
+                    <select class="form-control">
+                        <option disabled>Select Website</option>
+                        <option>Choose Website</option>
+                    </select>
+                </div>
+    
+                <div class="col">
+                    <label class="form-label">Secondary Phone Number</label>
+                    <input class="form-control" type="text" placeholder="" name="name" />
+                </div>
+    
+                <div class="col">
+                    <label class="form-label">Preferred Mail Method</label>
+                    <select class="form-control">  
+                        <option disabled>Select Website</option>  
+                        <option>Choose Website</option>  
+                    </select>
+                </div>
+    
+                <div class="col">
+                    <label class="form-label">Website</label>
+                    <div class="input-group mb-3">
+                        <span class="form-control" id="basic-addon3">https://</span>
+                        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="website" placeholder="www.example.com">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-dark">
+                        Save Changes
+                    </button>
+                    <button type="button" class="btn btn-light">Cancel</button>
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="section" #referredPatients>
+            <h6 class="heading">Referred Patients</h6>
+            <div class="row">
+                <div class="col">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Phase</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Treatment Start Date</th>
+                                <th scope="col">Treatment End Date</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="bussinessGroups">
+                            <tr *ngFor="let d of bussinessGroups; let i = index">
+                                <td>{{ d?.First_Name }}</td>
+                                <td>{{ d?.Last_Name }}</td>
+                                <td>{{ d?.Phase }}</td>
+                                <td>{{ d?.Status }}</td>
+                                <td>{{ d?.Treatment_Start_Date }}</td>
+                                <td>{{ d?.Treatment_End_Date }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" #notes>
+            <h6 class="heading">Notes</h6>
+            <div class="row">
+                <div class="col-6">
+                    <textarea class="form-control" name="note" id="" cols="70" rows="5"></textarea>
+                </div>
+
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-dark">
+                        Save Changes
+                    </button>
+                    <button type="button" class="btn btn-light">Cancel</button>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -15,6 +15,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'patient',
+        loadChildren: () =>
+          import('@pages/patient/patient.module').then(
+            (m) => m.PatientModule
+          ),
+      },
+      {
         path: 'settings',
         loadChildren: () =>
           import('@pages/settings/settings.module').then(

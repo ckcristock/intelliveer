@@ -1,0 +1,34 @@
+<div class="container" *ngFor="let lGuardian of guardian; let i = index">
+    <div class="row" style="font-size: 10px;">
+        <div class="col-2" (click)="gotoDetails(lGuardian)">
+            <img src="{{lGuardian.image}}" width="75%" />
+            <small *ngIf="lGuardian.isPrimary" class="bottom-right">Primary</small>
+            <small *ngIf="lGuardian.isDisabled" class="inactive">Inactive</small>
+        </div>
+        <div class="col-3" (click)="gotoDetails(lGuardian)">
+            <p>{{lGuardian.name}} <span>{{lGuardian.id}}</span> </p>
+            <p>{{lGuardian.gender}}</p>
+            <p>{{lGuardian.date}}</p>
+            <p>{{lGuardian.duration}}</p>
+        </div>
+        <div class="col-3" (click)="gotoDetails(lGuardian)">
+            <p>Phone: <span>{{lGuardian.phone}}</span></p>
+            <p>Email: <span>{{lGuardian.email}}</span></p>
+            <p>Address: <span>{{lGuardian.address}}</span></p>
+        </div>
+        <div class="col-3" (click)="gotoDetails(lGuardian)">
+            <p>Chart Number: <span>{{lGuardian.chartNumber}}</span></p>
+            <p>Creation Date: <span>{{lGuardian.createdDate}}</span></p>
+        </div>
+        <div class="col-1">
+            <div ngbDropdown class="d-inline-block">
+                <i class="bi bi-three-dots-vertical" style="font-size: 14px;" id="dropdownBasic" ngbDropdownToggle></i>
+                <ul ngbDropdownMenu aria-labelledby="dropdownBasic">
+                    <li ngbDropdownItem>Edit</li>
+                    <li ngbDropdownItem *ngIf="!lGuardian.isPrimary">Set as primary</li>
+                    <li ngbDropdownItem>{{lGuardian.isDisabled ? 'Reactivate': 'Deactivate'}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

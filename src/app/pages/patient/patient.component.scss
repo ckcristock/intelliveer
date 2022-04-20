@@ -1,0 +1,17 @@
+ul {
+    li {
+      line-height: 3;
+      font-size: smaller;
+    }
+  }
+  .component-view {
+    height: calc(100vh - 200px);
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  a {
+    color: --primary;
+    text-decoration: none;
+  }
+  
