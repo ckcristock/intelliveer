@@ -9,7 +9,7 @@
                     <ul class="ol">
                         <li class="pointer" routerLinkActive="active" [routerLink]="'/dashboard/patient/legal-guardian'">Legal Guardian</li>
                         <li class="pointer" routerLinkActive="active" [routerLink]="'/dashboard/patient/payment-party'">Payment Party</li>
-                        <li class="pointer" routerLinkActive="active" [routerLink]="'/dashboard/patient/insurance-subscriber'">Insurance Subscriber</li>    
+                        <li class="pointer" routerLinkActive="active" [routerLink]="'/dashboard/patient/insurance-subscriber'" data-toggle="tooltip" title="Insurance Subscriber">{{ 'Insurance Subscriber' | shortened : 10 }}</li>    
                     </ul>
                     <li class="pointer" routerLinkActive="active" [routerLink]="'/dashboard/patient/provider'">Provider</li>
                     <li class="pointer" routerLinkActive="active" [routerLink]="'/dashboard/patient/referer'">Referer</li>
