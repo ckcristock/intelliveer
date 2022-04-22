@@ -1,165 +1,186 @@
 <div class="row" *ngIf="Form">
-  <div class="col-12 d-flex mb-3">
-    <div class="col d-flex align-items-center">
-      <span class="text-uppercase fw-bold">{{ title }}</span>
-    </div>
-    <div class="col d-flex justify-content-end align-content-center">
-      <button
-        class="btn btn-dark"
-        [disabled]="Form.invalid"
-        (click)="save(Form.value)"
-      >
-        Save Changes
-      </button>
-      <button class="btn btn-light" (click)="cancel()">Cancel</button>
-    </div>
-  </div>
-  <div class="col-12">
-    <div class="col pills">
-      <a class="active" (click)="scroll(overview)">Overview</a>
-      <a (click)="scroll(profile)">Profile</a>
-      <a (click)="scroll(physicalAddress)">Physical Address</a>
-      <a (click)="scroll(mailingAddress)">Mailing Address</a>
-      <a (click)="scroll(insuranceBillingAddress)">Insurance</a>
-      <a (click)="scroll(contactDetails)">Contact</a>
-      <a (click)="scroll(contactPerson)">Contact Person Info</a>
-    </div>
-  </div>
-  <div class="container" id="main">
-    <div class="section" #overview>
-      <div class="row">
-        <h6 class="heading">Logo</h6>
-      </div>
-      <div class="row">
-        <app-image-uploader
-          [imageUrl]="formData?.logo || ''"
-          (onUpload)="handleUploadedImage($event)"
-        ></app-image-uploader>
-      </div>
-    </div>
-    <form [formGroup]="Form" (submit)="save(Form.value)">
-      <!-- Profile -->
-      <div class="section" #profile>
-        <div class="row">
-          <h6 class="heading">Profile</h6>
-        </div>
-        <div class="row">
-          <div class="col">
-            <label class="required">Name</label>
-            <input type="text" class="form-control" formControlName="name" />
-          </div>
-          <div class="col">
-            <label class="required">Description</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="description"
-            />
-          </div>
-          <div class="col">
-            <label class="required">Abbreviation</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="abbreviation"
-            />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-4">
-            <label class="required">Practice Type</label>
-            <select class="form-select" formControlName="practiceType">
-              <option
-                [value]="type.value"
-                *ngFor="let type of staticData.practiceType"
-              >
-                {{ type.label }}
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <!-- Physical Address -->
-      <div class="section" #physicalAddress>
-        <div class="row">
-          <h6 class="heading">Physical Address</h6>
-        </div>
-        <app-address-form
-          [parentGroup]="Form"
-          [formGroupName]="'physicalAddress'"
-        ></app-address-form>
-      </div>
-      <!-- Mailing Address -->
-      <div class="section" #mailingAddress>
-        <div class="row">
-          <h6 class="heading">Mailing Address</h6>
-        </div>
-        <div class="row">
-          <div class="col-4 mb-3">
-            <button
-              type="button"
-              class="btn btn-sm btn-dark"
-              (click)="setAddress('mailingAddress')"
-            >
-              Same as physical address
-            </button>
-          </div>
-        </div>
-        <app-address-form
-          [parentGroup]="Form"
-          [formGroupName]="'mailingAddress'"
-        ></app-address-form>
-      </div>
-      <!-- Insurance Billing Address -->
-      <div class="section" #insuranceBillingAddress>
-        <div class="row">
-          <h6 class="heading">Insurance Billing Address</h6>
-        </div>
-        <div class="row">
-          <div class="col-4 mb-3">
-            <button
-              type="button"
-              class="btn btn-sm btn-dark"
-              (click)="setAddress('insuranceBillingAddress')"
-            >
-              Same as physical address
-            </button>
-          </div>
-        </div>
-        <app-address-form
-          [parentGroup]="Form"
-          [formGroupName]="'insuranceBillingAddress'"
-        ></app-address-form>
-      </div>
-      <!-- Contact -->
-      <div class="section" #contactDetails>
-        <div class="row">
-          <h6 class="heading">Contact Details</h6>
-        </div>
-        <app-contact-details-form
-          [parentGroup]="Form"
-          [formGroupName]="'contactDetails'"
-        ></app-contact-details-form>
-      </div>
-      <!-- Contact Person-->
-      <div class="section" #contactPerson>
-        <div class="row">
-          <h6 class="heading">Contact Person</h6>
-        </div>
-        <app-contact-person-form
-          [parentGroup]="Form"
-          [formGroupName]="'contactPerson'"
-        ></app-contact-person-form>
-      </div>
-      <div class="d-flex border-top pt-3 gap-2">
-        <button class="btn btn-dark" type="submit" [disabled]="Form.invalid">
-          Save Changes
-        </button>
+	<div class="col-12 d-flex mb-3">
+		<div class="col d-flex align-items-center">
+			<span class="text-uppercase fw-bold">{{ title }}</span>
+		</div>
+		<div class="col d-flex justify-content-end align-content-center gap-2">
+			<button
+				class="btn btn-dark"
+				[disabled]="Form.invalid"
+				(click)="save(Form.value)"
+			>
+				Save Changes
+			</button>
+			<button class="btn btn-light" (click)="cancel()">Cancel</button>
+		</div>
+	</div>
+	<div class="col-12">
+		<div class="col pills">
+			<a class="active" (click)="scroll(overview)">Overview</a>
+			<a (click)="scroll(profile)">Profile</a>
+			<a (click)="scroll(physicalAddress)">Physical Address</a>
+			<a (click)="scroll(mailingAddress)">Mailing Address</a>
+			<a (click)="scroll(insuranceBillingAddress)">Insurance</a>
+			<a (click)="scroll(contactDetails)">Contact</a>
+			<a (click)="scroll(contactPerson)">Contact Person Info</a>
+		</div>
+	</div>
+	<div class="container" id="main">
+		<div class="section" #overview>
+			<div class="row">
+				<h6 class="heading">Logo</h6>
+			</div>
+			<div class="row">
+				<app-image-uploader
+					[imageUrl]="formData?.logo || ''"
+					(onUpload)="handleUploadedImage($event)"
+				></app-image-uploader>
+			</div>
+		</div>
+		<form [formGroup]="Form" (submit)="save(Form.value)">
+			<!-- Profile -->
+			<div class="section" #profile>
+				<div class="row">
+					<h6 class="heading">Profile</h6>
+				</div>
+				<div class="row">
+					<div class="col">
+						<label class="required">Name</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="name"
+						/>
+					</div>
+					<div class="col">
+						<label class="required">Description</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="description"
+						/>
+					</div>
+					<div class="col">
+						<label class="required">Abbreviation</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="abbreviation"
+						/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4" *ngIf="staticData">
+						<label class="required">Practice Type</label>
+						<select
+							class="form-select"
+							formControlName="practiceType"
+						>
+							<option
+								[value]="type.value"
+								*ngFor="let type of staticData.practiceType"
+							>
+								{{ type.label }}
+							</option>
+						</select>
+						<!-- <ng-select
+							[items]="practiceTypeData"
+							bindLabel="label"
+							bindValue="value"
+							groupBy="dataType"
+						>
+							<ng-template ng-optgroup-tmp let-item="item">
+								{{ item.dataType || 'Unnamed group' }}
+							</ng-template>
+						</ng-select> -->
+					</div>
+				</div>
+			</div>
+			<!-- Physical Address -->
+			<div class="section" #physicalAddress>
+				<div class="row">
+					<h6 class="heading">Physical Address</h6>
+				</div>
+				<app-address-form
+					[parentGroup]="Form"
+					[formGroupName]="'physicalAddress'"
+				></app-address-form>
+			</div>
+			<!-- Mailing Address -->
+			<div class="section" #mailingAddress>
+				<div class="row">
+					<h6 class="heading">Mailing Address</h6>
+				</div>
+				<div class="row">
+					<div class="col-4 mb-3">
+						<button
+							type="button"
+							class="btn btn-sm btn-dark"
+							(click)="setAddress('mailingAddress')"
+						>
+							Same as physical address
+						</button>
+					</div>
+				</div>
+				<app-address-form
+					[parentGroup]="Form"
+					[formGroupName]="'mailingAddress'"
+				></app-address-form>
+			</div>
+			<!-- Insurance Billing Address -->
+			<div class="section" #insuranceBillingAddress>
+				<div class="row">
+					<h6 class="heading">Insurance Billing Address</h6>
+				</div>
+				<div class="row">
+					<div class="col-4 mb-3">
+						<button
+							type="button"
+							class="btn btn-sm btn-dark"
+							(click)="setAddress('insuranceBillingAddress')"
+						>
+							Same as physical address
+						</button>
+					</div>
+				</div>
+				<app-address-form
+					[parentGroup]="Form"
+					[formGroupName]="'insuranceBillingAddress'"
+				></app-address-form>
+			</div>
+			<!-- Contact -->
+			<div class="section" #contactDetails>
+				<div class="row">
+					<h6 class="heading">Contact Details</h6>
+				</div>
+				<app-contact-details-form
+					[parentGroup]="Form"
+					[formGroupName]="'contactDetails'"
+				></app-contact-details-form>
+			</div>
+			<!-- Contact Person-->
+			<div class="section" #contactPerson>
+				<div class="row">
+					<h6 class="heading">Contact Person</h6>
+				</div>
+				<app-contact-person-form
+					[parentGroup]="Form"
+					[formGroupName]="'contactPerson'"
+				></app-contact-person-form>
+			</div>
+			<div class="d-flex border-top pt-3 gap-2">
+				<button
+					class="btn btn-dark"
+					type="submit"
+					[disabled]="Form.invalid"
+				>
+					Save Changes
+				</button>
 
-        <button class="btn btn-light" type="button" (click)="cancel()">
-          Cancel
-        </button>
-      </div>
-    </form>
-  </div>
+				<button class="btn btn-light" type="button" (click)="cancel()">
+					Cancel
+				</button>
+			</div>
+		</form>
+	</div>
 </div>

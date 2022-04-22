@@ -4,7 +4,7 @@ import { PageNotFoundComponent } from '@pages/common/page-not-found/page-not-fou
 import { AuthGuard } from '@services/auth/auth.guard';
 
 const routes: Routes = [
-	{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+	{ path: '', redirectTo: '/dashboard/home', pathMatch: 'full' },
 	{
 		path: 'dashboard',
 		canActivate: [AuthGuard],
