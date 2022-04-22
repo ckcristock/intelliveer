@@ -153,3 +153,13 @@ label.required {
 .dropdown-item {
 	line-height: 2;
 }
+
+.sticky {
+  position: -webkit-sticky; 
+  position: sticky; 
+  top: 0;
+}
+
+.form-control {
+  font-size: 10px !important;
+}

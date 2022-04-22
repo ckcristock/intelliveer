@@ -1,0 +1,354 @@
+<div class="row sticky">
+    <div class="col d-flex justify-content-end align-content-center">
+        <button class="btn_icon" disabled>
+            <i class="bi bi-plus-lg"></i>
+        </button>
+    </div>
+    <div class="col-12">
+        <div class="col pills">
+            <a class="active" (click)="scroll(overview)">Overview</a>
+            <a (click)="scroll(profile)">Profile</a>
+            <a (click)="scroll(information)">Information</a>
+            <a (click)="scroll(preferences)">Preferences</a>
+            <a (click)="scroll(emergencyContact)">Emergency Contact</a>
+            <a (click)="scroll(notes)">Notes</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12" id="main">
+        <div class="section" #overview>
+            <table>
+                <tr>
+                    <td>
+                        <app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
+                        </app-image-uploader>
+                    </td>
+                    <td>
+                        <tr>Olivia Doe <span>(P1001)</span> </tr>
+                        <tr>Female</tr>
+                        <tr>May 10,1992</tr>
+                        <tr>29y, 10m</tr>
+                    </td>
+                    <td>
+                        <tr>
+                            <td>Phase:</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>Status:</td>
+                            <td>Active</td>
+                        </tr>
+                        <tr>
+                            <td>Dentist:</td>
+                            <td data-toggle="tooltip" title="Kim Doe">{{ 'Kim Doe' | shortened: 4 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Referrer:</td>
+                            <td data-toggle="tooltip" title="John Doe">{{ 'John Doe' | shortened: 4 }}</td>
+                        </tr>
+                    </td>
+                    <td>
+                        <tr>
+                            <td>Language:</td>
+                            <td>English</td>
+                        </tr>
+                        <tr>
+                            <td>Provider:</td>
+                            <td data-toggle="tooltip" title="Provider Name">{{ 'Provider Name' | shortened: 8 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Practice:</td>
+                            <td data-toggle="tooltip" title="Practice Name">{{ 'Practice Name' | shortened: 8 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Location:</td>
+                            <td data-toggle="tooltip" title="330 2nd Street Huntington Beach, CA 92646">{{ '330 2nd Street Huntington Beach, CA 92646' | shortened: 8 }}</td>
+                        </tr>
+                    </td>
+                    <td>
+                        <tr>
+                            <td data-toggle="tooltip" title="Chart Number:">{{ 'Chart Number:' | shortened: 8 }}</td>
+                            <td>US-10001</td>
+                        </tr>
+                        <tr>
+                            <td data-toggle="tooltip" title="Creation Date:">{{ 'Creation Date:' | shortened: 8 }}</td>
+                            <td>Feb 15, 2022</td>
+                        </tr>
+                        <tr>
+                            <td data-toggle="tooltip" title="Treatement Start Date:">{{ 'Treatement Start Date:' | shortened: 10 }}</td>
+                            <td>Feb 20, 2022</td>
+                        </tr>
+                        <tr>
+                            <td data-toggle="tooltip" title="Treatement End Date:">{{ 'Treatement End Date:' | shortened: 10 }}</td>
+                            <td>March 20, 2022</td>
+                        </tr>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section" #profile>
+            <form autocomplete="off">
+                <h6 class="heading">Profile</h6>
+                <div class="row">
+                    <div class="col">
+                        <label class="required">Title</label>
+                        <select class="form-control">  
+                            <option disabled>Select Website</option>  
+                            <option>Choose Website</option>  
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label class="required">First Name</label>
+                        <input class="form-control" type="text" placeholder="" name="firstName" />
+                    </div>
+
+                    <div class="col">
+                        <label class="required">Middle Name</label>
+                        <input class="form-control" type="text" placeholder="" name="name" />
+                    </div>
+                    <div class="col">
+                        <label class="required">Last Name</label>
+                        <input class="form-control" type="text" placeholder="" name="lastName" />
+                    </div>
+                    <div class="col">
+                        <label class="required">Date of Birth</label>
+                        <input class="form-control" type="date" placeholder="" name="DOB" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label class="required">Gender</label>
+                        <select class="form-control">  
+                            <option value="M">Male</option>  
+                            <option value="F">Female</option>  
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label class="required">Preferred Pronoun</label>
+                        <select class="form-control">  
+                            <option disabled>Select Website</option>  
+                            <option>Choose Website</option>  
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label class="required">Language</label>
+                        <input class="form-control" type="text" placeholder="" name="name" />
+                    </div>
+                    <div class="col">
+                        <label class="required">Marital Status</label>
+                        <input class="form-control" type="text" placeholder="" name="name" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-dark">
+                            Save and Next
+                        </button>
+                        <button type="button" class="btn btn-light">Cancel</button>
+                    </div>
+                    
+                </div>
+            </form>
+        </div>
+
+        <div class="section" #information>
+            <form autocomplete="off">
+                <h6 class="heading">Information</h6>
+                <div class="row">
+                    <div class="col">
+                        <label class="required" data-toggle="tooltip" title="Preferred Name">{{ 'Preferred Name' | shortened : 10 }}</label>
+                        <input class="form-control" type="text" placeholder="" name="id">
+                    </div>
+                    <div class="col">
+                        <label class="required">Pronounciation</label>
+                        <input class="form-control" type="text" placeholder="" name="name" />
+                    </div>
+        
+                    <div class="col">
+                        <label class="required">School</label>
+                        <input class="form-control" type="text" placeholder="" name="name" />
+                    </div>
+                    <div class="col">
+                        <label class="required">Interests</label>
+                        <select class="form-control">  
+                            <option disabled>Select Website</option>  
+                            <option>Choose Website</option>  
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label class="required">Tags</label>
+                        <select class="form-control">  
+                            <option disabled>Select Website</option>  
+                            <option>Choose Website</option>  
+                        </select>
+                    </div>
+                </div>
+                <div formArrayName="info">
+                    <div *ngFor="let inf of ids.controls; let i=index">
+                        <div class="row">
+                            <div class="col">
+                                <label class="required">ID Type</label>
+                                <input class="form-control" formControlName="idType" type="text" placeholder="" name="name" />
+                            </div>
+        
+                            <div class="col">
+                                <label class="required">ID Number</label>
+                                <input class="form-control" formControlName="idNumber" type="text" placeholder="" name="name" />
+                            </div>
+
+                            <div class="col mt-4">
+                                <button class="btn_icon" [disabled]="ids.length == 1" (click)="removeId(i)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>                            
+                        </div>
+        
+                    </div>
+                    <div class="space2"></div>
+                    <div class="row" (click)="addId()">
+                        <div class="col">
+                            <button class="btn_icon bt" style="padding: 1px; margin: 0px 5px 0px 12px;">
+                                <i class="bi bi-plus-lg"></i>
+                            </button>
+                            Add Another ID
+                        </div>
+                    </div>
+        
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-dark">
+                            Save Changes
+                        </button>
+                        <button type="button" class="btn btn-light">Cancel</button>
+                    </div>
+                    
+                </div>
+            </form>
+        </div>
+
+        <div class="section" #preferences>
+            <form autocomplete="off">
+                    <h6 class="heading">Preferences</h6>
+                    <div class="row">
+                        <div class="col">
+                            <label class="required">Location</label>
+                            <select class="form-control">  
+                                <option disabled>Select Website</option>  
+                                <option>Choose Website</option>  
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label class="required">Practice</label>
+                            <select class="form-control">  
+                                <option disabled>Select Website</option>  
+                                <option>Choose Website</option>  
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <label class="required">Provider</label>
+                            <select class="form-control">  
+                                <option disabled>Select Website</option>  
+                                <option>Choose Website</option>  
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="required">New Patient Coordinator</label>
+                            <select class="form-control">  
+                                <option disabled>Select Website</option>  
+                                <option>Choose Website</option>  
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label class="required">Treatment Coordinator</label>
+                            <select class="form-control">  
+                                <option disabled>Select Website</option>  
+                                <option>Choose Website</option>  
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <label class="required">Chair Side Assistant</label>
+                            <select class="form-control">  
+                                <option disabled>Select Website</option>  
+                                <option>Choose Website</option>  
+                            </select>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" class="btn btn-dark">
+                                Save Changes
+                            </button>
+                            <button type="button" class="btn btn-light">Cancel</button>
+                        </div>
+                        
+                    </div>
+                
+            </form>
+        </div>
+
+        <div class="section" #emergencyContact>
+            <form autocomplete="off">
+                <h6 class="heading">Emergency Contact</h6>
+                <div class="row">
+                    <div class="col">
+                        <label class="required">Contact Person</label>
+                        <select class="form-control">  
+                            <option disabled>Select Website</option>  
+                            <option>Choose Website</option>  
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label class="required">Name</label>
+                        <input class="form-control" type="text" placeholder="" name="id">
+                    </div>
+                    <div class="col">
+                        <label class="required">Emergency Contact</label>
+                        <input class="form-control" type="text" placeholder="" name="name" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-dark">
+                            Save Changes
+                        </button>
+                        <button type="button" class="btn btn-light">Cancel</button>
+                    </div>
+                    
+                </div>
+            </form>
+        </div>
+
+        <div class="section" #notes>
+            <h6 class="heading">Notes</h6>
+            <div class="row">
+                <div class="col-6">
+                    <textarea class="form-control" name="note" id="" cols="70" rows="5"></textarea>
+                </div>
+
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-dark">
+                        Save Changes
+                    </button>
+                    <button type="button" class="btn btn-light">Cancel</button>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</div>
