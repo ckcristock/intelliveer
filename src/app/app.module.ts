@@ -1,4 +1,4 @@
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, Provider } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -11,6 +11,24 @@ import { ErrorHandlerComponent } from './components/error-handler/error-handler.
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { environment } from '@environment/environment';
+
+let providers: Provider[] = [
+	{
+		provide: HTTP_INTERCEPTORS,
+		useClass: HttpCallsInterceptor,
+		multi: true,
+	},
+	CookieService,
+];
+
+// Only enable custom error handler in production mode
+if (environment.production) {
+	providers.push({
+		provide: ErrorHandler,
+		useClass: GlobalErrorHandler,
+	});
+}
 
 @NgModule({
 	declarations: [AppComponent, DialogComponent, ErrorHandlerComponent],
@@ -23,18 +41,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 		BrowserAnimationsModule, // required by ToasterModule
 		ToastrModule.forRoot(),
 	],
-	providers: [
-		// {
-		//   provide: ErrorHandler,
-		//   useClass: GlobalErrorHandler,
-		// },
-		{
-			provide: HTTP_INTERCEPTORS,
-			useClass: HttpCallsInterceptor,
-			multi: true,
-		},
-		CookieService,
-	],
+	providers: providers,
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

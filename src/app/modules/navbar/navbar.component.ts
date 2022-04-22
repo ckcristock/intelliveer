@@ -12,11 +12,9 @@ import { Subscription } from 'rxjs';
 	styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-	private compactSidebar: boolean = true;
 	constructor(
 		private authService: AuthService,
-		private cookieService: CookieService,
-		private menuBarService: MenuBarService
+		private cookieService: CookieService
 	) {}
 	ngOnInit(): void {}
 	logOut() {
@@ -33,9 +31,5 @@ export class NavbarComponent implements OnInit {
 				console.log(err.message);
 			},
 		});
-	}
-	toggleMenuBar() {
-		this.compactSidebar = !this.compactSidebar;
-		this.menuBarService.compactSideMenu(this.compactSidebar);
 	}
 }

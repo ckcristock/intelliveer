@@ -4,7 +4,13 @@ import { BusinessGroupDropdownService } from '@services/business-group-dropdown/
 import { MenuBarService } from '@services/menu-bar/menu-bar.service';
 import { Subscription } from 'rxjs';
 import { IMenuItem, menuItems } from './menu';
-
+import {
+	style,
+	state,
+	animate,
+	transition,
+	trigger,
+} from '@angular/animations';
 interface MenuItems {
 	top: IMenuItem[];
 	bottom: IMenuItem[];
@@ -14,8 +20,22 @@ interface MenuItems {
 	selector: 'app-dashboard',
 	templateUrl: './dashboard.component.html',
 	styleUrls: ['./dashboard.component.scss'],
+	animations: [
+		trigger('fadeInOut', [
+			transition(':enter', [
+				// :enter is alias to 'void => *'
+				style({ opacity: 0 }),
+				animate(500, style({ opacity: 1 })),
+			]),
+			transition(':leave', [
+				// :leave is alias to '* => void'
+				animate(500, style({ opacity: 0 })),
+			]),
+		]),
+	],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
+	compactSidebar: boolean = false;
 	selectedBusinessGroup: string | undefined;
 	businessGroupDropdownSupscription: Subscription;
 	menuStatsSubscription: Subscription;
@@ -23,12 +43,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	businessGroups: any;
 	disableBGDropdown: boolean = false;
 	moduleName: string = '';
-	showCompactSidebar: boolean = true;
 	constructor(
 		private router: Router,
 		private businessGroupDropdownService: BusinessGroupDropdownService,
 		private menuBarService: MenuBarService
 	) {
+		this.menuBarService.compactSideMenu(this.compactSidebar);
 		this.businessGroupDropdownSupscription =
 			this.businessGroupDropdownService
 				.getBusinessGroups()
@@ -47,7 +67,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 		this.menuStatsSubscription =
 			this.menuBarService.compactSideMenuStatus.subscribe(
 				(val: boolean) => {
-					this.showCompactSidebar = val;
+					this.compactSidebar = val;
 				}
 			);
 	}
@@ -57,6 +77,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {}
+	toggleMenuBar() {
+		this.compactSidebar = !this.compactSidebar;
+		this.menuBarService.compactSideMenu(this.compactSidebar);
+	}
 	handleClick(menu: IMenuItem) {
 		if (menu.url) {
 			this.router.navigate([menu.url]);

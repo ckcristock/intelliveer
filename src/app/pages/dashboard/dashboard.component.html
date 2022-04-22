@@ -1,7 +1,7 @@
 <div
 	class="dashboard-layout"
 	[ngStyle]="{
-		'grid-auto-columns': showCompactSidebar
+		'grid-auto-columns': compactSidebar
 			? '42px 1fr 200px'
 			: '200px 1fr 200px'
 	}"
@@ -12,6 +12,25 @@
 	<div class="__sidebar">
 		<ul>
 			<li
+				class="d-flex justify-content-end"
+				[ngStyle]="{
+					'line-height': compactSidebar ? '2' : '1'
+				}"
+			>
+				<i
+					class="bi bi-arrow-left"
+					(click)="toggleMenuBar()"
+					*ngIf="!compactSidebar"
+					ngbTooltip="Minimize sidemenu"
+				></i>
+				<i
+					class="bi bi-arrow-right"
+					(click)="toggleMenuBar()"
+					*ngIf="compactSidebar"
+					ngbTooltip="Expand sidemenu"
+				></i>
+			</li>
+			<li
 				*ngFor="let item of menuItems.top"
 				routerLinkActive="active"
 				[routerLink]="item.url"
@@ -19,15 +38,15 @@
 			>
 				<div
 					class="icon"
-					*ngIf="showCompactSidebar"
+					*ngIf="compactSidebar"
 					[ngbTooltip]="item.title"
 				>
 					<i [class]="item.icon"></i>
 				</div>
-				<div class="icon" *ngIf="!showCompactSidebar">
+				<div class="icon" *ngIf="!compactSidebar">
 					<i [class]="item.icon"></i>
 				</div>
-				<div class="title" *ngIf="!showCompactSidebar">
+				<div class="title" *ngIf="!compactSidebar">
 					{{ item.title }}
 				</div>
 			</li>
@@ -41,15 +60,15 @@
 			>
 				<div
 					class="icon"
-					*ngIf="showCompactSidebar"
+					*ngIf="compactSidebar"
 					[ngbTooltip]="item.title"
 				>
 					<i [class]="item.icon"></i>
 				</div>
-				<div class="icon" *ngIf="!showCompactSidebar">
+				<div class="icon" *ngIf="!compactSidebar">
 					<i [class]="item.icon"></i>
 				</div>
-				<div class="title" *ngIf="!showCompactSidebar">
+				<div class="title" *ngIf="!compactSidebar">
 					{{ item.title }}
 				</div>
 			</li>

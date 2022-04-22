@@ -84,7 +84,7 @@ export class PracticeFormComponent implements OnInit {
 			.subscribe({
 				next: (data) => {
 					this.staticData = data;
-					this.getPracticeTypeData();
+					// this.getPracticeTypeData();
 				},
 				error: () => {},
 				complete: () => {},

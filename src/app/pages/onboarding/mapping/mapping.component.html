@@ -4,28 +4,19 @@
 	</div>
 	<div class="row">
 		<div class="col">
-			<table class="table">
+			<table class="table table-bordered table-stripe mapping-table">
 				<thead>
-					<tr>
-						<th style="width: 150px">Location(s)</th>
-						<th>Legal Entites/Practices</th>
+					<tr class="mapping">
+						<th>Legal Entities</th>
+						<th style="width: 150px">Location</th>
+						<th>Practices</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr *ngFor="let le of locations">
 						<td>
-							<div class="d-flex flex-column">
-								<span>
-									{{ le._id }}
-								</span>
-								<span class="fw-bold">
-									{{ le.name }}
-								</span>
-							</div>
-						</td>
-						<td>
-							<label for="">Legal Entities</label>
 							<ng-select
+								class="ng-select-no-border"
 								[multiple]="true"
 								[(ngModel)]="le.legalEntities"
 							>
@@ -35,8 +26,18 @@
 									>{{ le.name }} [{{ le._id }}]</ng-option
 								>
 							</ng-select>
-							<label for="">Practices</label>
+						</td>
+						<td style="padding: 8px">
+							<div class="d-flex">
+								<span class="fw-bold">
+									{{ le.name }}
+								</span>
+								<span class="ms-1"> [{{ le._id }}] </span>
+							</div>
+						</td>
+						<td>
 							<ng-select
+								class="ng-select-no-border"
 								[multiple]="true"
 								[(ngModel)]="le.practices"
 							>
@@ -53,9 +54,12 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col">
+		<div class="col gap-2 d-flex">
 			<button class="btn btn-dark" (click)="saveMapping()">
 				Save Mapping
+			</button>
+			<button class="btn btn-light" (click)="handleCancel()">
+				Cancel
 			</button>
 		</div>
 	</div>

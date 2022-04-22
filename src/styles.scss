@@ -17,16 +17,33 @@
 @import '~@ng-select/ng-select/themes/default.theme.css';
 
 // Fonts
-@import url('https://fonts.googleapis.com/css2?family=PT+Sans+Narrow:wght@400;700&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=PT+Sans+Narrow:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 html,
 body {
-	font-family: 'PT Sans', sans-serif;
-	font-size: 14px;
+	// font-family: 'PT Sans', sans-serif;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 13px;
 }
-* {
-	outline: none !important;
+select:active,
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
+input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active {
+	outline: 0px !important;
+	-webkit-appearance: none;
+	box-shadow: none !important;
 }
+
 form {
 	.form-control {
 		margin-bottom: 0.5rem;
@@ -96,7 +113,7 @@ label.required {
 	}
 }
 .pills {
-	font-size: 14px;
+	font-size: 1rem;
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 15px;
@@ -117,4 +134,22 @@ label.required {
 			color: var(--primary) !important;
 		}
 	}
+}
+
+.ng-select-no-border .ng-select-container {
+	border: none !important;
+}
+
+.dropdown-menu {
+	padding: 0.5rem 0;
+	font-size: 1rem;
+	color: #212529;
+	text-align: left;
+	list-style: none;
+	background-color: #f2f2f2;
+	border: 1px solid #e9e9e9;
+	border-radius: 0 !important;
+}
+.dropdown-item {
+	line-height: 2;
 }

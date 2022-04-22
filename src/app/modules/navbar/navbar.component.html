@@ -1,6 +1,6 @@
 <div class="wrapper">
 	<div class="left">
-		<div class="sidebar-toggle pointer" (click)="toggleMenuBar()">
+		<div class="sidebar-toggle pointer">
 			<i class="bi bi-grid"></i>
 		</div>
 		<div class="logo">
@@ -39,11 +39,17 @@
 				id="dropdownBasic1"
 				ngbDropdownToggle
 			>
-				<i class="bi bi-list"></i>
+				<i class="bi bi-list" style="font-size: 1.6rem"></i>
 			</button>
 			<div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-				<button ngbDropdownItem>Settings</button>
+				<button ngbDropdownItem>Switch Roles</button>
+				<button ngbDropdownItem>Org Selection</button>
+				<button ngbDropdownItem>Employee Portal</button>
+				<button ngbDropdownItem>Handover</button>
 				<button ngbDropdownItem (click)="logOut()">Log Out</button>
+				<button ngbDropdownItem class="text-uppercase">
+					Intelliveer Version 1.0
+				</button>
 			</div>
 		</div>
 	</div>
