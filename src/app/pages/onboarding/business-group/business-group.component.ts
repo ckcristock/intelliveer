@@ -1,9 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CONFIG } from '@src/app/config';
 import { BusinessGroupDropdownService } from '@services/business-group-dropdown/business-group-dropdown.service';
-import { Subscription } from 'rxjs';
+import { BusinessGroupService } from '@services/onboarding/business-group/business-group.service';
 
 @Component({
   selector: 'app-business-group',
@@ -17,34 +15,30 @@ export class BusinessGroupComponent implements OnInit {
   checkAllState = false;
   constructor(
     private router: Router,
-    private http: HttpClient,
-    private businessGroupDropdownService: BusinessGroupDropdownService
+    private businessGroupDropdownService: BusinessGroupDropdownService,
+    private businessGroupService: BusinessGroupService
   ) {}
   ngOnDestroy(): void {}
   ngOnInit() {
     this.fetchBgList();
   }
   fetchBgList() {
-    this.http
-      .get(`${CONFIG.backend.host}/auth/api/v1/business-group`)
-      .subscribe({
-        next: (data) => {
-          this.data = data;
-        },
-        error: () => {},
-      });
+    this.businessGroupService.getBusinessGroups().subscribe({
+      next: (data) => {
+        this.data = data;
+      },
+      error: () => {},
+    });
   }
   deleteBG(id: string) {
     if (id) {
-      this.http
-        .delete(`${CONFIG.backend.host}/auth/api/v1/business-group/${id}`)
-        .subscribe({
-          next: (data) => {
-            this.businessGroupDropdownService.reload();
-            this.fetchBgList();
-          },
-          error: () => {},
-        });
+      this.businessGroupService.deleteBusinessGroup(id).subscribe({
+        next: (data) => {
+          this.businessGroupDropdownService.reload();
+          this.fetchBgList();
+        },
+        error: () => {},
+      });
     }
   }
   navigateTo(bg: string, module: string) {

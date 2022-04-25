@@ -1,0 +1,50 @@
+.mini-icon-navbar {
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		li {
+			&:hover {
+				cursor: pointer;
+			}
+			img {
+				height: 18px;
+				&:hover {
+					filter: invert(27%) sepia(51%) saturate(2878%)
+						hue-rotate(346deg) brightness(104%) contrast(97%);
+				}
+			}
+			.active {
+				filter: invert(27%) sepia(51%) saturate(2878%)
+					hue-rotate(346deg) brightness(104%) contrast(97%);
+			}
+		}
+	}
+}
+ul {
+	li {
+		line-height: 3;
+		// font-size: smaller;
+	}
+}
+.component-view {
+	height: calc(100vh - 200px);
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+.ol {
+	margin-left: 8px;
+	padding: 2px;
+	list-style: none;
+}
+.accord {
+	.accordion-item {
+		background-color: #fff;
+		border: none !important;
+	}
+}
+ol {
+	.pointer:hover {
+		color: var(--primary);
+	}
+}

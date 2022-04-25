@@ -1,11 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CONFIG } from '@src/app/config';
 import {
   BusinessGroupDropdownService,
   SelectedBusinessGroup,
-} from '@src/app/services/business-group-dropdown/business-group-dropdown.service';
+} from '@services/business-group-dropdown/business-group-dropdown.service';
+import { LegalEntityService } from '@services/onboarding/legal-entity/legal-entity.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -17,9 +16,9 @@ export class AddLegalEntityComponent implements OnInit, OnDestroy {
   bgDropdownSubscription: Subscription;
   selectedBusinessGroup: SelectedBusinessGroup | undefined;
   constructor(
-    private http: HttpClient,
     private router: Router,
-    private bgDropdownService: BusinessGroupDropdownService
+    private bgDropdownService: BusinessGroupDropdownService,
+    private legalEntityService: LegalEntityService
   ) {
     this.bgDropdownSubscription = this.bgDropdownService
       .businessGroup()
@@ -36,13 +35,10 @@ export class AddLegalEntityComponent implements OnInit, OnDestroy {
   }
   createLegalEntity(data: any) {
     if (this.selectedBusinessGroup) {
-      this.http
-        .post(
-          `${CONFIG.backend.host}/bg-auth/api/v1/legal-entity?bg=${this.selectedBusinessGroup.bgId}`,
-          data
-        )
+      this.legalEntityService
+        .createLegalEntity(this.selectedBusinessGroup.bgId, data)
         .subscribe({
-          next: (data) => {
+          next: (res) => {
             this.router.navigate(['/dashboard/onboarding/legal-entity']);
           },
           error: () => {},

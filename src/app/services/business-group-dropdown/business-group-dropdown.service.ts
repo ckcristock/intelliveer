@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CONFIG } from '@src/app/config';
+import { BusinessGroupService } from '@services/onboarding/business-group/business-group.service';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 export interface SelectedBusinessGroup {
@@ -19,7 +18,7 @@ export class BusinessGroupDropdownService {
   private selectedBusinessGroup = new BehaviorSubject<
     SelectedBusinessGroup | undefined
   >(undefined);
-  constructor(private http: HttpClient) {
+  constructor(private businessGroupService: BusinessGroupService) {
     this._getBusinessGroups();
   }
   businessGroup(): Observable<SelectedBusinessGroup | undefined> {
@@ -50,21 +49,19 @@ export class BusinessGroupDropdownService {
     }
   }
   private _getBusinessGroups() {
-    this.http
-      .get(`${CONFIG.backend.host}/auth/api/v1/business-group`)
-      .subscribe({
-        next: (data: any) => {
-          if (data && data.length > 0) {
-            this.selectedBG = {
-              bgId: data[0]?._id,
-              disabled: this.disabled,
-            };
-            this.selectedBusinessGroup.next(this.selectedBG);
-            this.businessGroups.next(data);
-          }
-        },
-        error: () => {},
-        complete: () => {},
-      });
+    this.businessGroupService.getBusinessGroups().subscribe({
+      next: (data: any) => {
+        if (data && data.length > 0) {
+          this.selectedBG = {
+            bgId: data[0]?._id,
+            disabled: this.disabled,
+          };
+          this.selectedBusinessGroup.next(this.selectedBG);
+          this.businessGroups.next(data);
+        }
+      },
+      error: () => {},
+      complete: () => {},
+    });
   }
 }

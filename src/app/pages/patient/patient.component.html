@@ -1,0 +1,170 @@
+<div class="container content">
+	<div class="row mini-icon-navbar d-flex justify-content-center mb-3">
+		<ul class="d-flex justify-content-center align-items-center gap-5">
+			<li>
+				<img
+					src="assets/icons/users.svg"
+					alt=""
+					routerLinkActive="active"
+					[routerLink]="'/dashboard/patient'"
+				/>
+			</li>
+			<li>
+				<img src="assets/icons/chat.svg" alt="" />
+			</li>
+			<li>
+				<img src="assets/icons/paper.svg" alt="" />
+			</li>
+			<li>
+				<img src="assets/icons/teeth.svg" alt="" />
+			</li>
+			<li>
+				<img src="assets/icons/folder.svg" alt="" />
+			</li>
+			<li>
+				<img src="assets/icons/camera.svg" alt="" />
+			</li>
+			<li>
+				<img src="assets/icons/image.svg" alt="" />
+			</li>
+			<li>
+				<img src="assets/icons/user_chat.svg" alt="" />
+			</li>
+			<li>
+				<img src="assets/icons/user_card.svg" alt="" />
+			</li>
+			<li>
+				<img src="assets/icons/calendar.svg" alt="" />
+			</li>
+			<li>
+				<img src="assets/icons/jar.svg" alt="" />
+			</li>
+		</ul>
+		<hr />
+	</div>
+	<div class="row">
+		<div class="col" style="max-width: 200px">
+			<ngb-accordion
+				#acc="ngbAccordion"
+				activeIds="consultation-phase-panel"
+				class="accord"
+			>
+				<ngb-panel
+					title="Consultation Phase"
+					id="consultation-phase-panel"
+				>
+					<ng-template ngbPanelContent>
+						<ul class="ul">
+							<ol class="ol">
+								<li
+									class="pointer"
+									routerLinkActive="active"
+									[routerLink]="
+										'/dashboard/patient/patient-detail'
+									"
+								>
+									Patient
+								</li>
+								<li>
+									<ngb-accordion
+										#acc="ngbAccordion"
+										activeIds="patient-panel"
+										class="accord-transparent"
+									>
+										<ngb-panel
+											title="Responsible Party"
+											id="patient-panel"
+										>
+											<ng-template ngbPanelContent>
+												<ul class="ol">
+													<li
+														class="pointer"
+														routerLinkActive="active"
+														[routerLink]="
+															'/dashboard/patient/legal-guardian'
+														"
+													>
+														Legal Guardian
+													</li>
+													<li
+														class="pointer"
+														routerLinkActive="active"
+														[routerLink]="
+															'/dashboard/patient/payment-party'
+														"
+													>
+														Payment Party
+													</li>
+													<li
+														class="pointer"
+														routerLinkActive="active"
+														[routerLink]="
+															'/dashboard/patient/insurance-subscriber'
+														"
+														data-toggle="tooltip"
+														title="Insurance Subscriber"
+													>
+														{{
+															'Insurance Subscriber'
+																| shortened: 30
+														}}
+													</li>
+												</ul>
+											</ng-template>
+										</ngb-panel>
+									</ngb-accordion>
+								</li>
+
+								<li
+									class="pointer"
+									routerLinkActive="active"
+									[routerLink]="'/dashboard/patient/provider'"
+								>
+									Provider
+								</li>
+								<li
+									class="pointer"
+									routerLinkActive="active"
+									[routerLink]="'/dashboard/patient/referer'"
+								>
+									Referer
+								</li>
+								<li
+									class="pointer"
+									routerLinkActive="active"
+									[routerLink]="
+										'/dashboard/patient/family_members'
+									"
+								>
+									Family Members
+								</li>
+								<hr />
+								<li
+									class="pointer"
+									routerLinkActive="active"
+									[routerLink]="
+										'/dashboard/patient/family_members'
+									"
+								>
+									Achieve Patient
+								</li>
+								<li
+									class="pointer"
+									routerLinkActive="active"
+									[routerLink]="
+										'/dashboard/patient/family_members'
+									"
+								>
+									Delete Patient
+								</li>
+							</ol>
+						</ul>
+					</ng-template>
+				</ngb-panel>
+			</ngb-accordion>
+		</div>
+		<div class="col component-view">
+			<router-outlet></router-outlet>
+		</div>
+	</div>
+</div>

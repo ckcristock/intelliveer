@@ -1,11 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CONFIG } from '@src/app/config';
 import {
   BusinessGroupDropdownService,
   SelectedBusinessGroup,
 } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { LocationService } from '@services/onboarding/location/location.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -20,9 +19,9 @@ export class EditLocationComponent implements OnInit, OnDestroy {
   selectedBusinessGroup: SelectedBusinessGroup | undefined;
   constructor(
     private router: Router,
-    private http: HttpClient,
     private activeRoute: ActivatedRoute,
-    private bgDropdownService: BusinessGroupDropdownService
+    private bgDropdownService: BusinessGroupDropdownService,
+    private locationService: LocationService
   ) {
     this.bgDropdownSubscription = this.bgDropdownService
       .businessGroup()
@@ -48,13 +47,11 @@ export class EditLocationComponent implements OnInit, OnDestroy {
   }
   getLOC(id: string) {
     if (this.selectedBusinessGroup && id) {
-      this.http
-        .get(
-          `${CONFIG.backend.host}/bg-auth/api/v1/location/${id}?bg=${this.selectedBusinessGroup.bgId}`
-        )
+      this.locationService
+        .getLocation(this.selectedBusinessGroup.bgId, id)
         .subscribe({
-          next: (data) => {
-            this.data = data;
+          next: (res) => {
+            this.data = res;
           },
           error: () => {},
         });
@@ -62,13 +59,10 @@ export class EditLocationComponent implements OnInit, OnDestroy {
   }
   update(data: any) {
     if (this.id && this.selectedBusinessGroup) {
-      this.http
-        .patch(
-          `${CONFIG.backend.host}/bg-auth/api/v1/location/${this.id}?bg=${this.selectedBusinessGroup.bgId}`,
-          data
-        )
+      this.locationService
+        .updateLocation(this.selectedBusinessGroup.bgId, this.id, data)
         .subscribe({
-          next: (data) => {
+          next: (res) => {
             this.router.navigate(['/dashboard/onboarding/location']);
           },
           error: () => {},
