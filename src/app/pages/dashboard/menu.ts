@@ -24,7 +24,7 @@ export const menuItems = {
 		},
 		{
 			title: 'Patient Flow',
-			url: 'NA',
+			url: '/dashboard/patient',
 			icon: 'bi bi-people',
 		},
 		{

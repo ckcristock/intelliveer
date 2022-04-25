@@ -1,260 +1,397 @@
 <div class="row sticky">
-    <div class="col d-flex justify-content-end align-content-center">
-        <button class="btn_icon" disabled>
-            <i class="bi bi-plus-lg"></i>
-        </button>
-    </div>
-    <div class="col-12">
-        <div class="col pills">
-            <a class="active" (click)="scroll(overview)">Overview</a>
-            <a (click)="scroll(profile)">Profile</a>
-            <a (click)="scroll(address)">Address</a>
-            <a (click)="scroll(contact)">Contact</a>
-            <a (click)="scroll(referredPatients)">Referred Patients</a>
-            <a (click)="scroll(notes)">Notes</a>
-        </div>
-    </div>
+	<div class="col-11">
+		<div class="col pills">
+			<a class="active" (click)="scroll(overview)">Overview</a>
+			<a (click)="scroll(profile)">Profile</a>
+			<a (click)="scroll(address)">Address</a>
+			<a (click)="scroll(contact)">Contact</a>
+			<a (click)="scroll(referredPatients)">Referred Patients</a>
+			<a (click)="scroll(notes)">Notes</a>
+		</div>
+	</div>
+	<div class="col-1 d-flex justify-content-center align-items-center mb-3">
+		<button class="btn btn-dark">
+			<i class="bi bi-plus-lg"></i>
+		</button>
+	</div>
 </div>
 
 <div class="row">
-    <div class="col-12" id="main">
+	<div class="col-12" id="main">
+		<div class="section" #overview>
+			<table>
+				<tr>
+					<td>
+						<app-image-uploader
+							[imageUrl]="formData?.logo || ''"
+							(onUpload)="handleUploadedImage($event)"
+						>
+						</app-image-uploader>
+					</td>
+					<td>
+						<tr>
+							Olivia Doe
+							<span>(P1001)</span>
+						</tr>
+						<tr>
+							Female
+						</tr>
+						<tr>
+							May 10,1992
+						</tr>
+						<tr>
+							29y, 10m
+						</tr>
+					</td>
+					<td>
+						<tr>
+							<td>Phase:</td>
+							<td>2</td>
+						</tr>
+						<tr>
+							<td>Status:</td>
+							<td>Active</td>
+						</tr>
+						<tr>
+							<td>Dentist:</td>
+							<td data-toggle="tooltip" title="Kim Doe">
+								{{ 'Kim Doe' | shortened: 4 }}
+							</td>
+						</tr>
+						<tr>
+							<td>Referrer:</td>
+							<td data-toggle="tooltip" title="John Doe">
+								{{ 'John Doe' | shortened: 4 }}
+							</td>
+						</tr>
+					</td>
+					<td>
+						<tr>
+							<td>Language:</td>
+							<td>English</td>
+						</tr>
+						<tr>
+							<td>Provider:</td>
+							<td data-toggle="tooltip" title="Provider Name">
+								{{ 'Provider Name' | shortened: 8 }}
+							</td>
+						</tr>
+						<tr>
+							<td>Practice:</td>
+							<td data-toggle="tooltip" title="Practice Name">
+								{{ 'Practice Name' | shortened: 8 }}
+							</td>
+						</tr>
+						<tr>
+							<td>Location:</td>
+							<td
+								data-toggle="tooltip"
+								title="330 2nd Street Huntington Beach, CA 92646"
+							>
+								{{
+									'330 2nd Street Huntington Beach, CA 92646'
+										| shortened: 8
+								}}
+							</td>
+						</tr>
+					</td>
+					<td>
+						<tr>
+							<td data-toggle="tooltip" title="Chart Number:">
+								{{ 'Chart Number:' | shortened: 8 }}
+							</td>
+							<td>US-10001</td>
+						</tr>
+						<tr>
+							<td data-toggle="tooltip" title="Creation Date:">
+								{{ 'Creation Date:' | shortened: 8 }}
+							</td>
+							<td>Feb 15, 2022</td>
+						</tr>
+						<tr>
+							<td
+								data-toggle="tooltip"
+								title="Treatement Start Date:"
+							>
+								{{ 'Treatement Start Date:' | shortened: 10 }}
+							</td>
+							<td>Feb 20, 2022</td>
+						</tr>
+						<tr>
+							<td
+								data-toggle="tooltip"
+								title="Treatement End Date:"
+							>
+								{{ 'Treatement End Date:' | shortened: 10 }}
+							</td>
+							<td>March 20, 2022</td>
+						</tr>
+					</td>
+				</tr>
+			</table>
+		</div>
 
-        <div class="section" #overview>
-            <table>
-                <tr>
-                    <td>
-                        <app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
-                        </app-image-uploader>
-                    </td>
-                    <td>
-                        <tr>Olivia Doe <span>(P1001)</span> </tr>
-                        <tr>Female</tr>
-                        <tr>May 10,1992</tr>
-                        <tr>29y, 10m</tr>
-                    </td>
-                    <td>
-                        <tr>
-                            <td>Phase:</td>
-                            <td>2</td>
-                        </tr>
-                        <tr>
-                            <td>Status:</td>
-                            <td>Active</td>
-                        </tr>
-                        <tr>
-                            <td>Dentist:</td>
-                            <td data-toggle="tooltip" title="Kim Doe">{{ 'Kim Doe' | shortened: 4 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Referrer:</td>
-                            <td data-toggle="tooltip" title="John Doe">{{ 'John Doe' | shortened: 4 }}</td>
-                        </tr>
-                    </td>
-                    <td>
-                        <tr>
-                            <td>Language:</td>
-                            <td>English</td>
-                        </tr>
-                        <tr>
-                            <td>Provider:</td>
-                            <td data-toggle="tooltip" title="Provider Name">{{ 'Provider Name' | shortened: 8 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Practice:</td>
-                            <td data-toggle="tooltip" title="Practice Name">{{ 'Practice Name' | shortened: 8 }}</td>
-                        </tr>
-                        <tr>
-                            <td>Location:</td>
-                            <td data-toggle="tooltip" title="330 2nd Street Huntington Beach, CA 92646">{{ '330 2nd Street Huntington Beach, CA 92646' | shortened: 8 }}</td>
-                        </tr>
-                    </td>
-                    <td>
-                        <tr>
-                            <td data-toggle="tooltip" title="Chart Number:">{{ 'Chart Number:' | shortened: 8 }}</td>
-                            <td>US-10001</td>
-                        </tr>
-                        <tr>
-                            <td data-toggle="tooltip" title="Creation Date:">{{ 'Creation Date:' | shortened: 8 }}</td>
-                            <td>Feb 15, 2022</td>
-                        </tr>
-                        <tr>
-                            <td data-toggle="tooltip" title="Treatement Start Date:">{{ 'Treatement Start Date:' | shortened: 10 }}</td>
-                            <td>Feb 20, 2022</td>
-                        </tr>
-                        <tr>
-                            <td data-toggle="tooltip" title="Treatement End Date:">{{ 'Treatement End Date:' | shortened: 10 }}</td>
-                            <td>March 20, 2022</td>
-                        </tr>
-                    </td>
-                </tr>
-            </table>
-        </div>
+		<div class="section" #profile>
+			<form autocomplete="off">
+				<h6 class="heading">Profile</h6>
+				<div class="row">
+					<div class="col">
+						<label
+							class="required"
+							data-toggle="tooltip"
+							title="Company Name"
+							>{{ 'Company Name' | shortened: 10 }}</label
+						>
+						<input
+							class="form-control"
+							type="text"
+							placeholder=""
+							name="name"
+						/>
+					</div>
+					<div class="col">
+						<label class="required">Title</label>
+						<select class="form-control">
+							<option disabled>Select Website</option>
+							<option>Choose Website</option>
+						</select>
+					</div>
+					<div class="col">
+						<label class="required">First Name</label>
+						<input
+							class="form-control"
+							type="text"
+							placeholder=""
+							name="firstName"
+						/>
+					</div>
 
-        <div class="section" #profile>
-            <form autocomplete="off">
-                <h6 class="heading">Profile</h6>
-                <div class="row">
-                    <div class="col">
-                        <label class="required" data-toggle="tooltip" title="Company Name">{{ 'Company Name' | shortened: 10 }}</label>
-                        <input class="form-control" type="text" placeholder="" name="name" />
-                    </div>
-                    <div class="col">
-                        <label class="required">Title</label>
-                        <select class="form-control">  
-                            <option disabled>Select Website</option>  
-                            <option>Choose Website</option>  
-                        </select>
-                    </div>
-                    <div class="col">
-                        <label class="required">First Name</label>
-                        <input class="form-control" type="text" placeholder="" name="firstName" />
-                    </div>
+					<div class="col">
+						<label class="required">Middle Name</label>
+						<input
+							class="form-control"
+							type="text"
+							placeholder=""
+							name="name"
+						/>
+					</div>
+					<div class="col">
+						<label class="required">Last Name</label>
+						<input
+							class="form-control"
+							type="text"
+							placeholder=""
+							name="lastName"
+						/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-3">
+						<label class="required">Greeting</label>
+						<input
+							class="form-control"
+							type="text"
+							placeholder=""
+							name="name"
+						/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col d-flex gap-3 mt-3">
+						<button class="btn btn-dark">Save Changes</button>
+						<button type="button" class="btn btn-light">
+							Cancel
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
 
-                    <div class="col">
-                        <label class="required">Middle Name</label>
-                        <input class="form-control" type="text" placeholder="" name="name" />
-                    </div>
-                    <div class="col">
-                        <label class="required">Last Name</label>
-                        <input class="form-control" type="text" placeholder="" name="lastName" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <label class="required">Greeting</label>
-                        <input class="form-control" type="text" placeholder="" name="name" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <button class="btn btn-dark">
-                            Save Changes
-                        </button>
-                        <button type="button" class="btn btn-light">Cancel</button>
-                    </div>
-                    
-                </div>
-            </form>
-        </div>
+		<div class="section" #address>
+			<h6 class="heading">Address</h6>
+			<app-address-form
+				[parentGroup]="Form"
+				[formGroupName]="'address'"
+			></app-address-form>
+		</div>
 
-        <div class="section" #address>
-            <h6 class="heading">Address</h6>
-            <app-address-form [parentGroup]="Form" [formGroupName]="'address'"></app-address-form>
-        </div>
+		<div class="section" #contact>
+			<h6 class="heading">Contact</h6>
+			<div class="row">
+				<div class="col">
+					<label class="required">Email</label>
+					<input
+						class="form-control"
+						type="text"
+						placeholder=""
+						name="id"
+					/>
+				</div>
 
-        <div class="section" #contact>
-            <h6 class="heading">Contact</h6>
-            <div class="row">
-                    
-                <div class="col">
-                    <label class="required">Email</label>
-                    <input class="form-control" type="text" placeholder="" name="id">
-                </div>
-    
-                <div class="col">
-                    <label class="required">Primary Phone Type</label>
-                    <select class="form-control">
-                        <option disabled>Select Website</option>
-                        <option>Choose Website</option>
-                    </select>
-                </div>
-    
-                <div class="col">
-                    <label class="required">Primary Phone Number</label>
-                    <input class="form-control" type="text" placeholder="" name="name" />
-                </div>
-            </div>
-    
-            <div class="row">
-                <div class="col">
-                    <label class="required" data-toggle="tooltip" title="Secondary Phone Type">{{ 'Secondary Phone Type' | shortened: 10 }}</label>
-                    <select class="form-control">
-                        <option disabled>Select Website</option>
-                        <option>Choose Website</option>
-                    </select>
-                </div>
-    
-                <div class="col">
-                    <label class="required" data-toggle="tooltip" title="Secondary Phone Number">{{ 'Secondary Phone Number' | shortened: 10 }}</label>
-                    <input class="form-control" type="text" placeholder="" name="name" />
-                </div>
-    
-                <div class="col">
-                    <label class="required" data-toggle="tooltip" title="Preferred Mail Method">{{ 'Preferred Mail Method' | shortened: 10 }}</label>
-                    <select class="form-control">  
-                        <option disabled>Select Website</option>  
-                        <option>Choose Website</option>  
-                    </select>
-                </div>
-    
-                <div class="col">
-                    <label class="required">Website</label>
-                    <div class="input-group mb-3">
-                        <span class="form-control" id="basic-addon3">https://</span>
-                        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="website" placeholder="www.example.com">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <button class="btn btn-dark">
-                        Save Changes
-                    </button>
-                    <button type="button" class="btn btn-light">Cancel</button>
-                </div>
-                
-            </div>
-        </div>
+				<div class="col">
+					<label class="required">Primary Phone Type</label>
+					<select class="form-control">
+						<option disabled>Select Website</option>
+						<option>Choose Website</option>
+					</select>
+				</div>
 
-        <div class="section" #referredPatients>
-            <h6 class="heading">Referred Patients</h6>
-            <div class="row">
-                <div class="col">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col" data-toggle="tooltip" title="First Name">{{ 'First Name' | shortened: 8 }}</th>
-                                <th scope="col" data-toggle="tooltip" title="Last Name">{{ 'Last Name' | shortened: 8 }}</th>
-                                <th scope="col">Phase</th>
-                                <th scope="col">Status</th>
-                                <th scope="col" data-toggle="tooltip" title="Treatment Start Date">{{ 'Treatment Start Date' | shortened: 8 }}</th>
-                                <th scope="col" data-toggle="tooltip" title="Treatment End Date">{{ 'Treatment End Date' | shortened: 8 }}</th>
-                            </tr>
-                        </thead>
-                        <tbody *ngIf="bussinessGroups">
-                            <tr *ngFor="let d of bussinessGroups; let i = index">
-                                <td>{{ d?.First_Name }}</td>
-                                <td>{{ d?.Last_Name }}</td>
-                                <td>{{ d?.Phase }}</td>
-                                <td>{{ d?.Status }}</td>
-                                <td>{{ d?.Treatment_Start_Date }}</td>
-                                <td>{{ d?.Treatment_End_Date }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+				<div class="col">
+					<label class="required">Primary Phone Number</label>
+					<input
+						class="form-control"
+						type="text"
+						placeholder=""
+						name="name"
+					/>
+				</div>
+			</div>
 
-        <div class="section" #notes>
-            <h6 class="heading">Notes</h6>
-            <div class="row">
-                <div class="col-6">
-                    <textarea class="form-control" name="note" id="" cols="70" rows="5"></textarea>
-                </div>
+			<div class="row">
+				<div class="col">
+					<label
+						class="required"
+						data-toggle="tooltip"
+						title="Secondary Phone Type"
+						>{{ 'Secondary Phone Type' | shortened: 10 }}</label
+					>
+					<select class="form-control">
+						<option disabled>Select Website</option>
+						<option>Choose Website</option>
+					</select>
+				</div>
 
-            </div>
-            <br/>
-            <div class="row">
-                <div class="col">
-                    <button type="button" class="btn btn-dark">
-                        Save Changes
-                    </button>
-                    <button type="button" class="btn btn-light">Cancel</button>
-                </div>
-                
-            </div>
-        </div>
+				<div class="col">
+					<label
+						class="required"
+						data-toggle="tooltip"
+						title="Secondary Phone Number"
+						>{{ 'Secondary Phone Number' | shortened: 10 }}</label
+					>
+					<input
+						class="form-control"
+						type="text"
+						placeholder=""
+						name="name"
+					/>
+				</div>
 
-    </div>
+				<div class="col">
+					<label
+						class="required"
+						data-toggle="tooltip"
+						title="Preferred Mail Method"
+						>{{ 'Preferred Mail Method' | shortened: 10 }}</label
+					>
+					<select class="form-control">
+						<option disabled>Select Website</option>
+						<option>Choose Website</option>
+					</select>
+				</div>
+
+				<div class="col">
+					<label class="required">Website</label>
+					<div class="input-group mb-3">
+						<span class="form-control" id="basic-addon3"
+							>https://</span
+						>
+						<input
+							type="text"
+							class="form-control"
+							id="basic-url"
+							aria-describedby="basic-addon3"
+							name="website"
+							placeholder="www.example.com"
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col d-flex gap-3 mt-3">
+					<button class="btn btn-dark">Save Changes</button>
+					<button type="button" class="btn btn-light">Cancel</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="section" #referredPatients>
+			<h6 class="heading">Referred Patients</h6>
+			<div class="row">
+				<div class="col">
+					<table class="table">
+						<thead>
+							<tr>
+								<th
+									scope="col"
+									data-toggle="tooltip"
+									title="First Name"
+								>
+									{{ 'First Name' | shortened: 8 }}
+								</th>
+								<th
+									scope="col"
+									data-toggle="tooltip"
+									title="Last Name"
+								>
+									{{ 'Last Name' | shortened: 8 }}
+								</th>
+								<th scope="col">Phase</th>
+								<th scope="col">Status</th>
+								<th
+									scope="col"
+									data-toggle="tooltip"
+									title="Treatment Start Date"
+								>
+									{{ 'Treatment Start Date' | shortened: 8 }}
+								</th>
+								<th
+									scope="col"
+									data-toggle="tooltip"
+									title="Treatment End Date"
+								>
+									{{ 'Treatment End Date' | shortened: 8 }}
+								</th>
+							</tr>
+						</thead>
+						<tbody *ngIf="bussinessGroups">
+							<tr
+								*ngFor="let d of bussinessGroups; let i = index"
+							>
+								<td>{{ d?.First_Name }}</td>
+								<td>{{ d?.Last_Name }}</td>
+								<td>{{ d?.Phase }}</td>
+								<td>{{ d?.Status }}</td>
+								<td>{{ d?.Treatment_Start_Date }}</td>
+								<td>{{ d?.Treatment_End_Date }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div class="section" #notes>
+			<h6 class="heading">Notes</h6>
+			<div class="row">
+				<div class="col-6">
+					<textarea
+						class="form-control"
+						name="note"
+						id=""
+						cols="70"
+						rows="5"
+					></textarea>
+				</div>
+			</div>
+			<br />
+			<div class="row">
+				<div class="col d-flex gap-3 mt-3">
+					<button type="button" class="btn btn-dark">
+						Save Changes
+					</button>
+					<button type="button" class="btn btn-light">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
