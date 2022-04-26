@@ -20,123 +20,45 @@
 <div class="row">
 	<div class="col-12" id="main">
 		<div class="section" #overview>
-			<table>
-				<tr>
-					<td>
-						<app-image-uploader
-							[imageUrl]="formData?.logo || ''"
-							(onUpload)="handleUploadedImage($event)"
-						>
-						</app-image-uploader>
-					</td>
-					<td>
-						<tr>
-							Olivia Doe
-							<span>(P1001)</span>
-						</tr>
-						<tr>
-							Female
-						</tr>
-						<tr>
-							May 10,1992
-						</tr>
-						<tr>
-							29y, 10m
-						</tr>
-					</td>
-					<td>
-						<tr>
-							<td>Phase:</td>
-							<td>2</td>
-						</tr>
-						<tr>
-							<td>Status:</td>
-							<td>Active</td>
-						</tr>
-						<tr>
-							<td>Dentist:</td>
-							<td data-toggle="tooltip" title="Kim Doe">
-								{{ 'Kim Doe' | shortened: 4 }}
-							</td>
-						</tr>
-						<tr>
-							<td>Referrer:</td>
-							<td data-toggle="tooltip" title="John Doe">
-								{{ 'John Doe' | shortened: 4 }}
-							</td>
-						</tr>
-					</td>
-					<td>
-						<tr>
-							<td>Language:</td>
-							<td>English</td>
-						</tr>
-						<tr>
-							<td>Provider:</td>
-							<td data-toggle="tooltip" title="Provider Name">
-								{{ 'Provider Name' | shortened: 8 }}
-							</td>
-						</tr>
-						<tr>
-							<td>Practice:</td>
-							<td data-toggle="tooltip" title="Practice Name">
-								{{ 'Practice Name' | shortened: 8 }}
-							</td>
-						</tr>
-						<tr>
-							<td>Location:</td>
-							<td
-								data-toggle="tooltip"
-								title="330 2nd Street Huntington Beach, CA 92646"
-							>
-								{{
-									'330 2nd Street Huntington Beach, CA 92646'
-										| shortened: 8
-								}}
-							</td>
-						</tr>
-					</td>
-					<td>
-						<tr>
-							<td data-toggle="tooltip" title="Chart Number:">
-								{{ 'Chart Number:' | shortened: 8 }}
-							</td>
-							<td>US-10001</td>
-						</tr>
-						<tr>
-							<td data-toggle="tooltip" title="Creation Date:">
-								{{ 'Creation Date:' | shortened: 8 }}
-							</td>
-							<td>Feb 15, 2022</td>
-						</tr>
-						<tr>
-							<td
-								data-toggle="tooltip"
-								title="Treatement Start Date:"
-							>
-								{{ 'Treatement Start Date:' | shortened: 10 }}
-							</td>
-							<td>Feb 20, 2022</td>
-						</tr>
-						<tr>
-							<td
-								data-toggle="tooltip"
-								title="Treatement End Date:"
-							>
-								{{ 'Treatement End Date:' | shortened: 10 }}
-							</td>
-							<td>March 20, 2022</td>
-						</tr>
-					</td>
-				</tr>
-			</table>
+			<div class="row">
+				<div class="col-sm">
+					<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
+					</app-image-uploader>
+				</div>
+				<div class="col-sm">
+					<p>Olivia Doe <span>(P1001)</span></p>
+					<p>Female</p>
+					<p>May 10,1992</p>
+					<p>29y, 10m</p>
+				</div>
+				<div class="col-sm">
+					<p>Phase: 2</p>
+					<p>Status: Active</p>
+					<p>Dentist: <span>{{ 'Kim Doe' | shortened: 4 }}</span></p>
+					<p>Referrer: <span>{{ 'John Doe' | shortened: 4 }}</span></p>
+				</div>
+				<div class="col-sm">
+					<p>Language: English</p>
+					<p>Provider: <span>{{ 'Provider Name' | shortened: 8 }}</span></p>
+					<p>Practice: <span>{{ 'Practice Name' | shortened: 8 }}</span></p>
+					<p>Location: <span>{{ '330 2nd Street Huntington Beach, CA 92646' | shortened: 8 }}</span></p>
+				</div>
+				<div class="col-sm">
+					<p><span>{{ 'Chart Number' | shortened: 8 }}</span> : <span>{{ 'US-10001' | shortened: 4 }}</span></p>
+					<p><span>{{ 'Creation Date' | shortened: 8 }}</span> : <span>{{ ' Feb 15, 2022' | shortened: 4 }}</span></p>
+					<p><span>{{ 'Treatement Start Date' | shortened: 8 }}</span> : <span>{{ 'Feb 20, 2022' | shortened: 4 }}</span>
+					</p>
+					<p><span>{{ 'Treatement End Date' | shortened: 8 }}</span> : <span>{{ 'March 20, 2022' | shortened: 4 }}</span>
+					</p>
+				</div>
+			</div>
 		</div>
 
-		<div class="section" #profile>
+		<div class="section container" #profile>
 			<form autocomplete="off">
 				<h6 class="heading">Profile</h6>
 				<div class="row">
-					<div class="col">
+					<div class="col-3">
 						<label
 							class="required"
 							data-toggle="tooltip"
@@ -145,91 +67,95 @@
 								'Relationship with Patient' | shortened: 10
 							}}</label
 						>
-						<select class="form-control">
+						<select class="form-select" formControlName="relation">
 							<option disabled>Select Website</option>
 							<option>Choose Website</option>
 						</select>
 					</div>
-					<div class="col">
+					<div class="col-3">
 						<label class="required">Title</label>
-						<select class="form-control">
+						<select class="form-select" formControlName="title">
 							<option disabled>Select Website</option>
 							<option>Choose Website</option>
 						</select>
 					</div>
-					<div class="col">
+					<div class="col-2">
 						<label class="required">First Name</label>
 						<input
 							class="form-control"
 							type="text"
 							placeholder=""
 							name="firstName"
+							formControlName="firstName"
 						/>
 					</div>
 
-					<div class="col">
+					<div class="col-2">
 						<label class="required">Middle Name</label>
 						<input
 							class="form-control"
 							type="text"
 							placeholder=""
 							name="name"
+							formControlName="middleName"
 						/>
 					</div>
-					<div class="col">
+					<div class="col-2">
 						<label class="required">Last Name</label>
 						<input
 							class="form-control"
 							type="text"
 							placeholder=""
 							name="lastName"
+							formControlName="lastName"
 						/>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col">
+					<div class="col-3">
 						<label class="required">Date of Birth</label>
 						<input
 							class="form-control"
 							type="date"
 							placeholder=""
 							name="DOB"
+							formControlName="DOB"
 						/>
 					</div>
-					<div class="col">
+					<div class="col-3">
 						<label class="required">Gender</label>
-						<select class="form-control">
+						<select class="form-select" formControlName="gender">
 							<option value="M">Male</option>
 							<option value="F">Female</option>
 						</select>
 					</div>
-					<div class="col">
+					<div class="col-2">
 						<label
 							class="required"
 							data-toggle="tooltip"
 							title="Preferred Pronoun"
 							>{{ 'Preferred Pronoun' | shortened: 10 }}</label
 						>
-						<select class="form-control">
+						<select class="form-select" formControlName="pronoun">
 							<option value="M">Male</option>
 							<option value="F">Female</option>
 						</select>
 					</div>
-					<div class="col">
+					<div class="col-2">
 						<label class="required">Language</label>
-						<select class="form-control">
+						<select class="form-select" formControlName="language">
 							<option value="M">Male</option>
 							<option value="F">Female</option>
 						</select>
 					</div>
-					<div class="col">
+					<div class="col-2">
 						<label
 							class="required"
 							data-toggle="tooltip"
 							title="Marital Status"
 							>{{ 'Marital Status' | shortened: 10 }}</label
 						>
-						<select class="form-control">
+						<select class="form-select" formControlName="maried">
 							<option value="M">Maried</option>
 							<option value="S">Single</option>
 						</select>
@@ -264,12 +190,13 @@
 						type="text"
 						placeholder=""
 						name="id"
+						formControlName="emailId"
 					/>
 				</div>
 
 				<div class="col">
 					<label class="required">Primary Phone Type</label>
-					<select class="form-control">
+					<select class="form-select" formControlName="pPhoneType">
 						<option disabled>Select Website</option>
 						<option>Choose Website</option>
 					</select>
@@ -282,6 +209,7 @@
 						type="text"
 						placeholder=""
 						name="name"
+						formControlName="pPhoneNumber"
 					/>
 				</div>
 			</div>
@@ -289,7 +217,7 @@
 			<div class="row">
 				<div class="col">
 					<label class="required">Secondary Phone Type</label>
-					<select class="form-control">
+					<select class="form-select" formControlName="sPhoneType">
 						<option disabled>Select Website</option>
 						<option>Choose Website</option>
 					</select>
@@ -302,6 +230,7 @@
 						type="text"
 						placeholder=""
 						name="name"
+						formControlName="sPhoneNumber"
 					/>
 				</div>
 
@@ -315,7 +244,7 @@
 								| shortened: 15
 						}}</label
 					>
-					<select class="form-control">
+					<select class="form-select" formControlName="CommPrimary">
 						<option disabled>Select Website</option>
 						<option>Choose Website</option>
 					</select>
@@ -332,7 +261,7 @@
 								| shortened: 30
 						}}</label
 					>
-					<select class="form-control">
+					<select class="form-select" formControlName="CommSecondary">
 						<option disabled>Select Website</option>
 						<option>Choose Website</option>
 					</select>
@@ -344,6 +273,7 @@
 						type="number"
 						placeholder=""
 						name="phone"
+						formControlName="phone"
 					/>
 				</div>
 			</div>
@@ -361,7 +291,7 @@
 			<div class="row">
 				<div class="col">
 					<label class="required">Work Status</label>
-					<select class="form-control">
+					<select class="form-select" formControlName="workStatus">
 						<option disabled>Select Website</option>
 						<option>Choose Website</option>
 					</select>
@@ -373,6 +303,7 @@
 						type="text"
 						placeholder=""
 						name="name"
+						formControlName="occupation"
 					/>
 				</div>
 				<div class="col">
@@ -382,6 +313,7 @@
 						type="text"
 						placeholder=""
 						name="name"
+						formControlName="employer"
 					/>
 				</div>
 				<div class="col">
@@ -391,11 +323,12 @@
 						type="text"
 						placeholder=""
 						name="name"
+						formControlName="ssn"
 					/>
 				</div>
 				<div class="col">
 					<label class="required">Credit Rating</label>
-					<select class="form-control">
+					<select class="form-select" formControlName="rating">
 						<option disabled>Select Website</option>
 						<option>Choose Website</option>
 					</select>
@@ -424,6 +357,7 @@
 						id=""
 						cols="70"
 						rows="5"
+						formControlName="note"
 					></textarea>
 				</div>
 			</div>

@@ -30,10 +30,30 @@ export class PaymentPartyComponent implements OnInit {
   initForm(data?: any) {
     data = data || {};
     this.Form = this.fb.group({
-      name: [data?.name || '', Validators.required],
-      description: [data?.description || '', Validators.required],
-      abbreviation: [data?.abbreviation || '', Validators.required],
-      logo: [data?.logo || 'null'],
+      relation: [data?.relation || '', Validators.required],
+      title: [data?.title || '', Validators.required],
+      firstName: [data?.firstName || '', Validators.required],
+      middleName: [data?.middleName || '', Validators.required],
+      lastName: [data?.lastName || '', Validators.required],
+      DOB: [data?.DOB || '', Validators.required],
+      gender: [data?.gender || '', Validators.required],
+      pronoun: [data?.pronoun || '',Validators.required],
+      language: [data?.language || '', Validators.required],
+      maried: [data?.maried || '', Validators.required],
+      emailId: [data?.emailId || '', Validators.required],
+      pPhoneType: [data?.pPhoneType || '', Validators.required],
+      pPhoneNumber: [data?.pPhoneNumber || '', Validators.required],
+      sPhoneType: [data?.sPhoneType || '', Validators.required],
+      sPhoneNumber: [data?.sPhoneNumber || '', Validators.required],
+      CommPrimary: [data?.CommPrimary || '', Validators.required],
+      CommSecondary: [data?.CommSecondary || '', Validators.required],
+      phone: [data?.phone || '', Validators.required],
+      workStatus: [data?.workStatus || '', Validators.required],
+      occupation: [data?.occupation || '', Validators.required],
+      employer: [data?.employer || '', Validators.required],
+      ssn: [data?.ssn || '', Validators.required],
+      rating: [data?.rating || '', Validators.required],
+      note: [data?.note || '', Validators.required],
       address: this.addressFormService.getAddressForm(
         data?.address || {}
       )
