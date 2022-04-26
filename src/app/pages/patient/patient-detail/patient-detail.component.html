@@ -19,38 +19,38 @@
 <div class="row">
 	<div class="col-12" id="main">
 		<div class="section" #overview>
-				<div class="row">
-					<div class="col-sm">
-						<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
-						</app-image-uploader>
-					</div>
-					<div class="col-sm">
-						<p>Olivia Doe <span>(P1001)</span></p>
-						<p>Female</p>
-						<p>May 10,1992</p>
-						<p>29y, 10m</p>
-					</div>
-					<div class="col-sm">
-						<p>Phase: 2</p>
-						<p>Status: Active</p>
-						<p>Dentist: <span>{{ 'Kim Doe' | shortened: 4 }}</span></p>
-						<p>Referrer: <span>{{ 'John Doe' | shortened: 4 }}</span></p>
-					</div>
-					<div class="col-sm">
-						<p>Language: English</p>
-						<p>Provider: <span>{{ 'Provider Name' | shortened: 8 }}</span></p>
-						<p>Practice: <span>{{ 'Practice Name' | shortened: 8 }}</span></p>
-						<p>Location: <span>{{ '330 2nd Street Huntington Beach, CA 92646' | shortened: 8 }}</span></p>
-					</div>
-					<div class="col-sm">
-						<p><span>{{ 'Chart Number' | shortened: 8 }}</span> : <span>{{ 'US-10001' | shortened: 4 }}</span></p>
-						<p><span>{{ 'Creation Date' | shortened: 8 }}</span> : <span>{{ ' Feb 15, 2022' | shortened: 4 }}</span></p>
-						<p><span>{{ 'Treatement Start Date' | shortened: 8 }}</span> : <span>{{ 'Feb 20, 2022' | shortened: 4 }}</span>
-						</p>
-						<p><span>{{ 'Treatement End Date' | shortened: 8 }}</span> : <span>{{ 'March 20, 2022' | shortened: 4 }}</span>
-						</p>
-					</div>
+			<div class="row">
+				<div class="col-sm">
+					<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
+					</app-image-uploader>
 				</div>
+				<div class="col-sm">
+					<p>Olivia Doe <span>(P1001)</span></p>
+					<p>Female</p>
+					<p>May 10,1992</p>
+					<p>29y, 10m</p>
+				</div>
+				<div class="col-sm">
+					<p>Phase: 2</p>
+					<p>Status: Active</p>
+					<p>Dentist: <span data-toggle="tooltip"	title="Kim Doe">{{ 'Kim Doe' | shortened: 4 }}</span></p>
+					<p>Referrer: <span data-toggle="tooltip" title="John Doe">{{ 'John Doe' | shortened: 4 }}</span></p>
+				</div>
+				<div class="col-sm">
+					<p>Language: English</p>
+					<p>Provider: <span data-toggle="tooltip" title="Provider Name">{{ 'Provider Name' | shortened: 8 }}</span></p>
+					<p>Practice: <span data-toggle="tooltip" title="Practice Name">{{ 'Practice Name' | shortened: 8 }}</span></p>
+					<p>Location: <span data-toggle="tooltip" title="330 2nd Street Huntington Beach, CA 92646">{{ '330 2nd Street Huntington Beach, CA 92646' | shortened: 8 }}</span></p>
+				</div>
+				<div class="col-sm">
+					<p><span data-toggle="tooltip" title="Chart Number">{{ 'Chart Number' | shortened: 8 }}</span> : <span data-toggle="tooltip" title="US-10001">{{ 'US-10001' | shortened: 4 }}</span></p>
+					<p><span data-toggle="tooltip" title="Creation Date">{{ 'Creation Date' | shortened: 8 }}</span> : <span data-toggle="tooltip" title="Feb 15, 2022">{{ 'Feb 15, 2022' | shortened: 4 }}</span></p>
+					<p><span data-toggle="tooltip" title="Treatement Start Date">{{ 'Treatement Start Date' | shortened: 8 }}</span> : <span data-toggle="tooltip" title="Feb 20, 2022">{{ 'Feb 20, 2022' | shortened: 4 }}</span>
+					</p>
+					<p><span data-toggle="tooltip" title="Treatement End Date">{{ 'Treatement End Date' | shortened: 8 }}</span> : <span data-toggle="tooltip" title="March 20, 2022">{{ 'March 20, 2022' | shortened: 4 }}</span>
+					</p>
+				</div>
+			</div>
 		</div>
 
 		<div class="section" #profile>
