@@ -1,68 +1,101 @@
-<div
-	class="dashboard-layout"
-	[ngStyle]="{
+<div class="dashboard-layout" [ngStyle]="{
 		'grid-auto-columns': compactSidebar
 			? '42px 1fr 200px'
 			: '200px 1fr 200px'
-	}"
->
+	}">
 	<div class="__navbar">
 		<top-navbar></top-navbar>
 	</div>
 	<div class="__sidebar">
 		<ul>
-			<li
-				class="d-flex justify-content-end"
-				[ngStyle]="{
+			<li class="d-flex justify-content-end" [ngStyle]="{
 					'line-height': compactSidebar ? '2' : '1'
-				}"
-			>
-				<i
-					class="bi bi-arrow-left"
-					(click)="toggleMenuBar()"
-					*ngIf="!compactSidebar"
-					ngbTooltip="Minimize sidemenu"
-				></i>
-				<i
-					class="bi bi-arrow-right"
-					(click)="toggleMenuBar()"
-					*ngIf="compactSidebar"
-					ngbTooltip="Expand sidemenu"
-				></i>
+				}">
+				<i class="bi bi-arrow-left" (click)="toggleMenuBar()" *ngIf="!compactSidebar"
+					ngbTooltip="Minimize sidemenu"></i>
+				<i class="bi bi-arrow-right" (click)="toggleMenuBar()" *ngIf="compactSidebar"
+					ngbTooltip="Expand sidemenu"></i>
 			</li>
-			<li
-				*ngFor="let item of menuItems.top"
-				routerLinkActive="active"
-				[routerLink]="item.url"
-				placement="right"
-			>
-				<div
-					class="icon"
-					*ngIf="compactSidebar"
-					[ngbTooltip]="item.title"
-				>
-					<i [class]="item.icon"></i>
-				</div>
-				<div class="icon" *ngIf="!compactSidebar">
-					<i [class]="item.icon"></i>
-				</div>
-				<div class="title" *ngIf="!compactSidebar">
-					{{ item.title }}
-				</div>
-			</li>
+
+			<div *ngIf="compactSidebar">
+				<li class="icon" ngbTooltip="{{'home'}}" routerLinkActive="active" [routerLink]="'/dashboard/home'"
+					placement="right">
+					<img src="assets/icons/home.svg" />
+				</li>
+				<li class="icon" ngbTooltip="{{'Appointments'}}" routerLinkActive="active" [routerLink]="'NA'"
+					placement="right">
+					<img src="assets/icons/appointments.svg" />
+				</li>
+				<li class="icon" ngbTooltip="{{'Communication'}}" routerLinkActive="active" [routerLink]="'NA'"
+					placement="right">
+					<img src="assets/icons/chat.svg" />
+				</li>
+				<li class="icon" ngbTooltip="{{'Patient Flow'}}" routerLinkActive="active" [routerLink]="'/dashboard/patient'"
+					placement="right">
+					<img src="assets/icons/patient_flow.svg" />
+				</li>
+				<li class="icon" ngbTooltip="{{'Practice Tool'}}" routerLinkActive="active" [routerLink]="'NA'"
+					placement="right">
+					<img src="assets/icons/practice_tools.svg" />
+				</li>
+				<li class="icon" ngbTooltip="{{'Practice Management'}}" routerLinkActive="active" [routerLink]="'NA'"
+					placement="right">
+					<img src="assets/icons/practice_management.svg" />
+				</li>
+				<li class="icon" ngbTooltip="{{'Reports'}}" routerLinkActive="active" [routerLink]="'NA'"
+					placement="right">
+					<img src="assets/icons/task_list.svg" />
+				</li>
+			</div>
+			<div *ngIf="!compactSidebar">
+				<li routerLinkActive="active" [routerLink]="'/dashboard/home'" placement="right">
+					<div class="title">
+						<img src="assets/icons/home.svg" width="20" height="15" />
+						Home
+					</div>
+				</li>
+				<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
+					<div class="title">
+						<img src="assets/icons/appointments.svg" width="20" height="15" />
+						Appointments
+					</div>
+				</li>
+				<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
+					<div class="title">
+						<img src="assets/icons/chat.svg" width="20" height="15" />
+						Communication
+					</div>
+				</li>
+				<li routerLinkActive="active" [routerLink]="'/dashboard/patient'" placement="right">
+					<div class="title">
+						<img src="assets/icons/patient_flow.svg" width="20" height="15" />
+						Patient Flow
+					</div>
+				</li>
+				<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
+					<div class="title">
+						<img src="assets/icons/practice_tools.svg" width="20" height="15" />
+						Practice Tool
+					</div>
+				</li>
+				<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
+					<div class="title">
+						<img src="assets/icons/practice_management.svg" width="20" height="15" />
+						Practice Management
+					</div>
+				</li>
+				<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
+					<div class="title">
+						<img src="assets/icons/task_list.svg" width="20" height="15" />
+						Reports
+					</div>
+				</li>
+			</div>
 		</ul>
 		<ul>
-			<li
-				*ngFor="let item of menuItems.bottom"
-				routerLinkActive="active"
-				[routerLink]="item.url"
-				placement="right"
-			>
-				<div
-					class="icon"
-					*ngIf="compactSidebar"
-					[ngbTooltip]="item.title"
-				>
+			<li *ngFor="let item of menuItems.bottom" routerLinkActive="active" [routerLink]="item.url"
+				placement="right">
+				<div class="icon" *ngIf="compactSidebar" [ngbTooltip]="item.title">
 					<i [class]="item.icon"></i>
 				</div>
 				<div class="icon" *ngIf="!compactSidebar">
@@ -75,24 +108,18 @@
 		</ul>
 	</div>
 	<div class="__content">
-		<div
-			class="container d-flex justify-content-end align-items-center global-bg-dropdown"
-		>
+		<div class="container d-flex justify-content-end align-items-center global-bg-dropdown">
 			<div class="col-md-5 ps-2">
 				<span class="fw-bold text-uppercase text-black-50">{{
 					moduleName
-				}}</span>
+					}}</span>
 			</div>
 			<div class="col-3 text-end me-2">
 				<label class="fw-bold">Business Group:</label>
 			</div>
 			<div class="col-4">
-				<select
-					class="form-select"
-					[(ngModel)]="selectedBusinessGroup"
-					(change)="setBusinessGroup($event)"
-					[disabled]="disableBGDropdown"
-				>
+				<select class="form-select" [(ngModel)]="selectedBusinessGroup" (change)="setBusinessGroup($event)"
+					[disabled]="disableBGDropdown">
 					<option *ngFor="let bg of businessGroups" [value]="bg._id">
 						{{ bg.name }}
 					</option>
