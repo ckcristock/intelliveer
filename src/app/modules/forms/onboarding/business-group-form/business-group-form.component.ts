@@ -79,4 +79,15 @@ export class BusinessGroupFormComponent implements OnInit {
       inline: 'nearest',
     });
   }
+
+  checkboxValue(event: any, value: string)
+  {
+    if(event.target.checked)
+    {
+      this.setAddress(value);
+    }
+    else{
+      this.BGForm?.get(value)?.reset();
+    }
+  }
 }

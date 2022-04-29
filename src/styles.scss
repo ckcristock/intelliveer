@@ -52,6 +52,15 @@ form {
 	}
 }
 
+form {
+	.value-must {
+		margin-bottom: 0.5rem;
+		background-color: #f5c9ca;
+		outline: ridge;
+		outline-color: #f39498;
+	}
+}
+
 label {
 	color: #696969;
 }
@@ -113,7 +122,7 @@ input.search {
 }
 label.required {
 	&::after {
-		content: '*';
+		// content: '*';
 		color: #ff6e6e;
 		margin-left: 5px;
 	}

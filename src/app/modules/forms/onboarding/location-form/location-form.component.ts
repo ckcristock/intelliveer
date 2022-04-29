@@ -75,4 +75,14 @@ export class LocationFormComponent implements OnInit {
       inline: 'nearest',
     });
   }
+  checkboxValue(event: any, value: string)
+  {
+    if(event.target.checked)
+    {
+      this.setAddress(value);
+    }
+    else{
+      this.Form?.get(value)?.reset();
+    }
+  }
 }

@@ -142,4 +142,15 @@ export class PracticeFormComponent implements OnInit {
 
 		this.practiceTypeData = _data;
 	}
+
+	checkboxValue(event: any, value: string)
+  {
+    if(event.target.checked)
+    {
+      this.setAddress(value);
+    }
+    else{
+      this.Form?.get(value)?.reset();
+    }
+  }
 }

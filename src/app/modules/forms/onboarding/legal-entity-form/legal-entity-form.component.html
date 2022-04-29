@@ -1,20 +1,5 @@
 <div class="row" *ngIf="Form">
-	<div class="col-12 d-flex mb-3">
-		<div class="col d-flex align-items-center">
-			<span class="text-uppercase fw-bold">{{ title }}</span>
-		</div>
-		<div class="col d-flex justify-content-end align-content-center gap-2">
-			<button
-				class="btn btn-dark"
-				[disabled]="Form.invalid"
-				(click)="save(Form.value)"
-			>
-				Save Changes
-			</button>
-			<button class="btn btn-light" (click)="cancel()">Cancel</button>
-		</div>
-	</div>
-	<div class="col-12">
+	<div class="col-10">
 		<div class="col pills">
 			<a class="active" (click)="scroll(overview)">Overview</a>
 			<a (click)="scroll(profile)">Profile</a>
@@ -25,6 +10,15 @@
 			<a (click)="scroll(contactPerson)">Contact Person Info</a>
 		</div>
 	</div>
+	<div class="col-2 d-flex justify-content-center align-items-center mb-3">
+		<button class="btn btn-dark" [disabled]="Form.invalid" (click)="save(Form.value)">
+			<img src="assets/icons/save.svg" width="20" height="20" />
+		</button>
+		&nbsp;&nbsp;
+		<button class="btn btn-dark"  (click)="cancel()">
+			<i class="bi bi-x-lg"></i>
+		</button>
+	</div>
 
 	<div class="container" id="main">
 		<div class="section" #overview>
@@ -32,10 +26,25 @@
 				<h6 class="heading">Logo</h6>
 			</div>
 			<div class="row">
-				<app-image-uploader
-					[imageUrl]="formData?.logo || ''"
-					(onUpload)="handleUploadedImage($event)"
-				></app-image-uploader>
+				<div class="col-lg-3 col-sm">
+					<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
+					</app-image-uploader>
+				</div>
+				<div class="col-lg-3 col-sm">
+					<p>Legal Entity Name</p>
+					<p>Legal Entity ID</p>
+					<p>Legal Entity Status</p>
+				</div>
+				<div class="col-lg-3 col-sm">
+					<p>Effective Date: Feb 15, 2022</p>
+					<p>Termination Date: Feb 15, 2022</p>
+					<p>Created By: Lorem ipsum</p>
+				</div>
+				<div class="col-lg-3 col-sm">
+					<p>Creation Date: Feb 15, 2022</p>
+					<p>Last Updated By: Lorem ipsum</p>
+					<p>Last Updated Date: Feb 15, 2022</p>
+				</div>
 			</div>
 		</div>
 		<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
@@ -46,19 +55,11 @@
 				</div>
 				<div class="row">
 					<div class="col">
-						<label class="required">Name</label>
+						<label class="required">Legal Entity Name</label>
 						<input
 							type="text"
-							class="form-control"
+							class="form-control value-must"
 							formControlName="name"
-						/>
-					</div>
-					<div class="col">
-						<label class="required">Description</label>
-						<input
-							type="text"
-							class="form-control"
-							formControlName="description"
 						/>
 					</div>
 					<div class="col">
@@ -67,6 +68,49 @@
 							type="text"
 							class="form-control"
 							formControlName="abbreviation"
+						/>
+					</div>
+					<div class="col">
+						<label class="required">TIN</label>
+						<input
+							type="text"
+							class="form-control value-must"
+							formControlName="TIN"
+						/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<label class="required">Country</label>
+						<select class="form-select" formControlName="country">
+							<option>Choose country</option>
+						</select>
+					</div>
+					<div class="col">
+						<label class="required">Currency</label>
+						<select class="form-select" formControlName="currency">
+							<option>Choose currency</option>
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<p>Is this Legal Entity also Legal Employer?</p>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="yes" (change)="checkEmployee($event)">
+							<label class="form-check-label" for="inlineRadio1">Yes</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="no" (change)="checkEmployee($event)">
+							<label class="form-check-label" for="inlineRadio2">No</label>
+						</div>
+					</div>
+					<div class="col" *ngIf="showEmployeIdFeild">
+						<label class="required">Employer ID</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="eid"
 						/>
 					</div>
 				</div>
@@ -86,15 +130,13 @@
 				<div class="row">
 					<h6 class="heading">Mailing Address</h6>
 				</div>
-				<div class="row">
-					<div class="col-4 mb-3">
-						<button
-							type="button"
-							class="btn btn-sm btn-dark"
-							(click)="setAddress('mailingAddress')"
-						>
+				<div class="row mb-3">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="mailingCheckbox"
+							(change)="checkboxValue($event, 'mailingAddress')">
+						<label class="form-check-label" for="mailingCheckbox">
 							Same as physical address
-						</button>
+						</label>
 					</div>
 				</div>
 				<app-address-form
@@ -107,15 +149,13 @@
 				<div class="row">
 					<h6 class="heading">Insurance Billing Address</h6>
 				</div>
-				<div class="row">
-					<div class="col-4 mb-3">
-						<button
-							type="button"
-							class="btn btn-sm btn-dark"
-							(click)="setAddress('insuranceBillingAddress')"
-						>
+				<div class="row mb-3">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="insuranceBillingCheckbox"
+							(change)="checkboxValue($event, 'insuranceBillingAddress')">
+						<label class="form-check-label" for="insuranceBillingCheckbox">
 							Same as physical address
-						</button>
+						</label>
 					</div>
 				</div>
 				<app-address-form

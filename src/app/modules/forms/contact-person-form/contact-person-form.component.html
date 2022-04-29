@@ -3,43 +3,33 @@
     <div [formGroupName]="formGroupName">
       <div class="row">
         <div class="col">
-          <label class="required">Party ID</label>
-          <input type="text" class="form-control" formControlName="partyId" />
+          <label class="required">Contact Person Designation</label>
+          <input type="text" class="form-control" formControlName="designation" />
         </div>
         <div class="col">
-          <label class="required">Designation</label>
-          <input
-            type="text"
-            class="form-control"
-            formControlName="designation"
-          />
-        </div>
-        <div class="col">
-          <label class="required">Title</label>
+          <label class="required">Contact Person Title</label>
           <select class="form-select" formControlName="title">
             <option [value]="type.value" *ngFor="let type of staticData.title">
               {{ type.label }}
             </option>
           </select>
         </div>
-      </div>
-      <div class="row">
         <div class="col">
-          <label class="required">First Name</label>
+          <label class="required">Contact Person First Name</label>
           <input type="text" class="form-control" formControlName="firstName" />
         </div>
         <div class="col">
-          <label class="required">Last Name</label>
+          <label class="required">Contact Person Last Name</label>
           <input type="text" class="form-control" formControlName="lastName" />
         </div>
+      </div>
+      <div class="row">
         <div class="col">
-          <label class="required">Email</label>
+          <label class="required">Contact Person's Email</label>
           <input type="email" class="form-control" formControlName="email" />
         </div>
-      </div>
-      <div class="row" formGroupName="phone">
         <div class="col">
-          <label class="required">Phone Type</label>
+          <label class="required">Contact Person's Phone Type</label>
           <select class="form-select" formControlName="type">
             <option [value]="type.value" *ngFor="let type of staticData.phone">
               {{ type.label }}
@@ -47,18 +37,16 @@
           </select>
         </div>
         <div class="col">
-          <label class="required">Country Code</label>
-          <input
-            type="text"
-            class="form-control"
-            formControlName="countryCode"
-          />
-        </div>
-        <div class="col">
-          <label class="required">Number</label>
+          <label class="required">Contact Person's Phone Number</label>
           <input type="text" class="form-control" formControlName="number" />
         </div>
       </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <i class="bi bi-plus-square-fill"></i>
+      Add Another Contact Person Info
     </div>
   </div>
 </div>

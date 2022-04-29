@@ -18,78 +18,82 @@
 			</li>
 
 			<div *ngIf="compactSidebar">
-				<li class="icon" ngbTooltip="{{'home'}}" routerLinkActive="active" [routerLink]="'/dashboard/home'"
-					placement="right">
-					<img src="assets/icons/home.svg" />
-				</li>
-				<li class="icon" ngbTooltip="{{'Appointments'}}" routerLinkActive="active" [routerLink]="'NA'"
-					placement="right">
-					<img src="assets/icons/appointments.svg" />
-				</li>
-				<li class="icon" ngbTooltip="{{'Communication'}}" routerLinkActive="active" [routerLink]="'NA'"
-					placement="right">
-					<img src="assets/icons/chat.svg" />
-				</li>
-				<li class="icon" ngbTooltip="{{'Patient Flow'}}" routerLinkActive="active" [routerLink]="'/dashboard/patient'"
-					placement="right">
-					<img src="assets/icons/patient_flow.svg" />
-				</li>
-				<li class="icon" ngbTooltip="{{'Practice Tool'}}" routerLinkActive="active" [routerLink]="'NA'"
-					placement="right">
-					<img src="assets/icons/practice_tools.svg" />
-				</li>
-				<li class="icon" ngbTooltip="{{'Practice Management'}}" routerLinkActive="active" [routerLink]="'NA'"
-					placement="right">
-					<img src="assets/icons/practice_management.svg" />
-				</li>
-				<li class="icon" ngbTooltip="{{'Reports'}}" routerLinkActive="active" [routerLink]="'NA'"
-					placement="right">
-					<img src="assets/icons/task_list.svg" />
-				</li>
+				<ul class="ul">
+					<li class="icon mb-3" ngbTooltip="{{'home'}}" routerLinkActive="active" [routerLink]="'/dashboard/home'"
+						placement="right">
+						<img src="assets/icons/home.svg" />
+					</li>
+					<li class="icon mb-3" ngbTooltip="{{'Appointments'}}" routerLinkActive="active" [routerLink]="'NA'"
+						placement="right">
+						<img src="assets/icons/appointments.svg" />
+					</li>
+					<li class="icon mb-3" ngbTooltip="{{'Communication'}}" routerLinkActive="active" [routerLink]="'NA'"
+						placement="right">
+						<img src="assets/icons/chat.svg" />
+					</li>
+					<li class="icon mb-3" ngbTooltip="{{'Patient Flow'}}" routerLinkActive="active"
+						[routerLink]="'/dashboard/patient'" placement="right">
+						<img src="assets/icons/patient_flow.svg" />
+					</li>
+					<li class="icon mb-3" ngbTooltip="{{'Practice Tool'}}" routerLinkActive="active" [routerLink]="'NA'"
+						placement="right">
+						<img src="assets/icons/practice_tools.svg" />
+					</li>
+					<li class="icon mb-3" ngbTooltip="{{'Practice Management'}}" routerLinkActive="active"
+						[routerLink]="'NA'" placement="right">
+						<img src="assets/icons/practice_management.svg" />
+					</li>
+					<li class="icon mb-3" ngbTooltip="{{'Reports'}}" routerLinkActive="active" [routerLink]="'NA'"
+						placement="right">
+						<img src="assets/icons/task_list.svg" />
+					</li>
+				</ul>
 			</div>
 			<div *ngIf="!compactSidebar">
-				<li routerLinkActive="active" [routerLink]="'/dashboard/home'" placement="right">
-					<div class="title">
-						<img src="assets/icons/home.svg" width="20" height="15" />
-						Home
-					</div>
-				</li>
-				<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
-					<div class="title">
-						<img src="assets/icons/appointments.svg" width="20" height="15" />
-						Appointments
-					</div>
-				</li>
-				<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
-					<div class="title">
-						<img src="assets/icons/chat.svg" width="20" height="15" />
-						Communication
-					</div>
-				</li>
-				<li routerLinkActive="active" [routerLink]="'/dashboard/patient'" placement="right">
-					<div class="title">
-						<img src="assets/icons/patient_flow.svg" width="20" height="15" />
-						Patient Flow
-					</div>
-				</li>
-				<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
-					<div class="title">
-						<img src="assets/icons/practice_tools.svg" width="20" height="15" />
-						Practice Tool
-					</div>
-				</li>
-				<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
-					<div class="title">
-						<img src="assets/icons/practice_management.svg" width="20" height="15" />
-						Practice Management
-					</div>
-				</li>
-				<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
-					<div class="title">
-						<img src="assets/icons/task_list.svg" width="20" height="15" />
-						Reports
-					</div>
-				</li>
+				<ul class="ul">
+					<li routerLinkActive="active" [routerLink]="'/dashboard/home'" placement="right">
+						<div class="icon">
+							<img src="assets/icons/home.svg" width="20" height="15" />
+							Home
+						</div>
+					</li>
+					<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
+						<div class="icon">
+							<img src="assets/icons/appointments.svg" width="20" height="15" />
+							Appointments
+						</div>
+					</li>
+					<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
+						<div class="icon">
+							<img src="assets/icons/chat.svg" width="20" height="15" />
+							Communication
+						</div>
+					</li>
+					<li routerLinkActive="active" [routerLink]="'/dashboard/patient'" placement="right">
+						<div class="icon">
+							<img src="assets/icons/patient_flow.svg" width="20" height="15" />
+							Patient Flow
+						</div>
+					</li>
+					<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
+						<div class="icon">
+							<img src="assets/icons/practice_tools.svg" width="20" height="15" />
+							Practice Tool
+						</div>
+					</li>
+					<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
+						<div class="icon">
+							<img src="assets/icons/practice_management.svg" width="20" height="15" />
+							Practice Management
+						</div>
+					</li>
+					<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
+						<div class="icon">
+							<img src="assets/icons/task_list.svg" width="20" height="15" />
+							Reports
+						</div>
+					</li>
+				</ul>
 			</div>
 		</ul>
 		<ul>

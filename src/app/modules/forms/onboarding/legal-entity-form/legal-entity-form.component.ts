@@ -17,6 +17,7 @@ export class LegalEntityFormComponent implements OnInit {
   @Input() formData: any | undefined = undefined;
   @Output() onCancel = new EventEmitter();
   @Output() onSubmit = new EventEmitter();
+  showEmployeIdFeild: boolean = false;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -73,5 +74,28 @@ export class LegalEntityFormComponent implements OnInit {
       block: 'start',
       inline: 'nearest',
     });
+  }
+
+  checkEmployee(event: any)
+  {
+    console.log(event.target.value)
+    if(event.target.value === 'yes')
+    {
+      this.showEmployeIdFeild = true;
+    }
+    else{
+      this.showEmployeIdFeild = false;
+    }
+  }
+
+  checkboxValue(event: any, value: string)
+  {
+    if(event.target.checked)
+    {
+      this.setAddress(value);
+    }
+    else{
+      this.Form?.get(value)?.reset();
+    }
   }
 }
