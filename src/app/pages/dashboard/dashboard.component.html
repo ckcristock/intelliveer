@@ -19,8 +19,8 @@
 
 			<div *ngIf="compactSidebar">
 				<ul class="ul">
-					<li class="icon mb-3" ngbTooltip="{{'home'}}" routerLinkActive="active" [routerLink]="'/dashboard/home'"
-						placement="right">
+					<li class="icon mb-3" ngbTooltip="{{'home'}}" routerLinkActive="active"
+						[routerLink]="'/dashboard/home'" placement="right">
 						<img src="assets/icons/home.svg" />
 					</li>
 					<li class="icon mb-3" ngbTooltip="{{'Appointments'}}" routerLinkActive="active" [routerLink]="'NA'"
@@ -29,7 +29,7 @@
 					</li>
 					<li class="icon mb-3" ngbTooltip="{{'Communication'}}" routerLinkActive="active" [routerLink]="'NA'"
 						placement="right">
-						<img src="assets/icons/chat.svg" />
+						<img src="assets/icons/communication.svg" />
 					</li>
 					<li class="icon mb-3" ngbTooltip="{{'Patient Flow'}}" routerLinkActive="active"
 						[routerLink]="'/dashboard/patient'" placement="right">
@@ -45,7 +45,13 @@
 					</li>
 					<li class="icon mb-3" ngbTooltip="{{'Reports'}}" routerLinkActive="active" [routerLink]="'NA'"
 						placement="right">
-						<img src="assets/icons/task_list.svg" />
+						<img src="assets/icons/reports.svg" />
+					</li>
+					<li class="icon mb-3" ngbTooltip="{{'More'}}" placement="right">
+						<img src="assets/icons/more.svg" width="20" height="15" />
+					</li>
+					<li class="icon mb-3" ngbTooltip="{{'Task List'}}" placement="right">
+						<img src="assets/icons/task_list.svg" width="20" height="15" />
 					</li>
 				</ul>
 			</div>
@@ -65,7 +71,7 @@
 					</li>
 					<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
 						<div class="icon">
-							<img src="assets/icons/chat.svg" width="20" height="15" />
+							<img src="assets/icons/communication.svg" width="20" height="15" />
 							Communication
 						</div>
 					</li>
@@ -89,8 +95,19 @@
 					</li>
 					<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
 						<div class="icon">
-							<img src="assets/icons/task_list.svg" width="20" height="15" />
+							<img src="assets/icons/reports.svg" width="20" height="15" />
 							Reports
+						</div>
+					</li>
+					<li placement="right">
+						<div class="icon">
+							<img src="assets/icons/more.svg" width="20" height="15" />
+						</div>
+					</li>
+					<li placement="right">
+						<div class="icon">
+							<img src="assets/icons/task_list.svg" width="20" height="15" />
+							Task List
 						</div>
 					</li>
 				</ul>
@@ -130,6 +147,15 @@
 				</select>
 			</div>
 		</div>
+		<!-- <nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><span>Home</span></li>
+				<li class="breadcrumb-item"><span>Library</span></li>
+				<li class="breadcrumb-item active" aria-current="page"><span>Data</span></li>
+			</ol>
+		</nav> -->
+
+		<!-- <hr /> -->
 
 		<router-outlet></router-outlet>
 	</div>

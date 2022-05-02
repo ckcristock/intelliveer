@@ -18,6 +18,7 @@ export class LegalEntityFormComponent implements OnInit {
   @Output() onCancel = new EventEmitter();
   @Output() onSubmit = new EventEmitter();
   showEmployeIdFeild: boolean = false;
+  selectTab: string = "overview";
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -68,7 +69,8 @@ export class LegalEntityFormComponent implements OnInit {
       this.Form.controls['logo'].setValue(e.url);
     }
   }
-  scroll(el: HTMLElement) {
+  scroll(el: HTMLElement, selectTab: string) {
+    this.selectTab = selectTab.trim();
     el.scrollIntoView({
       behavior: 'smooth',
       block: 'start',

@@ -10,10 +10,7 @@
 			<div class="search-results" *ngIf="searchFocus">
 				<ul>
 					<li *ngFor="let result of searchResults">
-						<button
-							class="d-flex justify-content-between"
-							(click)="handleSearchResultsClick(result)"
-						>
+						<button	class="d-flex justify-content-between" (click)="handleSearchResultsClick(result)">
 							<span> {{ result.user }} ({{ result.dob }}) </span>
 							<span *ngIf="!result.active" class="inactive">
 								Inactive
@@ -149,8 +146,8 @@
 		<div>
 			<i class="bi bi-clock-history"></i>
 		</div>
-		<img src="assets/icons/full_screen.svg" width="20" height="15" />
-		<img src="assets/icons/lock.svg" width="20" height="15" />
+		<img src="assets/icons/full_screen.svg" width="20" height="20" />
+		<img src="assets/icons/lock.svg" width="20" height="20" />
 		<div>
 			<span class="fw-bold">Super user</span>
 		</div>

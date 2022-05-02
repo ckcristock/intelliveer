@@ -55,9 +55,9 @@ form {
 form {
 	.value-must {
 		margin-bottom: 0.5rem;
-		background-color: #f5c9ca;
+		background-color: #f7ebeb;
 		outline: ridge;
-		outline-color: #f39498;
+		outline-color: #ed1c24;
 	}
 }
 
@@ -223,13 +223,13 @@ form {
 ::-webkit-scrollbar {
     width: 4px;
     overflow-y: scroll;
-    background: grey;
+    background: lightgrey;
     box-shadow: inset 0 0 4px #707070;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: lightgray;
-    border-radius: 10px;
+    background: gray;
+    border-radius: 5pt;
 }
 
 table {
@@ -241,4 +241,9 @@ table {
 		font-size: 12px;
 		font-weight: lighter;
 	}
+}
+
+.inactive {
+	color: #212529;
+	text-decoration: none;
 }

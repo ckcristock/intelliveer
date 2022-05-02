@@ -1,13 +1,13 @@
 <div class="row" *ngIf="Form">
 	<div class="col-10">
 		<div class="col pills">
-			<a class="active" (click)="scroll(overview)">Overview</a>
-			<a (click)="scroll(profile)">Profile</a>
-			<a (click)="scroll(physicalAddress)">Physical Address</a>
-			<a (click)="scroll(mailingAddress)">Mailing Address</a>
-			<a (click)="scroll(insuranceBillingAddress)">Insurance</a>
-			<a (click)="scroll(contactDetails)">Contact</a>
-			<a (click)="scroll(contactPerson)">Contact Person Info</a>
+			<a [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']" (click)="scroll(overview, 'overview')">Overview</a>
+			<a [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']" (click)="scroll(profile, 'profile')">Profile</a>
+			<a [ngClass]="[ selectTab == 'physicalAddress' ? 'active' : 'inactive']" (click)="scroll(physicalAddress, 'physicalAddress')">Physical Address</a>
+			<a [ngClass]="[ selectTab == 'mailingAddress' ? 'active' : 'inactive']" (click)="scroll(mailingAddress, 'mailingAddress')">Mailing Address</a>
+			<a [ngClass]="[ selectTab == 'insuranceBillingAddress' ? 'active' : 'inactive']" (click)="scroll(insuranceBillingAddress, 'insuranceBillingAddress')">Insurance</a>
+			<a [ngClass]="[ selectTab == 'contactDetails' ? 'active' : 'inactive']" (click)="scroll(contactDetails, 'contactDetails')">Contact</a>
+			<a [ngClass]="[ selectTab == 'contactPerson' ? 'active' : 'inactive']" (click)="scroll(contactPerson, 'contactPerson')">Contact Person Info</a>
 		</div>
 	</div>
 	<div class="col-2 d-flex justify-content-center align-items-center mb-3">
@@ -97,12 +97,14 @@
 					<h6 class="heading">Mailing Address</h6>
 				</div>
 				<div class="row mb-3">
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value="" id="mailingCheckbox"
-							(change)="checkboxValue($event, 'mailingAddress')">
-						<label class="form-check-label" for="mailingCheckbox">
-							Same as physical address
-						</label>
+					<div class="col">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="" id="mailingCheckbox"
+								(change)="checkboxValue($event, 'mailingAddress')">
+							<label class="form-check-label" for="mailingCheckbox">
+								Same as physical address
+							</label>
+						</div>
 					</div>
 				</div>
 				<app-address-form
@@ -116,12 +118,14 @@
 					<h6 class="heading">Insurance Billing Address</h6>
 				</div>
 				<div class="row mb-3">
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value="" id="insuranceBillingCheckbox"
-							(change)="checkboxValue($event, 'insuranceBillingAddress')">
-						<label class="form-check-label" for="insuranceBillingCheckbox">
-							Same as physical address
-						</label>
+					<div class="col">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="" id="insuranceBillingCheckbox"
+								(change)="checkboxValue($event, 'insuranceBillingAddress')">
+							<label class="form-check-label" for="insuranceBillingCheckbox">
+								Same as physical address
+							</label>
+						</div>
 					</div>
 				</div>
 				<app-address-form
