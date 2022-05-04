@@ -19,6 +19,7 @@ export class BusinessGroupFormComponent implements OnInit {
   BGForm: FormGroup | undefined;
   countries: any;
   imageSrc: any;
+  selectTab: string = "overview";
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -72,11 +73,23 @@ export class BusinessGroupFormComponent implements OnInit {
       this.BGForm.controls['logo'].setValue(e.url);
     }
   }
-  scroll(el: HTMLElement) {
+  scroll(el: HTMLElement, selectTab: string) {
+    this.selectTab = selectTab.trim();
     el.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
       inline: 'nearest',
     });
+  }
+
+  checkboxValue(event: any, value: string)
+  {
+    if(event.target.checked)
+    {
+      this.setAddress(value);
+    }
+    else{
+      this.BGForm?.get(value)?.reset();
+    }
   }
 }

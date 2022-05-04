@@ -1,7 +1,7 @@
 <div class="wrapper">
 	<div class="left">
 		<div class="sidebar-toggle pointer">
-			<i class="bi bi-grid"></i>
+			<i class="bi bi-grid-3x3-gap" style="font-size: 1.6rem"></i>
 		</div>
 		<div class="logo">
 			<img src="/assets/images/logo.png" alt="" />
@@ -10,10 +10,7 @@
 			<div class="search-results" *ngIf="searchFocus">
 				<ul>
 					<li *ngFor="let result of searchResults">
-						<button
-							class="d-flex justify-content-between"
-							(click)="handleSearchResultsClick(result)"
-						>
+						<button	class="d-flex justify-content-between" (click)="handleSearchResultsClick(result)">
 							<span> {{ result.user }} ({{ result.dob }}) </span>
 							<span *ngIf="!result.active" class="inactive">
 								Inactive
@@ -147,14 +144,10 @@
 	</div>
 	<div class="right">
 		<div>
-			<i class="bi bi-stopwatch"></i>
+			<i class="bi bi-clock-history"></i>
 		</div>
-		<div>
-			<i class="bi bi-fullscreen"></i>
-		</div>
-		<div>
-			<i class="bi bi-lock"></i>
-		</div>
+		<img src="assets/icons/full_screen.svg" width="20" height="20" />
+		<img src="assets/icons/lock.svg" width="20" height="20" />
 		<div>
 			<span class="fw-bold">Super user</span>
 		</div>

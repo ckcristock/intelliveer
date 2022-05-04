@@ -17,6 +17,7 @@ export class LocationFormComponent implements OnInit {
   @Input() formData: any | undefined = undefined;
   @Output() onCancel = new EventEmitter();
   @Output() onSubmit = new EventEmitter();
+  selectTab: string = "overview";
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -68,11 +69,22 @@ export class LocationFormComponent implements OnInit {
       this.Form.controls['logo'].setValue(e.url);
     }
   }
-  scroll(el: HTMLElement) {
+  scroll(el: HTMLElement, selectTab: string) {
+    this.selectTab = selectTab.trim();
     el.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
       inline: 'nearest',
     });
+  }
+  checkboxValue(event: any, value: string)
+  {
+    if(event.target.checked)
+    {
+      this.setAddress(value);
+    }
+    else{
+      this.Form?.get(value)?.reset();
+    }
   }
 }

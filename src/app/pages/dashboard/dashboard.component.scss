@@ -61,11 +61,17 @@ $navbar-height: 40px;
 		grid-area: content;
 		background-color: #f2f2f2;
 		overflow: auto;
-		padding: 1.5rem;
+		padding: 1rem;
 	}
 	.__tray {
 		grid-area: tray;
-		margin: 0.5rem;
+		margin: 1rem;
 		background-color: #fff;
 	}
 }
+
+.ul {
+	li {
+	  line-height: 3;
+	}
+  }

@@ -52,6 +52,15 @@ form {
 	}
 }
 
+form {
+	.value-must {
+		margin-bottom: 0.5rem;
+		background-color: #f7ebeb;
+		outline: ridge;
+		outline-color: #ed1c24;
+	}
+}
+
 label {
 	color: #696969;
 }
@@ -113,7 +122,7 @@ input.search {
 }
 label.required {
 	&::after {
-		content: '*';
+		// content: '*';
 		color: #ff6e6e;
 		margin-left: 5px;
 	}
@@ -209,4 +218,32 @@ form {
 }
 .ng-select.ng-select-single .ng-select-container {
 	height: 30px;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    overflow-y: scroll;
+    background: lightgrey;
+    box-shadow: inset 0 0 4px #707070;
+}
+
+::-webkit-scrollbar-thumb {
+    background: gray;
+    border-radius: 5pt;
+}
+
+table {
+	th {
+		font-size: 12px;
+		font-weight: bolder;
+	}
+	td {
+		font-size: 12px;
+		font-weight: lighter;
+	}
+}
+
+.inactive {
+	color: #212529;
+	text-decoration: none;
 }

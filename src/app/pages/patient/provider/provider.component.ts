@@ -58,13 +58,29 @@ export class ProviderComponent implements OnInit {
   initForm(data?: any) {
     data = data || {};
     this.Form = this.fb.group({
-      name: [data?.name || '', Validators.required],
-      description: [data?.description || '', Validators.required],
-      abbreviation: [data?.abbreviation || '', Validators.required],
-      logo: [data?.logo || 'null'],
+      provider: [data?.relation || '', Validators.required],
+      title: [data?.title || '', Validators.required],
+      firstName: [data?.firstName || '', Validators.required],
+      middleName: [data?.middleName || '', Validators.required],
+      lastName: [data?.lastName || '', Validators.required],
+      praticeName: [data?.praticeName || '', Validators.required],
+      degree: [data?.degree || '', Validators.required],
+      DMSchool: [data?.DMSchool || '',Validators.required],
+      language: [data?.language || '', Validators.required],
+      specialty: [data?.specialty || '', Validators.required],
+      specialtySchool: [data?.specialtySchool || '', Validators.required],
+      greeting: [data?.greeting || '', Validators.required],
+      emailId: [data?.emailId || '', Validators.required],
+      pPhoneType: [data?.pPhoneType || '', Validators.required],
+      pPhoneNumber: [data?.pPhoneNumber || '', Validators.required],
+      sPhoneType: [data?.sPhoneType || '', Validators.required],
+      sPhoneNumber: [data?.sPhoneNumber || '', Validators.required],
+      preferredMailMethod: [data?.preferredMailMethod || '', Validators.required],
+      website: [data?.website || '', Validators.required],
+      note: [data?.note || '', Validators.required],
       address: this.addressFormService.getAddressForm(
         data?.address || {}
-      ),
+      )
     });
   }
 
