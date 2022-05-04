@@ -44,7 +44,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	disableBGDropdown: boolean = false;
 	moduleName: string = '';
 	constructor(
-		private router: Router,
+		public router: Router,
 		private businessGroupDropdownService: BusinessGroupDropdownService,
 		private menuBarService: MenuBarService
 	) {

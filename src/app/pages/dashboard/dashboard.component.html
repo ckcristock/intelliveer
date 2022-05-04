@@ -103,13 +103,32 @@
 						<div class="icon">
 							<img src="assets/icons/more.svg" width="20" height="15" />
 						</div>
-					</li>
-					<li placement="right">
+					</li>	
+					<!-- <li>
 						<div class="icon">
 							<img src="assets/icons/task_list.svg" width="20" height="15" />
-							Task List
 						</div>
-					</li>
+						<ngb-accordion #acc="ngbAccordion" activeIds="patient-panel" class="accord-transparent">
+							<ngb-panel title="Task List" id="patient-panel">
+								<ng-template ngbPanelContent>
+									<ul class="ol">
+										<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
+											Dental Examination
+										</li>
+										<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
+											Teeth Cleaning
+										</li>
+										<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
+											Tooth Extraction
+										</li>
+										<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
+											Dental filling theraphy
+										</li>
+									</ul>
+								</ng-template>
+							</ngb-panel>
+						</ngb-accordion>
+					</li> -->
 				</ul>
 			</div>
 		</ul>
@@ -147,15 +166,16 @@
 				</select>
 			</div>
 		</div>
-		<!-- <nav aria-label="breadcrumb">
+		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><span>Home</span></li>
+				{{router.url}}
+				<!-- <li class="breadcrumb-item"><span>Home</span></li>
 				<li class="breadcrumb-item"><span>Library</span></li>
-				<li class="breadcrumb-item active" aria-current="page"><span>Data</span></li>
+				<li class="breadcrumb-item active" aria-current="page"><span>Data</span></li> -->
 			</ol>
-		</nav> -->
+		</nav>
 
-		<!-- <hr /> -->
+		<hr />
 
 		<router-outlet></router-outlet>
 	</div>
