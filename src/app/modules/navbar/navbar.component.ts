@@ -67,4 +67,9 @@ export class NavbarComponent implements OnInit {
 			this.router.navigate(['/dashboard/patient/patient-detail']);
 		}
 	}
+
+	openAddPatientDialog()
+	{
+		this.router.navigate(['/header/add-patient']);
+	}
 }

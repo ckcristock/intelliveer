@@ -1,18 +1,20 @@
 <div class="row sticky">
-	<div class="col-11">
+	<div class="col-12">
 		<div class="col pills">
-			<a class="active" (click)="scroll(overview)">Overview</a>
-			<a (click)="scroll(profile)">Profile</a>
-			<a (click)="scroll(address)">Address</a>
-			<a (click)="scroll(contact)">Contact</a>
-			<a (click)="scroll(referredPatients)">Referred Patients</a>
-			<a (click)="scroll(notes)">Notes</a>
+			<a [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']" (click)="scroll(overview, 'overview')">Overview</a>
+			<a [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']" (click)="scroll(profile, 'profile')">Profile</a>
+			<a [ngClass]="[ selectTab == 'address' ? 'active' : 'inactive']" (click)="scroll(address, 'address')">Address</a>
+			<a [ngClass]="[ selectTab == 'contact' ? 'active' : 'inactive']" (click)="scroll(contact, 'contact')">Contact</a>
+			<a [ngClass]="[ selectTab == 'notes' ? 'active' : 'inactive']" (click)="scroll(notes, 'notes')">Notes</a>
+			<div align="end">
+				<button class="btn btn-light" [disabled]="Form?.invalid" >
+					<img src="assets/icons/save.svg" width="36" height="36" />
+				</button>
+				<button class="btn btn-light" (click)="cancel()">
+					<img src="assets/icons/cancel.svg" width="36" height="36" />
+				</button>
+			</div>
 		</div>
-	</div>
-	<div class="col-1 d-flex justify-content-center align-items-center mb-3">
-		<button class="btn btn-dark">
-			<i class="bi bi-plus-lg"></i>
-		</button>
 	</div>
 </div>
 
@@ -58,19 +60,6 @@
 				<h6 class="heading">Profile</h6>
 				<div class="row">
 					<div class="col">
-						<label
-							class="required"
-							>Company Name</label
-						>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="companyName"
-						/>
-					</div>
-					<div class="col">
 						<label class="required">Title</label>
 						<select class="form-select" formControlName="title">
 							<option disabled>Select Website</option>
@@ -80,7 +69,7 @@
 					<div class="col">
 						<label class="required">First Name</label>
 						<input
-							class="form-control"
+							class="form-control value-must"
 							type="text"
 							placeholder=""
 							name="firstName"
@@ -95,31 +84,106 @@
 							type="text"
 							placeholder=""
 							name="name"
-							formControlName="middleName"
+							fromControlName="middleName"
 						/>
 					</div>
 					<div class="col">
 						<label class="required">Last Name</label>
 						<input
-							class="form-control"
+							class="form-control value-must"
 							type="text"
 							placeholder=""
 							name="lastName"
 							formControlName="lastName"
 						/>
 					</div>
+					<div class="col">
+						<label
+							class="required">Practice Name</label>
+						<input
+							class="form-control"
+							type="text"
+							placeholder=""
+							name="name"
+							formControlName="praticeName"
+						/>
+					</div>
 				</div>
 				<div class="row">
-					<div class="col-3">
+					
+					<div class="col">
+						<label class="required">Degree</label>
+						<input
+							class="form-control"
+							type="text"
+							placeholder=""
+							name="name"
+							formControlName="degree"
+						/>
+					</div>
+					<div class="col">
+						<label
+							class="required"
+							data-toggle="tooltip"
+							title="Dental/Medical School"
+							>{{
+								'Dental/Medical School' | shortened: 10
+							}}</label
+						>
+						<input
+							class="form-control"
+							type="text"
+							placeholder=""
+							name="name"
+							formControlName="DMSchool"
+						/>
+					</div>
+					<div class="col">
+						<label class="required">Specialty</label>
+						<input
+							class="form-control"
+							type="text"
+							placeholder=""
+							name="name"
+							formControlName="specialty"
+						/>
+					</div>
+					<div class="col">
+						<label
+							class="required"
+							data-toggle="tooltip"
+							title="Specialty School"
+							>{{ 'Specialty School' | shortened: 10 }}</label
+						>
+						<input
+							class="form-control"
+							type="text"
+							placeholder=""
+							name="name"
+							formControlName="specialtySchool"
+						/>
+					</div>
+					<div class="col">
 						<label class="required">Greeting</label>
 						<input
 							class="form-control"
 							type="text"
 							placeholder=""
 							name="name"
-							formControlName="greeting"
+							formControlNAme="greeting"
 						/>
 					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="true" id="mailingCheckbox">
+							<label class="form-check-label" for="mailingCheckbox">
+								Prefered Provider
+							</label>
+						</div>
+					</div>
+					
 				</div>
 				
 			</form>
@@ -137,7 +201,7 @@
 			<h6 class="heading">Contact</h6>
 			<div class="row">
 				<div class="col">
-					<label class="required">Email</label>
+					<label class="required">Practice Email</label>
 					<input
 						class="form-control"
 						type="text"
@@ -148,15 +212,18 @@
 				</div>
 
 				<div class="col">
-					<label class="required">Primary Phone Type</label>
-					<select class="form-select" formControlName="pPhoneType">
-						<option disabled>Select Website</option>
-						<option>Choose Website</option>
-					</select>
+					<label class="required">Dentist Email</label>
+					<input
+						class="form-control"
+						type="text"
+						placeholder=""
+						name="id"
+						formControlName="demailId"
+					/>
 				</div>
 
 				<div class="col">
-					<label class="required">Primary Phone Number</label>
+					<label class="required">Phone Number - Practice</label>
 					<input
 						class="form-control"
 						type="text"
@@ -169,31 +236,13 @@
 
 			<div class="row">
 				<div class="col">
-					<label
-						class="required"
-						data-toggle="tooltip"
-						title="Secondary Phone Type"
-						>{{ 'Secondary Phone Type' | shortened: 10 }}</label
-					>
-					<select class="form-select" formControlName="sPhoneType">
-						<option disabled>Select Website</option>
-						<option>Choose Website</option>
-					</select>
-				</div>
-
-				<div class="col">
-					<label
-						class="required"
-						data-toggle="tooltip"
-						title="Secondary Phone Number"
-						>{{ 'Secondary Phone Number' | shortened: 10 }}</label
-					>
+					<label class="required">Phone Number - Mobile</label>
 					<input
 						class="form-control"
 						type="text"
 						placeholder=""
 						name="name"
-						formControlName="sPhoneNumber"
+						formControlName="pPhoneNumber"
 					/>
 				</div>
 
@@ -228,68 +277,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col d-flex gap-3 mt-3">
-					<button class="btn btn-dark">Save Changes</button>
-					<button type="button" class="btn btn-light">Cancel</button>
-				</div>
-			</div>
-		</div>
-
-		<div class="section" #referredPatients>
-			<h6 class="heading">Referred Patients</h6>
-			<div class="row">
-				<div class="col">
-					<table class="table">
-						<thead>
-							<tr>
-								<th
-									scope="col"
-									data-toggle="tooltip"
-									title="First Name"
-								>
-									{{ 'First Name' | shortened: 8 }}
-								</th>
-								<th
-									scope="col"
-									data-toggle="tooltip"
-									title="Last Name"
-								>
-									{{ 'Last Name' | shortened: 8 }}
-								</th>
-								<th scope="col">Phase</th>
-								<th scope="col">Status</th>
-								<th
-									scope="col"
-									data-toggle="tooltip"
-									title="Treatment Start Date"
-								>
-									{{ 'Treatment Start Date' | shortened: 8 }}
-								</th>
-								<th
-									scope="col"
-									data-toggle="tooltip"
-									title="Treatment End Date"
-								>
-									{{ 'Treatment End Date' | shortened: 8 }}
-								</th>
-							</tr>
-						</thead>
-						<tbody *ngIf="bussinessGroups">
-							<tr
-								*ngFor="let d of bussinessGroups; let i = index"
-							>
-								<td>{{ d?.First_Name }}</td>
-								<td>{{ d?.Last_Name }}</td>
-								<td>{{ d?.Phase }}</td>
-								<td>{{ d?.Status }}</td>
-								<td>{{ d?.Treatment_Start_Date }}</td>
-								<td>{{ d?.Treatment_End_Date }}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
 		</div>
 
 		<div class="section" #notes>
@@ -304,15 +291,6 @@
 						rows="5"
 						formControlName="note"
 					></textarea>
-				</div>
-			</div>
-			<br />
-			<div class="row">
-				<div class="col d-flex gap-3 mt-3">
-					<button type="button" class="btn btn-dark">
-						Save Changes
-					</button>
-					<button type="button" class="btn btn-light">Cancel</button>
 				</div>
 			</div>
 		</div>

@@ -22,9 +22,16 @@ const routes: Routes = [
       {
         path: 'provider',
         loadChildren: () =>
+          import('@pages/patient/provider/provider.module').then(
+            (m) => m.ProviderModule
+          ),
+      },
+      {
+        path: 'provider/add',
+        loadChildren: () =>
           import(
-            '@pages/patient/provider/provider.module').then(
-              (m) => m.ProviderModule
+            '@pages/patient/provider/add-provider/add-provider.module').then(
+              (m) => m.AddProviderModule
             ),
       },
       {
