@@ -1,5 +1,5 @@
 <div *ngIf="providerList?.length == 0">
-    <div style="text-align: center;">
+    <div style="text-align: center; padding-top: 7%;">
         <div>
             <h5><b>You haven’t added yet</b></h5>
             <p>Click here, <img src="assets/icons/add.svg" width="36" height="36" (click)="showList = true" /> to add Provide</p>
@@ -7,7 +7,7 @@
         <div class="mb-3" *ngIf="showList">
             <p>Please search first If not found, create a new one</p>
             <div class="row gy-2">
-                <div class="col-3"></div>
+                <div class="col-4"></div>
                 <div class="col-6" style="text-align: center;">
                     <div class="search" #searchDivRef>
                         <div class="search-results" *ngIf="searchFocus">

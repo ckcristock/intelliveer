@@ -1,21 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RefererComponent } from './referer.component';
-import { AddressFormModule } from '@modules/forms/address-form/address-form.module';
-import { ImageUploaderModule } from '@modules/image-uploader/image-uploader.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RefererRoutingModule } from './referer-routing.module';
-import { PipesModule } from 'src/app/pipes/pipes/pipes.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
 @NgModule({
-  declarations: [RefererComponent],
+  declarations: [
+    RefererComponent
+  ],
   imports: [
     CommonModule,
     RefererRoutingModule,
-    ImageUploaderModule,
-    AddressFormModule,
-    PipesModule
+    ReactiveFormsModule,
+    FormsModule,
+    NgbModule //required for dropdown
   ]
 })
 export class RefererModule { }

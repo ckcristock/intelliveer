@@ -1,0 +1,8 @@
+<div class="container">
+    <app-legal-guardian-form
+        [title]="'Edit Family Member'"
+        [formData]="data"
+        (onCancel)="handleCancel()"
+        (onSubmit)="update($event)"
+    ></app-legal-guardian-form>
+</div>

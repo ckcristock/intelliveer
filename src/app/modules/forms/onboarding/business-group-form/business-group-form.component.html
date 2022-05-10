@@ -64,13 +64,14 @@
 					<div class="col-3">
 						<label class="required">Country</label>
 						<select class="form-select value-must" formControlName="country">
-							<option>Choose country</option>
+							<option *ngFor="let country of countriesList" [value]="country.iso3">{{ country.name }}</option>
 						</select>
 					</div>
 					<div class="col-3">
 						<label class="required">Currency</label>
 						<select class="form-select value-must" formControlName="currency">
-							<option>Choose currency</option>
+							<option [value]="'Afghan afghani'">Afghan afghani</option>
+							<option [value]="'Euro'">Euro</option>
 						</select>
 					</div>
 				</div>

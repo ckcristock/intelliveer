@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AddressFormService } from '@services/forms/address-form/address-form.service';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-insurance-subscriber',
@@ -9,70 +8,66 @@ import { AddressFormService } from '@services/forms/address-form/address-form.se
 })
 export class InsuranceSubscriberComponent implements OnInit {
 
-  @Input() formData: any | undefined = undefined;
-  idForm: FormGroup;
-  Form!: FormGroup;
+  searchFocus: boolean = false;
+  showSelectedPatient: boolean = false;
+	selectedPatient: any;
+  showList: boolean = false;
+  showRelationList: boolean = false;
+	searchResults: any = [
+		{ user: 'Smith John', dob: '30/12/1984', active: true, id: 'P001' },
+		{ user: 'Smith Doe', dob: '23/08/1988', active: true, id: 'P002' },
+		{ user: 'Smith Walker', dob: '12/06/1994', active: false, id: 'P002' },
+	];
 
-  constructor(
-    private fb: FormBuilder,
-    private addressFormService: AddressFormService
-  ) {
-    this.idForm = this.fb.group({
-      // name: '',
-      info: this.fb.array([]),
-    });
-  }
+  InsuranceSubscriberList: any[] = [];
+  patientList: any[] = [];
+  searchWord: string = "";
+
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
-    this.initForm(this.formData);
   }
 
-  initForm(data?: any) {
-    data = data || {};
-    this.Form = this.fb.group({
-      relation: [data?.relation || '', Validators.required],
-      title: [data?.title || '', Validators.required],
-      firstName: [data?.firstName || '', Validators.required],
-      middleName: [data?.middleName || '', Validators.required],
-      lastName: [data?.lastName || '', Validators.required],
-      DOB: [data?.DOB || '', Validators.required],
-      gender: [data?.gender || '', Validators.required],
-      pronoun: [data?.pronoun || '',Validators.required],
-      language: [data?.language || '', Validators.required],
-      maried: [data?.maried || '', Validators.required],
-      lastUsedName: [data?.lastUsedName || '', Validators.required],
-      emailId: [data?.emailId || '', Validators.required],
-      pPhoneType: [data?.pPhoneType || '', Validators.required],
-      pPhoneNumber: [data?.pPhoneNumber || '', Validators.required],
-      sPhoneType: [data?.sPhoneType || '', Validators.required],
-      sPhoneNumber: [data?.sPhoneNumber || '', Validators.required],
-      CommPrimary: [data?.CommPrimary || '', Validators.required],
-      CommSecondary: [data?.CommSecondary || '', Validators.required],
-      phone: [data?.phone || '', Validators.required],
-      workStatus: [data?.workStatus || '', Validators.required],
-      occupation: [data?.occupation || '', Validators.required],
-      employer: [data?.employer || '', Validators.required],
-      ssn: [data?.ssn || '', Validators.required],
-      rating: [data?.rating || '', Validators.required],
-      note: [data?.note || '', Validators.required],
-      address: this.addressFormService.getAddressForm(
-        data?.address || {}
-      )
-    });
-  }
+  handleSearchResultsClick(patient: any) {
+    console.log(patient);
+		if (patient.active) {
+			this.searchFocus = false;
+			this.showSelectedPatient = true;
+			this.selectedPatient = patient;
+      this.searchWord = patient.user
+		}
+	}
 
-  handleUploadedImage(e: { url: string }) {
-    if (e && this.idForm) {
-      this.idForm.controls['logo'].setValue(e.url);
+  fetchSearch($event: any): void
+  {
+    if ($event.target.value === '') {
+      console.log("fgggggggggggggggggggg")
+      console.log(this.searchResults);
+      console.log(this.patientList)
+      // return this.searchResults = [];
     }
+    this.searchResults = this.patientList.filter((paitent: any) => {
+      return paitent.user.toLowerCase().startsWith($event.target.value.toLowerCase());
+    })
   }
 
-  scroll(el: HTMLElement) {
-    el.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-      inline: 'nearest',
-    });
+  addAsInsuranceSubscriber()
+  {
+    let obj = {
+      image: "",
+      user: this.selectedPatient.user,
+      practiceName: "Practice Name",
+      specialty: "Specialty",
+      pemail: "abc@gmail.com",
+      phone: "8484848484",
+      email: "abcd@gmail.com",
+      mutualPatient: "5"
+    }
+    this.InsuranceSubscriberList.push(obj);
+  }
+
+  gotoDetails(data: any) {
+    this.router.navigate(['/dashboard/patient/insurance-subscriber/add'])
   }
 
 }

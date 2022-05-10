@@ -1,375 +1,110 @@
-<div class="row sticky">
-	<div class="col-11">
-		<div class="col pills">
-			<a class="active" (click)="scroll(overview)">Overview</a>
-			<a (click)="scroll(profile)">Profile</a>
-			<a (click)="scroll(address)">Address</a>
-			<a (click)="scroll(contact)">Contact</a>
-			<a (click)="scroll(financials)">Financials</a>
-			<a (click)="scroll(patientPortal)">Patient Portal</a>
-			<a (click)="scroll(notes)">Notes</a>
-		</div>
-	</div>
-	<div class="col-1 d-flex justify-content-center align-items-center mb-3">
-		<button class="btn btn-dark">
-			<i class="bi bi-plus-lg"></i>
-		</button>
-	</div>
+<div *ngIf="paymentPartyList?.length == 0">
+    <div style="text-align: center; padding-top: 7%;">
+        <div>
+            <h5><b>You haven’t added yet</b></h5>
+            <p>Click here, <img src="assets/icons/add.svg" width="36" height="36" (click)="showRelationList = true" /> to add
+                Payment Party</p>
+        </div>
+        <div class="mb-3" *ngIf="showRelationList">
+            <p>What is the relationship of new legal guardian to patient</p>
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-6">
+                    <select class="form-select" style="width: 60%;" (change)="showList = true">
+                        <option>Select Relationship</option>
+                        <option>Father</option>
+                        <option>Mother</option>
+                        <option>Sister</option>
+                        <option>Brother</option>
+                    </select>
+                </div>
+                <div class="col-3"></div>
+            </div>
+        </div>
+        <div class="mb-3" *ngIf="showList">
+            <p>Please search first If not found, create a new one</p>
+            <div class="row gy-2">
+                <div class="col-4"></div>
+                <div class="col-6" style="text-align: center;">
+                    <div class="search" #searchDivRef>
+                        <div class="search-results" *ngIf="searchFocus">
+                            <ul *ngIf="searchResults?.length != 0">
+                                <li *ngFor="let result of searchResults">
+                                    <button class="d-flex justify-content-between"
+                                        (click)="handleSearchResultsClick(result)">
+                                        <span> {{ result.user }}</span>
+                                    </button>
+                                </li>
+                            </ul>
+                            <div class="padding justify-content-between" *ngIf="searchResults?.length == 0">
+                                <p>No matches found</p>
+                                <p>Would you like to create a new one?</p>
+                            </div>
+                            <div class="d-flex gap-3 ps-4 align-items-center">
+                                <div class="btn-group me-3">
+                                    <button type="button" class="btn btn-dark"
+                                        routerLink="/dashboard/patient/payment-party/add">
+                                        Create new Payment Party
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group justify-content-between">
+                            <span class="input-group-text bg-transparent" id="basic-addon1"><i
+                                    class="bi bi-search"></i></span>
+                            <input type="text" class="form-control" placeholder="Type Name" [(ngModel)]="searchWord"
+                                (keyup)="fetchSearch($event)" aria-describedby="basic-addon1"
+                                (focus)="searchFocus = true" style="border-left-style: none;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3"></div>
+            </div>
+        </div>
+        <div *ngIf="showSelectedPatient">
+            <button class="btn btn-dark" (click)="addAsPaymentParty()">Add as a Payment Party</button>
+        </div>
+    </div>
 </div>
 
-<div class="row">
-	<div class="col-12" id="main">
-		<div class="section" #overview>
-			<div class="row">
-				<div class="col-sm">
-					<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
-					</app-image-uploader>
-				</div>
-				<div class="col-sm">
-					<p>Olivia Doe <span>(P1001)</span></p>
-					<p>Female</p>
-					<p>May 10,1992</p>
-					<p>29y, 10m</p>
-				</div>
-				<div class="col-sm">
-					<p>Phase: 2</p>
-					<p>Status: Active</p>
-					<p>Dentist: <span data-toggle="tooltip"	title="Kim Doe">{{ 'Kim Doe' | shortened: 4 }}</span></p>
-					<p>Referrer: <span data-toggle="tooltip" title="John Doe">{{ 'John Doe' | shortened: 4 }}</span></p>
-				</div>
-				<div class="col-sm">
-					<p>Language: English</p>
-					<p>Provider: <span data-toggle="tooltip" title="Provider Name">{{ 'Provider Name' | shortened: 8 }}</span></p>
-					<p>Practice: <span data-toggle="tooltip" title="Practice Name">{{ 'Practice Name' | shortened: 8 }}</span></p>
-					<p>Location: <span data-toggle="tooltip" title="330 2nd Street Huntington Beach, CA 92646">{{ '330 2nd Street Huntington Beach, CA 92646' | shortened: 8 }}</span></p>
-				</div>
-				<div class="col-sm">
-					<p><span data-toggle="tooltip" title="Chart Number">{{ 'Chart Number' | shortened: 8 }}</span> : <span data-toggle="tooltip" title="US-10001">{{ 'US-10001' | shortened: 4 }}</span></p>
-					<p><span data-toggle="tooltip" title="Creation Date">{{ 'Creation Date' | shortened: 8 }}</span> : <span data-toggle="tooltip" title="Feb 15, 2022">{{ 'Feb 15, 2022' | shortened: 4 }}</span></p>
-					<p><span data-toggle="tooltip" title="Treatement Start Date">{{ 'Treatement Start Date' | shortened: 8 }}</span> : <span data-toggle="tooltip" title="Feb 20, 2022">{{ 'Feb 20, 2022' | shortened: 4 }}</span>
-					</p>
-					<p><span data-toggle="tooltip" title="Treatement End Date">{{ 'Treatement End Date' | shortened: 8 }}</span> : <span data-toggle="tooltip" title="March 20, 2022">{{ 'March 20, 2022' | shortened: 4 }}</span>
-					</p>
-				</div>
-			</div>
-		</div>
-
-		<div class="section container" #profile>
-			<form autocomplete="off">
-				<h6 class="heading">Profile</h6>
-				<div class="row">
-					<div class="col-3">
-						<label
-							class="required"
-							data-toggle="tooltip"
-							title="Relationship with Patient"
-							>{{
-								'Relationship with Patient' | shortened: 10
-							}}</label
-						>
-						<select class="form-select" formControlName="relation">
-							<option disabled>Select Website</option>
-							<option>Choose Website</option>
-						</select>
-					</div>
-					<div class="col-3">
-						<label class="required">Title</label>
-						<select class="form-select" formControlName="title">
-							<option disabled>Select Website</option>
-							<option>Choose Website</option>
-						</select>
-					</div>
-					<div class="col-2">
-						<label class="required">First Name</label>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="firstName"
-							formControlName="firstName"
-						/>
-					</div>
-
-					<div class="col-2">
-						<label class="required">Middle Name</label>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="middleName"
-						/>
-					</div>
-					<div class="col-2">
-						<label class="required">Last Name</label>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="lastName"
-							formControlName="lastName"
-						/>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-3">
-						<label class="required">Date of Birth</label>
-						<input
-							class="form-control"
-							type="date"
-							placeholder=""
-							name="DOB"
-							formControlName="DOB"
-						/>
-					</div>
-					<div class="col-3">
-						<label class="required">Gender</label>
-						<select class="form-select" formControlName="gender">
-							<option value="M">Male</option>
-							<option value="F">Female</option>
-						</select>
-					</div>
-					<div class="col-2">
-						<label
-							class="required"
-							data-toggle="tooltip"
-							title="Preferred Pronoun"
-							>{{ 'Preferred Pronoun' | shortened: 10 }}</label
-						>
-						<select class="form-select" formControlName="pronoun">
-							<option value="M">Male</option>
-							<option value="F">Female</option>
-						</select>
-					</div>
-					<div class="col-2">
-						<label class="required">Language</label>
-						<select class="form-select" formControlName="language">
-							<option value="M">Male</option>
-							<option value="F">Female</option>
-						</select>
-					</div>
-					<div class="col-2">
-						<label
-							class="required"
-							data-toggle="tooltip"
-							title="Marital Status"
-							>{{ 'Marital Status' | shortened: 10 }}</label
-						>
-						<select class="form-select" formControlName="maried">
-							<option value="M">Maried</option>
-							<option value="S">Single</option>
-						</select>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col d-flex gap-3 mt-3">
-						<button class="btn btn-dark">Save and Next</button>
-						<button type="button" class="btn btn-light">
-							Cancel
-						</button>
-					</div>
-				</div>
-			</form>
-		</div>
-
-		<div class="section" #address>
-			<h6 class="heading">Address</h6>
-			<app-address-form
-				[parentGroup]="Form"
-				[formGroupName]="'address'"
-			></app-address-form>
-		</div>
-
-		<div class="section" #contact>
-			<h6 class="heading">Contact</h6>
-			<div class="row">
-				<div class="col">
-					<label class="required">Email</label>
-					<input
-						class="form-control"
-						type="text"
-						placeholder=""
-						name="id"
-						formControlName="emailId"
-					/>
-				</div>
-
-				<div class="col">
-					<label class="required">Primary Phone Type</label>
-					<select class="form-select" formControlName="pPhoneType">
-						<option disabled>Select Website</option>
-						<option>Choose Website</option>
-					</select>
-				</div>
-
-				<div class="col">
-					<label class="required">Primary Phone Number</label>
-					<input
-						class="form-control"
-						type="text"
-						placeholder=""
-						name="name"
-						formControlName="pPhoneNumber"
-					/>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col">
-					<label class="required">Secondary Phone Type</label>
-					<select class="form-select" formControlName="sPhoneType">
-						<option disabled>Select Website</option>
-						<option>Choose Website</option>
-					</select>
-				</div>
-
-				<div class="col">
-					<label class="required">Secondary Phone Number</label>
-					<input
-						class="form-control"
-						type="text"
-						placeholder=""
-						name="name"
-						formControlName="sPhoneNumber"
-					/>
-				</div>
-
-				<div class="col">
-					<label
-						class="required"
-						data-toggle="tooltip"
-						title="Preferred Communication Method - Primary"
-						>{{
-							'Preferred Communication Method - Primary'
-								| shortened: 15
-						}}</label
-					>
-					<select class="form-select" formControlName="CommPrimary">
-						<option disabled>Select Website</option>
-						<option>Choose Website</option>
-					</select>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col">
-					<label
-						class="required"
-						data-toggle="tooltip"
-						title="Preferred Communication Method - Secondary"
-						>{{
-							'Preferred Communication Method - Secondary'
-								| shortened: 30
-						}}</label
-					>
-					<select class="form-select" formControlName="CommSecondary">
-						<option disabled>Select Website</option>
-						<option>Choose Website</option>
-					</select>
-				</div>
-				<div class="col">
-					<label class="required">Preferred Timings for Call</label>
-					<input
-						class="form-control"
-						type="number"
-						placeholder=""
-						name="phone"
-						formControlName="phone"
-					/>
-				</div>
-			</div>
-			<br />
-			<div class="row">
-				<div class="col d-flex gap-3 mt-3">
-					<button class="btn btn-dark">Save Changes</button>
-					<button type="button" class="btn btn-light">Cancel</button>
-				</div>
-			</div>
-		</div>
-
-		<div class="section" #financials>
-			<h6 class="heading">Financials</h6>
-			<div class="row">
-				<div class="col">
-					<label class="required">Work Status</label>
-					<select class="form-select" formControlName="workStatus">
-						<option disabled>Select Website</option>
-						<option>Choose Website</option>
-					</select>
-				</div>
-				<div class="col">
-					<label class="required">Occupation</label>
-					<input
-						class="form-control"
-						type="text"
-						placeholder=""
-						name="name"
-						formControlName="occupation"
-					/>
-				</div>
-				<div class="col">
-					<label class="required">Employer</label>
-					<input
-						class="form-control"
-						type="text"
-						placeholder=""
-						name="name"
-						formControlName="employer"
-					/>
-				</div>
-				<div class="col">
-					<label class="required">SSN</label>
-					<input
-						class="form-control"
-						type="text"
-						placeholder=""
-						name="name"
-						formControlName="ssn"
-					/>
-				</div>
-				<div class="col">
-					<label class="required">Credit Rating</label>
-					<select class="form-select" formControlName="rating">
-						<option disabled>Select Website</option>
-						<option>Choose Website</option>
-					</select>
-				</div>
-			</div>
-			<br />
-			<div class="row">
-				<div class="col d-flex gap-3 mt-3">
-					<button class="btn btn-dark">Save and Next</button>
-					<button type="button" class="btn btn-light">Cancel</button>
-				</div>
-			</div>
-		</div>
-
-		<div class="section" #patientPortal>
-			<h6 class="heading">Patient Portal</h6>
-		</div>
-
-		<div class="section" #notes>
-			<h6 class="heading">Notes</h6>
-			<div class="row">
-				<div class="col-6">
-					<textarea
-						class="form-control"
-						name="note"
-						id=""
-						cols="70"
-						rows="5"
-						formControlName="note"
-					></textarea>
-				</div>
-			</div>
-			<br />
-			<div class="row">
-				<div class="col d-flex gap-3 mt-3">
-					<button type="button" class="btn btn-dark">
-						Save Changes
-					</button>
-					<button type="button" class="btn btn-light">Cancel</button>
-				</div>
-			</div>
-		</div>
-	</div>
+<div *ngIf="paymentPartyList?.length != 0">
+    <div class="container" *ngFor="let paymentParty of paymentPartyList; let i = index">
+        <div class="row section">
+            <div class="col-2" (click)="gotoDetails(paymentParty)">
+                <img src="{{ paymentParty.image }}" width="78" height="90" />
+            </div>
+            <div class="col-3" (click)="gotoDetails(paymentParty)">
+                <p>
+                    {{ paymentParty.user }}
+                </p>
+                <p>{{ paymentParty.practiceName }}</p>
+                <p>{{ paymentParty.specialty }}</p>
+            </div>
+            <div class="col-6" (click)="gotoDetails(paymentParty)">
+                <p>
+                    Prefered mail method: <span>{{ paymentParty.pemail }}</span>
+                </p>
+                <p>
+                    Primary Phone number:: <span>{{ paymentParty.phone }}</span>
+                </p>
+                <p>
+                    Email: <span>{{ paymentParty.email }}</span>
+                </p>
+                <p>
+                    No. of mutual patient: <span>{{ paymentParty.mutualPatient }}</span>
+                </p>
+            </div>
+            <div class="col-1">
+                <div ngbDropdown class="d-inline-block">
+                    <i class="bi bi-three-dots-vertical" id="dropdownBasic" ngbDropdownToggle></i>
+                    <ul ngbDropdownMenu aria-labelledby="dropdownBasic">
+                        <li ngbDropdownItem>Edit</li>
+                        <li ngbDropdownItem>
+                            {{ paymentParty.isDisabled ? 'Reactivate' : 'Deactivate' }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,19 +1,19 @@
 <div class="row sticky">
-	<div class="col-12">
+	<div class="col-10">
 		<div class="col pills">
 			<a [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']" (click)="scroll(overview, 'overview')">Overview</a>
 			<a [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']" (click)="scroll(profile, 'profile')">Profile</a>
 			<a [ngClass]="[ selectTab == 'address' ? 'active' : 'inactive']" (click)="scroll(address, 'address')">Address</a>
 			<a [ngClass]="[ selectTab == 'contact' ? 'active' : 'inactive']" (click)="scroll(contact, 'contact')">Contact</a>
 			<a [ngClass]="[ selectTab == 'notes' ? 'active' : 'inactive']" (click)="scroll(notes, 'notes')">Notes</a>
-			<div align="end">
-				<button class="btn btn-light" [disabled]="Form?.invalid" >
-					<img src="assets/icons/save.svg" width="36" height="36" />
-				</button>
-				<button class="btn btn-light" (click)="cancel()">
-					<img src="assets/icons/cancel.svg" width="36" height="36" />
-				</button>
-			</div>
+		</div>
+	</div>
+	<div class="col-2 d-flex justify-content-center align-items-center mb-3">
+		<div class="col">
+			<button class="btn btn-light" [disabled]="Form?.invalid" >
+				<img src="assets/icons/save.svg" width="36" height="36" />
+			</button>
+			<img src="assets/icons/cancel.svg" width="36" height="36" (click)="cancel()" />
 		</div>
 	</div>
 </div>
@@ -26,39 +26,13 @@
 					<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
 					</app-image-uploader>
 				</div>
-				<div class="col-sm">
-					<p>Olivia Doe <span>(P1001)</span></p>
-					<p>Female</p>
-					<p>May 10,1992</p>
-					<p>29y, 10m</p>
-				</div>
-				<div class="col-sm">
-					<p>Phase: 2</p>
-					<p>Status: Active</p>
-					<p>Dentist: <span data-toggle="tooltip"	title="Kim Doe">{{ 'Kim Doe' | shortened: 4 }}</span></p>
-					<p>Referrer: <span data-toggle="tooltip" title="John Doe">{{ 'John Doe' | shortened: 4 }}</span></p>
-				</div>
-				<div class="col-sm">
-					<p>Language: English</p>
-					<p>Provider: <span data-toggle="tooltip" title="Provider Name">{{ 'Provider Name' | shortened: 8 }}</span></p>
-					<p>Practice: <span data-toggle="tooltip" title="Practice Name">{{ 'Practice Name' | shortened: 8 }}</span></p>
-					<p>Location: <span data-toggle="tooltip" title="330 2nd Street Huntington Beach, CA 92646">{{ '330 2nd Street Huntington Beach, CA 92646' | shortened: 8 }}</span></p>
-				</div>
-				<div class="col-sm">
-					<p><span data-toggle="tooltip" title="Chart Number">{{ 'Chart Number' | shortened: 8 }}</span> : <span data-toggle="tooltip" title="US-10001">{{ 'US-10001' | shortened: 4 }}</span></p>
-					<p><span data-toggle="tooltip" title="Creation Date">{{ 'Creation Date' | shortened: 8 }}</span> : <span data-toggle="tooltip" title="Feb 15, 2022">{{ 'Feb 15, 2022' | shortened: 4 }}</span></p>
-					<p><span data-toggle="tooltip" title="Treatement Start Date">{{ 'Treatement Start Date' | shortened: 8 }}</span> : <span data-toggle="tooltip" title="Feb 20, 2022">{{ 'Feb 20, 2022' | shortened: 4 }}</span>
-					</p>
-					<p><span data-toggle="tooltip" title="Treatement End Date">{{ 'Treatement End Date' | shortened: 8 }}</span> : <span data-toggle="tooltip" title="March 20, 2022">{{ 'March 20, 2022' | shortened: 4 }}</span>
-					</p>
-				</div>
 			</div>
 		</div>
 
 		<div class="section" #profile>
 			<form autocomplete="off">
 				<h6 class="heading">Profile</h6>
-				<div class="row">
+				<div class="row mb-3">
 					<div class="col">
 						<label class="required">Title</label>
 						<select class="form-select" formControlName="title">
@@ -109,7 +83,7 @@
 						/>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row mb-3">
 					
 					<div class="col">
 						<label class="required">Degree</label>
@@ -123,12 +97,7 @@
 					</div>
 					<div class="col">
 						<label
-							class="required"
-							data-toggle="tooltip"
-							title="Dental/Medical School"
-							>{{
-								'Dental/Medical School' | shortened: 10
-							}}</label
+							class="required">Dental/Medical School</label
 						>
 						<input
 							class="form-control"
@@ -150,10 +119,7 @@
 					</div>
 					<div class="col">
 						<label
-							class="required"
-							data-toggle="tooltip"
-							title="Specialty School"
-							>{{ 'Specialty School' | shortened: 10 }}</label
+							class="required">Specialty School</label
 						>
 						<input
 							class="form-control"
@@ -199,7 +165,7 @@
 
 		<div class="section" #contact>
 			<h6 class="heading">Contact</h6>
-			<div class="row">
+			<div class="row mb-3">
 				<div class="col">
 					<label class="required">Practice Email</label>
 					<input
@@ -248,10 +214,7 @@
 
 				<div class="col">
 					<label
-						class="required"
-						data-toggle="tooltip"
-						title="Preferred Mail Method"
-						>{{ 'Preferred Mail Method' | shortened: 10 }}</label
+						class="required">Preferred Mail Method</label
 					>
 					<select class="form-select" formControlName="preferredMailMethod">
 						<option disabled>Select Website</option>
