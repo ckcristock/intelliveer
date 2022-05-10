@@ -1,0 +1,22 @@
+// mainformsection
+.mainformsection {padding: 15px 0;
+  h6.heading {padding-left: 10px;}
+ .mainformset > label {padding-bottom: 5px;color: #000;     padding-left: 4px;     white-space: nowrap;}
+ .formrow {padding-top: 10px;    padding-left: 10px;
+ padding-right: 10px}
+ h6.heading + .formrow {padding-top: 0;}
+ .mainformset {padding: 0 0px;}
+ .mainformset input[type=text], .mainformset .form-select {    height: 36px;
+ border: 1px solid #BCBEC0;
+ border-radius: 6px;
+ box-shadow: 0 -0.5px 0pt 0.1pt #ddd!important;
+ }.mainformset .form-check.form-check-inline > * {display: inline-block;vertical-align: middle;float: none!important;white-space: nowrap;padding-right: 6px;}
+ .mainformset .form-check.form-check-inline > label.form-check-label {padding-left: 4px;padding-top: 2px;}
+ .mainformset .btn-group {display: flex;align-items: center;}
+ .mainformset .btn-group label {margin-right: 22px;margin-left: 4px;}
+ .row.sticky {z-index: 999;background: #fff;}
+
+ .mainformset.noradiopad .form-check.form-check-inline {
+  padding-left: 0;
+}
+ }
