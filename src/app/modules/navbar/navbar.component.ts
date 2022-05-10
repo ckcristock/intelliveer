@@ -52,7 +52,16 @@ export class NavbarComponent implements OnInit {
 					'/',
 					environment.domain
 				);
-				window.location.href = CONFIG.auth.host;
+				const authHost = new URL(CONFIG.auth.host);
+				if (authHost.hostname == 'localhost') {
+					window.location.href = CONFIG.auth.host;
+				} else {
+					const domainMeta = authHost.hostname.split('.');
+					domainMeta.shift(); // remove first subdomain
+					let origin =
+						authHost.protocol + '//ivweb.' + domainMeta.join('.');
+					window.location.href = origin;
+				}
 			},
 			error: (err) => {
 				console.log(err.message);
