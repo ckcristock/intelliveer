@@ -52,10 +52,10 @@ export class NavbarComponent implements OnInit {
 					'/',
 					environment.domain
 				);
-				const authHost = new URL(CONFIG.auth.host);
-				if (authHost.hostname == 'localhost') {
+				if (window.location.hostname == 'localhost') {
 					window.location.href = CONFIG.auth.host;
 				} else {
+					const authHost = new URL(window.location.href);
 					const domainMeta = authHost.hostname.split('.');
 					domainMeta.shift(); // remove first subdomain
 					let origin =
