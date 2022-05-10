@@ -59,6 +59,14 @@ const routes: Routes = [
               (m) => m.InsuranceSubscriberModule
             ),
       },
+      {
+        path: 'insurance',
+        loadChildren: () =>
+          import(
+            '@pages/patient/insurance/insurance.module').then(
+              (m) => m.InsuranceModule
+            ),
+      },
     ],
   },
 ];
