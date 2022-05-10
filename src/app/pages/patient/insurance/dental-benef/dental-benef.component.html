@@ -292,7 +292,7 @@
               <div class="formrow">
                  <div class="row">
                     <div class="col">
-                       <div class="mainformset"></div>
+                       <div class="mainformset">
                        <p class="required">Major includes</p>
                        <div class="form-check form-check-inline">
                           <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" />
@@ -323,23 +323,29 @@
                  </div>
               </div>
            </div>
+          </div>
         </form>
      </div>
      <div class="section" #frequencies>
+
         <form autocomplete="off">
+          <div class="mainformsection">
            <h6 class="heading">Frequencies</h6>
+
+           <div class="formrow">
            <div class="row">
               <div class="col-5">
                  <p>EXAMS</p>
                  <div class="row">
                     <!-- button and dropdown inline-->
                     <div class="col-6">
+                      <div class="mainformset">
                        <div class="row">
                           <div class="labelsinline">
                              <label class="required">Frecuency</label>
                              <label class="required">Time Frame</label>
                           </div>
-                       </div>
+                       </div></div>
                        <div class="row">
                           <div class="buttoninput">
                              <button class="">Select</button>
@@ -354,9 +360,10 @@
                     </div>
                     <!-- input with its title -->
                     <div class="col-6">
+                      <div class="mainformset">
                        <label class="required">Exceptions</label>
                        <input class="form-control" type="text" placeholder="" name="" formControlName="" />
-                    </div>
+                    </div></div>
                  </div>
               </div>
               <div class="col-5">
@@ -364,39 +371,46 @@
                  <div class="row">
                     <!-- button and dropdown inline-->
                     <div class="col-6">
-                       <div class="row">
-                          <div class="labelsinline">
-                             <label class="required">Frecuency</label>
-                             <label class="required">Time Frame</label>
-                          </div>
-                       </div>
-                       <div class="row">
-                          <div class="buttoninput">
-                             <button class="">Select</button>
-                             <select class="form-select" formControlName="interest">
-                                <option disabled>
-                                   Select Website
-                                </option>
-                                <option>Choose Website</option>
-                             </select>
-                          </div>
-                       </div>
-                    </div>
+                      <div class="row">
+                         <div class="labelsinline">
+                            <label class="required">Frecuency</label>
+                            <label class="required">Time Frame</label>
+                         </div>
+                      </div>
+                      <div class="row">
+                         <div class="buttoninput">
+                               <button class="">Select</button>
+                               <select class="form-select" formControlName="interest">
+                                  <option disabled>
+                                     Select Website
+                                  </option>
+                                  <option>Choose Website</option>
+                               </select>
+                         </div>
+                      </div>
+                   </div>
+
+
+
                     <!-- input with its title -->
                     <div class="col-6">
+                      <div class="mainformset">
                        <label class="required">Exceptions</label>
-                       <input class="form-control" type="text" placeholder="" name="" formControlName="" />
+                       <input class="form-control" type="text" placeholder="" name="" formControlName="" /></div>
                     </div>
                  </div>
               </div>
-              <div class="col-2"></div>
            </div>
+           </div>
+
+           <div class="formrow">
            <div class="row">
               <div class="col-5">
                  <p>PERIO. MAINTENANCE</p>
                  <div class="row">
                     <!-- button and dropdown inline-->
                     <div class="col-6">
+
                        <div class="row">
                           <div class="labelsinline">
                              <label class="required">Frecuency</label>
@@ -417,8 +431,10 @@
                     </div>
                     <!-- input with its title -->
                     <div class="col-6">
+                      <div class="mainformset">
                        <label class="required">Exceptions</label>
                        <input class="form-control" type="text" placeholder="" name="" formControlName="" />
+                      </div>
                     </div>
                  </div>
               </div>
@@ -427,31 +443,41 @@
                  <div class="row">
                     <!-- button and dropdown inline-->
                     <div class="col-6">
+                      <div class="mainformset">
                        <label class="required">Paid at</label>
                        <input class="form-control" type="text" placeholder="" name="" formControlName="" />
-                    </div>
+                    </div></div>
                     <!-- input with its title -->
                     <div class="col-6">
+                      <div class="mainformsetdefalt">
                        <div style="height: 10px"></div>
                        <div class="form-check">
                           <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
                           <label class="form-check-label" for="flexRadioDefault1">
                           Default radio
                           </label>
-                       </div>
+                       </div></div>
                        <div class="form-check">
+                        <div class="mainformset">
                           <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked />
                           <label class="form-check-label" for="flexRadioDefault2">
                           Default checked radio
                           </label>
                        </div>
+                       </div>
                     </div>
                  </div>
               </div>
-              <div class="col-2"></div>
            </div>
-           <br />
+           </div>
+</div>
+
         </form>
+
+
+
+
+
      </div>
   </div>
 </div>

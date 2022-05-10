@@ -1,120 +1,130 @@
 <div class="row sticky">
 	<div class="col-11">
-		<div class="col pills">
-			<a class="active" >Overview</a>
-			<a >Profile</a>
-		</div>
+	  <div class="col pills">
+		<a class="active">Overview</a>
+		<a>Profile</a>
+	  </div>
 	</div>
 	<div class="col-1 d-flex justify-content-center align-items-center mb-3">
-		<button class="btn btn-dark">
-			<i class="bi bi-plus-lg"></i>
-		</button>
+	  <button class="btn btn-dark">
+		<i class="bi bi-plus-lg"></i>
+	  </button>
 	</div>
-</div>
-
-<div class="row">
+  </div>
+  
+  <div class="row">
 	<div class="col-12" id="main">
-		<div class="section" #overview>
-			<div class="row">
-				<div class="col-sm">
-                    
+	  <div class="section" #overview>
+  
+		<div class="topimagesection">
+		<div class="row">
+  
+		  <div class="col-sm">
+			<img src="https://via.placeholder.com/150?text=LOGO"/>
+		  </div>
+		  <div class="col-sm">
+			<p>Olivia Doe <span>(P1001)</span></p>
+			<p>Female</p>
+			<p>May 10,1992</p>
+			<p>29y, 10m</p>
+		  </div>
+		  <div class="col-sm">
+			<p>Phase: 2</p>
+			<p>Status: Active</p>
+			<p>Dentist: <span data-toggle="tooltip" title="Kim Doe">{{ 'Kim Doe' }}</span></p>
+			<p>Referrer: <span data-toggle="tooltip" title="John Doe">{{ 'John Doe' }}</span></p>
+		  </div>
+		  <div class="col-sm">
+			<p>Language: English</p>
+			<p>Provider: <span data-toggle="tooltip" title="Provider Name">{{ 'Provider Name' }}</span></p>
+			<p>Practice: <span data-toggle="tooltip" title="Practice Name">{{ 'Practice Name' }}</span></p>
+			<p>Location: <span data-toggle="tooltip" title="330 2nd Street Huntington Beach, CA 92646">{{ '330 2nd Street
+				Huntington Beach, CA 92646' }}</span></p>
+		  </div>
+  
+		  <div class="col-sm">
+			<p><span data-toggle="tooltip" title="Chart Number">{{ 'Chart Number' }}</span> : <span data-toggle="tooltip"
+				title="US-10001">{{ 'US-10001' }}</span></p>
+			<p><span data-toggle="tooltip" title="Creation Date">{{ 'Creation Date' }}</span> : <span
+				data-toggle="tooltip" title="Feb 15, 2022">{{ 'Feb 15, 2022' }}</span></p>
+			<p><span data-toggle="tooltip" title="Treatement Start Date">{{ 'Treatement Start Date' }}</span> : <span
+				data-toggle="tooltip" title="Feb 20, 2022">{{ 'Feb 20, 2022' }}</span>
+			</p>
+			<p><span data-toggle="tooltip" title="Treatement End Date">{{ 'Treatement End Date' }}</span> : <span
+				data-toggle="tooltip" title="March 20, 2022">{{ 'March 20, 2022' }}</span>
+			</p>
+		  </div>
+  
+  </div>
+		</div>
+	  </div>
+  
+  
+  
+  
+	  <div class="section" #profile>
+		<form autocomplete="off">
+		  <div class="mainformsection">
+			<h6 class="heading">Profile</h6>
+  
+			<div class="formrow">
+			  <div class="row">
+				<div class="col-4">
+				  <div class="mainformset">
+				  <label class="required">Plan name</label>
+				  <select class="form-select" formControlName="title">
+					<option disabled>Select Website</option>
+					<option>Choose Website</option>
+				  </select>
 				</div>
-				<div class="col-sm">
-					<p>Olivia Doe <span>(P1001)</span></p>
-					<p>Female</p>
-					<p>May 10,1992</p>
-					<p>29y, 10m</p>
 				</div>
-				<div class="col-sm">
-					<p>Phase: 2</p>
-					<p>Status: Active</p>
-					<p>Dentist: <span data-toggle="tooltip"	title="Kim Doe">{{ 'Kim Doe' }}</span></p>
-					<p>Referrer: <span data-toggle="tooltip" title="John Doe">{{ 'John Doe' }}</span></p>
+				<div class="col-4">
+				  <div class="mainformset">
+				  <label class="required">Group Number</label>
+				  <select class="form-select" formControlName="title">
+					<option disabled>Select Website</option>
+					<option>Choose Website</option>
+				  </select>
 				</div>
-				<div class="col-sm">
-					<p>Language: English</p>
-					<p>Provider: <span data-toggle="tooltip" title="Provider Name">{{ 'Provider Name' }}</span></p>
-					<p>Practice: <span data-toggle="tooltip" title="Practice Name">{{ 'Practice Name' }}</span></p>
-					<p>Location: <span data-toggle="tooltip" title="330 2nd Street Huntington Beach, CA 92646">{{ '330 2nd Street Huntington Beach, CA 92646' }}</span></p>
 				</div>
-				<div class="col-sm">
-					<p><span data-toggle="tooltip" title="Chart Number">{{ 'Chart Number' }}</span> : <span data-toggle="tooltip" title="US-10001">{{ 'US-10001' }}</span></p>
-					<p><span data-toggle="tooltip" title="Creation Date">{{ 'Creation Date' }}</span> : <span data-toggle="tooltip" title="Feb 15, 2022">{{ 'Feb 15, 2022' }}</span></p>
-					<p><span data-toggle="tooltip" title="Treatement Start Date">{{ 'Treatement Start Date' }}</span> : <span data-toggle="tooltip" title="Feb 20, 2022">{{ 'Feb 20, 2022' }}</span>
-					</p>
-					<p><span data-toggle="tooltip" title="Treatement End Date">{{ 'Treatement End Date' }}</span> : <span data-toggle="tooltip" title="March 20, 2022">{{ 'March 20, 2022' }}</span>
-					</p>
+				<div class="col-4">
+				  <div class="mainformset">
+				  <label class="required">Subscriber's Name</label>
+				  <select class="form-select" formControlName="title">
+					<option disabled>Select Website</option>
+					<option>Choose Website</option>
+				  </select>
 				</div>
+				</div>
+			  </div>
 			</div>
-		</div>
-
-		<div class="section" #profile>
-			<form autocomplete="off">
-				<h6 class="heading">Profile</h6>
-				<div class="row">
-					<div class="col-4">
-						<label class="required">Plan name</label>
-						<select class="form-select" formControlName="title">
-							<option disabled>Select Website</option>
-							<option>Choose Website</option>
-						</select>
-					</div>
-					<div class="col-4">
-						<label class="required">Group Number</label>
-						<select class="form-select" formControlName="title">
-							<option disabled>Select Website</option>
-							<option>Choose Website</option>
-						</select>
-					</div>
-					<div class="col-4">
-						<label class="required">Subscriber's Name</label>
-						<select class="form-select" formControlName="title">
-							<option disabled>Select Website</option>
-							<option>Choose Website</option>
-						</select>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-4">
-						<label
-							class="required"
-							data-toggle="tooltip"
-							title="Preferred Name"
-							>Policy Number</label
-						>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="id"
-							formControlName="preferredName"
-						/>
-					</div>
-					<div class="col-4">
-						<label class="required">Policy Effective Date</label>
-						<input
-							class="form-control"
-							type="date"
-							placeholder=""
-							name="DOB"
-							formControlName="DOB"
-						/>
-					</div>
-					<div class="col-4">
-						<label class="required">Policy Termination Date</label>
-						<input
-							class="form-control"
-							type="date"
-							placeholder=""
-							name="DOB"
-							formControlName="DOB"
-						/>
-					</div>
-				</div>
-			</form>
-		</div>
+  
+			<div class="formrow">
+			  <div class="row">
+				<div class="col-4">
+				  <div class="mainformset">
+				  <label class="required" data-toggle="tooltip" title="Preferred Name">Policy Number</label>
+				  <input class="form-control" type="text" placeholder="" name="id" formControlName="preferredName" />
+				</div></div>
+				<div class="col-4">
+				  <div class="mainformset">
+				  <label class="required">Policy Effective Date</label>
+				  <input class="form-control" type="date" placeholder="" name="DOB" formControlName="DOB" />
+				</div></div>
+				<div class="col-4">
+				  <div class="mainformset">
+				  <label class="required">Policy Termination Date</label>
+				  <input class="form-control" type="date" placeholder="" name="DOB" formControlName="DOB" />
+				</div></div>
+			  </div>
+			</div>
+		  </div>
+		</form>
+	  </div>
+  
+  
+  
+  
 	</div>
-</div>
-
-
-
+  </div>
+  
