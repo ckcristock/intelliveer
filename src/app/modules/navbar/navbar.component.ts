@@ -59,7 +59,7 @@ export class NavbarComponent implements OnInit {
 					const domainMeta = authHost.hostname.split('.');
 					domainMeta.shift(); // remove first subdomain
 					let origin =
-						authHost.protocol + '//ivweb.' + domainMeta.join('.');
+						authHost.protocol + '//ivauth.' + domainMeta.join('.');
 					window.location.href = origin;
 				}
 			},
