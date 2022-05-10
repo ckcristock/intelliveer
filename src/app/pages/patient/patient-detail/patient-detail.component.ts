@@ -13,6 +13,7 @@ export class PatientDetailComponent implements OnInit {
   idForm: FormGroup;
   @Input() formData: any | undefined = undefined;
   Form!: FormGroup;
+  selectTab: string = "overview";
 
   constructor(
     private fb: FormBuilder,
@@ -85,7 +86,8 @@ export class PatientDetailComponent implements OnInit {
   }
 
 
-  scroll(el: HTMLElement) {
+  scroll(el: HTMLElement, selectTab: string) {
+    this.selectTab = selectTab.trim();
     el.scrollIntoView({
       behavior: 'smooth',
       block: 'start',

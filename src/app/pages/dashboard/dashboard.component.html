@@ -48,10 +48,10 @@
 						<img src="assets/icons/reports.svg" />
 					</li>
 					<li class="icon mb-3" ngbTooltip="{{'More'}}" placement="right">
-						<img src="assets/icons/more.svg" width="20" height="15" />
+						<img src="assets/icons/more.svg" />
 					</li>
 					<li class="icon mb-3" ngbTooltip="{{'Task List'}}" placement="right">
-						<img src="assets/icons/task_list.svg" width="20" height="15" />
+						<img src="assets/icons/task_list.svg" />
 					</li>
 				</ul>
 			</div>
@@ -103,13 +103,32 @@
 						<div class="icon">
 							<img src="assets/icons/more.svg" width="20" height="15" />
 						</div>
-					</li>
-					<li placement="right">
+					</li>	
+					<!-- <li>
 						<div class="icon">
 							<img src="assets/icons/task_list.svg" width="20" height="15" />
-							Task List
 						</div>
-					</li>
+						<ngb-accordion #acc="ngbAccordion" activeIds="patient-panel" class="accord-transparent">
+							<ngb-panel title="Task List" id="patient-panel">
+								<ng-template ngbPanelContent>
+									<ul class="ol">
+										<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
+											Dental Examination
+										</li>
+										<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
+											Teeth Cleaning
+										</li>
+										<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
+											Tooth Extraction
+										</li>
+										<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
+											Dental filling theraphy
+										</li>
+									</ul>
+								</ng-template>
+							</ngb-panel>
+						</ngb-accordion>
+					</li> -->
 				</ul>
 			</div>
 		</ul>
@@ -129,7 +148,7 @@
 		</ul>
 	</div>
 	<div class="__content">
-		<div class="container d-flex justify-content-end align-items-center global-bg-dropdown">
+		<div class="container d-flex justify-content-end align-items-center global-bg-dropdown" *ngIf="router.url.includes('onboarding')">
 			<div class="col-md-5 ps-2">
 				<span class="fw-bold text-uppercase text-black-50">{{
 					moduleName
@@ -147,15 +166,13 @@
 				</select>
 			</div>
 		</div>
-		<!-- <nav aria-label="breadcrumb">
+		<nav aria-label="breadcrumb" *ngIf="router.url.includes('onboarding')">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><span>Home</span></li>
-				<li class="breadcrumb-item"><span>Library</span></li>
-				<li class="breadcrumb-item active" aria-current="page"><span>Data</span></li>
+				{{router.url}}
 			</ol>
-		</nav> -->
+		</nav>
 
-		<!-- <hr /> -->
+		<hr  *ngIf="router.url.includes('onboarding')" />
 
 		<router-outlet></router-outlet>
 	</div>

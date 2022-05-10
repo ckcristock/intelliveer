@@ -2,20 +2,21 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProviderComponent } from './provider.component';
 import { ProviderRoutingModule } from './provider-routing.module';
-import { ImageUploaderModule } from '@modules/image-uploader/image-uploader.module';
-import { AddressFormModule } from '@modules/forms/address-form/address-form.module';
-import { PipesModule } from 'src/app/pipes/pipes/pipes.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
 @NgModule({
-  declarations: [ProviderComponent],
+  declarations: [
+    ProviderComponent
+  ],
   imports: [
     CommonModule,
     ProviderRoutingModule,
-    ImageUploaderModule,
-    AddressFormModule,
-    PipesModule
+    FormsModule,
+    ReactiveFormsModule,
+    NgbModule //required for dropdown
   ]
 })
 export class ProviderModule { }

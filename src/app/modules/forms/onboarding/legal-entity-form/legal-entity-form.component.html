@@ -11,10 +11,9 @@
 		</div>
 	</div>
 	<div class="col-2 d-flex justify-content-center align-items-center mb-3">
-		<button class="btn btn-dark" [disabled]="Form.invalid" (click)="save(Form.value)">
-			<img src="assets/icons/save.svg" width="20" height="20" />
+		<button class="btn btn-light" [disabled]="Form.invalid" (click)="save(Form.value)">
+			<img src="assets/icons/save.svg" width="40" height="40" />
 		</button>
-		&nbsp;&nbsp;
 		<button class="btn btn-dark"  (click)="cancel()">
 			<i class="bi bi-x-lg"></i>
 		</button>
@@ -93,6 +92,7 @@
 						</select>
 					</div>
 				</div>
+				<br/>
 				<div class="row">
 					<div class="col">
 						<p>Is this Legal Entity also Legal Employer?</p>
@@ -186,19 +186,6 @@
 					[parentGroup]="Form"
 					[formGroupName]="'contactPerson'"
 				></app-contact-person-form>
-			</div>
-			<div class="d-flex border-top pt-3 gap-2">
-				<button
-					class="btn btn-dark"
-					type="submit"
-					[disabled]="Form.invalid"
-				>
-					Save Changes
-				</button>
-
-				<button class="btn btn-light" type="button" (click)="cancel()">
-					Cancel
-				</button>
 			</div>
 		</form>
 	</div>

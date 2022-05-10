@@ -1,17 +1,17 @@
 <div class="row sticky">
 	<div class="col-11">
 		<div class="col pills">
-			<a class="active" (click)="scroll(overview)">Overview</a>
-			<a (click)="scroll(profile)">Profile</a>
-			<a (click)="scroll(information)">Information</a>
-			<a (click)="scroll(preferences)">Preferences</a>
-			<a (click)="scroll(emergencyContact)">Emergency Contact</a>
-			<a (click)="scroll(notes)">Notes</a>
+			<a [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']" (click)="scroll(overview, 'overview')">Overview</a>
+			<a [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']" (click)="scroll(profile, 'profile')">Profile</a>
+			<a [ngClass]="[ selectTab == 'information' ? 'active' : 'inactive']" (click)="scroll(information, 'information')">Information</a>
+			<a [ngClass]="[ selectTab == 'preferences' ? 'active' : 'inactive']" (click)="scroll(preferences, 'preferences')">Preferences</a>
+			<a [ngClass]="[ selectTab == 'emergencyContact' ? 'active' : 'inactive']" (click)="scroll(emergencyContact, 'emergencyContact')">Emergency Contact</a>
+			<a [ngClass]="[ selectTab == 'notes' ? 'active' : 'inactive']" (click)="scroll(notes, 'notes')">Notes</a>
 		</div>
 	</div>
 	<div class="col-1 d-flex justify-content-center align-items-center mb-3">
 		<button class="btn btn-dark">
-			<i class="bi bi-plus-lg"></i>
+			<i class="bi bi-x-lg"></i>
 		</button>
 	</div>
 </div>
@@ -67,7 +67,7 @@
 					<div class="col">
 						<label class="required">First Name</label>
 						<input
-							class="form-control"
+							class="form-control value-must"
 							type="text"
 							placeholder=""
 							name="firstName"
@@ -88,7 +88,7 @@
 					<div class="col">
 						<label class="required">Last Name</label>
 						<input
-							class="form-control"
+							class="form-control value-must"
 							type="text"
 							placeholder=""
 							name="lastName"
@@ -98,7 +98,7 @@
 					<div class="col">
 						<label class="required">Date of Birth</label>
 						<input
-							class="form-control"
+							class="form-control value-must"
 							type="date"
 							placeholder=""
 							name="DOB"
@@ -142,14 +142,6 @@
 						/>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col d-flex gap-3 mt-3">
-						<button class="btn btn-dark">Save and Next</button>
-						<button type="button" class="btn btn-light">
-							Cancel
-						</button>
-					</div>
-				</div>
 			</form>
 		</div>
 
@@ -160,9 +152,8 @@
 					<div class="col">
 						<label
 							class="required"
-							data-toggle="tooltip"
-							title="Preferred Name"
-							>{{ 'Preferred Name' | shortened: 10 }}</label
+							
+							>Preferred Name</label
 						>
 						<input
 							class="form-control"
@@ -208,7 +199,73 @@
 						</select>
 					</div>
 				</div>
-				<div formArrayName="info">
+				<div class="row">
+					<div class="col">
+						<label class="required">ID Type</label>
+						<input
+							class="form-control"
+							formControlName="idType"
+							type="text"
+							placeholder=""
+							name="name"
+						/>
+					</div>
+
+					<div class="col">
+						<label class="required">ID Number</label>
+						<input
+							class="form-control"
+							formControlName="idNumber"
+							type="text"
+							placeholder=""
+							name="name"
+						/>
+					</div>
+
+					<!-- <div class="col mt-4">
+						<button
+							class="btn btn-light"
+							[disabled]="ids.length == 1"
+							(click)="removeId(i)"
+						>
+							<i class="bi bi-trash"></i>
+						</button>
+					</div> -->
+				</div>
+				<div class="row">
+					<div class="col">
+						<label class="required">ID Type</label>
+						<input
+							class="form-control"
+							formControlName="idType"
+							type="text"
+							placeholder=""
+							name="name"
+						/>
+					</div>
+
+					<div class="col">
+						<label class="required">ID Number</label>
+						<input
+							class="form-control"
+							formControlName="idNumber"
+							type="text"
+							placeholder=""
+							name="name"
+						/>
+					</div>
+
+					<!-- <div class="col mt-4">
+						<button
+							class="btn btn-light"
+							[disabled]="ids.length == 1"
+							(click)="removeId(i)"
+						>
+							<i class="bi bi-trash"></i>
+						</button>
+					</div> -->
+				</div>
+				<!-- <div formArrayName="info">
 					<div *ngFor="let inf of ids.controls; let i = index">
 						<div class="row">
 							<div class="col">
@@ -253,18 +310,7 @@
 							Add Another ID
 						</div>
 					</div>
-				</div>
-				<br />
-				<div class="row">
-					<div class="col d-flex gap-3 mt-3">
-						<button type="button" class="btn btn-dark">
-							Save Changes
-						</button>
-						<button type="button" class="btn btn-light">
-							Cancel
-						</button>
-					</div>
-				</div>
+				</div> -->
 			</form>
 		</div>
 
@@ -280,7 +326,7 @@
 						</select>
 					</div>
 					<div class="col">
-						<label class="required">Practice</label>
+						<label class="required">Billing Provider</label>
 						<select class="form-select" formControlName="practice">
 							<option disabled>Select Website</option>
 							<option>Choose Website</option>
@@ -288,13 +334,14 @@
 					</div>
 
 					<div class="col">
-						<label class="required">Provider</label>
+						<label class="required">Treating Provider</label>
 						<select class="form-select" formControlName="provider">
 							<option disabled>Select Website</option>
 							<option>Choose Website</option>
 						</select>
 					</div>
 				</div>
+				<br/>
 				<div class="row">
 					<div class="col">
 						<label class="required">New Patient Coordinator</label>
@@ -319,17 +366,6 @@
 						</select>
 					</div>
 				</div>
-				<br />
-				<div class="row">
-					<div class="col d-flex gap-3 mt-3">
-						<button type="button" class="btn btn-dark">
-							Save Changes
-						</button>
-						<button type="button" class="btn btn-light">
-							Cancel
-						</button>
-					</div>
-				</div>
 			</form>
 		</div>
 
@@ -345,6 +381,7 @@
 						</select>
 					</div>
 				</div>
+				<br/>
 				<div class="row">
 					<div class="col">
 						<label class="required">Name</label>
@@ -367,16 +404,6 @@
 						/>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col d-flex gap-3 mt-3">
-						<button type="button" class="btn btn-dark">
-							Save Changes
-						</button>
-						<button type="button" class="btn btn-light">
-							Cancel
-						</button>
-					</div>
-				</div>
 			</form>
 		</div>
 
@@ -392,15 +419,6 @@
 						rows="5"
 						formControlName="note"
 					></textarea>
-				</div>
-			</div>
-			<br />
-			<div class="row">
-				<div class="col d-flex gap-3 mt-3">
-					<button type="button" class="btn btn-dark">
-						Save Changes
-					</button>
-					<button type="button" class="btn btn-light">Cancel</button>
 				</div>
 			</div>
 		</div>

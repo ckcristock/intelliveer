@@ -1,22 +1,83 @@
+$search-input-width: 300px;
+@mixin center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+@mixin center-left {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+}
+.search {
+    width: $search-input-width;
+    background-color: #fff;
+    @include center;
+    position: relative;
+    .search-results {
+        position: absolute;
+        padding-bottom: 15px;
+        width: $search-input-width;
+        background: #f2f2f2;
+        top: 42px;
+        left: 0;
+        box-shadow: 0 6px 12px rgb(0 0 0 / 18%);
+        z-index: 999;
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 10px;
+            li {
+                button {
+                    background-color: transparent;
+                    border: none;
+                    line-height: 2;
+                    display: block;
+                    width: 90%;
+                    margin: 5px 5px 2px 5px;
+                    span.inactive {
+                        background-color: var(--bs-gray-400);
+                        padding: 0px 6px;
+                        border-radius: 4px;
+                    }
+                    &:hover {
+                        background-color: var(--bs-gray-200);
+                    }
+                }
+            }
+        }
+    }
+    // input {
+    //   border: none;
+    //   height: 100%;
+    //   &:focus {
+    //     outline: none;
+    //   }
+    //   &::before {
+    //     content: "\F52A";
+    //   }
+    // }
+}
+
 .bottom-right {
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  background-color: var(--primary-color);
-  color: white;
-  border-top-left-radius: 2px;
-  padding: 0px 3px;
-  font-size: 6px;
-  font-weight: 600;
-}
-.inactive {
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  background-color: grey;
-  color: white;
-  border-top-left-radius: 2px;
-  padding: 0px 3px;
-  font-size: 6px;
-  font-weight: 600;
-}
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    background-color: var(--primary-color);
+    color: white;
+    border-top-left-radius: 2px;
+    padding: 0px 3px;
+    font-size: 6px;
+    font-weight: 600;
+  }
+  .inactive {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    background-color: grey;
+    color: white;
+    border-top-left-radius: 2px;
+    padding: 0px 3px;
+    font-size: 6px;
+    font-weight: 600;
+  }
