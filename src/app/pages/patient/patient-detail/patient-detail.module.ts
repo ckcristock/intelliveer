@@ -4,6 +4,8 @@ import { PatientDetailComponent } from './patient-detail.component';
 import { PatientDetailRoutingModule } from './patient-detail-routing.module';
 import { ImageUploaderModule } from '@modules/image-uploader/image-uploader.module';
 import { PipesModule } from 'src/app/pipes/pipes/pipes.module';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -13,7 +15,8 @@ import { PipesModule } from 'src/app/pipes/pipes/pipes.module';
     CommonModule,
     PatientDetailRoutingModule,
     ImageUploaderModule,
-    PipesModule
+    PipesModule,
+    NgSelectModule,
   ]
 })
 export class PatientDetailModule { }
