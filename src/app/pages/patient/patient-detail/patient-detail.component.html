@@ -1,5 +1,6 @@
 <div class="row sticky">
 	<div class="col-11">
+		<!-- <app-tabs [tabsLst]="tabsLst" (selectTab)="selectedTab($event)"></app-tabs> -->
 		<div class="col pills">
 			<a [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']"
 				(click)="scroll(overview, 'overview')">Overview</a>
