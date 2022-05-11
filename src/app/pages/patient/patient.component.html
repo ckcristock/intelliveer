@@ -43,6 +43,14 @@
 	<div class="row">
 		<!-- Principal DropDown -->
 		<div *ngIf="patients()===true" class="col" style="max-width: 200px">
+			<!-- <div class="col-2">
+				<ul class="ul">
+					<li class="pointer" *ngFor="let item of menuItems" routerLinkActive="active"
+						[routerLink]="item.url">
+						{{ item.title }}
+					</li>
+				</ul>
+			</div> -->
 			<ngb-accordion #acc="ngbAccordion" activeIds="consultation-phase-panel" class="accord">
 				<ngb-panel title="Consultation Phase" id="consultation-phase-panel">
 					<ng-template ngbPanelContent>
@@ -124,8 +132,7 @@
 										class="accord-transparent">
 										<ngb-panel title="" id="patient-panel">
 											<ng-template ngbPanelTitle>
-												<span [class.active]="activeSection()==true" 
-												[routerLink]="'/dashboard/patient/insurance/active'
+												<span [class.active]="activeSection()==true" [routerLink]="'/dashboard/patient/insurance/active'
 												">Active Dental Plan</span>
 											</ng-template>
 											<ng-template ngbPanelContent>

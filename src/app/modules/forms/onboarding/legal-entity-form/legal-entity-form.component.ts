@@ -5,6 +5,8 @@ import { CONFIG } from '@config/index';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 import { ContactDetailsFormService } from '@services/forms/contact-details-form/contact-details-form.service';
 import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
+import { GeoService } from '@services/global-data/public/geo/geo.service';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-legal-entity-form',
@@ -19,16 +21,31 @@ export class LegalEntityFormComponent implements OnInit {
   @Output() onSubmit = new EventEmitter();
   showEmployeIdFeild: boolean = false;
   selectTab: string = "overview";
+  countriesList: any = [];
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private addressFormService: AddressFormService,
     private contactPersonFormService: ContactPersonFormService,
-    private contactDetailsFormService: ContactDetailsFormService
+    private contactDetailsFormService: ContactDetailsFormService,
+    private geoService: GeoService
   ) {}
 
   ngOnInit(): void {
     this.initForm(this.formData);
+    this.getCountryList();
+  }
+  getCountryList()
+  {
+    this.geoService
+      .getCountries()
+      .pipe(delay(100))
+      .subscribe({
+        next: (res: any) => {
+          this.countriesList = res;
+          console.log(res)
+        },
+      });
   }
   save(data: any) {
     this.onSubmit.emit(data);

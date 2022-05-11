@@ -40,8 +40,6 @@ export class BusinessGroupFormComponent implements OnInit {
     data = data || {};
     this.BGForm = this.fb.group({
       name: [data?.name || '', Validators.required],
-      description: [data?.description || '', Validators.required],
-      abbreviation: [data?.abbreviation || '', Validators.required],
       logo: [data?.logo || 'null'],
       TIN: [data?.TIN || '', Validators.required],
       country: [data?.country || '', Validators.required],
