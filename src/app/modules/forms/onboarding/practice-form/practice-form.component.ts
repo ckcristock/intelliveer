@@ -33,7 +33,6 @@ export class PracticeFormComponent implements OnInit {
 			dataType: 'Business Data',
 		},
 	];
-	selectTab: string = "overview";
 
 	constructor(
 		private fb: FormBuilder,
@@ -100,8 +99,7 @@ export class PracticeFormComponent implements OnInit {
 			this.Form.controls['logo'].setValue(e.url);
 		}
 	}
-	scroll(el: HTMLElement, selectTab: string) {
-		this.selectTab = selectTab.trim();
+	scroll(el: HTMLElement) {
 		el.scrollIntoView({
 			behavior: 'smooth',
 			block: 'start',
@@ -144,15 +142,4 @@ export class PracticeFormComponent implements OnInit {
 
 		this.practiceTypeData = _data;
 	}
-
-	checkboxValue(event: any, value: string)
-  {
-    if(event.target.checked)
-    {
-      this.setAddress(value);
-    }
-    else{
-      this.Form?.get(value)?.reset();
-    }
-  }
 }
