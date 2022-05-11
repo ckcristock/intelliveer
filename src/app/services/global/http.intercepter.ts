@@ -24,35 +24,21 @@ export class HttpCallsInterceptor implements HttpInterceptor {
 		request: HttpRequest<any>,
 		next: HttpHandler
 	): Observable<HttpEvent<any>> {
-		const requestedURL = new URL(request.url);
-		const backendURL = new URL(CONFIG.backend.host);
-
-		if (requestedURL.host === backendURL.host) {
+		if (environment.production) {
 			request = request.clone({
 				headers: request.headers
 					.set('Content-Type', 'application/json')
 					.set('Accept', '/'),
 				withCredentials: true,
 			});
+		} else {
+			request = request.clone({
+				headers: request.headers.set(
+					'Authorization',
+					`Bearer ${this.cookieService.get('token')}`
+				),
+			});
 		}
-		// 	if (environment.production) {
-		// 		request = request.clone({
-		// 			headers: request.headers
-		// 				.set('Content-Type', 'application/json')
-		// 				.set('Accept', '/'),
-		// 			withCredentials: true,
-		// 		});
-		// 	} else {
-		// 		// local development
-		// 		// Cookie will not be readable in prod mode
-
-		// 			// .set(
-		// 			// 	'Authorization',
-		// 			// 	`Bearer ${this.cookieService.get('token')}`
-		// 			// ),
-		// 		});
-		// 	}
-		// }
 
 		this.loaderService.openDialog();
 		return next.handle(request).pipe(
