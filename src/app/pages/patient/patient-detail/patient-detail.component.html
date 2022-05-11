@@ -1,11 +1,16 @@
 <div class="row sticky">
 	<div class="col-11">
 		<div class="col pills">
-			<a [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']" (click)="scroll(overview, 'overview')">Overview</a>
-			<a [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']" (click)="scroll(profile, 'profile')">Profile</a>
-			<a [ngClass]="[ selectTab == 'information' ? 'active' : 'inactive']" (click)="scroll(information, 'information')">Information</a>
-			<a [ngClass]="[ selectTab == 'preferences' ? 'active' : 'inactive']" (click)="scroll(preferences, 'preferences')">Preferences</a>
-			<a [ngClass]="[ selectTab == 'emergencyContact' ? 'active' : 'inactive']" (click)="scroll(emergencyContact, 'emergencyContact')">Emergency Contact</a>
+			<a [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']"
+				(click)="scroll(overview, 'overview')">Overview</a>
+			<a [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']"
+				(click)="scroll(profile, 'profile')">Profile</a>
+			<a [ngClass]="[ selectTab == 'information' ? 'active' : 'inactive']"
+				(click)="scroll(information, 'information')">Information</a>
+			<a [ngClass]="[ selectTab == 'preferences' ? 'active' : 'inactive']"
+				(click)="scroll(preferences, 'preferences')">Preferences</a>
+			<a [ngClass]="[ selectTab == 'emergencyContact' ? 'active' : 'inactive']"
+				(click)="scroll(emergencyContact, 'emergencyContact')">Emergency Contact</a>
 			<a [ngClass]="[ selectTab == 'notes' ? 'active' : 'inactive']" (click)="scroll(notes, 'notes')">Notes</a>
 		</div>
 	</div>
@@ -33,21 +38,32 @@
 				<div class="col-sm">
 					<p>Phase: 2</p>
 					<p>Status: Active</p>
-					<p>Dentist: <span data-toggle="tooltip"	title="Kim Doe">{{ 'Kim Doe' | shortened: 4 }}</span></p>
+					<p>Dentist: <span data-toggle="tooltip" title="Kim Doe">{{ 'Kim Doe' | shortened: 4 }}</span></p>
 					<p>Referrer: <span data-toggle="tooltip" title="John Doe">{{ 'John Doe' | shortened: 4 }}</span></p>
 				</div>
 				<div class="col-sm">
 					<p>Language: English</p>
-					<p>Provider: <span data-toggle="tooltip" title="Provider Name">{{ 'Provider Name' | shortened: 8 }}</span></p>
-					<p>Practice: <span data-toggle="tooltip" title="Practice Name">{{ 'Practice Name' | shortened: 8 }}</span></p>
-					<p>Location: <span data-toggle="tooltip" title="330 2nd Street Huntington Beach, CA 92646">{{ '330 2nd Street Huntington Beach, CA 92646' | shortened: 8 }}</span></p>
+					<p>Provider: <span data-toggle="tooltip" title="Provider Name">{{ 'Provider Name' | shortened: 8
+							}}</span></p>
+					<p>Practice: <span data-toggle="tooltip" title="Practice Name">{{ 'Practice Name' | shortened: 8
+							}}</span></p>
+					<p>Location: <span data-toggle="tooltip" title="330 2nd Street Huntington Beach, CA 92646">{{ '330
+							2nd Street Huntington Beach, CA 92646' | shortened: 8 }}</span></p>
 				</div>
 				<div class="col-sm">
-					<p><span data-toggle="tooltip" title="Chart Number">{{ 'Chart Number' | shortened: 8 }}</span> : <span data-toggle="tooltip" title="US-10001">{{ 'US-10001' | shortened: 4 }}</span></p>
-					<p><span data-toggle="tooltip" title="Creation Date">{{ 'Creation Date' | shortened: 8 }}</span> : <span data-toggle="tooltip" title="Feb 15, 2022">{{ 'Feb 15, 2022' | shortened: 4 }}</span></p>
-					<p><span data-toggle="tooltip" title="Treatement Start Date">{{ 'Treatement Start Date' | shortened: 8 }}</span> : <span data-toggle="tooltip" title="Feb 20, 2022">{{ 'Feb 20, 2022' | shortened: 4 }}</span>
+					<p><span data-toggle="tooltip" title="Chart Number">{{ 'Chart Number' | shortened: 8 }}</span> :
+						<span data-toggle="tooltip" title="US-10001">{{ 'US-10001' | shortened: 4 }}</span>
 					</p>
-					<p><span data-toggle="tooltip" title="Treatement End Date">{{ 'Treatement End Date' | shortened: 8 }}</span> : <span data-toggle="tooltip" title="March 20, 2022">{{ 'March 20, 2022' | shortened: 4 }}</span>
+					<p><span data-toggle="tooltip" title="Creation Date">{{ 'Creation Date' | shortened: 8 }}</span> :
+						<span data-toggle="tooltip" title="Feb 15, 2022">{{ 'Feb 15, 2022' | shortened: 4 }}</span>
+					</p>
+					<p><span data-toggle="tooltip" title="Treatement Start Date">{{ 'Treatement Start Date' | shortened:
+							8 }}</span> : <span data-toggle="tooltip" title="Feb 20, 2022">{{ 'Feb 20, 2022' |
+							shortened: 4 }}</span>
+					</p>
+					<p><span data-toggle="tooltip" title="Treatement End Date">{{ 'Treatement End Date' | shortened: 8
+							}}</span> : <span data-toggle="tooltip" title="March 20, 2022">{{ 'March 20, 2022' |
+							shortened: 4 }}</span>
 					</p>
 				</div>
 			</div>
@@ -66,44 +82,24 @@
 					</div>
 					<div class="col">
 						<label class="required">First Name</label>
-						<input
-							class="form-control value-must"
-							type="text"
-							placeholder=""
-							name="firstName"
-							formControlName="firstName"
-						/>
+						<input class="form-control value-must" type="text" placeholder="" name="firstName"
+							formControlName="firstName" />
 					</div>
 
 					<div class="col">
 						<label class="required">Middle Name</label>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="middleName"
-						/>
+						<input class="form-control" type="text" placeholder="" name="name"
+							formControlName="middleName" />
 					</div>
 					<div class="col">
 						<label class="required">Last Name</label>
-						<input
-							class="form-control value-must"
-							type="text"
-							placeholder=""
-							name="lastName"
-							formControlName="lastName"
-						/>
+						<input class="form-control value-must" type="text" placeholder="" name="lastName"
+							formControlName="lastName" />
 					</div>
 					<div class="col">
 						<label class="required">Date of Birth</label>
-						<input
-							class="form-control value-must"
-							type="date"
-							placeholder=""
-							name="DOB"
-							formControlName="DOB"
-						/>
+						<input class="form-control value-must" type="date" placeholder="" name="DOB"
+							formControlName="DOB" />
 					</div>
 				</div>
 				<div class="row">
@@ -123,23 +119,17 @@
 					</div>
 					<div class="col">
 						<label class="required">Language</label>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="language"
-						/>
+						<select class="form-select" formControlName="language">
+							<option value="english">English</option>
+							<option value="hindi">Hindi</option>
+						</select>
 					</div>
 					<div class="col">
 						<label class="required">Marital Status</label>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="maried"
-						/>
+						<select class="form-select" formControlName="maried">
+							<option value="maried">Maried</option>
+							<option value="single">Single</option>
+						</select>
 					</div>
 				</div>
 			</form>
@@ -150,76 +140,44 @@
 				<h6 class="heading">Information</h6>
 				<div class="row">
 					<div class="col">
-						<label
-							class="required"
-							
-							>Preferred Name</label
-						>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="id"
-							formControlName="preferredName"
-						/>
+						<label class="required">Preferred Name</label>
+						<input class="form-control" type="text" placeholder="" name="id"
+							formControlName="preferredName" />
 					</div>
 					<div class="col">
 						<label class="required">Pronounciation</label>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="pronounciation"
-						/>
+						<input class="form-control" type="text" placeholder="" name="name"
+							formControlName="pronounciation" />
 					</div>
 
 					<div class="col">
 						<label class="required">School</label>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="school"
-						/>
+						<input class="form-control" type="text" placeholder="" name="name" formControlName="school" />
 					</div>
 					<div class="col">
-						<label class="required">Interests</label>
-						<select class="form-select" formControlName="interest">
-							<option disabled>Select Website</option>
-							<option>Choose Website</option>
-						</select>
+						<label class="required">Interests</label>						
+						<ng-select class="ng-select" [multiple]="true" formControlName="interest">
+							<ng-option *ngFor="let interest of interestsLst" [value]="interest">{{ interest }}
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col">
 						<label class="required">Tags</label>
-						<select class="form-select" formControlName="tags">
-							<option disabled>Select Website</option>
-							<option>Choose Website</option>
-						</select>
+						<ng-select class="ng-select" [multiple]="true" formControlName="tags">
+							<ng-option *ngFor="let tags of tagsLst" [value]="tags">{{ tags }}
+							</ng-option>
+						</ng-select>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col">
 						<label class="required">ID Type</label>
-						<input
-							class="form-control"
-							formControlName="idType"
-							type="text"
-							placeholder=""
-							name="name"
-						/>
+						<input class="form-control" formControlName="idType" type="text" placeholder="" name="name" />
 					</div>
 
 					<div class="col">
 						<label class="required">ID Number</label>
-						<input
-							class="form-control"
-							formControlName="idNumber"
-							type="text"
-							placeholder=""
-							name="name"
-						/>
+						<input class="form-control" formControlName="idNumber" type="text" placeholder="" name="name" />
 					</div>
 
 					<!-- <div class="col mt-4">
@@ -235,24 +193,12 @@
 				<div class="row">
 					<div class="col">
 						<label class="required">ID Type</label>
-						<input
-							class="form-control"
-							formControlName="idType"
-							type="text"
-							placeholder=""
-							name="name"
-						/>
+						<input class="form-control" formControlName="idType" type="text" placeholder="" name="name" />
 					</div>
 
 					<div class="col">
 						<label class="required">ID Number</label>
-						<input
-							class="form-control"
-							formControlName="idNumber"
-							type="text"
-							placeholder=""
-							name="name"
-						/>
+						<input class="form-control" formControlName="idNumber" type="text" placeholder="" name="name" />
 					</div>
 
 					<!-- <div class="col mt-4">
@@ -341,7 +287,7 @@
 						</select>
 					</div>
 				</div>
-				<br/>
+				<br />
 				<div class="row">
 					<div class="col">
 						<label class="required">New Patient Coordinator</label>
@@ -381,27 +327,15 @@
 						</select>
 					</div>
 				</div>
-				<br/>
+				<br />
 				<div class="row">
 					<div class="col">
 						<label class="required">Name</label>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="id"
-							formControlName="name"
-						/>
+						<input class="form-control" type="text" placeholder="" name="id" formControlName="name" />
 					</div>
 					<div class="col">
 						<label class="required">Emergency Contact</label>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="eContact"
-						/>
+						<input class="form-control" type="text" placeholder="" name="name" formControlName="eContact" />
 					</div>
 				</div>
 			</form>
@@ -411,14 +345,8 @@
 			<h6 class="heading">Notes</h6>
 			<div class="row">
 				<div class="col-6">
-					<textarea
-						class="form-control"
-						name="note"
-						id=""
-						cols="70"
-						rows="5"
-						formControlName="note"
-					></textarea>
+					<textarea class="form-control" name="note" id="" cols="70" rows="5"
+						formControlName="note"></textarea>
 				</div>
 			</div>
 		</div>
