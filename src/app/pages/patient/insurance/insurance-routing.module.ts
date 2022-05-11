@@ -21,6 +21,14 @@ const routes: Routes = [
             ),
       },
       {
+        path: 'dropped',
+        loadChildren: () =>
+          import(
+            '@pages/patient/insurance/dropped/dropped.module').then(
+              (m) => m.DroppedModule
+            ),
+      },
+      {
         path: 'policy-info',
         loadChildren: () =>
           import(
