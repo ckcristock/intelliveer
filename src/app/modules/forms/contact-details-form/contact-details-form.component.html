@@ -3,6 +3,24 @@
     <div [formGroupName]="formGroupName">
       <div class="row">
         <div class="col">
+          <label class="required">Email</label>
+          <input type="text" class="form-control" formControlName="email" />
+        </div>
+        <div class="col">
+          <label class="required">Website</label>
+          <input type="text" class="form-control" formControlName="website" />
+        </div>
+        <div class="col">
+          <label class="required">Prefered Mail Method</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="preferedMailMethod"
+          />
+        </div>
+      </div>
+      <div class="row" formGroupName="primaryPhone">
+        <div class="col">
           <label class="required">Primary Phone Type</label>
           <select class="form-select" formControlName="type">
             <option [value]="type.value" *ngFor="let type of staticData.phone">
@@ -11,15 +29,19 @@
           </select>
         </div>
         <div class="col">
-          <label class="required">Primary Phone Number</label>
-          <input type="text" class="form-control" formControlName="number" />
+          <label class="required">Country Code</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="countryCode"
+          />
         </div>
         <div class="col">
-          <label class="required">Email</label>
-          <input type="text" class="form-control" formControlName="email" />
+          <label class="required">Number</label>
+          <input type="text" class="form-control" formControlName="number" />
         </div>
       </div>
-      <div class="row">
+      <div class="row" formGroupName="secondaryPhone">
         <div class="col">
           <label class="required">Secondary Phone Type</label>
           <select class="form-select" formControlName="type">
@@ -29,26 +51,16 @@
           </select>
         </div>
         <div class="col">
-          <label class="required">Secondary Phone Number</label>
+          <label class="required">Country Code</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="countryCode"
+          />
+        </div>
+        <div class="col">
+          <label class="required">Number</label>
           <input type="text" class="form-control" formControlName="number" />
-        </div>
-        <div class="col">
-          <label class="required">Website</label>
-          <input type="text" class="form-control" formControlName="website" />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <label class="required">Fax</label>
-          <input type="text" class="form-control" formControlName="fax" />
-        </div>
-        <div class="col">
-          <label class="required">Prefered Mail Method</label>
-          <select class="form-select" formControlName="preferedMailMethod">
-            <option [value]="type.value" *ngFor="let type of staticData.phone">
-              {{ type.label }}
-            </option>
-          </select>
         </div>
       </div>
     </div>
