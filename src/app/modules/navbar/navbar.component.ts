@@ -52,7 +52,16 @@ export class NavbarComponent implements OnInit {
 					'/',
 					environment.domain
 				);
-				window.location.href = CONFIG.auth.host;
+				if (window.location.hostname == 'localhost') {
+					window.location.href = CONFIG.auth.host;
+				} else {
+					const authHost = new URL(window.location.href);
+					const domainMeta = authHost.hostname.split('.');
+					domainMeta.shift(); // remove first subdomain
+					let origin =
+						authHost.protocol + '//ivauth.' + domainMeta.join('.');
+					window.location.href = origin;
+				}
 			},
 			error: (err) => {
 				console.log(err.message);
@@ -66,5 +75,10 @@ export class NavbarComponent implements OnInit {
 			this.selectedPatient = patient;
 			this.router.navigate(['/dashboard/patient/patient-detail']);
 		}
+	}
+
+	openAddPatientDialog()
+	{
+		this.router.navigate(['/header/add-patient']);
 	}
 }

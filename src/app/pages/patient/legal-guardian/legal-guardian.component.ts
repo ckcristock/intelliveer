@@ -8,69 +8,68 @@ import { Router } from '@angular/router';
 })
 export class LegalGuardianComponent implements OnInit {
 
-  guardian = [
-    {
-      name: 'Olivia Doe',
-      id: '(P1001)',
-      gender: 'Female',
-      date: 'May 10, 1958',
-      duration: '30y, 2m',
-      phone: '(844) 569-8628',
-      email: 'yourname@email.com',
-      address: '330 2nd Street Huntington Beach, CA 92646',
-      chartNumber: 'US-10001',
-      createdDate: 'Feb 15, 2022',
-      isPrimary: true,
-      isDisabled: false,
-      image: 'https://aawafi.com/uploads/partners/profile/doctor.jpg',
-    },
-    {
-      name: 'John Doe',
-      id: '(P1002)',
-      gender: 'Male',
-      date: 'April 10, 1960',
-      duration: '30y, 2m',
-      phone: '(844) 569-8628',
-      email: 'yourname@email.com',
-      address: '330 2nd Street New Jersey, CA 92646',
-      chartNumber: 'US-10088',
-      createdDate: 'Feb 15, 2020',
-      isPrimary: false,
-      isDisabled: false,
-      image:
-        'https://media.istockphoto.com/photos/happy-healthcare-practitioner-picture-id138205019?k=20&m=138205019&s=612x612&w=0&h=KpsSMVsplkOqTnAJmOye4y6DcciVYIBe5dYDgYXLVW4=',
-    },
-    {
-      name: 'Marian Doe',
-      id: '(P1003)',
-      gender: 'Female',
-      date: 'Dec. 07, 1974',
-      duration: '30y, 2m',
-      phone: '(844) 569-8628',
-      email: 'yourname@email.com',
-      address: '240 Street 7, New York, CA 92646',
-      chartNumber: 'US-10348',
-      createdDate: 'Aug. 04, 2021',
-      isPrimary: false,
-      isDisabled: true,
-      image:
-        'https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg',
-    },
-  ];
+  searchFocus: boolean = false;
+  showSelectedPatient: boolean = false;
+	selectedPatient: any;
+  showList: boolean = false;
+  showRelationList: boolean = false;
+	searchResults: any = [
+		{ user: 'Smith John', dob: '30/12/1984', active: true, id: 'P001' },
+		{ user: 'Smith Doe', dob: '23/08/1988', active: true, id: 'P002' },
+		{ user: 'Smith Walker', dob: '12/06/1994', active: false, id: 'P002' },
+	];
 
-  selectedGuardian: any = {};
+  legalGuardianList: any[] = [];
+  patientList: any[] = [];
+  searchWord: string = "";
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  gotoDetails(data: any) {
-    this.selectedGuardian = data;
-    this.router.navigate([
-      '/patient-chart/patient-overview/legal_guardian',
-      this.selectedGuardian.id,
-    ]);
+  handleSearchResultsClick(patient: any) {
+    console.log(patient);
+		if (patient.active) {
+			this.searchFocus = false;
+			this.showSelectedPatient = true;
+			this.selectedPatient = patient;
+      this.searchWord = patient.user
+		}
+	}
+
+  fetchSearch($event: any): void
+  {
+    if ($event.target.value === '') {
+      console.log("fgggggggggggggggggggg")
+      console.log(this.searchResults);
+      console.log(this.patientList)
+      // return this.searchResults = [];
+    }
+    this.searchResults = this.patientList.filter((paitent: any) => {
+      return paitent.user.toLowerCase().startsWith($event.target.value.toLowerCase());
+    })
   }
+
+  addAsLegalGuardian()
+  {
+    let obj = {
+      image: "",
+      user: this.selectedPatient.user,
+      practiceName: "Practice Name",
+      specialty: "Specialty",
+      pemail: "abc@gmail.com",
+      phone: "8484848484",
+      email: "abcd@gmail.com",
+      mutualPatient: "5"
+    }
+    this.legalGuardianList.push(obj);
+  }
+
+  gotoDetails(data: any) {
+    this.router.navigate(['/dashboard/patient/legal-guardian/add'])
+  }
+
+
 
 }

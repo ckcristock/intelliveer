@@ -1,0 +1,8 @@
+<div class="container" *ngIf="data">
+    <app-payment-party-form
+        [title]="'Edit Family Member'"
+        [formData]="data"
+        (onCancel)="handleCancel()"
+        (onSubmit)="update($event)"
+    ></app-payment-party-form>
+</div>

@@ -1,68 +1,110 @@
-<div class="row sticky">
-	<div class="col-11">
-		<div class="col pills"></div>
-	</div>
-	<div class="col-1 d-flex justify-content-center align-items-center mb-3">
-		<button class="btn btn-dark">
-			<i class="bi bi-plus-lg"></i>
-		</button>
-	</div>
+<div *ngIf="legalGuardianList?.length == 0">
+    <div style="text-align: center; padding-top: 7%;">
+        <div>
+            <h5><b>You haven’t added yet</b></h5>
+            <p>Click here, <img src="assets/icons/add.svg" width="36" height="36" (click)="showRelationList = true" /> to add
+                Legal Guardian</p>
+        </div>
+        <div class="mb-3" *ngIf="showRelationList">
+            <p>What is the relationship of new legal guardian to patient</p>
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-6">
+                    <select class="form-select" style="width: 60%;" (change)="showList = true">
+                        <option>Select Relationship</option>
+                        <option>Father</option>
+                        <option>Mother</option>
+                        <option>Sister</option>
+                        <option>Brother</option>
+                    </select>
+                </div>
+                <div class="col-3"></div>
+            </div>
+        </div>
+        <div class="mb-3" *ngIf="showList">
+            <p>Please search first If not found, create a new one</p>
+            <div class="row gy-2">
+                <div class="col-4"></div>
+                <div class="col-6" style="text-align: center;">
+                    <div class="search" #searchDivRef>
+                        <div class="search-results" *ngIf="searchFocus">
+                            <ul *ngIf="searchResults?.length != 0">
+                                <li *ngFor="let result of searchResults">
+                                    <button class="d-flex justify-content-between"
+                                        (click)="handleSearchResultsClick(result)">
+                                        <span> {{ result.user }}</span>
+                                    </button>
+                                </li>
+                            </ul>
+                            <div class="padding justify-content-between" *ngIf="searchResults?.length == 0">
+                                <p>No matches found</p>
+                                <p>Would you like to create a new one?</p>
+                            </div>
+                            <div class="d-flex gap-3 ps-4 align-items-center">
+                                <div class="btn-group me-3">
+                                    <button type="button" class="btn btn-dark"
+                                        routerLink="/dashboard/patient/legal-guardian/add">
+                                        Create new Legal Guardian
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group justify-content-between">
+                            <span class="input-group-text bg-transparent" id="basic-addon1"><i
+                                    class="bi bi-search"></i></span>
+                            <input type="text" class="form-control" placeholder="Type Name" [(ngModel)]="searchWord"
+                                (keyup)="fetchSearch($event)" aria-describedby="basic-addon1"
+                                (focus)="searchFocus = true" style="border-left-style: none;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3"></div>
+            </div>
+        </div>
+        <div *ngIf="showSelectedPatient">
+            <button class="btn btn-dark" (click)="addAsLegalGuardian()">Add as a Legal Guardian</button>
+        </div>
+    </div>
 </div>
-<div class="container" *ngFor="let lGuardian of guardian; let i = index">
-	<div class="row section">
-		<div class="col-2" (click)="gotoDetails(lGuardian)">
-			<img src="{{ lGuardian.image }}" width="75%" />
-			<small *ngIf="lGuardian.isPrimary" class="bottom-right"
-				>Primary</small
-			>
-			<small *ngIf="lGuardian.isDisabled" class="inactive"
-				>Inactive</small
-			>
-		</div>
-		<div class="col-3" (click)="gotoDetails(lGuardian)">
-			<p>
-				{{ lGuardian.name }} <span>{{ lGuardian.id }}</span>
-			</p>
-			<p>{{ lGuardian.gender }}</p>
-			<p>{{ lGuardian.date }}</p>
-			<p>{{ lGuardian.duration }}</p>
-		</div>
-		<div class="col-3" (click)="gotoDetails(lGuardian)">
-			<p>
-				Phone: <span>{{ lGuardian.phone }}</span>
-			</p>
-			<p>
-				Email: <span>{{ lGuardian.email }}</span>
-			</p>
-			<p>
-				Address: <span>{{ lGuardian.address }}</span>
-			</p>
-		</div>
-		<div class="col-3" (click)="gotoDetails(lGuardian)">
-			<p>
-				Chart Number: <span>{{ lGuardian.chartNumber }}</span>
-			</p>
-			<p>
-				Creation Date: <span>{{ lGuardian.createdDate }}</span>
-			</p>
-		</div>
-		<div class="col-1">
-			<div ngbDropdown class="d-inline-block">
-				<i
-					class="bi bi-three-dots-vertical"
-					id="dropdownBasic"
-					ngbDropdownToggle
-				></i>
-				<ul ngbDropdownMenu aria-labelledby="dropdownBasic">
-					<li ngbDropdownItem>Edit</li>
-					<li ngbDropdownItem *ngIf="!lGuardian.isPrimary">
-						Set as primary
-					</li>
-					<li ngbDropdownItem>
-						{{ lGuardian.isDisabled ? 'Reactivate' : 'Deactivate' }}
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
+
+<div *ngIf="legalGuardianList?.length != 0">
+    <div class="container" *ngFor="let legalGuardian of legalGuardianList; let i = index">
+        <div class="row section">
+            <div class="col-2" (click)="gotoDetails(legalGuardian)">
+                <img src="{{ legalGuardian.image }}" width="78" height="90" />
+            </div>
+            <div class="col-3" (click)="gotoDetails(legalGuardian)">
+                <p>
+                    {{ legalGuardian.user }}
+                </p>
+                <p>{{ legalGuardian.practiceName }}</p>
+                <p>{{ legalGuardian.specialty }}</p>
+            </div>
+            <div class="col-6" (click)="gotoDetails(legalGuardian)">
+                <p>
+                    Prefered mail method: <span>{{ legalGuardian.pemail }}</span>
+                </p>
+                <p>
+                    Primary Phone number:: <span>{{ legalGuardian.phone }}</span>
+                </p>
+                <p>
+                    Email: <span>{{ legalGuardian.email }}</span>
+                </p>
+                <p>
+                    No. of mutual patient: <span>{{ legalGuardian.mutualPatient }}</span>
+                </p>
+            </div>
+            <div class="col-1">
+                <div ngbDropdown class="d-inline-block">
+                    <i class="bi bi-three-dots-vertical" id="dropdownBasic" ngbDropdownToggle></i>
+                    <ul ngbDropdownMenu aria-labelledby="dropdownBasic">
+                        <li ngbDropdownItem>Edit</li>
+                        <li ngbDropdownItem>
+                            {{ legalGuardian.isDisabled ? 'Reactivate' : 'Deactivate' }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

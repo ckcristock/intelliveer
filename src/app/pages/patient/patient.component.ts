@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { IMenuItem } from '@pages/dashboard/menu';
+import { patientMenuItems } from './menu';
 
 @Component({
   selector: 'app-patient',
@@ -7,6 +9,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./patient.component.scss']
 })
 export class PatientComponent implements OnInit {
+
+  menuItems: IMenuItem[] = patientMenuItems;
 
   navbarOpen = false;
   navbarNumb = 1;

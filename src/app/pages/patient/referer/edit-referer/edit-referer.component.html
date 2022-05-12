@@ -1,0 +1,8 @@
+<div class="container" *ngIf="data">
+    <app-referer-form
+        [title]="'Edit Referer'"
+        [formData]="data"
+        (onCancel)="handleCancel()"
+        (onSubmit)="update($event)"
+    ></app-referer-form>
+</div>

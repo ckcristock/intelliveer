@@ -1,23 +1,29 @@
 <div class="row" *ngIf="Form">
-	<div class="col-10">
-		<div class="col pills">
-			<a [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']" (click)="scroll(overview, 'overview')">Overview</a>
-			<a [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']" (click)="scroll(profile, 'profile')">Profile</a>
-			<a [ngClass]="[ selectTab == 'physicalAddress' ? 'active' : 'inactive']" (click)="scroll(physicalAddress, 'physicalAddress')">Physical Address</a>
-			<a [ngClass]="[ selectTab == 'mailingAddress' ? 'active' : 'inactive']" (click)="scroll(mailingAddress, 'mailingAddress')">Mailing Address</a>
-			<a [ngClass]="[ selectTab == 'insuranceBillingAddress' ? 'active' : 'inactive']" (click)="scroll(insuranceBillingAddress, 'insuranceBillingAddress')">Insurance</a>
-			<a [ngClass]="[ selectTab == 'contactDetails' ? 'active' : 'inactive']" (click)="scroll(contactDetails, 'contactDetails')">Contact</a>
-			<a [ngClass]="[ selectTab == 'contactPerson' ? 'active' : 'inactive']" (click)="scroll(contactPerson, 'contactPerson')">Contact Person Info</a>
+	<div class="col-12 d-flex mb-3">
+		<div class="col d-flex align-items-center">
+			<span class="text-uppercase fw-bold">{{ title }}</span>
+		</div>
+		<div class="col d-flex justify-content-end align-content-center gap-2">
+			<button
+				class="btn btn-dark"
+				[disabled]="Form.invalid"
+				(click)="save(Form.value)"
+			>
+				Save Changes
+			</button>
+			<button class="btn btn-light" (click)="cancel()">Cancel</button>
 		</div>
 	</div>
-	<div class="col-2 d-flex justify-content-center align-items-center mb-3">
-		<button class="btn btn-dark" [disabled]="Form.invalid" (click)="save(Form.value)">
-			<img src="assets/icons/save.svg" width="20" height="20" />
-		</button>
-		&nbsp;&nbsp;
-		<button class="btn btn-dark"  (click)="cancel()">
-			<i class="bi bi-x-lg"></i>
-		</button>
+	<div class="col-12">
+		<div class="col pills">
+			<a class="active" (click)="scroll(overview)">Overview</a>
+			<a (click)="scroll(profile)">Profile</a>
+			<a (click)="scroll(physicalAddress)">Physical Address</a>
+			<a (click)="scroll(mailingAddress)">Mailing Address</a>
+			<a (click)="scroll(insuranceBillingAddress)">Insurance</a>
+			<a (click)="scroll(contactDetails)">Contact</a>
+			<a (click)="scroll(contactPerson)">Contact Person Info</a>
+		</div>
 	</div>
 	<div class="container" id="main">
 		<div class="section" #overview>
@@ -25,25 +31,10 @@
 				<h6 class="heading">Logo</h6>
 			</div>
 			<div class="row">
-				<div class="col-lg-3 col-sm">
-					<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
-					</app-image-uploader>
-				</div>
-				<div class="col-lg-3 col-sm">
-					<p>Practice Name</p>
-					<p>Practice ID</p>
-					<p>Practice Status</p>
-				</div>
-				<div class="col-lg-3 col-sm">
-					<p>Effective Date: Feb 15, 2022</p>
-					<p>Termination Date: Feb 15, 2022</p>
-					<p>Created By: Lorem ipsum</p>
-				</div>
-				<div class="col-lg-3 col-sm">
-					<p>Creation Date: Feb 15, 2022</p>
-					<p>Last Updated By: Lorem ipsum</p>
-					<p>Last Updated Date: Feb 15, 2022</p>
-				</div>
+				<app-image-uploader
+					[imageUrl]="formData?.logo || ''"
+					(onUpload)="handleUploadedImage($event)"
+				></app-image-uploader>
 			</div>
 		</div>
 		<form [formGroup]="Form" (submit)="save(Form.value)">
@@ -57,8 +48,16 @@
 						<label class="required">Name</label>
 						<input
 							type="text"
-							class="form-control value-must"
+							class="form-control"
 							formControlName="name"
+						/>
+					</div>
+					<div class="col">
+						<label class="required">Description</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="description"
 						/>
 					</div>
 					<div class="col">
@@ -69,10 +68,12 @@
 							formControlName="abbreviation"
 						/>
 					</div>
-					<div class="col" *ngIf="staticData">
+				</div>
+				<div class="row">
+					<div class="col-4" *ngIf="staticData">
 						<label class="required">Practice Type</label>
 						<select
-							class="form-select value-must"
+							class="form-select"
 							formControlName="practiceType"
 						>
 							<option
@@ -110,15 +111,15 @@
 				<div class="row">
 					<h6 class="heading">Mailing Address</h6>
 				</div>
-				<div class="row mb-3">
-					<div class="col">
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="insuranceBillingCheckbox"
-								(change)="checkboxValue($event, 'insuranceBillingAddress')">
-							<label class="form-check-label" for="insuranceBillingCheckbox">
-								Same as physical address
-							</label>
-						</div>
+				<div class="row">
+					<div class="col-4 mb-3">
+						<button
+							type="button"
+							class="btn btn-sm btn-dark"
+							(click)="setAddress('mailingAddress')"
+						>
+							Same as physical address
+						</button>
 					</div>
 				</div>
 				<app-address-form
@@ -131,15 +132,15 @@
 				<div class="row">
 					<h6 class="heading">Insurance Billing Address</h6>
 				</div>
-				<div class="row mb-3">
-					<div class="col">
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="mailingCheckbox"
-								(change)="checkboxValue($event, 'insuranceBillingAddress')">
-							<label class="form-check-label" for="insuranceBillingAddress">
-								Same as physical address
-							</label>
-						</div>
+				<div class="row">
+					<div class="col-4 mb-3">
+						<button
+							type="button"
+							class="btn btn-sm btn-dark"
+							(click)="setAddress('insuranceBillingAddress')"
+						>
+							Same as physical address
+						</button>
 					</div>
 				</div>
 				<app-address-form
@@ -166,6 +167,19 @@
 					[parentGroup]="Form"
 					[formGroupName]="'contactPerson'"
 				></app-contact-person-form>
+			</div>
+			<div class="d-flex border-top pt-3 gap-2">
+				<button
+					class="btn btn-dark"
+					type="submit"
+					[disabled]="Form.invalid"
+				>
+					Save Changes
+				</button>
+
+				<button class="btn btn-light" type="button" (click)="cancel()">
+					Cancel
+				</button>
 			</div>
 		</form>
 	</div>

@@ -13,6 +13,10 @@ export class PatientDetailComponent implements OnInit {
   idForm: FormGroup;
   @Input() formData: any | undefined = undefined;
   Form!: FormGroup;
+  selectTab: string = "overview";
+
+  interestsLst: any[] = ["option 1", "option 2", "option 3", "option 4", "option 5", "option 6"];
+  tagsLst: any[] = ["option 1", "option 2", "option 3", "option 4", "option 5", "option 6"];
 
   constructor(
     private fb: FormBuilder,
@@ -85,7 +89,8 @@ export class PatientDetailComponent implements OnInit {
   }
 
 
-  scroll(el: HTMLElement) {
+  scroll(el: HTMLElement, selectTab: string) {
+    this.selectTab = selectTab.trim();
     el.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
