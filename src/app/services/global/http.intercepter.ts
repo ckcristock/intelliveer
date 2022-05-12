@@ -3,7 +3,7 @@ import {
 	HttpEvent,
 	HttpHandler,
 	HttpInterceptor,
-	HttpRequest,
+	HttpRequest
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, finalize, Observable, throwError } from 'rxjs';
@@ -24,20 +24,26 @@ export class HttpCallsInterceptor implements HttpInterceptor {
 		request: HttpRequest<any>,
 		next: HttpHandler
 	): Observable<HttpEvent<any>> {
-		if (environment.production) {
-			request = request.clone({
-				headers: request.headers
-					.set('Content-Type', 'application/json')
-					.set('Accept', '/'),
-				withCredentials: true,
-			});
-		} else {
-			request = request.clone({
-				headers: request.headers.set(
-					'Authorization',
-					`Bearer ${this.cookieService.get('token')}`
-				),
-			});
+		const requestedURL = new URL(request.url);
+		const backendHost = new URL(environment.backendHost);
+
+		if (requestedURL.hostname === backendHost.hostname) {
+			if (environment.production) {
+				request = request.clone({
+					headers: request.headers
+						.set('Content-Type', 'application/json')
+						.set('Accept', '/'),
+					withCredentials: true
+				});
+			} else {
+				request = request.clone({
+					headers: request.headers.set(
+						'Authorization',
+						`Bearer ${this.cookieService.get('token')}`
+					),
+					withCredentials: false
+				});
+			}
 		}
 
 		this.loaderService.openDialog();

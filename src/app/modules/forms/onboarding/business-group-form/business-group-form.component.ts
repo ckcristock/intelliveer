@@ -10,7 +10,7 @@ import { GeoService } from '@services/global-data/public/geo/geo.service';
 @Component({
 	selector: 'app-business-group-form',
 	templateUrl: './business-group-form.component.html',
-	styleUrls: ['./business-group-form.component.scss'],
+	styleUrls: ['./business-group-form.component.scss']
 })
 export class BusinessGroupFormComponent implements OnInit {
 	@Input() title: string = '';
@@ -36,11 +36,12 @@ export class BusinessGroupFormComponent implements OnInit {
 	initBGForm(data?: any) {
 		data = data || {};
 		this.BGForm = this.fb.group({
-			name: [data?.name || '', Validators.required],
-			description: [data?.description || '', Validators.required],
-			abbreviation: [data?.abbreviation || '', Validators.required],
 			logo: [data?.logo || 'null'],
-			TIN: [data?.TIN || '', Validators.required],
+			name: [data?.name || '', Validators.required],
+			// description: [data?.description || ''],
+			// abbreviation: [data?.abbreviation || ''],
+
+			TIN: [data?.TIN || ''],
 			country: [data?.country || '', Validators.required],
 			currency: [data?.currency || '', Validators.required],
 			physicalAddress: this.addressFormService.getAddressForm(
@@ -57,8 +58,13 @@ export class BusinessGroupFormComponent implements OnInit {
 					data?.contactDetails || {}
 				),
 			contactPerson: this.contactPersonFormService.getContactPersonForm(
-				data?.contactPerson || {}
-			),
+				data?.contactPerson || {},
+				{
+					firstName: true,
+					lastName: true,
+					phone: { type: true, number: true, countryCode: true }
+				}
+			)
 		});
 	}
 	save(data: any) {
@@ -80,14 +86,14 @@ export class BusinessGroupFormComponent implements OnInit {
 		el.scrollIntoView({
 			behavior: 'smooth',
 			block: 'start',
-			inline: 'nearest',
+			inline: 'nearest'
 		});
 	}
 	getCountries() {
 		this.geoService.getCountries().subscribe({
 			next: (res) => {
 				this.countries = res;
-			},
+			}
 		});
 	}
 }

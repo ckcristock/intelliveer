@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="d-flex justify-content-between call-to-actions">
 		<div class="col-4">
-			<div class="input-group">
+			<div class="input-group search_box">
 				<span
 					class="input-group-text border-0 bg-transparent"
 					id="basic-addon1"
@@ -18,22 +18,24 @@
 		</div>
 		<div class="d-flex gap-2">
 			<button
-				class="btn btn-dark btn-sm"
+				class="add_btn"
 				routerLink="/dashboard/onboarding/practice/add"
 			>
-				<i class="bi bi-plus fs-4"></i>
+				<img src="/assets/icons/add.svg" alt="" />
 			</button>
 		</div>
 	</div>
 </div>
-<div class="container mt-3">
+<div class="container mt-4">
 	<div class="row">
 		<table class="table">
 			<thead>
 				<tr>
 					<th scope="col">ID</th>
 					<th scope="col">Name</th>
-					<th scope="col">Description</th>
+					<th scope="col">Contact Person</th>
+					<th scope="col">Phone no.</th>
+					<th scope="col">Created on</th>
 					<th scope="col">Actions</th>
 				</tr>
 			</thead>
@@ -41,7 +43,17 @@
 				<tr *ngFor="let d of data; let i = index">
 					<td>{{ d?._id }}</td>
 					<td>{{ d?.name }}</td>
-					<td>{{ d?.description }}</td>
+					<td>
+						{{ d?.contactPerson?.firstName }}&nbsp;{{
+							d?.contactPerson?.lastName
+						}}
+					</td>
+					<td>
+						{{ d?.contactPerson?.phone?.number }}
+					</td>
+					<td>
+						{{ d?.createdBy?.timestamp | date: 'mediumDate' }}
+					</td>
 					<td>
 						<div
 							ngbDropdown
@@ -49,7 +61,7 @@
 							placement="bottom-end"
 						>
 							<button
-								class="btn btn-light btn-sm"
+								class="btn btn-light btn-sm more_btn"
 								ngbDropdownToggle
 							>
 								<i class="bi bi-three-dots-vertical"></i>

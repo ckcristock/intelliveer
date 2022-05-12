@@ -9,7 +9,7 @@ import { ContactPersonFormService } from '@services/forms/contact-person-form/co
 @Component({
 	selector: 'app-practice-form',
 	templateUrl: './practice-form.component.html',
-	styleUrls: ['./practice-form.component.scss'],
+	styleUrls: ['./practice-form.component.scss']
 })
 export class PracticeFormComponent implements OnInit {
 	Form: FormGroup | undefined;
@@ -25,13 +25,13 @@ export class PracticeFormComponent implements OnInit {
 		{
 			type: 'Orthodontics',
 			value: 'Orthodontics',
-			dataType: 'Global Data',
+			dataType: 'Global Data'
 		},
 		{
 			type: 'Orthodontics 2',
 			value: 'Orthodontics2',
-			dataType: 'Business Data',
-		},
+			dataType: 'Business Data'
+		}
 	];
 
 	constructor(
@@ -50,8 +50,8 @@ export class PracticeFormComponent implements OnInit {
 		data = data || {};
 		this.Form = this.fb.group({
 			name: [data?.name || '', Validators.required],
-			description: [data?.description || '', Validators.required],
-			abbreviation: [data?.abbreviation || '', Validators.required],
+			// description: [data?.description || '', Validators.required],
+			abbreviation: [data?.abbreviation || ''],
 			logo: [data?.logo || 'null'],
 			practiceType: [data?.practiceType || '', Validators.required],
 			physicalAddress: this.addressFormService.getAddressForm(
@@ -69,7 +69,7 @@ export class PracticeFormComponent implements OnInit {
 				),
 			contactPerson: this.contactPersonFormService.getContactPersonForm(
 				data?.contactPerson || {}
-			),
+			)
 		});
 	}
 	save(data: any) {
@@ -87,7 +87,7 @@ export class PracticeFormComponent implements OnInit {
 					// this.getPracticeTypeData();
 				},
 				error: () => {},
-				complete: () => {},
+				complete: () => {}
 			});
 	}
 	setAddress(type: string) {
@@ -103,7 +103,7 @@ export class PracticeFormComponent implements OnInit {
 		el.scrollIntoView({
 			behavior: 'smooth',
 			block: 'start',
-			inline: 'nearest',
+			inline: 'nearest'
 		});
 	}
 	getPracticeTypeData() {
@@ -113,12 +113,12 @@ export class PracticeFormComponent implements OnInit {
 		let businessData: any[] = [
 			{
 				label: 'Pediatric dental services',
-				value: 'pediatric_dental_services',
+				value: 'pediatric_dental_services'
 			},
 			{
 				label: 'Endodontic procedures',
-				value: 'endodontic_procedures',
-			},
+				value: 'endodontic_procedures'
+			}
 		];
 		if (businessData && businessData.length > 0) {
 			businessData.map((item: any) => {

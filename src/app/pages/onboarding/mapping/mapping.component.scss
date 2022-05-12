@@ -1,3 +1,4 @@
+@import 'table';
 table.mapping-table {
 	tr.mapping {
 		th {
@@ -10,4 +11,12 @@ table.mapping-table {
 			padding: 0;
 		}
 	}
+}
+ng-select {
+	border: 1px solid transparent;
+	border-radius: 4px;
+	background: #fff;
+}
+ng-select {
+	font-weight: bold !important;
 }

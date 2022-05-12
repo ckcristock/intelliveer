@@ -1,21 +1,12 @@
 <div class="row" *ngIf="Form">
-	<div class="col-12 d-flex mb-3">
+	<!-- <div class="col-12 d-flex mb-3">
 		<div class="col d-flex align-items-center">
 			<span class="text-uppercase fw-bold">{{ title }}</span>
 		</div>
-		<div class="col d-flex justify-content-end align-content-center gap-2">
-			<button
-				class="btn btn-dark"
-				[disabled]="Form.invalid"
-				(click)="save(Form.value)"
-			>
-				Save Changes
-			</button>
-			<button class="btn btn-light" (click)="cancel()">Cancel</button>
-		</div>
-	</div>
-	<div class="col-12">
-		<div class="col pills">
+	</div> -->
+
+	<div id="navbar-pills">
+		<div class="left">
 			<a class="active" (click)="scroll(overview)">Overview</a>
 			<a (click)="scroll(profile)">Profile</a>
 			<a (click)="scroll(physicalAddress)">Physical Address</a>
@@ -24,13 +15,25 @@
 			<a (click)="scroll(contactDetails)">Contact</a>
 			<a (click)="scroll(contactPerson)">Contact Person Info</a>
 		</div>
+		<div class="right">
+			<button
+				class="save"
+				[disabled]="Form.invalid"
+				(click)="save(Form.value)"
+			>
+				<img src="/assets/icons/save.svg" alt="" />
+			</button>
+			<button class="cancel" (click)="cancel()">
+				<img src="/assets/icons/cancel.svg" alt="" />
+			</button>
+		</div>
 	</div>
 
 	<div class="container" id="main">
 		<div class="section" #overview>
-			<div class="row">
+			<!-- <div class="row">
 				<h6 class="heading">Logo</h6>
-			</div>
+			</div> -->
 			<div class="row">
 				<app-image-uploader
 					[imageUrl]="formData?.logo || ''"
@@ -46,27 +49,80 @@
 				</div>
 				<div class="row">
 					<div class="col">
-						<label class="required">Name</label>
+						<label class="required">Legal Entity Name</label>
 						<input
 							type="text"
-							class="form-control"
+							class="form-control required-field"
 							formControlName="name"
 						/>
 					</div>
-					<div class="col">
-						<label class="required">Description</label>
-						<input
-							type="text"
-							class="form-control"
-							formControlName="description"
-						/>
-					</div>
+
 					<div class="col">
 						<label class="required">Abbreviation</label>
 						<input
 							type="text"
 							class="form-control"
 							formControlName="abbreviation"
+						/>
+					</div>
+
+					<div class="col">
+						<label class="required">TIN</label>
+						<input
+							type="text"
+							class="form-control required-field"
+							formControlName="TIN"
+						/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4">
+						<label class="required">Country</label>
+						<ng-select formControlName="country">
+							<ng-option
+								*ngFor="let country of countries"
+								[value]="country.iso3"
+								>{{ country.name }}</ng-option
+							>
+						</ng-select>
+					</div>
+					<div class="col-4">
+						<label class="required">Currency</label>
+						<select class="form-select" formControlName="currency">
+							<option value="usd">USD</option>
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4">
+						<label class="required"
+							>Is this Legal Entity also Legal Employer?</label
+						>
+						<div class="d-flex gap-4 pt-3">
+							<label for="">
+								<input
+									type="radio"
+									name=""
+									formControlName="isLegalEmployer"
+									value="yes"
+								/>&nbsp;Yes
+							</label>
+							<label for="">
+								<input
+									type="radio"
+									name=""
+									formControlName="isLegalEmployer"
+									value="no"
+								/>&nbsp;No
+							</label>
+						</div>
+					</div>
+					<div class="col-4">
+						<label class="required">Employer ID</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="employerId"
 						/>
 					</div>
 				</div>
@@ -86,7 +142,7 @@
 				<div class="row">
 					<h6 class="heading">Mailing Address</h6>
 				</div>
-				<div class="row">
+				<!-- <div class="row">
 					<div class="col-4 mb-3">
 						<button
 							type="button"
@@ -96,7 +152,7 @@
 							Same as physical address
 						</button>
 					</div>
-				</div>
+				</div> -->
 				<app-address-form
 					[parentGroup]="Form"
 					[formGroupName]="'mailingAddress'"
@@ -105,9 +161,9 @@
 			<!-- Insurance Billing Address -->
 			<div class="section" #insuranceBillingAddress>
 				<div class="row">
-					<h6 class="heading">Insurance Billing Address</h6>
+					<h6 class="heading">Insurance Billing / Payment Address</h6>
 				</div>
-				<div class="row">
+				<!-- <div class="row">
 					<div class="col-4 mb-3">
 						<button
 							type="button"
@@ -117,7 +173,7 @@
 							Same as physical address
 						</button>
 					</div>
-				</div>
+				</div> -->
 				<app-address-form
 					[parentGroup]="Form"
 					[formGroupName]="'insuranceBillingAddress'"
@@ -126,7 +182,7 @@
 			<!-- Contact -->
 			<div class="section" #contactDetails>
 				<div class="row">
-					<h6 class="heading">Contact Details</h6>
+					<h6 class="heading">Contact</h6>
 				</div>
 				<app-contact-details-form
 					[parentGroup]="Form"
@@ -136,14 +192,14 @@
 			<!-- Contact Person-->
 			<div class="section" #contactPerson>
 				<div class="row">
-					<h6 class="heading">Contact Person</h6>
+					<h6 class="heading">Contact Person Info</h6>
 				</div>
 				<app-contact-person-form
 					[parentGroup]="Form"
 					[formGroupName]="'contactPerson'"
 				></app-contact-person-form>
 			</div>
-			<div class="d-flex border-top pt-3 gap-2">
+			<!-- <div class="d-flex border-top pt-3 gap-2">
 				<button
 					class="btn btn-dark"
 					type="submit"
@@ -155,7 +211,7 @@
 				<button class="btn btn-light" type="button" (click)="cancel()">
 					Cancel
 				</button>
-			</div>
+			</div> -->
 		</form>
 	</div>
 </div>

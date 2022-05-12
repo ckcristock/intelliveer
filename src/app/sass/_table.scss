@@ -1,0 +1,12 @@
+tr {
+	line-height: 3;
+}
+.table > :not(:first-child) {
+	border-top: 1px solid currentColor;
+}
+.more_btn {
+	font-size: 16px;
+	font-weight: bold;
+	background-color: transparent;
+	border: none;
+}
