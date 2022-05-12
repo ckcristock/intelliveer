@@ -1,5 +1,5 @@
 <div class="row sticky">
-	<div class="col-10">
+	<div class="col-11">
 		<div class="col pills">
 			<ul class="nav">
 				<li class="nav-item">
@@ -12,7 +12,7 @@
 			</ul>		
 		</div>
 	</div>
-	<div class="col-2 d-flex justify-content-end align-items-center mb-3">
+	<div class="col-1 d-flex justify-content-end align-items-center mb-3">
 		<button class="btn btn-light" [disabled]="Form?.invalid" >
 			<img src="assets/icons/save.svg" width="36" height="36" />
 		</button>
@@ -73,7 +73,34 @@
 						/>
 					</div>
 				</div>
-				
+				<div class="row mb-3">
+					<div class="col">
+						<label class="required">Date of Birth</label>
+						<input
+							class="form-control"
+							type="date"
+							placeholder=""
+							name="DOB"
+							formControlName="DOB"
+						/>
+					</div>
+					<div class="col">
+						<label class="required">Gender</label>
+						<select class="form-select" formControlName="gender">
+							<option value="M">Male</option>
+							<option value="F">Female</option>
+						</select>
+					</div>
+					<div class="col">
+						<label
+							class="required">Relationship with Patient</label
+						>
+						<select class="form-select" formControlName="pronoun">
+							<option>Select</option>
+						</select>
+					</div>
+					<div class="col"></div>
+				</div>
 				
 			</form>
 		</div>
