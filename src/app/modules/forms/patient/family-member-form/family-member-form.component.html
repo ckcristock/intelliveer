@@ -12,13 +12,11 @@
 			</ul>		
 		</div>
 	</div>
-	<div class="col-2 d-flex justify-content-center align-items-center mb-3">
-		<div class="col">
-			<button class="btn btn-light" [disabled]="Form?.invalid" >
-				<img src="assets/icons/save.svg" width="36" height="36" />
-			</button>
-			<img src="assets/icons/cancel.svg" width="36" height="36" (click)="cancel()" />
-		</div>
+	<div class="col-2 d-flex justify-content-end align-items-center mb-3">
+		<button class="btn btn-light" [disabled]="Form?.invalid" >
+			<img src="assets/icons/save.svg" width="36" height="36" />
+		</button>
+		<img src="assets/icons/cancel.svg" width="36" height="36" (click)="cancel()" />
 	</div>
 </div>
 
@@ -30,18 +28,6 @@
 					<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
 					</app-image-uploader>
 				</div>
-				<div class="col-sm">
-					<p>Olivia Doe <span>(P1001)</span></p>
-					<p>Female</p>
-					<p>May 10,1992</p>
-					<p>29y, 10m</p>
-				</div>
-				<div class="col-sm">
-					<p>Prefered mail method: abc@gmail.com</p>
-					<p>Primary Phone number: 1234567890</p>
-					<p>Email: abc@email.com</p>
-					<p>No. of referred patient: 4</p>
-				</div>
 			</div>
 		</div>
 
@@ -52,8 +38,7 @@
 					<div class="col">
 						<label class="required">Title</label>
 						<select class="form-select" formControlName="title">
-							<option disabled>Select Website</option>
-							<option>Choose Website</option>
+							<option>Select</option>
 						</select>
 					</div>
 					<div class="col">

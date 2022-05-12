@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-4"></div>
                 <div class="col-6">
-                    <select class="form-select" style="width: 60%;" (change)="showList = true">
+                    <select class="form-select" style="width: 55.8%;" (change)="showList = true">
                         <option>Select Relationship</option>
                         <option>Father</option>
                         <option>Mother</option>
@@ -71,7 +71,8 @@
     <div class="container" *ngFor="let paymentParty of paymentPartyList; let i = index">
         <div class="row section">
             <div class="col-2" (click)="gotoDetails(paymentParty)">
-                <img src="{{ paymentParty.image }}" width="78" height="90" />
+                <h1 class="border border-1" style="text-align: center; height: 80px; justify-content: center; display: flex; width: 94px; font-size: xxx-large;">A</h1>
+                <!-- <img src="{{ paymentParty.image }}" width="78" height="90" /> -->
             </div>
             <div class="col-3" (click)="gotoDetails(paymentParty)">
                 <p>
@@ -96,7 +97,11 @@
             </div>
             <div class="col-1">
                 <div ngbDropdown class="d-inline-block">
-                    <i class="bi bi-three-dots-vertical" id="dropdownBasic" ngbDropdownToggle></i>
+                    <i
+                        class="bi bi-three-dots-vertical"
+                        id="dropdownBasic"
+                        ngbDropdownToggle
+                    ></i>
                     <ul ngbDropdownMenu aria-labelledby="dropdownBasic">
                         <li ngbDropdownItem>Edit</li>
                         <li ngbDropdownItem>

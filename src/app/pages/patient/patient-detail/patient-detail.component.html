@@ -2,17 +2,31 @@
 	<div class="col-11">
 		<!-- <app-tabs [tabsLst]="tabsLst" (selectTab)="selectedTab($event)"></app-tabs> -->
 		<div class="col pills">
-			<a [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']"
-				(click)="scroll(overview, 'overview')">Overview</a>
-			<a [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']"
-				(click)="scroll(profile, 'profile')">Profile</a>
-			<a [ngClass]="[ selectTab == 'information' ? 'active' : 'inactive']"
-				(click)="scroll(information, 'information')">Information</a>
-			<a [ngClass]="[ selectTab == 'preferences' ? 'active' : 'inactive']"
-				(click)="scroll(preferences, 'preferences')">Preferences</a>
-			<a [ngClass]="[ selectTab == 'emergencyContact' ? 'active' : 'inactive']"
-				(click)="scroll(emergencyContact, 'emergencyContact')">Emergency Contact</a>
-			<a [ngClass]="[ selectTab == 'notes' ? 'active' : 'inactive']" (click)="scroll(notes, 'notes')">Notes</a>
+			<ul class="nav">
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']" (click)="scroll(overview, 'overview')">Overview</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']" (click)="scroll(profile, 'profile')">Profile</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'information' ? 'active' : 'inactive']" (click)="scroll(information, 'information')">Information</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'preferences' ? 'active' : 'inactive']" (click)="scroll(preferences, 'preferences')">Preferences</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'emergencyContact' ? 'active' : 'inactive']" (click)="scroll(emergencyContact, 'emergencyContact')">Emergency Contact</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'notes' ? 'active' : 'inactive']" (click)="scroll(notes, 'notes')">Notes</a>
+				</li>
+			</ul>
 		</div>
 	</div>
 	<div class="col-1 d-flex justify-content-center align-items-center mb-3">
@@ -26,46 +40,34 @@
 	<div class="col-12" id="main">
 		<div class="section" #overview>
 			<div class="row">
-				<div class="col-sm">
+				<div class="col-2">
 					<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
 					</app-image-uploader>
 				</div>
-				<div class="col-sm">
+				<div class="col-2">
 					<p>Olivia Doe <span>(P1001)</span></p>
 					<p>Female</p>
 					<p>May 10,1992</p>
 					<p>29y, 10m</p>
 				</div>
-				<div class="col-sm">
+				<div class="col-2">
 					<p>Phase: 2</p>
 					<p>Status: Active</p>
-					<p>Dentist: <span data-toggle="tooltip" title="Kim Doe">{{ 'Kim Doe' | shortened: 4 }}</span></p>
-					<p>Referrer: <span data-toggle="tooltip" title="John Doe">{{ 'John Doe' | shortened: 4 }}</span></p>
+					<p>Dentist: Kim Doe</p>
+					<p>Referrer: John Doe</p>
 				</div>
 				<div class="col-sm">
 					<p>Language: English</p>
-					<p>Provider: <span data-toggle="tooltip" title="Provider Name">{{ 'Provider Name' | shortened: 8
-							}}</span></p>
-					<p>Practice: <span data-toggle="tooltip" title="Practice Name">{{ 'Practice Name' | shortened: 8
-							}}</span></p>
-					<p>Location: <span data-toggle="tooltip" title="330 2nd Street Huntington Beach, CA 92646">{{ '330
-							2nd Street Huntington Beach, CA 92646' | shortened: 8 }}</span></p>
+					<p>Provider: Provider Name</p>
+					<p>Practice: Practice Name</p>
+					<p>Location: 330
+							2nd Street Huntington Beach, CA 92646</p>
 				</div>
 				<div class="col-sm">
-					<p><span data-toggle="tooltip" title="Chart Number">{{ 'Chart Number' | shortened: 8 }}</span> :
-						<span data-toggle="tooltip" title="US-10001">{{ 'US-10001' | shortened: 4 }}</span>
-					</p>
-					<p><span data-toggle="tooltip" title="Creation Date">{{ 'Creation Date' | shortened: 8 }}</span> :
-						<span data-toggle="tooltip" title="Feb 15, 2022">{{ 'Feb 15, 2022' | shortened: 4 }}</span>
-					</p>
-					<p><span data-toggle="tooltip" title="Treatement Start Date">{{ 'Treatement Start Date' | shortened:
-							8 }}</span> : <span data-toggle="tooltip" title="Feb 20, 2022">{{ 'Feb 20, 2022' |
-							shortened: 4 }}</span>
-					</p>
-					<p><span data-toggle="tooltip" title="Treatement End Date">{{ 'Treatement End Date' | shortened: 8
-							}}</span> : <span data-toggle="tooltip" title="March 20, 2022">{{ 'March 20, 2022' |
-							shortened: 4 }}</span>
-					</p>
+					<p>Chart Number:US-10001</p>
+					<p>Creation Date:Feb 15, 2022</p>
+					<p>Treatement Start Date:Feb 20, 2022</p>
+					<p>Treatement End Date: March 20, 2022</p>
 				</div>
 			</div>
 		</div>
@@ -73,12 +75,11 @@
 		<div class="section" #profile>
 			<form autocomplete="off">
 				<h6 class="heading">Profile</h6>
-				<div class="row">
+				<div class="row mb-3">
 					<div class="col">
 						<label class="required">Title</label>
 						<select class="form-select" formControlName="title">
-							<option disabled>Select Website</option>
-							<option>Choose Website</option>
+							<option>Select</option>
 						</select>
 					</div>
 					<div class="col">
@@ -103,7 +104,7 @@
 							formControlName="DOB" />
 					</div>
 				</div>
-				<div class="row">
+				<div class="row mb-3">
 					<div class="col">
 						<label class="required">Gender</label>
 						<select class="form-select" formControlName="gender">
@@ -114,8 +115,7 @@
 					<div class="col">
 						<label class="required">Preferred Pronoun</label>
 						<select class="form-select" formControlName="pronoun">
-							<option disabled>Select Website</option>
-							<option>Choose Website</option>
+							<option>Select</option>
 						</select>
 					</div>
 					<div class="col">
@@ -139,7 +139,7 @@
 		<div class="section" #information>
 			<form autocomplete="off">
 				<h6 class="heading">Information</h6>
-				<div class="row">
+				<div class="row mb-3">
 					<div class="col">
 						<label class="required">Preferred Name</label>
 						<input class="form-control" type="text" placeholder="" name="id"
@@ -170,7 +170,7 @@
 						</ng-select>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row mb-3">
 					<div class="col">
 						<label class="required">ID Type</label>
 						<input class="form-control" formControlName="idType" type="text" placeholder="" name="name" />
@@ -181,17 +181,11 @@
 						<input class="form-control" formControlName="idNumber" type="text" placeholder="" name="name" />
 					</div>
 
-					<!-- <div class="col mt-4">
-						<button
-							class="btn btn-light"
-							[disabled]="ids.length == 1"
-							(click)="removeId(i)"
-						>
-							<i class="bi bi-trash"></i>
-						</button>
-					</div> -->
+					<div class="col"></div>
+					<div class="col"></div>
+					<div class="col"></div>
 				</div>
-				<div class="row">
+				<div class="row mb-3">
 					<div class="col">
 						<label class="required">ID Type</label>
 						<input class="form-control" formControlName="idType" type="text" placeholder="" name="name" />
@@ -202,114 +196,55 @@
 						<input class="form-control" formControlName="idNumber" type="text" placeholder="" name="name" />
 					</div>
 
-					<!-- <div class="col mt-4">
-						<button
-							class="btn btn-light"
-							[disabled]="ids.length == 1"
-							(click)="removeId(i)"
-						>
-							<i class="bi bi-trash"></i>
-						</button>
-					</div> -->
+					<div class="col"></div>
+					<div class="col"></div>
+					<div class="col"></div>
 				</div>
-				<!-- <div formArrayName="info">
-					<div *ngFor="let inf of ids.controls; let i = index">
-						<div class="row">
-							<div class="col">
-								<label class="required">ID Type</label>
-								<input
-									class="form-control"
-									formControlName="idType"
-									type="text"
-									placeholder=""
-									name="name"
-								/>
-							</div>
-
-							<div class="col">
-								<label class="required">ID Number</label>
-								<input
-									class="form-control"
-									formControlName="idNumber"
-									type="text"
-									placeholder=""
-									name="name"
-								/>
-							</div>
-
-							<div class="col mt-4">
-								<button
-									class="btn btn-light"
-									[disabled]="ids.length == 1"
-									(click)="removeId(i)"
-								>
-									<i class="bi bi-trash"></i>
-								</button>
-							</div>
-						</div>
-					</div>
-					<div class="space2"></div>
-					<div class="row" (click)="addId()">
-						<div class="col">
-							<button type="button" class="btn btn-dark">
-								<i class="bi bi-plus-lg"></i>
-							</button>
-							Add Another ID
-						</div>
-					</div>
-				</div> -->
 			</form>
 		</div>
 
 		<div class="section" #preferences>
 			<form autocomplete="off">
 				<h6 class="heading">Preferences</h6>
-				<div class="row">
+				<div class="row mb-3">
 					<div class="col">
 						<label class="required">Location</label>
 						<select class="form-select" formControlName="location">
-							<option disabled>Select Website</option>
-							<option>Choose Website</option>
+							<option>Select</option>
 						</select>
 					</div>
 					<div class="col">
 						<label class="required">Billing Provider</label>
 						<select class="form-select" formControlName="practice">
-							<option disabled>Select Website</option>
-							<option>Choose Website</option>
+							<option>Select</option>
 						</select>
 					</div>
 
 					<div class="col">
 						<label class="required">Treating Provider</label>
 						<select class="form-select" formControlName="provider">
-							<option disabled>Select Website</option>
-							<option>Choose Website</option>
+							<option>Select</option>
 						</select>
 					</div>
 				</div>
-				<br />
-				<div class="row">
+				<div class="row mb-3">
 					<div class="col">
 						<label class="required">New Patient Coordinator</label>
 						<select class="form-select" formControlName="patientCoordinator">
-							<option disabled>Select Website</option>
-							<option>Choose Website</option>
+							<option>Select</option>
 						</select>
 					</div>
 					<div class="col">
 						<label class="required">Treatment Coordinator</label>
 						<select class="form-select" formControlName="treatmentCoordinator">
-							<option disabled>Select Website</option>
-							<option>Choose Website</option>
+							<option>Select</option>
 						</select>
 					</div>
 
 					<div class="col">
 						<label class="required">Chair Side Assistant</label>
 						<select class="form-select" formControlName="CSAssistant">
-							<option disabled>Select Website</option>
-							<option>Choose Website</option>
+							<option>Select</option>
 						</select>
 					</div>
 				</div>
@@ -319,17 +254,19 @@
 		<div class="section" #emergencyContact>
 			<form autocomplete="off">
 				<h6 class="heading">Emergency Contact</h6>
-				<div class="row">
+				<div class="row mb-3">
 					<div class="col">
 						<label class="required">Contact Person</label>
 						<select class="form-select" formControlName="cPerson">
-							<option disabled>Select Website</option>
-							<option>Choose Website</option>
+							<option>Select</option>
 						</select>
 					</div>
+					<div class="col"></div>
+					<div class="col"></div>
+					<div class="col"></div>
+					<div class="col"></div>
 				</div>
-				<br />
-				<div class="row">
+				<div class="row mb-3">
 					<div class="col">
 						<label class="required">Name</label>
 						<input class="form-control" type="text" placeholder="" name="id" formControlName="name" />
@@ -338,6 +275,9 @@
 						<label class="required">Emergency Contact</label>
 						<input class="form-control" type="text" placeholder="" name="name" formControlName="eContact" />
 					</div>
+					<div class="col"></div>
+					<div class="col"></div>
+					<div class="col"></div>
 				</div>
 			</form>
 		</div>

@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-4"></div>
                 <div class="col-6">
-                    <select class="form-select" style="width: 60%;" (change)="showList = true">
+                    <select class="form-select" style="width: 55.8%;" (change)="showList = true">
                         <option>Select Relationship</option>
                         <option>Father</option>
                         <option>Mother</option>
@@ -71,7 +71,8 @@
     <div class="container" *ngFor="let legalGuardian of legalGuardianList; let i = index">
         <div class="row section">
             <div class="col-2" (click)="gotoDetails(legalGuardian)">
-                <img src="{{ legalGuardian.image }}" width="78" height="90" />
+                <h1 class="border border-1" style="text-align: center; height: 80px; justify-content: center; display: flex; width: 94px; font-size: xxx-large;">A</h1>
+                <!-- <img src="{{ legalGuardian.image }}" width="78" height="90" /> -->
             </div>
             <div class="col-3" (click)="gotoDetails(legalGuardian)">
                 <p>
