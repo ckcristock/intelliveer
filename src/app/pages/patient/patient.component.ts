@@ -43,7 +43,15 @@ export class PatientComponent implements OnInit {
       this.router.url === '/dashboard/patient/referer' ||
       this.router.url === '/dashboard/patient/legal-guardian' ||
       this.router.url === '/dashboard/patient/payment-party' ||
-      this.router.url === '/dashboard/patient/insurance-subscriber'
+      this.router.url === '/dashboard/patient/insurance-subscriber' ||
+      this.router.url === '/dashboard/patient/family_members' ||
+
+      this.router.url === '/dashboard/patient/provider/add' ||
+      this.router.url === '/dashboard/patient/referer/add' ||
+      this.router.url === '/dashboard/patient/legal-guardian/add' ||
+      this.router.url === '/dashboard/patient/payment-party/add' ||
+      this.router.url === '/dashboard/patient/insurance-subscriber/add' ||
+      this.router.url === '/dashboard/patient/family_members/add'
     ) {
       return true;
     } else {

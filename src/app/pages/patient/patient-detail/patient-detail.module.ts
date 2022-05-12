@@ -6,6 +6,7 @@ import { ImageUploaderModule } from '@modules/image-uploader/image-uploader.modu
 import { PipesModule } from 'src/app/pipes/pipes/pipes.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TabsModule } from '@modules/tabs/tabs.module';
 
 
 
@@ -17,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ImageUploaderModule,
     PipesModule,
     NgSelectModule,
+    TabsModule
   ]
 })
 export class PatientDetailModule { }

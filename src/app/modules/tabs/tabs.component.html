@@ -1,0 +1,8 @@
+<div class="col pills">
+    <ul class="nav nav-pills">
+        <li class="nav-item" *ngFor="let tab of tabsLst">
+            <a class="nav-link" [ngClass]="[ selectTab == tab ? 'active' : 'inactive']" (click)="scroll(tab, tab)">{{
+                tab }}</a>
+        </li>
+    </ul>
+</div>
