@@ -1,14 +1,14 @@
 <div (click)="uploader.click()" class="img-uploader-main">
-  <div class="loader-overlay" *ngIf="processing">
-    <div class="lds-dual-ring"></div>
-  </div>
-  <img [src]="imageSrc || 'https://via.placeholder.com/150?text=LOGO'" />
-  <input
-    type="file"
-    accept="image/*"
-    #uploader
-    [hidden]="true"
-    (change)="uploadImage($event)"
-    style="font-size: 11px; margin-top: 5px"
-  />
+	<div class="loader-overlay" *ngIf="processing">
+		<div class="lds-dual-ring"></div>
+	</div>
+	<img [src]="imageSrc || '/assets/images/img_upload_placeholder.png'" />
+	<input
+		type="file"
+		accept="image/*"
+		#uploader
+		[hidden]="true"
+		(change)="uploadImage($event)"
+		style="font-size: 11px; margin-top: 5px"
+	/>
 </div>
