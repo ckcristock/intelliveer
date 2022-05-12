@@ -43,6 +43,12 @@
 	overflow: auto;
 }
 
+.pluscentered{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
 // mainformsection
 // .row.sticky {z-index: 999;background: #fff;}
 // .mainformsection {padding: 15px 0;

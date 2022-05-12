@@ -2,24 +2,53 @@
 <div class="row sticky">
    <div class="col-11">
       <div class="col pills">
-         <a class="active">Eligibility</a>
-         <a>COB/Assignment</a>
-         <a>Deductible</a>
-         <a>Benefits</a>
-         <a>Pre-authorization</a>
-         <a>Billing & Payments</a>
+         <a
+				[ngClass]="[selectTab == 'eligibility' ? 'active' : 'inactive']"
+				(click)="scroll(eligibility, 'eligibility')"
+				>Eligibility</a
+			>
+         <a
+				[ngClass]="[selectTab == 'cobaddig' ? 'active' : 'inactive']"
+				(click)="scroll(cobaddig, 'cobaddig')"
+				>COB/Assignment</a
+			>
+         <a
+				[ngClass]="[selectTab == 'deductible' ? 'active' : 'inactive']"
+				(click)="scroll(deductible, 'deductible')"
+				>Deductible</a
+			>
+         <a
+				[ngClass]="[selectTab == 'benefits' ? 'active' : 'inactive']"
+				(click)="scroll(benefits, 'benefits')"
+				>Benefits</a
+			>
+         <a
+				[ngClass]="[selectTab == 'preauth' ? 'active' : 'inactive']"
+				(click)="scroll(preauth, 'preauth')"
+				>Pre-authorization</a
+			>
+         <a
+				[ngClass]="[selectTab == 'billingpaym' ? 'active' : 'inactive']"
+				(click)="scroll(billingpaym, 'billingpaym')"
+				>Billing & Payments</a
+			>
       </div>
    </div>
-   <div class="col-1 d-flex justify-content-center align-items-center mb-3">
-      <button class="btn btn-dark">
-      <i class="bi bi-plus-lg"></i>
-      </button>
-   </div>
+   <div class="col-1 d-flex justify-content-center align-items-center mb-3 gap-2">
+		<img
+			src="../../../../../assets/icons/save.svg"
+			style="width: 37px; height: 37px; cursor: pointer;"
+			alt=""
+		/>
+		<button class="btn btn-dark pluscentered">
+			<i class="bi bi-plus-lg"></i>
+		</button>
+	</div>
  </div>
  <!-- sections -->
  <div class="row">
    <div class="col-12" id="main">
-      <div class="section" #eligibility>
+      <div class="section p-5" #eligibility>
          <form autocomplete="off">
             <div class="mainformsection">
                <h6 class="heading">Eligibility</h6>
@@ -78,7 +107,7 @@
             </div>
          </form>
       </div>
-      <div class="section" #cobaddig>
+      <div class="section p-5" #cobaddig>
          <form autocomplete="off">
             <div class="mainformsection">
                <h6 class="heading">COB/Assignment</h6>
@@ -125,7 +154,7 @@
             </div>
          </form>
       </div>
-      <div class="section" #deductible>
+      <div class="section p-5" #deductible>
          <form autocomplete="off">
             <div class="mainformsection">
                <h6 class="heading">Deductible</h6>
@@ -196,7 +225,7 @@
             </div>
          </form>
       </div>
-      <div class="section" #benefits>
+      <div class="section p-5" #benefits>
          <form autocomplete="off">
             <div class="mainformsection">
                <h6 class="heading">Benefits</h6>
@@ -205,7 +234,7 @@
                      <div class="col-4">
                         <div class="mainformset">
                            <label class="required">Orthodontic Maximum Type: Lifetime/Annual</label>
-                           <select class="form-select" formControlName="interest">
+                           <select class="form-select" formControlName="">
                               <option disabled>Select Website</option>
                               <option>Select</option>
                            </select>
@@ -269,7 +298,7 @@
             </div>
          </form>
       </div>
-      <div class="section" #preauth>
+      <div class="section p-5" #preauth>
          <form autocomplete="off">
             <div class="mainformsection">
                <h6 class="heading">Pre-authorization</h6>
@@ -333,7 +362,7 @@
             </div>
          </form>
       </div>
-      <div class="section" #billingpaym>
+      <div class="section p-5" #billingpaym>
          <form autocomplete="off">
             <div class="mainformsection">
                <h6 class="heading">BIlling & Payments</h6>

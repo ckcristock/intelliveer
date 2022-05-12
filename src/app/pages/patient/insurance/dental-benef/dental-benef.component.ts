@@ -7,9 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DentalBenefComponent implements OnInit {
 
+  selectTab: string = "eligibility";
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  scroll(el: HTMLElement, selectTab: string) {
+    this.selectTab = selectTab.trim();
+    el.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'nearest',
+    });
   }
 
 }

@@ -1,19 +1,44 @@
 <!-- menu -->
-<div class="row sticky">
+<div class="row sticky" style="width: 101.4%;">
 	<div class="col-11">
 		<div class="col pills">
-			<a class="active">Eligibility</a>
-			<a>COB/Assignment</a>
-			<a>Deductible</a>
-			<a>Dental Benefits</a>
-			<a>Frequencies</a>
+			<a
+				[ngClass]="[selectTab == 'eligibility' ? 'active' : 'inactive']"
+				(click)="scroll(eligibility, 'eligibility')"
+				>Eligibility</a
+			>
+			<a
+				[ngClass]="[selectTab == 'cobaddig' ? 'active' : 'inactive']"
+				(click)="scroll(cobaddig, 'cobaddig')"
+				>COB/Assignment</a
+			>
+			<a
+				[ngClass]="[selectTab == 'deductible' ? 'active' : 'inactive']"
+				(click)="scroll(deductible, 'deductible')"
+				>Deductible</a
+			>
+			<a
+				[ngClass]="[selectTab == 'dentalbenef' ? 'active' : 'inactive']"
+				(click)="scroll(dentalbenef, 'dentalbenef')"
+				>Dental Benefits</a
+			>
+			<a
+				[ngClass]="[selectTab == 'frequencies' ? 'active' : 'inactive']"
+				(click)="scroll(frequencies, 'frequencies')"
+				>Frequencies</a
+			>
 			<a>History</a>
 			<a>General Provision</a>
 			<a>Implant Benefits</a>
 		</div>
 	</div>
-	<div class="col-1 d-flex justify-content-center align-items-center mb-3">
-		<button class="btn btn-dark">
+	<div class="col-1 d-flex justify-content-center align-items-center mb-3 gap-2">
+		<img
+			src="../../../../../assets/icons/save.svg"
+			style="width: 37px; height: 37px; cursor: pointer;"
+			alt=""
+		/>
+		<button class="btn btn-dark pluscentered">
 			<i class="bi bi-plus-lg"></i>
 		</button>
 	</div>
@@ -77,7 +102,7 @@
 										formControlName="interest"
 									>
 										<option disabled>Select Website</option>
-										<option>Choose Website</option>
+										<option>Select</option>
 									</select>
 								</div>
 							</div>
@@ -192,7 +217,7 @@
 										formControlName="interest"
 									>
 										<option disabled>Select Website</option>
-										<option>Choose Website</option>
+										<option>Select</option>
 									</select>
 								</div>
 							</div>
@@ -206,7 +231,7 @@
 										formControlName="interest"
 									>
 										<option disabled>Select Website</option>
-										<option>Choose Website</option>
+										<option>Select</option>
 									</select>
 								</div>
 							</div>
@@ -221,7 +246,7 @@
 										formControlName="interest"
 									>
 										<option disabled>Select Website</option>
-										<option>Choose Website</option>
+										<option>Select</option>
 									</select>
 								</div>
 							</div>
@@ -235,7 +260,7 @@
 										formControlName="interest"
 									>
 										<option disabled>Select Website</option>
-										<option>Choose Website</option>
+										<option>Select</option>
 									</select>
 								</div>
 							</div>
@@ -734,7 +759,7 @@
 											<div
 												class="btn-group btn-group-select"
 											>
-												<button class="">Select</button>
+												<button style="height: 35px;" class="">Select</button>
 												<select
 													class="form-select"
 													formControlName="interest"
@@ -743,7 +768,7 @@
 														Select Website
 													</option>
 													<option>
-														Choose Website
+														Select
 													</option>
 												</select>
 											</div>
@@ -785,7 +810,7 @@
 											<div
 												class="btn-group btn-group-select"
 											>
-												<button class="">Select</button>
+												<button style="height: 35px;" class="">Select</button>
 												<select
 													class="form-select"
 													formControlName="interest"
@@ -794,7 +819,7 @@
 														Select Website
 													</option>
 													<option>
-														Choose Website
+														Select
 													</option>
 												</select>
 											</div>
@@ -842,7 +867,7 @@
 											<div
 												class="btn-group btn-group-select"
 											>
-												<button class="">Select</button>
+												<button style="height: 35px;" class="">Select</button>
 												<select
 													class="form-select"
 													formControlName="interest"
@@ -851,7 +876,7 @@
 														Select Website
 													</option>
 													<option>
-														Choose Website
+														Select
 													</option>
 												</select>
 											</div>
