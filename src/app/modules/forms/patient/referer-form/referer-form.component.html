@@ -1,20 +1,34 @@
 <div class="row sticky">
-	<div class="col-10">
+	<div class="col-11">
 		<div class="col pills">
-			<a [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']" (click)="scroll(overview, 'overview')">Overview</a>
-			<a [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']" (click)="scroll(profile, 'profile')">Profile</a>
-			<a [ngClass]="[ selectTab == 'address' ? 'active' : 'inactive']" (click)="scroll(address, 'address')">Address</a>
-			<a [ngClass]="[ selectTab == 'contact' ? 'active' : 'inactive']" (click)="scroll(contact, 'contact')">Contact</a>
-			<a [ngClass]="[ selectTab == 'notes' ? 'active' : 'inactive']" (click)="scroll(notes, 'notes')">Notes</a>
+			<ul class="nav">
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']" (click)="scroll(overview, 'overview')">Overview</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']" (click)="scroll(profile, 'profile')">Profile</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'address' ? 'active' : 'inactive']" (click)="scroll(address, 'address')">Address</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'contact' ? 'active' : 'inactive']" (click)="scroll(contact, 'contact')">Contact</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'notes' ? 'active' : 'inactive']" (click)="scroll(notes, 'notes')">Notes</a>
+				</li>
+			</ul>
 		</div>
 	</div>
-	<div class="col-2 d-flex justify-content-center align-items-center mb-3">
-		<div class="col">
-			<button class="btn btn-light" [disabled]="Form?.invalid" >
-				<img src="assets/icons/save.svg" width="36" height="36" />
-			</button>
-			<img src="assets/icons/cancel.svg" width="36" height="36" (click)="cancel()" />
-		</div>
+	<div class="col-1 d-flex justify-content-end align-items-center mb-3">
+		<button class="btn btn-light" [disabled]="Form?.invalid" >
+			<img src="assets/icons/save.svg" width="36" height="36" />
+		</button>
+		<img src="assets/icons/cancel.svg" width="36" height="36" (click)="cancel()" />
 	</div>
 </div>
 
@@ -22,22 +36,23 @@
 	<div class="col-12" id="main">
 		<div class="section" #overview>
 			<div class="row">
-				<div class="col-sm">
+				<div class="col-2">
 					<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
 					</app-image-uploader>
 				</div>
-				<div class="col-sm">
+				<div class="col-4">
 					<p>Olivia Doe <span>(P1001)</span></p>
 					<p>Female</p>
 					<p>May 10,1992</p>
 					<p>29y, 10m</p>
 				</div>
-				<div class="col-sm">
+				<div class="col-4">
 					<p>Prefered mail method: abc@gmail.com</p>
 					<p>Primary Phone number: 1234567890</p>
 					<p>Email: abc@email.com</p>
 					<p>No. of referred patient: 4</p>
 				</div>
+				<div class="col-2"></div>
 			</div>
 		</div>
 
@@ -61,8 +76,7 @@
 					<div class="col">
 						<label class="required">Title</label>
 						<select class="form-select" formControlName="title">
-							<option disabled>Select Website</option>
-							<option>Choose Website</option>
+							<option>Select</option>
 						</select>
 					</div>
 					<div class="col">
@@ -138,8 +152,7 @@
 				<div class="col">
 					<label class="required">Primary Phone Type</label>
 					<select class="form-select" formControlName="pPhoneType">
-						<option disabled>Select Website</option>
-						<option>Choose Website</option>
+						<option>Select</option>
 					</select>
 				</div>
 
@@ -161,8 +174,7 @@
 						class="required">
 						Secondary Phone Type</label>
 					<select class="form-select" formControlName="sPhoneType">
-						<option disabled>Select Website</option>
-						<option>Choose Website</option>
+						<option>Select</option>
 					</select>
 				</div>
 
@@ -183,8 +195,7 @@
 					<label
 						class="required">Preferred Mail Method</label>
 					<select class="form-select" formControlName="preferredMailMethod">
-						<option disabled>Select Website</option>
-						<option>Choose Website</option>
+						<option>Select</option>
 					</select>
 				</div>
 

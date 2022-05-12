@@ -1,21 +1,38 @@
 <div class="row sticky">
-	<div class="col-10">
+	<div class="col-11">
 		<div class="col pills">
-			<a [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']" (click)="scroll(overview, 'overview')">Overview</a>
-			<a [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']" (click)="scroll(profile, 'profile')">Profile</a>
-			<a [ngClass]="[ selectTab == 'address' ? 'active' : 'inactive']" (click)="scroll(address, 'address')">Address</a>
-			<a [ngClass]="[ selectTab == 'contact' ? 'active' : 'inactive']" (click)="scroll(contact, 'contact')">Contact</a>
-			<a [ngClass]="[ selectTab == 'financials' ? 'active' : 'inactive']" (click)="scroll(financials, 'financials')">Financials</a>
-			<a [ngClass]="[ selectTab == 'notes' ? 'active' : 'inactive']" (click)="scroll(notes, 'notes')">Notes</a>
+			<ul class="nav">
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']" (click)="scroll(overview, 'overview')">Overview</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']" (click)="scroll(profile, 'profile')">Profile</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'address' ? 'active' : 'inactive']" (click)="scroll(address, 'address')">Address</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'contact' ? 'active' : 'inactive']" (click)="scroll(contact, 'contact')">Contact</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'financials' ? 'active' : 'inactive']" (click)="scroll(financials, 'financials')">Financials</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'notes' ? 'active' : 'inactive']" (click)="scroll(notes, 'notes')">Notes</a>
+				</li>
+			</ul>
 		</div>
 	</div>
-	<div class="col-2 d-flex justify-content-center align-items-center mb-3">
-		<div class="col">
-			<button class="btn btn-light" [disabled]="Form?.invalid" >
-				<img src="assets/icons/save.svg" width="36" height="36" />
-			</button>
-			<img src="assets/icons/cancel.svg" width="36" height="36" (click)="cancel()" />
-		</div>
+	<div class="col-1 d-flex justify-content-end align-items-center mb-3">
+		<button class="btn btn-light" [disabled]="Form?.invalid" >
+			<img src="assets/icons/save.svg" width="36" height="36" />
+		</button>
+		<img src="assets/icons/cancel.svg" width="36" height="36" (click)="cancel()" />
 	</div>
 </div>
 
@@ -23,23 +40,23 @@
 	<div class="col-12" id="main">
 		<div class="section" #overview>
 			<div class="row">
-				<div class="col-sm">
+				<div class="col-2">
 					<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
 					</app-image-uploader>
 				</div>
-				<div class="col-sm">
+				<div class="col-3">
 					<p>Olivia Doe <span>(P1001)</span></p>
 					<p>Female</p>
 					<p>May 10,1992</p>
 					<p>29y, 10m</p>
 				</div>
-				<div class="col-sm">
+				<div class="col-3">
 					<p>Preferred Pronoun: Lorem ipsum</p>
 					<p>Status: Active</p>
 					<p>Relationship: Mother</p>
 					<p>Subscriber ID: 12454</p>
 				</div>
-				<div class="col-sm">
+				<div class="col-4">
 					<p>Language: English</p>
 					<p>Preferred Communication Method: Phone</p>
 					<p>Phone (Primary): 1234567890</p>
@@ -51,21 +68,19 @@
 		<div class="section container" #profile>
 			<form autocomplete="off">
 				<h6 class="heading">Profile</h6>
-				<div class="row">
+				<div class="row mb-3">
 					<div class="col-3">
 						<label
 							class="required">Relationship with Patient</label
 						>
 						<select class="form-select" formControlName="relation">
-							<option disabled>Select Website</option>
-							<option>Choose Website</option>
+							<option>Select</option>
 						</select>
 					</div>
 					<div class="col-3">
 						<label class="required">Title</label>
 						<select class="form-select" formControlName="title">
-							<option disabled>Select Website</option>
-							<option>Choose Website</option>
+							<option>Select</option>
 						</select>
 					</div>
 					<div class="col-2">
@@ -100,7 +115,7 @@
 						/>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row mb-3">
 					<div class="col-3">
 						<label class="required">Date of Birth</label>
 						<input
@@ -123,8 +138,7 @@
 							class="required">Preferred Pronoun</label
 						>
 						<select class="form-select" formControlName="pronoun">
-							<option value="M">Male</option>
-							<option value="F">Female</option>
+							<option>Select</option>
 						</select>
 					</div>
 					<div class="col-2">
@@ -144,9 +158,9 @@
 						</select>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row mb-3">
 					<div class="col-3">
-						<label class="required" for="inputGroupFile01">Upload ID</label>
+						<label class="heading" for="inputGroupFile01"><i class="bi bi-cloud-arrow-up" style="font-size: 15px;"></i>&nbsp; Upload ID</label>
 						<input
 							class="form-control"
 							type="file"
@@ -189,8 +203,7 @@
 				<div class="col">
 					<label class="required">Primary Phone Type</label>
 					<select class="form-select value-must" formControlName="pPhoneType">
-						<option>Select Website</option>
-						<option>Choose Website</option>
+						<option>Select</option>
 					</select>
 				</div>
 
@@ -210,8 +223,7 @@
 				<div class="col">
 					<label class="required">Secondary Phone Type</label>
 					<select class="form-select" formControlName="sPhoneType">
-						<option disabled>Select Website</option>
-						<option>Choose Website</option>
+						<option>Select</option>
 					</select>
 				</div>
 
@@ -231,8 +243,7 @@
 						class="required">Preferred Communication Method - Primary</label
 					>
 					<select class="form-select" formControlName="CommPrimary">
-						<option disabled>Select Website</option>
-						<option>Choose Website</option>
+						<option>Select</option>
 					</select>
 				</div>
 			</div>
@@ -242,8 +253,7 @@
 						class="required">Preferred Communication Method - Secondary</label
 					>
 					<select class="form-select" formControlName="CommSecondary">
-						<option disabled>Select Website</option>
-						<option>Choose Website</option>
+						<option>Select</option>
 					</select>
 				</div>
 				<div class="col">
@@ -256,18 +266,18 @@
 						formControlName="phone"
 					/>
 				</div>
+				<div class="col"></div>
 			</div>
 			
 		</div>
 
 		<div class="section" #financials>
 			<h6 class="heading">Financials</h6>
-			<div class="row">
+			<div class="row mb-3">
 				<div class="col">
 					<label class="required">Work Status</label>
 					<select class="form-select" formControlName="workStatus">
-						<option disabled>Select Website</option>
-						<option>Choose Website</option>
+						<option>Select</option>
 					</select>
 				</div>
 				<div class="col">
@@ -303,8 +313,7 @@
 				<div class="col">
 					<label class="required">Credit Rating</label>
 					<select class="form-select" formControlName="rating">
-						<option disabled>Select Website</option>
-						<option>Choose Website</option>
+						<option>Select</option>
 					</select>
 				</div>
 			</div>
