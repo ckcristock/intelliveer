@@ -7,12 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PolicyInfoComponent implements OnInit {
 
+  selectTab: string = "overview";
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  scroll(el: HTMLElement) {
+  scroll(el: HTMLElement, selectTab: string) {
+    this.selectTab = selectTab.trim();
     el.scrollIntoView({
       behavior: 'smooth',
       block: 'start',

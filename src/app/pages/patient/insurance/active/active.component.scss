@@ -93,3 +93,52 @@
     margin-right: 19px;
     cursor: pointer;
 }
+
+.modal-header{
+    border-bottom: none;
+    width: 433px;
+}
+
+.modal-content{
+    margin: 0px;
+    padding: 0px;
+    width: 433px;
+    border-radius: 8px;
+}
+
+.modal-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 433px;
+    height: 227px;
+    margin: 0px;
+    padding: 0px;
+    gap: 42px;
+    p{
+        margin: 0px !important;
+        padding: 0px !important;
+        width: 277px;
+        text-align: center;
+        font-family: "Montserrat";
+        font-size: 11px;
+        font-weight: bold;
+        
+    }
+    #buttonmodal{
+        width: 88.818px;
+        height: 35.763px;
+        border-radius: 5px;
+    }
+}
+
+.menuheight{
+    height: 43px;
+}
+
+.pluscentered{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
