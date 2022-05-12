@@ -19,7 +19,7 @@
 			<li>
 				<img src="assets/icons/folder.svg" alt="" />
 			</li>
-			<li>
+			<li class="cameraline">
 				<img src="assets/icons/camera.svg" alt="" />
 			</li>
 			<li>
@@ -51,7 +51,7 @@
 					</li>
 				</ol>
 			</ul>
-			
+
 
 			<!-- <ngb-accordion #acc="ngbAccordion" activeIds="consultation-phase-panel" class="accord">
 				<ngb-panel title="Consultation Phase" id="consultation-phase-panel">
@@ -248,7 +248,7 @@
 										class="accord-transparent">
 										<ngb-panel title="" id="patient-panel">
 											<ng-template ngbPanelTitle>
-												<span [class.active]="activeSection()==true" 
+												<span [class.active]="activeSection()==true"
 												[routerLink]="'/dashboard/patient/insurance/dropped'
 												">Dropped Dental Plan</span>
 											</ng-template>
