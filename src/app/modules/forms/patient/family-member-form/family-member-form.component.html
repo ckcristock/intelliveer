@@ -1,8 +1,15 @@
 <div class="row sticky">
 	<div class="col-10">
 		<div class="col pills">
-			<a [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']" (click)="scroll(overview, 'overview')">Overview</a>
-			<a [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']" (click)="scroll(profile, 'profile')">Profile</a>
+			<ul class="nav">
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']" (click)="scroll(overview, 'overview')">Overview</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']" (click)="scroll(profile, 'profile')">Profile</a>
+				</li>
+			</ul>		
 		</div>
 	</div>
 	<div class="col-2 d-flex justify-content-center align-items-center mb-3">

@@ -43,7 +43,17 @@
 	<div class="row">
 		<!-- Principal DropDown -->
 		<div *ngIf="patients()===true" class="col" style="max-width: 200px">
-			<ngb-accordion #acc="ngbAccordion" activeIds="consultation-phase-panel" class="accord">
+			<button type="button" class="btn btn-light" style="border-color: lightgray;">Consultation Phase</button>
+			<ul class="ul">
+				<ol class="ol">
+					<li class="pointer" *ngFor="let item of menuItems" routerLinkActive="active" [routerLink]="item.url">
+						<b>{{ item.title }}</b>
+					</li>
+				</ol>
+			</ul>
+			
+
+			<!-- <ngb-accordion #acc="ngbAccordion" activeIds="consultation-phase-panel" class="accord">
 				<ngb-panel title="Consultation Phase" id="consultation-phase-panel">
 					<ng-template ngbPanelContent>
 						<ul class="ul">
@@ -97,21 +107,17 @@
 									Family Members
 								</li>
 								<hr />
-								<li class="pointer" routerLinkActive="active" [routerLink]="
-										'/dashboard/patient/family_members'
-									">
+								<li class="pointer" routerLinkActive="active">
 									Achieve Patient
 								</li>
-								<li class="pointer" routerLinkActive="active" [routerLink]="
-										'/dashboard/patient/family_members'
-									">
+								<li class="pointer" routerLinkActive="active">
 									Delete Patient
 								</li>
 							</ol>
 						</ul>
 					</ng-template>
 				</ngb-panel>
-			</ngb-accordion>
+			</ngb-accordion> -->
 		</div>
 		<div *ngIf="insurances()===true" class="col" style="max-width: 200px">
 			<ngb-accordion #acc="ngbAccordion" activeIds="consultation-phase-panel" class="accord">
@@ -124,8 +130,7 @@
 										class="accord-transparent">
 										<ngb-panel title="" id="patient-panel">
 											<ng-template ngbPanelTitle>
-												<span [class.active]="activeSection()==true" 
-												[routerLink]="'/dashboard/patient/insurance/active'
+												<span [class.active]="activeSection()==true" [routerLink]="'/dashboard/patient/insurance/active'
 												">Active Dental Plan</span>
 											</ng-template>
 											<ng-template ngbPanelContent>

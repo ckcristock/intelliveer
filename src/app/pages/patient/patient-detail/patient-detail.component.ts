@@ -17,6 +17,7 @@ export class PatientDetailComponent implements OnInit {
 
   interestsLst: any[] = ["option 1", "option 2", "option 3", "option 4", "option 5", "option 6"];
   tagsLst: any[] = ["option 1", "option 2", "option 3", "option 4", "option 5", "option 6"];
+  tabsLst: any[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -29,6 +30,7 @@ export class PatientDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.tabsLst = ["overview", "profile", "Address"];
     this.addId();
     this.initForm(this.formData);
   }
@@ -88,7 +90,6 @@ export class PatientDetailComponent implements OnInit {
     this.ids.removeAt(i);
   }
 
-
   scroll(el: HTMLElement, selectTab: string) {
     this.selectTab = selectTab.trim();
     el.scrollIntoView({
@@ -96,6 +97,16 @@ export class PatientDetailComponent implements OnInit {
       block: 'start',
       inline: 'nearest',
     });
+  }
+
+  selectedTab($event: any)
+  {
+    // if($event == "overview")
+    // {
+    //   this.scroll("overview", $event);
+    // }
+    console.log($event);
+    // this.scroll($event.selectHtmlTab, $event.selectTab.trim())
   }
 
 
