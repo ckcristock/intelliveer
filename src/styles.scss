@@ -52,13 +52,13 @@ label:focus,
 }
 form {
 	.form-control {
-		margin-bottom: 0.5rem;
+		// margin-bottom: 0.5rem;
 	}
 }
 
 form {
 	.value-must {
-		margin-bottom: 0.5rem;
+		// margin-bottom: 0.5rem;
 		background-color: #f7ebeb;
 		border-color: #ed1c24;
 	}
@@ -267,7 +267,7 @@ select.form-select {
 	border-radius: 4px;
 	font-weight: 300;
 	font-size: 12px;
-	margin-bottom: 0;
+	//margin-bottom: 0;
 	color: #000;
 	// box-shadow: 0 -0.5px 0pt 0.1pt #ddd !important;
 }
@@ -361,4 +361,17 @@ ng-select {
 	border: 1px solid red;
 	border-radius: 4px;
 	background: #f7ebeb !important;
+}
+
+form {
+	input,
+	select {
+		margin-bottom: 12px;
+	}
+	.input-group {
+		label,
+		input {
+			margin-bottom: 0px;
+		}
+	}
 }
