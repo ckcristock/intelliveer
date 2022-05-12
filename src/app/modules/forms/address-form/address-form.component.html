@@ -1,70 +1,105 @@
 <div *ngIf="parentGroup">
-  <div [formGroup]="parentGroup">
-    <div [formGroupName]="formGroupName">
-      <div class="row mb-3">
-        <div class="col">
-          <label class="required">Address Line 1</label>
-          <input
-            type="text"
-            class="form-control"
-            formControlName="addressLine1"
-          />
-        </div>
-        <div class="col">
-          <label class="required">Address Line 2</label>
-          <input
-            type="text"
-            class="form-control"
-            formControlName="addressLine2"
-          />
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="col">
-          <label class="required">Country</label>
-          <!-- <input type="text" class="form-control" formControlName="country" /> -->
-          <ng-select
-            formControlName="country"
-            (change)="getStates($event)"
-            (clear)="resetState(); resetCity()"
-          >
-            <ng-option
-              *ngFor="let country of countries"
-              [value]="country.iso3"
-              >{{ country.name }}</ng-option
-            >
-          </ng-select>
-        </div>
-        <div class="col">
-          <label class="required">State</label>
-          <!-- <input type="text" class="form-control" formControlName="state" /> -->
-          <ng-select
-            formControlName="state"
-            (change)="getCities($event)"
-            (open)="stateOptionIsOpened()"
-            (clear)="resetCity()"
-          >
-            <ng-option
-              *ngFor="let state of states"
-              [value]="state.state_code"
-              >{{ state.name }}</ng-option
-            >
-          </ng-select>
-        </div>
-        <div class="col">
-          <label class="required">City</label>
-          <!-- <input type="text" class="form-control" formControlName="city" /> -->
-          <ng-select formControlName="city" (open)="cityOptionIsOpened()">
-            <ng-option *ngFor="let city of cities" [value]="city.name">{{
-              city.name
-            }}</ng-option>
-          </ng-select>
-        </div>
-        <div class="col">
-          <label class="required">Zip Code</label>
-          <input type="number" class="form-control" formControlName="zipCode" />
-        </div>
-      </div>
-    </div>
-  </div>
+	<div [formGroup]="parentGroup">
+		<div [formGroupName]="formGroupName">
+			<div class="row mb-3">
+				<div class="col">
+					<label class="required">Address Line 1</label>
+					<input
+						type="text"
+						class="form-control"
+						formControlName="addressLine1"
+						placeholder="Street address, P.O box"
+						[ngClass]="{
+							'required-field':
+								isRequiredField('addressLine1') === true
+						}"
+					/>
+				</div>
+				<div class="col">
+					<label class="required">Address Line 2</label>
+					<input
+						type="text"
+						class="form-control"
+						formControlName="addressLine2"
+						placeholder="Apartment, Suite, Unit, Building, Floor, etc."
+						[ngClass]="{
+							'required-field':
+								isRequiredField('addressLine2') === true
+						}"
+					/>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col">
+					<label class="required">Zip Code</label>
+					<input
+						type="number"
+						class="form-control"
+						formControlName="zipCode"
+						[ngClass]="{
+							'required-field':
+								isRequiredField('zipCode') === true
+						}"
+					/>
+				</div>
+				<div class="col">
+					<label class="required">Country</label>
+					<!-- <input type="text" class="form-control" formControlName="country" /> -->
+					<ng-select
+						formControlName="country"
+						(change)="getStates($event)"
+						(clear)="resetState(); resetCity()"
+						[ngClass]="{
+							'required-ng-select':
+								isRequiredField('country') === true
+						}"
+					>
+						<ng-option
+							*ngFor="let country of countries"
+							[value]="country.iso3"
+							>{{ country.name }}</ng-option
+						>
+					</ng-select>
+				</div>
+				<div class="col">
+					<label class="required">State</label>
+					<!-- <input type="text" class="form-control" formControlName="state" /> -->
+					<ng-select
+						formControlName="state"
+						(change)="getCities($event)"
+						(open)="stateOptionIsOpened()"
+						(clear)="resetCity()"
+						[ngClass]="{
+							'required-ng-select':
+								isRequiredField('state') === true
+						}"
+					>
+						<ng-option
+							*ngFor="let state of states"
+							[value]="state.state_code"
+							>{{ state.name }}</ng-option
+						>
+					</ng-select>
+				</div>
+				<div class="col">
+					<label class="required">City</label>
+					<!-- <input type="text" class="form-control" formControlName="city" /> -->
+					<ng-select
+						formControlName="city"
+						(open)="cityOptionIsOpened()"
+						[ngClass]="{
+							'required-ng-select':
+								isRequiredField('city') === true
+						}"
+					>
+						<ng-option
+							*ngFor="let city of cities"
+							[value]="city.name"
+							>{{ city.name }}</ng-option
+						>
+					</ng-select>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
