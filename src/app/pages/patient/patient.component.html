@@ -200,11 +200,35 @@
 														</ngb-accordion>
 													</li>
 													<li>
-														<ngb-accordion #acc="ngbAccordion" activeIds="patient-panel"
-															class="accord-transparent">
+														<ngb-accordion #acc="ngbAccordion" class="accord-transparent">
 															<ngb-panel title="Tertiary" id="patient-panel">
 																<ng-template ngbPanelContent>
-
+																	<ul class="ol">
+																		<li class="pointer" routerLinkActive="active"
+																			[routerLink]="
+																				'/dashboard/patient/insurance/policy-info'
+																			">
+																			Policy Informtion
+																		</li>
+																		<li class="pointer" routerLinkActive="active"
+																			[routerLink]="
+																				'/dashboard/patient/insurance/ortho-benef'
+																			">
+																			Orthodontic Benefits
+																		</li>
+																		<li class="pointer" routerLinkActive="active"
+																			[routerLink]="
+																				'/dashboard/patient/insurance/dental-benef'
+																			">
+																			Dental Benefits
+																		</li>
+																		<li class="pointer" routerLinkActive="active"
+																			[routerLink]="
+																				'/dashboard/patient/insurance/billing'
+																			">
+																			Billing
+																		</li>
+																	</ul>
 																</ng-template>
 															</ngb-panel>
 														</ngb-accordion>
@@ -217,7 +241,12 @@
 								<li>
 									<ngb-accordion #acc="ngbAccordion" activeIds="patient-panel"
 										class="accord-transparent">
-										<ngb-panel title="Dropped Dental Plan" id="patient-panel">
+										<ngb-panel title="" id="patient-panel">
+											<ng-template ngbPanelTitle>
+												<span [class.active]="activeSection()==true" 
+												[routerLink]="'/dashboard/patient/insurance/dropped'
+												">Dropped Dental Plan</span>
+											</ng-template>
 											<ng-template ngbPanelContent>
 
 											</ng-template>

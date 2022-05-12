@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-active',
-  templateUrl: './active.component.html',
-  styleUrls: ['./active.component.scss']
+  selector: 'app-dropped',
+  templateUrl: './dropped.component.html',
+  styleUrls: ['./dropped.component.scss']
 })
-export class ActiveComponent implements OnInit {
+export class DroppedComponent implements OnInit {
 
   constructor() { }
 

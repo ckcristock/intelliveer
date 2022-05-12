@@ -93,3 +93,12 @@
     margin-right: 19px;
     cursor: pointer;
 }
+
+.deactive{
+    background-color: #eeeeee;
+    opacity: 0.25;
+    cursor: none;
+    .active{
+        color: black;
+    }
+}
