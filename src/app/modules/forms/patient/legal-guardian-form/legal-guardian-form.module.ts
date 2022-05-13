@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AddressFormModule } from '@modules/forms/address-form/address-form.module';
 import { ImageUploaderModule } from '@modules/image-uploader/image-uploader.module';
 import { LegalGuardianFormComponent } from './legal-guardian-form.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -13,7 +14,9 @@ import { LegalGuardianFormComponent } from './legal-guardian-form.component';
   imports: [
     CommonModule,
     ImageUploaderModule,
-    AddressFormModule
+    AddressFormModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [LegalGuardianFormComponent]
 })

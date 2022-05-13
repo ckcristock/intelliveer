@@ -7,7 +7,7 @@
 					src="assets/icons/users.svg"
 					alt=""
 					[class.active]="patients() === true"
-					[routerLink]="'/dashboard/patient/patient-detail'"
+					[routerLink]="'/dashboard/patient/patient-user/patient-detail'"
 				/>
 			</li>
 			<li>
@@ -49,128 +49,6 @@
 		<hr />
 	</div>
 	<div class="row">
-		<!-- Principal DropDown -->
-		<div *ngIf="patients() === true" class="col" style="max-width: 200px">
-			<ngb-accordion
-				#acc="ngbAccordion"
-				activeIds="consultation-phase-panel"
-				class="accord"
-			>
-				<ngb-panel
-					title="Consultation Phase"
-					id="consultation-phase-panel"
-				>
-					<ng-template ngbPanelContent>
-						<ul class="ul">
-							<ol class="ol">
-								<li
-									class="pointer"
-									routerLinkActive="active"
-									[routerLink]="
-										'/dashboard/patient/patient-detail'
-									"
-								>
-									Patient
-								</li>
-								<li>
-									<ngb-accordion
-										#acc="ngbAccordion"
-										activeIds="patient-panel"
-										class="accord-transparent"
-									>
-										<ngb-panel
-											title="Responsible Party"
-											id="patient-panel"
-										>
-											<ng-template ngbPanelContent>
-												<ul class="ol">
-													<li
-														class="pointer"
-														routerLinkActive="active"
-														[routerLink]="
-															'/dashboard/patient/legal-guardian'
-														"
-													>
-														Legal Guardian
-													</li>
-													<li
-														class="pointer"
-														routerLinkActive="active"
-														[routerLink]="
-															'/dashboard/patient/payment-party'
-														"
-													>
-														Payment Party
-													</li>
-													<li
-														class="pointer"
-														routerLinkActive="active"
-														[routerLink]="
-															'/dashboard/patient/insurance-subscriber'
-														"
-														data-toggle="tooltip"
-														title="Insurance Subscriber"
-													>
-														{{
-															'Insurance Subscriber'
-																| shortened: 30
-														}}
-													</li>
-												</ul>
-											</ng-template>
-										</ngb-panel>
-									</ngb-accordion>
-								</li>
-
-								<li
-									class="pointer"
-									routerLinkActive="active"
-									[routerLink]="'/dashboard/patient/provider'"
-								>
-									Provider
-								</li>
-								<li
-									class="pointer"
-									routerLinkActive="active"
-									[routerLink]="'/dashboard/patient/referer'"
-								>
-									Referer
-								</li>
-								<li
-									class="pointer"
-									routerLinkActive="active"
-									[routerLink]="
-										'/dashboard/patient/family_members'
-									"
-								>
-									Family Members
-								</li>
-								<hr />
-								<li
-									class="pointer"
-									routerLinkActive="active"
-									[routerLink]="
-										'/dashboard/patient/family_members'
-									"
-								>
-									Achieve Patient
-								</li>
-								<li
-									class="pointer"
-									routerLinkActive="active"
-									[routerLink]="
-										'/dashboard/patient/family_members'
-									"
-								>
-									Delete Patient
-								</li>
-							</ol>
-						</ul>
-					</ng-template>
-				</ngb-panel>
-			</ngb-accordion>
-			-->
-		</div>
 		<div *ngIf="insurances() === true" class="col" style="max-width: 200px">
 			<div class="title">
 				<p>Phase 1</p>

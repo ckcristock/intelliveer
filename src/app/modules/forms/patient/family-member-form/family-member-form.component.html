@@ -13,7 +13,7 @@
 		</div>
 	</div>
 	<div class="col-1 d-flex justify-content-end align-items-center mb-3">
-		<button class="btn btn-light" [disabled]="Form?.invalid" >
+		<button class="btn btn-light" [disabled]="Form?.invalid"  (click)="save(f.value)" >
 			<img src="assets/icons/save.svg" width="36" height="36" />
 		</button>
 		<img src="assets/icons/cancel.svg" width="36" height="36" (click)="cancel()" />
@@ -32,7 +32,7 @@
 		</div>
 
 		<div class="section" #profile>
-			<form autocomplete="off">
+			<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
 				<h6 class="heading">Profile</h6>
 				<div class="row mb-3">
 					<div class="col">
@@ -73,7 +73,7 @@
 						/>
 					</div>
 				</div>
-				<div class="row mb-3">
+				<div class="row">
 					<div class="col">
 						<label class="required">Date of Birth</label>
 						<input

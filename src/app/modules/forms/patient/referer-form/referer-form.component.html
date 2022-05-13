@@ -3,29 +3,34 @@
 		<div class="col pills">
 			<ul class="nav">
 				<li class="nav-item">
-					<a class="nav-link" [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']" (click)="scroll(overview, 'overview')">Overview</a>
+					<a class="nav-link" [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']"
+						(click)="scroll(overview, 'overview')">Overview</a>
 				</li>
 				&nbsp;&nbsp;
 				<li class="nav-item">
-					<a class="nav-link" [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']" (click)="scroll(profile, 'profile')">Profile</a>
+					<a class="nav-link" [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']"
+						(click)="scroll(profile, 'profile')">Profile</a>
 				</li>
 				&nbsp;&nbsp;
 				<li class="nav-item">
-					<a class="nav-link" [ngClass]="[ selectTab == 'address' ? 'active' : 'inactive']" (click)="scroll(address, 'address')">Address</a>
+					<a class="nav-link" [ngClass]="[ selectTab == 'address' ? 'active' : 'inactive']"
+						(click)="scroll(address, 'address')">Address</a>
 				</li>
 				&nbsp;&nbsp;
 				<li class="nav-item">
-					<a class="nav-link" [ngClass]="[ selectTab == 'contact' ? 'active' : 'inactive']" (click)="scroll(contact, 'contact')">Contact</a>
+					<a class="nav-link" [ngClass]="[ selectTab == 'contact' ? 'active' : 'inactive']"
+						(click)="scroll(contact, 'contact')">Contact</a>
 				</li>
 				&nbsp;&nbsp;
 				<li class="nav-item">
-					<a class="nav-link" [ngClass]="[ selectTab == 'notes' ? 'active' : 'inactive']" (click)="scroll(notes, 'notes')">Notes</a>
+					<a class="nav-link" [ngClass]="[ selectTab == 'notes' ? 'active' : 'inactive']"
+						(click)="scroll(notes, 'notes')">Notes</a>
 				</li>
 			</ul>
 		</div>
 	</div>
 	<div class="col-1 d-flex justify-content-end align-items-center mb-3">
-		<button class="btn btn-light" [disabled]="Form?.invalid" >
+		<button class="btn btn-light" [disabled]="Form?.invalid" (click)="save(f.value)">
 			<img src="assets/icons/save.svg" width="36" height="36" />
 		</button>
 		<img src="assets/icons/cancel.svg" width="36" height="36" (click)="cancel()" />
@@ -56,22 +61,16 @@
 			</div>
 		</div>
 
-		<div class="section" #profile>
-			<form autocomplete="off">
+		<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
+
+			<div class="section" #profile>
+
 				<h6 class="heading">Profile</h6>
-				<div class="row mb-3">
+				<div class="row">
 					<div class="col">
-						<label
-							class="required"
-							>Company Name</label
-						>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="companyName"
-						/>
+						<label class="required">Company Name</label>
+						<input class="form-control" type="text" placeholder="" name="name"
+							formControlName="companyName" />
 					</div>
 					<div class="col">
 						<label class="required">Title</label>
@@ -81,158 +80,102 @@
 					</div>
 					<div class="col">
 						<label class="required">First Name</label>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="firstName"
-							formControlName="firstName"
-						/>
+						<input class="form-control" type="text" placeholder="" name="firstName"
+							formControlName="firstName" />
 					</div>
 
 					<div class="col">
 						<label class="required">Middle Name</label>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="middleName"
-						/>
+						<input class="form-control" type="text" placeholder="" name="name"
+							formControlName="middleName" />
 					</div>
 					<div class="col">
 						<label class="required">Last Name</label>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="lastName"
-							formControlName="lastName"
-						/>
+						<input class="form-control" type="text" placeholder="" name="lastName"
+							formControlName="lastName" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-3">
 						<label class="required">Greeting</label>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="greeting"
-						/>
+						<input class="form-control" type="text" placeholder="" name="name" formControlName="greeting" />
 					</div>
 				</div>
-				
-			</form>
-		</div>
 
-		<div class="section" #address>
-			<h6 class="heading">Address</h6>
-			<app-address-form
-				[parentGroup]="Form"
-				[formGroupName]="'address'"
-			></app-address-form>
-		</div>
 
-		<div class="section" #contact>
-			<h6 class="heading">Contact</h6>
-			<div class="row mb-3">
-				<div class="col">
-					<label class="required">Email</label>
-					<input
-						class="form-control"
-						type="text"
-						placeholder=""
-						name="id"
-						formControlName="emailId"
-					/>
-				</div>
-
-				<div class="col">
-					<label class="required">Primary Phone Type</label>
-					<select class="form-select" formControlName="pPhoneType">
-						<option>Select</option>
-					</select>
-				</div>
-
-				<div class="col">
-					<label class="required">Primary Phone Number</label>
-					<input
-						class="form-control"
-						type="text"
-						placeholder=""
-						name="name"
-						formControlName="pPhoneNumber"
-					/>
-				</div>
 			</div>
 
-			<div class="row mb-3">
-				<div class="col">
-					<label
-						class="required">
-						Secondary Phone Type</label>
-					<select class="form-select" formControlName="sPhoneType">
-						<option>Select</option>
-					</select>
+			<div class="section" #address>
+				<h6 class="heading">Address</h6>
+				<app-address-form [parentGroup]="Form" [formGroupName]="'address'"></app-address-form>
+			</div>
+
+			<div class="section" #contact>
+				<h6 class="heading">Contact</h6>
+				<div class="row">
+					<div class="col">
+						<label class="required">Email</label>
+						<input class="form-control" type="text" placeholder="" name="id" formControlName="emailId" />
+					</div>
+
+					<div class="col">
+						<label class="required">Primary Phone Type</label>
+						<select class="form-select" formControlName="pPhoneType">
+							<option>Select</option>
+						</select>
+					</div>
+
+					<div class="col">
+						<label class="required">Primary Phone Number</label>
+						<input class="form-control" type="text" placeholder="" name="name"
+							formControlName="pPhoneNumber" />
+					</div>
 				</div>
 
-				<div class="col">
-					<label
-						class="required"
-						>Secondary Phone Number</label>
-					<input
-						class="form-control"
-						type="text"
-						placeholder=""
-						name="name"
-						formControlName="sPhoneNumber"
-					/>
-				</div>
+				<div class="row">
+					<div class="col">
+						<label class="required">
+							Secondary Phone Type</label>
+						<select class="form-select" formControlName="sPhoneType">
+							<option>Select</option>
+						</select>
+					</div>
 
-				<div class="col">
-					<label
-						class="required">Preferred Mail Method</label>
-					<select class="form-select" formControlName="preferredMailMethod">
-						<option>Select</option>
-					</select>
-				</div>
+					<div class="col">
+						<label class="required">Secondary Phone Number</label>
+						<input class="form-control" type="text" placeholder="" name="name"
+							formControlName="sPhoneNumber" />
+					</div>
 
-				<div class="col">
-					<label class="required">Website</label>
-					<div class="input-group mb-3">
-						<span class="form-control" id="basic-addon3"
-							>https://</span
-						>
-						<input
-							type="text"
-							class="form-control"
-							id="basic-url"
-							aria-describedby="basic-addon3"
-							name="website"
-							placeholder="www.example.com"
-							formControlName="website"
-						/>
+					<div class="col">
+						<label class="required">Preferred Mail Method</label>
+						<select class="form-select" formControlName="preferredMailMethod">
+							<option>Select</option>
+						</select>
+					</div>
+
+					<div class="col">
+						<label class="required">Website</label>
+						<div class="input-group">
+							<span class="form-control" id="basic-addon3">https://</span>
+							<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3"
+								name="website" placeholder="www.example.com" formControlName="website" />
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="section" #notes>
-			<h6 class="heading">Notes</h6>
-			<div class="row">
-				<div class="col-6">
-					<textarea
-						class="form-control"
-						name="note"
-						id=""
-						cols="70"
-						rows="5"
-						formControlName="note"
-					></textarea>
+			<div class="section" #notes>
+				<h6 class="heading">Notes</h6>
+				<div class="row">
+					<div class="col-6">
+						<textarea class="form-control" name="note" id="" cols="70" rows="5"
+							formControlName="note"></textarea>
+					</div>
 				</div>
 			</div>
-		</div>
+
+		</form>
+
 	</div>
 </div>

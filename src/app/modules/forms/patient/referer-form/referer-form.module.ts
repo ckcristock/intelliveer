@@ -4,6 +4,7 @@ import { AddressFormModule } from '@modules/forms/address-form/address-form.modu
 import { ImageUploaderModule } from '@modules/image-uploader/image-uploader.module';
 import { PipesModule } from 'src/app/pipes/pipes/pipes.module';
 import { RefererFormComponent } from './referer-form.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -13,7 +14,9 @@ import { RefererFormComponent } from './referer-form.component';
     CommonModule,
     ImageUploaderModule,
     AddressFormModule,
-    PipesModule
+    PipesModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [RefererFormComponent]
 })
