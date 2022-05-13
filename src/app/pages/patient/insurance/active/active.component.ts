@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Modal} from 'bootstrap' //<--import Modal
+// import {Modal} from 'bootstrap' //<--import Modal
 
 @Component({
   selector: 'app-active',
@@ -16,8 +16,8 @@ export class ActiveComponent implements OnInit {
   }
 
   show(modalElement:any){
-    const modal=new Modal(modalElement);
-    modal.show();
+    // const modal=new Modal(modalElement);
+    // modal.show();
   }
 
 }

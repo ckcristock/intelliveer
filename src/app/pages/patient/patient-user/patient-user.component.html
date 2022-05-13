@@ -1,0 +1,18 @@
+<div>
+    <div class="row">
+        <div class="col" style="max-width: 200px">
+            <button type="button" class="btn btn-light" style="border-color: lightgray;">Consultation Phase</button>
+            <ul class="ul">
+                <ol class="ol">
+                    <li class="pointer" *ngFor="let item of menuItems" routerLinkActive="active"
+                        [routerLink]="item.url">
+                        <b>{{ item.title }}</b>
+                    </li>
+                </ol>
+            </ul>
+        </div>
+        <div class="col component-view">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

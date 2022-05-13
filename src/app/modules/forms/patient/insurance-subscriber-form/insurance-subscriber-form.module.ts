@@ -4,6 +4,7 @@ import { AddressFormModule } from '@modules/forms/address-form/address-form.modu
 import { ImageUploaderModule } from '@modules/image-uploader/image-uploader.module';
 import { PipesModule } from 'src/app/pipes/pipes/pipes.module';
 import { InsuranceSubscriberFormComponent } from './insurance-subscriber-form.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -15,7 +16,9 @@ import { InsuranceSubscriberFormComponent } from './insurance-subscriber-form.co
     CommonModule,
     ImageUploaderModule,
     AddressFormModule,
-    PipesModule
+    PipesModule,
+    FormsModule,
+		ReactiveFormsModule,
   ],
   exports: [InsuranceSubscriberFormComponent]
 })

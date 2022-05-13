@@ -1,0 +1,16 @@
+ul {
+	li {
+		line-height: 3;
+		// font-size: smaller;
+	}
+}
+.component-view {
+	height: calc(100vh - 200px);
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+.ol {
+	margin-left: 8px;
+	padding: 2px;
+	list-style: none;
+}

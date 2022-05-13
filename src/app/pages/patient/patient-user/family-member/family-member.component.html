@@ -1,0 +1,116 @@
+<div *ngIf="familyMemberList?.length == 0">
+    <div style="text-align: center; padding-top: 7%;">
+        <div>
+            <h5><b>You haven’t added yet</b></h5>
+            <p>Click here, <img src="assets/icons/add.svg" width="36" height="36" (click)="showRelationList = true" /> to add
+                Family Member</p>
+        </div>
+        <div class="mb-3" *ngIf="showRelationList">
+            <p>What is the relationship of new legal guardian to patient</p>
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-6">
+                    <select class="form-select" style="width: 64.8%;" (change)="showList = true">
+                        <option>Select Relationship</option>
+                        <option>Father</option>
+                        <option>Mother</option>
+                        <option>Sister</option>
+                        <option>Brother</option>
+                    </select>
+                </div>
+                <div class="col-3"></div>
+            </div>
+        </div>
+        <div class="mb-3" *ngIf="showList">
+            <p>Please search first If not found, create a new one</p>
+            <div class="row gy-2">
+                <div class="col-4"></div>
+                <div class="col-6" style="text-align: center;">
+                    <div class="search" #searchDivRef>
+                        <div class="search-results" *ngIf="searchFocus">
+                            <ul *ngIf="searchResults?.length != 0">
+                                <li *ngFor="let result of searchResults">
+                                    <button class="d-flex justify-content-between"
+                                        (click)="handleSearchResultsClick(result)">
+                                        <span> {{ result.user }}</span>
+                                    </button>
+                                </li>
+                            </ul>
+                            <div class="padding justify-content-between" *ngIf="searchResults?.length == 0">
+                                <p>No matches found</p>
+                                <p>Would you like to create a new one?</p>
+                            </div>
+                            <div class="d-flex gap-3 ps-4 align-items-center">
+                                <div class="btn-group me-3">
+                                    <button type="button" class="btn btn-dark"
+                                        routerLink="/dashboard/patient/patient-user/family_members/add">
+                                        Create new Family Member
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group justify-content-between">
+                            <span class="input-group-text bg-transparent" id="basic-addon1"><i
+                                    class="bi bi-search"></i></span>
+                            <input type="text" class="form-control" placeholder="Type Name" [(ngModel)]="searchWord"
+                                (keyup)="fetchSearch($event)" aria-describedby="basic-addon1"
+                                (focus)="searchFocus = true" style="border-left-style: none;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3"></div>
+            </div>
+        </div>
+        <div *ngIf="showSelectedPatient">
+            <button class="btn btn-dark" (click)="addAsFamilyMember()">Add as a Family Member</button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="familyMemberList?.length != 0">
+    <div class="container" *ngFor="let familyMember of familyMemberList; let i = index">
+        <div class="row section">
+            <div class="col-2" (click)="gotoDetails(familyMember)">
+                <div class="letter">
+                    <p>{{ 'A' }}</p>
+                    <div id="orange">
+                        <span >{{ 'PRIMARY' }}</span>
+                    </div>
+                </div>
+                <!-- <img src="{{ familyMember.image || 'A' }}" width="78" height="90" /> -->
+            </div>
+            <div class="col-3" (click)="gotoDetails(familyMember)">
+                <p>
+                    {{ familyMember.user }}
+                </p>
+                <p>{{ familyMember.practiceName }}</p>
+                <p>{{ familyMember.specialty }}</p>
+            </div>
+            <div class="col-6" (click)="gotoDetails(familyMember)">
+                <p>
+                    Prefered mail method: <span>{{ familyMember.pemail }}</span>
+                </p>
+                <p>
+                    Primary Phone number:: <span>{{ familyMember.phone }}</span>
+                </p>
+                <p>
+                    Email: <span>{{ familyMember.email }}</span>
+                </p>
+                <p>
+                    No. of mutual patient: <span>{{ familyMember.mutualPatient }}</span>
+                </p>
+            </div>
+            <div class="col-1">
+                <div ngbDropdown class="d-inline-block">
+                    <i class="bi bi-three-dots-vertical" id="dropdownBasic" ngbDropdownToggle></i>
+                    <ul ngbDropdownMenu aria-labelledby="dropdownBasic">
+                        <li ngbDropdownItem>Edit</li>
+                        <li ngbDropdownItem>
+                            {{ familyMember.isDisabled ? 'Reactivate' : 'Deactivate' }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -14,6 +14,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { MenuBarService } from '@services/menu-bar/menu-bar.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { QuickAddPatientComponent } from '@pages/header/quick-add-patient/quick-add-patient.component';
 
 @Component({
 	selector: 'top-navbar',
@@ -34,7 +36,8 @@ export class NavbarComponent implements OnInit {
 		private authService: AuthService,
 		private cookieService: CookieService,
 		private renderer: Renderer2,
-		private router: Router
+		private router: Router,
+		private modalService: NgbModal
 	) {
 		this.renderer.listen('window', 'click', (e: Event) => {
 			if (!this.searchDivRef.nativeElement.contains(e.target)) {
@@ -73,12 +76,14 @@ export class NavbarComponent implements OnInit {
 			this.searchFocus = false;
 			this.showSelectedPatient = true;
 			this.selectedPatient = patient;
-			this.router.navigate(['/dashboard/patient/patient-detail']);
+			this.router.navigate(['/dashboard/patient/patient-user/patient-detail']);
 		}
 	}
 
 	openAddPatientDialog()
 	{
-		this.router.navigate(['/header/add-patient']);
+		const modalRef = this.modalService.open(QuickAddPatientComponent, { size: 'lg' });
+		modalRef.componentInstance.name = 'Ayushi';
+		// this.router.navigate(['/header/add-patient']);
 	}
 }

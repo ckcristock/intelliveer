@@ -63,20 +63,20 @@ export class RefererFormComponent implements OnInit {
   initForm(data?: any) {
     data = data || {};
     this.Form = this.fb.group({
-      companyName: [data?.companyName || '', Validators.required],
-      title: [data?.title || '', Validators.required],
-      firstName: [data?.firstName || '', Validators.required],
-      middleName: [data?.middleName || '', Validators.required],
-      lastName: [data?.lastName || '', Validators.required],
-      greeting: [data?.greeting || '', Validators.required],
-      emailId: [data?.emailId || '', Validators.required],
-      pPhoneType: [data?.pPhoneType || '', Validators.required],
-      pPhoneNumber: [data?.pPhoneNumber || '', Validators.required],
-      sPhoneType: [data?.sPhoneType || '', Validators.required],
-      sPhoneNumber: [data?.sPhoneNumber || '', Validators.required],
-      preferredMailMethod: [data?.preferredMailMethod || '', Validators.required],
-      website: [data?.website || '', Validators.required],
-      note: [data?.note || '', Validators.required],
+      companyName: [data?.companyName || ''],
+      title: [data?.title || ''],
+      firstName: [data?.firstName || ''],
+      middleName: [data?.middleName || ''],
+      lastName: [data?.lastName || ''],
+      greeting: [data?.greeting || ''],
+      emailId: [data?.emailId || ''],
+      pPhoneType: [data?.pPhoneType || ''],
+      pPhoneNumber: [data?.pPhoneNumber || ''],
+      sPhoneType: [data?.sPhoneType || ''],
+      sPhoneNumber: [data?.sPhoneNumber || ''],
+      preferredMailMethod: [data?.preferredMailMethod || ''],
+      website: [data?.website || ''],
+      note: [data?.note || ''],
       address: this.addressFormService.getAddressForm(
         data?.address || {}
       )

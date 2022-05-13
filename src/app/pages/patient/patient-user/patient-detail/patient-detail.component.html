@@ -1,0 +1,305 @@
+<div class="row sticky">
+	<div class="col-11">
+		<!-- <app-tabs [tabsLst]="tabsLst" (selectTab)="selectedTab($event)"></app-tabs> -->
+		<div class="col pills">
+			<ul class="nav">
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']"
+						(click)="scroll(overview, 'overview')">Overview</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']"
+						(click)="scroll(profile, 'profile')">Profile</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'information' ? 'active' : 'inactive']"
+						(click)="scroll(information, 'information')">Information</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'preferences' ? 'active' : 'inactive']"
+						(click)="scroll(preferences, 'preferences')">Preferences</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'emergencyContact' ? 'active' : 'inactive']"
+						(click)="scroll(emergencyContact, 'emergencyContact')">Emergency Contact</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'notes' ? 'active' : 'inactive']"
+						(click)="scroll(notes, 'notes')">Notes</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="col-1 d-flex justify-content-center align-items-center mb-3">
+		<button class="btn btn-dark">
+			<i class="bi bi-x-lg"></i>
+		</button>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-12" id="main">
+		<div class="section" #overview>
+			<div class="row">
+				<div class="col-2">
+					<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
+					</app-image-uploader>
+				</div>
+				<div class="col-2">
+					<p>Olivia Doe <span>(P1001)</span></p>
+					<p>Female</p>
+					<p>May 10,1992</p>
+					<p>29y, 10m</p>
+				</div>
+				<div class="col-2">
+					<p>Phase: 2</p>
+					<p>Status: Active</p>
+					<p>Dentist: Kim Doe</p>
+					<p>Referrer: John Doe</p>
+				</div>
+				<div class="col-sm">
+					<p>Language: English</p>
+					<p>Provider: Provider Name</p>
+					<p>Practice: Practice Name</p>
+					<p>Location: 330
+						2nd Street Huntington Beach, CA 92646</p>
+				</div>
+				<div class="col-sm">
+					<p>Chart Number:US-10001</p>
+					<p>Creation Date:Feb 15, 2022</p>
+					<p>Treatement Start Date:Feb 20, 2022</p>
+					<p>Treatement End Date: March 20, 2022</p>
+				</div>
+			</div>
+		</div>
+
+		<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
+
+			<div class="section" #profile>
+
+				<h6 class="heading">Profile</h6>
+				<div class="row">
+					<div class="col">
+						<label class="required">Title</label>
+						<select class="form-select" formControlName="title">
+							<option>Select</option>
+						</select>
+					</div>
+					<div class="col">
+						<label class="required">First Name</label>
+						<input class="form-control value-must" type="text" placeholder="" name="firstName"
+							formControlName="firstName" />
+					</div>
+
+					<div class="col">
+						<label class="required">Middle Name</label>
+						<input class="form-control" type="text" placeholder="" name="name"
+							formControlName="middleName" />
+					</div>
+					<div class="col">
+						<label class="required">Last Name</label>
+						<input class="form-control value-must" type="text" placeholder="" name="lastName"
+							formControlName="lastName" />
+					</div>
+					<div class="col">
+						<label class="required">Date of Birth</label>
+						<input class="form-control value-must" type="date" placeholder="" name="DOB"
+							formControlName="DOB" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<label class="required">Gender</label>
+						<select class="form-select" formControlName="gender">
+							<option value="M">Male</option>
+							<option value="F">Female</option>
+						</select>
+					</div>
+					<div class="col">
+						<label class="required">Preferred Pronoun</label>
+						<select class="form-select" formControlName="pronoun">
+							<option>Select</option>
+						</select>
+					</div>
+					<div class="col">
+						<label class="required">Language</label>
+						<select class="form-select" formControlName="language">
+							<option value="english">English</option>
+							<option value="hindi">Hindi</option>
+						</select>
+					</div>
+					<div class="col">
+						<label class="required">Marital Status</label>
+						<select class="form-select" formControlName="maried">
+							<option value="maried">Maried</option>
+							<option value="single">Single</option>
+						</select>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="section" #information>
+
+				<h6 class="heading">Information</h6>
+				<div class="row">
+					<div class="col">
+						<label class="required">Preferred Name</label>
+						<input class="form-control" type="text" placeholder="" name="id"
+							formControlName="preferredName" />
+					</div>
+					<div class="col">
+						<label class="required">Pronounciation</label>
+						<input class="form-control" type="text" placeholder="" name="name"
+							formControlName="pronounciation" />
+					</div>
+
+					<div class="col">
+						<label class="required">School</label>
+						<input class="form-control" type="text" placeholder="" name="name" formControlName="school" />
+					</div>
+					<div class="col">
+						<label class="required">Interests</label>
+						<ng-select class="ng-select" [multiple]="true" formControlName="interest">
+							<ng-option *ngFor="let interest of interestsLst" [value]="interest">{{ interest }}
+							</ng-option>
+						</ng-select>
+					</div>
+					<div class="col">
+						<label class="required">Tags</label>
+						<ng-select class="ng-select" [multiple]="true" formControlName="tags">
+							<ng-option *ngFor="let tags of tagsLst" [value]="tags">{{ tags }}
+							</ng-option>
+						</ng-select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<label class="required">ID Type</label>
+						<input class="form-control" formControlName="idType" type="text" placeholder="" name="name" />
+					</div>
+
+					<div class="col">
+						<label class="required">ID Number</label>
+						<input class="form-control" formControlName="idNumber" type="text" placeholder="" name="name" />
+					</div>
+
+					<div class="col"></div>
+					<div class="col"></div>
+					<div class="col"></div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<label class="required">ID Type</label>
+						<input class="form-control" formControlName="idType" type="text" placeholder="" name="name" />
+					</div>
+
+					<div class="col">
+						<label class="required">ID Number</label>
+						<input class="form-control" formControlName="idNumber" type="text" placeholder="" name="name" />
+					</div>
+
+					<div class="col"></div>
+					<div class="col"></div>
+					<div class="col"></div>
+				</div>
+
+			</div>
+
+			<div class="section" #preferences>
+
+				<h6 class="heading">Preferences</h6>
+				<div class="row">
+					<div class="col">
+						<label class="required">Location</label>
+						<select class="form-select" formControlName="location">
+							<option>Select</option>
+						</select>
+					</div>
+					<div class="col">
+						<label class="required">Billing Provider</label>
+						<select class="form-select" formControlName="practice">
+							<option>Select</option>
+						</select>
+					</div>
+
+					<div class="col">
+						<label class="required">Treating Provider</label>
+						<select class="form-select" formControlName="provider">
+							<option>Select</option>
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<label class="required">New Patient Coordinator</label>
+						<select class="form-select" formControlName="patientCoordinator">
+							<option>Select</option>
+						</select>
+					</div>
+					<div class="col">
+						<label class="required">Treatment Coordinator</label>
+						<select class="form-select" formControlName="treatmentCoordinator">
+							<option>Select</option>
+						</select>
+					</div>
+
+					<div class="col">
+						<label class="required">Chair Side Assistant</label>
+						<select class="form-select" formControlName="CSAssistant">
+							<option>Select</option>
+						</select>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="section" #emergencyContact>
+
+				<h6 class="heading">Emergency Contact</h6>
+				<div class="row">
+					<div class="col">
+						<label class="required">Contact Person</label>
+						<select class="form-select" formControlName="cPerson">
+							<option>Select</option>
+						</select>
+					</div>
+					<div class="col"></div>
+					<div class="col"></div>
+					<div class="col"></div>
+					<div class="col"></div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<label class="required">Name</label>
+						<input class="form-control" type="text" placeholder="" name="id" formControlName="name" />
+					</div>
+					<div class="col">
+						<label class="required">Emergency Contact</label>
+						<input class="form-control" type="text" placeholder="" name="name" formControlName="eContact" />
+					</div>
+					<div class="col"></div>
+					<div class="col"></div>
+					<div class="col"></div>
+				</div>
+
+			</div>
+
+			<div class="section" #notes>
+				<h6 class="heading">Notes</h6>
+				<div class="row">
+					<div class="col-6">
+						<textarea class="form-control" name="note" id="" cols="70" rows="5"
+							formControlName="note"></textarea>
+					</div>
+				</div>
+			</div>
+
+		</form>
+	</div>
+</div>
