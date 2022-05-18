@@ -20,3 +20,18 @@ ng-select {
 ng-select {
 	font-weight: bold !important;
 }
+.ng-select ::ng-deep .ng-arrow {
+    display: none !important;
+}
+.ng-select ::ng-deep .ng-arrow-wrapper {
+    height: 14px;
+    width: 14px;
+    background-image: url('./../../../../assets/icons/add.svg');
+    background-repeat: no-repeat;
+    margin-right: 12px;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+.ng-select-opened ::ng-deep .ng-arrow-wrapper { 
+    // background-image: url('./../../../../assets/icons/cancel.svg');
+}

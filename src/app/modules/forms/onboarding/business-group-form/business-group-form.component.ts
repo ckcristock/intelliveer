@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CONFIG } from '@config/index';
+import { AlertService } from '@services/alert/alert.service';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 import { ContactDetailsFormService } from '@services/forms/contact-details-form/contact-details-form.service';
 import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
@@ -26,7 +27,8 @@ export class BusinessGroupFormComponent implements OnInit {
 		private addressFormService: AddressFormService,
 		private contactPersonFormService: ContactPersonFormService,
 		private contactDetailsFormService: ContactDetailsFormService,
-		private geoService: GeoService
+		private geoService: GeoService,
+		private alertService: AlertService
 	) {}
 
 	ngOnInit() {
@@ -71,7 +73,12 @@ export class BusinessGroupFormComponent implements OnInit {
 		this.onSubmit.emit(data);
 	}
 	cancel() {
-		this.onCancel.emit();
+		this.alertService.conformAlert('Are you sure?', 'You want to exit')
+		.then((result) => {
+			if (result.value) {
+				this.onCancel.emit();
+			}
+		});
 	}
 	setAddress(type: string) {
 		let physicalAddress = this.BGForm?.controls['physicalAddress'].value;

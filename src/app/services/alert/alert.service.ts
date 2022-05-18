@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2'; //npm install --save sweetalert2 required for alert
 @Injectable({
   providedIn: 'root',
 })
@@ -15,5 +16,16 @@ export class AlertService {
       progressBar: true,
       timeOut: 45454545,
     });
+  }
+  conformAlert(title: string, text: string)
+  {
+    return Swal.fire({
+			title: title,
+			text: text,
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Yes, go ahead.',
+			cancelButtonText: 'No, let me think',
+		})
   }
 }

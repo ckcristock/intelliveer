@@ -140,6 +140,11 @@ export class MappingComponent implements OnInit, OnDestroy {
 		}
 	}
 	handleCancel() {
-		this.routeLocation.back();
+		this.alertService.conformAlert('Are you sure?', 'You want to exit')
+		.then((result) => {
+			if (result.value) {
+				this.routeLocation.back();
+			}
+		});
 	}
 }

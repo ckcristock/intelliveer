@@ -19,6 +19,7 @@ export class LegalEntityFormComponent implements OnInit {
 	@Output() onCancel = new EventEmitter();
 	@Output() onSubmit = new EventEmitter();
 	countries: any;
+	showEmpIdFeild: boolean = false;
 	constructor(
 		private fb: FormBuilder,
 		private http: HttpClient,
@@ -49,7 +50,7 @@ export class LegalEntityFormComponent implements OnInit {
 			TIN: [data?.TIN || '', Validators.required],
 			country: [data?.country || ''],
 			currency: [data?.currency || ''],
-			isLegalEmployer: [data?.isLegalEmployer || 'yes'],
+			isLegalEmployer: [data?.isLegalEmployer || ''],
 			employerId: [data?.employerId || ''],
 			physicalAddress: this.addressFormService.getAddressForm(
 				data?.physicalAddress || {}
@@ -91,5 +92,17 @@ export class LegalEntityFormComponent implements OnInit {
 			block: 'start',
 			inline: 'nearest'
 		});
+	}
+
+	checkRadio(event: any)
+	{
+		if(event.srcElement.value.trim() === "yes")
+		{
+			this.showEmpIdFeild = true
+		}
+		else
+		{
+			this.showEmpIdFeild = false;
+		}
 	}
 }
