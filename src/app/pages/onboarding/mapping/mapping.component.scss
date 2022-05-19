@@ -30,8 +30,5 @@ ng-select {
     background-repeat: no-repeat;
     margin-right: 12px;
     margin-left: 10px;
-    margin-top: 5px;
-}
-.ng-select-opened ::ng-deep .ng-arrow-wrapper { 
-    // background-image: url('./../../../../assets/icons/cancel.svg');
+    margin-top: 0px;
 }

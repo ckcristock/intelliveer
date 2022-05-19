@@ -20,8 +20,8 @@ export class AddressFormComponent implements OnInit {
 			.getCountries()
 			.pipe(delay(100))
 			.subscribe({
-				next: (res) => {
-					this.countries = res;
+				next: (res: any) => {
+					this.countries = res.sort((a: any, b: any) => (a.name > b.name) ? 1 : -1);
 					const selectedCountry =
 						this.parentGroup.controls[this.formGroupName].get(
 							'country'
@@ -54,8 +54,8 @@ export class AddressFormComponent implements OnInit {
 			);
 			if (country && country.length == 1) {
 				this.geoService.getStates(country[0]['id']).subscribe({
-					next: (res) => {
-						this.states = res;
+					next: (res: any) => {
+						this.states = res.sort((a: any, b: any) => (a.name > b.name) ? 1 : -1);
 					},
 				});
 			}
@@ -68,8 +68,8 @@ export class AddressFormComponent implements OnInit {
 			);
 			if (state && state.length == 1) {
 				this.geoService.getCities(state[0]['id']).subscribe({
-					next: (res) => {
-						this.cities = res;
+					next: (res: any) => {
+						this.cities = res.sort((a: any, b: any) => (a.name > b.name) ? 1 : -1);
 					},
 				});
 			}

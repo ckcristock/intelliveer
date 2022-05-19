@@ -24,8 +24,12 @@ export class AlertService {
 			text: text,
 			icon: 'warning',
 			showCancelButton: true,
+      allowOutsideClick: false,
 			confirmButtonText: 'Yes, go ahead.',
+      confirmButtonColor: '#ff4500',
 			cancelButtonText: 'No, let me think',
+      cancelButtonColor: '#414042',
+      backdrop: true
 		})
   }
 }

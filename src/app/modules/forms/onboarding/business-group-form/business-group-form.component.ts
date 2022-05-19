@@ -21,6 +21,7 @@ export class BusinessGroupFormComponent implements OnInit {
 	BGForm: FormGroup | undefined;
 	countries: any;
 	imageSrc: any;
+	saveButtonEnable: boolean = true;
 	constructor(
 		private fb: FormBuilder,
 		private http: HttpClient,
@@ -68,6 +69,10 @@ export class BusinessGroupFormComponent implements OnInit {
 				}
 			)
 		});
+		this.BGForm.valueChanges.subscribe(data => 
+		{
+			this.saveButtonEnable = false;
+		})
 	}
 	save(data: any) {
 		this.onSubmit.emit(data);
@@ -98,9 +103,21 @@ export class BusinessGroupFormComponent implements OnInit {
 	}
 	getCountries() {
 		this.geoService.getCountries().subscribe({
-			next: (res) => {
-				this.countries = res;
+			next: (res: any) => {
+				this.countries = res.sort((a: any, b: any) => (a.name > b.name) ? 1 : -1);
 			}
 		});
+	}
+
+	customSearchFn(term: string, item: any) {
+		term = term.toLowerCase();
+		let splitTerm = term.split(' ').filter(t => t);
+		let isWordThere: any = [];
+		splitTerm.forEach(arr_term => {
+		  let search = item.toLowerCase();
+		  isWordThere.push(search.indexOf(arr_term) != -1);
+		});
+		const all_words = (this_word: any) => this_word;
+		return isWordThere.every(all_words);
 	}
 }

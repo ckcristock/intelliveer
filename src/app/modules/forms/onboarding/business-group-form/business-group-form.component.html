@@ -18,7 +18,7 @@
 		<div class="right">
 			<button
 				class="save"
-				[disabled]="BGForm.invalid"
+				[disabled]="BGForm.invalid || saveButtonEnable"
 				(click)="save(BGForm.value)"
 			>
 				<img src="/assets/icons/save.svg" alt="" />
@@ -70,6 +70,7 @@
 						<ng-select
 							formControlName="country"
 							class="required-ng-select"
+							[searchFn]="customSearchFn"
 						>
 							<ng-option
 								*ngFor="let country of countries"

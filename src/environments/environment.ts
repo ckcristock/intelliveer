@@ -4,7 +4,7 @@
 
 export const environment = {
 	production: false,
-	backendHost: 'http://localhost:8000',
+	backendHost: 'https://ivapi.apresp.net',
 	authAppHost: 'http://localhost:3000',
 	domain: 'localhost',
 };
