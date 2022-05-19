@@ -5,7 +5,7 @@ import {
 	OnInit,
 	Renderer2,
 	ViewChild,
-	ViewEncapsulation,
+	ViewEncapsulation
 } from '@angular/core';
 import { CONFIG } from '@config/index';
 import { AuthService } from '@services/auth/auth.service';
@@ -20,7 +20,7 @@ import { QuickAddPatientComponent } from '@pages/header/quick-add-patient/quick-
 @Component({
 	selector: 'top-navbar',
 	templateUrl: './navbar.component.html',
-	styleUrls: ['./navbar.component.scss'],
+	styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
 	searchFocus: boolean = false;
@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit {
 	searchResults: any = [
 		{ user: 'Smith John', dob: '30/12/1984', active: true, id: 'P001' },
 		{ user: 'Smith Doe', dob: '23/08/1988', active: true, id: 'P002' },
-		{ user: 'Smith Walker', dob: '12/06/1994', active: false, id: 'P002' },
+		{ user: 'Smith Walker', dob: '12/06/1994', active: false, id: 'P002' }
 	];
 	@ViewChild('searchDivRef') searchDivRef!: ElementRef;
 	constructor(
@@ -55,20 +55,11 @@ export class NavbarComponent implements OnInit {
 					'/',
 					environment.domain
 				);
-				if (window.location.hostname == 'localhost') {
-					window.location.href = CONFIG.auth.host;
-				} else {
-					const authHost = new URL(window.location.href);
-					const domainMeta = authHost.hostname.split('.');
-					domainMeta.shift(); // remove first subdomain
-					let origin =
-						authHost.protocol + '//ivauth.' + domainMeta.join('.');
-					window.location.href = origin;
-				}
+				window.location.href = CONFIG.auth.host;
 			},
 			error: (err) => {
 				console.log(err.message);
-			},
+			}
 		});
 	}
 	handleSearchResultsClick(patient: any) {
@@ -76,13 +67,16 @@ export class NavbarComponent implements OnInit {
 			this.searchFocus = false;
 			this.showSelectedPatient = true;
 			this.selectedPatient = patient;
-			this.router.navigate(['/dashboard/patient/patient-user/patient-detail']);
+			this.router.navigate([
+				'/dashboard/patient/patient-user/patient-detail'
+			]);
 		}
 	}
 
-	openAddPatientDialog()
-	{
-		const modalRef = this.modalService.open(QuickAddPatientComponent, { size: 'lg' });
+	openAddPatientDialog() {
+		const modalRef = this.modalService.open(QuickAddPatientComponent, {
+			size: 'lg'
+		});
 		modalRef.componentInstance.name = 'Ayushi';
 		// this.router.navigate(['/header/add-patient']);
 	}
