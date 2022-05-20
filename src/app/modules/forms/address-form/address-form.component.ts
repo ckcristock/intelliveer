@@ -107,4 +107,15 @@ export class AddressFormComponent implements OnInit {
 			city: '',
 		});
 	}
+	customSearchFn(term: string, item: any) {
+		term = term.toLowerCase();
+		let splitTerm = term.split(' ').filter(t => t);
+		let isWordThere: any = [];
+		splitTerm.forEach(arr_term => {
+		  let search = item.toLowerCase();
+		  isWordThere.push(search.indexOf(arr_term) != -1);
+		});
+		const all_words = (this_word: any) => this_word;
+		return isWordThere.every(all_words);
+	}
 }

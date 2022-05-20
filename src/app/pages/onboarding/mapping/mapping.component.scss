@@ -32,3 +32,12 @@ ng-select {
     margin-left: 10px;
     margin-top: 0px;
 }
+
+.ng-select ::ng-deep .ng-clear-wrapper {
+    cursor: pointer;
+    position: relative;
+    width: 17px;
+    -webkit-user-select: none;
+    user-select: none;
+    margin-top: 6px !important;
+}

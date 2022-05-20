@@ -24,6 +24,7 @@ export class MappingComponent implements OnInit, OnDestroy {
 	practices: any = [];
 	businessGroupDropdownSupscription: Subscription;
 	selectedBusinessGroup: SelectedBusinessGroup | undefined;
+	saveButtonEnable: boolean = true;
 	constructor(
 		private mappingService: MappingService,
 		private businessGroupDropdownService: BusinessGroupDropdownService,
@@ -146,5 +147,9 @@ export class MappingComponent implements OnInit, OnDestroy {
 				this.routeLocation.back();
 			}
 		});
+	}
+	selectionValueChange()
+	{
+		this.saveButtonEnable = false;
 	}
 }
