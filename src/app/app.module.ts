@@ -12,26 +12,32 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '@environment/environment';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 let providers: Provider[] = [
 	{
 		provide: HTTP_INTERCEPTORS,
 		useClass: HttpCallsInterceptor,
-		multi: true,
+		multi: true
 	},
-	CookieService,
+	CookieService
 ];
 
 // Only enable custom error handler in production mode
 if (environment.production) {
 	providers.push({
 		provide: ErrorHandler,
-		useClass: GlobalErrorHandler,
+		useClass: GlobalErrorHandler
 	});
 }
 
 @NgModule({
-	declarations: [AppComponent, DialogComponent, ErrorHandlerComponent],
+	declarations: [
+		AppComponent,
+		DialogComponent,
+		ErrorHandlerComponent,
+		ConfirmationDialogComponent
+	],
 	imports: [
 		BrowserModule,
 		FormsModule,
@@ -39,9 +45,9 @@ if (environment.production) {
 		HttpClientModule,
 		AppRoutingModule,
 		BrowserAnimationsModule, // required by ToasterModule
-		ToastrModule.forRoot(),
+		ToastrModule.forRoot()
 	],
 	providers: providers,
-	bootstrap: [AppComponent],
+	bootstrap: [AppComponent]
 })
 export class AppModule {}

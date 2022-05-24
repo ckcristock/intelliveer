@@ -60,7 +60,7 @@ export class HttpCallsInterceptor implements HttpInterceptor {
 						error.error
 					);
 				}
-				this.errHandlerService.showErrorr(error.error);
+				this.errHandlerService.showError(error.error);
 				return throwError(
 					() =>
 						new Error(
