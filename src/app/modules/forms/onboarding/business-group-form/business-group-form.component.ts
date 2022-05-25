@@ -10,7 +10,6 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CONFIG } from '@config/index';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
-import { MenuBarService } from "../../../../services/onboarding/menu-bar/menu-bar.service";
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 import { ContactDetailsFormService } from '@services/forms/contact-details-form/contact-details-form.service';
 import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
@@ -30,7 +29,15 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 	countries: any;
 	imageSrc: any;
 	currentSelection: string = '';
-	menuItems: MenuItem[] = this.menuItemsServ.getMenu();
+	menuItems: MenuItem[] = [
+		{ title: 'Overview', id: 'overview' },
+		{ title: 'Profile', id: 'profile' },
+		{ title: 'Physical Address', id: 'physicalAddress' },
+		{ title: 'Mailing Address', id: 'mailingAddress' },
+		{ title: 'Insurance ', id: 'insuranceBillingAddress' },
+		{ title: 'Contact', id: 'contactDetails' },
+		{ title: 'Contact Person Info', id: 'contactPerson' }
+	];
 	constructor(
 		private fb: FormBuilder,
 		private http: HttpClient,
@@ -38,7 +45,6 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 		private contactPersonFormService: ContactPersonFormService,
 		private contactDetailsFormService: ContactDetailsFormService,
 		private geoService: GeoService,
-		private menuItemsServ: MenuBarService
 	) {}
 
 	ngOnInit() {
