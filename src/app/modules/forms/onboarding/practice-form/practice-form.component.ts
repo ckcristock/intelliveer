@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CONFIG } from '@config/index';
+import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
+import { MenuBarService } from "../../../../services/onboarding/menu-bar/menu-bar.service";
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 import { ContactDetailsFormService } from '@services/forms/contact-details-form/contact-details-form.service';
 import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
@@ -18,8 +20,11 @@ export class PracticeFormComponent implements OnInit {
 	@Input() formData: any | undefined = undefined;
 	@Output() onCancel = new EventEmitter();
 	@Output() onSubmit = new EventEmitter();
-
 	practiceTypeData: any = [];
+	countries: any;
+	imageSrc: any;
+	currentSelection: string = '';
+	menuItems: MenuItem[] = this.menuItemsServ.getMenu();
 
 	globalData: any = [
 		{
@@ -39,7 +44,8 @@ export class PracticeFormComponent implements OnInit {
 		private http: HttpClient,
 		private addressFormService: AddressFormService,
 		private contactPersonFormService: ContactPersonFormService,
-		private contactDetailsFormService: ContactDetailsFormService
+		private contactDetailsFormService: ContactDetailsFormService,
+		private menuItemsServ: MenuBarService
 	) {}
 
 	ngOnInit() {
@@ -141,5 +147,8 @@ export class PracticeFormComponent implements OnInit {
 		}
 
 		this.practiceTypeData = _data;
+	}
+	onSectionChange(sectionId: string) {
+		this.currentSelection = sectionId;
 	}
 }

@@ -6,6 +6,9 @@ import { ImageUploaderModule } from '@modules/image-uploader/image-uploader.modu
 import { AddressFormModule } from '@modules/forms/address-form/address-form.module';
 import { ContactDetailsFormModule } from '@modules/forms/contact-details-form/contact-details-form.module';
 import { ContactPersonFormModule } from '@modules/forms/contact-person-form/contact-person-form.module';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { ScrollspyModule } from "../../../../modules/scrollspy/scrollspy.module";
+import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
 
 @NgModule({
   declarations: [LocationFormComponent],
@@ -16,7 +19,10 @@ import { ContactPersonFormModule } from '@modules/forms/contact-person-form/cont
     AddressFormModule,
     ContactDetailsFormModule,
     ContactPersonFormModule,
-    ImageUploaderModule,
+		NgSelectModule,
+		ImageUploaderModule,
+		NavBarPillsModule,
+		ScrollspyModule
   ],
   exports: [LocationFormComponent],
 })
