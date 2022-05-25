@@ -1,7 +1,15 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	Output,
+	EventEmitter,
+	AfterViewInit
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CONFIG } from '@config/index';
+import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 import { ContactDetailsFormService } from '@services/forms/contact-details-form/contact-details-form.service';
 import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
@@ -12,7 +20,7 @@ import { GeoService } from '@services/global-data/public/geo/geo.service';
 	templateUrl: './business-group-form.component.html',
 	styleUrls: ['./business-group-form.component.scss']
 })
-export class BusinessGroupFormComponent implements OnInit {
+export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 	@Input() title: string = '';
 	@Input() formData: any | undefined = undefined;
 	@Output() onCancel = new EventEmitter();
@@ -20,6 +28,16 @@ export class BusinessGroupFormComponent implements OnInit {
 	BGForm: FormGroup | undefined;
 	countries: any;
 	imageSrc: any;
+	currentSelection: string = '';
+	menuItems: MenuItem[] = [
+		{ title: 'Overview', id: 'overview' },
+		{ title: 'Profile', id: 'profile' },
+		{ title: 'Physical Address', id: 'physicalAddress' },
+		{ title: 'Mailing Address', id: 'mailingAddress' },
+		{ title: 'Insurance ', id: 'insuranceBillingAddress' },
+		{ title: 'Contact', id: 'contactDetails' },
+		{ title: 'Contact Person Info', id: 'contactPerson' }
+	];
 	constructor(
 		private fb: FormBuilder,
 		private http: HttpClient,
@@ -33,6 +51,7 @@ export class BusinessGroupFormComponent implements OnInit {
 		this.getCountries();
 		this.initBGForm(this.formData);
 	}
+	ngAfterViewInit(): void {}
 	initBGForm(data?: any) {
 		data = data || {};
 		this.BGForm = this.fb.group({
@@ -82,18 +101,14 @@ export class BusinessGroupFormComponent implements OnInit {
 			this.BGForm.controls['logo'].setValue(e.url);
 		}
 	}
-	scroll(el: HTMLElement) {
-		el.scrollIntoView({
-			behavior: 'smooth',
-			block: 'start',
-			inline: 'nearest'
-		});
-	}
 	getCountries() {
 		this.geoService.getCountries().subscribe({
 			next: (res) => {
 				this.countries = res;
 			}
 		});
+	}
+	onSectionChange(sectionId: string) {
+		this.currentSelection = sectionId;
 	}
 }

@@ -1,0 +1,22 @@
+<ng-template #content let-c="close" let-d="dismiss">
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Please confirm</h4>
+		<button
+			type="button"
+			class="btn-close"
+			aria-label="Close"
+			(click)="d('Cross click')"
+		></button>
+	</div>
+	<div class="modal-body">
+		<p>Are you sure you want to leave this page?</p>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-dark" (click)="close()">
+			Leave page
+		</button>
+		<button type="button" class="btn btn-outline-dark" (click)="cancel()">
+			Cancel
+		</button>
+	</div>
+</ng-template>
