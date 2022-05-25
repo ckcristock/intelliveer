@@ -6,18 +6,23 @@ import { ImageUploaderModule } from '@modules/image-uploader/image-uploader.modu
 import { AddressFormModule } from '@modules/forms/address-form/address-form.module';
 import { ContactDetailsFormModule } from '@modules/forms/contact-details-form/contact-details-form.module';
 import { ContactPersonFormModule } from '@modules/forms/contact-person-form/contact-person-form.module';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { ScrollSpyDirective } from '@directives/scrollspy';
+import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
 
 @NgModule({
-  declarations: [BusinessGroupFormComponent],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AddressFormModule,
-    ContactDetailsFormModule,
-    ContactPersonFormModule,
-    ImageUploaderModule,
-  ],
-  exports: [BusinessGroupFormComponent],
+	declarations: [BusinessGroupFormComponent, ScrollSpyDirective],
+	imports: [
+		CommonModule,
+		FormsModule,
+		ReactiveFormsModule,
+		AddressFormModule,
+		ContactDetailsFormModule,
+		ContactPersonFormModule,
+		NgSelectModule,
+		ImageUploaderModule,
+		NavBarPillsModule
+	],
+	exports: [BusinessGroupFormComponent]
 })
 export class BusinessGroupFormModule {}

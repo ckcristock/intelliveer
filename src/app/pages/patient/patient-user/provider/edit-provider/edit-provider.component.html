@@ -1,0 +1,8 @@
+<div class="container" *ngIf="data">
+    <app-provider-form
+        [title]="'Edit Provider'"
+        [formData]="data"
+        (onCancel)="handleCancel()"
+        (onSubmit)="update($event)"
+    ></app-provider-form>
+</div>

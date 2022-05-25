@@ -1,52 +1,125 @@
 <div *ngIf="parentGroup && staticData">
-  <div [formGroup]="parentGroup">
-    <div [formGroupName]="formGroupName">
-      <div class="row">
-        <div class="col">
-          <label class="required">Contact Person Designation</label>
-          <input type="text" class="form-control" formControlName="designation" />
-        </div>
-        <div class="col">
-          <label class="required">Contact Person Title</label>
-          <select class="form-select" formControlName="title">
-            <option [value]="type.value" *ngFor="let type of staticData.title">
-              {{ type.label }}
-            </option>
-          </select>
-        </div>
-        <div class="col">
-          <label class="required">Contact Person First Name</label>
-          <input type="text" class="form-control" formControlName="firstName" />
-        </div>
-        <div class="col">
-          <label class="required">Contact Person Last Name</label>
-          <input type="text" class="form-control" formControlName="lastName" />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <label class="required">Contact Person's Email</label>
-          <input type="email" class="form-control" formControlName="email" />
-        </div>
-        <div class="col">
-          <label class="required">Contact Person's Phone Type</label>
-          <select class="form-select" formControlName="type">
-            <option [value]="type.value" *ngFor="let type of staticData.phone">
-              {{ type.label }}
-            </option>
-          </select>
-        </div>
-        <div class="col">
-          <label class="required">Contact Person's Phone Number</label>
-          <input type="text" class="form-control" formControlName="number" />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <i class="bi bi-plus-square-fill"></i>
-      Add Another Contact Person Info
-    </div>
-  </div>
+	<div [formGroup]="parentGroup">
+		<div [formGroupName]="formGroupName">
+			<div class="row">
+				<div class="col">
+					<label class="required">Contact Person Designation</label>
+					<input
+						type="text"
+						class="form-control"
+						formControlName="designation"
+						[ngClass]="{
+							'required-field':
+								isRequiredField('designation') === true
+						}"
+					/>
+				</div>
+				<div class="col">
+					<label class="required">Contact Person Title</label>
+					<select
+						class="form-select"
+						formControlName="title"
+						[ngClass]="{
+							'required-field': isRequiredField('title') === true
+						}"
+					>
+						<option
+							[value]="type.value"
+							*ngFor="let type of staticData.title"
+						>
+							{{ type.label }}
+						</option>
+					</select>
+				</div>
+				<div class="col">
+					<label class="required">Contact Person First Name</label>
+					<input
+						type="text"
+						class="form-control"
+						formControlName="firstName"
+						[ngClass]="{
+							'required-field':
+								isRequiredField('firstName') === true
+						}"
+					/>
+				</div>
+				<div class="col">
+					<label class="required">Contact Person Last Name</label>
+					<input
+						type="text"
+						class="form-control"
+						formControlName="lastName"
+						[ngClass]="{
+							'required-field':
+								isRequiredField('lastName') === true
+						}"
+					/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-3">
+					<label class="required">Contact Person Email</label>
+					<input
+						type="email"
+						class="form-control"
+						formControlName="email"
+						[ngClass]="{
+							'required-field': isRequiredField('email') === true
+						}"
+					/>
+				</div>
+				<div class="col-9" formGroupName="phone">
+					<div class="row">
+						<div class="col-4">
+							<label class="required"
+								>Contact Person Phone Type</label
+							>
+							<select
+								class="form-select"
+								formControlName="type"
+								[ngClass]="{
+									'required-field':
+										isRequiredField('phone.type') === true
+								}"
+							>
+								<option
+									[value]="type.value"
+									*ngFor="let type of staticData.phone"
+								>
+									{{ type.label }}
+								</option>
+							</select>
+						</div>
+						<div class="col-4">
+							<label class="required">Country Code</label>
+							<input
+								type="text"
+								class="form-control"
+								formControlName="countryCode"
+								[ngClass]="{
+									'required-field':
+										isRequiredField('phone.countryCode') ===
+										true
+								}"
+							/>
+						</div>
+						<div class="col-4">
+							<label class="required"
+								>Contact Person Number</label
+							>
+							<input
+								type="text"
+								class="form-control"
+								formControlName="number"
+								[ngClass]="{
+									'required-field':
+										isRequiredField('phone.number') === true
+								}"
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

@@ -1,0 +1,186 @@
+<div class="row sticky">
+	<div class="col-11">
+		<div class="col pills">
+			<ul class="nav">
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']"
+						(click)="scroll(overview, 'overview')">Overview</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']"
+						(click)="scroll(profile, 'profile')">Profile</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'address' ? 'active' : 'inactive']"
+						(click)="scroll(address, 'address')">Address</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'contact' ? 'active' : 'inactive']"
+						(click)="scroll(contact, 'contact')">Contact</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'notes' ? 'active' : 'inactive']"
+						(click)="scroll(notes, 'notes')">Notes</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="col-1 d-flex justify-content-end align-items-center mb-3">
+		<button class="btn btn-light" [disabled]="Form?.invalid" (click)="save(f.value)">
+			<img src="assets/icons/save.svg" width="36" height="36" />
+		</button>
+		<img src="assets/icons/cancel.svg" width="36" height="36" (click)="cancel()" />
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-12" id="main">
+		<div class="section" #overview>
+			<div class="row">
+				<div class="col-sm">
+					<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
+					</app-image-uploader>
+				</div>
+			</div>
+		</div>
+
+		<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
+
+			<div class="section" #profile>
+
+				<h6 class="heading">Profile</h6>
+				<div class="row">
+					<div class="col">
+						<label class="required">Title</label>
+						<select class="form-select" formControlName="title">
+							<option>Select</option>
+						</select>
+					</div>
+					<div class="col">
+						<label class="required">First Name</label>
+						<input class="form-control value-must" type="text" placeholder="" name="firstName"
+							formControlName="firstName" />
+					</div>
+
+					<div class="col">
+						<label class="required">Middle Name</label>
+						<input class="form-control" type="text" placeholder="" name="name"
+							fromControlName="middleName" />
+					</div>
+					<div class="col">
+						<label class="required">Last Name</label>
+						<input class="form-control value-must" type="text" placeholder="" name="lastName"
+							formControlName="lastName" />
+					</div>
+					<div class="col">
+						<label class="required">Practice Name</label>
+						<input class="form-control" type="text" placeholder="" name="name"
+							formControlName="praticeName" />
+					</div>
+				</div>
+				<div class="row">
+
+					<div class="col">
+						<label class="required">Degree</label>
+						<input class="form-control" type="text" placeholder="" name="name" formControlName="degree" />
+					</div>
+					<div class="col">
+						<label class="required">Dental/Medical School</label>
+						<input class="form-control" type="text" placeholder="" name="name" formControlName="DMSchool" />
+					</div>
+					<div class="col">
+						<label class="required">Specialty</label>
+						<input class="form-control" type="text" placeholder="" name="name"
+							formControlName="specialty" />
+					</div>
+					<div class="col">
+						<label class="required">Specialty School</label>
+						<input class="form-control" type="text" placeholder="" name="name"
+							formControlName="specialtySchool" />
+					</div>
+					<div class="col">
+						<label class="required">Greeting</label>
+						<input class="form-control" type="text" placeholder="" name="name" formControlNAme="greeting" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="true" id="mailingCheckbox">
+							<label class="form-check-label" for="mailingCheckbox">
+								Prefered Provider
+							</label>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="section" #address>
+				<h6 class="heading">Address</h6>
+				<app-address-form [parentGroup]="Form" [formGroupName]="'address'"></app-address-form>
+			</div>
+
+			<div class="section" #contact>
+				<h6 class="heading">Contact</h6>
+				<div class="row">
+					<div class="col">
+						<label class="required">Practice Email</label>
+						<input class="form-control" type="text" placeholder="" name="id" formControlName="emailId" />
+					</div>
+
+					<div class="col">
+						<label class="required">Dentist Email</label>
+						<input class="form-control" type="text" placeholder="" name="id" formControlName="demailId" />
+					</div>
+
+					<div class="col">
+						<label class="required">Phone Number - Practice</label>
+						<input class="form-control" type="text" placeholder="" name="name"
+							formControlName="pPhoneNumber" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col">
+						<label class="required">Phone Number - Mobile</label>
+						<input class="form-control" type="text" placeholder="" name="name"
+							formControlName="pPhoneNumber" />
+					</div>
+
+					<div class="col">
+						<label class="required">Preferred Mail Method</label>
+						<select class="form-select" formControlName="preferredMailMethod">
+							<option>Select</option>
+						</select>
+					</div>
+
+					<div class="col">
+						<label class="required">Website</label>
+						<div class="input-group">
+							<span class="form-control" id="basic-addon3">https://</span>
+							<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3"
+								name="website" placeholder="www.example.com" formControlName="website" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section" #notes>
+				<h6 class="heading">Notes</h6>
+				<div class="row">
+					<div class="col-6">
+						<textarea class="form-control" name="note" id="" cols="70" rows="5"
+							formControlName="note"></textarea>
+					</div>
+				</div>
+			</div>
+
+		</form>
+	</div>
+</div>

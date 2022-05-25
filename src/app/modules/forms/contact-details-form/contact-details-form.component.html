@@ -1,56 +1,156 @@
 <div *ngIf="parentGroup && staticData">
-  <div [formGroup]="parentGroup">
-    <div [formGroupName]="formGroupName">
-      <div class="row">
-        <div class="col">
-          <label class="required">Primary Phone Type</label>
-          <select class="form-select" formControlName="type">
-            <option [value]="type.value" *ngFor="let type of staticData.phone">
-              {{ type.label }}
-            </option>
-          </select>
-        </div>
-        <div class="col">
-          <label class="required">Primary Phone Number</label>
-          <input type="text" class="form-control" formControlName="number" />
-        </div>
-        <div class="col">
-          <label class="required">Email</label>
-          <input type="text" class="form-control" formControlName="email" />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <label class="required">Secondary Phone Type</label>
-          <select class="form-select" formControlName="type">
-            <option [value]="type.value" *ngFor="let type of staticData.phone">
-              {{ type.label }}
-            </option>
-          </select>
-        </div>
-        <div class="col">
-          <label class="required">Secondary Phone Number</label>
-          <input type="text" class="form-control" formControlName="number" />
-        </div>
-        <div class="col">
-          <label class="required">Website</label>
-          <input type="text" class="form-control" formControlName="website" />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <label class="required">Fax</label>
-          <input type="text" class="form-control" formControlName="fax" />
-        </div>
-        <div class="col">
-          <label class="required">Prefered Mail Method</label>
-          <select class="form-select" formControlName="preferedMailMethod">
-            <option [value]="type.value" *ngFor="let type of staticData.phone">
-              {{ type.label }}
-            </option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div [formGroup]="parentGroup">
+		<div [formGroupName]="formGroupName">
+			<div class="row" formGroupName="primaryPhone">
+				<div class="col">
+					<label class="required">Primary Phone Type</label>
+					<select
+						class="form-select"
+						formControlName="type"
+						[ngClass]="{
+							'required-field':
+								isRequiredField('primaryPhone.type') === true
+						}"
+					>
+						<option
+							[value]="type.value"
+							*ngFor="let type of staticData.phone"
+						>
+							{{ type.label }}
+						</option>
+					</select>
+				</div>
+				<div class="col">
+					<label class="required">Country Code</label>
+					<input
+						type="text"
+						class="form-control"
+						formControlName="countryCode"
+						[ngClass]="{
+							'required-field':
+								isRequiredField('primaryPhone.countryCode') ===
+								true
+						}"
+					/>
+				</div>
+				<div class="col">
+					<label class="required">Number</label>
+					<input
+						type="text"
+						class="form-control"
+						formControlName="number"
+						[ngClass]="{
+							'required-field':
+								isRequiredField('primaryPhone.number') === true
+						}"
+					/>
+				</div>
+			</div>
+			<div class="row" formGroupName="secondaryPhone">
+				<div class="col">
+					<label class="required">Secondary Phone Type</label>
+					<select
+						class="form-select"
+						formControlName="type"
+						[ngClass]="{
+							'required-field':
+								isRequiredField('secondaryPhone.type') === true
+						}"
+					>
+						<option
+							[value]="type.value"
+							*ngFor="let type of staticData.phone"
+						>
+							{{ type.label }}
+						</option>
+					</select>
+				</div>
+
+				<div class="col">
+					<label class="required">Country Code</label>
+					<input
+						type="text"
+						class="form-control"
+						formControlName="countryCode"
+						[ngClass]="{
+							'required-field':
+								isRequiredField(
+									'secondaryPhone.countryCode'
+								) === true
+						}"
+					/>
+				</div>
+				<div class="col">
+					<label class="required">Number</label>
+					<input
+						type="text"
+						class="form-control"
+						formControlName="number"
+						[ngClass]="{
+							'required-field':
+								isRequiredField('secondaryPhone.number') ===
+								true
+						}"
+					/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<label class="required">Email</label>
+					<input
+						type="text"
+						class="form-control"
+						formControlName="email"
+						[ngClass]="{
+							'required-field': isRequiredField('email') === true
+						}"
+					/>
+				</div>
+				<div class="col">
+					<label class="required">Website</label>
+					<div class="input-group">
+						<label class="input-group-text" for="inputGroupFile01"
+							>https://</label
+						>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="website"
+							[ngClass]="{
+								'required-field':
+									isRequiredField('website') === true
+							}"
+						/>
+					</div>
+				</div>
+				<div class="col">
+					<label class="required">Fax</label>
+					<input
+						type="text"
+						class="form-control"
+						formControlName="fax"
+						[ngClass]="{
+							'required-field': isRequiredField('fax') === true
+						}"
+					/>
+				</div>
+				<div class="row">
+					<div class="col-4">
+						<label class="required">Prefered Mail Method</label>
+						<select
+							class="form-select"
+							formControlName="preferedMailMethod"
+							[ngClass]="{
+								'required-field':
+									isRequiredField('preferedMailMethod') ===
+									true
+							}"
+						>
+							<option value="mail">Mail</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

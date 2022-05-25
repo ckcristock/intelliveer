@@ -1,7 +1,7 @@
 <div class="container">
-	<div class="row mb-3">
+	<!-- <div class="row mb-3">
 		<span class="text-uppercase fw-bold">Manage Mapping</span>
-	</div>
+	</div> -->
 	<div class="row">
 		<div class="col">
 			<table class="table table-bordered table-stripe mapping-table">
@@ -54,11 +54,14 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col gap-2 d-flex">
-			<button class="btn btn-dark" (click)="saveMapping()">
+		<div class="col gap-2 d-flex mt-3">
+			<button class="btn btn-dark fw-bold" (click)="saveMapping()">
 				Save Mapping
 			</button>
-			<button class="btn btn-light" (click)="handleCancel()">
+			<button
+				class="btn btn-outline-secondary fw-bold"
+				(click)="handleCancel()"
+			>
 				Cancel
 			</button>
 		</div>

@@ -1,0 +1,8 @@
+<div class="container" *ngIf="data">
+    <app-family-member-form
+        [title]="'Edit Family Member'"
+        [formData]="data"
+        (onCancel)="handleCancel()"
+        (onSubmit)="update($event)"
+    ></app-family-member-form>
+</div>

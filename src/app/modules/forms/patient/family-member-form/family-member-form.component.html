@@ -1,0 +1,109 @@
+<div class="row sticky">
+	<div class="col-11">
+		<div class="col pills">
+			<ul class="nav">
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']" (click)="scroll(overview, 'overview')">Overview</a>
+				</li>
+				&nbsp;&nbsp;
+				<li class="nav-item">
+					<a class="nav-link" [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']" (click)="scroll(profile, 'profile')">Profile</a>
+				</li>
+			</ul>		
+		</div>
+	</div>
+	<div class="col-1 d-flex justify-content-end align-items-center mb-3">
+		<button class="btn btn-light" [disabled]="Form?.invalid"  (click)="save(f.value)" >
+			<img src="assets/icons/save.svg" width="36" height="36" />
+		</button>
+		<img src="assets/icons/cancel.svg" width="36" height="36" (click)="cancel()" />
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-12" id="main">
+		<div class="section" #overview>
+			<div class="row">
+				<div class="col-sm">
+					<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
+					</app-image-uploader>
+				</div>
+			</div>
+		</div>
+
+		<div class="section" #profile>
+			<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
+				<h6 class="heading">Profile</h6>
+				<div class="row mb-3">
+					<div class="col">
+						<label class="required">Title</label>
+						<select class="form-select" formControlName="title">
+							<option>Select</option>
+						</select>
+					</div>
+					<div class="col">
+						<label class="required">First Name</label>
+						<input
+							class="form-control value-must"
+							type="text"
+							placeholder=""
+							name="firstName"
+							formControlName="firstName"
+						/>
+					</div>
+
+					<div class="col">
+						<label class="required">Middle Name</label>
+						<input
+							class="form-control"
+							type="text"
+							placeholder=""
+							name="name"
+							formControlName="middleName"
+						/>
+					</div>
+					<div class="col">
+						<label class="required">Last Name</label>
+						<input
+							class="form-control value-must"
+							type="text"
+							placeholder=""
+							name="lastName"
+							formControlName="lastName"
+						/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<label class="required">Date of Birth</label>
+						<input
+							class="form-control"
+							type="date"
+							placeholder=""
+							name="DOB"
+							formControlName="DOB"
+						/>
+					</div>
+					<div class="col">
+						<label class="required">Gender</label>
+						<select class="form-select" formControlName="gender">
+							<option value="M">Male</option>
+							<option value="F">Female</option>
+						</select>
+					</div>
+					<div class="col">
+						<label
+							class="required">Relationship with Patient</label
+						>
+						<select class="form-select" formControlName="pronoun">
+							<option>Select</option>
+						</select>
+					</div>
+					<div class="col"></div>
+				</div>
+				
+			</form>
+		</div>
+
+	</div>
+</div>

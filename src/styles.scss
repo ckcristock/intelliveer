@@ -19,6 +19,8 @@
 // Fonts
 // @import url('https://fonts.googleapis.com/css2?family=PT+Sans+Narrow:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
 
 html,
 body {
@@ -26,6 +28,8 @@ body {
 	font-family: 'Montserrat', sans-serif;
 	font-size: 12px;
 }
+
+$input-border-color: #c1c3c5;
 
 textarea:hover,
 input.form-control:hover,
@@ -48,16 +52,15 @@ label:focus,
 }
 form {
 	.form-control {
-		margin-bottom: 0.5rem;
+		// margin-bottom: 0.5rem;
 	}
 }
 
 form {
 	.value-must {
-		margin-bottom: 0.5rem;
+		// margin-bottom: 0.5rem;
 		background-color: #f7ebeb;
-		outline: ridge;
-		outline-color: #ed1c24;
+		border-color: #ed1c24;
 	}
 }
 
@@ -214,22 +217,26 @@ form {
 	}
 }
 .ng-select .ng-select-container {
-	min-height: 30px;
+	min-height: 35px;
 }
 .ng-select.ng-select-single .ng-select-container {
-	height: 30px;
+	height: 34px;
+	border-radius: 4px;
+	border: 1px solid transparent;
+	background: transparent;
 }
 
 ::-webkit-scrollbar {
-    width: 4px;
-    overflow-y: scroll;
-    background: lightgrey;
-    box-shadow: inset 0 0 4px #707070;
+	height: 4px;
+	width: 4px;
+	overflow-y: scroll;
+	background: lightgrey;
+	box-shadow: inset 0 0 4px #707070;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: gray;
-    border-radius: 5pt;
+	background: gray;
+	border-radius: 5pt;
 }
 
 table {
@@ -246,4 +253,153 @@ table {
 .inactive {
 	color: #212529;
 	text-decoration: none;
+}
+
+.letter {
+	position: relative;
+	width: 78px;
+	height: 90px;
+	background-color: #f1f2f2;
+	border-radius: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	p {
+		font-size: 56.33px;
+	}
+
+	#orange {
+		width: max-content;
+		padding: 0px 8px;
+		background-color: #ec6e4d;
+		position: absolute;
+		bottom: 0px;
+		right: 0px;
+		color: white;
+		font-size: 7.5px;
+		text-align: center;
+		border-bottom-right-radius: 5px;
+	}
+}
+
+// temporarily css
+
+input[type='text'].form-control,
+input[type='date'].form-control,
+input[type='number'].form-control,
+input[type='email'].form-control,
+input[type='text'].form-control-inline,
+select.form-select {
+	height: 36px;
+	border: 1px solid $input-border-color;
+	border-radius: 4px;
+	font-weight: 300;
+	font-size: 12px;
+	//margin-bottom: 0;
+	color: #000;
+	// box-shadow: 0 -0.5px 0pt 0.1pt #ddd !important;
+}
+
+input[type='text'].form-control,
+input[type='date'].form-control,
+input[type='text'].form-control-inline {
+	line-height: 36px;
+}
+
+input[type='text'].form-control.value-must,
+input[type='date'].form-control.value-must,
+input[type='text'].form-control-inline.value-must {
+	border: 1px solid #ed1c24;
+	box-shadow: 0 -0.5px 0pt 0.1pt #f7ebeb !important;
+	background: #f7ebeb;
+}
+
+label {
+	color: #000;
+	white-space: nowrap;
+	font-weight: 300;
+	font-size: 12px;
+	min-height: 17px;
+}
+
+input:checked[type='radio'] {
+	background-image: url('/../assets/images/radio-checked.png');
+}
+
+input[type='radio'] {
+	background-image: url('/../assets/images/radio.png');
+	width: 15px;
+	height: 15px;
+	border: none;
+	border: none;
+	background-color: #f9f9f9;
+	border-color: #f9f9f9;
+}
+
+input[type='radio']:focus,
+input[type='checkbox']:focus {
+	box-shadow: none;
+	outline: 0;
+}
+
+input[type='checkbox'] {
+	background-image: url('/../assets/images/checkbox.png');
+	width: 19px;
+	height: 18px;
+	border: none;
+	border: none;
+	background-color: #f9f9f9;
+	border-color: #f9f9f9;
+}
+
+input:checked[type='checkbox'] {
+	background-image: url('/../assets/images/checkbox-checked.png');
+}
+
+input[type='checkbox'] + label,
+input[type='radio'] + label {
+	padding-left: 6px;
+	vertical-align: middle;
+	padding-right: 6px;
+}
+
+input[type='checkbox'] + label {
+	padding-top: 3px;
+}
+
+.section h6.heading {
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.form-check-inline {
+	vertical-align: middle;
+}
+
+.required-field {
+	border: 1px solid #ed1c24 !important;
+	background: #f7ebeb !important;
+}
+ng-select {
+	border: 1px solid $input-border-color;
+	border-radius: 4px;
+	background: #fff;
+}
+.required-ng-select {
+	border: 1px solid red;
+	border-radius: 4px;
+	background: #f7ebeb !important;
+}
+
+form {
+	input,
+	select {
+		margin-bottom: 12px;
+	}
+	.input-group {
+		label,
+		input {
+			margin-bottom: 0px;
+		}
+	}
 }

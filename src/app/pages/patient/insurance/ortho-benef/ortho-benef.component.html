@@ -1,0 +1,895 @@
+<!-- menu -->
+<div class="row sticky" style="width: 101.4%">
+	<div class="col-11">
+		<div class="col pills">
+			<a
+				[ngClass]="[selectTab == 'eligibility' ? 'active' : 'inactive']"
+				(click)="scroll(eligibility, 'eligibility')"
+				>Eligibility</a
+			>
+			<a
+				[ngClass]="[selectTab == 'cobaddig' ? 'active' : 'inactive']"
+				(click)="scroll(cobaddig, 'cobaddig')"
+				>COB/Assignment</a
+			>
+			<a
+				[ngClass]="[selectTab == 'deductible' ? 'active' : 'inactive']"
+				(click)="scroll(deductible, 'deductible')"
+				>Deductible</a
+			>
+			<a
+				[ngClass]="[selectTab == 'benefits' ? 'active' : 'inactive']"
+				(click)="scroll(benefits, 'benefits')"
+				>Benefits</a
+			>
+			<a
+				[ngClass]="[selectTab == 'preauth' ? 'active' : 'inactive']"
+				(click)="scroll(preauth, 'preauth')"
+				>Pre-authorization</a
+			>
+			<a
+				[ngClass]="[selectTab == 'billingpaym' ? 'active' : 'inactive']"
+				(click)="scroll(billingpaym, 'billingpaym')"
+				>Billing & Payments</a
+			>
+		</div>
+	</div>
+	<div
+		class="col-1 d-flex justify-content-center align-items-center mb-3 gap-2"
+	>
+		<img
+			src="../../../../../assets/icons/save.svg"
+			style="width: 37px; height: 37px; cursor: pointer"
+			alt=""
+		/>
+		<img
+			src="../../../../../assets/icons/add.svg"
+			style="width: 37px; height: 37px; cursor: pointer"
+			alt=""
+		/>
+	</div>
+</div>
+<!-- sections -->
+<div class="row formstyle">
+	<div class="col-12" id="main">
+		<div class="section p-5" #eligibility>
+			<form autocomplete="off">
+				<div class="mainformsection">
+					<h6 class="heading">Eligibility</h6>
+					<div class="formrow">
+						<div class="row">
+							<div class="col-3">
+								<div class="mainformset">
+									<p class="required">
+										Is patient eligible under plan?
+									</p>
+									<div
+										class="btn-group"
+										role="group"
+										aria-label="Basic radio toggle button group"
+									>
+										<input
+											type="radio"
+											name="btnradio"
+											id="btnradio1"
+											autocomplete="off"
+											checked
+										/>
+										<label class="" for="btnradio1"
+											>Yes</label
+										>
+										<input
+											type="radio"
+											name="btnradio"
+											id="btnradio2"
+											autocomplete="off"
+										/>
+										<label class="" for="btnradio2"
+											>No</label
+										>
+									</div>
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="required"
+										>Calendar Year / Fiscal Year</label
+									>
+									<input
+										class="form-control"
+										type="text"
+										placeholder=""
+										name="DOB"
+										formControlName="DOB"
+									/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="formrow">
+						<div class="row">
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="required"
+										>Month to Month Eligibility?</label
+									>
+									<select
+										class="form-select"
+										formControlName="interest"
+									>
+										<option disabled>Select Website</option>
+										<option>Select</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="required"
+										>Age limit for subscriber</label
+									>
+									<input
+										class="form-control"
+										type="text"
+										placeholder=""
+										name="DOB"
+										formControlName="DOB"
+									/>
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="required"
+										>Age limit for dependant (Child)</label
+									>
+									<input
+										class="form-control"
+										type="text"
+										placeholder=""
+										name="DOB"
+										formControlName="DOB"
+									/>
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="required"
+										>Age limit for dependant
+										(Student)</label
+									>
+									<input
+										class="form-control"
+										type="text"
+										placeholder=""
+										name="DOB"
+										formControlName="DOB"
+									/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="section p-5" #cobaddig>
+			<form autocomplete="off">
+				<div class="mainformsection">
+					<h6 class="heading">COB/Assignment</h6>
+					<div class="formrow">
+						<div class="row">
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="required"
+										>Type of Coordination of benefits</label
+									>
+									<select
+										class="form-select"
+										formControlName="interest"
+									>
+										<option disabled>Select Website</option>
+										<option>Select</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="required"
+										>Assignment of Benefits</label
+									>
+									<select
+										class="form-select"
+										formControlName="interest"
+									>
+										<option disabled>Select Website</option>
+										<option>Select</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="required"
+										>Are the fees based on contract or
+										UCR?</label
+									>
+									<select
+										class="form-select"
+										formControlName="interest"
+									>
+										<option disabled>Select Website</option>
+										<option>Select</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="required"
+										>If contract, which fee schedule?</label
+									>
+									<select
+										class="form-select"
+										formControlName="interest"
+									>
+										<option disabled>Select Website</option>
+										<option>Select</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="section p-5" #deductible>
+			<form autocomplete="off">
+				<div class="mainformsection">
+					<h6 class="heading">Deductible</h6>
+					<div class="formrow">
+						<div class="row">
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="required"
+										>Deductible (Family)</label
+									>
+									<input
+										class="form-control"
+										type="text"
+										placeholder=""
+										name="DOB"
+										formControlName="DOB"
+									/>
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="required"
+										>Deductible remaining (Family)</label
+									>
+									<input
+										class="form-control"
+										type="text"
+										placeholder=""
+										name="DOB"
+										formControlName="DOB"
+									/>
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="required"
+										>Deductible (Individual)</label
+									>
+									<input
+										class="form-control"
+										type="text"
+										placeholder=""
+										name="DOB"
+										formControlName="DOB"
+									/>
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="required"
+										>Deductible remaining
+										(Individual)</label
+									>
+									<input
+										class="form-control"
+										type="text"
+										placeholder=""
+										name="DOB"
+										formControlName="DOB"
+									/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="formrow">
+						<div class="row">
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="required"
+										>Percentage Covered for Ortho:</label
+									>
+									<input
+										class="form-control"
+										type="text"
+										placeholder=""
+										name="DOB"
+										formControlName="DOB"
+									/>
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="mainformset">
+									<p class="required">Waiting Periods?</p>
+									<div
+										class="btn-group"
+										role="group"
+										aria-label="Basic radio toggle button group"
+									>
+										<input
+											type="radio"
+											name="btnradio"
+											id="btnradio1"
+											autocomplete="off"
+											checked
+										/>
+										<label class="" for="btnradio1"
+											>Yes</label
+										>
+										<input
+											type="radio"
+											name="btnradio"
+											id="btnradio2"
+											autocomplete="off"
+										/>
+										<label class="" for="btnradio2"
+											>No</label
+										>
+									</div>
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="required"
+										>When does it end?</label
+									>
+									<select
+										class="form-select"
+										formControlName="interest"
+									>
+										<option disabled>Select Website</option>
+										<option>Select</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="required">End Date</label>
+									<input
+										class="form-control"
+										type="text"
+										placeholder=""
+										name="DOB"
+										formControlName="DOB"
+										disabled
+									/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="section p-5" #benefits>
+			<form autocomplete="off">
+				<div class="mainformsection">
+					<h6 class="heading">Benefits</h6>
+					<div class="formrow">
+						<div class="row">
+							<div class="col-4">
+								<div class="mainformset">
+									<label class="required"
+										>Orthodontic Maximum Type:
+										Lifetime/Annual</label
+									>
+									<select
+										class="form-select"
+										formControlName=""
+									>
+										<option disabled>Select Website</option>
+										<option>Select</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="mainformset">
+									<label class="required"
+										>Orthodontic Maximum Amount (In
+										Network)</label
+									>
+									<input
+										class="form-control"
+										type="text"
+										placeholder=""
+										name="DOB"
+										formControlName="DOB"
+									/>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="mainformset">
+									<label class="required"
+										>Orthodontic Maximum Amount (Out
+										Network)</label
+									>
+									<input
+										class="form-control"
+										type="text"
+										placeholder=""
+										name="DOB"
+										formControlName="DOB"
+									/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="formrow">
+						<div class="row">
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="required"
+										>Any benefits used?</label
+									>
+									<select
+										class="form-select"
+										formControlName="interest"
+									>
+										<option disabled>Select Website</option>
+										<option>Select</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="required"
+										>Remaining benefits</label
+									>
+									<input
+										class="form-control"
+										type="text"
+										placeholder=""
+										name="DOB"
+										formControlName="DOB"
+									/>
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="mainformset">
+									<p class="required">
+										Is work in progress covered?
+									</p>
+									<div
+										class="btn-group"
+										role="group"
+										aria-label="Basic radio toggle button group"
+									>
+										<input
+											type="radio"
+											name="btnradio"
+											id="btnradio1"
+											autocomplete="off"
+											checked
+										/>
+										<label class="" for="btnradio1"
+											>Yes</label
+										>
+										<input
+											type="radio"
+											name="btnradio"
+											id="btnradio2"
+											autocomplete="off"
+										/>
+										<label class="" for="btnradio2"
+											>No</label
+										>
+									</div>
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="mainformset">
+									<p class="required">
+										Any exclusion for Ortho?
+									</p>
+									<div
+										class="btn-group"
+										role="group"
+										aria-label="Basic radio toggle button group"
+									>
+										<input
+											type="radio"
+											name="btnradio"
+											id="btnradio1"
+											autocomplete="off"
+											checked
+										/>
+										<label class="" for="btnradio1"
+											>Yes</label
+										>
+										<input
+											type="radio"
+											name="btnradio"
+											id="btnradio2"
+											autocomplete="off"
+										/>
+										<label class="" for="btnradio2"
+											>No</label
+										>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="section p-5" #preauth>
+			<form autocomplete="off">
+				<div class="mainformsection">
+					<h6 class="heading">Pre-authorization</h6>
+					<div class="formrow">
+						<div class="row">
+							<div class="col-3">
+								<div class="mainformset">
+									<p class="required">
+										Is preauthorization mandatory?
+									</p>
+									<div
+										class="btn-group"
+										role="group"
+										aria-label="Basic radio toggle button group"
+									>
+										<input
+											type="radio"
+											name="btnradio"
+											id="btnradio1"
+											autocomplete="off"
+											checked
+										/>
+										<label class="" for="btnradio1"
+											>Yes</label
+										>
+										<input
+											type="radio"
+											name="btnradio"
+											id="btnradio2"
+											autocomplete="off"
+										/>
+										<label class="" for="btnradio2"
+											>No</label
+										>
+										<input
+											type="radio"
+											name="btnradio"
+											id="btnradio3"
+											autocomplete="off"
+										/>
+										<label class="" for="btnradio2"
+											>Recommended</label
+										>
+									</div>
+								</div>
+							</div>
+							<div class="col-9">
+								<div class="mainformset">
+									<p class="required">
+										Does preauthorization need to be
+										submitted on Insurance provided form?
+									</p>
+									<div
+										class="btn-group"
+										role="group"
+										aria-label="Basic radio toggle button group"
+									>
+										<input
+											type="radio"
+											name="btnradio"
+											id="btnradio1"
+											autocomplete="off"
+											checked
+										/>
+										<label class="" for="btnradio1"
+											>Yes</label
+										>
+										<input
+											type="radio"
+											name="btnradio"
+											id="btnradio2"
+											autocomplete="off"
+										/>
+										<label class="" for="btnradio2"
+											>No</label
+										>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="formrow">
+						<div class="row">
+							<div class="col">
+								<div class="mainformset">
+									<p class="required">
+										What do we need to be submit along with
+										preauthorization?
+									</p>
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="checkbox"
+											id="inlineCheckbox1"
+											value="option1"
+										/>
+										<label
+											class="form-check-label"
+											for="inlineCheckbox1"
+											>Study Models</label
+										>
+									</div>
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="checkbox"
+											id="inlineCheckbox2"
+											value="option2"
+										/>
+										<label
+											class="form-check-label"
+											for="inlineCheckbox2"
+											>Photos</label
+										>
+									</div>
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="checkbox"
+											id="inlineCheckbox1"
+											value="option1"
+										/>
+										<label
+											class="form-check-label"
+											for="inlineCheckbox3"
+											>Panoramic X-ray</label
+										>
+									</div>
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="checkbox"
+											id="inlineCheckbox2"
+											value="option2"
+										/>
+										<label
+											class="form-check-label"
+											for="inlineCheckbox4"
+											>Cephalometric X-ray</label
+										>
+									</div>
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="checkbox"
+											id="inlineCheckbox2"
+											value="option2"
+										/>
+										<label
+											class="form-check-label"
+											for="inlineCheckbox5"
+											>Exam Summary</label
+										>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="section p-5" #billingpaym>
+			<form autocomplete="off">
+				<div class="mainformsection">
+					<h6 class="heading">BIlling & Payments</h6>
+					<div class="formrow">
+						<div class="row">
+							<div class="col-4">
+								<div class="mainformset">
+									<p class="required">
+										Are benefits paid automatically after
+										initial claim?
+									</p>
+									<div
+										class="btn-group"
+										role="group"
+										aria-label="Basic radio toggle button group"
+									>
+										<input
+											type="radio"
+											name="btnradio"
+											id="btnradio1"
+											autocomplete="off"
+											checked
+										/>
+										<label class="" for="btnradio1"
+											>Yes</label
+										>
+										<input
+											type="radio"
+											name="btnradio"
+											id="btnradio2"
+											autocomplete="off"
+										/>
+										<label class="" for="btnradio2"
+											>No</label
+										>
+									</div>
+								</div>
+							</div>
+							<div class="col-8">
+								<div class="mainformset">
+									<p class="required">
+										Initial payment amount/percentage:
+									</p>
+									<div
+										class="btn-group"
+										role="group"
+										aria-label="Basic radio toggle button group"
+									>
+										<input
+											type="radio"
+											class="btn-check"
+											name="options-outlined"
+											id="success-outlined"
+											autocomplete="off"
+											checked
+										/>
+										<label
+											class="btn btn-outline-secondary btnoutlinesecondary"
+											for="success-outlined"
+											>Percentage (%)</label
+										>
+										<input
+											type="radio"
+											class="btn-check"
+											name="options-outlined"
+											id="danger-outlined"
+											autocomplete="off"
+										/>
+										<label
+											class="btn btn-outline-secondary btnoutlinesecondary2"
+											for="danger-outlined"
+											>Amount ($)</label
+										>
+										<input
+											class="btnoutlinesecondary3"
+											value="50%"
+											type="text"
+											placeholder=""
+											name=""
+											formControlName=""
+											style="width: 100px"
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="formrow">
+						<div class="row">
+							<div class="col">
+								<div class="mainformset noradiopad">
+									<p class="required">Payment Schedule</p>
+									<div class="form-check form-check-inline">
+										<input
+											name="btnradio"
+											type="radio"
+											id="inlineCheckbox1"
+											value="option1"
+										/>
+										<label
+											class="form-check-label"
+											for="inlineCheckbox1"
+											>Monthly</label
+										>
+									</div>
+									<div class="form-check form-check-inline">
+										<input
+											name="btnradio"
+											type="radio"
+											id="inlineCheckbox2"
+											value="option2"
+										/>
+										<label
+											class="form-check-label"
+											for="inlineCheckbox2"
+											>Quarterly</label
+										>
+									</div>
+									<div class="form-check form-check-inline">
+										<input
+											name="btnradio"
+											type="radio"
+											id="inlineCheckbox3"
+											value="option1"
+										/>
+										<label
+											class="form-check-label"
+											for="inlineCheckbox3"
+											>Semi-annual</label
+										>
+									</div>
+									<div class="form-check form-check-inline">
+										<input
+											name="btnradio"
+											type="radio"
+											id="inlineCheckbox4"
+											value="option2"
+											checked
+										/>
+										<label
+											class="form-check-label"
+											for="inlineCheckbox4"
+											>Annual</label
+										>
+									</div>
+									<div class="form-check form-check-inline">
+										<input
+											name="btnradio"
+											type="radio"
+											id="inlineCheckbox5"
+											value="option2"
+										/>
+										<label
+											class="form-check-label"
+											for="inlineCheckbox5"
+											>Lump Sum</label
+										>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="formrow">
+						<div class="mainformset">
+							<p class="required">Do we need to submit:</p>
+							<div
+								class="btn-group"
+								role="group"
+								aria-label="Basic radio toggle button group"
+							>
+								<input
+									type="radio"
+									name="btnradio"
+									id="btnradio1"
+									autocomplete="off"
+									checked
+								/>
+								<label class="" for="btnradio1"
+									>Periodic Claims</label
+								>
+								<input
+									type="radio"
+									name="btnradio"
+									id="btnradio2"
+									autocomplete="off"
+								/>
+								<label class="" for="btnradio2"
+									>Recertification Forms?</label
+								>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

@@ -9,54 +9,22 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'patient-detail',
+        redirectTo: 'patient-user',
         pathMatch: 'full',
       },
       {
-        path: 'patient-detail',
+        path: 'patient-user',
         loadChildren: () =>
-          import('@pages/patient/patient-detail/patient-detail.module').then(
-            (m) => m.PatientDetailModule
+          import('@pages/patient/patient-user/patient-user.module').then(
+            (m) => m.PatientUserModule
           ),
       },
       {
-        path: 'provider',
+        path: 'insurance',
         loadChildren: () =>
           import(
-            '@pages/patient/provider/provider.module').then(
-              (m) => m.ProviderModule
-            ),
-      },
-      {
-        path: 'referer',
-        loadChildren: () =>
-          import(
-            '@pages/patient/referer/referer.module').then(
-              (m) => m.RefererModule
-            ),
-      },
-      {
-        path: 'legal-guardian',
-        loadChildren: () =>
-          import(
-            '@pages/patient/legal-guardian/legal-guardian.module').then(
-              (m) => m.LegalGuardianModule
-            ),
-      },
-      {
-        path: 'payment-party',
-        loadChildren: () =>
-          import(
-            '@pages/patient/payment-party/payment-party.module').then(
-              (m) => m.PaymentPartyModule
-            ),
-      },
-      {
-        path: 'insurance-subscriber',
-        loadChildren: () =>
-          import(
-            '@pages/patient/insurance-subscriber/insurance-subscriber.module').then(
-              (m) => m.InsuranceSubscriberModule
+            '@pages/patient/insurance/insurance.module').then(
+              (m) => m.InsuranceModule
             ),
       },
     ],

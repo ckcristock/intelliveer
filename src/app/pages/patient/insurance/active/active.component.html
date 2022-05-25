@@ -1,0 +1,137 @@
+<!-- icons menu -->
+<div class="row sticky" style="width: 101%;">
+	<div class="col-11">
+		<div class="col pills menuheight">
+			<p>&nbsp;</p>
+		</div>
+	</div>
+	<div class="col-1 d-flex justify-content-center align-items-center mb-3 gap-2">
+		<img
+			src="../../../../../assets/icons/save.svg"
+			style="width: 37px; height: 37px; cursor: pointer;"
+			alt=""
+		/>
+		<button class="btn btn-dark pluscentered">
+			<i class="bi bi-plus-lg"></i>
+		</button>
+	</div>
+</div>
+
+<!-- content -->
+<div class="row">
+	<div class="col-12" id="main">
+		<div *ngFor="let letter of letters" class="section" #overview>
+			<div class="row">
+				<div class="principal">
+					<div class="colm" style="margin-left: 52px">
+						<div class="letterandtext">
+							<div class="letter">
+								<p>{{ letter.letter }}</p>
+								<div id="orange">
+									<span>{{ letter.status }}</span>
+								</div>
+							</div>
+							<div class="columsp">
+								<span class="special">Ins. Company Name</span>
+								<div class="horizont">
+									<div class="colums">
+										<span>Phone No.:</span>
+										<span>Plan Type:</span>
+										<span>Group No.:</span>
+									</div>
+									<div class="colums">
+										<span>1234567890</span>
+										<span>PPO</span>
+										<span>GG595</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="colm" style="margin-left: 79px">
+						<div
+							class="horizont"
+							style="width: 203px; justify-content: space-between"
+						>
+							<div class="colums">
+								<span>Subscriber Name:</span>
+								<span>Subscriber ID/SSN:</span>
+								<span>Subscriber DOB:</span>
+								<span>Relationship:</span>
+							</div>
+							<div class="colums">
+								<span>Kim Doe</span>
+								<span>256465</span>
+								<span>May, 10, 1992</span>
+								<span>Father</span>
+							</div>
+						</div>
+					</div>
+					<div class="colm" style="margin-left: 71px">
+						<div class="colums" style="width: 102px">
+							<span
+								><span class="special">Olivia Doe</span>
+								(P1001</span
+							>
+							<span>256465</span>
+							<span>May, 10, 1992</span>
+							<span>Father</span>
+						</div>
+					</div>
+					<div class="colm" style="margin-left: 59px">
+						<div
+							class="horizont"
+							style="width: 186px; justify-content: space-between"
+						>
+							<div class="colums">
+								<span>LE TIN:</span>
+								<span>NPI I & NPI II:</span>
+								<span>Dental Licence No.:</span>
+								<span>Creation Date: </span>
+							</div>
+							<div class="colums">
+								<span>&nbsp;</span>
+								<span>&nbsp;</span>
+								<span>22585</span>
+								<span>Feb 15, 2022</span>
+							</div>
+						</div>
+					</div>
+					<div class="colm dots" style="margin-left: 50px">
+						<div ngbDropdown class="dots">
+							<i
+								class="bi bi-three-dots-vertical"
+								id="dropdownBasic"
+								ngbDropdownToggle
+							></i>
+							<ul ngbDropdownMenu aria-labelledby="dropdownBasic">
+								<li ngbDropdownItem>Drop Plan</li>
+								<li ngbDropdownItem>Set as Secondary</li>
+								<li ngbDropdownItem>Set as Tertiary</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- popup -->
+<!-- <button type="button" class="btn btn-primary" (click)="show(modal)">
+    Launch demo modal
+  </button>
+<div #modal class="modal fade" tabindex="-1" >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+			<p>Active plan needs to be dropped before
+				adding another plan</p>
+			<button type="button" class="btn btn-secondary" id="buttonmodal" data-bs-dismiss="modal">Ok</button>
+        </div>
+      </div>
+   </div>
+</div> -->

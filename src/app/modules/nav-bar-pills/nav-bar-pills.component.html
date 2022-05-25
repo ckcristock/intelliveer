@@ -1,0 +1,36 @@
+<div>
+	<div id="navbar-pills">
+		<div class="left">
+			<a
+				*ngFor="let menu of menuItems"
+				[ngClass]="{ active: activeClass === menu.id }"
+				(click)="scroll(menu)"
+				>{{ menu.title }}</a
+			>
+		</div>
+		<div class="right">
+			<button
+				class="save"
+				*ngIf="saveBtn"
+				[disabled]="disableSaveBtn"
+				(click)="handleSaveBtnClicked()"
+			>
+				<img src="/assets/icons/save.svg" alt="" />
+			</button>
+			<button
+				class="cancel"
+				*ngIf="addBtn"
+				(click)="handleAddCancelClicked()"
+			>
+				<img src="/assets/icons/add.svg" alt="" />
+			</button>
+			<button
+				class="cancel"
+				*ngIf="cancelBtn"
+				(click)="handleSaveCancelClicked()"
+			>
+				<img src="/assets/icons/cancel.svg" alt="" />
+			</button>
+		</div>
+	</div>
+</div>
