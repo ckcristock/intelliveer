@@ -35,3 +35,61 @@ export const patientUserMenuItems = [
 		icon: 'bi bi-house-door',
 	}
 ];
+
+export const patientUserHeaderIconMenuItems = [
+	{
+		title: '',
+		url: '/dashboard/patient/patient-user/patient-detail',
+		icon: 'assets/icons/users.svg',
+	},
+	{
+		title: '',
+		url: '/dashboard/patient/patient-user/patient-detail2',
+		icon: 'assets/icons/chat.svg',
+	},
+	{
+		title: '',
+		url: '/dashboard/patient/patient-user/patient-detail2',
+		icon: 'assets/icons/paper.svg',
+	},
+	{
+		title: '',
+		url: '/dashboard/patient/insurance',
+		icon: 'assets/icons/teeth.svg',
+	},
+	{
+		title: '',
+		url: '/dashboard/patient/patient-user/patient-detail2',
+		icon: 'assets/icons/folder.svg',
+	},
+	{
+		title: '',
+		url: '/dashboard/patient/patient-user/patient-detail2',
+		icon: 'assets/icons/camera.svg',
+	},
+	{
+		title: '',
+		url: '/dashboard/patient/patient-user/patient-detail2',
+		icon: 'assets/icons/image.svg',
+	},
+	{
+		title: '',
+		url: '/dashboard/patient/patient-user/patient-detail2',
+		icon: 'assets/icons/user_chat.svg',
+	},
+	{
+		title: '',
+		url: '/dashboard/patient/patient-user/patient-detail2',
+		icon: 'assets/icons/user_card.svg',
+	},
+	{
+		title: '',
+		url: '/dashboard/patient/patient-user/patient-detail2',
+		icon: 'assets/icons/calendar.svg',
+	},
+	{
+		title: '',
+		url: '/dashboard/patient/patient-user/patient-detail2',
+		icon: 'assets/icons/jar.svg',
+	}
+];
