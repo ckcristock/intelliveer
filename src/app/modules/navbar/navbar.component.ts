@@ -15,7 +15,6 @@ import { MenuBarService } from '@services/menu-bar/menu-bar.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { QuickAddPatientComponent } from '@pages/header/quick-add-patient/quick-add-patient.component';
 
 @Component({
 	selector: 'top-navbar',
@@ -80,10 +79,10 @@ export class NavbarComponent implements OnInit {
 		}
 	}
 
-	openAddPatientDialog()
+	addPatient()
 	{
-		const modalRef = this.modalService.open(QuickAddPatientComponent, { size: 'lg' });
-		modalRef.componentInstance.name = 'Ayushi';
-		// this.router.navigate(['/header/add-patient']);
+		this.searchFocus = false;
+		this.router.navigate(['/dashboard/header/add-patient']);
 	}
+
 }

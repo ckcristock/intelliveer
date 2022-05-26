@@ -26,6 +26,13 @@ const routes: Routes = [
 						(m) => m.PatientModule
 					),
 			},
+			{
+				path: 'header',
+				loadChildren: () =>
+					import('@pages/header/header.module').then(
+						(m) => m.HeaderModule
+					),
+			},
 		],
 	},
 ];

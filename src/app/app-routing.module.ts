@@ -14,13 +14,6 @@ const routes: Routes = [
 			),
 	},
 	{
-		path: 'header',
-		loadChildren: () =>
-			import('@pages/header/header.module').then(
-				(m) => m.HeaderModule
-			),
-	},
-	{
 		path: '**',
 		loadChildren: () =>
 			import('@pages/common/page-not-found/page-not-found.module').then(
