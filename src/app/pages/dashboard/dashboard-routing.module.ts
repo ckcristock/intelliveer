@@ -12,19 +12,19 @@ const routes: Routes = [
 				loadChildren: () =>
 					import('@pages/onboarding/onboarding.module').then(
 						(m) => m.OnboardingModule
-					),
+					)
 			},
 			{
 				path: 'home',
 				loadChildren: () =>
-					import('@pages/home/home.module').then((m) => m.HomeModule),
+					import('@pages/home/home.module').then((m) => m.HomeModule)
 			},
 			{
 				path: 'patient',
 				loadChildren: () =>
 					import('@pages/patient/patient.module').then(
 						(m) => m.PatientModule
-					),
+					)
 			},
 			{
 				path: 'header',
@@ -33,12 +33,12 @@ const routes: Routes = [
 						(m) => m.HeaderModule
 					),
 			},
-		],
-	},
+		]
+	}
 ];
 
 @NgModule({
 	imports: [RouterModule.forChild(routes)],
-	exports: [RouterModule],
+	exports: [RouterModule]
 })
 export class DashboardRoutingModule {}
