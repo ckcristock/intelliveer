@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CONFIG } from '@config/index';
+import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 import { ContactDetailsFormService } from '@services/forms/contact-details-form/contact-details-form.service';
 import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
@@ -19,14 +20,24 @@ export class LegalEntityFormComponent implements OnInit {
 	@Output() onCancel = new EventEmitter();
 	@Output() onSubmit = new EventEmitter();
 	countries: any;
-	showEmpIdFeild: boolean = false;
+	imageSrc: any;
+	currentSelection: string = '';
+	menuItems: MenuItem[] = [
+		{ title: 'Overview', id: 'overview' },
+		{ title: 'Profile', id: 'profile' },
+		{ title: 'Physical Address', id: 'physicalAddress' },
+		{ title: 'Mailing Address', id: 'mailingAddress' },
+		{ title: 'Insurance ', id: 'insuranceBillingAddress' },
+		{ title: 'Contact', id: 'contactDetails' },
+		{ title: 'Contact Person Info', id: 'contactPerson' }
+	];
 	constructor(
 		private fb: FormBuilder,
 		private http: HttpClient,
 		private addressFormService: AddressFormService,
 		private contactPersonFormService: ContactPersonFormService,
 		private contactDetailsFormService: ContactDetailsFormService,
-		private geoService: GeoService
+		private geoService: GeoService,
 	) {
 		this.getCountries();
 	}
@@ -50,7 +61,7 @@ export class LegalEntityFormComponent implements OnInit {
 			TIN: [data?.TIN || '', Validators.required],
 			country: [data?.country || ''],
 			currency: [data?.currency || ''],
-			isLegalEmployer: [data?.isLegalEmployer || ''],
+			isLegalEmployer: [data?.isLegalEmployer || 'yes'],
 			employerId: [data?.employerId || ''],
 			physicalAddress: this.addressFormService.getAddressForm(
 				data?.physicalAddress || {}
@@ -86,23 +97,7 @@ export class LegalEntityFormComponent implements OnInit {
 			}
 		});
 	}
-	scroll(el: HTMLElement) {
-		el.scrollIntoView({
-			behavior: 'smooth',
-			block: 'start',
-			inline: 'nearest'
-		});
-	}
-
-	checkRadio(event: any)
-	{
-		if(event.srcElement.value.trim() === "yes")
-		{
-			this.showEmpIdFeild = true
-		}
-		else
-		{
-			this.showEmpIdFeild = false;
-		}
+	onSectionChange(sectionId: string) {
+		this.currentSelection = sectionId;
 	}
 }

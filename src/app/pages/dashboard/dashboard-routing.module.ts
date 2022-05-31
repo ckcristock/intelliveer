@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CanDeactivateGuard } from '@guards/can-deactivate/can-deactivate.guard';
 import { DashboardComponent } from './dashboard.component';
 
 const routes: Routes = [
@@ -25,14 +26,7 @@ const routes: Routes = [
 					import('@pages/patient/patient.module').then(
 						(m) => m.PatientModule
 					)
-			},
-			{
-				path: 'header',
-				loadChildren: () =>
-					import('@pages/header/header.module').then(
-						(m) => m.HeaderModule
-					),
-			},
+			}
 		]
 	}
 ];
