@@ -30,7 +30,32 @@ export class PatientDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tabsLst = ["overview", "profile", "Address"];
+    this.tabsLst = [
+      {
+        tabTitleName: "Overview",
+        tabTitleId: "overview"
+      },
+      {
+        tabTitleName: "Profile",
+        tabTitleId: "profile"
+      },
+      {
+        tabTitleName: "Information",
+        tabTitleId: "information"
+      },
+      {
+        tabTitleName: "Preferences",
+        tabTitleId: "preferences"
+      },
+      {
+        tabTitleName: "Emergency Contact",
+        tabTitleId: "emergencyContact"
+      },
+      {
+        tabTitleName: "Notes",
+        tabTitleId: "notes"
+      }
+    ];
     this.addId();
     this.initForm(this.formData);
   }
@@ -108,12 +133,8 @@ export class PatientDetailComponent implements OnInit {
 
   selectedTab($event: any)
   {
-    // if($event == "overview")
-    // {
-    //   this.scroll("overview", $event);
-    // }
     console.log($event);
-    // this.scroll($event.selectHtmlTab, $event.selectTab.trim())
+    document.getElementById($event)?.scrollIntoView();
   }
 
 

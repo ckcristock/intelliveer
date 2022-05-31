@@ -14,23 +14,10 @@ export class TabsComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-    console.log(this.tabsLst)
-  }
+  ngOnInit(): void {}
 
-  scroll(el: HTMLElement, selectTab: string) {
-    let tabObj ={
-      selectHtnlTab: el,
-      selectTab: selectTab
-    }
-    // this.selectTab = selectTab.trim();
-    this.selectTab.emit(tabObj);
-    // el.scrollIntoView({
-    //   behavior: 'smooth',
-    //   block: 'start',
-    //   inline: 'nearest',
-    // });
+  scroll(selectTab: any) {
+    this.selectTab.emit(selectTab);
   }
-
 
 }
