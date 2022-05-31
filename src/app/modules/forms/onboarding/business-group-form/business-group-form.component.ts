@@ -30,7 +30,7 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 	countries: any;
 	imageSrc: any;
 	currentSelection: string = '';
-	saveButtonEnable: boolean = false;
+	saveButtonEnable: boolean = true;
 	menuItems: MenuItem[] = [
 		{ title: 'Overview', id: 'overview' },
 		{ title: 'Profile', id: 'profile' },
@@ -115,8 +115,8 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 	}
 	getCountries() {
 		this.geoService.getCountries().subscribe({
-			next: (res) => {
-				this.countries = res;
+			next: (res: any) => {
+				this.countries = res.sort((a: any, b: any) => (a.name > b.name) ? 1 : -1);
 			}
 		});
 	}
