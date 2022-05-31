@@ -1,0 +1,118 @@
+.formstyle {
+	height: 82%;
+	overflow: auto;
+}
+
+.row.sticky {
+  z-index: 999;
+  background: #fff;
+}
+.mainformsection {
+  .mainformset .btn-group {
+    display: flex;
+    align-items: center;
+  }
+
+  .mainformset .btn-group label {
+    margin-right: 22px;
+    margin-left: 4px;
+  }
+
+  .mainformset label.btn.btnoutlinesecondary {
+    background: #39383a;
+    height: 38px;
+    line-height: 38px;
+    width: 130px !important;
+    display: block;
+    padding: 0;
+    margin: 0 !important;
+    min-width: inherit !important;
+    flex: none;
+    ;
+    border-radius: 6px 0 0 6px;
+  }
+
+  .formrow .buttoninput button {
+    border: 0;
+    background: #fff;
+    border: 1px solid #ced4da;
+    border-right: 0;
+    border-radius: 6px 0 0 6px;
+    padding: 0 8px;
+  }
+
+  .mainformset .btnoutlinesecondary2 {
+
+    background: #fff;
+    height: 38px !important;
+    line-height: 39px;
+    width: 110px !important;
+    display: block;
+    padding: 0 0 0 16px;
+    margin: 0 !important;
+    min-width: inherit !important;
+    flex: none;
+    border-radius: 0px 6px 6px 0px !important;
+    color: #000;
+    border-color: #BCBEC0 !important;
+    text-align: left;
+    border-left: 0 !important;
+    box-shadow: none !important;
+  }
+
+  input.btnoutlinesecondary3 {
+    background: #fff;
+    height: 38px !important;
+    line-height: 39px;
+    width: 110px !important;
+    display: block;
+    padding: 0 0 0 16px;
+    margin: 0 !important;
+    min-width: inherit !important;
+    flex: none;
+    border-radius: 0px 6px 6px 0px !important;
+    color: #000;
+    border-color: #BCBEC0;
+    text-align: left;
+    border-left: 0 !important;
+  }
+
+
+}
+
+.pluscentered{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.type-width{
+  width: 15%;
+}
+
+.large-width{
+  width: 35%;
+}
+
+.two-items{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.twenty {
+	width: 20%;
+}
+
+.input-button{
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  gap: 10px;
+}
+
+.start{
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+}

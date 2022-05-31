@@ -6,6 +6,15 @@ const routes: Routes = [
 	{
 		path: '',
 		component: HomeComponent,
+		children: [
+			{
+				path: 'add-patient',
+				loadChildren: () =>
+					import('@pages/home/add-patient/add-patient.module').then(
+						(m) => m.AddPatientModule
+					)
+			},
+		]
 	},
 ];
 
