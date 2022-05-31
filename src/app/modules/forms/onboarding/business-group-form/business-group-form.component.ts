@@ -44,7 +44,7 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 		private addressFormService: AddressFormService,
 		private contactPersonFormService: ContactPersonFormService,
 		private contactDetailsFormService: ContactDetailsFormService,
-		private geoService: GeoService
+		private geoService: GeoService,
 	) {}
 
 	ngOnInit() {

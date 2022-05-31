@@ -7,11 +7,11 @@ import { AddressFormModule } from '@modules/forms/address-form/address-form.modu
 import { ContactDetailsFormModule } from '@modules/forms/contact-details-form/contact-details-form.module';
 import { ContactPersonFormModule } from '@modules/forms/contact-person-form/contact-person-form.module';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { ScrollSpyDirective } from '@directives/scrollspy';
+import { ScrollspyModule } from "@modules/scrollspy/scrollspy.module";
 import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
 
 @NgModule({
-	declarations: [BusinessGroupFormComponent, ScrollSpyDirective],
+	declarations: [BusinessGroupFormComponent],
 	imports: [
 		CommonModule,
 		FormsModule,
@@ -21,7 +21,8 @@ import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
 		ContactPersonFormModule,
 		NgSelectModule,
 		ImageUploaderModule,
-		NavBarPillsModule
+		NavBarPillsModule,
+		ScrollspyModule
 	],
 	exports: [BusinessGroupFormComponent]
 })

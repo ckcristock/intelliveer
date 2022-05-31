@@ -1,49 +1,33 @@
 <div class="row" *ngIf="Form">
-	<!-- <div class="col-12 d-flex mb-3">
-		<div class="col d-flex align-items-center">
-			<span class="text-uppercase fw-bold">{{ title }}</span>
-		</div>
-	</div> -->
-
-	<div id="navbar-pills">
-		<div class="left">
-			<a class="active" (click)="scroll(overview)">Overview</a>
-			<a (click)="scroll(profile)">Profile</a>
-			<a (click)="scroll(physicalAddress)">Physical Address</a>
-			<a (click)="scroll(mailingAddress)">Mailing Address</a>
-			<a (click)="scroll(insuranceBillingAddress)">Insurance</a>
-			<a (click)="scroll(contactDetails)">Contact</a>
-			<a (click)="scroll(contactPerson)">Contact Person Info</a>
-		</div>
-		<div class="right">
-			<button
-				class="save"
-				[disabled]="Form.invalid"
-				(click)="save(Form.value)"
-			>
-				<img src="/assets/icons/save.svg" alt="" />
-			</button>
-			<button class="cancel" (click)="cancel()">
-				<img src="/assets/icons/cancel.svg" alt="" />
-			</button>
-		</div>
-	</div>
-
-	<div class="container" id="main">
-		<div class="section" #overview>
-			<!-- <div class="row">
+	<app-nav-bar-pills
+		[menuItems]="menuItems"
+		[activeClass]="currentSelection"
+		[cancelBtn]="true"
+		[saveBtn]="true"
+		[disableSaveBtn]="Form.invalid"
+		(onCancel)="cancel()"
+		(onSave)="save(Form.value)"
+	></app-nav-bar-pills>
+	<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
+		<div
+			class="col-12"
+			id="main"
+			scrollSpy
+			(sectionChange)="onSectionChange($event)"
+		>
+			<div class="section" id="overview">
+				<!-- <div class="row">
 				<h6 class="heading">Logo</h6>
 			</div> -->
-			<div class="row">
-				<app-image-uploader
-					[imageUrl]="formData?.logo || ''"
-					(onUpload)="handleUploadedImage($event)"
-				></app-image-uploader>
+				<div class="row">
+					<app-image-uploader
+						[imageUrl]="formData?.logo || ''"
+						(onUpload)="handleUploadedImage($event)"
+					></app-image-uploader>
+				</div>
 			</div>
-		</div>
-		<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
 			<!-- Profile -->
-			<div class="section" #profile>
+			<div class="section" id="profile">
 				<div class="row">
 					<h6 class="heading">Profile</h6>
 				</div>
@@ -128,7 +112,7 @@
 				</div>
 			</div>
 			<!-- Physical Address -->
-			<div class="section" #physicalAddress>
+			<div class="section" id="physicalAddress">
 				<div class="row">
 					<h6 class="heading">Physical Address</h6>
 				</div>
@@ -138,49 +122,49 @@
 				></app-address-form>
 			</div>
 			<!-- Mailing Address -->
-			<div class="section" #mailingAddress>
+			<div class="section" id="mailingAddress">
 				<div class="row">
 					<h6 class="heading">Mailing Address</h6>
 				</div>
 				<!-- <div class="row">
-					<div class="col-4 mb-3">
-						<button
-							type="button"
-							class="btn btn-sm btn-dark"
-							(click)="setAddress('mailingAddress')"
-						>
-							Same as physical address
-						</button>
-					</div>
-				</div> -->
+				<div class="col-4 mb-3">
+					<button
+						type="button"
+						class="btn btn-sm btn-dark"
+						(click)="setAddress('mailingAddress')"
+					>
+						Same as physical address
+					</button>
+				</div>
+			</div> -->
 				<app-address-form
 					[parentGroup]="Form"
 					[formGroupName]="'mailingAddress'"
 				></app-address-form>
 			</div>
 			<!-- Insurance Billing Address -->
-			<div class="section" #insuranceBillingAddress>
+			<div class="section" id="insuranceBillingAddress">
 				<div class="row">
 					<h6 class="heading">Insurance Billing / Payment Address</h6>
 				</div>
 				<!-- <div class="row">
-					<div class="col-4 mb-3">
-						<button
-							type="button"
-							class="btn btn-sm btn-dark"
-							(click)="setAddress('insuranceBillingAddress')"
-						>
-							Same as physical address
-						</button>
-					</div>
-				</div> -->
+				<div class="col-4 mb-3">
+					<button
+						type="button"
+						class="btn btn-sm btn-dark"
+						(click)="setAddress('insuranceBillingAddress')"
+					>
+						Same as physical address
+					</button>
+				</div>
+			</div> -->
 				<app-address-form
 					[parentGroup]="Form"
 					[formGroupName]="'insuranceBillingAddress'"
 				></app-address-form>
 			</div>
 			<!-- Contact -->
-			<div class="section" #contactDetails>
+			<div class="section" id="contactDetails">
 				<div class="row">
 					<h6 class="heading">Contact</h6>
 				</div>
@@ -190,7 +174,7 @@
 				></app-contact-details-form>
 			</div>
 			<!-- Contact Person-->
-			<div class="section" #contactPerson>
+			<div class="section" id="contactPerson">
 				<div class="row">
 					<h6 class="heading">Contact Person Info</h6>
 				</div>
@@ -200,18 +184,18 @@
 				></app-contact-person-form>
 			</div>
 			<!-- <div class="d-flex border-top pt-3 gap-2">
-				<button
-					class="btn btn-dark"
-					type="submit"
-					[disabled]="Form.invalid"
-				>
-					Save Changes
-				</button>
-
-				<button class="btn btn-light" type="button" (click)="cancel()">
-					Cancel
-				</button>
-			</div> -->
-		</form>
-	</div>
+			<button
+				class="btn btn-dark"
+				type="submit"
+				[disabled]="Form.invalid"
+			>
+				Save Changes
+			</button>
+	
+			<button class="btn btn-light" type="button" (click)="cancel()">
+				Cancel
+			</button>
+		</div> -->
+		</div>
+	</form>
 </div>
