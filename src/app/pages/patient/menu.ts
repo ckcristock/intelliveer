@@ -35,3 +35,127 @@ export const patientUserMenuItems = [
 		icon: 'bi bi-house-door',
 	}
 ];
+
+export const patientConsultationMenuItems = [
+	{
+		title: 'Health History',
+		url: '/dashboard/patient/consultation/health-history',
+		icon: 'bi bi-house-door',
+		child: []
+	},
+	{
+		title: 'Consultations',
+		url: '',
+		icon: 'bi bi-house-door',
+		child: [
+			{
+				title: 'Consultation 1',
+				url: '',
+				icon: 'bi bi-house-door',
+				child: [
+					{
+						title: 'Questionnaire',
+						url: '',
+						icon: 'bi bi-house-door',
+					},
+					{
+						title: 'Diagnosis',
+						url: '',
+						icon: 'bi bi-house-door',
+					},
+					{
+						title: 'Treatment Options',
+						url: '',
+						icon: 'bi bi-house-door',
+					},
+					{
+						title: 'Fee Estimate',
+						url: '',
+						icon: 'bi bi-house-door',
+					},
+					{
+						title: 'Payment Options',
+						url: '',
+						icon: 'bi bi-house-door',
+					}
+				]
+			},
+			{
+				title: 'Consultation 2',
+				url: '',
+				icon: 'bi bi-house-door',
+				child: [
+					{
+						title: 'Questionnaire',
+						url: '',
+						icon: 'bi bi-house-door',
+					},
+					{
+						title: 'Diagnosis',
+						url: '',
+						icon: 'bi bi-house-door',
+					},
+					{
+						title: 'Treatment Options',
+						url: '',
+						icon: 'bi bi-house-door',
+					},
+					{
+						title: 'Fee Estimate',
+						url: '',
+						icon: 'bi bi-house-door',
+					},
+					{
+						title: 'Payment Options',
+						url: '',
+						icon: 'bi bi-house-door',
+					}
+				]
+			},
+			{
+				title: 'Consultation 3',
+				url: '',
+				icon: 'bi bi-house-door',
+				child: [
+					{
+						title: 'Questionnaire',
+						url: '',
+						icon: 'bi bi-house-door',
+					},
+					{
+						title: 'Diagnosis',
+						url: '',
+						icon: 'bi bi-house-door',
+					},
+					{
+						title: 'Treatment Options',
+						url: '',
+						icon: 'bi bi-house-door',
+					},
+					{
+						title: 'Fee Estimate',
+						url: '',
+						icon: 'bi bi-house-door',
+					},
+					{
+						title: 'Payment Options',
+						url: '',
+						icon: 'bi bi-house-door',
+					}
+				]
+			}
+		]
+	},
+	{
+		title: 'Follow ups',
+		url: '/*',
+		icon: 'bi bi-house-door',
+		child: []
+	},
+	{
+		title: 'Showcase',
+		url: '/*',
+		icon: 'bi bi-house-door',
+		child: []
+	}
+]

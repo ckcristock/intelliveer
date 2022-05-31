@@ -1,0 +1,19 @@
+@import 'navbar_pills';
+
+#main {
+	height: calc(100vh - 310px);
+	overflow: auto;
+	padding-bottom: 5rem;
+	form {
+		input,
+		select {
+			margin-bottom: 5px;
+		}
+	}
+}
+
+.box {
+	height: 10rem;
+	border: 1px solid lightgrey;
+	background-color: white;
+  }

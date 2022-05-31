@@ -26,7 +26,14 @@ const routes: Routes = [
 					import('@pages/patient/patient.module').then(
 						(m) => m.PatientModule
 					)
-			}
+			},
+			{
+				path: 'header',
+				loadChildren: () =>
+					import('@pages/header/header.module').then(
+						(m) => m.HeaderModule
+					),
+			},
 		]
 	}
 ];

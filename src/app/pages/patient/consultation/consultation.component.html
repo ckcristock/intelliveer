@@ -1,0 +1,58 @@
+<div>
+    <div class="row">
+        <div class="col" style="max-width: 200px">
+            <button type="button" class="btn btn-light" style="border-color: lightgray;">Consultation Phase</button>
+            <ul class="ul">
+                <ol class="ol">
+					<!-- <li class="pointer" *ngFor="let item of menuItems" routerLinkActive="active"
+                        [routerLink]="item.url">
+                        <b>{{ item.title }}</b>
+                    </li> -->
+                    <li class="pointer" *ngFor="let item of menuItems" routerLinkActive="active"
+						[routerLink]="item.url">
+						<b>{{ item.title }}</b>
+						<ngb-accordion
+							#acc="ngbAccordion"
+							activeIds="consultations-panel"
+							class="accord-transparent"
+							*ngIf="item.child?.length != 0"
+						>
+							<ngb-panel title="" id="consultations-panel">
+								<ng-template ngbPanelTitle>
+									<span><b>{{ item.title }}</b></span
+									>
+								</ng-template>
+								<ng-template ngbPanelContent>
+									<ul class="ol">
+										<li class="pointer" *ngFor="let childItem of item.child">
+											<ngb-accordion
+												#acc="ngbAccordion"
+												class="accord-transparent"
+											>
+												<ngb-panel id="consultations1-panel">
+													<ng-template ngbPanelTitle>
+														<span><b>{{ childItem.title }}</b></span>
+													</ng-template>
+													<ng-template
+														ngbPanelContent
+													>
+														<ul class="ol">
+															<li class="pointer" *ngFor="let subChild of childItem.child"><b>{{ subChild.title }}</b></li>
+														</ul>
+													</ng-template>
+												</ngb-panel>
+											</ngb-accordion>
+										</li>
+									</ul>
+								</ng-template>
+							</ngb-panel>
+						</ngb-accordion>
+					</li>
+                </ol>
+            </ul>
+        </div>
+        <div class="col component-view">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

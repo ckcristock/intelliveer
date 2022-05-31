@@ -10,6 +10,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CONFIG } from '@config/index';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
+import { AlertService } from '@services/alert/alert.service';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 import { ContactDetailsFormService } from '@services/forms/contact-details-form/contact-details-form.service';
 import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
@@ -29,6 +30,7 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 	countries: any;
 	imageSrc: any;
 	currentSelection: string = '';
+	saveButtonEnable: boolean = true;
 	menuItems: MenuItem[] = [
 		{ title: 'Overview', id: 'overview' },
 		{ title: 'Profile', id: 'profile' },
@@ -44,7 +46,8 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 		private addressFormService: AddressFormService,
 		private contactPersonFormService: ContactPersonFormService,
 		private contactDetailsFormService: ContactDetailsFormService,
-		private geoService: GeoService
+		private geoService: GeoService,
+		private alertService: AlertService
 	) {}
 
 	ngOnInit() {
@@ -85,12 +88,21 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 				}
 			)
 		});
+		this.BGForm.valueChanges.subscribe(data => 
+			{
+				this.saveButtonEnable = false;
+			})
 	}
 	save(data: any) {
 		this.onSubmit.emit(data);
 	}
 	cancel() {
-		this.onCancel.emit();
+		this.alertService.conformAlert('Are you sure?', 'You want to exit')
+		.then((result: any) => {
+			if (result.value) {
+				this.onCancel.emit();
+			}
+		});
 	}
 	setAddress(type: string) {
 		let physicalAddress = this.BGForm?.controls['physicalAddress'].value;
@@ -110,5 +122,16 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 	}
 	onSectionChange(sectionId: string) {
 		this.currentSelection = sectionId;
+	}
+	customSearchFn(term: string, item: any) {
+		term = term.toLowerCase();
+		let splitTerm = term.split(' ').filter(t => t);
+		let isWordThere: any = [];
+		splitTerm.forEach(arr_term => {
+		  let search = item.toLowerCase();
+		  isWordThere.push(search.indexOf(arr_term) != -1);
+		});
+		const all_words = (this_word: any) => this_word;
+		return isWordThere.every(all_words);
 	}
 }
