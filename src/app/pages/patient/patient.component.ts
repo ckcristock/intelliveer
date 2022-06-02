@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
-import { patientUserHeaderIconMenuItems } from './menu';
 
 @Component({
   selector: 'app-patient',
@@ -9,8 +8,6 @@ import { patientUserHeaderIconMenuItems } from './menu';
   styleUrls: ['./patient.component.scss']
 })
 export class PatientComponent implements OnInit {
-
-  menuItems: IMenuItem[] = patientUserHeaderIconMenuItems;
 
   navbarOpen = false;
   navbarNumb = 1;
@@ -37,27 +34,27 @@ export class PatientComponent implements OnInit {
   }
 
   //to show patient Dropdown and highlights patient icon
-  // patients() {
-  //   if (this.router.url === '/dashboard/patient/patient-detail' ||
-  //     this.router.url === '/dashboard/patient/provider' ||
-  //     this.router.url === '/dashboard/patient/referer' ||
-  //     this.router.url === '/dashboard/patient/legal-guardian' ||
-  //     this.router.url === '/dashboard/patient/payment-party' ||
-  //     this.router.url === '/dashboard/patient/insurance-subscriber' ||
-  //     this.router.url === '/dashboard/patient/family_members' ||
+  patients() {
+    if (this.router.url === '/dashboard/patient/patient-detail' ||
+      this.router.url === '/dashboard/patient/provider' ||
+      this.router.url === '/dashboard/patient/referer' ||
+      this.router.url === '/dashboard/patient/legal-guardian' ||
+      this.router.url === '/dashboard/patient/payment-party' ||
+      this.router.url === '/dashboard/patient/insurance-subscriber' ||
+      this.router.url === '/dashboard/patient/family_members' ||
 
-  //     this.router.url === '/dashboard/patient/provider/add' ||
-  //     this.router.url === '/dashboard/patient/referer/add' ||
-  //     this.router.url === '/dashboard/patient/legal-guardian/add' ||
-  //     this.router.url === '/dashboard/patient/payment-party/add' ||
-  //     this.router.url === '/dashboard/patient/insurance-subscriber/add' ||
-  //     this.router.url === '/dashboard/patient/family_members/add'
-  //   ) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+      this.router.url === '/dashboard/patient/provider/add' ||
+      this.router.url === '/dashboard/patient/referer/add' ||
+      this.router.url === '/dashboard/patient/legal-guardian/add' ||
+      this.router.url === '/dashboard/patient/payment-party/add' ||
+      this.router.url === '/dashboard/patient/insurance-subscriber/add' ||
+      this.router.url === '/dashboard/patient/family_members/add'
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   //to highlights Active-Section's Title
   activeSection() {

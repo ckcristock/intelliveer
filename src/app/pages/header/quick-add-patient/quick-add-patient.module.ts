@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AddPatientComponent } from './add-patient.component';
-import { AddPatientRoutingModule } from './add-patient-routing.module';
+import { QuickAddPatientComponent } from './quick-add-patient.component';
+import { QuickAddPatientRoutingModule } from './quick-add-patient-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AddPatientComponent
+    QuickAddPatientComponent
   ],
   imports: [
     CommonModule,
-    AddPatientRoutingModule,
+    QuickAddPatientRoutingModule,
     FormsModule,
     ReactiveFormsModule
   ]
 })
-export class AddPatientModule { }
+export class QuickAddPatientModule { }

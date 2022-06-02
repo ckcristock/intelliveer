@@ -3,12 +3,19 @@ import { CommonModule } from '@angular/common';
 
 import { AddPatientRoutingModule } from './add-patient-routing.module';
 import { AddPatientComponent } from './add-patient.component';
+import { CoorWithProspectComponent } from './coor-with-prospect/coor-with-prospect.component';
+import { QuickAddComponent } from './quick-add/quick-add.component';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
-	declarations: [AddPatientComponent],
-	imports: [CommonModule, AddPatientRoutingModule, NgbModule, NgSelectModule]
+  declarations: [
+    AddPatientComponent,
+    CoorWithProspectComponent,
+    QuickAddComponent
+  ],
+  imports: [
+    CommonModule,
+    AddPatientRoutingModule
+  ]
 })
-export class AddPatientModule {}
+export class AddPatientModule { }
