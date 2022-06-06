@@ -1,1 +1,47 @@
-<p>quick-add works!</p>
+<div>
+    <div class="row">
+        <div class="col" style="max-width: 200px;">
+			<p class="heading" style="font-weight: bold; font-size:16px;">Quick Add Patient</p>
+
+            <!-- left menu -->
+            <div style="margin-top: 25px;">
+                <div  *ngFor="let menu of menuItemsOfQuickAdd; let i = index">
+                    <div class="step step-active" *ngIf="menu.url === router.url; else falseBlock">
+                        <div>
+                            <div class="active-circle"></div>
+                        </div>
+                        <div>
+                            <div class="title" (click)="goToSpecificMenu(menu)">{{ menu.title }}</div>
+                        </div>
+                    </div>
+                    <div class="vertical-line-not-active" *ngIf="menu.url === router.url  && (i < menuItemsOfQuickAdd!.length - 1)"></div>
+                    <ng-template #falseBlock>
+                        <div class="step" *ngIf="(sessionArrayQuickAdd.indexOf(menu.title) != -1)">
+                            <div>
+                                <div class="complete-circle"><i class="bi bi-check-lg"></i></div>
+                            </div>
+                            <div>
+                                <div class="title" (click)="goToSpecificMenu(menu)">{{ menu.title }}</div>
+                            </div>
+                        </div>
+                        <div class="vertical-line-active" *ngIf="(sessionArrayQuickAdd.indexOf(menu.title) != -1) && (i < menuItemsOfQuickAdd!.length - 1)"></div>
+                        
+                        <div class="step" *ngIf="(sessionArrayQuickAdd.indexOf(menu.title) == -1)">
+                            <div>
+                                <div class="later-circle"></div>
+                            </div>
+                            <div>
+                                <div class="title" (click)="goToSpecificMenu(menu)">{{ menu.title }}</div>
+                            </div>
+                        </div>
+                        <div class="vertical-line-not-active" *ngIf="(sessionArrayQuickAdd.indexOf(menu.title) == -1) && (i < menuItemsOfQuickAdd!.length - 1)"></div>
+
+                    </ng-template>
+                </div>
+            </div>
+		</div>
+        <div class="col component-view" style="background-color: #f9fafb; padding: 40px 35px;">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

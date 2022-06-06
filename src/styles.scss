@@ -378,7 +378,7 @@ input[type='checkbox'] + label {
 
 .required-field {
 	border: 1px solid #ed1c24 !important;
-	background: #f7ebeb !important;
+	background-color: #f7ebeb !important;
 }
 ng-select {
 	border: 1px solid $input-border-color;
@@ -402,4 +402,40 @@ form {
 			margin-bottom: 0px;
 		}
 	}
+}
+.two-items{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .btn-dark-custom {
+	  font-size: 10px;
+	  padding: 7px 20px;
+	  border-radius: 4px;
+  }
+
+  .btn-light-custom{
+	font-size: 10px;
+	padding: 7px 25px;
+	border-radius: 4px;
+  }
+
+  .a-link{
+	color: #ec6e4d;
+  }
+
+  .two-final-buttons{
+	margin-top: 40px;
+  }
+
+  .input-button{
+	display: flex;
+	justify-content: space-between;
+	align-content: center;
+	gap: 10px;
+  }
+
+  .twenty {
+	width: 20%;
 }

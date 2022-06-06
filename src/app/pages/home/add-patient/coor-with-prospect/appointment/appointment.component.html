@@ -1,0 +1,65 @@
+<form autocomplete="off">
+    <div class="mainformsection">
+        <div class="two-items">
+            <h6 class="heading" style="font-weight: bolder;">Appointment</h6>
+            <a class="heading a-link">Add Script</a>
+        </div>
+        <div class="row">
+            <nav ngbNav #nav5="ngbNav" class="nav-pills">
+                <ng-container ngbNavItem>
+                    <a ngbNavLink>Patient 1</a>
+                    <ng-template ngbNavContent>
+                        <div class="row" style="margin-top: 15px;">
+                            <div class="col-3">
+                                <div class="mainformset">
+                                    <label class="required pb-1"
+                                        >Date</label
+                                    >
+                                    <input
+                                        class="form-control"
+                                        type="date"
+                                        placeholder=""
+                                        name=""
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="mainformset">
+                                    <label class="required pb-1"
+                                        >Time</label
+                                    >
+                                    <input
+                                        class="form-control"
+                                        type="text"
+                                        placeholder=""
+                                        name=""
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ng-container>
+                <ng-container ngbNavItem>
+                    <a ngbNavLink>Patient 2</a>
+                    <ng-template ngbNavContent> </ng-template>
+                </ng-container>
+                <ng-container ngbNavItem>
+                    <a ngbNavLink>Patient 3</a>
+                    <ng-template ngbNavContent> </ng-template>
+                </ng-container>
+                <ng-container ngbNavItem>
+                    <a ngbNavLink>Patient 4</a>
+                    <ng-template ngbNavContent> </ng-template>
+                </ng-container>
+            </nav>
+
+            <div [ngbNavOutlet]="nav5" class="mt-2"></div>
+        </div>
+        <div class="row two-final-buttons">
+            <div class="two-items">
+                <button class="btn btn-light btn-light-custom" >Exit</button>
+                <button type="button" class="btn btn-dark btn-dark-custom" (click)="continueToConclusion()" >Save and continue</button>
+            </div>
+        </div>
+    </div>
+</form>

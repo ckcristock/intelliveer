@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-patient',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddPatientComponent implements OnInit {
 
-  constructor() { }
+  selectTab: string = "coordWithProspect";
+
+  constructor(private router: Router,) { }
 
   ngOnInit(): void {
   }
+
 
 }

@@ -5,7 +5,9 @@ import { CoorWithProspectRoutingModule } from './coor-with-prospect-routing.modu
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    
+  ],
   imports: [
     CommonModule,
     CoorWithProspectRoutingModule

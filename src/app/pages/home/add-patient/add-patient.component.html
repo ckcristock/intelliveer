@@ -1,12 +1,36 @@
-<p>add-patient works!</p>
-<div>
-    <div class="row">
-        <div class="col" style="max-width: 200px">
-            <p>Hi</p>
-        </div>
-        <div class="col component-view">
-            <p>Hi</p>
-        </div>
-    </div>
+<div class="container content">
+	<div class="row">
+		<div class="col pills " style="margin-left: 200px;">
+			<ul class="nav menu-items">
+				<li class="nav-item">
+					<a
+						[ngClass]="[
+							selectTab == 'quickadd' ? 'active' : 'inactive'
+						]"
+						(click)="selectTab = 'quickadd'"
+						[routerLink]="'/dashboard/home/add-patient/quick-add'"
+						>Quick add</a
+					>
+				</li>
+				<li class="nav-item">
+					<a
+						[ngClass]="[
+							selectTab == 'coordWithProspect'
+								? 'active'
+								: 'inactive'
+						]"
+						(click)="selectTab = 'coordWithProspect'"
+						[routerLink]="
+							'/dashboard/home/add-patient/coor-with-prospect'
+						"
+						>Coordinate with prospect</a
+					>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div  style="margin-top: -15px;">
+		<router-outlet></router-outlet>
+	</div>
+	
 </div>
-

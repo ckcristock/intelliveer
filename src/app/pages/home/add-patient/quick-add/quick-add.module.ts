@@ -5,7 +5,8 @@ import { QuickAddRoutingModule } from './quick-add-routing.module';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [
     CommonModule,
     QuickAddRoutingModule
