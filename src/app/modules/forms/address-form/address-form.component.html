@@ -49,7 +49,6 @@
 						formControlName="country"
 						(change)="getStates($event)"
 						(clear)="resetState(); resetCity()"
-						[searchFn]="customSearchFn"
 						[ngClass]="{
 							'required-ng-select':
 								isRequiredField('country') === true

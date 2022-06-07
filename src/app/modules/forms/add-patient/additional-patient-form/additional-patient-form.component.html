@@ -1,0 +1,834 @@
+<form autocomplete="off" >
+    <div  class="mainformsection scroll" style="" >
+        <div class="two-items">
+            <h6 class="heading" style="font-weight: bolder;">Patient</h6>
+            <a class="heading a-link">Add Script</a>
+        </div>
+        <div class="row">
+            <!-- patient-textbox-button -->
+            <div class="col-3">
+                <div class="mainformset">
+                    <label class="required pb-1"
+                        >Please search first If not found, create a
+                        new one</label
+                    >
+                    <div class="input-button">
+                        <input
+                            class="form-control"
+                            type="text"
+                            placeholder="Type Name"
+                            name=""
+                        />
+                        <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- patient-textboxes-->
+            <div class="col-3">
+                <div class="mainformset">
+                    <label class="required pb-1"
+                        >What is First Name of the Patient?</label
+                    >
+                    <input
+                        class="form-control"
+                        type="text"
+                        placeholder=""
+                        name=""
+                    />
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="mainformset">
+                    <label class="required pb-1">Last Name</label>
+                    <input
+                        class="form-control"
+                        type="text"
+                        placeholder=""
+                        name=""
+                    />
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="mainformset">
+                    <label class="required pb-1"
+                        >Date of Birth?</label
+                    >
+                    <input
+                        class="form-control"
+                        type="date"
+                        placeholder=""
+                        name=""
+                    />
+                </div>
+            </div>
+            <div class="col-3">
+                <label class="required">Gender</label>
+                <ng-select placeholder="Select">
+                    <ng-option>Select</ng-option>
+                </ng-select>
+            </div>
+        </div>
+        <div class="row">
+            <!-- legal Guardian radios-->
+            <div class="mainformset">
+                <h6 class="heading" style="font-weight: bolder; margin-top: 20px;">Legal Guardian</h6>
+                <div
+                    class="btn-group"
+                    role="group"
+                    aria-label="Basic radio toggle button group"
+                >
+                    <input
+                        type="radio"
+                        name="btnradio"
+                        id="btnradio1"
+                        autocomplete="off"
+                        checked
+                    />
+                    <label class="" for="btnradio1"
+                        >Use existing one</label
+                    >
+                    <input
+                        type="radio"
+                        name="btnradio"
+                        id="btnradio2"
+                        autocomplete="off"
+                    />
+                    <label class="" for="btnradio2"
+                        >Same as patient 1</label
+                    >
+                    <input
+                        type="radio"
+                        name="btnradio"
+                        id="btnradio3"
+                        autocomplete="off"
+                    />
+                    <label class="" for="btnradio3"
+                        >Add a new one</label
+                    >
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <!-- legal Guardian textbox and button -->
+            <div class="col-3">
+                <div class="mainformset">
+                    <label class="required pb-1"
+                        >Please search first If not found, create a
+                        new one</label
+                    >
+                    <div class="input-button">
+                        <input
+                            class="form-control"
+                            type="text"
+                            placeholder="Type Name"
+                            name=""
+                        />
+                        <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <!-- Legal Guardian textboxes-->
+            <div class="row">
+                <div class="col-4">
+                    <div class="mainformset">
+                        <label class="required pb-1"
+                            >Relationship to patient?</label
+                        >
+                        <input
+                            class="form-control"
+                            type="text"
+                            placeholder=""
+                            name=""
+                        />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="mainformset">
+                        <label class="required pb-1"
+                            >What is First Name of the Legal
+                            Guardian?</label
+                        >
+                        <input
+                            class="form-control"
+                            type="text"
+                            placeholder=""
+                            name=""
+                        />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="mainformset">
+                        <label class="required pb-1"
+                            >Last Name</label
+                        >
+                        <input
+                            class="form-control"
+                            type="text"
+                            placeholder=""
+                            name=""
+                        />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="mainformset">
+                        <label class="required pb-1"
+                            >Address Line 1</label
+                        >
+                        <input
+                            class="form-control"
+                            type="text"
+                            placeholder="Street address, P.O.box"
+                            name=""
+                        />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mainformset">
+                        <label class="required pb-1"
+                            >Address Line 2</label
+                        >
+                        <input
+                            class="form-control"
+                            type="text"
+                            placeholder="Apartment, Suite, Unit, Building, Floor, etc."
+                            name=""
+                        />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="mainformset">
+                        <label class="required pb-1"
+                            >Zip Code</label
+                        >
+                        <input
+                            class="form-control"
+                            type="text"
+                            placeholder=""
+                            name=""
+                        />
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="mainformset">
+                        <label class="required pb-1">City</label>
+                        <input
+                            class="form-control"
+                            type="text"
+                            placeholder=""
+                            name=""
+                        />
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="mainformset">
+                        <label class="required pb-1">State</label>
+                        <input
+                            class="form-control"
+                            type="text"
+                            placeholder=""
+                            name=""
+                        />
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="mainformset">
+                        <label class="required pb-1">Country</label>
+                        <input
+                            class="form-control"
+                            type="text"
+                            placeholder=""
+                            name=""
+                        />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="mainformset">
+                        <label class="required pb-1"
+                            >Primary Phone Number</label
+                        >
+                        <input
+                            class="form-control"
+                            type="text"
+                            placeholder=""
+                            name=""
+                        />
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="mainformset">
+                        <label class="required">Type</label>
+                        <ng-select placeholder="Select">
+                            <ng-option>Select</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="mainformset">
+                        <label class="required pb-1">Email</label>
+                        <input
+                            class="form-control"
+                            type="text"
+                            placeholder=""
+                            name=""
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Dentist radios-->
+            <div class="mainformset">
+                <h6 class="heading" style="font-weight: bolder; margin-top: 20px;">Dentist</h6>
+                <div
+                    class="btn-group"
+                    role="group"
+                    aria-label="Basic radio toggle button group"
+                >
+                    <input
+                        type="radio"
+                        name="btnradio"
+                        id="btnradio1"
+                        autocomplete="off"
+                        checked
+                    />
+                    <label class="" for="btnradio1"
+                        >Use existing one</label
+                    >
+                    <input
+                        type="radio"
+                        name="btnradio"
+                        id="btnradio2"
+                        autocomplete="off"
+                    />
+                    <label class="" for="btnradio2"
+                        >Same as patient 1</label
+                    >
+                    <input
+                        type="radio"
+                        name="btnradio"
+                        id="btnradio3"
+                        autocomplete="off"
+                    />
+                    <label class="" for="btnradio3"
+                        >Add a new one</label
+                    >
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <!-- Dentist textbox and button -->
+            <div class="col-3">
+                <div class="mainformset">
+                    <label class="required pb-1"
+                        >Please search first If not found, create a
+                        new one</label
+                    >
+                    <div class="input-button">
+                        <input
+                            class="form-control"
+                            type="text"
+                            placeholder="Type Name"
+                            name=""
+                        />
+                        <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Dentist textboxes-->
+            <div class="col-3">
+                <div class="mainformset">
+                    <label class="required pb-1"
+                        >Dentist’s Office Name</label
+                    >
+                    <input
+                        class="form-control"
+                        type="text"
+                        placeholder=""
+                        name=""
+                    />
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="mainformset">
+                    <label class="required pb-1"
+                        >Dentist’s First Name</label
+                    >
+                    <input
+                        class="form-control"
+                        type="text"
+                        placeholder=""
+                        name=""
+                    />
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="mainformset">
+                    <label class="required pb-1">Last Name</label>
+                    <input
+                        class="form-control"
+                        type="text"
+                        placeholder=""
+                        name=""
+                    />
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="mainformset">
+                    <label class="required pb-1"
+                        >Office Phone Number</label
+                    >
+                    <input
+                        class="form-control"
+                        type="text"
+                        placeholder=""
+                        name=""
+                    />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Referrer radios-->
+            <div class="mainformset">
+                <h6 class="heading" style="font-weight: bolder; margin-top: 20px;">Referrer</h6>
+                <div
+                    class="btn-group"
+                    role="group"
+                    aria-label="Basic radio toggle button group"
+                >
+                    <input
+                        type="radio"
+                        name="btnradio"
+                        id="btnradio1"
+                        autocomplete="off"
+                        checked
+                    />
+                    <label class="" for="btnradio1"
+                        >Use existing one</label
+                    >
+                    <input
+                        type="radio"
+                        name="btnradio"
+                        id="btnradio2"
+                        autocomplete="off"
+                    />
+                    <label class="" for="btnradio2"
+                        >Same as patient 1</label
+                    >
+                    <input
+                        type="radio"
+                        name="btnradio"
+                        id="btnradio3"
+                        autocomplete="off"
+                    />
+                    <label class="" for="btnradio3"
+                        >Add a new one</label
+                    >
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <!-- Referrer textbox and button -->
+            <div class="col-3">
+                <div class="mainformset">
+                    <label class="required pb-1"
+                        >Please search first If not found, create a
+                        new one</label
+                    >
+                    <div class="input-button">
+                        <input
+                            class="form-control"
+                            type="text"
+                            placeholder="Type Name"
+                            name=""
+                        />
+                        <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Referrer textboxes-->
+            <div class="col-3">
+                <div class="mainformset">
+                    <label class="required pb-1"
+                        >Company Name</label
+                    >
+                    <input
+                        class="form-control"
+                        type="text"
+                        placeholder=""
+                        name=""
+                    />
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="mainformset">
+                    <label class="required pb-1">First Name</label>
+                    <input
+                        class="form-control"
+                        type="text"
+                        placeholder=""
+                        name=""
+                    />
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="mainformset">
+                    <label class="required pb-1">Last Name</label>
+                    <input
+                        class="form-control"
+                        type="text"
+                        placeholder=""
+                        name=""
+                    />
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="mainformset">
+                    <label class="required pb-1"
+                        >Phone Number</label
+                    >
+                    <input
+                        class="form-control"
+                        type="text"
+                        placeholder=""
+                        name=""
+                    />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Insurance radios-->
+            <h6 class="heading" style="font-weight: bolder; margin-top: 20px;">Insurance</h6>
+            <div class="col-6">
+                <!-- first radios -->
+                <div class="mainformset">
+                    <p class="required">
+                        Is there any insurance you would like us to
+                        check for “Patient 2 name”?
+                    </p>
+                    <div
+                        class="btn-group"
+                        role="group"
+                        aria-label="Basic radio toggle button group"
+                    >
+                        <input
+                            type="radio"
+                            name="radioyesno"
+                            id="radioyesno1"
+                            autocomplete="off"
+                            checked
+                            (change)="provideInsurance = true"
+                        />
+                        <label class="" for="radioyesno1">Yes</label>
+                        <input
+                            type="radio"
+                            name="radioyesno"
+                            id="radioyesno2"
+                            autocomplete="off"
+                            (change)="provideInsurance = false"
+                        />
+                        <label class="" for="radioyesno2">No</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <!-- second radios -->
+                <div class="mainformset" *ngIf="provideInsurance">
+                    <p class="required">How many?</p>
+                    <div
+                        class="btn-group"
+                        role="group"
+                        aria-label="Basic radio toggle button group"
+                    >
+                        <input
+                            type="radio"
+                            name="btnradioIns2"
+                            id="insurance1"
+                            autocomplete="off"
+                            checked
+                            (click)="checkInsuranceCount = 1"
+                        />
+                        <label class="" for="insurance1">1</label>
+                        <input
+                            type="radio"
+                            name="btnradioIns2"
+                            id="insurance2"
+                            autocomplete="off"
+                            (click)="checkInsuranceCount = 2"
+                        />
+                        <label class="" for="insurance2">2</label>
+                        <input
+                            type="radio"
+                            name="btnradioIns2"
+                            id="insurance3"
+                            autocomplete="off"
+                            (click)="checkInsuranceCount = 3"
+                        />
+                        <label class="" for="insurance3">3</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row"  *ngIf="provideInsurance">
+            <!-- Insurance tabs-->
+            <nav ngbNav #nav4="ngbNav" class="nav-pills">
+                <ng-container ngbNavItem>
+                    <a ngbNavLink *ngIf="checkInsuranceCount == 1 || checkInsuranceCount > 1">Insurance 1</a>
+                    <ng-template ngbNavContent>
+                        <div class="row">
+                            <!-- radios -->
+                            <div class="mainformset">
+                                <div
+                                    class="btn-group"
+                                    role="group"
+                                    aria-label="Basic radio toggle button group"
+                                >
+                                    <input
+                                        type="radio"
+                                        name="btnradio"
+                                        id="btnradio1"
+                                        autocomplete="off"
+                                        checked
+                                    />
+                                    <label class="" for="btnradio1"
+                                        >Use existing one</label
+                                    >
+                                    <input
+                                        type="radio"
+                                        name="btnradio"
+                                        id="btnradio2"
+                                        autocomplete="off"
+                                    />
+                                    <label class="" for="btnradio2"
+                                        >Same as patient 1</label
+                                    >
+                                    <input
+                                        type="radio"
+                                        name="btnradio"
+                                        id="btnradio3"
+                                        autocomplete="off"
+                                    />
+                                    <label class="" for="btnradio3"
+                                        >Add a new one</label
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- textbox and button -->
+                            <div class="col-3">
+                                <div class="mainformset">
+                                    <label class="required pb-1"
+                                        >Search Insurance</label
+                                    >
+                                    <div class="input-button">
+                                        <input
+                                            class="form-control"
+                                            type="text"
+                                            placeholder="Type Name"
+                                            name=""
+                                        />
+                                        <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- textboxes -->
+                            <div class="col-3">
+                                <div class="mainformset">
+                                    <label class="required pb-1"
+                                        >Name of Insurance</label
+                                    >
+                                    <input
+                                        class="form-control"
+                                        type="text"
+                                        placeholder=""
+                                        name=""
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="mainformset">
+                                    <label class="required pb-1"
+                                        >Phone</label
+                                    >
+                                    <input
+                                        class="form-control"
+                                        type="text"
+                                        placeholder=""
+                                        name=""
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ng-container>
+                <ng-container ngbNavItem>
+                    <a ngbNavLink *ngIf="checkInsuranceCount > 1">Insurance 2</a>
+                    <ng-template ngbNavContent> </ng-template>
+                </ng-container>
+                <ng-container ngbNavItem>
+                    <a ngbNavLink *ngIf="checkInsuranceCount == 3">Insurance 3</a>
+                    <ng-template ngbNavContent> </ng-template>
+                </ng-container>
+            </nav>
+
+            <div [ngbNavOutlet]="nav4" class="mt-2"></div>
+        </div>
+        <br />
+        <div class="row">
+            <!-- Subscriber radios -->
+            <div class="mainformset">
+                <h6 class="heading" style="font-weight: bolder;">Subscriber</h6>
+                <div
+                    class="btn-group"
+                    role="group"
+                    aria-label="Basic radio toggle button group"
+                >
+                    <input
+                        type="radio"
+                        name="btnradio"
+                        id="btnradio1"
+                        autocomplete="off"
+                        checked
+                    />
+                    <label class="" for="btnradio1"
+                        >Use existing one</label
+                    >
+                    <input
+                        type="radio"
+                        name="btnradio"
+                        id="btnradio2"
+                        autocomplete="off"
+                    />
+                    <label class="" for="btnradio2"
+                        >Same as patient</label
+                    >
+                    <input
+                        type="radio"
+                        name="btnradio"
+                        id="btnradio3"
+                        autocomplete="off"
+                    />
+                    <label class="" for="btnradio3"
+                        >Same as legal guardian</label
+                    >
+                    <input
+                        type="radio"
+                        name="btnradio"
+                        id="btnradio4"
+                        autocomplete="off"
+                    />
+                    <label class="" for="btnradio4"
+                        >Add a new one</label
+                    >
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Subscriber textbox and button -->
+            <div class="col-3">
+                <div class="mainformset">
+                    <label class="required pb-1"
+                        >Search Subscriber</label
+                    >
+                    <div class="input-button">
+                        <input
+                            class="form-control"
+                            type="text"
+                            placeholder="Type Name"
+                            name=""
+                        />
+                        <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Subscriber textboxes-->
+            <div class="twenty">
+                <div class="mainformset">
+                    <label class="required"
+                        >Subscriber’s First Name</label
+                    >
+
+                    <input
+                        class="form-control"
+                        type="text"
+                        placeholder=""
+                        name=""
+                    />
+                </div>
+            </div>
+            <div class="twenty">
+                <div class="mainformset">
+                    <label class="required pb-1"
+                        >Subscriber’s Last Name</label
+                    >
+                    <input
+                        class="form-control"
+                        type="text"
+                        placeholder=""
+                        name=""
+                    />
+                </div>
+            </div>
+            <div class="twenty">
+                <div class="mainformset">
+                    <label class="required pb-1"
+                        >Relationship</label
+                    >
+                    <ng-select placeholder="Select">
+                        <ng-option>Select</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="twenty">
+                <div class="mainformset">
+                    <label class="required pb-1">DOB</label>
+                    <input
+                        class="form-control"
+                        type="text"
+                        placeholder=""
+                        name=""
+                    />
+                </div>
+            </div>
+            <div class="twenty">
+                <div class="mainformset">
+                    <label class="required">SSN/ID</label>
+                    <input
+                        class="form-control"
+                        type="text"
+                        placeholder=""
+                        name=""
+                    />
+                </div>
+            </div>
+        </div>
+        <div class="two-final-buttons">
+            <!-- Buttons -->
+            <div class="two-items">
+                <button class="btn btn-light btn-light-custom">Exit</button>
+                <button type="button" class="btn btn-dark btn-dark-custom" (click)="moveToAnotherTab()">Next</button>
+            </div>
+        </div>
+    </div>
+</form>

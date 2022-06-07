@@ -19,7 +19,6 @@
 								class="ng-select-no-border"
 								[multiple]="true"
 								[(ngModel)]="le.legalEntities"
-								(change)="selectionValueChange()"
 							>
 								<ng-option
 									*ngFor="let le of legalEntities"
@@ -41,7 +40,6 @@
 								class="ng-select-no-border"
 								[multiple]="true"
 								[(ngModel)]="le.practices"
-								(change)="selectionValueChange()"
 							>
 								<ng-option
 									*ngFor="let pr of practices"
@@ -57,7 +55,7 @@
 	</div>
 	<div class="row">
 		<div class="col gap-2 d-flex mt-3">
-			<button class="btn btn-dark fw-bold" [disabled]="saveButtonEnable" (click)="saveMapping()">
+			<button class="btn btn-dark fw-bold" (click)="saveMapping()">
 				Save Mapping
 			</button>
 			<button

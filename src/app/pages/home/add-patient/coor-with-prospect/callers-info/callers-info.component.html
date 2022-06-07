@@ -1,0 +1,145 @@
+<form >
+    <div class="mainformsection">
+        <div class="two-items">
+            <h6 class="heading" style="font-weight: bolder;">Caller’s Information</h6>
+            <a class="heading a-link" *ngIf="showButtonSaveCancel==false" (click)="showButtonSaveCancelFunc()">Edit Script</a>
+            <div class="two-little-button" *ngIf="showButtonSaveCancel==true" >
+                <a class="heading a-link" (click)="closeSaveCancelFunc()">Save Script</a>
+                <a class="heading a-link" (click)="closeSaveCancelFunc()">Cancel</a>
+            </div>
+            
+        </div>
+
+        <div class="formrow">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-floating">
+                        <p style="margin-top: 10px; font-style: oblique;" *ngIf="showButtonSaveCancel==false">
+                            Lorem ipsum dolor sit amet, consectetuer
+                            adipiscing elit, sed diam nonummy nibh
+                            euismod tincidunt ut laoreet dolore
+                            magna aliquam erat volutpat. Ut wisi
+                            enim ad minim veniam, quis nostrud
+                            exerci tation ullamcorper suscipit
+                            lobortis nisl ut aliquip ex ea commodo
+                            consequat. Duis autem vel eum iriure
+                            dolor in hendrerit in vulputate velit
+                            esse molestie consequat, vel illum
+                            dolore eu feugiat nulla facilisis at
+                            vero eros et accumsan et iusto odio
+                            dignissim qui blandit praesent luptatum
+                            zzril delenit augue duis dolore te
+                            feugait nulla facilisi.
+                        </p>
+                        <textarea *ngIf="showButtonSaveCancel==true"
+                            class="form-control"
+                            placeholder="Leave a comment here"
+                            id="floatingTextarea2"
+                            style="height: 98px; padding: 5px 10px 8px 6px; font-size: 12px; line-height : 20px; border: 2px solid #7a7a7c; font-style: oblique; resize: none;"
+                        >
+So I have reserved an hour on Appt. Date at Appt. Time for Pt. Name’s consultation visit. During this visit, Dr.Shah will do an extensive orthodontic
+exam and will explain you his findings and treatment options. Also, our treatment coordinator will discuss fees and payment options with you. If you
+decide to get started, our record technician can take x rays on the same day. Please allow an hour to hour and half for this visit. Also, we require all minors
+to be accompanied by a legal guardian. Do you have any questions for me?</textarea
+                        >
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-3 large-width">
+                    <div class="mainformset">
+                        <label class="required"
+                            >What is the best phone number to reach
+                            you?</label
+                        >
+                        <input
+                            class="form-control"
+                            type="text"
+                            placeholder=""
+                            name=""
+                        />
+                    </div>
+                </div>
+                <div class="col-3 type-width">
+                    <div class="mainformset">
+                        <label class="required">Type</label>
+                        <ng-select placeholder="Select"  style="height: 36px;">
+                            <ng-option>Select</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="mainformset">
+                        <label class="required"
+                            >Caller’s First Name</label
+                        >
+                        <input
+                            class="form-control"
+                            type="text"
+                            placeholder=""
+                            name=""
+                        />
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="mainformset">
+                        <label class="required">Last Name</label>
+                        <input
+                            class="form-control"
+                            type="text"
+                            placeholder=""
+                            name=""
+                        />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="mainformset">
+                        <p class="required">
+                            Are you interested in braces for
+                            yourself or a family member?
+                        </p>
+                        <div
+                            class="btn-group"
+                            role="group"
+                            aria-label="Basic radio toggle button group"
+                        >
+                        <div class="form-check form-check-inline">
+                            <input
+                            class="form-check-input"
+                                type="radio"
+                                name="btnradio1"
+                                id="btnradio1"
+                                autocomplete="off"
+                                checked
+                            />
+                            <label class="form-check-label" for="btnradio1"
+                                >Self</label
+                            >
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input
+                            class="form-check-input"
+                                type="radio"
+                                name="btnradio1"
+                                id="btnradio2"
+                                autocomplete="off"
+                            />
+                            <label class="form-check-label" for="btnradio2"
+                                >Family Member</label
+                            >
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row two-final-buttons" >
+                <div class="two-items">
+                    <button class="btn btn-light btn-light-custom" >Exit</button>
+                    <button type="button" class="btn btn-dark btn-dark-custom" (click)="continueToPatient()">Save and continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

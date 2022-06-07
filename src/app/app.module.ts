@@ -36,7 +36,7 @@ if (environment.production) {
 		AppComponent,
 		DialogComponent,
 		ErrorHandlerComponent,
-		ConfirmationDialogComponent
+		ConfirmationDialogComponent,
 	],
 	imports: [
 		BrowserModule,

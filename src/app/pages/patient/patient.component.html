@@ -2,15 +2,15 @@
 	<!-- Icons Menu -->
 	<div class="row mini-icon-navbar d-flex justify-content-center mb-3">
 		<ul class="d-flex justify-content-center align-items-center gap-5">
-			<li *ngFor="let item of menuItems">
+			<li>
 				<img
-					src="{{item.icon}}"
+					src="assets/icons/users.svg"
 					alt=""
-					routerLinkActive="active"
-					[routerLink]="item.url"
+					[class.active]="patients() === true"
+					[routerLink]="'/dashboard/patient/patient-user/patient-detail'"
 				/>
 			</li>
-			<!-- <li>
+			<li>
 				<img src="assets/icons/chat.svg" alt="" />
 			</li>
 			<li>
@@ -44,7 +44,7 @@
 			</li>
 			<li>
 				<img src="assets/icons/jar.svg" alt="" />
-			</li> -->
+			</li>
 		</ul>
 		<hr />
 	</div>

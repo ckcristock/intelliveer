@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-patient',
@@ -7,21 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddPatientComponent implements OnInit {
 
-  selectDefault: any = "Select";
+  selectTab: string = "coordWithProspect";
 
-  selectTab: string = "eligibility";
-
-  constructor() { }
+  constructor(private router: Router,) { }
 
   ngOnInit(): void {
   }
 
-  scroll(el: HTMLElement, selectTab: string) {
-    this.selectTab = selectTab.trim();
-    el.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-      inline: 'nearest',
-    });
-  }
+
 }
