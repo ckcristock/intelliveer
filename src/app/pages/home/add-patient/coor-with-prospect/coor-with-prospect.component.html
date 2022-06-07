@@ -1,152 +1,93 @@
 <div>
 	<div class="row">
-		<!-- left menu -->
-		<div class="col" style="max-width: 200px">
-			<p class="heading" style="font-weight: bold; font-size: 16px">
-				Add New Patient
-			</p>
-
-			<!-- left menu -->
-			<div style="margin-top: 25px;">
-				<div *ngFor="let menu of menuItemsOfCordinate; let i = index">
-					<div
-						class="step step-active"
-						*ngIf="menu.url === router.url; else falseBlock"
-					>
-						<div>
-							<div class="active-circle"></div>
-						</div>
-
-						<div>
-							<div 
-								class="title"
-								routerLinkActive="active"
-								[routerLink]="menu.url"
-								(click)="goToSpecificMenu(menu)"
-							>
-								{{ menu.title }}
-							</div>
-						</div>
-						
-						<div
-							style="margin-top: 15px;"
-							*ngIf="menu.title=='Family Members'"
-						></div>
-					</div>
-
-					<div *ngFor="let item of menu.child">
-						<div
-							class="step step-active"
-							*ngIf="sessionArray.indexOf(item.title) == -1"
-						>
-							<div>
-								<div
-									class="sub-menu-vertical-line-not-active"
-								></div>
-							</div>
-							<div>
-								<div
-									class="title"
-									style="margin-bottom: 10px;"
-									routerLinkActive="active"
-									[routerLink]="item.url"
-								>
-									{{ item.title }}
-								</div>
-							</div>
-						</div>
-
-						<div
-							class="step"
-							*ngIf="sessionArray.indexOf(item.title) != -1"
-						>
-							<div>
-								<div
-									class="sub-menu-vertical-line-active"
-								></div>
-							</div>
-							<div>
-								<div class="title">{{ item.title }} </div>
-							</div>
-						</div>
-					</div>
-
-					<div
-						class="vertical-line-not-active"
-						*ngIf="
-							menu.url === router.url &&
-							i < menuItemsOfCordinate!.length - 1 && menu.title!='Family Members'
-						"
-					></div>
-					<div
-						style="margin-top: 15px;"
-						*ngIf="menu.title=='Family Members'"
-					></div>
-
-					<ng-template #falseBlock>
-						<div
-							class="step"
-							*ngIf="sessionArray.indexOf(menu.title) != -1"
-						>
-							<div>
-								<div class="complete-circle">
-									<i class="bi bi-check-lg"></i>
-								</div>
-							</div>
-							<div>
-								<div
-									class="title"
-									(click)="goToSpecificMenu(menu)"
-								>
-									{{ menu.title }} 
-								</div>
-							</div>
-						</div>
-						<div
-							class="vertical-line-active"
-							*ngIf="
-								sessionArray.indexOf(menu.title) != -1 &&
-								i < menuItemsOfCordinate!.length - 1 && (menu.title!='Family Members')
-							"
-						></div>
-						<div
-							style="margin-top: 15px;"
-							*ngIf="menu.title=='Family Members'"
-						></div>
-
-						<div
-							class="step"
-							*ngIf="sessionArray.indexOf(menu.title) == -1"
-						>
-							<div>
-								<div class="later-circle"></div>
-							</div>
-							<div>
-								<div
-									class="title"
-									(click)="goToSpecificMenu(menu)"
-								>
-									{{ menu.title }}
-								</div>
-							</div>
-						</div>
-						<div
-							class="vertical-line-not-active"
-							*ngIf="
-								sessionArray.indexOf(menu.title) == -1 &&
-								i < menuItemsOfCordinate!.length - 1
-							"
-						></div>
-					</ng-template>
+	   <!-- left menu -->
+	   <div class="col" style="max-width: 200px">
+		  <p class="heading" style="font-weight: bold; font-size: 16px">
+			 Add New Patient
+		  </p>
+		  <!-- left menu -->
+		  <div style="margin-top: 25px;">
+			 <div *ngFor="let menu of menuItemsOfCordinate; let i = index">
+				<div class="step step-active" *ngIf="menu.url === router.url; else falseBlock">
+				   <div>
+					  <div class="active-circle"></div>
+				   </div>
+				   <!-- Menu All Checked-->
+				   <div>
+					  <div class="title" routerLinkActive="active" [routerLink]="menu.url" (click)="goToSpecificMenu(menu)">
+					  {{ menu.title }} 
+				   </div>
 				</div>
+			 </div>
+			 <!-- childs -->
+			 <div *ngFor="let item of menu.child" class="vertical-line-not-active">
+				<div class="step step-active" *ngIf="sessionArray.indexOf(item.title) == -1">
+				   <div>
+				   </div>
+				   <div>
+					  <div class="title" style="margin: 10px 0px 10px 0px;" routerLinkActive="active" [routerLink]="item.url">
+						 {{ item.title }} 
+					  </div>
+				   </div>
+				</div>
+			 </div>
+
+			 <!-- Vetical line to all Checked -->
+			 <div class="vertical-line-not-active" *ngIf="menu.url === router.url &&i < menuItemsOfCordinate!.length - 1&&(menu.title!='Family Members')">
+			 </div>
+			 <div  *ngIf="menu.url === router.url &&i < menuItemsOfCordinate!.length - 1&&(menu.title=='Family Members')">
 			</div>
-		</div>
-		<!-- content -->
-		<div
-			class="col component-view"
-			style="background-color: #f9fafb; padding: 40px 35px"
-		>
-			<router-outlet></router-outlet>
-		</div>
+
+			 <ng-template #falseBlock>
+				<div
+				   class="step"
+				   *ngIf="sessionArray.indexOf(menu.title) != -1"
+				   >
+				   <div>
+					  <div class="complete-circle">
+						 <i class="bi bi-check-lg"></i>
+					  </div>
+				   </div>
+				   <!-- Menuuuu Completed Leaved -->
+				   <div>
+					  <div class="title" (click)="goToSpecificMenu(menu)">
+						 {{ menu.title }}
+					  </div>
+				   </div>
+				</div>
+
+				<!-- vertical line to Activated no Checked -->
+				<div class="vertical-line-active" *ngIf="sessionArray.indexOf(menu.title) != -1 
+				&&i < menuItemsOfCordinate!.length - 1&&(menu.title!='Family Members')">
+				</div>
+
+				<div class="step" *ngIf="sessionArray.indexOf(menu.title) == -1">
+				   <div>
+					  <div class="later-circle">
+					  </div>
+				   </div>
+				   <!-- Menuuuu Incomplete No checked -->
+				   <div>
+					  <div class="title" (click)="goToSpecificMenu(menu)">
+						 {{ menu.title }} 
+					  </div>
+				   </div>
+				</div>
+				
+				<!-- vertical line to no Activate no Checked -->
+				<div class="vertical-line-not-active" *ngIf="sessionArray.indexOf(menu.title) == -1 
+					 && i < menuItemsOfCordinate!.length - 1">
+				</div>
+			 </ng-template>
+		  </div>
+	   </div>
 	</div>
-</div>
+	<!-- content -->
+	<div
+	   class="col component-view"
+	   style="background-color: #f9fafb; padding: 40px 35px"
+	   >
+	   <router-outlet></router-outlet>
+	</div>
+ </div>
+ </div>

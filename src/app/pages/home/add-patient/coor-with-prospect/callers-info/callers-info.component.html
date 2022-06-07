@@ -2,14 +2,19 @@
     <div class="mainformsection">
         <div class="two-items">
             <h6 class="heading" style="font-weight: bolder;">Caller’s Information</h6>
-            <a class="heading a-link" >Edit Script</a>
+            <a class="heading a-link" *ngIf="showButtonSaveCancel==false" (click)="showButtonSaveCancelFunc()">Edit Script</a>
+            <div class="two-little-button" *ngIf="showButtonSaveCancel==true" >
+                <a class="heading a-link" (click)="closeSaveCancelFunc()">Save Script</a>
+                <a class="heading a-link" (click)="closeSaveCancelFunc()">Cancel</a>
+            </div>
+            
         </div>
 
         <div class="formrow">
             <div class="row">
                 <div class="col-12">
                     <div class="form-floating">
-                        <p style="margin-top: 10px; font-style: oblique;">
+                        <p style="margin-top: 10px; font-style: oblique;" *ngIf="showButtonSaveCancel==false">
                             Lorem ipsum dolor sit amet, consectetuer
                             adipiscing elit, sed diam nonummy nibh
                             euismod tincidunt ut laoreet dolore
@@ -26,6 +31,17 @@
                             zzril delenit augue duis dolore te
                             feugait nulla facilisi.
                         </p>
+                        <textarea *ngIf="showButtonSaveCancel==true"
+                            class="form-control"
+                            placeholder="Leave a comment here"
+                            id="floatingTextarea2"
+                            style="height: 98px; padding: 5px 10px 8px 6px; font-size: 12px; line-height : 20px; border: 2px solid #7a7a7c; font-style: oblique; resize: none;"
+                        >
+So I have reserved an hour on Appt. Date at Appt. Time for Pt. Name’s consultation visit. During this visit, Dr.Shah will do an extensive orthodontic
+exam and will explain you his findings and treatment options. Also, our treatment coordinator will discuss fees and payment options with you. If you
+decide to get started, our record technician can take x rays on the same day. Please allow an hour to hour and half for this visit. Also, we require all minors
+to be accompanied by a legal guardian. Do you have any questions for me?</textarea
+                        >
                     </div>
                 </div>
             </div>

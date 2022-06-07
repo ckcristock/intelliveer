@@ -13,6 +13,9 @@ export class ReferrerFormComponent implements OnInit {
   menuItemsOfCordinate: IMenuItem[] = addPatientCordinateMenuItems;
   menuItemsOfQuickAdd: IMenuItem[] = addPatientQuickMenuItems;
   @Input() tab: string = "";
+  openFormBool: boolean = true;
+  showButtonSaveCancel:boolean = false;
+  openTextAreaVar:boolean = false;
 
   constructor(private router: Router) { }
 
@@ -32,6 +35,28 @@ export class ReferrerFormComponent implements OnInit {
       localStorage.setItem("visitedArrayQuick", JSON.stringify(visitedArrayQuick));
       this.router.navigate([this.menuItemsOfQuickAdd[4].url]);
     }
+  }
+
+  closeForm(){
+    this.openFormBool = false;
+  }
+
+  openForm(){
+    this.openFormBool = true;
+  }
+
+  showButtonSaveCancelFunc(){
+    this.showButtonSaveCancel = true;
+  }
+
+  closeSaveCancelFunc(){
+    this.openTextAreaVar = false;
+    this.showButtonSaveCancel = false;
+  }
+
+  openTextarea(){
+    this.openTextAreaVar = true;
+    this.showButtonSaveCancel = true;
   }
 
 

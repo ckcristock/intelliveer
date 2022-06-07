@@ -11,6 +11,8 @@ import { addPatientCordinateMenuItems } from '@pages/home/add-patient/menu';
 export class AppointmentComponent implements OnInit {
 
   menuItems: IMenuItem[] = addPatientCordinateMenuItems;
+  showButtonSaveCancel:boolean = false;
+  openTextAreaVar:boolean = false;
 
   constructor(private router: Router) { }
 
@@ -22,6 +24,20 @@ export class AppointmentComponent implements OnInit {
     visitedArray.push("Appointment");
     localStorage.setItem("visitedArray", JSON.stringify(visitedArray));
     this.router.navigate([this.menuItems[8].url]);
+  }
+
+  showButtonSaveCancelFunc(){
+    this.showButtonSaveCancel = true;
+  }
+
+  closeSaveCancelFunc(){
+    this.openTextAreaVar = false;
+    this.showButtonSaveCancel = false;
+  }
+
+  openTextarea(){
+    this.openTextAreaVar = true;
+    this.showButtonSaveCancel = true;
   }
 
 }

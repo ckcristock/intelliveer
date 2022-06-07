@@ -16,6 +16,8 @@ export class LegalGuardianFormComponent implements OnInit {
   Form!: FormGroup;
   @Input() formData: any | undefined = undefined;
   @Input() tab: string = "";
+  showButtonSaveCancel:boolean = false;
+  openTextAreaVar:boolean = false;
 
   constructor(private router: Router, private fb: FormBuilder,) { }
 
@@ -50,6 +52,20 @@ export class LegalGuardianFormComponent implements OnInit {
   save(data: any)
   {
     console.log(data);
+  }
+
+  showButtonSaveCancelFunc(){
+    this.showButtonSaveCancel = true;
+  }
+
+  closeSaveCancelFunc(){
+    this.openTextAreaVar = false;
+    this.showButtonSaveCancel = false;
+  }
+
+  openTextarea(){
+    this.openTextAreaVar = true;
+    this.showButtonSaveCancel = true;
   }
 
 }

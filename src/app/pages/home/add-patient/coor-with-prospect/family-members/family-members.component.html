@@ -2,7 +2,20 @@
     <div class="mainformsection">
         <div class="two-items">
             <h6 class="heading" style="font-weight: bolder;">Family Members</h6>
-            <a class="heading a-link">Add Script</a>
+            <a class="heading a-link" *ngIf="showButtonSaveCancel==false" (click)="openTextarea()">Add Script</a>
+            <div class="two-little-button" *ngIf="showButtonSaveCancel==true" >
+                <a class="heading a-link" (click)="closeSaveCancelFunc()">Save Script</a>
+                <a class="heading a-link" (click)="closeSaveCancelFunc()">Cancel</a>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 11px; margin-bottom: 18px;">
+            <textarea *ngIf="openTextAreaVar==true"
+                        class="form-control"
+                        placeholder="Leave a comment here"
+                        id="floatingTextarea2"
+                        style="height: 98px; padding: 5px 10px 8px 6px; font-size: 12px; line-height : 20px; border: 2px solid #7a7a7c; font-style: oblique; resize: none;"
+                    ></textarea
+                    >
         </div>
         <div class="row" style="margin-top: 7px">
             <div class="col-6">
@@ -18,7 +31,7 @@
                     >
                         <input
                             type="radio"
-                            name="btnradio"
+                            name="radioyesno"
                             id="btnradio1"
                             autocomplete="off"
                             checked
@@ -28,7 +41,7 @@
                         <label class="" for="btnradio1">Yes</label>
                         <input
                             type="radio"
-                            name="btnradio"
+                            name="radioyesno"
                             id="btnradio2"
                             autocomplete="off"
                             value="false"
@@ -48,32 +61,34 @@
                     >
                         <input
                             type="radio"
-                            name="btnradio2"
-                            id="btnradio1"
+                            name="membersCount"
+                            id="members1"
                             autocomplete="off"
-                            checked
+                            [checked]="whichIsChecked==1"
                             value="1"
                             (change)="checkFamilyMemberCount($event)"
                         />
-                        <label class="" for="btnradio1">1</label>
+                        <label class="" for="members1">1</label>
                         <input
                             type="radio"
-                            name="btnradio2"
-                            id="btnradio2"
+                            name="membersCount"
+                            id="members2"
                             autocomplete="off"
+                            [checked]="whichIsChecked==2"
                             value="2"
                             (change)="checkFamilyMemberCount($event)"
                         />
-                        <label class="" for="btnradio2">2</label>
+                        <label class="" for="members2">2</label>
                         <input
                             type="radio"
-                            name="btnradio2"
-                            id="btnradio3"
+                            name="membersCount"
+                            id="members3"
                             autocomplete="off"
+                            [checked]="whichIsChecked==3"
                             value="3"
                             (change)="checkFamilyMemberCount($event)"
                         />
-                        <label class="" for="btnradio3">3</label>
+                        <label class="" for="members3">3</label>
                     </div>
                 </div>
             </div>

@@ -2,7 +2,20 @@
     <div class="mainformsection">
         <div class="two-items">
             <h6 class="heading" style="font-weight: bolder;">Appointment</h6>
-            <a class="heading a-link">Add Script</a>
+            <a class="heading a-link" *ngIf="showButtonSaveCancel==false" (click)="openTextarea()">Add Script</a>
+            <div class="two-little-button" *ngIf="showButtonSaveCancel==true" >
+                <a class="heading a-link" (click)="closeSaveCancelFunc()">Save Script</a>
+                <a class="heading a-link" (click)="closeSaveCancelFunc()">Cancel</a>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 11px; margin-bottom: 18px;">
+            <textarea *ngIf="openTextAreaVar==true"
+                        class="form-control"
+                        placeholder="Leave a comment here"
+                        id="floatingTextarea2"
+                        style="height: 98px; padding: 5px 10px 8px 6px; font-size: 12px; line-height : 20px; border: 2px solid #7a7a7c; font-style: oblique; resize: none;"
+                    ></textarea
+                    >
         </div>
         <div class="row">
             <nav ngbNav #nav5="ngbNav" class="nav-pills">

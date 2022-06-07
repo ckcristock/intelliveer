@@ -12,6 +12,8 @@ export class DentistFormComponent implements OnInit {
   menuItemsOfCordinate: IMenuItem[] = addPatientCordinateMenuItems;
   menuItemsOfQuickAdd: IMenuItem[] = addPatientQuickMenuItems;
   @Input() tab: string = "";
+  showButtonSaveCancel:boolean = false;
+  openTextAreaVar:boolean = false;
 
   constructor(private router: Router) { }
 
@@ -31,5 +33,19 @@ export class DentistFormComponent implements OnInit {
       localStorage.setItem("visitedArrayQuick", JSON.stringify(visitedArrayQuick));
       this.router.navigate([this.menuItemsOfQuickAdd[3].url]);
     }
+  }
+
+  showButtonSaveCancelFunc(){
+    this.showButtonSaveCancel = true;
+  }
+
+  closeSaveCancelFunc(){
+    this.openTextAreaVar = false;
+    this.showButtonSaveCancel = false;
+  }
+
+  openTextarea(){
+    this.openTextAreaVar = true;
+    this.showButtonSaveCancel = true;
   }
 }

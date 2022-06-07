@@ -17,6 +17,8 @@ export class InsuranceComponent implements OnInit {
   menuItems: IMenuItem[] = addPatientCordinateMenuItems;
   checkInsuranceCount: number = 1;
   provideInsurance :boolean = true;
+  showButtonSaveCancel:boolean = false;
+  openTextAreaVar:boolean = false;
 
   constructor(private router: Router) { }
 
@@ -44,6 +46,20 @@ export class InsuranceComponent implements OnInit {
     this.provideInsurance = true;
     this.active=1;
     this.checkInsuranceCount=1;
+  }
+
+  showButtonSaveCancelFunc(){
+    this.showButtonSaveCancel = true;
+  }
+
+  closeSaveCancelFunc(){
+    this.openTextAreaVar = false;
+    this.showButtonSaveCancel = false;
+  }
+
+  openTextarea(){
+    this.openTextAreaVar = true;
+    this.showButtonSaveCancel = true;
   }
 
 }
