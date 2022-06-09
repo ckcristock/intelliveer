@@ -3,6 +3,7 @@ import { IMenuItem } from '@pages/dashboard/menu';
 // import { addPatientCordinateMenuItems } from '@pages/header/menu';
 import { Router } from '@angular/router';
 import { addPatientCordinateMenuItems, addPatientQuickMenuItems } from '@pages/home/add-patient/menu';
+import { AddPatientRoutesService } from '@services/add-patient-routes/add-patient-routes.service';
 
 @Component({
   selector: 'app-coor-with-prospect',
@@ -22,30 +23,68 @@ export class CoorWithProspectComponent implements OnInit {
   public routerName: string = "second";
   public sessionArray: any[] = [];
   public sessionArrayQuickAdd: any[] = [];
+	coordWithProspRoutes: any[] = [];
+  savedPatient: any[] = [];
+  visitedPatient: any[] = [];
 
-  constructor(public router: Router) { }
+
+  constructor(public router: Router,
+    private addPatientRoutesServ: AddPatientRoutesService) { }
 
   ngOnInit(): void {
-    this.sessionArray = JSON.parse(localStorage.getItem("visitedArray") || '[]');  
+
+    this.addPatientRoutesServ.getPatientsSavedUnsaved().subscribe((resp: any[])=>{
+      this.savedPatient = resp;
+      console.log("OOOOBBBSSEEERRVV", resp);
+      this.visitedPatient = this.addPatientRoutesServ.getSavedPatientsKeys();
+  
+
+      if(this.addPatientRoutesServ.getCheckAllSaved()){
+        console.log("to seeeeeeee");
+      this.sessionArray = JSON.parse(localStorage.getItem("visitedArray") || '[]');  
+
+        
+        let visitedArray: any = JSON.parse(
+          localStorage.getItem('visitedArray') || '[]'
+        );
+        visitedArray.push('Family Members');
+        localStorage.setItem('visitedArray', JSON.stringify(visitedArray));
+      } else {
+      this.sessionArray = JSON.parse(localStorage.getItem("visitedArray") || '[]');  
+
+        let visitedArray: any = JSON.parse(
+          localStorage.getItem('visitedArray') || '[]'
+        );
+        visitedArray = visitedArray.filter((x:any)=>{
+          return x!="Family Members";
+        })
+        localStorage.setItem('visitedArray', JSON.stringify(visitedArray));
+      }
+      
+    });
+
+
     setInterval(() =>
     {
-      
       this.sessionArray = JSON.parse(localStorage.getItem("visitedArray") || '[]');  
+
       let familyMemberCount = parseInt(localStorage.getItem('familyMemberCount') || "0");
+
       if(this.prevFMCount != familyMemberCount){
         this.menuItemsOfCordinate[6].child = [];
+        this.coordWithProspRoutes =	this.addPatientRoutesServ.getCoordWithProspRoutes();
         for (let i = 1; i <= familyMemberCount; i++) {
           let patientInit = i + 1
             this.menuItemsOfCordinate[6].child?.push({
               title: 'Patient '+ patientInit,
-              url: '/dashboard/home/add-patient/coor-with-prospect/family-members/additional-patient-'+patientInit,
+              url: this.coordWithProspRoutes[6].child[i-1].url,
               icon: 'bi bi-house-door'
             })
         }
         this.prevFMCount = familyMemberCount;
       }
-    }, 1000)  
-    console.log(this.menuItemsOfCordinate);
+    }, 500) ;
+    
     
   }
 

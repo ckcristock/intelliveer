@@ -445,3 +445,10 @@ form {
 	display: flex;
 	justify-content: space-around;
 }
+
+
+
+.form-check-input:checked{
+	background: none!important;
+	border: 3.5px solid #434243 !important;
+}

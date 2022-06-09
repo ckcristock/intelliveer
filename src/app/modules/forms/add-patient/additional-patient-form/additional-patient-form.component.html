@@ -1,12 +1,25 @@
 <form autocomplete="off" >
-    <div  class="mainformsection scroll" style="" >
+    <div  class="mainformsection scroll" >
         <div class="two-items">
-            <h6 class="heading" style="font-weight: bolder;">Patient</h6>
-            <a class="heading a-link">Add Script</a>
+            <h6 class="heading" style="font-weight: bolder; font-size: 14px; margin-bottom: 15px;">{{ title }}</h6>
+            <a class="heading a-link" *ngIf="showButtonSaveCancel==false" (click)="openTextarea()">Add Script</a>
+            <div class="two-little-button" *ngIf="showButtonSaveCancel==true" >
+                <a class="heading a-link" (click)="closeSaveCancelFunc()">Save Script</a>
+                <a class="heading a-link" (click)="closeSaveCancelFunc()">Cancel</a>
+            </div>
+        </div>
+        <div *ngIf="openTextAreaVar==true" class="row" style="margin: 5px 1px 14px 1px;">
+            <textarea 
+                        class="form-control"
+                        placeholder="Leave a comment here"
+                        id="floatingTextarea2"
+                        style="height: 98px; padding: 5px 10px 8px 6px; font-size: 12px; line-height : 20px; border: 2px solid #7a7a7c; font-style: oblique; resize: none;"
+                    ></textarea
+                    >
         </div>
         <div class="row">
             <!-- patient-textbox-button -->
-            <div class="col-3">
+            <div class="col-6">
                 <div class="mainformset">
                     <label class="required pb-1"
                         >Please search first If not found, create a
@@ -79,41 +92,52 @@
                     role="group"
                     aria-label="Basic radio toggle button group"
                 >
+
+                <div class="subscriber-divs">
                     <input
+                    class="form-check-input"
                         type="radio"
-                        name="btnradio"
-                        id="btnradio1"
+                        name="lgGuardianRadio"
+                        id="lgGuardianRadio1"
                         autocomplete="off"
                         checked
                     />
-                    <label class="" for="btnradio1"
+                    <label class="subscriber-labels" for="lgGuardianRadio1"
                         >Use existing one</label
                     >
+                </div>
+                <div class="subscriber-divs">
                     <input
+                    class="form-check-input"
                         type="radio"
-                        name="btnradio"
-                        id="btnradio2"
+                        name="lgGuardianRadio"
+                        id="lgGuardianRadio2"
                         autocomplete="off"
                     />
-                    <label class="" for="btnradio2"
+                    <label class="subscriber-labels" for="lgGuardianRadio2"
                         >Same as patient 1</label
                     >
+                </div>
+                <div class="subscriber-divs">
                     <input
-                        type="radio"
-                        name="btnradio"
-                        id="btnradio3"
-                        autocomplete="off"
-                    />
-                    <label class="" for="btnradio3"
-                        >Add a new one</label
-                    >
+                    class="form-check-input"
+                    type="radio"
+                    name="lgGuardianRadio"
+                    id="lgGuardianRadio3"
+                    autocomplete="off"
+                />
+                <label class="subscriber-labels" for="lgGuardianRadio3"
+                    >Add a new one</label
+                >
+                </div>
+                   
                 </div>
             </div>
         </div>
         <br />
         <div class="row">
             <!-- legal Guardian textbox and button -->
-            <div class="col-3">
+            <div class="col-6">
                 <div class="mainformset">
                     <label class="required pb-1"
                         >Please search first If not found, create a
@@ -154,7 +178,7 @@
                             Guardian?</label
                         >
                         <input
-                            class="form-control"
+                            class="form-control value-must"
                             type="text"
                             placeholder=""
                             name=""
@@ -167,7 +191,7 @@
                             >Last Name</label
                         >
                         <input
-                            class="form-control"
+                            class="form-control value-must"
                             type="text"
                             placeholder=""
                             name=""
@@ -295,41 +319,52 @@
                     role="group"
                     aria-label="Basic radio toggle button group"
                 >
+
+                <div class="subscriber-divs">
                     <input
+                    class="form-check-input"
                         type="radio"
-                        name="btnradio"
-                        id="btnradio1"
+                        name="dentistRadio"
+                        id="dentistRadio1"
                         autocomplete="off"
                         checked
                     />
-                    <label class="" for="btnradio1"
+                    <label class="subscriber-labels" for="dentistRadio1"
                         >Use existing one</label
                     >
+                </div>
+                <div class="subscriber-divs">
                     <input
+                    class="form-check-input"
                         type="radio"
-                        name="btnradio"
-                        id="btnradio2"
+                        name="dentistRadio"
+                        id="dentistRadio2"
                         autocomplete="off"
                     />
-                    <label class="" for="btnradio2"
+                    <label class="subscriber-labels" for="dentistRadio2"
                         >Same as patient 1</label
                     >
+                </div>
+                <div class="subscriber-divs">
                     <input
-                        type="radio"
-                        name="btnradio"
-                        id="btnradio3"
-                        autocomplete="off"
-                    />
-                    <label class="" for="btnradio3"
-                        >Add a new one</label
-                    >
+                    class="form-check-input"
+                    type="radio"
+                    name="dentistRadio"
+                    id="dentistRadio3"
+                    autocomplete="off"
+                />
+                <label class="subscriber-labels" for="dentistRadio3"
+                    >Add a new one</label
+                >
+                </div>
+                   
                 </div>
             </div>
         </div>
         <br />
         <div class="row">
             <!-- Dentist textbox and button -->
-            <div class="col-3">
+            <div class="col-6">
                 <div class="mainformset">
                     <label class="required pb-1"
                         >Please search first If not found, create a
@@ -409,41 +444,52 @@
                     role="group"
                     aria-label="Basic radio toggle button group"
                 >
+
+                <div class="subscriber-divs">
                     <input
+                    class="form-check-input"
                         type="radio"
-                        name="btnradio"
-                        id="btnradio1"
+                        name="referrerRadio"
+                        id="referrerRadio1"
                         autocomplete="off"
                         checked
                     />
-                    <label class="" for="btnradio1"
+                    <label class="subscriber-labels" for="referrerRadio1"
                         >Use existing one</label
                     >
+                </div>
+                <div class="subscriber-divs">
                     <input
+                    class="form-check-input"
                         type="radio"
-                        name="btnradio"
-                        id="btnradio2"
+                        name="referrerRadio"
+                        id="referrerRadio2"
                         autocomplete="off"
                     />
-                    <label class="" for="btnradio2"
+                    <label class="subscriber-labels" for="referrerRadio2"
                         >Same as patient 1</label
                     >
+                </div>
+                <div class="subscriber-divs">
                     <input
-                        type="radio"
-                        name="btnradio"
-                        id="btnradio3"
-                        autocomplete="off"
-                    />
-                    <label class="" for="btnradio3"
-                        >Add a new one</label
-                    >
+                    class="form-check-input"
+                    type="radio"
+                    name="referrerRadio"
+                    id="referrerRadio3"
+                    autocomplete="off"
+                />
+                <label class="subscriber-labels" for="referrerRadio3"
+                    >Add a new one</label
+                >
+                </div>
+                   
                 </div>
             </div>
         </div>
         <br />
         <div class="row">
             <!-- Referrer textbox and button -->
-            <div class="col-3">
+            <div class="col-6">
                 <div class="mainformset">
                     <label class="required pb-1"
                         >Please search first If not found, create a
@@ -527,7 +573,9 @@
                         role="group"
                         aria-label="Basic radio toggle button group"
                     >
+                    <div class="form-check form-check-inline">
                         <input
+                        class="form-check-input"
                             type="radio"
                             name="radioyesno"
                             id="radioyesno1"
@@ -535,15 +583,23 @@
                             checked
                             (change)="provideInsurance = true"
                         />
-                        <label class="" for="radioyesno1">Yes</label>
+                        <label class="form-check-label" for="radioyesno1"
+                            >Yes</label
+                        >
+                    </div>
+                    <div class="form-check form-check-inline">
                         <input
+                        class="form-check-input"
                             type="radio"
                             name="radioyesno"
                             id="radioyesno2"
                             autocomplete="off"
                             (change)="provideInsurance = false"
                         />
-                        <label class="" for="radioyesno2">No</label>
+                        <label class="form-check-label" for="radioyesno2"
+                            >No</label
+                        >
+                    </div>
                     </div>
                 </div>
             </div>
@@ -556,31 +612,48 @@
                         role="group"
                         aria-label="Basic radio toggle button group"
                     >
+                    <div class="form-check form-check-inline">
                         <input
+                        class="form-check-input"
                             type="radio"
-                            name="btnradioIns2"
-                            id="insurance1"
+                            name="radiohowmany"
+                            id="radiohowmany1"
                             autocomplete="off"
                             checked
                             (click)="checkInsuranceCount = 1"
+                            
                         />
-                        <label class="" for="insurance1">1</label>
+                        <label class="form-check-label" for="radiohowmany1"
+                            >1</label
+                        >
+                    </div>
+                    <div class="form-check form-check-inline">
                         <input
+                        class="form-check-input"
                             type="radio"
-                            name="btnradioIns2"
-                            id="insurance2"
+                            name="radiohowmany"
+                            id="radiohowmany2"
                             autocomplete="off"
                             (click)="checkInsuranceCount = 2"
                         />
-                        <label class="" for="insurance2">2</label>
+                        <label class="form-check-label" for="radiohowmany2"
+                            >2</label
+                        >
+                    </div>
+                    <div class="form-check form-check-inline">
                         <input
+                        class="form-check-input"
                             type="radio"
-                            name="btnradioIns2"
-                            id="insurance3"
+                            name="radiohowmany"
+                            id="radiohowmany3"
                             autocomplete="off"
+                            
                             (click)="checkInsuranceCount = 3"
                         />
-                        <label class="" for="insurance3">3</label>
+                        <label class="form-check-label" for="radiohowmany3"
+                            >3</label
+                        >
+                    </div>
                     </div>
                 </div>
             </div>
@@ -599,40 +672,51 @@
                                     role="group"
                                     aria-label="Basic radio toggle button group"
                                 >
+
+                                <div class="subscriber-divs">
                                     <input
+                                    class="form-check-input"
                                         type="radio"
-                                        name="btnradio"
-                                        id="btnradio1"
+                                        name="insuranRadio1"
+                                        id="insuranRadio11"
                                         autocomplete="off"
                                         checked
                                     />
-                                    <label class="" for="btnradio1"
+                                    <label class="subscriber-labels" for="insuranRadio11"
                                         >Use existing one</label
                                     >
+                                </div>
+                                <div class="subscriber-divs">
                                     <input
+                                    class="form-check-input"
                                         type="radio"
-                                        name="btnradio"
-                                        id="btnradio2"
+                                        name="insuranRadio1"
+                                        id="insuranRadio12"
                                         autocomplete="off"
                                     />
-                                    <label class="" for="btnradio2"
+                                    <label class="subscriber-labels" for="insuranRadio12"
                                         >Same as patient 1</label
                                     >
+                                </div>
+                                <div class="subscriber-divs">
                                     <input
-                                        type="radio"
-                                        name="btnradio"
-                                        id="btnradio3"
-                                        autocomplete="off"
-                                    />
-                                    <label class="" for="btnradio3"
-                                        >Add a new one</label
-                                    >
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="insuranRadio1"
+                                    id="insuranRadio13"
+                                    autocomplete="off"
+                                />
+                                <label class="subscriber-labels" for="insuranRadio13"
+                                    >Add a new one</label
+                                >
+                                </div>
+                                
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <!-- textbox and button -->
-                            <div class="col-3">
+                            <div class="col-6">
                                 <div class="mainformset">
                                     <label class="required pb-1"
                                         >Search Insurance</label
@@ -682,11 +766,209 @@
                 </ng-container>
                 <ng-container ngbNavItem>
                     <a ngbNavLink *ngIf="checkInsuranceCount > 1">Insurance 2</a>
-                    <ng-template ngbNavContent> </ng-template>
+                    <ng-template ngbNavContent>
+                        <div class="row">
+                            <!-- radios -->
+                            <div class="mainformset">
+                                <div
+                                    class="btn-group"
+                                    role="group"
+                                    aria-label="Basic radio toggle button group"
+                                >
+
+                                <div class="subscriber-divs">
+                                    <input
+                                    class="form-check-input"
+                                        type="radio"
+                                        name="insuranRadio2"
+                                        id="insuranRadio21"
+                                        autocomplete="off"
+                                        checked
+                                    />
+                                    <label class="subscriber-labels" for="insuranRadio21"
+                                        >Use existing one</label
+                                    >
+                                </div>
+                                <div class="subscriber-divs">
+                                    <input
+                                    class="form-check-input"
+                                        type="radio"
+                                        name="insuranRadio2"
+                                        id="insuranRadio22"
+                                        autocomplete="off"
+                                    />
+                                    <label class="subscriber-labels" for="insuranRadio22"
+                                        >Same as patient 1</label
+                                    >
+                                </div>
+                                <div class="subscriber-divs">
+                                    <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="insuranRadio2"
+                                    id="insuranRadio23"
+                                    autocomplete="off"
+                                />
+                                <label class="subscriber-labels" for="insuranRadio23"
+                                    >Add a new one</label
+                                >
+                                </div>
+                                
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- textbox and button -->
+                            <div class="col-6">
+                                <div class="mainformset">
+                                    <label class="required pb-1"
+                                        >Search Insurance</label
+                                    >
+                                    <div class="input-button">
+                                        <input
+                                            class="form-control"
+                                            type="text"
+                                            placeholder="Type Name"
+                                            name=""
+                                        />
+                                        <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- textboxes -->
+                            <div class="col-3">
+                                <div class="mainformset">
+                                    <label class="required pb-1"
+                                        >Name of Insurance</label
+                                    >
+                                    <input
+                                        class="form-control"
+                                        type="text"
+                                        placeholder=""
+                                        name=""
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="mainformset">
+                                    <label class="required pb-1"
+                                        >Phone</label
+                                    >
+                                    <input
+                                        class="form-control"
+                                        type="text"
+                                        placeholder=""
+                                        name=""
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
                 </ng-container>
                 <ng-container ngbNavItem>
                     <a ngbNavLink *ngIf="checkInsuranceCount == 3">Insurance 3</a>
-                    <ng-template ngbNavContent> </ng-template>
+                    <ng-template ngbNavContent>
+                        <div class="row">
+                            <!-- radios -->
+                            <div class="mainformset">
+                                <div
+                                    class="btn-group"
+                                    role="group"
+                                    aria-label="Basic radio toggle button group"
+                                >
+
+                                <div class="subscriber-divs">
+                                    <input
+                                    class="form-check-input"
+                                        type="radio"
+                                        name="insuranRadio3"
+                                        id="insuranRadio31"
+                                        autocomplete="off"
+                                        checked
+                                    />
+                                    <label class="subscriber-labels" for="insuranRadio31"
+                                        >Use existing one</label
+                                    >
+                                </div>
+                                <div class="subscriber-divs">
+                                    <input
+                                    class="form-check-input"
+                                        type="radio"
+                                        name="insuranRadio3"
+                                        id="insuranRadio32"
+                                        autocomplete="off"
+                                    />
+                                    <label class="subscriber-labels" for="insuranRadio32"
+                                        >Same as patient 1</label
+                                    >
+                                </div>
+                                <div class="subscriber-divs">
+                                    <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="insuranRadio3"
+                                    id="insuranRadio33"
+                                    autocomplete="off"
+                                />
+                                <label class="subscriber-labels" for="insuranRadio33"
+                                    >Add a new one</label
+                                >
+                                </div>
+                                
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- textbox and button -->
+                            <div class="col-6">
+                                <div class="mainformset">
+                                    <label class="required pb-1"
+                                        >Search Insurance</label
+                                    >
+                                    <div class="input-button">
+                                        <input
+                                            class="form-control"
+                                            type="text"
+                                            placeholder="Type Name"
+                                            name=""
+                                        />
+                                        <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- textboxes -->
+                            <div class="col-3">
+                                <div class="mainformset">
+                                    <label class="required pb-1"
+                                        >Name of Insurance</label
+                                    >
+                                    <input
+                                        class="form-control"
+                                        type="text"
+                                        placeholder=""
+                                        name=""
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="mainformset">
+                                    <label class="required pb-1"
+                                        >Phone</label
+                                    >
+                                    <input
+                                        class="form-control"
+                                        type="text"
+                                        placeholder=""
+                                        name=""
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
                 </ng-container>
             </nav>
 
@@ -702,49 +984,63 @@
                     role="group"
                     aria-label="Basic radio toggle button group"
                 >
+                <div class="subscriber-divs">
                     <input
+                    class="form-check-input"
                         type="radio"
-                        name="btnradio"
-                        id="btnradio1"
+                        name="subscriRadio"
+                        id="subscriRadio1"
                         autocomplete="off"
                         checked
                     />
-                    <label class="" for="btnradio1"
+                    <label class="form-check-label subscriber-labels" for="subscriRadio1"
                         >Use existing one</label
                     >
+                </div>
+                <div class="subscriber-divs">
                     <input
+                    class="form-check-input"
                         type="radio"
-                        name="btnradio"
-                        id="btnradio2"
+                        name="subscriRadio"
+                        id="subscriRadio2"
                         autocomplete="off"
                     />
-                    <label class="" for="btnradio2"
+                    <label class="form-check-label subscriber-labels" for="subscriRadio2"
                         >Same as patient</label
                     >
+                </div>
+                <div class="subscriber-divs">
                     <input
+                    class="form-check-input"
                         type="radio"
-                        name="btnradio"
-                        id="btnradio3"
+                        name="subscriRadio"
+                        id="subscriRadio3"
                         autocomplete="off"
                     />
-                    <label class="" for="btnradio3"
+                    <label class="form-check-label subscriber-labels" for="subscriRadio3"
                         >Same as legal guardian</label
                     >
+                </div>
+
+                <div class="subscriber-divs">
                     <input
+                    class="form-check-input"
                         type="radio"
-                        name="btnradio"
-                        id="btnradio4"
+                        name="subscriRadio"
+                        id="subscriRadio4"
                         autocomplete="off"
                     />
-                    <label class="" for="btnradio4"
+                    <label class="form-check-label subscriber-labels" for="subscriRadio4"
                         >Add a new one</label
                     >
+                </div>
+
                 </div>
             </div>
         </div>
         <div class="row">
             <!-- Subscriber textbox and button -->
-            <div class="col-3">
+            <div class="col-6">
                 <div class="mainformset">
                     <label class="required pb-1"
                         >Search Subscriber</label
@@ -827,7 +1123,7 @@
             <!-- Buttons -->
             <div class="two-items">
                 <button class="btn btn-light btn-light-custom">Exit</button>
-                <button type="button" class="btn btn-dark btn-dark-custom" (click)="moveToAnotherTab()">Next</button>
+                <button type="button" class="btn btn-dark btn-dark-custom" (click)="moveToAnotherTab()">Save and continue</button>
             </div>
         </div>
     </div>

@@ -29,25 +29,33 @@
                         role="group"
                         aria-label="Basic radio toggle button group"
                     >
+                    <div class="form-check form-check-inline">
                         <input
+                        class="form-check-input"
                             type="radio"
                             name="radioyesno"
                             id="btnradio1"
                             autocomplete="off"
+                            [attr.disabled]="disableYesNo"
                             checked
                             value="true"
                             (change)="changeProvideFM($event)"
                         />
-                        <label class="" for="btnradio1">Yes</label>
+                        <label class="form-check-label" for="btnradio1">Yes</label>
+                    </div>
+                    <div class="form-check form-check-inline">
                         <input
+                        class="form-check-input"
                             type="radio"
                             name="radioyesno"
                             id="btnradio2"
                             autocomplete="off"
+                            [attr.disabled]="disableYesNo"
                             value="false"
                             (change)="changeProvideFM($event)"
                         />
-                        <label class="" for="btnradio2">No</label>
+                        <label class="form-check-label" for="btnradio2">No</label>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -59,36 +67,54 @@
                         role="group"
                         aria-label="Basic radio toggle button group"
                     >
-                        <input
-                            type="radio"
-                            name="membersCount"
-                            id="members1"
-                            autocomplete="off"
-                            [checked]="whichIsChecked==1"
-                            value="1"
-                            (change)="checkFamilyMemberCount($event)"
-                        />
-                        <label class="" for="members1">1</label>
-                        <input
+                        <div class="form-check form-check-inline">
+                            <input
+                            #radio1
+                            class="form-check-input"
+                                type="radio"
+                                name="membersCount"
+                                id="members1"
+                                autocomplete="off"
+                                [attr.disabled]="disableYesNo"
+                                [checked]="whichIsChecked==1"
+                                value="1"
+                                (change)="checkFamilyMemberCount($event)"
+                            />
+                            <label class="form-check-label" for="members1">1</label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input
+                            #radio2
+                            class="form-check-input"
                             type="radio"
                             name="membersCount"
                             id="members2"
-                            autocomplete="off"
+                            [attr.disabled]="disableRadioBTowThree[0][0]"
                             [checked]="whichIsChecked==2"
+                            (click)="uncheck($event)"
                             value="2"
                             (change)="checkFamilyMemberCount($event)"
                         />
-                        <label class="" for="members2">2</label>
-                        <input
-                            type="radio"
-                            name="membersCount"
-                            id="members3"
-                            autocomplete="off"
-                            [checked]="whichIsChecked==3"
-                            value="3"
-                            (change)="checkFamilyMemberCount($event)"
-                        />
-                        <label class="" for="members3">3</label>
+                        <label class="form-check-label" for="members2">2</label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input
+                            #radio3
+                            class="form-check-input"
+                                type="radio"
+                                name="membersCount"
+                                id="members3"
+                                autocomplete="off"
+                                [attr.disabled]="disableRadioBTowThree[1][1]"
+                                [checked]="whichIsChecked==3"
+                                (click)="uncheck($event)"
+                                value="3"
+                                (change)="checkFamilyMemberCount($event)"
+                            />
+                            <label class="form-check-label" for="members3">3</label>
+                        </div>
                     </div>
                 </div>
             </div>
