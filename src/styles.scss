@@ -397,15 +397,77 @@ form {
 		margin-bottom: 12px;
 	}
 	.input-group {
+		border: 2.5px solid #d4d6d8;
+		box-shadow: 10px #d4d6d8;
+		height: 36px;
+		border-radius: 5px;
 		label,
 		input {
 			margin-bottom: 0px;
 		}
 	}
 }
+.two-items{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-.scroll {
-    height: 30rem;
-    overflow-x: hidden;
-    overflow-y: auto;
+  .btn-dark-custom {
+	  font-size: 10px;
+	  padding: 7px 20px;
+	  border-radius: 4px;
+  }
+
+  .btn-light-custom{
+	font-size: 10px;
+	padding: 7px 25px;
+	border-radius: 4px;
+  }
+
+  .a-link:hover, .a-link{
+	  padding: 0px !important;
+	  margin: 0px !important;
+	  font-weight: bolder; font-size: 12px; 
+	  color: #ec6e4d;
+  }
+
+  .two-final-buttons{
+	margin-top: 40px;
+  }
+
+  .input-button{
+	display: flex;
+	justify-content: space-between;
+	align-content: center;
+	gap: 10px;
+  }
+
+  .twenty {
+	width: 20%;
+}
+
+.two-little-button{
+	width: 150px;
+	display: flex;
+	justify-content: space-around;
+}
+
+
+
+.form-check-input:checked{
+	background: none!important;
+	border: 3.5px solid #434243 !important;
+}
+
+.subti-radio-b{
+	font-weight: bolder; margin-top: 20px; font-size: 12px; margin-bottom: 16.5px;
+}
+
+.radios{
+	margin-bottom: 2px;
+}
+
+.input-button-label{
+	margin-left: 22px;
 }
