@@ -378,7 +378,7 @@ input[type='checkbox'] + label {
 
 .required-field {
 	border: 1px solid #ed1c24 !important;
-	background: #f7ebeb !important;
+	background-color: #f7ebeb !important;
 }
 ng-select {
 	border: 1px solid $input-border-color;
@@ -402,4 +402,10 @@ form {
 			margin-bottom: 0px;
 		}
 	}
+}
+
+.scroll {
+    height: 30rem;
+    overflow-x: hidden;
+    overflow-y: auto;
 }

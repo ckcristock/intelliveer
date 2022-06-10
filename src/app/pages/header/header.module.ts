@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header.component';
 import { HeaderRoutingModule } from './header-routing.module';
+import { ProgressBarModule } from '@modules/forms/progress-bar/progress-bar.module';
 
 @NgModule({
   declarations: [
@@ -9,7 +10,8 @@ import { HeaderRoutingModule } from './header-routing.module';
   ],
   imports: [
     CommonModule,
-    HeaderRoutingModule
+    HeaderRoutingModule,
+    ProgressBarModule
   ]
 })
 export class HeaderModule { }

@@ -1,0 +1,124 @@
+$white-circle: white;
+$gray-circle: #bcbec0;
+$orange-circle: #f9ac42;
+
+.step {
+    position: relative;
+    min-height: 1em;
+    left: 2px;
+}
+
+.title {
+    line-height: 1.5em;
+    font-weight: bold;
+}
+
+.step+.step {
+    margin-top: 1.5em
+}
+
+.step>div:first-child {
+    position: static;
+    height: 0;
+}
+
+.step>div:not(:first-child) {
+    margin-left: 1.5em;
+    padding-left: 1em;
+}
+
+/* Circle */
+.active-circle {
+    background: $white-circle;
+    position: relative;
+    width: 1.2em;
+    height: 1.2em;
+    line-height: 1.2em;
+    border-radius: 100%;
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 0 0 2px $orange-circle;
+}
+
+/* Circle */
+.later-circle {
+    background: $gray-circle;
+    position: relative;
+    width: 1.2em;
+    height: 1.2em;
+    line-height: 1.2em;
+    border-radius: 100%;
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 0 0 2px $gray-circle;
+}
+
+/* Circle */
+.complete-circle {
+    background: $orange-circle;
+    position: relative;
+    width: 1.2em;
+    height: 1.2em;
+    line-height: 1.2em;
+    border-radius: 100%;
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 0 0 2px $orange-circle;
+}
+
+.step:last-child .circle:after {
+    display: none
+}
+
+.step.step-active {
+    font-weight: bold;
+}
+
+.step.step-active .circle {
+    background-color: $white-circle;
+    outline-color: black;
+    outline: violet;
+}
+
+.vertical-line-active {
+    border-left: 2px solid $orange-circle;
+    height: 2rem;
+    margin-left: 8px;
+    margin-top: -3px;
+ }
+
+ .vertical-line-not-active {
+    border-left: 2px solid $gray-circle;
+    height: 2rem;
+    margin-left: 8px;
+    margin-top: -3px;
+ }
+
+ 
+.sub-menu-vertical-line-active {
+    border-left: 2px solid $orange-circle;
+    height: 2rem;
+    margin-left: 6px;
+    margin-top: -3px;
+ }
+
+ .sub-menu-vertical-line-not-active {
+    border-left: 2px solid $gray-circle;
+    height: 2rem;
+    margin-left: 6px;
+    margin-top: -3px;
+ }
+ 
+ .small-vertical-line-not-active {
+    border-left: 2px solid $gray-circle;
+    height: 1rem;
+    margin-left: 8px;
+    margin-top: -3px;
+ }
+
+ .small-vertical-line-active {
+    border-left: 2px solid $orange-circle;
+    height: 1rem;
+    margin-left: 8px;
+    margin-top: -3px;
+ }

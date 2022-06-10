@@ -13,6 +13,18 @@ export class HealthHistoryComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    let objC = {
+      date: "2022/04/10",
+      name: "Health History v1",
+      status: "Completed"
+    }
+    this.healthHistoryList.push(objC);
+    let objR = {
+      date: "2022/04/09",
+      name: "Health History v2",
+      status: "Review"
+    }
+    this.healthHistoryList.push(objR);
   }
 
   addHealthHistory()

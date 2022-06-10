@@ -9,49 +9,62 @@
 </div>
 
 <div *ngIf="healthHistoryList?.length != 0">
-    <div class="container" *ngFor="let healthHistory of healthHistoryList; let i = index">
-        <div class="row section">
-            <div class="col-2">
-                <div class="letter">
-                    <p>{{ 'A' }}</p>
-                    <div id="orange">
-                        <span >{{ 'PRIMARY' }}</span>
-                    </div>
-                </div>
-                <!-- <img src="{{ healthHistory.image }}" width="78" height="90" /> -->
+    <div class="container">
+        <div class="d-flex justify-content-between call-to-actions">
+            <div class="col-4">
             </div>
-            <div class="col-3">
-                <p>
-                    {{ healthHistory.user }}
-                </p>
-                <p>{{ healthHistory.practiceName }}</p>
-                <p>{{ healthHistory.specialty }}</p>
+            <div class="d-flex gap-2">
+                <button class="add_btn" disabled>
+                    <img src="/assets/icons/export.svg" alt="" />
+                </button>
+                <button class="add_btn" [disabled]="true">
+                    <img src="/assets/icons/print.svg" alt="" />
+                </button>
+                <button class="add_btn" [disabled]="true">
+                    <img src="/assets/icons/delete.svg" alt="" />
+                </button>
+                <button class="add_btn" routerLink="/dashboard/patient/consultation/health-history/add">
+                    <img src="/assets/icons/add.svg" alt="" />
+                </button>
             </div>
-            <div class="col-6">
-                <p>
-                    Prefered mail method: <span>{{ healthHistory.pemail }}</span>
-                </p>
-                <p>
-                    Primary Phone number:: <span>{{ healthHistory.phone }}</span>
-                </p>
-                <p>
-                    Email: <span>{{ healthHistory.email }}</span>
-                </p>
-                <p>
-                    No. of mutual patient: <span>{{ healthHistory.mutualPatient }}</span>
-                </p>
-            </div>
-            <div class="col-1">
-                <div ngbDropdown class="d-inline-block">
-                    <i class="bi bi-three-dots-vertical" id="dropdownBasic" ngbDropdownToggle></i>
-                    <ul ngbDropdownMenu aria-labelledby="dropdownBasic">
-                        <li ngbDropdownItem>Edit</li>
-                        <li ngbDropdownItem>
-                            {{ healthHistory.isDisabled ? 'Reactivate' : 'Deactivate' }}
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        </div>
+    </div>
+    <div class="container mt-4">
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"><input type="checkbox" /></th>
+                        <th scope="col">Creation Date</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="healthHistoryList">
+                    <tr *ngFor="let healthHistory of healthHistoryList; let i = index">
+                        <td><input type="checkbox" value="{{i}}" /></td>
+                        <td>{{healthHistory?.date}}</td>
+                        <td>{{healthHistory?.name}}</td>
+                        <td>
+                            <span *ngIf="healthHistory?.status === 'Completed'"
+                                style="color: #3bbb7b;">{{healthHistory?.status}}</span>
+                            <span *ngIf="healthHistory?.status === 'Review'"
+                                style="text-decoration: underline;">{{healthHistory?.status}}</span>
+                        </td>
+                        <td>
+                            <div ngbDropdown container="body" placement="bottom-end">
+                                <i class="bi bi-three-dots-vertical" id="dropdownBasic" ngbDropdownToggle></i>
+                                <ul ngbDropdownMenu aria-labelledby="dropdownBasic">
+                                    <li ngbDropdownItem>Export as a pdf</li>
+                                    <li ngbDropdownItem>Print</li>
+                                    <li ngbDropdownItem>Delete</li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ScrollSpyDirective } from '@directives/scrollspy';
 import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
 import { HealthHistoryFormComponent } from './health-history-form.component';
+import { ScrollspyModule } from '@modules/scrollspy/scrollspy.module';
 
 @NgModule({
 	declarations: [HealthHistoryFormComponent],
@@ -11,7 +11,8 @@ import { HealthHistoryFormComponent } from './health-history-form.component';
 		CommonModule,
 		FormsModule,
 		ReactiveFormsModule,
-		NavBarPillsModule
+		NavBarPillsModule,
+		ScrollspyModule
 	],
 	exports: [HealthHistoryFormComponent]
 })

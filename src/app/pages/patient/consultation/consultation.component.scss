@@ -1,3 +1,4 @@
+$gray-circle: #bcbec0;
 ul {
 	li {
 		line-height: 3;
@@ -13,4 +14,11 @@ ul {
 	margin-left: 8px;
 	padding: 2px;
 	list-style: none;
+}
+
+.line {
+	border-left: 2px solid $gray-circle;
+    height: 14rem;
+    margin-left: 8px;
+    margin-top: -3px;
 }

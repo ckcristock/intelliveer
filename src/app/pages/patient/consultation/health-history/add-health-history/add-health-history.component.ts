@@ -46,6 +46,6 @@ export class AddHealthHistoryComponent implements OnInit, OnDestroy {
     // }
   }
   handleCancel() {
-    this.router.navigate(['/dashboard/patient/patient-user/insurance-subscriber']);
+    this.router.navigate(['/dashboard/patient/consultation/health-history']);
   }
 }

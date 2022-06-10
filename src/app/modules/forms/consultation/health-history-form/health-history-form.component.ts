@@ -21,7 +21,7 @@ export class HealthHistoryFormComponent implements OnInit, AfterViewInit {
 	@Input() formData: any | undefined = undefined;
 	@Output() onCancel = new EventEmitter();
 	@Output() onSubmit = new EventEmitter();
-	BGForm: FormGroup | undefined;
+	Form: FormGroup | undefined;
 	countries: any;
 	imageSrc: any;
 	currentSelection: string = '';
@@ -31,13 +31,17 @@ export class HealthHistoryFormComponent implements OnInit, AfterViewInit {
 		{ title: 'Dental Conditions', id: 'dentalConditions' },
 		{ title: 'Consents & Signature', id: 'consents&Signature' }
 	];
-	showLatexInputFeild: boolean = false;
-	showMetalInputFeild: boolean = false;
-	showAmoxicillinInputFeild: boolean = false;
-	showAsthamaInputFeild: boolean = false;
-	showBloodPressureInputFeild: boolean = false;
-	showCancerInputFeild: boolean = false;
-	showDentalInputFeild: boolean = false;
+	showLatexInputFeild: boolean = true;
+	showMetalInputFeild: boolean = true;
+	showAmoxicillinInputFeild: boolean = true;
+	showAsthamaInputFeild: boolean = true;
+	showBloodPressureInputFeild: boolean = true;
+	showCancerInputFeild: boolean = true;
+	showDentalInputFeild: boolean = true;
+	disableSaveButton: boolean = true;
+	check1: any;
+	check2: any;
+	todayDate: number = Date.now();
 	constructor(
 		private fb: FormBuilder,
 		private http: HttpClient,
@@ -46,21 +50,26 @@ export class HealthHistoryFormComponent implements OnInit, AfterViewInit {
 
 	ngOnInit() {
 		this.getCountries();
-		this.initBGForm(this.formData);
+		this.initForm(this.formData);
 	}
 	ngAfterViewInit(): void {}
-	initBGForm(data?: any) {
+	initForm(data?: any) {
 		data = data || {};
-		this.BGForm = this.fb.group({
-			logo: [data?.logo || 'null'],
-			name: [data?.name || '', Validators.required],
-			// description: [data?.description || ''],
-			// abbreviation: [data?.abbreviation || ''],
-
-			TIN: [data?.TIN || ''],
-			country: [data?.country || '', Validators.required],
-			currency: [data?.currency || '', Validators.required]
+		this.Form = this.fb.group({
+			latexRadio: [data?.latexRadio || 'yes'],
+			metalRadio: [data?.metalRadio || 'yes'],
+			amoxicillinRadio: [data?.amoxicillinRadio || 'yes'],
+			asthamaRadio: [data?.asthamaRadio || 'yes'],
+			bloodPressurRadio: [data?.bloodPressurRadio || 'yes'],
+			cancerRadio: [data?.cancerRadio || 'yes'],
+			dentalRadio: [data?.dentalRadio || 'yes'],
+			check1: [data?.check1 || '', Validators.required],
+			check2: [data?.check2 || '', Validators.required],
 		});
+		this.Form.valueChanges.subscribe(data => 
+			{
+				this.disableSaveButton = false;
+			})
 	}
 	save(data: any) {
 		this.onSubmit.emit(data);
@@ -68,13 +77,9 @@ export class HealthHistoryFormComponent implements OnInit, AfterViewInit {
 	cancel() {
 		this.onCancel.emit();
 	}
-	setAddress(type: string) {
-		let physicalAddress = this.BGForm?.controls['physicalAddress'].value;
-		this.BGForm?.controls[type].setValue(physicalAddress);
-	}
 	handleUploadedImage(e: { url: string }) {
-		if (e && this.BGForm) {
-			this.BGForm.controls['logo'].setValue(e.url);
+		if (e && this.Form) {
+			this.Form.controls['logo'].setValue(e.url);
 		}
 	}
 	getCountries() {
@@ -86,5 +91,9 @@ export class HealthHistoryFormComponent implements OnInit, AfterViewInit {
 	}
 	onSectionChange(sectionId: any) {
 		this.currentSelection = sectionId;
+	}
+	checkTNC($event: any)
+	{
+		this.check1 == true && this.check2 == true ? this.disableSaveButton = false : this.disableSaveButton = true;
 	}
 }

@@ -36,6 +36,64 @@ export const patientUserMenuItems = [
 	}
 ];
 
+export const patientUserHeaderIconMenuItems = [
+	{
+		title: '',
+		url: '/dashboard/patient/patient-user/patient-detail',
+		icon: '/assets/icons/users.svg',
+	},
+	{
+		title: '',
+		url: '/+',
+		icon: '/assets/icons/chat.svg',
+	},
+	{
+		title: '',
+		url: '/+',
+		icon: '/assets/icons/paper.svg',
+	},
+	{
+		title: '',
+		url: '/dashboard/patient/insurance',
+		icon: '/assets/icons/teeth.svg',
+	},
+	{
+		title: '',
+		url: '/+',
+		icon: '/assets/icons/folder.svg',
+	},
+	{
+		title: '',
+		url: '/+',
+		icon: '/assets/icons/camera.svg',
+	},
+	{
+		title: '',
+		url: '/+',
+		icon: '/assets/icons/image.svg',
+	},
+	{
+		title: '',
+		url: '/dashboard/patient/consultation',
+		icon: '/assets/icons/user_chat.svg',
+	},
+	{
+		title: '',
+		url: '/+',
+		icon: '/assets/icons/user_card.svg',
+	},
+	{
+		title: '',
+		url: '/+',
+		icon: '/assets/icons/calendar.svg',
+	},
+	{
+		title: '',
+		url: '/+',
+		icon: '/assets/icons/jar.svg',
+	},
+]
+
 export const patientConsultationMenuItems = [
 	{
 		title: 'Health History',
@@ -55,27 +113,27 @@ export const patientConsultationMenuItems = [
 				child: [
 					{
 						title: 'Questionnaire',
-						url: '',
+						url: '/dashboard/patient/consultation/questionnaire',
 						icon: 'bi bi-house-door',
 					},
 					{
 						title: 'Diagnosis',
-						url: '',
+						url: '/dashboard/patient/consultation/diagnosis',
 						icon: 'bi bi-house-door',
 					},
 					{
 						title: 'Treatment Options',
-						url: '',
+						url: '/+',
 						icon: 'bi bi-house-door',
 					},
 					{
 						title: 'Fee Estimate',
-						url: '',
+						url: '/+',
 						icon: 'bi bi-house-door',
 					},
 					{
 						title: 'Payment Options',
-						url: '',
+						url: '/+',
 						icon: 'bi bi-house-door',
 					}
 				]
@@ -87,27 +145,12 @@ export const patientConsultationMenuItems = [
 				child: [
 					{
 						title: 'Questionnaire',
-						url: '',
+						url: '/+',
 						icon: 'bi bi-house-door',
 					},
 					{
 						title: 'Diagnosis',
-						url: '',
-						icon: 'bi bi-house-door',
-					},
-					{
-						title: 'Treatment Options',
-						url: '',
-						icon: 'bi bi-house-door',
-					},
-					{
-						title: 'Fee Estimate',
-						url: '',
-						icon: 'bi bi-house-door',
-					},
-					{
-						title: 'Payment Options',
-						url: '',
+						url: '/+',
 						icon: 'bi bi-house-door',
 					}
 				]
@@ -119,27 +162,17 @@ export const patientConsultationMenuItems = [
 				child: [
 					{
 						title: 'Questionnaire',
-						url: '',
+						url: '/+',
 						icon: 'bi bi-house-door',
 					},
 					{
 						title: 'Diagnosis',
-						url: '',
+						url: '/+',
 						icon: 'bi bi-house-door',
 					},
 					{
 						title: 'Treatment Options',
-						url: '',
-						icon: 'bi bi-house-door',
-					},
-					{
-						title: 'Fee Estimate',
-						url: '',
-						icon: 'bi bi-house-door',
-					},
-					{
-						title: 'Payment Options',
-						url: '',
+						url: '/+',
 						icon: 'bi bi-house-door',
 					}
 				]
@@ -158,4 +191,100 @@ export const patientConsultationMenuItems = [
 		icon: 'bi bi-house-door',
 		child: []
 	}
+]
+
+export const patientDiagnosisMenuItems = [
+	{
+		title: 'Malocclusion',
+		url: '/dashboard/patient/consultation/diagnosis/malocclusion',
+		icon: '/assets/icons/jar.svg',
+		child: []
+	},
+	{
+		title: 'Overjet',
+		url: '/dashboard/patient/consultation/diagnosis/overjet',
+		icon: '/assets/icons/jar.svg',
+		child: []
+	},
+	{
+		title: 'Overbite',
+		url: '/dashboard/patient/consultation/diagnosis/overbite',
+		icon: '/assets/icons/jar.svg',
+		child: []
+	},
+	{
+		title: 'Category 1',
+		url: '/dashboard/patient/consultation/diagnosis/category1',
+		icon: '/assets/icons/jar.svg',
+		child: []
+	},
+	{
+		title: 'Category 2',
+		url: '/dashboard/patient/consultation/diagnosis/category2',
+		icon: '/assets/icons/jar.svg',
+		child: []
+	},
+	{
+		title: 'Category 3',
+		url: '/dashboard/patient/consultation/diagnosis/category3',
+		icon: '/assets/icons/jar.svg',
+		child: []
+	},
+	{
+		title: 'Category 4',
+		url: '/dashboard/patient/consultation/diagnosis/category4',
+		icon: '/assets/icons/jar.svg',
+		child: []
+	},
+	{
+		title: 'Category 5',
+		url: '/dashboard/patient/consultation/diagnosis/category5',
+		icon: '/assets/icons/jar.svg',
+		child: []
+	},
+	{
+		title: 'Category 6',
+		url: '/dashboard/patient/consultation/diagnosis/category6',
+		icon: '/assets/icons/jar.svg',
+		child: []
+	},
+]
+
+export const problemListOfDiagnosis = [
+	{
+		title: 'Malocclusion',
+		child: []
+	},
+	{
+		title: 'Overjet',
+		child: []
+	},
+	{
+		title: 'Overbite',
+		child: []
+	},
+	{
+		title: 'Category 1',
+		child: []
+	},
+	{
+		title: 'Category 2',
+		child: []
+	},
+	{
+		title: 'Category 3',
+		child: []
+	},
+	{
+		title: 'Category 4',
+		child: []
+	},
+	{
+		title: 'Category 5',
+		child: []
+	},
+	{
+		title: 'Category 6',
+		child: []
+	},
 ]

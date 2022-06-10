@@ -45,7 +45,7 @@ export class EditBusinessGroupComponent implements OnInit {
             'Success',
             'Business group has been updated successfully'
           );
-          this.router.navigate(['/dashboard/onboarding/business-group']);
+          // this.router.navigate(['/dashboard/onboarding/business-group']);
         },
         error: (err) => {},
       });
