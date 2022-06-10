@@ -20,20 +20,22 @@
 				</div>
 			 </div>
 			 <!-- childs -->
-			 <div *ngFor="let item of menu.child" class="vertical-line-not-active">
-				<div class="step step-active" *ngIf="sessionArray.indexOf(item.title) == -1">
-				   <div>
-				   </div>
-				   <div>
-					  <div class="title" style="margin: 10px 0px 10px 0px;" routerLinkActive="active" [routerLink]="item.url">
-						 {{ item.title }} 
-					  </div>
-				   </div>
+			 <div *ngFor="let item of menu.child" >
+				<div >
+					<div class="step step-active" *ngIf="sessionArray.indexOf(item.title) == -1" [ngClass]="{'vertical-line-not-active-child':visitedPatient.indexOf(item.title) == -1, 'vertical-line-active-child': visitedPatient.indexOf(item.title) != -1}">
+						<div>
+						</div>
+						<div>
+						   <div routerLinkActive="active" [routerLink]="item.url">
+							  {{ item.title }} 
+						   </div>
+						</div>
+					 </div>
 				</div>
 			 </div>
 
 			 <!-- Vetical line to all Checked -->
-			 <div class="vertical-line-not-active" *ngIf="menu.url === router.url &&i < menuItemsOfCordinate!.length - 1&&(menu.title!='Family Members')">
+			 <div class="vertical-line-not-active" *ngIf="menu.url === router.url &&i < menuItemsOfCordinate!.length - 1&& menu.child?.length==0">
 			 </div>
 			 <div  *ngIf="menu.url === router.url &&i < menuItemsOfCordinate!.length - 1&&(menu.title=='Family Members')">
 			</div>
@@ -76,8 +78,9 @@
 				
 				<!-- vertical line to no Activate no Checked -->
 				<div class="vertical-line-not-active" *ngIf="sessionArray.indexOf(menu.title) == -1 
-					 && i < menuItemsOfCordinate!.length - 1">
+					 && i < menuItemsOfCordinate!.length - 1 && menu.child?.length==0">
 				</div>
+				
 			 </ng-template>
 		  </div>
 	   </div>

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LegalGuardianFormModule } from '@modules/forms/add-patient/legal-guardian-form/legal-guardian-form.module';
 import { AdditionalPatientFormComponent } from './additional-patient-form.component';
 
 @NgModule({
@@ -14,7 +15,8 @@ import { AdditionalPatientFormComponent } from './additional-patient-form.compon
     NgbModule,
     NgSelectModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LegalGuardianFormModule
   ],
   exports: [AdditionalPatientFormComponent]
 })

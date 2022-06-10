@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { addPatientCordinateMenuItems } from '@pages/home/add-patient/menu';
+import { AddPatientRoutesService } from '@services/add-patient-routes/add-patient-routes.service';
 
 @Component({
 	selector: 'app-family-members',
@@ -12,12 +13,48 @@ export class FamilyMembersComponent implements OnInit {
 	menuItems: IMenuItem[] = addPatientCordinateMenuItems;
 	provideFamilyMember: boolean = true;
 	whichIsChecked: any = 1;
-	showButtonSaveCancel:boolean = false;
-	openTextAreaVar:boolean = false;
+	showButtonSaveCancel: boolean = false;
+	openTextAreaVar: boolean = false;
+	coordWithProspRoutes: any[] = [];
+	disableYesNo:any = null;
+	disableRadioBTowThree: any[] = [
+		{0:null},
+		{1:null}
+	];
+	errors: any;
+	@ViewChild('radio1') radio1!: ElementRef;
+	@ViewChild('radio2') radio2!: ElementRef;
+	@ViewChild('radio3') radio3!: ElementRef;
 
-	constructor(private router: Router) {}
+	constructor(
+		private router: Router,
+		private addPatientRoutesServ: AddPatientRoutesService
+	) {}
 
 	ngOnInit(): void {
+
+		try {
+		
+		this.addPatientRoutesServ.getPatientsSavedUnsaved().subscribe((resp: any[])=>{
+				
+				if(resp[0].saved===true){
+					this.disableYesNo = "disabled";
+				} else {this.disableYesNo=null};
+
+				for(let i=0; i<resp.length-1; i++){
+					console.log("i", i);
+					
+					if(resp[i+1].saved==true){
+						this.disableRadioBTowThree[i][i] = "disabled";
+					} else this.disableRadioBTowThree[i][i] = null;
+				}
+		  });
+		} catch (err) {
+			this.errors = 'Us a error';
+		  };
+
+		 
+
 		this.whichIsChecked = localStorage.getItem('familyMemberCount');
 		console.log(this.whichIsChecked);
 
@@ -29,14 +66,15 @@ export class FamilyMembersComponent implements OnInit {
 	}
 
 	continueToAppointment() {
-    let visitedArray: any = JSON.parse(localStorage.getItem("visitedArray") || '[]');
-    visitedArray.push("Family Members");
-    localStorage.setItem("visitedArray", JSON.stringify(visitedArray));
-		this.router.navigate(['/dashboard/home/add-patient/coor-with-prospect/family-members/additional-patient-2']);
+		this.coordWithProspRoutes =	this.addPatientRoutesServ.getCoordWithProspRoutes();
+		this.router.navigate([this.coordWithProspRoutes[6].child[0].url]);
 	}
+
 	checkFamilyMemberCount(event: any) {
 		localStorage.setItem('familyMemberCount', event.target.value);
+		this.addPatientRoutesServ.setTaken(localStorage.getItem('familyMemberCount'));
 	}
+
 	changeProvideFM(event: any) {
 		console.log(event.target.value);
 
@@ -49,17 +87,38 @@ export class FamilyMembersComponent implements OnInit {
 			localStorage.setItem('familyMemberCount', '0');
 		}
 	}
-	showButtonSaveCancelFunc(){
+
+	showButtonSaveCancelFunc() {
 		this.showButtonSaveCancel = true;
-	  }
-	
-	  closeSaveCancelFunc(){
+	}
+
+	closeSaveCancelFunc() {
 		this.openTextAreaVar = false;
 		this.showButtonSaveCancel = false;
-	  }
-	
-	  openTextarea(){
+	}
+
+	openTextarea() {
 		this.openTextAreaVar = true;
 		this.showButtonSaveCancel = true;
-	  }
+	}
+
+	uncheck(event: any){
+		let index = event.target.value;
+		let familyMemberCount = parseInt(localStorage.getItem('familyMemberCount') || "0");
+		console.log("familyMemberCount", familyMemberCount);
+		
+		if(familyMemberCount==2&&index==2){
+			this.radio1.nativeElement.checked=true;
+		
+			this.whichIsChecked = 1;
+			localStorage.setItem('familyMemberCount', '1');
+			this.addPatientRoutesServ.setTaken(localStorage.getItem('familyMemberCount'));
+		} else if(familyMemberCount==3&&index==3){
+			this.radio2.nativeElement.checked=true;
+		
+			this.whichIsChecked = 2;
+			localStorage.setItem('familyMemberCount', '2');
+			this.addPatientRoutesServ.setTaken(localStorage.getItem('familyMemberCount'));
+		}
+	}
 }

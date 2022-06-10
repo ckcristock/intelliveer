@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AddPatientRoutesService } from "@services/add-patient-routes/add-patient-routes.service";
 
 @Component({
   selector: 'app-additional-patient-form',
@@ -12,36 +13,55 @@ export class AdditionalPatientFormComponent implements OnInit {
   familyMemberCount:any = 2;
   checkInsuranceCount: number = 1;
   provideInsurance :boolean = true;
+  coordWithProspRoutes:any[]=[];
+  title: string = "";
+  showButtonSaveCancel:boolean = false;
+  openTextAreaVar:boolean = false;
 
-  constructor(private router:Router) { }
+  constructor(
+    private router:Router,
+    private addPatientRoutesServ: AddPatientRoutesService) { }
 
   ngOnInit(): void {
+    this.title= `Patient ${this.patientPage}`;
   }
 
   moveToAnotherTab(){
     this.familyMemberCount = localStorage.getItem('familyMemberCount');
     this.familyMemberCount = parseInt(this.familyMemberCount);
-    console.log("Hiiiiii");
-    console.log("this.patientPage", this.patientPage);
-    console.log("this.familyMemberCount", this.familyMemberCount);
-    
-    
-    if (this.patientPage==2 && this.familyMemberCount===1){
-      this.router.navigate(['/dashboard/home/add-patient/coor-with-prospect/appointment']);
-    } else if(this.patientPage==2){
-      console.log( this.familyMemberCount);
-      this.router.navigate(['/dashboard/home/add-patient/coor-with-prospect/family-members/additional-patient-'+3]);
-    } else if (this.patientPage==3 && this.familyMemberCount===2){
-      this.router.navigate(['/dashboard/home/add-patient/coor-with-prospect/appointment']);
-    } else if (this.patientPage==3){
-      this.router.navigate(['/dashboard/home/add-patient/coor-with-prospect/family-members/additional-patient-'+4]);
-    } else if (this.patientPage==4){
-      this.router.navigate(['/dashboard/home/add-patient/coor-with-prospect/appointment']);
-    } else {
-      this.router.navigate(['/dashboard/home/add-patient/coor-with-prospect/appointment']);
+    this.coordWithProspRoutes = this.addPatientRoutesServ.getCoordWithProspRoutes();
+
+   
+    if (this.patientPage==4){
+      this.addPatientRoutesServ.setPatientSaved(2);
+      this.router.navigate([this.coordWithProspRoutes[7].url]);
+      
+      return;
     }
-    
-    //this.router.navigate(['/dashboard/home/add-patient/coor-with-prospect/family-member/additional-patient/'+2]);
+
+    for(let i=1;i<=this.familyMemberCount;i++){
+      if (this.patientPage==(i+1) && this.familyMemberCount===i){
+        this.addPatientRoutesServ.setPatientSaved(i-1);
+        this.router.navigate([this.coordWithProspRoutes[7].url]);
+      } else if(this.patientPage==(i+1)){
+        this.addPatientRoutesServ.setPatientSaved(i-1);
+        this.router.navigate([this.coordWithProspRoutes[6].child[i].url]);
+
+      }
+    }
   }
 
+  showButtonSaveCancelFunc(){
+    this.showButtonSaveCancel = true;
+  }
+
+  closeSaveCancelFunc(){
+    this.openTextAreaVar = false;
+    this.showButtonSaveCancel = false;
+  }
+
+  openTextarea(){
+    this.openTextAreaVar = true;
+    this.showButtonSaveCancel = true;
+  }
 }
