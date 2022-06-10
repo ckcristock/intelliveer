@@ -1,7 +1,7 @@
 <form autocomplete="off" >
     <div  class="mainformsection scroll" >
         <div class="two-items">
-            <h6 class="heading" style="font-weight: bolder; font-size: 14px; margin-bottom: 15px;">{{ title }}</h6>
+            <h6 class="heading title">{{ title }}</h6>
             <a class="heading a-link" *ngIf="showButtonSaveCancel==false" (click)="openTextarea()">Add Script</a>
             <div class="two-little-button" *ngIf="showButtonSaveCancel==true" >
                 <a class="heading a-link" (click)="closeSaveCancelFunc()">Save Script</a>
@@ -17,21 +17,30 @@
                     ></textarea
                     >
         </div>
-        <div class="row">
+        <div class="row" style="margin-bottom: 32px;">
             <!-- patient-textbox-button -->
             <div class="col-6">
                 <div class="mainformset">
-                    <label class="required pb-1"
+                    <label class="required pb-1 input-button-label"
                         >Please search first If not found, create a
                         new one</label
                     >
                     <div class="input-button">
-                        <input
-                            class="form-control"
-                            type="text"
-                            placeholder="Type Name"
-                            name=""
-                        />
+                        <div class="input-group" style="background-color: white;">
+                            <span
+                                class="input-group-text border-0 bg-transparent"
+                                id="basic-addon1"
+                            >
+                                <i class="bi bi-search"></i>
+                            </span>
+                            <input
+                                type="text"
+                                class="form-control border-0"
+                                placeholder="Search"
+                                aria-describedby="basic-addon1"
+                                style="height: 100%;"
+                            />
+                        </div>
                         <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
                     </div>
                 </div>
@@ -83,14 +92,17 @@
                 </ng-select>
             </div>
         </div>
+
+        <!-- legal Guardian -->
         <div class="row">
             <!-- legal Guardian radios-->
             <div class="mainformset">
-                <h6 class="heading" style="font-weight: bolder; margin-top: 20px;">Legal Guardian</h6>
+                <h6 class="heading subti-radio-b">Legal Guardian</h6>
                 <div
-                    class="btn-group"
+                    class="btn-group radios"
                     role="group"
                     aria-label="Basic radio toggle button group"
+                    style="margin-bottom: 0px;"
                 >
 
                 <div class="subscriber-divs">
@@ -135,187 +147,18 @@
             </div>
         </div>
         <br />
+        
         <div class="row">
-            <!-- legal Guardian textbox and button -->
-            <div class="col-6">
-                <div class="mainformset">
-                    <label class="required pb-1"
-                        >Please search first If not found, create a
-                        new one</label
-                    >
-                    <div class="input-button">
-                        <input
-                            class="form-control"
-                            type="text"
-                            placeholder="Type Name"
-                            name=""
-                        />
-                        <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
-                    </div>
-                </div>
-            </div>
+            <app-legal-guardian-form
+        [tab]="'addPatient'"></app-legal-guardian-form>
         </div>
-        <div>
-            <!-- Legal Guardian textboxes-->
-            <div class="row">
-                <div class="col-4">
-                    <div class="mainformset">
-                        <label class="required pb-1"
-                            >Relationship to patient?</label
-                        >
-                        <input
-                            class="form-control"
-                            type="text"
-                            placeholder=""
-                            name=""
-                        />
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="mainformset">
-                        <label class="required pb-1"
-                            >What is First Name of the Legal
-                            Guardian?</label
-                        >
-                        <input
-                            class="form-control value-must"
-                            type="text"
-                            placeholder=""
-                            name=""
-                        />
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="mainformset">
-                        <label class="required pb-1"
-                            >Last Name</label
-                        >
-                        <input
-                            class="form-control value-must"
-                            type="text"
-                            placeholder=""
-                            name=""
-                        />
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="mainformset">
-                        <label class="required pb-1"
-                            >Address Line 1</label
-                        >
-                        <input
-                            class="form-control"
-                            type="text"
-                            placeholder="Street address, P.O.box"
-                            name=""
-                        />
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="mainformset">
-                        <label class="required pb-1"
-                            >Address Line 2</label
-                        >
-                        <input
-                            class="form-control"
-                            type="text"
-                            placeholder="Apartment, Suite, Unit, Building, Floor, etc."
-                            name=""
-                        />
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-3">
-                    <div class="mainformset">
-                        <label class="required pb-1"
-                            >Zip Code</label
-                        >
-                        <input
-                            class="form-control"
-                            type="text"
-                            placeholder=""
-                            name=""
-                        />
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="mainformset">
-                        <label class="required pb-1">City</label>
-                        <input
-                            class="form-control"
-                            type="text"
-                            placeholder=""
-                            name=""
-                        />
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="mainformset">
-                        <label class="required pb-1">State</label>
-                        <input
-                            class="form-control"
-                            type="text"
-                            placeholder=""
-                            name=""
-                        />
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="mainformset">
-                        <label class="required pb-1">Country</label>
-                        <input
-                            class="form-control"
-                            type="text"
-                            placeholder=""
-                            name=""
-                        />
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-3">
-                    <div class="mainformset">
-                        <label class="required pb-1"
-                            >Primary Phone Number</label
-                        >
-                        <input
-                            class="form-control"
-                            type="text"
-                            placeholder=""
-                            name=""
-                        />
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="mainformset">
-                        <label class="required">Type</label>
-                        <ng-select placeholder="Select">
-                            <ng-option>Select</ng-option>
-                        </ng-select>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="mainformset">
-                        <label class="required pb-1">Email</label>
-                        <input
-                            class="form-control"
-                            type="text"
-                            placeholder=""
-                            name=""
-                        />
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div class="row">
             <!-- Dentist radios-->
             <div class="mainformset">
-                <h6 class="heading" style="font-weight: bolder; margin-top: 20px;">Dentist</h6>
+                <h6 class="heading subti-radio-b">Dentist</h6>
                 <div
-                    class="btn-group"
+                    class="btn-group radios"
                     role="group"
                     aria-label="Basic radio toggle button group"
                 >
@@ -366,17 +209,26 @@
             <!-- Dentist textbox and button -->
             <div class="col-6">
                 <div class="mainformset">
-                    <label class="required pb-1"
+                    <label class="required pb-1 input-button-label"
                         >Please search first If not found, create a
                         new one</label
                     >
                     <div class="input-button">
-                        <input
-                            class="form-control"
-                            type="text"
-                            placeholder="Type Name"
-                            name=""
-                        />
+                        <div class="input-group" style="background-color: white;">
+                            <span
+                                class="input-group-text border-0 bg-transparent"
+                                id="basic-addon1"
+                            >
+                                <i class="bi bi-search"></i>
+                            </span>
+                            <input
+                                type="text"
+                                class="form-control border-0"
+                                placeholder="Search"
+                                aria-describedby="basic-addon1"
+                                style="height: 100%;"
+                            />
+                        </div>
                         <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
                     </div>
                 </div>
@@ -438,9 +290,9 @@
         <div class="row">
             <!-- Referrer radios-->
             <div class="mainformset">
-                <h6 class="heading" style="font-weight: bolder; margin-top: 20px;">Referrer</h6>
+                <h6 class="heading subti-radio-b">Referrer</h6>
                 <div
-                    class="btn-group"
+                    class="btn-group radios"
                     role="group"
                     aria-label="Basic radio toggle button group"
                 >
@@ -491,17 +343,26 @@
             <!-- Referrer textbox and button -->
             <div class="col-6">
                 <div class="mainformset">
-                    <label class="required pb-1"
+                    <label class="required pb-1 input-button-label"
                         >Please search first If not found, create a
                         new one</label
                     >
                     <div class="input-button">
-                        <input
-                            class="form-control"
-                            type="text"
-                            placeholder="Type Name"
-                            name=""
-                        />
+                        <div class="input-group" style="background-color: white;">
+                            <span
+                                class="input-group-text border-0 bg-transparent"
+                                id="basic-addon1"
+                            >
+                                <i class="bi bi-search"></i>
+                            </span>
+                            <input
+                                type="text"
+                                class="form-control border-0"
+                                placeholder="Search"
+                                aria-describedby="basic-addon1"
+                                style="height: 100%;"
+                            />
+                        </div>
                         <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
                     </div>
                 </div>
@@ -978,9 +839,9 @@
         <div class="row">
             <!-- Subscriber radios -->
             <div class="mainformset">
-                <h6 class="heading" style="font-weight: bolder;">Subscriber</h6>
+                <h6 class="heading subti-radio-b">Subscriber</h6>
                 <div
-                    class="btn-group"
+                    class="btn-group radios"
                     role="group"
                     aria-label="Basic radio toggle button group"
                 >

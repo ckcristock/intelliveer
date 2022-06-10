@@ -1,21 +1,53 @@
-<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
+<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)" style=" margin-top:0px;">
     <div class="mainformsection">
-        <div class="two-items">
-            <h6 class="heading" style="font-weight: bolder;">Legal Guardian</h6>
-            <a class="heading a-link" *ngIf="showButtonSaveCancel==false" (click)="openTextarea()">Add Script</a>
-            <div class="two-little-button" *ngIf="showButtonSaveCancel==true" >
-                <a class="heading a-link" (click)="closeSaveCancelFunc()">Save Script</a>
-                <a class="heading a-link" (click)="closeSaveCancelFunc()">Cancel</a>
+        <div *ngIf="tab!='addPatient'">
+            <div class="two-items">
+                <h6 class="heading" style="font-weight: bolder;">Legal Guardian</h6>
+                <a class="heading a-link" *ngIf="showButtonSaveCancel==false" (click)="openTextarea()">Add Script</a>
+                <div class="two-little-button" *ngIf="showButtonSaveCancel==true" >
+                    <a class="heading a-link" (click)="closeSaveCancelFunc()">Save Script</a>
+                    <a class="heading a-link" (click)="closeSaveCancelFunc()">Cancel</a>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 11px; margin-bottom: 18px;">
+                <textarea *ngIf="openTextAreaVar==true"
+                            class="form-control"
+                            placeholder="Leave a comment here"
+                            id="floatingTextarea2"
+                            style="height: 98px; padding: 5px 10px 8px 6px; font-size: 12px; line-height : 20px; border: 2px solid #7a7a7c; font-style: oblique; resize: none;"
+                        ></textarea
+                        >
             </div>
         </div>
-        <div class="row" style="margin-top: 11px; margin-bottom: 18px;">
-            <textarea *ngIf="openTextAreaVar==true"
-                        class="form-control"
-                        placeholder="Leave a comment here"
-                        id="floatingTextarea2"
-                        style="height: 98px; padding: 5px 10px 8px 6px; font-size: 12px; line-height : 20px; border: 2px solid #7a7a7c; font-style: oblique; resize: none;"
-                    ></textarea
-                    >
+        <!-- search -->
+        <div class="row" style=" margin-top:0px;">
+            <!-- legal Guardian textbox and button -->
+            <div class="col-6">
+                <div class="mainformset">
+                    <label class="required pb-1 input-button-label"
+                    >Please search first If not found, create a
+                    new one</label
+                >
+                    <div class="input-button">
+                        <div class="input-group" style="background-color: white;">
+                            <span
+                                class="input-group-text border-0 bg-transparent"
+                                id="basic-addon1"
+                            >
+                                <i class="bi bi-search"></i>
+                            </span>
+                            <input
+                                type="text"
+                                class="form-control border-0"
+                                placeholder="Search"
+                                aria-describedby="basic-addon1"
+                                style="height: 100%;"
+                            />
+                        </div>
+                        <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row" style="margin-top: 10px;">
             <div class="col-4">
@@ -162,7 +194,7 @@
                 </div>
             </div>
         </div>
-        <div class="row two-final-buttons">
+        <div  *ngIf="tab!='addPatient'" class="row two-final-buttons">
             <div class="two-items">
                 <button class="btn btn-light btn-light-custom" >Exit</button>
                 <button type="button" class="btn btn-dark btn-dark-custom" (click)="continueToDentist()" [disabled]="Form?.invalid">Save and continue</button>

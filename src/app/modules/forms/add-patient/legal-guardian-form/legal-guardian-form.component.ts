@@ -37,8 +37,7 @@ export class LegalGuardianFormComponent implements OnInit {
       visitedArrayQuick.push("Legal Guardian");
       localStorage.setItem("visitedArrayQuick", JSON.stringify(visitedArrayQuick));
       this.router.navigate([this.menuItemsOfQuickAdd[2].url]);
-    }
-    
+    } 
   }
 
   initForm(data?: any) {

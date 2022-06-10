@@ -1,5 +1,5 @@
 <form autocomplete="off">
-    <div class="mainformsection">
+    <div class="mainformsection scroll">
         <div class="two-items">
             <h6 class="heading" style="font-weight: bolder;">Insurance</h6>
             <a class="heading a-link" *ngIf="showButtonSaveCancel==false" (click)="openTextarea()">Add Script</a>
@@ -8,8 +8,8 @@
                 <a class="heading a-link" (click)="closeSaveCancelFunc()">Cancel</a>
             </div>
         </div>
-        <div class="row" style="margin-top: 11px; margin-bottom: 18px;">
-            <textarea *ngIf="openTextAreaVar==true"
+        <div *ngIf="openTextAreaVar==true" class="row" style="margin: 5px 1px 14px 1px;">
+            <textarea 
                         class="form-control"
                         placeholder="Leave a comment here"
                         id="floatingTextarea2"
@@ -669,6 +669,12 @@
                     <button type="button" class="btn btn-dark btn-dark-custom" *ngIf="active==2  && checkInsuranceCount==2" (click)="continueToFamilyMemb()" >Save and continue</button>
                     <button type="button" class="btn btn-dark btn-dark-custom" *ngIf="active==3" (click)="continueToFamilyMemb()" >Save and continue</button>
                 </div>
+            </div>
+        </div>
+        <div class="two-final-buttons" *ngIf="!provideInsurance">
+            <div class="two-items">
+                <button class="btn btn-light btn-light-custom" >Exit</button>
+                <button type="button" class="btn btn-dark btn-dark-custom" (click)="continueToFamilyMemb()" >Save and continue</button>
             </div>
         </div>
     </div>
