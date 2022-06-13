@@ -17,11 +17,12 @@
                     ></textarea
                     >
         </div>
+
+        <!-- patient-textbox-button -->
         <div class="row" style="margin-bottom: 32px;">
-            <!-- patient-textbox-button -->
             <div class="col-6">
                 <div class="mainformset">
-                    <label class="required pb-1 input-button-label"
+                    <label class="label-input-gap input-button-label"
                         >Please search first If not found, create a
                         new one</label
                     >
@@ -46,11 +47,12 @@
                 </div>
             </div>
         </div>
+
+        <!-- patient-textboxes-->
         <div class="row">
-            <!-- patient-textboxes-->
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="required pb-1"
+                    <label class="label-input-gap"
                         >What is First Name of the Patient?</label
                     >
                     <input
@@ -63,7 +65,7 @@
             </div>
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="required pb-1">Last Name</label>
+                    <label class="label-input-gap">Last Name</label>
                     <input
                         class="form-control"
                         type="text"
@@ -74,7 +76,7 @@
             </div>
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="required pb-1"
+                    <label class="label-input-gap"
                         >Date of Birth?</label
                     >
                     <input
@@ -93,9 +95,8 @@
             </div>
         </div>
 
-        <!-- legal Guardian -->
+        <!-- legal Guardian radios-->
         <div class="row">
-            <!-- legal Guardian radios-->
             <div class="mainformset">
                 <h6 class="heading subti-radio-b">Legal Guardian</h6>
                 <div
@@ -148,13 +149,14 @@
         </div>
         <br />
         
-        <div class="row">
+        <!-- legal TextBoxes Reusable-->
+        <div class="row" style="margin-top: -9px;">
             <app-legal-guardian-form
         [tab]="'addPatient'"></app-legal-guardian-form>
         </div>
 
-        <div class="row">
-            <!-- Dentist radios-->
+        <!-- Dentist radios-->
+        <div class="row" style="margin-bottom: 7px;">
             <div class="mainformset">
                 <h6 class="heading subti-radio-b">Dentist</h6>
                 <div
@@ -204,12 +206,11 @@
                 </div>
             </div>
         </div>
-        <br />
-        <div class="row">
-            <!-- Dentist textbox and button -->
+        <!-- Dentist textbox and button -->
+        <div class="row" style="margin-bottom: 17px;">
             <div class="col-6">
                 <div class="mainformset">
-                    <label class="required pb-1 input-button-label"
+                    <label class="label-input-gap input-button-label"
                         >Please search first If not found, create a
                         new one</label
                     >
@@ -234,11 +235,11 @@
                 </div>
             </div>
         </div>
+        <!-- Dentist textboxes-->
         <div class="row">
-            <!-- Dentist textboxes-->
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="required pb-1"
+                    <label class="label-input-gap"
                         >Dentist’s Office Name</label
                     >
                     <input
@@ -251,7 +252,7 @@
             </div>
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="required pb-1"
+                    <label class="label-input-gap"
                         >Dentist’s First Name</label
                     >
                     <input
@@ -264,7 +265,7 @@
             </div>
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="required pb-1">Last Name</label>
+                    <label class="label-input-gap">Last Name</label>
                     <input
                         class="form-control"
                         type="text"
@@ -275,7 +276,7 @@
             </div>
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="required pb-1"
+                    <label class="label-input-gap"
                         >Office Phone Number</label
                     >
                     <input
@@ -287,8 +288,9 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <!-- Referrer radios-->
+
+        <!-- Referrer radios-->
+        <div class="row" style="margin-bottom: 7px;">
             <div class="mainformset">
                 <h6 class="heading subti-radio-b">Referrer</h6>
                 <div
@@ -338,12 +340,12 @@
                 </div>
             </div>
         </div>
-        <br />
-        <div class="row">
-            <!-- Referrer textbox and button -->
+        
+        <!-- Referrer textbox and button -->
+        <div class="row" style="margin-bottom: 17px;">
             <div class="col-6">
                 <div class="mainformset">
-                    <label class="required pb-1 input-button-label"
+                    <label class="label-input-gap input-button-label"
                         >Please search first If not found, create a
                         new one</label
                     >
@@ -368,11 +370,12 @@
                 </div>
             </div>
         </div>
+
+        <!-- Referrer textboxes-->
         <div class="row">
-            <!-- Referrer textboxes-->
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="required pb-1"
+                    <label class="label-input-gap"
                         >Company Name</label
                     >
                     <input
@@ -385,7 +388,7 @@
             </div>
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="required pb-1">First Name</label>
+                    <label class="label-input-gap">First Name</label>
                     <input
                         class="form-control"
                         type="text"
@@ -396,7 +399,7 @@
             </div>
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="required pb-1">Last Name</label>
+                    <label class="label-input-gap">Last Name</label>
                     <input
                         class="form-control"
                         type="text"
@@ -407,7 +410,7 @@
             </div>
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="required pb-1"
+                    <label class="label-input-gap"
                         >Phone Number</label
                     >
                     <input
@@ -419,12 +422,13 @@
                 </div>
             </div>
         </div>
+
+        <!-- Insurance radios-->
         <div class="row">
-            <!-- Insurance radios-->
             <h6 class="heading" style="font-weight: bolder; margin-top: 20px;">Insurance</h6>
             <div class="col-6">
                 <!-- first radios -->
-                <div class="mainformset">
+                <div class="mainformset" style="margin-top: 6px;">
                     <p class="required">
                         Is there any insurance you would like us to
                         check for “Patient 2 name”?
@@ -466,7 +470,7 @@
             </div>
             <div class="col-6">
                 <!-- second radios -->
-                <div class="mainformset" *ngIf="provideInsurance">
+                <div class="mainformset" *ngIf="provideInsurance" style="margin-top: 6px;">
                     <p class="required">How many?</p>
                     <div
                         class="btn-group"
@@ -519,13 +523,15 @@
                 </div>
             </div>
         </div>
-        <div class="row"  *ngIf="provideInsurance">
-            <!-- Insurance tabs-->
+
+        <hr *ngIf="provideInsurance" style="position: relative; top: 30px; height: 1px;">
+        <!-- Insurance tabs-->
+        <div class="row"  *ngIf="provideInsurance" style="margin-top:-14px;">
             <nav ngbNav #nav4="ngbNav" class="nav-pills">
                 <ng-container ngbNavItem>
-                    <a ngbNavLink *ngIf="checkInsuranceCount == 1 || checkInsuranceCount > 1">Insurance 1</a>
+                    <a ngbNavLink *ngIf="checkInsuranceCount == 1 || checkInsuranceCount > 1" class="tabs">Insurance 1</a>
                     <ng-template ngbNavContent>
-                        <div class="row">
+                        <div class="row" style="margin-top: 22px;">
                             <!-- radios -->
                             <div class="mainformset">
                                 <div
@@ -534,7 +540,7 @@
                                     aria-label="Basic radio toggle button group"
                                 >
 
-                                <div class="subscriber-divs">
+                                <div class="subscriber-divs" >
                                     <input
                                     class="form-check-input"
                                         type="radio"
@@ -547,7 +553,7 @@
                                         >Use existing one</label
                                     >
                                 </div>
-                                <div class="subscriber-divs">
+                                <div class="subscriber-divs" >
                                     <input
                                     class="form-check-input"
                                         type="radio"
@@ -575,11 +581,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" style="margin-top: 5px;">
                             <!-- textbox and button -->
                             <div class="col-6">
                                 <div class="mainformset">
-                                    <label class="required pb-1"
+                                    <label class="label-input-gap"
                                         >Search Insurance</label
                                     >
                                     <div class="input-button">
@@ -594,11 +600,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" style="margin-top: 6px;">
                             <!-- textboxes -->
                             <div class="col-3">
                                 <div class="mainformset">
-                                    <label class="required pb-1"
+                                    <label class="label-input-gap"
                                         >Name of Insurance</label
                                     >
                                     <input
@@ -611,7 +617,7 @@
                             </div>
                             <div class="col-3">
                                 <div class="mainformset">
-                                    <label class="required pb-1"
+                                    <label class="label-input-gap"
                                         >Phone</label
                                     >
                                     <input
@@ -626,9 +632,9 @@
                     </ng-template>
                 </ng-container>
                 <ng-container ngbNavItem>
-                    <a ngbNavLink *ngIf="checkInsuranceCount > 1">Insurance 2</a>
+                    <a ngbNavLink *ngIf="checkInsuranceCount > 1" class="tabs">Insurance 2</a>
                     <ng-template ngbNavContent>
-                        <div class="row">
+                        <div class="row" style="margin-top: 22px;">
                             <!-- radios -->
                             <div class="mainformset">
                                 <div
@@ -637,28 +643,28 @@
                                     aria-label="Basic radio toggle button group"
                                 >
 
-                                <div class="subscriber-divs">
+                                <div class="subscriber-divs" >
                                     <input
                                     class="form-check-input"
                                         type="radio"
-                                        name="insuranRadio2"
-                                        id="insuranRadio21"
+                                        name="insuranRadio1"
+                                        id="insuranRadio11"
                                         autocomplete="off"
                                         checked
                                     />
-                                    <label class="subscriber-labels" for="insuranRadio21"
+                                    <label class="subscriber-labels" for="insuranRadio11"
                                         >Use existing one</label
                                     >
                                 </div>
-                                <div class="subscriber-divs">
+                                <div class="subscriber-divs" style="margin-right: 33px !important;;">
                                     <input
                                     class="form-check-input"
                                         type="radio"
-                                        name="insuranRadio2"
-                                        id="insuranRadio22"
+                                        name="insuranRadio1"
+                                        id="insuranRadio12"
                                         autocomplete="off"
                                     />
-                                    <label class="subscriber-labels" for="insuranRadio22"
+                                    <label class="subscriber-labels" for="insuranRadio12"
                                         >Same as patient 1</label
                                     >
                                 </div>
@@ -666,11 +672,11 @@
                                     <input
                                     class="form-check-input"
                                     type="radio"
-                                    name="insuranRadio2"
-                                    id="insuranRadio23"
+                                    name="insuranRadio1"
+                                    id="insuranRadio13"
                                     autocomplete="off"
                                 />
-                                <label class="subscriber-labels" for="insuranRadio23"
+                                <label class="subscriber-labels" for="insuranRadio13"
                                     >Add a new one</label
                                 >
                                 </div>
@@ -678,11 +684,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" style="margin-top: 5px;">
                             <!-- textbox and button -->
                             <div class="col-6">
                                 <div class="mainformset">
-                                    <label class="required pb-1"
+                                    <label class="label-input-gap"
                                         >Search Insurance</label
                                     >
                                     <div class="input-button">
@@ -697,11 +703,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" style="margin-top: 6px;">
                             <!-- textboxes -->
                             <div class="col-3">
                                 <div class="mainformset">
-                                    <label class="required pb-1"
+                                    <label class="label-input-gap"
                                         >Name of Insurance</label
                                     >
                                     <input
@@ -714,7 +720,7 @@
                             </div>
                             <div class="col-3">
                                 <div class="mainformset">
-                                    <label class="required pb-1"
+                                    <label class="label-input-gap"
                                         >Phone</label
                                     >
                                     <input
@@ -729,9 +735,9 @@
                     </ng-template>
                 </ng-container>
                 <ng-container ngbNavItem>
-                    <a ngbNavLink *ngIf="checkInsuranceCount == 3">Insurance 3</a>
+                    <a ngbNavLink *ngIf="checkInsuranceCount == 3" class="tabs">Insurance 3</a>
                     <ng-template ngbNavContent>
-                        <div class="row">
+                        <div class="row" style="margin-top: 22px;">
                             <!-- radios -->
                             <div class="mainformset">
                                 <div
@@ -740,28 +746,28 @@
                                     aria-label="Basic radio toggle button group"
                                 >
 
-                                <div class="subscriber-divs">
+                                <div class="subscriber-divs" style="margin-right: 33px !important;">
                                     <input
                                     class="form-check-input"
                                         type="radio"
-                                        name="insuranRadio3"
-                                        id="insuranRadio31"
+                                        name="insuranRadio1"
+                                        id="insuranRadio11"
                                         autocomplete="off"
                                         checked
                                     />
-                                    <label class="subscriber-labels" for="insuranRadio31"
+                                    <label class="subscriber-labels" for="insuranRadio11"
                                         >Use existing one</label
                                     >
                                 </div>
-                                <div class="subscriber-divs">
+                                <div class="subscriber-divs" style="margin-right: 33px !important;;">
                                     <input
                                     class="form-check-input"
                                         type="radio"
-                                        name="insuranRadio3"
-                                        id="insuranRadio32"
+                                        name="insuranRadio1"
+                                        id="insuranRadio12"
                                         autocomplete="off"
                                     />
-                                    <label class="subscriber-labels" for="insuranRadio32"
+                                    <label class="subscriber-labels" for="insuranRadio12"
                                         >Same as patient 1</label
                                     >
                                 </div>
@@ -769,11 +775,11 @@
                                     <input
                                     class="form-check-input"
                                     type="radio"
-                                    name="insuranRadio3"
-                                    id="insuranRadio33"
+                                    name="insuranRadio1"
+                                    id="insuranRadio13"
                                     autocomplete="off"
                                 />
-                                <label class="subscriber-labels" for="insuranRadio33"
+                                <label class="subscriber-labels" for="insuranRadio13"
                                     >Add a new one</label
                                 >
                                 </div>
@@ -781,11 +787,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" style="margin-top: 5px;">
                             <!-- textbox and button -->
                             <div class="col-6">
                                 <div class="mainformset">
-                                    <label class="required pb-1"
+                                    <label class="label-input-gap"
                                         >Search Insurance</label
                                     >
                                     <div class="input-button">
@@ -800,11 +806,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" style="margin-top: 6px;">
                             <!-- textboxes -->
                             <div class="col-3">
                                 <div class="mainformset">
-                                    <label class="required pb-1"
+                                    <label class="label-input-gap"
                                         >Name of Insurance</label
                                     >
                                     <input
@@ -817,7 +823,7 @@
                             </div>
                             <div class="col-3">
                                 <div class="mainformset">
-                                    <label class="required pb-1"
+                                    <label class="label-input-gap"
                                         >Phone</label
                                     >
                                     <input
@@ -835,15 +841,16 @@
 
             <div [ngbNavOutlet]="nav4" class="mt-2"></div>
         </div>
-        <br />
+        
+        <!-- Subscriber radios -->
         <div class="row">
-            <!-- Subscriber radios -->
             <div class="mainformset">
                 <h6 class="heading subti-radio-b">Subscriber</h6>
                 <div
                     class="btn-group radios"
                     role="group"
                     aria-label="Basic radio toggle button group"
+                    style="margin-top: -2px;"
                 >
                 <div class="subscriber-divs">
                     <input
@@ -882,7 +889,6 @@
                         >Same as legal guardian</label
                     >
                 </div>
-
                 <div class="subscriber-divs">
                     <input
                     class="form-check-input"
@@ -895,15 +901,15 @@
                         >Add a new one</label
                     >
                 </div>
-
                 </div>
             </div>
         </div>
-        <div class="row">
-            <!-- Subscriber textbox and button -->
+
+        <!-- Subscriber textbox and button -->
+        <div class="row"  style="margin-top: 3px;">
             <div class="col-6">
                 <div class="mainformset">
-                    <label class="required pb-1"
+                    <label class="label-input-gap"
                         >Search Subscriber</label
                     >
                     <div class="input-button">
@@ -918,8 +924,9 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <!-- Subscriber textboxes-->
+
+        <!-- Subscriber textboxes-->
+        <div class="row" style="margin-top: 5px;">
             <div class="twenty">
                 <div class="mainformset">
                     <label class="required"
@@ -936,7 +943,7 @@
             </div>
             <div class="twenty">
                 <div class="mainformset">
-                    <label class="required pb-1"
+                    <label class="label-input-gap"
                         >Subscriber’s Last Name</label
                     >
                     <input
@@ -949,7 +956,7 @@
             </div>
             <div class="twenty">
                 <div class="mainformset">
-                    <label class="required pb-1"
+                    <label class="label-input-gap"
                         >Relationship</label
                     >
                     <ng-select placeholder="Select">
@@ -959,7 +966,7 @@
             </div>
             <div class="twenty">
                 <div class="mainformset">
-                    <label class="required pb-1">DOB</label>
+                    <label class="label-input-gap">DOB</label>
                     <input
                         class="form-control"
                         type="text"
@@ -980,8 +987,9 @@
                 </div>
             </div>
         </div>
-        <div class="two-final-buttons">
-            <!-- Buttons -->
+
+        <!-- Final Buttons -->
+        <div class="two-final-buttons" style="margin-top: 57px!important;">
             <div class="two-items">
                 <button class="btn btn-light btn-light-custom">Exit</button>
                 <button type="button" class="btn btn-dark btn-dark-custom" (click)="moveToAnotherTab()">Save and continue</button>

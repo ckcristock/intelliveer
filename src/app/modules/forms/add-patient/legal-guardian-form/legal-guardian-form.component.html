@@ -20,11 +20,11 @@
             </div>
         </div>
         <!-- search -->
-        <div class="row" style=" margin-top:0px;">
+        <div class="row" style=" margin-top:-15px;">
             <!-- legal Guardian textbox and button -->
             <div class="col-6">
                 <div class="mainformset">
-                    <label class="required pb-1 input-button-label"
+                    <label class="label-input-gap input-button-label"
                     >Please search first If not found, create a
                     new one</label
                 >
@@ -49,10 +49,10 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top: 10px;">
+        <div class="row" style="margin-top: 17px;">
             <div class="col-4">
                 <div class="mainformset">
-                    <label class="required">Relationship to patient?</label>
+                    <label class="label-input-gap">Relationship to patient?</label>
                     <ng-select placeholder="Select">
                         <ng-option>Select</ng-option>
                     </ng-select>
@@ -60,7 +60,7 @@
             </div>
             <div class="col-4">
                 <div class="mainformset">
-                    <label class="required pb-1"
+                    <label class=" label-input-gap"
                         >What is First Name of the Legal
                         Guardian?</label
                     >
@@ -75,7 +75,7 @@
             </div>
             <div class="col-4">
                 <div class="mainformset">
-                    <label class="required pb-1">Last Name</label>
+                    <label class=" label-input-gap">Last Name</label>
                     <input
                         class="form-control value-must"
                         type="text"
@@ -86,10 +86,10 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="margin-top:4px;">
             <div class="col-6">
                 <div class="mainformset">
-                    <label class="required pb-1"
+                    <label class=" label-input-gap"
                         >Address Line 1</label
                     >
                     <input
@@ -102,7 +102,7 @@
             </div>
             <div class="col-6">
                 <div class="mainformset">
-                    <label class="required pb-1"
+                    <label class=" label-input-gap"
                         >Address Line 2</label
                     >
                     <input
@@ -114,10 +114,10 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="margin-top:5px;">
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="required pb-1">Zip Code</label>
+                    <label class="label-input-gap">Zip Code</label>
                     <input
                         class="form-control"
                         type="text"
@@ -128,7 +128,7 @@
             </div>
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="required pb-1">City</label>
+                    <label class="label-input-gap">City</label>
                     <input
                         class="form-control"
                         type="text"
@@ -139,7 +139,7 @@
             </div>
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="required pb-1">State</label>
+                    <label class=" label-input-gap">State</label>
                     <input
                         class="form-control"
                         type="text"
@@ -150,7 +150,7 @@
             </div>
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="required pb-1">Country</label>
+                    <label class=" label-input-gap">Country</label>
                     <input
                         class="form-control"
                         type="text"
@@ -160,10 +160,10 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="margin-top:5px;">
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="required pb-1"
+                    <label class=" label-input-gap"
                         >Primary Phone Number</label
                     >
                     <input
@@ -176,15 +176,15 @@
             </div>
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="required">Type</label>
-                    <ng-select placeholder="Select">
+                    <label class="label-input-gap">Type</label>
+                    <ng-select placeholder="Select" >
                         <ng-option>Select</ng-option>
                     </ng-select>
                 </div>
             </div>
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="required pb-1">Email</label>
+                    <label class=" label-input-gap">Email</label>
                     <input
                         class="form-control"
                         type="text"
@@ -194,7 +194,7 @@
                 </div>
             </div>
         </div>
-        <div  *ngIf="tab!='addPatient'" class="row two-final-buttons">
+        <div  *ngIf="tab!='addPatient'" class="row two-final-buttons" >
             <div class="two-items">
                 <button class="btn btn-light btn-light-custom" >Exit</button>
                 <button type="button" class="btn btn-dark btn-dark-custom" (click)="continueToDentist()" [disabled]="Form?.invalid">Save and continue</button>
