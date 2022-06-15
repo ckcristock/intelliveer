@@ -1,0 +1,22 @@
+<div class="container">
+    <h6 class="heading">{{title | titlecase}}</h6>
+    <hr />
+    <div class="scroll">
+        <div class="row" *ngFor="let overjet of overjetLst; let i = index;">
+            <div class="col">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="{{overjet.title}}"
+                        id="flexCheckDefault{{i}}" (change)="selectOption($event, overjet)"/>
+                    <label class="form-check-label" for="flexCheckDefault{{i}}">
+                        {{overjet.title}}
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row gap-3">
+        <div class="col p-2">
+            <button class="btn btn-dark" (click)="moveToNext()">Next</button>
+        </div>
+    </div>
+</div>

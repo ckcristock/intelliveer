@@ -1,0 +1,22 @@
+<div class="container">
+    <h6 class="heading">{{title | titlecase}}</h6>
+    <hr />
+    <div class="scroll">
+        <div class="row" *ngFor="let category3 of category3Lst; let i = index;">
+            <div class="col">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="{{category3.title}}"
+                        id="flexCheckDefault{{i}}" (change)="selectOption($event, category3)"/>
+                    <label class="form-check-label" for="flexCheckDefault{{i}}">
+                        {{category3.title}}
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row gap-3">
+        <div class="col p-2">
+            <button class="btn btn-dark" (click)="moveToNext()">Next</button>
+        </div>
+    </div>
+</div>

@@ -35,7 +35,7 @@ interface MenuItems {
 	],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-	compactSidebar: boolean = false;
+	compactSidebar: boolean = true;
 	selectedBusinessGroup: string | undefined;
 	businessGroupDropdownSupscription: Subscription;
 	menuStatsSubscription: Subscription;

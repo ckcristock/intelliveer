@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
+import { IMenuItem } from '@pages/dashboard/menu';
+import { patientUserHeaderIconMenuItems } from './menu';
 
 @Component({
   selector: 'app-patient',
@@ -8,6 +10,8 @@ import { GlobalRoutesService } from '@services/global-routes/global-routes.servi
   styleUrls: ['./patient.component.scss']
 })
 export class PatientComponent implements OnInit {
+
+  menuItems: IMenuItem[] = patientUserHeaderIconMenuItems;
 
   navbarOpen = false;
   navbarNumb = 1;
