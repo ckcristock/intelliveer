@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertService } from '@services/alert/alert.service';
 import { BusinessGroupDropdownService } from '@services/business-group-dropdown/business-group-dropdown.service';
 import { BusinessGroupService } from '@services/onboarding/business-group/business-group.service';
 
@@ -16,7 +17,8 @@ export class BusinessGroupComponent implements OnInit {
   constructor(
     private router: Router,
     private businessGroupDropdownService: BusinessGroupDropdownService,
-    private businessGroupService: BusinessGroupService
+    private businessGroupService: BusinessGroupService,
+    private alertService: AlertService
   ) {}
   ngOnDestroy(): void {}
   ngOnInit() {
@@ -32,13 +34,19 @@ export class BusinessGroupComponent implements OnInit {
   }
   deleteBG(id: string) {
     if (id) {
-      this.businessGroupService.deleteBusinessGroup(id).subscribe({
-        next: (data) => {
-          this.businessGroupDropdownService.reload();
-          this.fetchBgList();
-        },
-        error: () => {},
+      this.alertService.conformAlert('Are you sure?', 'You want to delete')
+      .then((result) => {
+        if (result.value) {
+          this.businessGroupService.deleteBusinessGroup(id).subscribe({
+            next: (data) => {
+              this.businessGroupDropdownService.reload();
+              this.fetchBgList();
+            },
+            error: () => {},
+          });
+        }
       });
+      
     }
   }
   navigateTo(bg: string, module: string) {

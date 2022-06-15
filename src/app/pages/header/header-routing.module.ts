@@ -10,8 +10,8 @@ const routes: Routes = [
       {
         path: 'add-patient',
         loadChildren: () =>
-          import('@pages/header/quick-add-patient/quick-add-patient.module').then(
-            (m) => m.QuickAddPatientModule
+          import('@pages/header/add-patient/add-patient.module').then(
+            (m) => m.AddPatientModule
           ),
       },
     ],

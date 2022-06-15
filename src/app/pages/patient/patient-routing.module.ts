@@ -27,6 +27,14 @@ const routes: Routes = [
               (m) => m.InsuranceModule
             ),
       },
+      {
+        path: 'consultation',
+        loadChildren: () =>
+          import(
+            '@pages/patient/consultation/consultation.module').then(
+              (m) => m.ConsultationModule
+            ),
+      },
     ],
   },
 ];

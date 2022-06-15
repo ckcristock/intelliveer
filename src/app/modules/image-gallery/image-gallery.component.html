@@ -1,0 +1,31 @@
+<div class="transparent-box" [ngStyle]="{ 'width': width, 'heigth': heigth }">
+    <div class="container">
+        <div class="row">
+            <div class="col" align="end" (click)="hideImageGallery()">
+                <i class="bi bi-x-lg" style="font-size: x-large; color: white;"></i>
+            </div>
+        </div>
+        <div class="modal-body">
+            <ngb-carousel #ngcarousel [showNavigationArrows]="true">
+                <ng-template ngbSlide *ngFor="let image of galleryImagesList;">
+                    <div class="picsum-img-wrapper">
+                        <img src="{{image.imageUrl}}" alt="{{image.title}}">
+                    </div>
+                    <div class="carousel-caption">
+                        <h3>{{image.title}}</h3>
+                    </div>
+                </ng-template>
+            </ngb-carousel>
+        </div>
+        <!-- <div class="model-footer">
+            <button (click)="increase()">Increase</button>
+            <button (click)="decrease()">Decrease</button>
+        </div> -->
+    </div>
+    <div class="row">
+        <div class="col" (mousedown)="dragToDown($event)">
+            <i class="bi bi-filter" style="font-size: x-large; color: white;"></i>
+        </div>
+    </div>
+</div>
+
