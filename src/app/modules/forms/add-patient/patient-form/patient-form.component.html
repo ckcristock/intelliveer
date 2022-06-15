@@ -9,8 +9,7 @@
             </div>
         </div>
 
-        <div class="formrow">
-            <div class="row" style="margin-top: 11px; margin-bottom: 18px;">
+            <div class="row" style="margin-top: -4px; margin-bottom: 18px;">
                 <textarea *ngIf="openTextAreaVar==true"
                             class="form-control"
                             placeholder="Leave a comment here"
@@ -22,7 +21,7 @@
             <div class="row" style="margin-top: 10px;">
                 <div class="twenty">
                     <div class="mainformset">
-                        <label class="required">Practice</label>
+                        <label class="label-input-gap">Practice</label>
                         <ng-select placeholder="Select" formControlName="practice">
                             <ng-option>Select</ng-option>
                         </ng-select>
@@ -30,7 +29,7 @@
                 </div>
                 <div class="twenty">
                     <div class="mainformset">
-                        <label class="required pb-1"
+                        <label class="label-input-gap"
                             >Patient's First Name</label
                         >
                         <input
@@ -44,7 +43,7 @@
                 </div>
                 <div class="twenty">
                     <div class="mainformset">
-                        <label class="required pb-1"
+                        <label class="label-input-gap"
                             >Last Name</label
                         >
                         <input
@@ -58,7 +57,7 @@
                 </div>
                 <div class="twenty">
                     <div class="mainformset">
-                        <label class="required pb-1"
+                        <label class="label-input-gap"
                             >Date of Birth</label
                         >
                         <input
@@ -80,12 +79,11 @@
                     </div>
                 </div>
             </div>
-            <div class="row two-final-buttons">
+            <div class="row two-final-buttons" >
                 <div class="two-items">
                     <button  class="btn btn-light btn-light-custom" >Exit</button>
                     <button type="button" class="btn btn-dark btn-dark-custom" (click)="continueToLegalGuar()"  [disabled]="Form?.invalid">Save and continue</button>
                 </div>
             </div>
         </div>
-    </div>
 </form>
