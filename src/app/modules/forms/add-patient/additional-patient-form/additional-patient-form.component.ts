@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AddPatientRoutesService } from "@services/add-patient-routes/add-patient-routes.service";
+import { AddPatientService } from "@services/add-patient/add-patient.service";
+import { GlobalRoutesService } from "@services/global-routes/global-routes.service";
 
 @Component({
   selector: 'app-additional-patient-form',
@@ -20,7 +21,8 @@ export class AdditionalPatientFormComponent implements OnInit {
 
   constructor(
     private router:Router,
-    private addPatientRoutesServ: AddPatientRoutesService) { }
+    private routes: GlobalRoutesService,
+    private AddPatientService: AddPatientService) { }
 
   ngOnInit(): void {
     this.title= `Patient ${this.patientPage}`;
@@ -29,11 +31,11 @@ export class AdditionalPatientFormComponent implements OnInit {
   moveToAnotherTab(){
     this.familyMemberCount = localStorage.getItem('familyMemberCount');
     this.familyMemberCount = parseInt(this.familyMemberCount);
-    this.coordWithProspRoutes = this.addPatientRoutesServ.getCoordWithProspRoutes();
+    this.coordWithProspRoutes = this.routes.getCoordWithProspRoutes();
 
    
     if (this.patientPage==4){
-      this.addPatientRoutesServ.setPatientSaved(2);
+      this.AddPatientService.setPatientSaved(2);
       this.router.navigate([this.coordWithProspRoutes[7].url]);
       
       return;
@@ -41,10 +43,10 @@ export class AdditionalPatientFormComponent implements OnInit {
 
     for(let i=1;i<=this.familyMemberCount;i++){
       if (this.patientPage==(i+1) && this.familyMemberCount===i){
-        this.addPatientRoutesServ.setPatientSaved(i-1);
+        this.AddPatientService.setPatientSaved(i-1);
         this.router.navigate([this.coordWithProspRoutes[7].url]);
       } else if(this.patientPage==(i+1)){
-        this.addPatientRoutesServ.setPatientSaved(i-1);
+        this.AddPatientService.setPatientSaved(i-1);
         this.router.navigate([this.coordWithProspRoutes[6].child[i].url]);
 
       }

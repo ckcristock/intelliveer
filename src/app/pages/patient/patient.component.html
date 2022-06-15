@@ -1,52 +1,71 @@
-<div class="container content">
+<div class="container content" style="padding-top: 0px; ">
 	<!-- Icons Menu -->
-	<div class="row mini-icon-navbar d-flex justify-content-center mb-3">
-		<ul class="d-flex justify-content-center align-items-center gap-5">
-			<li>
-				<img
-					src="assets/icons/users.svg"
+	<div class="row mini-icon-navbar d-flex justify-content-center align-content-center mb-3" style="margin-top: 0px; border-bottom: 1px solid #d8d9da; height: 90px !important;">
+			<ul class="d-flex justify-content-center align-content-center gap-5">
+				<li>
+					<img
+						src="assets/icons/users.svg"
+						class="icon"
+						alt=""
+						[class.active]="patientUser() === true"
+						[routerLink]="'/dashboard/patient/patient-user/patient-detail'"
+					/>
+				</li>
+				<li>
+					<img src="assets/icons/chat.svg" 
 					alt=""
-					[class.active]="patients() === true"
-					[routerLink]="'/dashboard/patient/patient-user/patient-detail'"
-				/>
-			</li>
-			<li>
-				<img src="assets/icons/chat.svg" alt="" />
-			</li>
-			<li>
-				<img src="assets/icons/paper.svg" alt="" />
-			</li>
-			<li>
-				<img
-					src="assets/icons/teeth.svg"
+					class="icon" />
+				</li>
+				<li>
+					<img src="assets/icons/paper.svg" 
 					alt=""
-					[class.active]="insurances() === true"
-					[routerLink]="'/dashboard/patient/insurance'"
-				/>
-			</li>
-			<li>
-				<img src="assets/icons/folder.svg" alt="" />
-			</li>
-			<li>
-				<img src="assets/icons/camera.svg" alt="" />
-			</li>
-			<li>
-				<img src="assets/icons/image.svg" alt="" />
-			</li>
-			<li>
-				<img src="assets/icons/user_chat.svg" alt="" />
-			</li>
-			<li>
-				<img src="assets/icons/user_card.svg" alt="" />
-			</li>
-			<li>
-				<img src="assets/icons/calendar.svg" alt="" />
-			</li>
-			<li>
-				<img src="assets/icons/jar.svg" alt="" />
-			</li>
-		</ul>
-		<hr />
+					class="icon" />
+				</li>
+				<li>
+					<img
+						src="assets/icons/teeth.svg"
+						alt=""
+						class="icon"
+						[class.active]="insurances() === true"
+						[routerLink]="'/dashboard/patient/insurance'"
+					/>
+				</li>
+				<li>
+					<img src="assets/icons/folder.svg" 
+					alt=""
+					class="icon" />
+				</li>
+				<li>
+					<img src="assets/icons/camera.svg" 
+					alt=""
+					class="icon" />
+				</li>
+				<li>
+					<img src="assets/icons/image.svg" 
+					alt=""
+					class="icon" />
+				</li>
+				<li>
+					<img src="assets/icons/user_chat.svg" 
+					alt=""
+					class="icon" />
+				</li>
+				<li>
+					<img src="assets/icons/user_card.svg" 
+					alt=""
+					class="icon" />
+				</li>
+				<li>
+					<img src="assets/icons/calendar.svg" 
+					alt=""
+					class="icon" />
+				</li>
+				<li>
+					<img src="assets/icons/jar.svg" 
+					alt=""
+					class="icon" />
+				</li>
+			</ul>
 	</div>
 	<div class="row">
 		<!-- Principal Content -->

@@ -91,18 +91,13 @@
 								</div>
 							</div>
 							<div class="col-3">
-								<div class="mainformset">
-									<label class="required"
-										>Calendar Year / Fiscal Year</label
-									>
-									<input
-										class="form-control"
-										type="text"
-										placeholder=""
-										name="DOB"
-										formControlName="DOB"
-									/>
-								</div>
+								<label class="required"
+									>Calendar Year / Fiscal Year</label
+								>
+								<ng-select placeholder="Select">
+									<ng-option>Calendar Year</ng-option>
+									<ng-option>Fiscal Year</ng-option>
+								</ng-select>
 							</div>
 						</div>
 					</div>
@@ -372,7 +367,6 @@
 										placeholder=""
 										name="DOB"
 										formControlName="DOB"
-										disabled
 									/>
 								</div>
 							</div>

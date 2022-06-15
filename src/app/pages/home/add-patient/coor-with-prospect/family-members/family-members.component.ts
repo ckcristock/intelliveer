@@ -2,7 +2,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { addPatientCordinateMenuItems } from '@pages/home/add-patient/menu';
-import { AddPatientRoutesService } from '@services/add-patient-routes/add-patient-routes.service';
+import { AddPatientService } from '@services/add-patient/add-patient.service';
+import { GlobalRoutesService } from "@services/global-routes/global-routes.service";
 
 @Component({
 	selector: 'app-family-members',
@@ -28,14 +29,15 @@ export class FamilyMembersComponent implements OnInit {
 
 	constructor(
 		private router: Router,
-		private addPatientRoutesServ: AddPatientRoutesService
+		private addPatientServ: AddPatientService,
+		private routes: GlobalRoutesService
 	) {}
 
 	ngOnInit(): void {
 
 		try {
 		
-		this.addPatientRoutesServ.getPatientsSavedUnsaved().subscribe((resp: any[])=>{
+		this.addPatientServ.getPatientsSavedUnsaved().subscribe((resp: any[])=>{
 				
 				if(resp[0].saved===true){
 					this.disableYesNo = "disabled";
@@ -53,8 +55,6 @@ export class FamilyMembersComponent implements OnInit {
 			this.errors = 'Us a error';
 		  };
 
-		 
-
 		this.whichIsChecked = localStorage.getItem('familyMemberCount');
 		console.log(this.whichIsChecked);
 
@@ -66,13 +66,13 @@ export class FamilyMembersComponent implements OnInit {
 	}
 
 	continueToAppointment() {
-		this.coordWithProspRoutes =	this.addPatientRoutesServ.getCoordWithProspRoutes();
+		this.coordWithProspRoutes =	this.routes.getCoordWithProspRoutes();
 		this.router.navigate([this.coordWithProspRoutes[6].child[0].url]);
 	}
 
 	checkFamilyMemberCount(event: any) {
 		localStorage.setItem('familyMemberCount', event.target.value);
-		this.addPatientRoutesServ.setTaken(localStorage.getItem('familyMemberCount'));
+		this.addPatientServ.setTaken(localStorage.getItem('familyMemberCount'));
 	}
 
 	changeProvideFM(event: any) {
@@ -105,20 +105,19 @@ export class FamilyMembersComponent implements OnInit {
 	uncheck(event: any){
 		let index = event.target.value;
 		let familyMemberCount = parseInt(localStorage.getItem('familyMemberCount') || "0");
-		console.log("familyMemberCount", familyMemberCount);
 		
 		if(familyMemberCount==2&&index==2){
 			this.radio1.nativeElement.checked=true;
 		
 			this.whichIsChecked = 1;
 			localStorage.setItem('familyMemberCount', '1');
-			this.addPatientRoutesServ.setTaken(localStorage.getItem('familyMemberCount'));
+			this.addPatientServ.setTaken(localStorage.getItem('familyMemberCount'));
 		} else if(familyMemberCount==3&&index==3){
 			this.radio2.nativeElement.checked=true;
 		
 			this.whichIsChecked = 2;
 			localStorage.setItem('familyMemberCount', '2');
-			this.addPatientRoutesServ.setTaken(localStorage.getItem('familyMemberCount'));
+			this.addPatientServ.setTaken(localStorage.getItem('familyMemberCount'));
 		}
 	}
 }

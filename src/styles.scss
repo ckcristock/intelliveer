@@ -484,3 +484,22 @@ form {
     margin-left: 10px; width: 97px; text-align: center; z-index: 10000;
     margin-right: 20px;
   }
+
+  .menu-plus{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+    margin-bottom: 10px;
+  }
+
+  .pluscentered{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+
+  .button-create-new{
+	color: white;
+	background-color: #414042;
+  }

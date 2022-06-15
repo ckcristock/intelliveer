@@ -1,4 +1,4 @@
-<div *ngIf="refererList?.length == 0">
+<div *ngIf="refererList?.length == 0" class="section" style="height: 90%;">
     <div style="text-align: center; padding-top: 7%;">
         <div>
             <h5><b>You haven’t added yet</b></h5>
@@ -48,6 +48,18 @@
 
 <div *ngIf="refererList?.length != 0">
     <div class="container" *ngFor="let referer of refererList; let i = index">
+        <div class="menu-plus" style="width: 101%; margin-left:0px;">
+            <div class="" style="width: 95%; ">
+                <div class="pills menuheight">
+                    <p>&nbsp;</p>
+                </div>
+            </div>
+            <div class="" style="width: 4%;">
+                <button class="btn btn-dark pluscentered">
+                    <i class="bi bi-plus-lg"></i>
+                </button>
+            </div>
+        </div>
         <div class="row section">
             <div class="col-2" (click)="gotoDetails(referer)">
                 <div class="letter">

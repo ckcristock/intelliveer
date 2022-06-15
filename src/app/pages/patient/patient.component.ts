@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IMenuItem } from '@pages/dashboard/menu';
+import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 
 @Component({
   selector: 'app-patient',
@@ -13,7 +13,8 @@ export class PatientComponent implements OnInit {
   navbarNumb = 1;
   // navbarOpen = !navbarOpen;
 
-  constructor(public router: Router) { }
+  constructor(public router: Router,
+    private routes: GlobalRoutesService) { }
 
   ngOnInit(): void {
   }
@@ -26,45 +27,16 @@ export class PatientComponent implements OnInit {
 
   //to to show insurance Dropdown and highlights teeth icon
   insurances() { //missing dropped routes
-    if (this.router.url.includes('/dashboard/patient/insurance/')) {
+    if (this.router.url.includes(this.routes.getPatientInsuranceUrl())) {
       return true;
     } else {
       return false;
     }
   }
 
-  //to show patient Dropdown and highlights patient icon
-  patients() {
-    if (this.router.url === '/dashboard/patient/patient-detail' ||
-      this.router.url === '/dashboard/patient/provider' ||
-      this.router.url === '/dashboard/patient/referer' ||
-      this.router.url === '/dashboard/patient/legal-guardian' ||
-      this.router.url === '/dashboard/patient/payment-party' ||
-      this.router.url === '/dashboard/patient/insurance-subscriber' ||
-      this.router.url === '/dashboard/patient/family_members' ||
-
-      this.router.url === '/dashboard/patient/provider/add' ||
-      this.router.url === '/dashboard/patient/referer/add' ||
-      this.router.url === '/dashboard/patient/legal-guardian/add' ||
-      this.router.url === '/dashboard/patient/payment-party/add' ||
-      this.router.url === '/dashboard/patient/insurance-subscriber/add' ||
-      this.router.url === '/dashboard/patient/family_members/add'
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  //to highlights Active-Section's Title
-  activeSection() {
-    if (
-      this.router.url === '/dashboard/patient/insurance/active' ||
-      this.router.url === '/dashboard/patient/insurance/policy-info' ||
-      this.router.url === '/dashboard/patient/insurance/ortho-benef' ||
-      this.router.url === '/dashboard/patient/insurance/dental-benef' ||
-      this.router.url === '/dashboard/patient/insurance/billing'
-    ) {
+  //to show patientUser Dropdown and highlights patient icon
+  patientUser() {
+    if (this.router.url.includes(this.routes.getPatientUserUrl())) {
       return true;
     } else {
       return false;
