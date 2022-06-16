@@ -453,6 +453,12 @@ form {
 	justify-content: space-around;
 }
 
+.scroll {
+    height: 20rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
 
 
 .form-check-input:checked{

@@ -65,6 +65,7 @@ export class MalocclusionComponent implements OnInit {
     {
       this.problemLst[0].child.push(Obj);
       this.problemListService.problemList = this.problemLst;
+      this.problemListService.toothChartList = Obj;
     }
     else
     {
