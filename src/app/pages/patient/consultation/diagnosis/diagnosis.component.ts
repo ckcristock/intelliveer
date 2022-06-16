@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { problemListOfDiagnosis } from '@pages/patient/menu';
 import { AlertService } from '@services/alert/alert.service';
 import { ConsultationDiagnosisiProblemListService } from '@services/consultation-diagnosisi-problem-list/consultation-diagnosisi-problem-list.service';
 
@@ -11,6 +12,12 @@ import { ConsultationDiagnosisiProblemListService } from '@services/consultation
 export class DiagnosisComponent implements OnInit {
   galleryImagesList: any[] = [];
   showImageGallery: boolean = false;
+  toothChartLstPart1: any[] = [];
+  toothChartLstPart2: any[] = [];
+  toothChartLstPart3: any[] = [];
+  toothChartLstPart4: any[] = [];
+  optionForToothDisplay: any;
+  problemLst: any[] = problemListOfDiagnosis;
 
   constructor(
     public router: Router, 
@@ -20,7 +27,33 @@ export class DiagnosisComponent implements OnInit {
 
   ngOnInit(): void {
     this.problemList;
+    this.toothChartList;
     this.getImageGallery();
+    this.getToothChartList();
+  }
+
+  ngAfterContentChecked(): void
+  {
+    let toothChartObj: any = this.problemListService.toothChartList;
+    if(toothChartObj.length != 0)
+    {
+      if(toothChartObj.id > 0 && toothChartObj.id <= 8)
+      {
+        this.removeTooth(this.toothChartLstPart1.find(obj => obj.title == toothChartObj.id));
+      }
+      else if(toothChartObj.id > 8 && toothChartObj.id <= 16)
+      {
+        this.removeTooth(this.toothChartLstPart2.find(obj => obj.title == toothChartObj.id));
+      }
+      else if(toothChartObj.id > 16 && toothChartObj.id <= 24)
+      {
+        this.removeTooth(this.toothChartLstPart3.find(obj => obj.title == toothChartObj.id));
+      }
+      else
+      {
+        this.removeTooth(this.toothChartLstPart4.find(obj => obj.title == toothChartObj.id));
+      }
+    }
   }
 
   save(data: any) {
@@ -44,6 +77,11 @@ export class DiagnosisComponent implements OnInit {
   get problemList(): any[]
   {
     return this.problemListService.problemList;
+  }
+
+  get toothChartList(): any[]
+  {
+    return this.problemListService.toothChartList;
   }
 
   getImageGallery()
@@ -70,6 +108,64 @@ export class DiagnosisComponent implements OnInit {
         imageUrl: 'https://th.bing.com/th/id/OIP.d87_4pn2Ss8Q41VdSaDz3AHaE8?pid=ImgDet&rs=1'
       }
     ];
+  }
+
+  getToothChartList()
+  {
+    for (let i = 1; i <= 8; i++) {
+      let obj = {
+        title: i,
+        remove: false,
+        show: true
+      }
+      this.toothChartLstPart1.push(obj);      
+    }
+    for (let i = 9; i <= 16; i++) {
+      let obj = {
+        title: i,
+        remove: false,
+        show: true
+      }
+      this.toothChartLstPart2.push(obj);  
+    }
+    for (let i = 24; i >= 17; i--) {
+      let obj = {
+        title: i,
+        remove: false,
+        show: true
+      }
+      this.toothChartLstPart3.push(obj);        
+    }
+    for (let i = 32; i >= 25; i--) {
+      let obj = {
+        title: i,
+        remove: false,
+        show: true
+      }
+      this.toothChartLstPart4.push(obj);       
+    }
+  }
+
+  removeTooth(obj: any)
+  {
+    obj.remove = true;
+  }
+
+  disableTooth(obj: any)
+  {
+    obj.show = false;
+  }
+
+
+  selectToothOption(obj: any, childTitle: any)
+  {
+    let Obj = {
+      title: obj.title + " - " + childTitle,
+      id: obj.title,
+      checked: true
+    }
+    this.problemLst[9].child.push(Obj);
+    this.problemListService.problemList = this.problemLst;
   }
 
 

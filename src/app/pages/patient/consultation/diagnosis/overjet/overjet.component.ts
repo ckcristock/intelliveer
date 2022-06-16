@@ -93,6 +93,7 @@ export class OverjetComponent implements OnInit {
     {
       this.problemLst[1].child.push(Obj);
       this.problemListService.problemList = this.problemLst;
+      this.problemListService.toothChartList = Obj;
     }
     else
     {
