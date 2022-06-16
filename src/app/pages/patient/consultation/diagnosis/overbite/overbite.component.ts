@@ -73,6 +73,7 @@ export class OverbiteComponent implements OnInit {
     {
       this.problemLst[2].child.push(Obj);
       this.problemListService.problemList = this.problemLst;
+      this.problemListService.toothChartList = Obj;
     }
     else
     {

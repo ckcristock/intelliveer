@@ -43,13 +43,14 @@ const routes: Routes = [
               (m) => m.DiagnosisModule
             ),
       },
-			{
-				path: 'provider/edit/:id',
-				loadChildren: () =>
-					import(
-						'@pages/patient/patient-user/provider/edit-provider/edit-provider.module'
-					).then((m) => m.EditProviderModule),
-			},
+      {
+        path: 'treatment',
+        loadChildren: () =>
+          import(
+            '@pages/patient/consultation/treatment/treatment.module').then(
+              (m) => m.TreatmentModule
+            ),
+      },
     ],
   },
 ];
