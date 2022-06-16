@@ -53,7 +53,6 @@ export class Category2Component implements OnInit {
     {
       this.problemLst[4].child.push(Obj);
       this.problemListService.problemList = this.problemLst;
-      this.problemListService.toothChartList = Obj;
     }
     else
     {

@@ -46,8 +46,9 @@
                 <div class="row">
                     <div class="col-5">
                         <p>Please decribe all the concern's you have about patient's teeth</p>
-                        <div class="mb-3">
-                            <textarea class="form-control" placeholder="Leave a comment here" rows="5"></textarea>
+                        <div class="input-group mb-3">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                                style="height: 100px"></textarea>
                         </div>
                     </div>
                     <div class="col-7"></div>
@@ -65,9 +66,8 @@
                 <div class="row">
                     <div class="col-12" *ngFor="let teethTreatment of teethTreatmentList; let i = index;">
                         <div class="form-check">
-                            <input class="form-check-input" type="{{teethTreatment.inputType}}"
-                                id="defaultCheck{{i + 1}}" [checked]="teethTreatmentList[i].checkValue"
-                                (change)="getCheckboxValue($event, i)">
+                            <input class="form-check-input" type="{{teethTreatment.inputType}}" id="defaultCheck{{i + 1}}"
+                                [checked]="teethTreatmentList[i].checkValue" (change)="getCheckboxValue($event, i)">
                             <label class="form-check-label" for="defaultCheck{{i + 1}}">
                                 {{teethTreatment.title}}
                             </label>
@@ -84,8 +84,9 @@
                     </div>
                     <div class="col-5">
                         <p>Other</p>
-                        <div class="mb-3">
-                            <textarea class="form-control" placeholder="Leave a comment here" rows="5" id="otherField"></textarea>
+                        <div class="input-group mb-3">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="otherField"
+                                style="height: 100px"></textarea>
                         </div>
                     </div>
                 </div>
@@ -108,8 +109,9 @@
                     </div>
                     <div class="col-5">
                         <p>Other</p>
-                        <div class="mb-3">
-                            <textarea class="form-control" placeholder="Leave a comment here" rows="5" id="otherField"></textarea>
+                        <div class="input-group mb-3">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="otherField"
+                                style="height: 100px"></textarea>
                         </div>
                     </div>
                 </div>
@@ -132,8 +134,9 @@
                     </div>
                     <div class="col-5">
                         <p *ngIf="showFamilyHistoryInputFeild">Please describe</p>
-                        <div class="mb-3" *ngIf="showFamilyHistoryInputFeild">
-                            <textarea class="form-control" placeholder="Leave a comment here" rows="5" id="floatingTextarea2"></textarea>
+                        <div class="input-group mb-3" *ngIf="showFamilyHistoryInputFeild">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                                style="height: 100px"></textarea>
                         </div>
                     </div>
                     <div class="col-2"></div>

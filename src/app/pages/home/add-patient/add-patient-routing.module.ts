@@ -12,20 +12,20 @@ const routes: Routes = [
 				redirectTo: 'coor-with-prospect',
 				pathMatch: 'full'
 			},
-			// {
-			// 	path: 'coor-with-prospect',
-			// 	loadChildren: () =>
-			// 		import(
-			// 			'@pages/home/add-patient/coor-with-prospect/coor-with-prospect.module'
-			// 		).then((m) => m.CoorWithProspectModule)
-			// },
-			// {
-			// 	path: 'quick-add',
-			// 	loadChildren: () =>
-			// 		import(
-			// 			'@pages/home/add-patient/quick-add/quick-add.module'
-			// 		).then((m) => m.QuickAddModule)
-			// }
+			{
+				path: 'coor-with-prospect',
+				loadChildren: () =>
+					import(
+						'@pages/home/add-patient/coor-with-prospect/coor-with-prospect.module'
+					).then((m) => m.CoorWithProspectModule)
+			},
+			{
+				path: 'quick-add',
+				loadChildren: () =>
+					import(
+						'@pages/home/add-patient/quick-add/quick-add.module'
+					).then((m) => m.QuickAddModule)
+			}
 		]
 	}
 ];

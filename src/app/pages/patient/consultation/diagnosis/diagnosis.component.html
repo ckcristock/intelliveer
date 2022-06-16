@@ -1,14 +1,19 @@
 <div class="container">
-    <app-nav-bar-pills [cancelBtn]="true" [saveBtn]="true" [disableSaveBtn]="false" (onCancel)="cancel()"
-        (onSave)="save($event)"></app-nav-bar-pills>
+    <app-nav-bar-pills
+		[cancelBtn]="true"
+		[saveBtn]="true"
+		[disableSaveBtn]="false"
+        (onCancel)="cancel()"
+		(onSave)="save($event)"
+	></app-nav-bar-pills>
     <div class="row">
         <div class="col-5">
-            <div class="section" style="height: 30rem;">
+            <div class="section" style="height: 40rem;">
                 <router-outlet></router-outlet>
             </div>
         </div>
         <div class="col-5">
-            <div class="section" style="height: 30rem;" *ngIf="!showImageGallery">
+            <div class="section" style="height: 40rem;" *ngIf="!showImageGallery">
                 <div class="container">
                     <h6 class="heading">Problem List</h6>
                     <hr />
@@ -37,8 +42,7 @@
                     </div>
                 </div>
             </div>
-            <app-image-gallery [galleryImagesList]="galleryImagesList" (closeImageGallery)="showImageGallery = false"
-                [width]="'37rem'" [heigth]="'40rem'" *ngIf="showImageGallery"></app-image-gallery>
+            <app-image-gallery [galleryImagesList]="galleryImagesList" (closeImageGallery)="showImageGallery = false" [width]="'37rem'" [heigth]="'40rem'" *ngIf="showImageGallery"></app-image-gallery>
         </div>
         <div class="col-2">
             <h6 class="heading">Gallery</h6>
@@ -48,107 +52,6 @@
                 </div> -->
                 <div class="col-1">
                     <img src="/assets/images/doctor2.jpg" width="50" height="50" (click)="showImageGallery = true" />
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-10">
-            <div class="section">
-                <div class="row">
-                    <div class="col">
-                        <div class="d-flex justify-content-start">
-                            <div *ngFor="let tooth of toothChartLstPart1; let i = index;">
-                                <div ngbDropdown class="d-inline-block">
-                                    <div style="margin: auto;" ngbDropdownToggle id="dropdownBasic1">
-                                        <img src="/assets/images/tooth_svg/{{tooth.title}}.svg" width="50"
-                                            height="50" *ngIf="tooth.show" />
-                                        <div style="width: 4rem; height: 4.2rem;" *ngIf="!tooth.show"></div>
-                                        <div class="imageOver" *ngIf="tooth.remove"><i class="bi bi-x-circle"
-                                                style="color: tomato;"></i></div>
-                                        <p [align]="'center'">{{tooth.title}}</p>
-                                    </div>
-                                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                        <button ngbDropdownItem (click)="selectToothOption(tooth, 'Aligner')">Aligner</button>
-                                        <button ngbDropdownItem (click)="selectToothOption(tooth, 'Braces')">Braces</button>
-                                        <button ngbDropdownItem (click)="removeTooth(tooth)">Remove</button>
-                                        <button ngbDropdownItem (click)="disableTooth(tooth)">Missing Tooth</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="vertical-line-top"></div>
-                    <div class="col">
-                        <div class="d-flex justify-content-start">
-                            <div *ngFor="let tooth of toothChartLstPart2; let i = index;">
-                                <div ngbDropdown class="d-inline-block">
-                                    <div style="margin: auto;" ngbDropdownToggle id="dropdownBasic2">
-                                        <img src="/assets/images/tooth_svg/{{tooth.title}}.svg" width="50"
-                                            height="50" *ngIf="tooth.show" />
-                                        <div style="width: 4rem; height: 4.2rem;" *ngIf="!tooth.show"></div>
-                                        <div class="imageOver" *ngIf="tooth.remove"><i class="bi bi-x-circle"
-                                                style="color: tomato;"></i></div>
-                                        <p [align]="'center'">{{tooth.title}}</p>
-                                    </div>
-                                    <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
-                                        <button ngbDropdownItem (click)="selectToothOption(tooth, 'Aligner')">Aligner</button>
-                                        <button ngbDropdownItem (click)="selectToothOption(tooth, 'Braces')">Braces</button>
-                                        <button ngbDropdownItem (click)="removeTooth(tooth)">Remove</button>
-                                        <button ngbDropdownItem (click)="disableTooth(tooth)">Missing Tooth</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr />
-                <div class="row">
-                    <div class="col">
-                        <div class="d-flex justify-content-start">
-                            <div *ngFor="let tooth of toothChartLstPart4; let i = index;">
-                                <div ngbDropdown class="d-inline-block">
-                                    <div style="margin: auto;" ngbDropdownToggle id="dropdownBasic4">
-                                        <p [align]="'center'">{{tooth.title}}</p>
-                                        <img src="/assets/images/tooth_svg/{{tooth.title}}.svg" width="50"
-                                            height="50" *ngIf="tooth.show" />
-                                        <div style="width: 4rem; height: 4.2rem;" *ngIf="!tooth.show"></div>
-                                        <div class="imageOver" *ngIf="tooth.remove"><i class="bi bi-x-circle"
-                                                style="color: tomato;"></i></div>
-                                    </div>
-                                    <div ngbDropdownMenu aria-labelledby="dropdownBasic4">
-                                        <button ngbDropdownItem (click)="selectToothOption(tooth, 'Aligner')">Aligner</button>
-                                        <button ngbDropdownItem (click)="selectToothOption(tooth, 'Braces')">Braces</button>
-                                        <button ngbDropdownItem (click)="removeTooth(tooth)">Remove</button>
-                                        <button ngbDropdownItem (click)="disableTooth(tooth)">Missing Tooth</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="vertical-line-bottom"></div>
-                    <div class="col">
-                        <div class="d-flex justify-content-start">
-                            <div *ngFor="let tooth of toothChartLstPart3; let i = index;">
-                                <div ngbDropdown class="d-inline-block">
-                                    <div style="margin: auto;" ngbDropdownToggle id="dropdownBasic3">
-                                        <p [align]="'center'">{{tooth.title}}</p>
-                                        <img src="/assets/images/tooth_svg/{{tooth.title}}.svg" width="50"
-                                            height="50" *ngIf="tooth.show" />
-                                        <div style="width: 4rem; height: 4.2rem;" *ngIf="!tooth.show"></div>
-                                        <div class="imageOver" *ngIf="tooth.remove"><i class="bi bi-x-circle"
-                                                style="color: tomato;"></i></div>
-                                    </div>
-                                    <div ngbDropdownMenu aria-labelledby="dropdownBasic3">
-                                        <button ngbDropdownItem (click)="selectToothOption(tooth, 'Aligner')">Aligner</button>
-                                        <button ngbDropdownItem (click)="selectToothOption(tooth, 'Braces')">Braces</button>
-                                        <button ngbDropdownItem (click)="removeTooth(tooth)">Remove</button>
-                                        <button ngbDropdownItem (click)="disableTooth(tooth)">Missing Tooth</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

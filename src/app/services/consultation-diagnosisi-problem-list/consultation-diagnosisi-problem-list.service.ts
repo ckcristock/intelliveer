@@ -6,7 +6,6 @@ import { Injectable } from '@angular/core';
 export class ConsultationDiagnosisiProblemListService {
 
   problemList: any[] = [];
-  toothChartList: any[] = [];
 
   constructor() { }
 }
