@@ -18,8 +18,8 @@
 				>Deductible</a
 			>
 			<a
-				[ngClass]="[selectTab == 'dentalbenef' ? 'active' : 'inactive']"
-				(click)="scroll(dentalbenef, 'dentalbenef')"
+				[ngClass]="[selectTab == 'dentalBenef' ? 'active' : 'inactive']"
+				(click)="scroll(dentalBenef, 'dentalBenef')"
 				>Dental Benefits</a
 			>
 			<a
@@ -67,14 +67,14 @@
 										<input
 											class="form-check-input"
 											type="radio"
-											name="btnradio"
-											id="btnradio1"
+											name="eligible"
+											id="eligible1"
 											autocomplete="off"
 											checked
 										/>
 										<label
 											class="form-check-label"
-											for="btnradio1"
+											for="eligible1"
 											>Yes</label
 										>
 									</div>
@@ -82,13 +82,13 @@
 										<input
 											class="form-check-input"
 											type="radio"
-											name="btnradio"
-											id="btnradio2"
+											name="eligible"
+											id="eligible2"
 											autocomplete="off"
 										/>
 										<label
 											class="form-check-label"
-											for="btnradio2"
+											for="eligible2"
 											>No</label
 										>
 									</div>
@@ -202,7 +202,6 @@
 				</div>
 			</form>
 		</div>
-
 		<div class="section p-5" #cobaddig>
 			<div class="mainformsection">
 				<form autocomplete="off">
@@ -495,8 +494,7 @@
 				</div>
 			</form>
 		</div>
-
-		<div class="section p-5" #dentalbenef>
+		<div class="section p-5" #dentalBenef>
 			<form autocomplete="off">
 				<div class="mainformsection">
 					<h6 class="heading mb-2">Dental Benefits</h6>
@@ -738,6 +736,7 @@
 				<div class="mainformsection">
 					<h6 class="heading mb-2">Frequencies</h6>
 
+					<!-- EXAMS -->
 					<div class="formrow">
 						<div class="row">
 							<div class="col-5">
@@ -848,6 +847,7 @@
 						</div>
 					</div>
 
+					<!-- PERIO. MAINTENANCE -->
 					<div class="formrow">
 						<p class="mt-4 mb-0 pb-0">PERIO. MAINTENANCE</p>
 						<div class="row">
@@ -918,7 +918,7 @@
 											/>
 										</div>
 									</div>
-									<!-- input with its title -->
+									<!-- vertical radios -->
 									<div class="col-6">
 										<div class="mainformsetdefalt">
 											<label
@@ -953,7 +953,7 @@
 													class="form-check-label"
 													for="flexRadioDefault2"
 												>
-													Both
+													In addition to
 												</label>
 											</div>
 										</div>
@@ -963,10 +963,11 @@
 						</div>
 					</div>
 
+					<!-- FMX -->
 					<div class="formrow">
 						<div class="row">
 							<div class="col-5">
-								<p class="mt-4 mb-2 pb-2">EXAMS</p>
+								<p class="mt-4 mb-2 pb-2">FMX</p>
 								<div class="row">
 									<!-- button and dropdown inline-->
 									<div class="col-6">
@@ -1019,7 +1020,7 @@
 								</div>
 							</div>
 							<div class="col-5">
-								<p class="mt-4 mb-2 pb-2">PROPHYLAXIS</p>
+								<p class="mt-4 mb-2 pb-2">PANO</p>
 								<div class="row">
 									<!-- button and dropdown inline-->
 									<div class="col-6">
@@ -1067,6 +1068,1067 @@
 												formControlName=""
 											/>
 										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- vertical radios -->
+							<div class="col-2 pt-3">
+								<p class="mt-4 mb-2 pb-2"> </p>
+								<div class="mainformsetdefalt">
+									<label
+										class="required py-1"
+									></label>
+									<div class="form-check">
+										<input
+											class="form-check-input"
+											type="radio"
+											name="fmxr"
+											id="fmxr1"
+										/>
+										<label
+											class="form-check-label"
+											for="fmxr1"
+										>
+											Either/or
+										</label>
+									</div>
+								</div>
+
+								<div class="form-check">
+									<div class="mainformset">
+										<input
+											class="form-check-input"
+											type="radio"
+											name="fmxr"
+											id="fmxr2"
+											checked
+										/>
+										<label
+											class="form-check-label"
+											for="fmxr2"
+										>
+											Both
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- BWX -->
+					<div class="formrow">
+						<p class="mt-4 mb-0 pb-0">BWX</p>
+						<div class="row">
+							<div class="col-5">
+								<div class="row">
+									<!-- button and dropdown inline-->
+									<div class="col-6 pt-3">
+										<div class="row">
+											<div class="labelsinline">
+												<label class="required pb-1"
+													>Frecuency</label
+												>
+												<label class="required pb-1"
+													>Time Frame</label
+												>
+											</div>
+										</div>
+										<div class="row">
+											<div
+												class="btn-group btn-group-select"
+											>
+												<button style="height: 35px;" class="">Select</button>
+												<select
+													class="form-select"
+													formControlName="interest"
+												>
+													<option disabled>
+														Select Website
+													</option>
+													<option>
+														Select
+													</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<!-- input with its title -->
+									<div class="col-6 pt-3">
+										<div class="mainformset">
+											<label class="required pb-1"
+												>Exceptions</label
+											>
+											<input
+												class="form-control"
+												type="text"
+												placeholder=""
+												name=""
+												formControlName=""
+											/>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-5 pt-3">
+								<div class="row">
+									<!-- button and dropdown inline-->
+									<div class="col-6">
+										<div class="mainformset">
+											<div>
+												<label class="required pb-3"
+													>Intra oral images covered?</label
+												>
+											</div>
+		
+											<div class="form-check form-check-inline">
+												<input
+													class="form-check-input"
+													type="radio"
+													name="bmx"
+													id="bmx1"
+													autocomplete="off"
+													checked
+												/>
+												<label
+													class="form-check-label"
+													for="bmx1"
+													>Yes</label
+												>
+											</div>
+											<div class="form-check form-check-inline">
+												<input
+													class="form-check-input"
+													type="radio"
+													name="bmx"
+													id="bmx2"
+													autocomplete="off"
+												/>
+												<label
+													class="form-check-label"
+													for="bmx2"
+													>No</label
+												>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- SCALING AND ROOT PLANING -->
+					<div class="formrow">
+						<p class="mt-4 mb-0 pb-0">SCALING AND ROOT PLANING</p>
+						<div class="row">
+							<div class="col-5">
+								<div class="row">
+									<!-- button and dropdown inline-->
+									<div class="col-6 pt-3">
+										<div class="row">
+											<div class="labelsinline">
+												<label class="required pb-1"
+													>Frecuency</label
+												>
+												<label class="required pb-1"
+													>Time Frame</label
+												>
+											</div>
+										</div>
+										<div class="row">
+											<div
+												class="btn-group btn-group-select"
+											>
+												<button style="height: 35px;" class="">Select</button>
+												<select
+													class="form-select"
+													formControlName="interest"
+												>
+													<option disabled>
+														Select Website
+													</option>
+													<option>
+														Select
+													</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<!-- input with its title -->
+									<div class="col-6 pt-3">
+										<div class="mainformset">
+											<label class="required pb-1"
+												>Exceptions</label
+											>
+											<input
+												class="form-control"
+												type="text"
+												placeholder=""
+												name=""
+												formControlName=""
+											/>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-5 pt-3">
+								<div class="row">
+									<!-- button and dropdown inline-->
+									<div class="col-6">
+										<div class="mainformset">
+											<div>
+												<label class="required pb-3"
+													>Can all quads be on same day?</label
+												>
+											</div>
+		
+											<div class="form-check form-check-inline">
+												<input
+													class="form-check-input"
+													type="radio"
+													name="srp"
+													id="srp1"
+													autocomplete="off"
+													checked
+												/>
+												<label
+													class="form-check-label"
+													for="srp1"
+													>Yes</label
+												>
+											</div>
+											<div class="form-check form-check-inline">
+												<input
+													class="form-check-input"
+													type="radio"
+													name="srp"
+													id="srp2"
+													autocomplete="off"
+												/>
+												<label
+													class="form-check-label"
+													for="srp2"
+													>No</label
+												>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- RESTORATIONS AND CROWNS -->
+					<div class="formrow">
+						<div class="row">
+							<div class="col-5">
+								<p class="mt-4 mb-2 pb-2">RESTORATIONS</p>
+								<div class="row">
+									<!-- button and dropdown inline-->
+									<div class="col-6">
+										<div class="mainformset">
+											<div class="row">
+												<div class="labelsinline">
+													<label class="required pb-1"
+														>Frecuency</label
+													>
+													<label class="required pb-1"
+														>Time Frame</label
+													>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div
+												class="btn-group btn-group-select"
+											>
+												<button style="height: 35px;" class="">Select</button>
+												<select
+													class="form-select"
+													formControlName="interest"
+												>
+													<option disabled>
+														Select Website
+													</option>
+													<option>
+														Select
+													</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<!-- input with its title -->
+									<div class="col-6">
+										<div class="mainformset">
+											<label class="required pb-1"
+												>Exceptions</label
+											>
+											<input
+												class="form-control"
+												type="text"
+												placeholder=""
+												name=""
+												formControlName=""
+											/>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-5">
+								<p class="mt-4 mb-2 pb-2">CROWNS</p>
+								<div class="row">
+									<!-- button and dropdown inline-->
+									<div class="col-6">
+										<div class="row">
+											<div class="labelsinline">
+												<label class="required pb-1"
+													>Frecuency</label
+												>
+												<label class="required pb-1"
+													>Time Frame</label
+												>
+											</div>
+										</div>
+										<div class="row">
+											<div
+												class="btn-group btn-group-select"
+											>
+												<button style="height: 35px;" class="">Select</button>
+												<select
+													class="form-select"
+													formControlName="interest"
+												>
+													<option disabled>
+														Select Website
+													</option>
+													<option>
+														Select
+													</option>
+												</select>
+											</div>
+										</div>
+									</div>
+
+									<!-- input with its title -->
+									<div class="col-6">
+										<div class="mainformset">
+											<label class="required pb-1"
+												>Exceptions</label
+											>
+											<input
+												class="form-control"
+												type="text"
+												placeholder=""
+												name=""
+												formControlName=""
+											/>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- BRIDGES AND DENTURES -->
+					<div class="formrow">
+						<div class="row">
+							<div class="col-5">
+								<p class="mt-4 mb-2 pb-2">BRIDGES</p>
+								<div class="row">
+									<!-- button and dropdown inline-->
+									<div class="col-6">
+										<div class="mainformset">
+											<div class="row">
+												<div class="labelsinline">
+													<label class="required pb-1"
+														>Frecuency</label
+													>
+													<label class="required pb-1"
+														>Time Frame</label
+													>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div
+												class="btn-group btn-group-select"
+											>
+												<button style="height: 35px;" class="">Select</button>
+												<select
+													class="form-select"
+													formControlName="interest"
+												>
+													<option disabled>
+														Select Website
+													</option>
+													<option>
+														Select
+													</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<!-- input with its title -->
+									<div class="col-6">
+										<div class="mainformset">
+											<label class="required pb-1"
+												>Exceptions</label
+											>
+											<input
+												class="form-control"
+												type="text"
+												placeholder=""
+												name=""
+												formControlName=""
+											/>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-5">
+								<p class="mt-4 mb-2 pb-2">DENTURES</p>
+								<div class="row">
+									<!-- button and dropdown inline-->
+									<div class="col-6">
+										<div class="row">
+											<div class="labelsinline">
+												<label class="required pb-1"
+													>Frecuency</label
+												>
+												<label class="required pb-1"
+													>Time Frame</label
+												>
+											</div>
+										</div>
+										<div class="row">
+											<div
+												class="btn-group btn-group-select"
+											>
+												<button style="height: 35px;" class="">Select</button>
+												<select
+													class="form-select"
+													formControlName="interest"
+												>
+													<option disabled>
+														Select Website
+													</option>
+													<option>
+														Select
+													</option>
+												</select>
+											</div>
+										</div>
+									</div>
+
+									<!-- input with its title -->
+									<div class="col-6">
+										<div class="mainformset">
+											<label class="required pb-1"
+												>Exceptions</label
+											>
+											<input
+												class="form-control"
+												type="text"
+												placeholder=""
+												name=""
+												formControlName=""
+											/>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- PARTIALS -->
+					<div class="formrow">
+						<div class="row">
+							<div class="col-5">
+								<p class="mt-4 mb-2 pb-2">PARTIALS</p>
+								<div class="row">
+									<!-- button and dropdown inline-->
+									<div class="col-6">
+										<div class="mainformset">
+											<div class="row">
+												<div class="labelsinline">
+													<label class="required pb-1"
+														>Frecuency</label
+													>
+													<label class="required pb-1"
+														>Time Frame</label
+													>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div
+												class="btn-group btn-group-select"
+											>
+												<button style="height: 35px;" class="">Select</button>
+												<select
+													class="form-select"
+													formControlName="interest"
+												>
+													<option disabled>
+														Select Website
+													</option>
+													<option>
+														Select
+													</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<!-- input with its title -->
+									<div class="col-6">
+										<div class="mainformset">
+											<label class="required pb-1"
+												>Exceptions</label
+											>
+											<input
+												class="form-control"
+												type="text"
+												placeholder=""
+												name=""
+												formControlName=""
+											/>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- ADD ANOTHER BUTTON -->
+					<p style="margin-top: 29px;"><img src="assets/icons/add.svg" width="28" height="28" /> Add Another</p>
+				</div>
+			</form>
+		</div>
+		<div class="section p-5" #history>
+			<form autocomplete="off">
+				<div class="mainformsection">
+					<h6 class="heading mb-2">History</h6>
+					<div class="formrow">
+						<div class="row">
+							<div class="col-3 pt-3">
+								<div class="mainformset">
+									<label class="required pb-1"
+										>FMX</label
+									>
+									<input
+										class="form-control"
+										type="date"
+										placeholder=""
+										name="DOB"
+										formControlName="DOB"
+									/>
+								</div>
+							</div>
+							<div class="col-3 pt-3">
+								<div class="mainformset">
+									<label class="required pb-1"
+										>Pano</label
+									>
+									<input
+										class="form-control"
+										type="date"
+										placeholder=""
+										name="DOB"
+										formControlName="DOB"
+									/>
+								</div>
+							</div>
+							<div class="col-3 pt-3">
+								<div class="mainformset">
+									<label class="required pb-1"
+										>Prophy</label
+									>
+									<input
+										class="form-control"
+										type="date"
+										placeholder=""
+										name="DOB"
+										formControlName="DOB"
+									/>
+								</div>
+							</div>
+							<div class="col-3 pt-3">
+								<div class="mainformset">
+									<label class="required pb-1"
+										>BWX</label
+									>
+									<input
+										class="form-control"
+										type="date"
+										placeholder=""
+										name="DOB"
+										formControlName="DOB"
+									/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- ADD ANOTHER BUTTON -->
+					<p style="margin-top: 29px;"><img src="assets/icons/add.svg" width="28" height="28" /> Add Another</p>
+				</div>
+			</form>
+		</div>
+		<div class="section p-5" #generalProv>
+			<form autocomplete="off">
+				<div class="mainformsection">
+					<h6 class="heading mb-2">General Provisions</h6>
+					<div class="formrow">
+						<div class="row">
+							<div class="col pt-3">
+								<div class="mainformset">
+									<div>
+										<label class="required pb-3"
+											>Porcelain on Posterior Crowns?</label
+										>
+									</div>
+
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="radio"
+											name="ppc"
+											id="ppc1"
+											autocomplete="off"
+											checked
+										/>
+										<label
+											class="form-check-label"
+											for="ppc1"
+											>Yes</label
+										>
+									</div>
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="radio"
+											name="ppc"
+											id="ppc2"
+											autocomplete="off"
+										/>
+										<label
+											class="form-check-label"
+											for="ppc2"
+											>No</label
+										>
+									</div>
+								</div>
+							</div>
+							<div class="col pt-3">
+								<div class="mainformset">
+									<div>
+										<label class="required pb-3"
+											>Gold Coverage (D2790)?</label
+										>
+									</div>
+
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="radio"
+											name="gcd2790"
+											id="gcd27901"
+											autocomplete="off"
+											checked
+										/>
+										<label
+											class="form-check-label"
+											for="gcd27901"
+											>Yes</label
+										>
+									</div>
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="radio"
+											name="gcd2790"
+											id="gcd27902"
+											autocomplete="off"
+										/>
+										<label
+											class="form-check-label"
+											for="gcd27902"
+											>No</label
+										>
+									</div>
+								</div>
+							</div>
+							<div class="col pt-3">
+								<div class="mainformset">
+									<div>
+										<label class="required pb-3"
+											>Posterior Composites?</label
+										>
+									</div>
+
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="radio"
+											name="postcomp"
+											id="postcomp1"
+											autocomplete="off"
+											checked
+										/>
+										<label
+											class="form-check-label"
+											for="postcomp1"
+											>Yes</label
+										>
+									</div>
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="radio"
+											name="postcomp"
+											id="postcomp2"
+											autocomplete="off"
+										/>
+										<label
+											class="form-check-label"
+											for="postcomp2"
+											>No</label
+										>
+									</div>
+								</div>
+							</div>
+							<div class="col pt-3">
+								<div class="mainformset">
+									<label class="required pb-1"
+										>Fluoride to the age of</label
+									>
+									<input
+										class="form-control"
+										type="text"
+										placeholder=""
+										name="DOB"
+										formControlName="DOB"
+									/>
+								</div>
+							</div>
+							<div class="col pt-3">
+								<div class="mainformset">
+									<label class="label-input-gap">Sealants</label>
+									<ng-select placeholder="Select">
+										<ng-option>Select</ng-option>
+									</ng-select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="formrow">
+						<div class="row">
+							<div class="col pt-3">
+								<div class="mainformset">
+									<div>
+										<label class="required pb-3"
+											>Night guards?</label
+										>
+									</div>
+
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="radio"
+											name="nightguards"
+											id="nightguards1"
+											autocomplete="off"
+										/>
+										<label
+											class="form-check-label"
+											for="nightguards1"
+											>Yes</label
+										>
+									</div>
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="radio"
+											name="nightguards"
+											id="nightguards2"
+											autocomplete="off"
+										/>
+										<label
+											class="form-check-label"
+											for="nightguards2"
+											>No</label
+										>
+									</div>
+								</div>
+							</div>
+							<div class="col pt-3" style="margin-left: -45px; margin-right: 45px;">
+								<div class="mainformset">
+									<div>
+										<label class="required pb-3"
+											> &nbsp;</label
+										>
+									</div>
+
+									<div class="row">
+										<div class="col-6">
+											<div class="">
+												<input
+													class="form-check-input"
+													type="radio"
+													name="paidat"
+													id="paidat"
+													autocomplete="off"
+													checked
+												/>
+												<label
+													class="form-check-label"
+													for="paidat"
+													>Paid at</label
+												>
+											</div>
+										</div>
+										<div class="col-6" style="margin-left: -30px;">
+											<input
+												class="form-control"
+												type="text"
+												placeholder=""
+												name="DOB"
+												formControlName="DOB"
+												style="margin-top: -6px;"
+											/>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col pt-3">
+								<div class="mainformset">
+									<div>
+										<label class="required pb-3"
+											>Restorations</label
+										>
+									</div>
+
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="radio"
+											name="restora"
+											id="restora1"
+											autocomplete="off"
+											checked
+										/>
+										<label
+											class="form-check-label"
+											for="restora1"
+											>Yes</label
+										>
+									</div>
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="radio"
+											name="restora"
+											id="restora2"
+											autocomplete="off"
+										/>
+										<label
+											class="form-check-label"
+											for="restora2"
+											>No</label
+										>
+									</div>
+								</div>
+							</div>
+							<div class="col pt-3">
+								<div class="mainformset">
+									<div>
+										<label class="required pb-3"
+											>Missing Tooth Clause?</label
+										>
+									</div>
+
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="radio"
+											name="missingtc"
+											id="missingtc1"
+											autocomplete="off"
+											checked
+										/>
+										<label
+											class="form-check-label"
+											for="missingtc1"
+											>Yes</label
+										>
+									</div>
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="radio"
+											name="missingtc"
+											id="missingtc2"
+											autocomplete="off"
+										/>
+										<label
+											class="form-check-label"
+											for="missingtc2"
+											>No</label
+										>
+									</div>
+								</div>
+							</div>
+							<div class="col pt-3">
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="section p-5" #implantBenef>
+			<form autocomplete="off">
+				<div class="mainformsection">
+					<h6 class="heading mb-2">Implant Benefits</h6>
+					<div class="formrow">
+						<div class="row">
+							<div class="col pt-3">
+								<div class="mainformset">
+									<div>
+										<label class="required pb-3"
+											>Porcelain on Posterior Crowns?</label
+										>
+									</div>
+
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="radio"
+											name="ppc"
+											id="ppc1"
+											autocomplete="off"
+											checked
+										/>
+										<label
+											class="form-check-label"
+											for="ppc1"
+											>Yes</label
+										>
+									</div>
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="radio"
+											name="ppc"
+											id="ppc2"
+											autocomplete="off"
+										/>
+										<label
+											class="form-check-label"
+											for="ppc2"
+											>No</label
+										>
+									</div>
+								</div>
+							</div>
+							<div class="col pt-3">
+								<div class="mainformset">
+									<div>
+										<label class="required pb-3"
+											>Gold Coverage (D2790)?</label
+										>
+									</div>
+
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="radio"
+											name="gcd2790"
+											id="gcd27901"
+											autocomplete="off"
+											checked
+										/>
+										<label
+											class="form-check-label"
+											for="gcd27901"
+											>Yes</label
+										>
+									</div>
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="radio"
+											name="gcd2790"
+											id="gcd27902"
+											autocomplete="off"
+										/>
+										<label
+											class="form-check-label"
+											for="gcd27902"
+											>No</label
+										>
+									</div>
+									<div class="btn-group" role="group" ngbRadioGroup name="radioBasic" [(ngModel)]="sepaMaximum">
+										<label ngbButtonLabel class="btn-dark-brown">
+										  <input ngbButton type="radio" class="btn-check" [value]="1"> Year
+										</label>
+										<label ngbButtonLabel class="btn-dark-brown-center">
+										  <input ngbButton type="radio" class="btn-check" value="middle"> Lifetime
+										</label>
+										<label ngbButtonLabel class="btn-dark-brown-right">
+										  <input ngbButton type="radio" class="btn-check" [value]="false"> $2500
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="col pt-3">
+								<div class="mainformset">
+									<div>
+										<label class="required pb-3"
+											>Posterior Composites?</label
+										>
+									</div>
+
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="radio"
+											name="postcomp"
+											id="postcomp1"
+											autocomplete="off"
+											checked
+										/>
+										<label
+											class="form-check-label"
+											for="postcomp1"
+											>Yes</label
+										>
+									</div>
+									<div class="form-check form-check-inline">
+										<input
+											class="form-check-input"
+											type="radio"
+											name="postcomp"
+											id="postcomp2"
+											autocomplete="off"
+										/>
+										<label
+											class="form-check-label"
+											for="postcomp2"
+											>No</label
+										>
+									</div>
+									<div class="btn-group" role="group" ngbRadioGroup name="radioBasic" [(ngModel)]="deductive">
+										<label ngbButtonLabel class="btn-dark-brown">
+										  <input ngbButton type="radio" class="btn-check" [value]="1"> Year
+										</label>
+										<label ngbButtonLabel class="btn-dark-brown-center">
+										  <input ngbButton type="radio" class="btn-check" value="middle"> Lifetime
+										</label>
+										<label ngbButtonLabel class="btn-dark-brown-right">
+										  <input ngbButton type="radio" class="btn-check" [value]="false"> $2500
+										</label>
 									</div>
 								</div>
 							</div>

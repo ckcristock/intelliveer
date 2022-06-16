@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class DentalBenefComponent implements OnInit {
 
   selectTab: string = "eligibility";
+  sepaMaximum:any = 1;
+  deductive:any = 1;
 
   constructor() { }
 

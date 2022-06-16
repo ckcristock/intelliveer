@@ -503,3 +503,56 @@ form {
 	color: white;
 	background-color: #414042;
   }
+
+  .btn-dark-brown,
+.btn-dark-brown-center,
+.btn-dark-brown-right{
+	border: 1px solid #e3e4e5;
+	border-radius: 7px;
+}
+
+.btn-dark-brown.active,
+.btn-dark-brown:active{
+	color: white;
+	background-color: #414042;
+	border: 1px solid #e3e4e5;
+	border-radius: 7px;
+}
+
+.btn-dark-brown-center.active,
+.btn-dark-brown-center:active{
+	color: white;
+	background-color: #414042;
+	border: 1px solid #e3e4e5;
+}
+
+.btn-dark-brown-right.active,
+.btn-dark-brown-right:active{
+	color: white;
+	background-color: #414042;
+	border: 1px solid #e3e4e5;
+	border-top-right-radius: 1px solid #e3e4e5;
+	border-bottom-right-radius: 1px solid #e3e4e5;
+}
+
+.website{
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	span{
+		display: flex;
+		align-content: center;
+		align-items: center;
+		background-color: #f1f2f2;
+		padding: 4px 15px;
+		border: 1px solid #dadbdd;
+		border-right: none;
+		border-top-right-radius: 0px !important;
+		border-bottom-right-radius: 0px !important;
+	}
+	input{
+		border-left: none;
+		border-top-left-radius: 0px !important;
+		border-bottom-left-radius: 0px !important;
+	}
+}
