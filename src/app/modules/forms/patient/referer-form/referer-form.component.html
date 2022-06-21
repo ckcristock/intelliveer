@@ -1,181 +1,154 @@
-<div class="row sticky">
-	<div class="col-11">
-		<div class="col pills">
-			<ul class="nav">
-				<li class="nav-item">
-					<a class="nav-link" [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']"
-						(click)="scroll(overview, 'overview')">Overview</a>
-				</li>
-				&nbsp;&nbsp;
-				<li class="nav-item">
-					<a class="nav-link" [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']"
-						(click)="scroll(profile, 'profile')">Profile</a>
-				</li>
-				&nbsp;&nbsp;
-				<li class="nav-item">
-					<a class="nav-link" [ngClass]="[ selectTab == 'address' ? 'active' : 'inactive']"
-						(click)="scroll(address, 'address')">Address</a>
-				</li>
-				&nbsp;&nbsp;
-				<li class="nav-item">
-					<a class="nav-link" [ngClass]="[ selectTab == 'contact' ? 'active' : 'inactive']"
-						(click)="scroll(contact, 'contact')">Contact</a>
-				</li>
-				&nbsp;&nbsp;
-				<li class="nav-item">
-					<a class="nav-link" [ngClass]="[ selectTab == 'notes' ? 'active' : 'inactive']"
-						(click)="scroll(notes, 'notes')">Notes</a>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<div class="col-1 d-flex justify-content-end align-items-center mb-3">
-		<button class="btn btn-light" [disabled]="Form?.invalid" (click)="save(f.value)">
-			<img src="assets/icons/save.svg" width="36" height="36" />
-		</button>
-		<img src="assets/icons/cancel.svg" width="36" height="36" (click)="cancel()" />
-	</div>
-</div>
-
-<div class="row">
-	<div class="col-12" id="main">
-		<div class="section" #overview>
-			<div class="row">
-				<div class="col-2">
-					<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
-					</app-image-uploader>
+<div class="row formrow" *ngIf="Form">
+	<app-nav-bar-pills
+		[menuItems]="menuItems"
+		[activeClass]="currentSelection"
+		[cancelBtn]="true"
+		[saveBtn]="true"
+		[disableSaveBtn]="Form.invalid"
+		(onCancel)="cancel()"
+		(onSave)="save(Form.value)"
+	></app-nav-bar-pills>
+	<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
+		<div class="col-12"	id="main" scrollSpy	(sectionChange)="onSectionChange($event)">
+			<div class="section" id="overview">
+				<div class="row formrow">
+					<div class="col-2">
+						<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
+						</app-image-uploader>
+					</div>
+					<div class="col-4">
+						<p>Olivia Doe <span>(P1001)</span></p>
+						<p>Female</p>
+						<p>May 10,1992</p>
+						<p>29y, 10m</p>
+					</div>
+					<div class="col-4">
+						<p>Prefered mail method: abc@gmail.com</p>
+						<p>Primary Phone number: 1234567890</p>
+						<p>Email: abc@email.com</p>
+						<p>No. of referred patient: 4</p>
+					</div>
+					<div class="col-2"></div>
 				</div>
-				<div class="col-4">
-					<p>Olivia Doe <span>(P1001)</span></p>
-					<p>Female</p>
-					<p>May 10,1992</p>
-					<p>29y, 10m</p>
-				</div>
-				<div class="col-4">
-					<p>Prefered mail method: abc@gmail.com</p>
-					<p>Primary Phone number: 1234567890</p>
-					<p>Email: abc@email.com</p>
-					<p>No. of referred patient: 4</p>
-				</div>
-				<div class="col-2"></div>
 			</div>
-		</div>
-
-		<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
-
-			<div class="section" #profile>
-
+			
+			<div class="section" id="profile">
+		
 				<h6 class="heading">Profile</h6>
-				<div class="row">
+				<div class="row formrow">
 					<div class="col">
-						<label class="required">Company Name</label>
+						<label class="label-input-gap">Company Name</label>
 						<input class="form-control" type="text" placeholder="" name="name"
 							formControlName="companyName" />
 					</div>
 					<div class="col">
-						<label class="required">Title</label>
+						<label class="label-input-gap">Title</label>
 						<select class="form-select" formControlName="title">
 							<option>Select</option>
 						</select>
 					</div>
 					<div class="col">
-						<label class="required">First Name</label>
+						<label class="label-input-gap">First Name</label>
 						<input class="form-control" type="text" placeholder="" name="firstName"
 							formControlName="firstName" />
 					</div>
-
+		
 					<div class="col">
-						<label class="required">Middle Name</label>
+						<label class="label-input-gap">Middle Name</label>
 						<input class="form-control" type="text" placeholder="" name="name"
 							formControlName="middleName" />
 					</div>
 					<div class="col">
-						<label class="required">Last Name</label>
+						<label class="label-input-gap">Last Name</label>
 						<input class="form-control" type="text" placeholder="" name="lastName"
 							formControlName="lastName" />
 					</div>
 				</div>
-				<div class="row">
+				<div class="row formrow">
 					<div class="col-3">
-						<label class="required">Greeting</label>
+						<label class="label-input-gap">Greeting</label>
 						<input class="form-control" type="text" placeholder="" name="name" formControlName="greeting" />
 					</div>
 				</div>
-
-
+		
+		
 			</div>
-
-			<div class="section" #address>
+		
+			<div class="section" id="address">
 				<h6 class="heading">Address</h6>
 				<app-address-form [parentGroup]="Form" [formGroupName]="'address'"></app-address-form>
 			</div>
-
-			<div class="section" #contact>
+		
+			<div class="section" id="contact">
 				<h6 class="heading">Contact</h6>
-				<div class="row">
+				<div class="row formrow">
 					<div class="col">
-						<label class="required">Email</label>
+						<label class="label-input-gap">Email</label>
 						<input class="form-control" type="text" placeholder="" name="id" formControlName="emailId" />
 					</div>
-
+		
 					<div class="col">
-						<label class="required">Primary Phone Type</label>
+						<label class="label-input-gap">Primary Phone Type</label>
 						<select class="form-select" formControlName="pPhoneType">
 							<option>Select</option>
 						</select>
 					</div>
-
+		
 					<div class="col">
-						<label class="required">Primary Phone Number</label>
+						<label class="label-input-gap">Primary Phone Number</label>
 						<input class="form-control" type="text" placeholder="" name="name"
 							formControlName="pPhoneNumber" />
 					</div>
 				</div>
-
-				<div class="row">
+		
+				<div class="row formrow">
 					<div class="col">
-						<label class="required">
+						<label class="label-input-gap">
 							Secondary Phone Type</label>
 						<select class="form-select" formControlName="sPhoneType">
 							<option>Select</option>
 						</select>
 					</div>
-
+		
 					<div class="col">
-						<label class="required">Secondary Phone Number</label>
+						<label class="label-input-gap">Secondary Phone Number</label>
 						<input class="form-control" type="text" placeholder="" name="name"
 							formControlName="sPhoneNumber" />
 					</div>
-
+		
 					<div class="col">
-						<label class="required">Preferred Mail Method</label>
+						<label class="label-input-gap">Preferred Mail Method</label>
 						<select class="form-select" formControlName="preferredMailMethod">
 							<option>Select</option>
 						</select>
 					</div>
-
+		
 					<div class="col">
-						<label class="required">Website</label>
-						<div class="input-group">
-							<span class="form-control" id="basic-addon3">https://</span>
-							<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3"
+						<label class="label-input-gap">Website</label>
+						<div class="website">
+							<span class="" style="height: 36px;">https://</span>
+							<input type="text" class="form-control"
 								name="website" placeholder="www.example.com" formControlName="website" />
 						</div>
 					</div>
 				</div>
 			</div>
-
-			<div class="section" #notes>
+		
+			<div class="section" id="notes">
 				<h6 class="heading">Notes</h6>
-				<div class="row">
+				<div class="row formrow">
 					<div class="col-6">
 						<textarea class="form-control" name="note" id="" cols="70" rows="5"
 							formControlName="note"></textarea>
 					</div>
 				</div>
 			</div>
-
-		</form>
-
-	</div>
+		</div>
+	</form>
 </div>
+
+
+
+
+
+

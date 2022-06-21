@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 
 @Component({
@@ -16,9 +17,15 @@ export class FamilyMemberFormComponent implements OnInit {
 	@Output() onCancel = new EventEmitter();
 	@Output() onSubmit = new EventEmitter();
 
+  currentSelection: string = '';
+
+  menuItems: MenuItem[] = [
+		{ title: 'Overview', id: 'overview' },
+		{ title: 'Profile', id: 'profile' },
+	];
   
   idForm: FormGroup;
-  selectTab: string = "overview";
+ 
 
   constructor(
     private fb: FormBuilder,
@@ -54,6 +61,10 @@ export class FamilyMemberFormComponent implements OnInit {
 		this.onCancel.emit();
 	}
 
+  onSectionChange(sectionId: string) {
+		this.currentSelection = sectionId;
+	}
+
   setAddress(type: string) {
 		let physicalAddress = this.Form?.controls['physicalAddress'].value;
 		this.Form?.controls[type].setValue(physicalAddress);
@@ -63,15 +74,6 @@ export class FamilyMemberFormComponent implements OnInit {
     if (e && this.idForm) {
       this.idForm.controls['logo'].setValue(e.url);
     }
-  }
-
-  scroll(el: HTMLElement, selectTab: string) {
-    this.selectTab = selectTab.trim();
-    el.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-      inline: 'nearest',
-    });
   }
 
 }

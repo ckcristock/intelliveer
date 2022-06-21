@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 
 @Component({
@@ -12,12 +13,23 @@ export class PatientDetailComponent implements OnInit {
   public navIndex: number = 0;
   idForm: FormGroup;
   @Input() formData: any | undefined = undefined;
+  @Output() onCancel = new EventEmitter();
+	@Output() onSubmit = new EventEmitter();
   Form!: FormGroup;
-  selectTab: string = "overview";
 
   interestsLst: any[] = ["option 1", "option 2", "option 3", "option 4", "option 5", "option 6"];
   tagsLst: any[] = ["option 1", "option 2", "option 3", "option 4", "option 5", "option 6"];
   tabsLst: any[] = [];
+
+	currentSelection: string = '';
+  menuItems: MenuItem[] = [
+		{ title: 'Overview', id: 'overview' },
+		{ title: 'Profile', id: 'profile' },
+		{ title: 'Information', id: 'information' },
+		{ title: 'Preferences', id: 'preferences' },
+		{ title: 'Emergency Contact', id: 'emergencyContact' },
+		{ title: 'Notes', id: 'notes' },
+	];
 
   constructor(
     private fb: FormBuilder,
@@ -117,25 +129,16 @@ export class PatientDetailComponent implements OnInit {
     this.ids.removeAt(i);
   }
 
-  save(data: any)
-  {
-    console.log(data);
-  }
+  save(data: any) {
+		this.onSubmit.emit(data);
+	}
+	cancel() {
+		this.onCancel.emit();
+	}
+  onSectionChange(sectionId: string) {
+		this.currentSelection = sectionId;
+	}
 
-  scroll(el: HTMLElement, selectTab: string) {
-    this.selectTab = selectTab.trim();
-    el.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-      inline: 'nearest',
-    });
-  }
-
-  selectedTab($event: any)
-  {
-    console.log($event);
-    document.getElementById($event)?.scrollIntoView();
-  }
 
 
 }

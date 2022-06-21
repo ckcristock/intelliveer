@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { GlobalRoutesService } from "@services/global-routes/global-routes.service";
 
 @Component({
   selector: 'app-insurance',
@@ -8,22 +9,17 @@ import { Router } from '@angular/router';
 })
 export class InsuranceComponent implements OnInit {
 
-  constructor(public router: Router) { }
+  constructor(public router: Router,
+    private routes: GlobalRoutesService) { }
 
   ngOnInit(): void {
   }
 
   activeSection() {
-    if (
-      this.router.url === '/dashboard/patient/insurance/active' ||
-      this.router.url === '/dashboard/patient/insurance/policy-info' ||
-      this.router.url === '/dashboard/patient/insurance/ortho-benef' ||
-      this.router.url === '/dashboard/patient/insurance/dental-benef' ||
-      this.router.url === '/dashboard/patient/insurance/billing'
-    ) {
-      return true;
-    } else {
+    if(this.router.url===this.routes.getPatientInsuranceRoutes()[5].url){ // [5] is dropped url
       return false;
+    } else {
+      return true;
     }
   }
 

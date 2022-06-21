@@ -39,7 +39,7 @@ export const patientUserMenuItems = [
 export const patientUserHeaderIconMenuItems = [
 	{
 		title: '',
-		url: '/dashboard/patient/patient-user/patient-detail',
+		url: '/dashboard/patient/patient-user',
 		icon: '/assets/icons/users.svg',
 	},
 	{
@@ -123,7 +123,7 @@ export const patientConsultationMenuItems = [
 					},
 					{
 						title: 'Treatment Options',
-						url: '/dashboard/patient/consultation/treatment',
+						url: '/+',
 						icon: 'bi bi-house-door',
 					},
 					{
@@ -247,7 +247,7 @@ export const patientDiagnosisMenuItems = [
 		url: '/dashboard/patient/consultation/diagnosis/category6',
 		icon: '/assets/icons/jar.svg',
 		child: []
-	}
+	},
 ]
 
 export const problemListOfDiagnosis = [
@@ -287,71 +287,4 @@ export const problemListOfDiagnosis = [
 		title: 'Category 6',
 		child: []
 	},
-	{
-		title: 'Tooth',
-		child: []
-	}
-]
-
-export const patientTreatmentMenuItems = [
-	{
-		title: 'Tx Recommendations',
-		url: '/dashboard/patient/consultation/treatment/recommendations',
-		icon: '/assets/icons/jar.svg',
-		child: []
-	},
-	{
-		title: 'Prerequisites',
-		url: '/dashboard/patient/consultation/treatment/overjet',
-		icon: '/assets/icons/jar.svg',
-		child: []
-	},
-	{
-		title: 'Extractions',
-		url: '/dashboard/patient/consultation/treatment/overbite',
-		icon: '/assets/icons/jar.svg',
-		child: []
-	},
-	{
-		title: 'Treatment Mechanics',
-		url: '/dashboard/patient/consultation/treatment/category1',
-		icon: '/assets/icons/jar.svg',
-		child: []
-	},
-	{
-		title: 'Expected Tx Outcome',
-		url: '/dashboard/patient/consultation/treatment/category2',
-		icon: '/assets/icons/jar.svg',
-		child: []
-	},
-	{
-		title: 'Risks',
-		url: '/dashboard/patient/consultation/treatment/category3',
-		icon: '/assets/icons/jar.svg',
-		child: []
-	},
-	{
-		title: 'Adjunctive Tx',
-		url: '/dashboard/patient/consultation/treatment/category4',
-		icon: '/assets/icons/jar.svg',
-		child: []
-	},
-	{
-		title: 'Appliance Sequence',
-		url: '/dashboard/patient/consultation/treatment/category5',
-		icon: '/assets/icons/jar.svg',
-		child: []
-	},
-	{
-		title: 'Bracket Variations',
-		url: '/dashboard/patient/consultation/treatment/category6',
-		icon: '/assets/icons/jar.svg',
-		child: []
-	},
-	{
-		title: 'Retention',
-		url: '/dashboard/patient/consultation/treatment/category6',
-		icon: '/assets/icons/jar.svg',
-		child: []
-	}
 ]

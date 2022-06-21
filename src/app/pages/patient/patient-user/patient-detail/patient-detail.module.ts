@@ -7,6 +7,8 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TabsModule } from '@modules/tabs/tabs.module';
+import { ScrollspyModule } from "@modules/scrollspy/scrollspy.module";
+import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
 
 
 
@@ -20,7 +22,9 @@ import { TabsModule } from '@modules/tabs/tabs.module';
     NgSelectModule,
     TabsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ScrollspyModule,
+    NavBarPillsModule
   ]
 })
 export class PatientDetailModule { }

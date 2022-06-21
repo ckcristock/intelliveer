@@ -5,8 +5,8 @@ import { ImageUploaderModule } from '@modules/image-uploader/image-uploader.modu
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FamilyMemberFormComponent } from './family-member-form.component';
-
-
+import { ScrollspyModule } from "@modules/scrollspy/scrollspy.module";
+import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
 
 
 @NgModule({
@@ -17,7 +17,9 @@ import { FamilyMemberFormComponent } from './family-member-form.component';
 		ReactiveFormsModule,
     ImageUploaderModule,
     AddressFormModule,
-    PipesModule
+    PipesModule,
+    ScrollspyModule,
+    NavBarPillsModule
   ],
   exports: [FamilyMemberFormComponent]
 })

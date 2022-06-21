@@ -1,252 +1,223 @@
-<div class="row sticky">
-	<div class="col-11">
-		<div class="col pills">
-			<ul class="nav">
-				<li class="nav-item">
-					<a class="nav-link" [ngClass]="[ selectTab == 'overview' ? 'active' : 'inactive']"
-						(click)="scroll(overview, 'overview')">Overview</a>
-				</li>
-				&nbsp;&nbsp;
-				<li class="nav-item">
-					<a class="nav-link" [ngClass]="[ selectTab == 'profile' ? 'active' : 'inactive']"
-						(click)="scroll(profile, 'profile')">Profile</a>
-				</li>
-				&nbsp;&nbsp;
-				<li class="nav-item">
-					<a class="nav-link" [ngClass]="[ selectTab == 'address' ? 'active' : 'inactive']"
-						(click)="scroll(address, 'address')">Address</a>
-				</li>
-				&nbsp;&nbsp;
-				<li class="nav-item">
-					<a class="nav-link" [ngClass]="[ selectTab == 'contact' ? 'active' : 'inactive']"
-						(click)="scroll(contact, 'contact')">Contact</a>
-				</li>
-				&nbsp;&nbsp;
-				<li class="nav-item">
-					<a class="nav-link" [ngClass]="[ selectTab == 'financials' ? 'active' : 'inactive']"
-						(click)="scroll(financials, 'financials')">Financials</a>
-				</li>
-				&nbsp;&nbsp;
-				<li class="nav-item">
-					<a class="nav-link" [ngClass]="[ selectTab == 'notes' ? 'active' : 'inactive']"
-						(click)="scroll(notes, 'notes')">Notes</a>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<div class="col-1 d-flex justify-content-end align-items-center mb-3">
-		<button class="btn btn-light" [disabled]="Form?.invalid" (click)="save(f.value)">
-			<img src="assets/icons/save.svg" width="36" height="36" />
-		</button>
-		<img src="assets/icons/cancel.svg" width="36" height="36" (click)="cancel()" />
-	</div>
-</div>
-
-<div class="row">
-	<div class="col-12" id="main">
-		<div class="section" #overview>
-			<div class="row">
-				<div class="col-sm">
-					<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
-					</app-image-uploader>
+<div class="row formrow" *ngIf="Form">
+	<app-nav-bar-pills
+		[menuItems]="menuItems"
+		[activeClass]="currentSelection"
+		[cancelBtn]="true"
+		[saveBtn]="true"
+		[disableSaveBtn]="Form.invalid"
+		(onCancel)="cancel()"
+		(onSave)="save(Form.value)"
+	></app-nav-bar-pills>
+	<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
+		<div class="col-12"	id="main" scrollSpy	(sectionChange)="onSectionChange($event)">
+			<div class="section" id="overview">
+				<div class="row formrow">
+					<div class="col-sm">
+						<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
+						</app-image-uploader>
+					</div>
+					<!-- <div class="col-sm">
+						<p>Olivia Doe <span>(P1001)</span></p>
+						<p>Female</p>
+						<p>May 10,1992</p>
+						<p>29y, 10m</p>
+					</div>
+					<div class="col-sm">
+						<p>Preferred Pronoun: Lorem ipsum</p>
+						<p>Status: Active</p>
+						<p>Relationship: Mother</p>
+						<p>Subscriber ID: 12454</p>
+					</div>
+					<div class="col-sm">
+						<p>Language: English</p>
+						<p>Preferred Communication Method: Phone</p>
+						<p>Phone (Primary): 1234567890</p>
+						<p>Email (Primary): name@email.com</p>
+					</div> -->
 				</div>
-				<!-- <div class="col-sm">
-					<p>Olivia Doe <span>(P1001)</span></p>
-					<p>Female</p>
-					<p>May 10,1992</p>
-					<p>29y, 10m</p>
-				</div>
-				<div class="col-sm">
-					<p>Preferred Pronoun: Lorem ipsum</p>
-					<p>Status: Active</p>
-					<p>Relationship: Mother</p>
-					<p>Subscriber ID: 12454</p>
-				</div>
-				<div class="col-sm">
-					<p>Language: English</p>
-					<p>Preferred Communication Method: Phone</p>
-					<p>Phone (Primary): 1234567890</p>
-					<p>Email (Primary): name@email.com</p>
-				</div> -->
 			</div>
-		</div>
-
-		<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
-
-			<div class="section container" #profile>
-
+			
+			<div class="section container" id="profile">
+		
 				<h6 class="heading">Profile</h6>
-				<div class="row">
+				<div class="row formrow">
 					<div class="col-3">
-						<label class="required">Relationship with Patient</label>
+						<label class="label-input-gap">Relationship with Patient</label>
 						<select class="form-select" formControlName="relation">
 							<option>Select</option>
 						</select>
 					</div>
 					<div class="col-3">
-						<label class="required">Title</label>
+						<label class="label-input-gap">Title</label>
 						<select class="form-select" formControlName="title">
 							<option>Select</option>
 						</select>
 					</div>
 					<div class="col-2">
-						<label class="required">First Name</label>
+						<label class="label-input-gap">First Name</label>
 						<input class="form-control value-must" type="text" placeholder="" name="firstName"
 							formControlName="firstName" />
 					</div>
-
+		
 					<div class="col-2">
-						<label class="required">Middle Name</label>
+						<label class="label-input-gap">Middle Name</label>
 						<input class="form-control" type="text" placeholder="" name="name"
 							formControlName="middleName" />
 					</div>
 					<div class="col-2">
-						<label class="required">Last Name</label>
+						<label class="label-input-gap">Last Name</label>
 						<input class="form-control value-must" type="text" placeholder="" name="lastName"
 							formControlName="lastName" />
 					</div>
 				</div>
-				<div class="row">
+				<div class="row formrow">
 					<div class="col-3">
-						<label class="required">Date of Birth</label>
+						<label class="label-input-gap">Date of Birth</label>
 						<input class="form-control" type="date" placeholder="" name="DOB" formControlName="DOB" />
 					</div>
 					<div class="col-3">
-						<label class="required">Gender</label>
+						<label class="label-input-gap">Gender</label>
 						<select class="form-select" formControlName="gender">
 							<option value="M">Male</option>
 							<option value="F">Female</option>
 						</select>
 					</div>
 					<div class="col-2">
-						<label class="required">Preferred Pronoun</label>
+						<label class="label-input-gap">Preferred Pronoun</label>
 						<select class="form-select" formControlName="pronoun">
 							<option>Select</option>
 						</select>
 					</div>
 					<div class="col-2">
-						<label class="required">Language</label>
+						<label class="label-input-gap">Language</label>
 						<select class="form-select" formControlName="language">
 							<option value="English">English</option>
 							<option value="Hindi">Hindi</option>
 						</select>
 					</div>
 					<div class="col-2">
-						<label class="required">Marital Status</label>
+						<label class="label-input-gap">Marital Status</label>
 						<select class="form-select" formControlName="maried">
 							<option value="M">Maried</option>
 							<option value="S">Single</option>
 						</select>
 					</div>
 				</div>
-
+		
 			</div>
-
-			<div class="section" #address>
+		
+			<div class="section" id="address">
 				<h6 class="heading">Address</h6>
 				<app-address-form [parentGroup]="Form" [formGroupName]="'address'"></app-address-form>
 			</div>
-
-			<div class="section" #contact>
+		
+			<div class="section" id="contact">
 				<h6 class="heading">Contact</h6>
-				<div class="row">
+				<div class="row formrow">
 					<div class="col">
-						<label class="required">Email</label>
+						<label class="label-input-gap">Email</label>
 						<input class="form-control" type="text" placeholder="" name="id" formControlName="emailId" />
 					</div>
-
+		
 					<div class="col">
-						<label class="required">Primary Phone Type</label>
+						<label class="label-input-gap">Primary Phone Type</label>
 						<select class="form-select value-must" formControlName="pPhoneType">
 							<option>Select</option>
 						</select>
 					</div>
-
+		
 					<div class="col">
-						<label class="required">Primary Phone Number</label>
+						<label class="label-input-gap">Primary Phone Number</label>
 						<input class="form-control value-must" type="text" placeholder="" name="name"
 							formControlName="pPhoneNumber" />
 					</div>
 				</div>
-
-				<div class="row">
+		
+				<div class="row formrow">
 					<div class="col">
-						<label class="required">Secondary Phone Type</label>
+						<label class="label-input-gap">Secondary Phone Type</label>
 						<select class="form-select" formControlName="sPhoneType">
 							<option>Select</option>
 						</select>
 					</div>
-
+		
 					<div class="col">
-						<label class="required">Secondary Phone Number</label>
+						<label class="label-input-gap">Secondary Phone Number</label>
 						<input class="form-control" type="text" placeholder="" name="name"
 							formControlName="sPhoneNumber" />
 					</div>
-
+		
 					<div class="col">
-						<label class="required">Preferred Communication Method - Primary</label>
+						<label class="label-input-gap">Preferred Communication Method - Primary</label>
 						<select class="form-select" formControlName="CommPrimary">
 							<option>Select</option>
 						</select>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row formrow">
 					<div class="col">
-						<label class="required">Preferred Communication Method - Secondary</label>
+						<label class="label-input-gap">Preferred Communication Method - Secondary</label>
 						<select class="form-select" formControlName="CommSecondary">
 							<option>Select</option>
 						</select>
 					</div>
 					<div class="col">
-						<label class="required">Preferred Timings for Call</label>
+						<label class="label-input-gap">Preferred Timings for Call</label>
 						<input class="form-control" type="number" placeholder="" name="phone" formControlName="phone" />
 					</div>
 					<div class="col"></div>
 				</div>
-
+		
 			</div>
-
-			<div class="section" #financials>
+		
+			<!-- <div class="section" #financials>
 				<h6 class="heading">Financials</h6>
-				<div class="row">
+				<div class="row formrow">
 					<div class="col">
-						<label class="required">Work Status</label>
+						<label class="label-input-gap">Work Status</label>
 						<select class="form-select" formControlName="workStatus">
 							<option>Select</option>
 						</select>
 					</div>
 					<div class="col">
-						<label class="required">Occupation</label>
+						<label class="label-input-gap">Occupation</label>
 						<input class="form-control" type="text" placeholder="" name="name"
 							formControlName="occupation" />
 					</div>
 					<div class="col">
-						<label class="required">Employer</label>
+						<label class="label-input-gap">Employer</label>
 						<input class="form-control" type="text" placeholder="" name="name" formControlName="employer" />
 					</div>
 					<div class="col">
-						<label class="required">SSN</label>
+						<label class="label-input-gap">SSN</label>
 						<input class="form-control" type="text" placeholder="" name="name" formControlName="ssn" />
 					</div>
 					<div class="col">
-						<label class="required">Credit Rating</label>
+						<label class="label-input-gap">Credit Rating</label>
 						<select class="form-select" formControlName="rating">
 							<option>Select</option>
 						</select>
 					</div>
 				</div>
-			</div>
-
-			<div class="section" #notes>
+			</div> -->
+		
+			<div class="section" id="notes">
 				<h6 class="heading">Notes</h6>
-				<div class="row">
+				<div class="row formrow">
 					<div class="col-6">
 						<textarea class="form-control" name="note" id="" cols="70" rows="5"
 							formControlName="note"></textarea>
 					</div>
 				</div>
 			</div>
-
-		</form>
-	</div>
+		</div>
+	</form>
 </div>
+
+
+
+
+
+
+
+

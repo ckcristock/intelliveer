@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { addPatientCordinateMenuItems } from '@pages/home/add-patient/menu';
-import { AddPatientRoutesService } from '@services/add-patient-routes/add-patient-routes.service';
+import { AddPatientService } from '@services/add-patient/add-patient.service';
 
 @Component({
   selector: 'app-callers-info',
@@ -15,13 +15,13 @@ export class CallersInfoComponent implements OnInit {
   showButtonSaveCancel:boolean = false;
 
   constructor(private router: Router,
-    private addPatientRoutesServ: AddPatientRoutesService) { }
+    private addPatientServ: AddPatientService) { }
 
   ngOnInit(): void {
   }
 
   continueToPatient(){
-    this.addPatientRoutesServ.get$();
+    this.addPatientServ.get$();
     let visitedArray: any = JSON.parse(localStorage.getItem("visitedArray") || '[]');
     visitedArray.push("Caller’s Info");
     localStorage.setItem("visitedArray", JSON.stringify(visitedArray));

@@ -1,352 +1,150 @@
-<!-- menu -->
-<div class="row sticky" style="width: 101.4%;">
-	<div class="col-11">
-		<div class="col pills">
-			<a
-				[ngClass]="[selectTab == 'eligibility' ? 'active' : 'inactive']"
-				(click)="scroll(eligibility, 'eligibility')"
-				>Eligibility</a
-			>
-			<a
-				[ngClass]="[selectTab == 'cobaddig' ? 'active' : 'inactive']"
-				(click)="scroll(cobaddig, 'cobaddig')"
-				>COB/Assignment</a
-			>
-			<a
-				[ngClass]="[selectTab == 'deductible' ? 'active' : 'inactive']"
-				(click)="scroll(deductible, 'deductible')"
-				>Deductible</a
-			>
-			<a
-				[ngClass]="[selectTab == 'dentalbenef' ? 'active' : 'inactive']"
-				(click)="scroll(dentalbenef, 'dentalbenef')"
-				>Dental Benefits</a
-			>
-			<a
-				[ngClass]="[selectTab == 'frequencies' ? 'active' : 'inactive']"
-				(click)="scroll(frequencies, 'frequencies')"
-				>Frequencies</a
-			>
-			<a>History</a>
-			<a>General Provision</a>
-			<a>Implant Benefits</a>
-		</div>
-	</div>
-	<div class="col-1 d-flex justify-content-center align-items-center mb-3 gap-2">
-		<img
-			src="../../../../../assets/icons/save.svg"
-			style="width: 37px; height: 37px; cursor: pointer;"
-			alt=""
-		/>
-		<img
-			src="../../../../../assets/icons/add.svg"
-			style="width: 37px; height: 37px; cursor: pointer"
-			alt=""
-		/>
-	</div>
-</div>
-<!-- sections -->
-<div class="row formstyle">
-	<div class="col-12" id="main">
-		<div class="section p-5" #eligibility>
-			<form autocomplete="off">
+<div class="row" *ngIf="Form">
+	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
+		[disableSaveBtn]="Form.invalid" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills>
+	<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
+		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
+			<div class="section" id="eligibility">
 				<div class="mainformsection">
-					<h6 class="heading mb-2">Eligibility</h6>
+					<h6 class="heading">Eligibility</h6>
 					<div class="formrow">
 						<div class="row">
-							<div class="col-3 pt-3">
-								<div class="mainformset">
-									<div>
-										<label class="required pb-3"
-											>Is patient eligible under
-											plan?</label
-										>
+							<div class="col-3">
+								<p class="label-input-gap">
+									Is patient eligible under plan?
+								</p>
+								<div class="two-radios">
+									<div class="yes-no-radio">
+										<input class="form-check-input" type="radio" name="eligible" id="eligible1"
+											autocomplete="off" checked />
+										<label class="" for="eligible1">Yes</label>
 									</div>
-
-									<div class="form-check form-check-inline">
-										<input
-											class="form-check-input"
-											type="radio"
-											name="btnradio"
-											id="btnradio1"
-											autocomplete="off"
-											checked
-										/>
-										<label
-											class="form-check-label"
-											for="btnradio1"
-											>Yes</label
-										>
-									</div>
-									<div class="form-check form-check-inline">
-										<input
-											class="form-check-input"
-											type="radio"
-											name="btnradio"
-											id="btnradio2"
-											autocomplete="off"
-										/>
-										<label
-											class="form-check-label"
-											for="btnradio2"
-											>No</label
-										>
+									<div class="yes-no-radio">
+										<input class="form-check-input" type="radio" name="eligible" id="eligible2"
+											autocomplete="off" />
+										<label class="" for="eligible2">No</label>
 									</div>
 								</div>
 							</div>
-							<div class="col-3 pt-3">
-								<div class="mainformset">
-									<label class="required pb-1"
-										>Calendar Year / Fiscal Year</label
-									>
-									<select
-										class="form-select"
-										formControlName="interest"
-									>
-										<option disabled>Select Website</option>
-										<option>Select</option>
-									</select>
-								</div>
+							<div class="col-3">
+								<label class="label-input-gap">Calendar Year / Fiscal Year</label>
+								<ng-select placeholder="Select" [items]="years" bindLabel="name" bindValue="name"
+									name="calendarFiscal" [(ngModel)]="selectedYear" [ngModelOptions]="{standalone: true}">
+								</ng-select>
 							</div>
-							<div class="col-3 pt-3">
-								<div class="mainformset">
-									<label class="required pb-1"
-										>Begin Date</label
-									>
-									<input
-										class="form-control"
-										type="date"
-										placeholder=""
-										name="DOB"
-										formControlName="DOB"
-									/>
-								</div>
+							<div class="col-3" *ngIf="selectedYear == years[1].name">
+								<label class="label-input-gap">Begin Date</label>
+								<input class="form-control" type="text" placeholder="" name="" />
 							</div>
-							<div class="col-3 pt-3">
-								<div class="mainformset">
-									<label class="required pb-1"
-										>End Date</label
-									>
-									<input
-										class="form-control"
-										type="date"
-										placeholder=""
-										name="DOB"
-										formControlName="DOB"
-									/>
-								</div>
+							<div class="col-3" *ngIf="selectedYear == years[1].name">
+								<label class="label-input-gap">End Date</label>
+								<input class="form-control" type="text" placeholder="" name="" />
 							</div>
 						</div>
 					</div>
 					<div class="formrow">
 						<div class="row">
-							<div class="col-3 pt-3">
+							<div class="col-3">
+								<label class="label-input-gap">Age limit for subscriber</label>
+								<input class="form-control" type="text" placeholder="" name="DOB" />
+							</div>
+							<div class="col-3">
+								<label class="label-input-gap">Age limit for dependants</label>
+								<input class="form-control" type="text" placeholder="" name="DOB" />
+							</div>
+							<div class="col-3">
+								<label class="label-input-gap">Age limit for dependants (Child)</label>
+								<input class="form-control" type="text" placeholder="" name="DOB" />
+							</div>
+							<div class="col-3">
+								<label class="label-input-gap">Age limit for dependants
+									(Student)</label>
+								<input class="form-control" type="text" placeholder="" name="DOB" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" id="cobaddig">
+				<div class="mainformsection">
+					<h6 class="heading">COB/Assignment</h6>
+					<div class="formrow">
+						<div class="row">
+							<div class="col-3">
 								<div class="mainformset">
-									<label class="required pb-1"
-										>Age limit for subscriber</label
-									>
-									<input
-										class="form-control"
-										type="text"
-										placeholder=""
-										name="DOB"
-										formControlName="DOB"
-									/>
+									<label class="label-input-gap">Type of Coordination of benefits</label>
+									<select class="form-select">
+										<option disabled>Select Website</option>
+										<option>Select</option>
+									</select>
 								</div>
 							</div>
-							<div class="col-3 pt-3">
+							<div class="col-3">
 								<div class="mainformset">
-									<label class="required pb-1"
-										>Age limit for dependants</label
-									>
-									<input
-										class="form-control"
-										type="text"
-										placeholder=""
-										name="DOB"
-										formControlName="DOB"
-									/>
+									<label class="label-input-gap">Assignment of Benefits</label>
+									<select class="form-select">
+										<option disabled>Select Website</option>
+										<option>Select</option>
+									</select>
 								</div>
 							</div>
-							<div class="col-3 pt-3">
+							<div class="col-3">
 								<div class="mainformset">
-									<label class="required pb-1"
-										>Age limit for dependants (Child)</label
-									>
-									<input
-										class="form-control"
-										type="text"
-										placeholder=""
-										name="DOB"
-										formControlName="DOB"
-									/>
+									<label class="label-input-gap">Are the fees based on contract or
+										UCR?</label>
+									<select class="form-select">
+										<option disabled>Select Website</option>
+										<option>Select</option>
+									</select>
 								</div>
 							</div>
-							<div class="col-3 pt-3">
+							<div class="col-3">
 								<div class="mainformset">
-									<label class="required pb-1"
-										>Age limit for dependants
-										(Student)</label
-									>
-									<input
-										class="form-control"
-										type="text"
-										placeholder=""
-										name="DOB"
-										formControlName="DOB"
-									/>
+									<label class="label-input-gap">If contract, which fee schedule?</label>
+									<select class="form-select">
+										<option disabled>Select Website</option>
+										<option>Select</option>
+									</select>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</form>
-		</div>
-
-		<div class="section p-5" #cobaddig>
-			<div class="mainformsection">
-				<form autocomplete="off">
-					<h6 class="heading mb-2">COB/Assignment</h6>
-					<div class="formrow">
-						<div class="row">
-							<div class="col-3 pt-3">
-								<div class="mainformset">
-									<label class="required pb-1"
-										>Type of Coordination of benefits</label
-									>
-									<select
-										class="form-select"
-										formControlName="interest"
-									>
-										<option disabled>Select Website</option>
-										<option>Select</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-3 pt-3">
-								<div class="mainformset">
-									<label class="required pb-1"
-										>Assignment of Benefits</label
-									>
-									<select
-										class="form-select"
-										formControlName="interest"
-									>
-										<option disabled>Select Website</option>
-										<option>Select</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-3 pt-3">
-								<div class="mainformset">
-									<label class="required pb-1"
-										>Are the fees based on contract or
-										UCR?</label
-									>
-									<select
-										class="form-select"
-										formControlName="interest"
-									>
-										<option disabled>Select Website</option>
-										<option>Select</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-3 pt-3">
-								<div class="mainformset">
-									<label class="required pb-1"
-										>If contract, which fee schedule?</label
-									>
-									<select
-										class="form-select"
-										formControlName="interest"
-									>
-										<option disabled>Select Website</option>
-										<option>Select</option>
-									</select>
-								</div>
-							</div>
-						</div>
-					</div>
-				</form>
 			</div>
-		</div>
-		<div class="section p-5" #deductible>
-			<form autocomplete="off">
+			<div class="section" id="deductible">
 				<div class="mainformsection">
-					<h6 class="heading mb-2">Deductible</h6>
+					<h6 class="heading">Deductible</h6>
 					<div class="formrow">
 						<div class="row">
-							<div class="twenty pt-3">
+							<div class="twenty">
 								<div class="mainformset">
-									<label class="required pb-1"
-										>Deductible (Family)</label
-									>
-									<input
-										class="form-control"
-										type="text"
-										placeholder=""
-										name="DOB"
-										formControlName="DOB"
-									/>
+									<label class="label-input-gap">Deductible (Family)</label>
+									<input class="form-control" type="text" placeholder="" name="DOB" />
 								</div>
 							</div>
-							<div class="twenty pt-3">
+							<div class="twenty">
 								<div class="mainformset">
-									<label class="required pb-1"
-										>Deductible remaining (Family)</label
-									>
-									<input
-										class="form-control"
-										type="text"
-										placeholder=""
-										name="DOB"
-										formControlName="DOB"
-									/>
+									<label class="label-input-gap">Deductible remaining (Family)</label>
+									<input class="form-control" type="text" placeholder="" name="DOB" />
 								</div>
 							</div>
-							<div class="twenty pt-3">
+							<div class="twenty">
 								<div class="mainformset">
-									<label class="required pb-1"
-										>Deductible (Individual)</label
-									>
-									<input
-										class="form-control"
-										type="text"
-										placeholder=""
-										name="DOB"
-										formControlName="DOB"
-									/>
+									<label class="label-input-gap">Deductible (Individual)</label>
+									<input class="form-control" type="text" placeholder="" name="DOB" />
 								</div>
 							</div>
-							<div class="twenty pt-3">
+							<div class="twenty">
 								<div class="mainformset">
-									<label class="required pb-1"
-										>Deductible remaining
-										(Individual)</label
-									>
-									<input
-										class="form-control"
-										type="text"
-										placeholder=""
-										name="DOB"
-										formControlName="DOB"
-									/>
+									<label class="label-input-gap">Deductible remaining
+										(Individual)</label>
+									<input class="form-control" type="text" placeholder="" name="DOB" />
 								</div>
 							</div>
-							<div class="twenty pt-3">
+							<div class="twenty">
 								<div class="mainformset">
-									<label class="required pb-1"
-										>Deductible waived on
-										Preventative?</label
-									>
-									<input
-										class="form-control"
-										type="text"
-										placeholder=""
-										name="DOB"
-										formControlName="DOB"
-									/>
+									<label class="label-input-gap">Deductible waived on
+										Preventative?</label>
+									<input class="form-control" type="text" placeholder="" name="DOB" />
 								</div>
 							</div>
 						</div>
@@ -354,46 +152,22 @@
 					<div class="formrow">
 						<div class="row">
 							<p class="mt-4 mb-0">PERCENTAGE COVERED</p>
-							<div class="col-3 pt-3">
+							<div class="col-3">
 								<div class="mainformset">
-									<label class="required pb-1"
-										>Preventative/Diagnostic (%)</label
-									>
-									<input
-										class="form-control"
-										type="text"
-										placeholder=""
-										name="DOB"
-										formControlName="DOB"
-									/>
+									<label class="label-input-gap">Preventative/Diagnostic (%)</label>
+									<input class="form-control" type="text" placeholder="" name="DOB" />
 								</div>
 							</div>
-							<div class="col-3 pt-3">
+							<div class="col-3">
 								<div class="mainformset">
-									<label class="required pb-1"
-										>Basic (%)</label
-									>
-									<input
-										class="form-control"
-										type="text"
-										placeholder=""
-										name="DOB"
-										formControlName="DOB"
-									/>
+									<label class="label-input-gap">Basic (%)</label>
+									<input class="form-control" type="text" placeholder="" name="DOB" />
 								</div>
 							</div>
-							<div class="col-3 pt-3">
+							<div class="col-3">
 								<div class="mainformset">
-									<label class="required pb-1"
-										>Major (%)</label
-									>
-									<input
-										class="form-control"
-										type="text"
-										placeholder=""
-										name="DOB"
-										formControlName="DOB"
-									/>
+									<label class="label-input-gap">Major (%)</label>
+									<input class="form-control" type="text" placeholder="" name="DOB" />
 								</div>
 							</div>
 						</div>
@@ -402,221 +176,99 @@
 						<div class="mainformset">
 							<p class="mt-4 mb-0">WAITING PERIOD</p>
 							<div class="row">
-								<div class="col-3 pt-3">
-									<div class="mainformset">
-										<!-- <p class="required">Waiting Periods?</p> -->
-
-										<div>
-											<label class="required pb-3"
-												>Waiting Periods?</label
-											>
+								<div class="col-3">
+									<p class="label-input-gap">
+										Waiting Periods?
+									</p>
+									<div class="two-radios">
+										<div class="yes-no-radio">
+											<input class="form-check-input" type="radio" name="waitingper"
+												id="waitingper1" autocomplete="off" checked />
+											<label class="" for="waitingper1">Yes</label>
 										</div>
-										<div
-											class="form-check form-check-inline"
-										>
-											<input
-												class="form-check-input"
-												type="radio"
-												name="btnradio"
-												id="btnradio1"
-												autocomplete="off"
-												checked
-											/>
-											<label
-												class="form-check-label"
-												for="btnradio1"
-												>Yes</label
-											>
-										</div>
-										<div
-											class="form-check form-check-inline"
-										>
-											<input
-												class="form-check-input"
-												type="radio"
-												name="btnradio"
-												id="btnradio2"
-												autocomplete="off"
-											/>
-											<label
-												class="form-check-label"
-												for="btnradio2"
-												>No</label
-											>
+										<div class="yes-no-radio">
+											<input class="form-check-input" type="radio" name="waitingper"
+												id="waitingper2" autocomplete="off" />
+											<label class="" for="waitingper2">No</label>
 										</div>
 									</div>
 								</div>
 
-								<div class="col-3 pt-3">
+								<div class="col-3">
 									<div class="mainformset">
-										<label class="required pb-1"
-											>Prev/Diagnostic</label
-										>
-										<input
-											class="form-control"
-											type="date"
-											placeholder=""
-											name="DOB"
-											formControlName="DOB"
-										/>
+										<label class="label-input-gap">Prev/Diagnostic</label>
+										<input class="form-control" type="date" placeholder="" name="DOB" />
 									</div>
 								</div>
-								<div class="col-3 pt-3">
+								<div class="col-3">
 									<div class="mainformset">
-										<label class="required pb-1"
-											>Basic</label
-										>
-										<input
-											class="form-control"
-											type="date"
-											placeholder=""
-											name="DOB"
-											formControlName="DOB"
-										/>
+										<label class="label-input-gap">Basic</label>
+										<input class="form-control" type="date" placeholder="" name="DOB" />
 									</div>
 								</div>
-								<div class="col-3 pt-3">
+								<div class="col-3">
 									<div class="mainformset">
-										<label class="required pb-1"
-											>Major</label
-										>
-										<input
-											class="form-control"
-											type="date"
-											placeholder=""
-											name="DOB"
-											formControlName="DOB"
-										/>
+										<label class="label-input-gap">Major</label>
+										<input class="form-control" type="date" placeholder="" name="DOB" />
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</form>
-		</div>
-
-		<div class="section p-5" #dentalbenef>
-			<form autocomplete="off">
+			</div>
+			<div class="section" id="dentalBenef">
 				<div class="mainformsection">
-					<h6 class="heading mb-2">Dental Benefits</h6>
-					<div class="row">
-						<div class="col-2 pt-3">
-							<div class="mainformset">
-								<label class="required pb-1"
-									>Dental annual maximum</label
-								>
-								<input
-									class="form-control"
-									type="text"
-									placeholder=""
-									name="DOB"
-									formControlName="DOB"
-								/>
+					<h6 class="heading">Dental Benefits</h6>
+					<div class="formrow">
+						<div class="row" style="width: 110%;">
+							<div style="width: 196px;">
+								<div class="mainformset">
+									<label class="label-input-gap">Dental annual maximum</label>
+									<input class="form-control" type="text" placeholder="" name="DOB" />
+								</div>
 							</div>
-						</div>
-						<div class="col-2 pt-3">
-							<div class="mainformset">
-								<label class="required pb-1">Remaining</label>
-								<input
-									class="form-control"
-									type="text"
-									placeholder=""
-									name="DOB"
-									formControlName="DOB"
-								/>
+							<div style="width: 196px;">
+								<div class="mainformset">
+									<label class="label-input-gap">Remaining</label>
+									<input class="form-control" type="text" placeholder="" name="DOB" />
+								</div>
 							</div>
-						</div>
-						<div class="col-8 pt-3">
-							<div class="mainformset">
+							<div style="width: 615px;">
 								<div>
-									<label class="required pb-1"
-										>Basic includes</label
-									>
+									<label class="col label-input-gap">Basic includes</label>
 								</div>
+								<div class=" rowinputs">
 
-								<div class="form-check form-check-inline">
-									<input
-										class="form-check-input"
-										type="checkbox"
-										id="inlineCheckbox1"
-										value="option1"
-									/>
-									<label
-										class="form-check-label"
-										for="inlineCheckbox1"
-										>Restorative</label
-									>
-								</div>
-								<div class="form-check form-check-inline">
-									<input
-										class="form-check-input"
-										type="checkbox"
-										id="inlineCheckbox2"
-										value="option2"
-									/>
-									<label
-										class="form-check-label"
-										for="inlineCheckbox2"
-										>Endo</label
-									>
-								</div>
-								<div class="form-check form-check-inline">
-									<input
-										class="form-check-input"
-										type="checkbox"
-										id="inlineCheckbox1"
-										value="option1"
-									/>
-									<label
-										class="form-check-label"
-										for="inlineCheckbox3"
-										>Perio</label
-									>
-								</div>
-								<div class="form-check form-check-inline">
-									<input
-										class="form-check-input"
-										type="checkbox"
-										id="inlineCheckbox2"
-										value="option2"
-									/>
-									<label
-										class="form-check-label"
-										for="inlineCheckbox4"
-										>Oral Surgery</label
-									>
-								</div>
 
-								<div class="form-check form-check-inline">
-									<div class="d-flex align-items-center">
-										<div class="">
-											<input
-												class="form-check-input mb-2"
-												type="checkbox"
-												id=""
-												value="option2"
-											/>
-										</div>
-
-										<div class="pe-2 ps-2">
-											<label
-												class="form-check-label"
-												for=""
-												>Other</label
-											>
-										</div>
-
-										<div class="">
-											<input
-												class="form-control-inline"
-												type="text"
-												placeholder=""
-												name=""
-												formControlName=""
-											/>
-										</div>
+									<div class="rowinputs">
+										<input class="form-check-input" type="checkbox" id="inlineCheckbox1"
+											value="option1" />
+										<label for="inlineCheckbox1">Restorative</label>
 									</div>
+									<div class="rowinputs">
+										<input class="form-check-input" type="checkbox" id="inlineCheckbox2"
+											value="option2" />
+										<label for="inlineCheckbox2">Endo</label>
+									</div>
+									<div class="rowinputs">
+										<input class="form-check-input" type="checkbox" id="inlineCheckbox3"
+											value="option3" />
+										<label for="inlineCheckbox3">Perio</label>
+									</div>
+									<div class="rowinputs">
+										<input class="form-check-input" type="checkbox" id="inlineCheckbox4"
+											value="option4" />
+										<label for="inlineCheckbox4">Oral Surgery</label>
+									</div>
+
+									<div class="rowinputs">
+										<input type="checkbox" id="inlineCheckbox5" value="option5" />
+										<label for="inlineCheckbox5" style="margin-right: 7px !important;">Other</label>
+									</div>
+
+									<input class="form-control-inline" type="text" placeholder="" name="" />
+
 								</div>
 							</div>
 						</div>
@@ -626,152 +278,74 @@
 							<div class="col">
 								<div class="mainformset">
 									<div>
-										<label class="required pt-3 pb-1"
-											>Major includes</label
-										>
+										<label class="">Major includes</label>
 									</div>
 
-									<div class="form-check form-check-inline">
-										<input
-											class="form-check-input"
-											type="checkbox"
-											id="inlineCheckbox1"
-											value="option1"
-										/>
-										<label
-											class="form-check-label"
-											for="inlineCheckbox1"
-											>Crowns</label
-										>
-									</div>
-									<div class="form-check form-check-inline">
-										<input
-											class="form-check-input"
-											type="checkbox"
-											id="inlineCheckbox2"
-											value="option2"
-										/>
-										<label
-											class="form-check-label"
-											for="inlineCheckbox2"
-											>Bridges</label
-										>
-									</div>
-									<div class="form-check form-check-inline">
-										<input
-											class="form-check-input"
-											type="checkbox"
-											id="inlineCheckbox1"
-											value="option1"
-										/>
-										<label
-											class="form-check-label"
-											for="inlineCheckbox3"
-											>Dentures</label
-										>
-									</div>
-									<div class="form-check form-check-inline">
-										<input
-											class="form-check-input"
-											type="checkbox"
-											id="inlineCheckbox2"
-											value="option2"
-										/>
-										<label
-											class="form-check-label"
-											for="inlineCheckbox4"
-											>Partials</label
-										>
-									</div>
-									<div class="form-check form-check-inline">
-										<input
-											class="form-check-input"
-											type="checkbox"
-											id="inlineCheckbox2"
-											value="option2"
-										/>
-										<label
-											class="form-check-label"
-											for="inlineCheckbox5"
-											>Implants</label
-										>
-									</div>
-									<div class="form-check form-check-inline">
-										<div class="d-flex align-items-center">
-											<div class="">
-												<input
-													class="form-check-input mb-2"
-													type="checkbox"
-													id=""
-													value="option2"
-												/>
-											</div>
-
-											<div class="pe-2 ps-2">
-												<label
-													class="form-check-label"
-													for=""
-													>Other</label
-												>
-											</div>
-
-											<div class="">
-												<input
-													class="form-control-inline"
-													type="text"
-													placeholder=""
-													name=""
-													formControlName=""
-												/>
-											</div>
+									<div class="rowinputs" style="width: 670px;">
+										<div class="rowinputs">
+											<input type="checkbox" id="majorinclu1" value="option1" />
+											<label class="form-check-label" for="majorinclu1">Crowns</label>
 										</div>
+										<div class="rowinputs">
+											<input type="checkbox" id="majorinclu2" value="option2" />
+											<label class="form-check-label" for="majorinclu2">Bridges</label>
+										</div>
+										<div class="rowinputs">
+											<input type="checkbox" id="majorinclu3" value="option3" />
+											<label class="form-check-label" for="majorinclu3">Dentures</label>
+										</div>
+										<div class="rowinputs">
+											<input type="checkbox" id="majorinclu4" value="option4" />
+											<label class="form-check-label" for="majorinclu4">Partials</label>
+										</div>
+										<div class="rowinputs">
+											<input type="checkbox" id="majorinclu5" value="option5" />
+											<label class="form-check-label" for="majorinclu5">Implants</label>
+										</div>
+										<div class="rowinputs">
+											<input type="checkbox" id="majorinclu6" value="option6" />
+											<label for="majorinclu6" style="margin-right: 7px !important;">Other</label>
+										</div>
+	
+										<input class="form-control-inline" type="text" placeholder="" name="" />
 									</div>
+
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</form>
-		</div>
-		<div class="section p-5" #frequencies>
-			<form autocomplete="off">
+			</div>
+			<div class="section" id="frequencies">
 				<div class="mainformsection">
-					<h6 class="heading mb-2">Frequencies</h6>
+					<h6 class="heading">Frequencies</h6>
 
+					<!-- EXAMS -->
 					<div class="formrow">
 						<div class="row">
 							<div class="col-5">
-								<p class="mt-4 mb-2 pb-2">EXAMS</p>
+								<p class="mt-4 pb-2">EXAMS</p>
 								<div class="row">
 									<!-- button and dropdown inline-->
 									<div class="col-6">
 										<div class="mainformset">
 											<div class="row">
 												<div class="labelsinline">
-													<label class="required pb-1"
-														>Frecuency</label
-													>
-													<label class="required pb-1"
-														>Time Frame</label
-													>
+													<label class="label-input-gap" style="margin-right: 10px;">Frecuency</label>
+													<label class="label-input-gap">Time Frame</label>
 												</div>
 											</div>
 										</div>
 										<div class="row">
-											<div
-												class="btn-group btn-group-select"
-											>
-												<button style="height: 35px;" class="">Select</button>
-												<select
-													class="form-select"
-													formControlName="interest"
-												>
+											<div class="btn-group btn-group-select">
+												<button class="btn btn-light">
+													Select
+												</button>
+												<select class="form-select">
 													<option disabled>
 														Select Website
 													</option>
-													<option>
-														Select
-													</option>
+													<option>Select</option>
 												</select>
 											</div>
 										</div>
@@ -779,50 +353,33 @@
 									<!-- input with its title -->
 									<div class="col-6">
 										<div class="mainformset">
-											<label class="required pb-1"
-												>Exceptions</label
-											>
-											<input
-												class="form-control"
-												type="text"
-												placeholder=""
-												name=""
-												formControlName=""
-											/>
+											<label class="label-input-gap">Exceptions</label>
+											<input class="form-control" type="text" placeholder="" name="" />
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="col-5">
-								<p class="mt-4 mb-2 pb-2">PROPHYLAXIS</p>
+								<p class="mt-4 pb-2">PROPHYLAXIS</p>
 								<div class="row">
 									<!-- button and dropdown inline-->
 									<div class="col-6">
 										<div class="row">
 											<div class="labelsinline">
-												<label class="required pb-1"
-													>Frecuency</label
-												>
-												<label class="required pb-1"
-													>Time Frame</label
-												>
+												<label class="label-input-gap" style="margin-right: 10px;">Frecuency</label>
+												<label class="label-input-gap">Time Frame</label>
 											</div>
 										</div>
 										<div class="row">
-											<div
-												class="btn-group btn-group-select"
-											>
-												<button style="height: 35px;" class="">Select</button>
-												<select
-													class="form-select"
-													formControlName="interest"
-												>
+											<div class="btn-group btn-group-select">
+												<button class="btn btn-light">
+													Select
+												</button>
+												<select class="form-select">
 													<option disabled>
 														Select Website
 													</option>
-													<option>
-														Select
-													</option>
+													<option>Select</option>
 												</select>
 											</div>
 										</div>
@@ -831,16 +388,8 @@
 									<!-- input with its title -->
 									<div class="col-6">
 										<div class="mainformset">
-											<label class="required pb-1"
-												>Exceptions</label
-											>
-											<input
-												class="form-control"
-												type="text"
-												placeholder=""
-												name=""
-												formControlName=""
-											/>
+											<label class="label-input-gap">Exceptions</label>
+											<input class="form-control" type="text" placeholder="" name="" />
 										</div>
 									</div>
 								</div>
@@ -848,112 +397,71 @@
 						</div>
 					</div>
 
+					<!-- PERIO. MAINTENANCE -->
 					<div class="formrow">
 						<p class="mt-4 mb-0 pb-0">PERIO. MAINTENANCE</p>
 						<div class="row">
 							<div class="col-5">
 								<div class="row">
 									<!-- button and dropdown inline-->
-									<div class="col-6 pt-3">
+									<div class="col-6">
 										<div class="row">
 											<div class="labelsinline">
-												<label class="required pb-1"
-													>Frecuency</label
-												>
-												<label class="required pb-1"
-													>Time Frame</label
-												>
+												<label class="label-input-gap" style="margin-right: 10px;">Frecuency</label>
+												<label class="label-input-gap">Time Frame</label>
 											</div>
 										</div>
 										<div class="row">
-											<div
-												class="btn-group btn-group-select"
-											>
-												<button style="height: 35px;" class="">Select</button>
-												<select
-													class="form-select"
-													formControlName="interest"
-												>
+											<div class="btn-group btn-group-select">
+												<button class="btn btn-light">
+													Select
+												</button>
+												<select class="form-select">
 													<option disabled>
 														Select Website
 													</option>
-													<option>
-														Select
-													</option>
+													<option>Select</option>
 												</select>
 											</div>
 										</div>
 									</div>
 									<!-- input with its title -->
-									<div class="col-6 pt-3">
+									<div class="col-6">
 										<div class="mainformset">
-											<label class="required pb-1"
-												>Exceptions</label
-											>
-											<input
-												class="form-control"
-												type="text"
-												placeholder=""
-												name=""
-												formControlName=""
-											/>
+											<label class="label-input-gap">Exceptions</label>
+											<input class="form-control" type="text" placeholder="" name="" />
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-5 pt-3">
+							<div class="col-5">
 								<div class="row">
 									<!-- button and dropdown inline-->
 									<div class="col-6">
 										<div class="mainformset">
-											<label class="required pb-1"
-												>Paid at</label
-											>
-											<input
-												class="form-control"
-												type="text"
-												placeholder=""
-												name=""
-												formControlName=""
-											/>
+											<label class="label-input-gap">Paid at</label>
+											<input class="form-control" type="text" placeholder="" name="" />
 										</div>
 									</div>
-									<!-- input with its title -->
+									<!-- vertical radios -->
 									<div class="col-6">
 										<div class="mainformsetdefalt">
-											<label
-												class="required py-1"
-											></label>
+											<label class="required py-1"></label>
 											<div class="form-check">
-												<input
-													class="form-check-input"
-													type="radio"
-													name="flexRadioDefault"
-													id="flexRadioDefault1"
-												/>
-												<label
-													class="form-check-label"
-													for="flexRadioDefault1"
-												>
-													Default radio
+												<input class="form-check-input" type="radio" name="flexRadioDefault"
+													id="flexRadioDefault1" />
+												<label class="form-check-label" for="flexRadioDefault1">
+													Either/or
 												</label>
 											</div>
 										</div>
 
 										<div class="form-check">
 											<div class="mainformset">
-												<input
-													class="form-check-input"
-													type="radio"
-													name="flexRadioDefault"
-													id="flexRadioDefault2"
-													checked
-												/>
-												<label
-													class="form-check-label"
-													for="flexRadioDefault2"
-												>
-													Default checked radio
+												<input class="form-check-input" type="radio" name="flexRadioDefault"
+													id="flexRadioDefault2" checked />
+												<label class="form-check-label" for="flexRadioDefault2">
+													In addition to
 												</label>
 											</div>
 										</div>
@@ -962,8 +470,714 @@
 							</div>
 						</div>
 					</div>
+
+					<!-- FMX -->
+					<div class="formrow">
+						<div class="row">
+							<div class="col-5">
+								<p class="mt-4 pb-2">FMX</p>
+								<div class="row">
+									<!-- button and dropdown inline-->
+									<div class="col-6">
+										<div class="mainformset">
+											<div class="row">
+												<div class="labelsinline">
+													<label class="label-input-gap" style="margin-right: 10px;">Frecuency</label>
+													<label class="label-input-gap">Time Frame</label>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="btn-group btn-group-select">
+												<button class="btn btn-light">
+													Select
+												</button>
+												<select class="form-select">
+													<option disabled>
+														Select Website
+													</option>
+													<option>Select</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<!-- input with its title -->
+									<div class="col-6">
+										<div class="mainformset">
+											<label class="label-input-gap">Exceptions</label>
+											<input class="form-control" type="text" placeholder="" name="" />
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-5">
+								<p class="mt-4 pb-2">PANO</p>
+								<div class="row">
+									<!-- button and dropdown inline-->
+									<div class="col-6">
+										<div class="row">
+											<div class="labelsinline">
+												<label class="label-input-gap" style="margin-right: 10px;">Frecuency</label>
+												<label class="label-input-gap">Time Frame</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="btn-group btn-group-select">
+												<button class="btn btn-light">
+													Select
+												</button>
+												<select class="form-select">
+													<option disabled>
+														Select Website
+													</option>
+													<option>Select</option>
+												</select>
+											</div>
+										</div>
+									</div>
+
+									<!-- input with its title -->
+									<div class="col-6">
+										<div class="mainformset">
+											<label class="label-input-gap">Exceptions</label>
+											<input class="form-control" type="text" placeholder="" name="" />
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- vertical radios -->
+							<div class="col-2">
+								<p class="mt-4 pb-2"></p>
+								<div class="mainformsetdefalt">
+									<label class="required py-1"></label>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="fmxr" id="fmxr1" />
+										<label class="form-check-label" for="fmxr1">
+											Either/or
+										</label>
+									</div>
+								</div>
+
+								<div class="form-check">
+									<div class="mainformset">
+										<input class="form-check-input" type="radio" name="fmxr" id="fmxr2" checked />
+										<label class="form-check-label" for="fmxr2">
+											Both
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- BWX -->
+					<div class="formrow">
+						<p class="mt-4 mb-0 pb-0">BWX</p>
+						<div class="row">
+							<div class="col-5">
+								<div class="row">
+									<!-- button and dropdown inline-->
+									<div class="col-6">
+										<div class="row">
+											<div class="labelsinline">
+												<label class="label-input-gap" style="margin-right: 10px;">Frecuency</label>
+												<label class="label-input-gap">Time Frame</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="btn-group btn-group-select">
+												<button class="btn btn-light">
+													Select
+												</button>
+												<select class="form-select">
+													<option disabled>
+														Select Website
+													</option>
+													<option>Select</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<!-- input with its title -->
+									<div class="col-6">
+										<div class="mainformset">
+											<label class="label-input-gap">Exceptions</label>
+											<input class="form-control" type="text" placeholder="" name="" />
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-5">
+								<div class="row">
+									<!-- button and dropdown inline-->
+									<div class="col-6">
+										<p class="label-input-gap">
+											Intra oral images covered?
+										</p>
+										<div class="two-radios">
+											<div class="yes-no-radio">
+												<input class="form-check-input" type="radio" name="intaoralimgs"
+													id="intaoralimgs1" autocomplete="off" checked />
+												<label class="" for="intaoralimgs1">Yes</label>
+											</div>
+											<div class="yes-no-radio">
+												<input class="form-check-input" type="radio" name="intaoralimgs"
+													id="intaoralimgs2" autocomplete="off" />
+												<label class="" for="intaoralimgs2">No</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- SCALING AND ROOT PLANING -->
+					<div class="formrow">
+						<p class="mt-4 mb-0 pb-0">SCALING AND ROOT PLANING</p>
+						<div class="row">
+							<div class="col-5">
+								<div class="row">
+									<!-- button and dropdown inline-->
+									<div class="col-6">
+										<div class="row">
+											<div class="labelsinline">
+												<label class="label-input-gap" style="margin-right: 10px;">Frecuency</label>
+												<label class="label-input-gap">Time Frame</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="btn-group btn-group-select">
+												<button class="btn btn-light">
+													Select
+												</button>
+												<select class="form-select">
+													<option disabled>
+														Select Website
+													</option>
+													<option>Select</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<!-- input with its title -->
+									<div class="col-6">
+										<div class="mainformset">
+											<label class="label-input-gap">Exceptions</label>
+											<input class="form-control" type="text" placeholder="" name="" />
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-5">
+								<div class="row">
+									<!-- button and dropdown inline-->
+									<div class="col-6">
+										<p class="label-input-gap">
+											Can all quads be on same day?
+										</p>
+										<div class="two-radios">
+											<div class="yes-no-radio">
+												<input class="form-check-input" type="radio" name="quadssamed"
+													id="quadssamed1" autocomplete="off" checked />
+												<label class="" for="quadssamed1">Yes</label>
+											</div>
+											<div class="yes-no-radio">
+												<input class="form-check-input" type="radio" name="quadssamed"
+													id="quadssamed2" autocomplete="off" />
+												<label class="" for="quadssamed2">No</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- RESTORATIONS AND CROWNS -->
+					<div class="formrow">
+						<div class="row">
+							<div class="col-5">
+								<p class="mt-4 pb-2">RESTORATIONS</p>
+								<div class="row">
+									<!-- button and dropdown inline-->
+									<div class="col-6">
+										<div class="mainformset">
+											<div class="row">
+												<div class="labelsinline">
+													<label class="label-input-gap" style="margin-right: 10px;">Frecuency</label>
+													<label class="label-input-gap">Time Frame</label>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="btn-group btn-group-select">
+												<button class="btn btn-light">
+													Select
+												</button>
+												<select class="form-select">
+													<option disabled>
+														Select Website
+													</option>
+													<option>Select</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<!-- input with its title -->
+									<div class="col-6">
+										<div class="mainformset">
+											<label class="label-input-gap">Exceptions</label>
+											<input class="form-control" type="text" placeholder="" name="" />
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-5">
+								<p class="mt-4 pb-2">CROWNS</p>
+								<div class="row">
+									<!-- button and dropdown inline-->
+									<div class="col-6">
+										<div class="row">
+											<div class="labelsinline">
+												<label class="label-input-gap" style="margin-right: 10px;">Frecuency</label>
+												<label class="label-input-gap">Time Frame</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="btn-group btn-group-select">
+												<button class="btn btn-light">
+													Select
+												</button>
+												<select class="form-select">
+													<option disabled>
+														Select Website
+													</option>
+													<option>Select</option>
+												</select>
+											</div>
+										</div>
+									</div>
+
+									<!-- input with its title -->
+									<div class="col-6">
+										<div class="mainformset">
+											<label class="label-input-gap">Exceptions</label>
+											<input class="form-control" type="text" placeholder="" name="" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- BRIDGES AND DENTURES -->
+					<div class="formrow">
+						<div class="row">
+							<div class="col-5">
+								<p class="mt-4 pb-2">BRIDGES</p>
+								<div class="row">
+									<!-- button and dropdown inline-->
+									<div class="col-6">
+										<div class="mainformset">
+											<div class="row">
+												<div class="labelsinline">
+													<label class="label-input-gap" style="margin-right: 10px;">Frecuency</label>
+													<label class="label-input-gap">Time Frame</label>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="btn-group btn-group-select">
+												<button class="btn btn-light">
+													Select
+												</button>
+												<select class="form-select">
+													<option disabled>
+														Select Website
+													</option>
+													<option>Select</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<!-- input with its title -->
+									<div class="col-6">
+										<div class="mainformset">
+											<label class="label-input-gap">Exceptions</label>
+											<input class="form-control" type="text" placeholder="" name="" />
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-5">
+								<p class="mt-4 pb-2">DENTURES</p>
+								<div class="row">
+									<!-- button and dropdown inline-->
+									<div class="col-6">
+										<div class="row">
+											<div class="labelsinline">
+												<label class="label-input-gap" style="margin-right: 10px;">Frecuency</label>
+												<label class="label-input-gap">Time Frame</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="btn-group btn-group-select">
+												<button class="btn btn-light">
+													Select
+												</button>
+												<select class="form-select">
+													<option disabled>
+														Select Website
+													</option>
+													<option>Select</option>
+												</select>
+											</div>
+										</div>
+									</div>
+
+									<!-- input with its title -->
+									<div class="col-6">
+										<div class="mainformset">
+											<label class="label-input-gap">Exceptions</label>
+											<input class="form-control" type="text" placeholder="" name="" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- PARTIALS -->
+					<div class="formrow">
+						<div class="row">
+							<div class="col-5">
+								<p class="mt-4 pb-2">PARTIALS</p>
+								<div class="row">
+									<!-- button and dropdown inline-->
+									<div class="col-6">
+										<div class="mainformset">
+											<div class="row">
+												<div class="labelsinline">
+													<label class="label-input-gap" style="margin-right: 10px;">Frecuency</label>
+													<label class="label-input-gap">Time Frame</label>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="btn-group btn-group-select">
+												<button class="btn btn-light">
+													Select
+												</button>
+												<select class="form-select">
+													<option disabled>
+														Select Website
+													</option>
+													<option>Select</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<!-- input with its title -->
+									<div class="col-6">
+										<div class="mainformset">
+											<label class="label-input-gap">Exceptions</label>
+											<input class="form-control" type="text" placeholder="" name="" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- ADD ANOTHER BUTTON -->
+					<p style="margin-top: 29px">
+						<img src="assets/icons/add.svg" width="28" height="28" />
+						Add Another
+					</p>
 				</div>
-			</form>
+			</div>
+			<div class="section" id="history">
+				<div class="mainformsection">
+					<h6 class="heading">History</h6>
+					<div class="formrow">
+						<div class="row">
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="label-input-gap">FMX</label>
+									<input class="form-control" type="date" placeholder="" name="DOB" />
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="label-input-gap">Pano</label>
+									<input class="form-control" type="date" placeholder="" name="DOB" />
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="label-input-gap">Prophy</label>
+									<input class="form-control" type="date" placeholder="" name="DOB" />
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="mainformset">
+									<label class="label-input-gap">BWX</label>
+									<input class="form-control" type="date" placeholder="" name="DOB" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- ADD ANOTHER BUTTON -->
+					<p style="margin-top: 29px">
+						<img src="assets/icons/add.svg" width="28" height="28" />
+						Add Another
+					</p>
+				</div>
+			</div>
+			<div class="section" id="generalProv">
+				<div class="mainformsection">
+					<h6 class="heading">General Provisions</h6>
+					<div class="formrow">
+						<div class="row">
+							<div class="col">
+								<p class="label-input-gap">
+									Porcelain on Posterior Crowns?
+								</p>
+								<div class="two-radios">
+									<div class="yes-no-radio">
+										<input class="form-check-input" type="radio" name="porcelpost" id="porcelpost1"
+											autocomplete="off" checked />
+										<label class="" for="porcelpost1">Yes</label>
+									</div>
+									<div class="yes-no-radio">
+										<input class="form-check-input" type="radio" name="porcelpost" id="porcelpost2"
+											autocomplete="off" />
+										<label class="btn btn-light" for="porcelpost2">No</label>
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<p class="label-input-gap">
+									Gold Coverage (D2790)?
+								</p>
+								<div class="two-radios">
+									<div class="yes-no-radio">
+										<input class="form-check-input" type="radio" name="gcd27901" id="gcd279011"
+											autocomplete="off" checked />
+										<label class="" for="gcd279011">Yes</label>
+									</div>
+									<div class="yes-no-radio">
+										<input class="form-check-input" type="radio" name="gcd27901" id="gcd279012"
+											autocomplete="off" />
+										<label class="" for="gcd279012">No</label>
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<p class="label-input-gap">
+									Posterior Composites?
+								</p>
+								<div class="two-radios">
+									<div class="yes-no-radio">
+										<input class="form-check-input" type="radio" name="postcomp1" id="postcomp11"
+											autocomplete="off" checked />
+										<label class="" for="postcomp11">Yes</label>
+									</div>
+									<div class="yes-no-radio">
+										<input class="form-check-input" type="radio" name="postcomp1" id="postcomp12"
+											autocomplete="off" />
+										<label class="" for="postcomp12">No</label>
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div class="mainformset">
+									<label class="label-input-gap">Fluoride to the age of</label>
+									<input class="form-control" type="text" placeholder="" name="DOB" />
+								</div>
+							</div>
+							<div class="col">
+								<div class="mainformset">
+									<label class="label-input-gap">Sealants</label>
+									<ng-select placeholder="Select">
+										<ng-option>Select</ng-option>
+									</ng-select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="formrow">
+						<div class="row">
+							<div class="col">
+								<p class="label-input-gap">Night guards?</p>
+								<div class="two-radios">
+									<div class="yes-no-radio">
+										<input class="form-check-input" type="radio" name="nightguards"
+											id="nightguards1" autocomplete="off" checked />
+										<label class="" for="nightguards1">Yes</label>
+									</div>
+									<div class="yes-no-radio">
+										<input class="form-check-input" type="radio" name="nightguards"
+											id="nightguards2" autocomplete="off" />
+										<label class="" for="nightguards2">No</label>
+									</div>
+								</div>
+							</div>
+							<div class="col" style="margin-left: -45px; margin-right: 45px">
+								<div class="mainformset">
+									<div>
+										<label class="label-input-gap">
+											&nbsp;</label>
+									</div>
+
+									<div class="row">
+										<div class="col-6">
+											<div class="">
+												<input class="form-check-input" type="radio" name="paidat" id="paidat"
+													autocomplete="off" checked />
+												<label class="form-check-label" for="paidat">Paid at</label>
+											</div>
+										</div>
+										<div class="col-6" style="margin-left: -30px">
+											<input class="form-control" type="text" placeholder="" name="DOB"
+												style="margin-top: -6px" />
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<p class="label-input-gap">Restorations</p>
+								<div class="two-radios">
+									<div class="yes-no-radio">
+										<input class="form-check-input" type="radio" name="restora" id="restora1"
+											autocomplete="off" checked />
+										<label class="" for="restora1">Yes</label>
+									</div>
+									<div class="yes-no-radio">
+										<input class="form-check-input" type="radio" name="restora" id="restora2"
+											autocomplete="off" />
+										<label class="" for="restora2">No</label>
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<p class="label-input-gap">
+									Missing Tooth Clause?
+								</p>
+								<div class="two-radios">
+									<div class="yes-no-radio">
+										<input class="form-check-input" type="radio" name="missingtc" id="missingtc1"
+											autocomplete="off" checked />
+										<label class="" for="missingtc1">Yes</label>
+									</div>
+									<div class="yes-no-radio">
+										<input class="form-check-input" type="radio" name="missingtc" id="missingtc2"
+											autocomplete="off" />
+										<label class="" for="missingtc2">No</label>
+									</div>
+								</div>
+							</div>
+							<div class="col"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" id="implantBenef">
+				<div class="mainformsection">
+					<h6 class="heading">Implant Benefits</h6>
+					<div class="formrow">
+						<div class="implant-benef" style="width: 92%;">
+							<div >
+								<p class="label-input-gap">
+									Covered Benefits?
+								</p>
+								<div class="two-radios">
+									<div class="yes-no-radio">
+										<input class="form-check-input" type="radio" name="ppc" id="ppc1"
+											autocomplete="off" checked />
+										<label class="" for="ppc1">Yes</label>
+									</div>
+									<div class="yes-no-radio">
+										<input class="form-check-input" type="radio" name="ppc" id="ppc2"
+											autocomplete="off" />
+										<label class="" for="ppc2">No</label>
+									</div>
+								</div>
+							</div>
+							<div >
+								<p class="label-input-gap">
+									Separate Maximun?
+								</p>
+								<div class="radios-circle-square">
+									<div class="two-radios">
+										<div class="yes-no-radio">
+											<input class="form-check-input" type="radio" name="gcd27902" id="gcd279021"
+												autocomplete="off" checked />
+											<label class="" for="gcd279021">Yes</label>
+										</div>
+										<div class="yes-no-radio">
+											<input class="form-check-input" type="radio" name="gcd27902" id="gcd279022"
+												autocomplete="off" />
+											<label class="" for="gcd279022">No</label>
+										</div>
+									</div>
+									<div class="btn-group" role="group" ngbRadioGroup name="radioBasic2">
+										<label ngbButtonLabel class="btn-dark-brown label-radio-square">
+											<input ngbButton type="radio" class="btn-check" [value]="1" />
+											Year
+										</label>
+										<label ngbButtonLabel class="btn-dark-brown-center label-radio-square">
+											<input ngbButton type="radio" class="btn-check" value="middle" true />
+											Lifetime
+										</label>
+										<label ngbButtonLabel class="btn-dark-brown-right label-radio-square">
+											<input ngbButton type="radio" class="btn-check" [value]="false" />
+											$2500
+										</label>
+									</div>
+								</div>
+
+							</div>
+							<div >
+								<p class="label-input-gap">
+									Deductible?
+								</p>
+
+								<div class="radios-circle-square">
+									<div class="two-radios">
+										<div class="yes-no-radio">
+											<input class="form-check-input" type="radio" name="postcompos"
+												id="postcompos1" autocomplete="off" checked />
+											<label class="" for="postcompos1">Yes</label>
+										</div>
+										<div class="yes-no-radio">
+											<input class="form-check-input" type="radio" name="postcompos"
+												id="postcompos2" autocomplete="off" />
+											<label class="" for="postcompos2">No</label>
+										</div>
+									</div>
+									<div class="btn-group" role="group" ngbRadioGroup name="radioBasic1">
+										<label ngbButtonLabel class="btn-dark-brown label-radio-square">
+											<input ngbButton type="radio" class="btn-check" [value]="1" />
+											Year
+										</label>
+										<label ngbButtonLabel class="btn-dark-brown-center label-radio-square">
+											<input ngbButton type="radio" class="btn-check" [value]="2" />
+											Lifetime
+										</label>
+										<label ngbButtonLabel class="btn-dark-brown-right label-radio-square">
+											<input ngbButton type="radio" class="btn-check" [value]="3" />
+											$250
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>
+	</form>
 </div>

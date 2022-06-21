@@ -1,74 +1,12 @@
-import { keyframes } from '@angular/animations';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AddPatientRoutesService {
-
-  private urlCoorWithProsp: string = "/dashboard/home/add-patient/coor-with-prospect";
-  private patientsTaken: any [] = [];
+export class AddPatientService {
 
   constructor() { }
-
-  private routesCoordWithProsp: any[] = [
-    {
-      title: "Caller's Info",
-      url: `${this.urlCoorWithProsp}/callers-info`,
-      child: []
-    },
-    {
-      title: "Patient",
-      url: `${this.urlCoorWithProsp}/patient`,
-      child: []
-    },
-    {
-      title: "Legal Guardian",
-      url: `${this.urlCoorWithProsp}/lg-guardian`,
-      child: []
-    },
-    {
-      title: "Dentist",
-      url: `${this.urlCoorWithProsp}/dentist`,
-      child: []
-    },
-    {
-      title: "Referrer",
-      url: `${this.urlCoorWithProsp}/referrer`,
-      child: []
-    },
-    {
-      title: "Insurance",
-      url: `${this.urlCoorWithProsp}/insurance`,
-      child: []
-    },
-    {
-      title: "Family Members",
-      url: `${this.urlCoorWithProsp}/family-members`,
-      child: [
-        {
-          title: "Patient 2",
-          url: `${this.urlCoorWithProsp}/family-members/additional-patient-2`},
-        {
-          title: "Patient 3",
-          url: `${this.urlCoorWithProsp}/family-members/additional-patient-3`},
-        {
-          title: "Patient 4",
-          url: `${this.urlCoorWithProsp}/family-members/additional-patient-4`}
-      ]
-    },
-    {
-      title: "Appointment",
-      url: `${this.urlCoorWithProsp}/appointment`,
-      child: []
-    },
-    {
-      title: "Conclusion",
-      url: `${this.urlCoorWithProsp}/conclusion`,
-      child: []
-    },
-  ];
 
   private patientsSavedUnsaved: any [] = [
     {
@@ -100,10 +38,6 @@ export class AddPatientRoutesService {
       this.patientsSavedUnsaved$.next(this.patientsSavedUnsaved);
     }
     
-  }
-
-  getCoordWithProspRoutes(){
-    return this.routesCoordWithProsp;
   }
 
   setPatientSaved(id:number){

@@ -5,6 +5,8 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 import { ProviderFormComponent } from './provider-form.component';
 import { AddressFormModule } from '@modules/forms/address-form/address-form.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ScrollspyModule } from "@modules/scrollspy/scrollspy.module";
+import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
 
 @NgModule({
   declarations: [ProviderFormComponent],
@@ -14,7 +16,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AddressFormModule,
     PipesModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ScrollspyModule,
+    NavBarPillsModule
   ],
   exports: [ProviderFormComponent]
 })

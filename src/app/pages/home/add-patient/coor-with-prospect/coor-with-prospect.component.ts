@@ -3,7 +3,8 @@ import { IMenuItem } from '@pages/dashboard/menu';
 // import { addPatientCordinateMenuItems } from '@pages/header/menu';
 import { Router } from '@angular/router';
 import { addPatientCordinateMenuItems, addPatientQuickMenuItems } from '@pages/home/add-patient/menu';
-import { AddPatientRoutesService } from '@services/add-patient-routes/add-patient-routes.service';
+import { AddPatientService } from '@services/add-patient/add-patient.service';
+import { GlobalRoutesService } from "@services/global-routes/global-routes.service";
 
 @Component({
   selector: 'app-coor-with-prospect',
@@ -27,23 +28,19 @@ export class CoorWithProspectComponent implements OnInit {
   savedPatient: any[] = [];
   visitedPatient: any[] = [];
 
-
   constructor(public router: Router,
-    private addPatientRoutesServ: AddPatientRoutesService) { }
+    private addPatientServ: AddPatientService,
+    private routes: GlobalRoutesService) { }
 
   ngOnInit(): void {
 
-    this.addPatientRoutesServ.getPatientsSavedUnsaved().subscribe((resp: any[])=>{
+    this.addPatientServ.getPatientsSavedUnsaved().subscribe((resp: any[])=>{
       this.savedPatient = resp;
-      console.log("OOOOBBBSSEEERRVV", resp);
-      this.visitedPatient = this.addPatientRoutesServ.getSavedPatientsKeys();
-  
+      this.visitedPatient = this.addPatientServ.getSavedPatientsKeys();
 
-      if(this.addPatientRoutesServ.getCheckAllSaved()){
-        console.log("to seeeeeeee");
+      if(this.addPatientServ.getCheckAllSaved()){
       this.sessionArray = JSON.parse(localStorage.getItem("visitedArray") || '[]');  
 
-        
         let visitedArray: any = JSON.parse(
           localStorage.getItem('visitedArray') || '[]'
         );
@@ -72,7 +69,7 @@ export class CoorWithProspectComponent implements OnInit {
 
       if(this.prevFMCount != familyMemberCount){
         this.menuItemsOfCordinate[6].child = [];
-        this.coordWithProspRoutes =	this.addPatientRoutesServ.getCoordWithProspRoutes();
+        this.coordWithProspRoutes =	this.routes.getCoordWithProspRoutes();
         for (let i = 1; i <= familyMemberCount; i++) {
           let patientInit = i + 1
             this.menuItemsOfCordinate[6].child?.push({
