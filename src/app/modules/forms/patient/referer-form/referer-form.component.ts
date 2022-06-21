@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 
 @Component({
@@ -16,6 +17,15 @@ export class RefererFormComponent implements OnInit {
 	@Output() onCancel = new EventEmitter();
 	@Output() onSubmit = new EventEmitter();
 
+  currentSelection: string = '';
+
+  menuItems: MenuItem[] = [
+		{ title: 'Overview', id: 'overview' },
+		{ title: 'Profile', id: 'profile' },
+		{ title: 'Address', id: 'address' },
+		{ title: 'Contact', id: 'contact' },
+    { title: 'Notes', id: 'notes' },
+	];
   
   idForm: FormGroup;
   selectTab: string = "overview";
@@ -88,6 +98,10 @@ export class RefererFormComponent implements OnInit {
 	}
 	cancel() {
 		this.onCancel.emit();
+	}
+
+  onSectionChange(sectionId: string) {
+		this.currentSelection = sectionId;
 	}
 
   setAddress(type: string) {

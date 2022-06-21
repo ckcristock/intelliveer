@@ -4,6 +4,8 @@ import { AddressFormModule } from '@modules/forms/address-form/address-form.modu
 import { ImageUploaderModule } from '@modules/image-uploader/image-uploader.module';
 import { LegalGuardianFormComponent } from './legal-guardian-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ScrollspyModule } from "@modules/scrollspy/scrollspy.module";
+import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
 
 
 
@@ -16,7 +18,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ImageUploaderModule,
     AddressFormModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ScrollspyModule,
+    NavBarPillsModule
   ],
   exports: [LegalGuardianFormComponent]
 })

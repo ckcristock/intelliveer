@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 
 @Component({
@@ -16,10 +17,18 @@ export class LegalGuardianFormComponent implements OnInit {
 	@Input() formData: any | undefined = undefined;
 	@Output() onCancel = new EventEmitter();
 	@Output() onSubmit = new EventEmitter();
+  currentSelection: string = '';
+
+  menuItems: MenuItem[] = [
+		{ title: 'Overview', id: 'overview' },
+		{ title: 'Profile', id: 'profile' },
+		{ title: 'Address', id: 'address' },
+		{ title: 'Contact', id: 'contact' },
+		{ title: 'Notes', id: 'notes' },
+	];
 
   
   idForm: FormGroup;
-  selectTab: string = "overview";
   fileName: string = "";
   filePath: any;
 
@@ -83,14 +92,9 @@ export class LegalGuardianFormComponent implements OnInit {
     }
   }
 
-  scroll(el: HTMLElement, selectTab: string) {
-    this.selectTab = selectTab.trim();
-    el.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-      inline: 'nearest',
-    });
-  }
+  onSectionChange(sectionId: string) {
+		this.currentSelection = sectionId;
+	}
 
 
 }

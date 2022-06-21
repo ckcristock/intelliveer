@@ -39,7 +39,7 @@ export const patientUserMenuItems = [
 export const patientUserHeaderIconMenuItems = [
 	{
 		title: '',
-		url: '/dashboard/patient/patient-user/patient-detail',
+		url: '/dashboard/patient/patient-user',
 		icon: '/assets/icons/users.svg',
 	},
 	{
