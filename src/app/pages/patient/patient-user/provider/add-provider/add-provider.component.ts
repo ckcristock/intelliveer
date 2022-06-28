@@ -39,7 +39,7 @@ export class AddProviderComponent implements OnInit, OnDestroy {
       //   .createPractice(this.selectedBusinessGroup.bgId, data)
       //   .subscribe({
       //     next: (res) => {
-      //       this.router.navigate(['/dashboard/onboarding/provider']);
+      //       this.router.navigate(['/dashboard/settings/onboarding/provider']);
       //     },
       //     error: () => {},
       //   });

@@ -273,29 +273,7 @@
 		</ul>
 	</div>
 	<div class="__content">
-		<div
-			class="container d-flex justify-content-end align-items-end global-bg-dropdown"
-			*ngIf="router.url.includes('onboarding')"
-		>
-			<div class="col">
-				<span>Settings/ Manage/ {{ selectedBusinessGroup }}</span>
-			</div>
-			<!-- <div class="col-3 text-end me-2">
-					<label class="fw-bold">Business Group:</label>
-				</div> -->
-			<div class="col-3">
-				<select
-					class="form-select"
-					[(ngModel)]="selectedBusinessGroup"
-					(change)="setBusinessGroup($event)"
-					[disabled]="disableBGDropdown"
-				>
-					<option *ngFor="let bg of businessGroups" [value]="bg._id">
-						{{ bg.name }}
-					</option>
-				</select>
-			</div>
-		</div>
+		
 
 		<!-- <nav aria-label="breadcrumb" *ngIf="router.url.includes('onboarding')">
 			<ol class="breadcrumb">

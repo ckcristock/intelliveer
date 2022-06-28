@@ -1,88 +1,54 @@
 <div>
-    <div class="row">
-        <div class="col" style="max-width: 200px">
-            <div class="title">
+	<div class="row">
+		<div class="col" style="max-width: 200px">
+			<div class="title">
 				<p>Phase 1</p>
 			</div>
 			<ul class="ul">
 				<ol class="ol">
 					<li>
-						<ngb-accordion
-							#acc="ngbAccordion"
-							activeIds="patient-panel"
-							class="accord-transparent"
-						>
+						<ngb-accordion #acc="ngbAccordion" activeIds="patient-panel" class="accord-transparent">
 							<ngb-panel title="" id="patient-panel">
 								<ng-template ngbPanelTitle>
-									<span
-										[class.active]="activeSection() == true"
-										[routerLink]="
+									<span [class.active]="activeSection() == true" [routerLink]="
 											'/dashboard/patient/insurance/active'
-										"
-										>Active Dental Plan</span
-									>
+										">Active Dental Plan</span>
 								</ng-template>
 								<ng-template ngbPanelContent>
 									<ul class="ol">
 										<li>
-											<ngb-accordion
-												[closeOthers]="true"
-												#acc="ngbAccordion"
-												activeIds="patient-panel"
-												class="accord-transparent"
-											>
+											<ngb-accordion [closeOthers]="true" #acc="ngbAccordion"
+												activeIds="patient-panel" class="accord-transparent">
 												<ngb-panel id="patient-panel">
 													<ng-template ngbPanelTitle>
-														<span
-															>Primary
-															<i
-																style="
+														<span>Primary
+															<i style="
 																	margin-left: 18px;
-																"
-																class="bi bi-info-circle"
-															></i>
+																" class="bi bi-info-circle"></i>
 														</span>
 													</ng-template>
-													<ng-template
-														ngbPanelContent
-													>
+													<ng-template ngbPanelContent>
 														<ul class="ol">
-															<li
-																class="pointer"
-																routerLinkActive="active"
-																[routerLink]="
+															<li class="pointer" routerLinkActive="active" [routerLink]="
 																	'/dashboard/patient/insurance/policy-info'
-																"
-															>
+																">
 																Policy
-																Informtion
+																Information
 															</li>
-															<li
-																class="pointer"
-																routerLinkActive="active"
-																[routerLink]="
+															<li class="pointer" routerLinkActive="active" [routerLink]="
 																	'/dashboard/patient/insurance/ortho-benef'
-																"
-															>
+																">
 																Orthodontic
 																Benefits
 															</li>
-															<li
-																class="pointer"
-																routerLinkActive="active"
-																[routerLink]="
+															<li class="pointer" routerLinkActive="active" [routerLink]="
 																	'/dashboard/patient/insurance/dental-benef'
-																"
-															>
+																">
 																Dental Benefits
 															</li>
-															<li
-																class="pointer"
-																routerLinkActive="active"
-																[routerLink]="
+															<li class="pointer" routerLinkActive="active" [routerLink]="
 																	'/dashboard/patient/insurance/billing'
-																"
-															>
+																">
 																Billing
 															</li>
 														</ul>
@@ -90,113 +56,69 @@
 												</ngb-panel>
 												<ngb-panel id="patient-panel2">
 													<ng-template ngbPanelTitle>
-														<span
-															>Secondary
-															<i
-																style="
+														<span>Secondary
+															<i style="
 																	margin-left: 18px;
-																"
-																class="bi bi-info-circle"
-															></i>
+																" class="bi bi-info-circle"></i>
 														</span>
 													</ng-template>
-													<ng-template
-														ngbPanelContent
-													>
+													<ng-template ngbPanelContent>
 														<ul class="ol">
-															<li
-																class="pointer"
-																routerLinkActive="active"
-																[routerLink]="
+															<li class="pointer" routerLinkActive="active" [routerLink]="
 																	'/dashboard/patient/insurance/policy-info'
-																"
-															>
+																">
 																Policy
-																Informtion
+																Information
 															</li>
-															<li
-																class="pointer"
-																routerLinkActive="active"
-																[routerLink]="
+															<li class="pointer" routerLinkActive="active" [routerLink]="
 																	'/dashboard/patient/insurance/ortho-benef'
-																"
-															>
+																">
 																Orthodontic
 																Benefits
 															</li>
-															<li
-																class="pointer"
-																routerLinkActive="active"
-																[routerLink]="
+															<li class="pointer" routerLinkActive="active" [routerLink]="
 																	'/dashboard/patient/insurance/dental-benef'
-																"
-															>
+																">
 																Dental Benefits
 															</li>
-															<li
-																class="pointer"
-																routerLinkActive="active"
-																[routerLink]="
+															<li class="pointer" routerLinkActive="active" [routerLink]="
 																	'/dashboard/patient/insurance/billing'
-																"
-															>
+																">
 																Billing
 															</li>
 														</ul>
 													</ng-template>
 												</ngb-panel>
-												<ngb-panel id="patient-panel3"
-													><ng-template ngbPanelTitle>
-														<span
-															>Tertiary
-															<i
-																style="
+												<ngb-panel id="patient-panel3">
+													<ng-template ngbPanelTitle>
+														<span>Tertiary
+															<i style="
 																	margin-left: 18px;
-																"
-																class="bi bi-info-circle"
-															></i>
+																" class="bi bi-info-circle"></i>
 														</span>
 													</ng-template>
-													<ng-template
-														ngbPanelContent
-													>
+													<ng-template ngbPanelContent>
 														<ul class="ol">
-															<li
-																class="pointer"
-																routerLinkActive="active"
-																[routerLink]="
+															<li class="pointer" routerLinkActive="active" [routerLink]="
 																	'/dashboard/patient/insurance/policy-info'
-																"
-															>
+																">
 																Policy
-																Informtion
+																Information
 															</li>
-															<li
-																class="pointer"
-																routerLinkActive="active"
-																[routerLink]="
+															<li class="pointer" routerLinkActive="active" [routerLink]="
 																	'/dashboard/patient/insurance/ortho-benef'
-																"
-															>
+																">
 																Orthodontic
 																Benefits
 															</li>
-															<li
-																class="pointer"
-																routerLinkActive="active"
-																[routerLink]="
+															<li class="pointer" routerLinkActive="active" [routerLink]="
 																	'/dashboard/patient/insurance/dental-benef'
-																"
-															>
+																">
 																Dental Benefits
 															</li>
-															<li
-																class="pointer"
-																routerLinkActive="active"
-																[routerLink]="
+															<li class="pointer" routerLinkActive="active" [routerLink]="
 																	'/dashboard/patient/insurance/billing'
-																"
-															>
+																">
 																Billing
 															</li>
 														</ul>
@@ -210,28 +132,17 @@
 						</ngb-accordion>
 					</li>
 					<li>
-						<ngb-accordion
-							#acc="ngbAccordion"
-							activeIds="patient-panel"
-							class="accord-transparent"
-						>
+						<ngb-accordion #acc="ngbAccordion" activeIds="patient-panel" class="accord-transparent">
 							<ngb-panel title="" id="patient-panel2">
 								<ng-template ngbPanelTitle>
-									<span
-										[class.active]="
+									<span [class.active]="
 											activeSection() == false
-										"
-										[routerLink]="
+										" [routerLink]="
 											'/dashboard/patient/insurance/dropped'
-										"
-										>Dropped Dental Plan</span
-									>
+										">Dropped Dental Plan</span>
 								</ng-template>
 								<ng-template ngbPanelContent>
-									<ul
-										class="ol d-flex flex-column align-items-start"
-										style="margin-left: 12px"
-									>
+									<ul class="ol d-flex flex-column align-items-start" style="margin-left: 12px">
 										<span class="left-menu-spans">
 											Inactive 1
 										</span>
@@ -248,9 +159,9 @@
 					</li>
 				</ol>
 			</ul>
-        </div>
-        <div class="col component-view">
-            <router-outlet></router-outlet>
-        </div>
-    </div>
+		</div>
+		<div class="col component-view">
+			<router-outlet></router-outlet>
+		</div>
+	</div>
 </div>

@@ -46,7 +46,7 @@ export const menuItems = {
 	bottom: [
 		{
 			title: 'Settings',
-			url: '/dashboard/onboarding',
+			url: '/dashboard/settings',
 			icon: 'bi bi-gear',
 		},
 	],
