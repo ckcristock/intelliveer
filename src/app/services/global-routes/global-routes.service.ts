@@ -8,6 +8,9 @@ export class GlobalRoutesService {
   private urlPatientUser: string = "/dashboard/patient/patient-user";
   private urlCoorWithProsp: string = "/dashboard/home/add-patient/coor-with-prospect";
   private urlInsurance: string = "/dashboard/patient/insurance";
+  private urlOnboarding: string = "/dashboard/settings/onboarding";
+  private urlRoleManage: string = "/dashboard/settings/role-management";
+  private urlUserManage: string = "/dashboard/settings/user-management";
 
   constructor() { }
 
@@ -86,13 +89,16 @@ export class GlobalRoutesService {
       child: [
         {
           title: "Patient 2",
-          url: `${this.urlCoorWithProsp}/family-members/additional-patient-2`},
+          url: `${this.urlCoorWithProsp}/family-members/additional-patient-2`
+        },
         {
           title: "Patient 3",
-          url: `${this.urlCoorWithProsp}/family-members/additional-patient-3`},
+          url: `${this.urlCoorWithProsp}/family-members/additional-patient-3`
+        },
         {
           title: "Patient 4",
-          url: `${this.urlCoorWithProsp}/family-members/additional-patient-4`}
+          url: `${this.urlCoorWithProsp}/family-members/additional-patient-4`
+        }
       ]
     },
     {
@@ -107,7 +113,7 @@ export class GlobalRoutesService {
     },
   ];
 
-  private routesPatientInsurance: any[]=[
+  private routesPatientInsurance: any[] = [
     {
       title: "Active",
       url: `${this.urlInsurance}/active`,
@@ -140,31 +146,129 @@ export class GlobalRoutesService {
     },
   ];
 
+  private routesSettingsOnboarding: any[] = [
+    {
+      title: "Business Group",
+      url: `${this.urlOnboarding}/business-group`,
+      child: [{
+        title: "Add",
+        url: `${this.urlOnboarding}/business-group/add`
+      },]
+    },
+    {
+      title: "Legal Entity",
+      url: `${this.urlOnboarding}/legal-entity`,
+      child: [{
+        title: "Add",
+        url: `${this.urlOnboarding}/legal-entity/add`
+      },]
+    },
+    {
+      title: "Location",
+      url: `${this.urlOnboarding}/location`,
+      child: [{
+        title: "Add",
+        url: `${this.urlOnboarding}/location/add`
+      },]
+    },
+    {
+      title: "Practice",
+      url: `${this.urlOnboarding}/practice`,
+      child: [{
+        title: "Add",
+        url: `${this.urlOnboarding}/practice/add`
+      },]
+    },
+    {
+      title: "Mapping",
+      url: `${this.urlOnboarding}/mapping`,
+      child: []
+    },
+  ];
+
+  private routesSettingsRoleManage: any[] = [
+    {
+      title: "Manage Role Templates",
+      url: `${this.urlRoleManage}/manage-role-template`,
+      child: [{
+        title: "Add",
+        url: `${this.urlRoleManage}/manage-role-template/add`
+      },]
+    },
+    {
+      title: "Manage Role",
+      url: `${this.urlRoleManage}/manage-role`,
+      child: [{
+        title: "Add",
+        url: `${this.urlRoleManage}/manage-role/add`
+      },{
+        title: "Edit",
+        url: `${this.urlRoleManage}/manage-role/edit`
+      }]
+    },
+  ];
+
+  private routesSettingsUserManage: any[] = [
+    {
+      title: "Manage User",
+      url: `${this.urlUserManage}/manage-user`,
+      child: []
+    },
+    {
+      title: "User Policy",
+      url: `${this.urlUserManage}/user-policy`,
+      child: []
+    },
+  ];
   // get base URL
-  getPatientUserUrl(){
+  getPatientUserUrl() {
     return this.urlPatientUser;
   }
 
-  getCoordWithProspUrl(){
+  getCoordWithProspUrl() {
     return this.urlCoorWithProsp;
   }
 
-  getPatientInsuranceUrl(){
+  getPatientInsuranceUrl() {
     return this.urlInsurance;
+  }
+
+  getSettingsOnboardingUrl() {
+    return this.urlOnboarding;
+  }
+
+  getSettingsRoleManage() {
+    return this.urlRoleManage;
+  }
+
+  getSettingsUserManage() {
+    return this.urlUserManage;
   }
 
   // get Routes
 
-  getPatientUserRoutes(){
+  getPatientUserRoutes() {
     return this.routesPatientPatientUser;
   }
 
-  getCoordWithProspRoutes(){
+  getCoordWithProspRoutes() {
     return this.routesHomeAddPatientCoordWithProsp;
   }
 
-  getPatientInsuranceRoutes(){
+  getPatientInsuranceRoutes() {
     return this.routesPatientInsurance;
+  }
+
+  getSettingsOnboardingRoutes() {
+    return this.routesSettingsOnboarding;
+  }
+
+  getSettingsRoleManageRoutes() {
+    return this.routesSettingsRoleManage;
+  }
+
+  getSettingsUserManageRoutes() {
+    return this.routesSettingsUserManage;
   }
 
 }

@@ -9,10 +9,10 @@ const routes: Routes = [
 		component: DashboardComponent,
 		children: [
 			{
-				path: 'onboarding',
+				path: 'settings',
 				loadChildren: () =>
-					import('@pages/onboarding/onboarding.module').then(
-						(m) => m.OnboardingModule
+					import('@pages/settings/settings.module').then(
+						(m) => m.SettingsModule
 					)
 			},
 			{

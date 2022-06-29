@@ -1,207 +1,213 @@
 <div class="row" *ngIf="Form">
-	<app-nav-bar-pills
-		[menuItems]="menuItems"
-		[activeClass]="currentSelection"
-		[cancelBtn]="true"
-		[saveBtn]="true"
-		[disableSaveBtn]="Form.invalid || disableSaveButton"
-		(onCancel)="cancel()"
-		(onSave)="save(Form.value)"
-	></app-nav-bar-pills>
+	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
+		[disableSaveBtn]="Form.invalid || disableSaveButton" (onCancel)="cancel()" (onSave)="save(Form.value)">
+	</app-nav-bar-pills>
 	<div class="row">
 		<div class="col-12" align="end">
 			<span>{{todayDate | date: 'y/MM/dd'}}</span>
 		</div>
 	</div>
 	<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
-		<div
-			class="col-12"
-			id="main"
-			scrollSpy
-			(sectionChange)="onSectionChange($event)"
-		>
+		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section" id="allergies">
-				<div class="row">
-					<h6 class="heading">Allergies</h6>
-				</div>
-				<div class="row">
+				<h6 class="heading">Allergies</h6>
+				<div class="row formrow">
 					<div class="col-3">
-						<p>Latex</p>
-						<div class="form-check form-check-inline" (change)="showLatexInputFeild = true">
-							<input class="form-check-input" type="radio" id="latexRadio1" name="latexRadio" formControlName="latexRadio" value="yes">
-							<label class="form-check-label" for="latexRadio1">Yes</label>
-						</div>
-						<div class="form-check form-check-inline" (change)="showLatexInputFeild = false">
-							<input class="form-check-input" type="radio" id="latexRadio2" name="latexRadio" formControlName="latexRadio" value="no">
-							<label class="form-check-label" for="latexRadio2">No</label>
+						<p class="label-input-gap">Latex</p>
+						<div class="two-radios">
+							<div class="yes-no-radio" (change)="showLatexInputFeild = true">
+								<input class="form-check-input" type="radio" id="latexRadio1" name="latexRadio"
+									formControlName="latexRadio" value="yes">
+								<label class="form-check-label" for="latexRadio1">Yes</label>
+							</div>
+							<div class="yes-no-radio" (change)="showLatexInputFeild = false">
+								<input class="form-check-input" type="radio" id="latexRadio2" name="latexRadio"
+									formControlName="latexRadio" value="no">
+								<label class="form-check-label" for="latexRadio2">No</label>
+							</div>
 						</div>
 					</div>
-					<div class="col-3">
-						<p *ngIf="showLatexInputFeild">Please Explain</p>
-						<div class="input-group mb-3" *ngIf="showLatexInputFeild">
-							<input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
-						</div>
-					</div>
-					<div class="col-6"></div>
-				</div>
-				<div class="row">
-					<div class="col-3">
-						<p>Metal</p>
-						<div class="form-check form-check-inline" (change)="showMetalInputFeild = true">
-							<input class="form-check-input" type="radio" id="metalRadio1" name="metalRadio" formControlName="metalRadio" value="yes">
-							<label class="form-check-label" for="metalRadio1">Yes</label>
-						</div>
-						<div class="form-check form-check-inline" (change)="showMetalInputFeild = false">
-							<input class="form-check-input" type="radio" id="metalRadio2" name="metalRadio" formControlName="metalRadio" value="no">
-							<label class="form-check-label" for="metalRadio2">No</label>
-						</div>
-					</div>
-					<div class="col-3">
-						<p *ngIf="showMetalInputFeild">Please Explain</p>
-						<div class="input-group mb-3" *ngIf="showMetalInputFeild">
-							<input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
-						</div>
+					<div class="col-3" *ngIf="showLatexInputFeild">
+						<label class="label-input-gap">Please Explain</label>
+						<input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
 					</div>
 					<div class="col-6"></div>
 				</div>
-				<div class="row">
+				<div class="row formrow">
 					<div class="col-3">
-						<p>Amoxicillin</p>
-						<div class="form-check form-check-inline" (change)="showAmoxicillinInputFeild = true">
-							<input class="form-check-input" type="radio" id="amoxicillinRadio1" name="amoxicillinRadio" formControlName="amoxicillinRadio" value="yes">
-							<label class="form-check-label" for="amoxicillinRadio1">Yes</label>
-						</div>
-						<div class="form-check form-check-inline" (change)="showAmoxicillinInputFeild = false">
-							<input class="form-check-input" type="radio" id="amoxicillinRadio2" name="amoxicillinRadio" formControlName="amoxicillinRadio" value="no">
-							<label class="form-check-label" for="amoxicillinRadio2">No</label>
+						<p class="label-input-gap">Metal</p>
+						<div class="two-radios">
+							<div class="yes-no-radio" (change)="showMetalInputFeild = true">
+								<input class="form-check-input" type="radio" id="metalRadio1" name="metalRadio"
+									formControlName="metalRadio" value="yes">
+								<label class="form-check-label" for="metalRadio1">Yes</label>
+							</div>
+							<div class="yes-no-radio" (change)="showMetalInputFeild = false">
+								<input class="form-check-input" type="radio" id="metalRadio2" name="metalRadio"
+									formControlName="metalRadio" value="no">
+								<label class="form-check-label" for="metalRadio2">No</label>
+							</div>
 						</div>
 					</div>
+					<div class="col-3" *ngIf="showMetalInputFeild">
+						<label class="label-input-gap">Please Explain</label>
+						<input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+					</div>
+					<div class="col-6"></div>
+				</div>
+				<div class="row formrow">
 					<div class="col-3">
-						<p *ngIf="showAmoxicillinInputFeild">Please Explain</p>
-						<div class="input-group mb-3" *ngIf="showAmoxicillinInputFeild">
-							<input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+						<p class="label-input-gap">Amoxicillin</p>
+						<div class="two-radios">
+							<div class="yes-no-radio" (change)="showAmoxicillinInputFeild = true">
+								<input class="form-check-input" type="radio" id="amoxicillinRadio1"
+									name="amoxicillinRadio" formControlName="amoxicillinRadio" value="yes">
+								<label class="form-check-label" for="amoxicillinRadio1">Yes</label>
+							</div>
+							<div class="yes-no-radio" (change)="showAmoxicillinInputFeild = false">
+								<input class="form-check-input" type="radio" id="amoxicillinRadio2"
+									name="amoxicillinRadio" formControlName="amoxicillinRadio" value="no">
+								<label class="form-check-label" for="amoxicillinRadio2">No</label>
+							</div>
 						</div>
+					</div>
+					<div class="col-3" *ngIf="showAmoxicillinInputFeild">
+						<label class="label-input-gap">Please Explain</label>
+						<input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
 					</div>
 					<div class="col-6"></div>
 				</div>
 			</div>
 			<div class="section" id="medicalConditions">
-				<div class="row">
-					<h6 class="heading">Medical Conditions</h6>
-				</div>
-				<div class="row">
+				<h6 class="heading">Medical Conditions</h6>
+				<div class="row formrow">
 					<div class="col-3">
-						<p>Asthama</p>
-						<div class="form-check form-check-inline" (change)="showAsthamaInputFeild = true">
-							<input class="form-check-input" type="radio" id="asthamaRadio1" name="asthamaRadio" formControlName="asthamaRadio" value="yes">
-							<label class="form-check-label" for="asthamaRadio1">Yes</label>
-						</div>
-						<div class="form-check form-check-inline" (change)="showAsthamaInputFeild = false">
-							<input class="form-check-input" type="radio" id="asthamaRadio2" name="asthamaRadio" formControlName="asthamaRadio" value="no">
-							<label class="form-check-label" for="asthamaRadio2">No</label>
+						<p class="label-input-gap">Asthama</p>
+						<div class="two-radios">
+							<div class="yes-no-radio" (change)="showAsthamaInputFeild = true">
+								<input class="form-check-input" type="radio" id="asthamaRadio1" name="asthamaRadio"
+									formControlName="asthamaRadio" value="yes">
+								<label class="form-check-label" for="asthamaRadio1">Yes</label>
+							</div>
+							<div class="yes-no-radio" (change)="showAsthamaInputFeild = false">
+								<input class="form-check-input" type="radio" id="asthamaRadio2" name="asthamaRadio"
+									formControlName="asthamaRadio" value="no">
+								<label class="form-check-label" for="asthamaRadio2">No</label>
+							</div>
 						</div>
 					</div>
-					<div class="col-3">
-						<p *ngIf="showAsthamaInputFeild">Please Explain</p>
-						<div class="input-group mb-3" *ngIf="showAsthamaInputFeild">
-							<input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
-						</div>
-					</div>
-					<div class="col-6"></div>
-				</div>
-				<div class="row">
-					<div class="col-3">
-						<p>Blood Pressure</p>
-						<div class="form-check form-check-inline" (change)="showBloodPressureInputFeild = true">
-							<input class="form-check-input" type="radio" id="bloodPressurRadio1" name="bloodPressurRadio" formControlName="bloodPressurRadio" value="yes">
-							<label class="form-check-label" for="bloodPressurRadio1">Yes</label>
-						</div>
-						<div class="form-check form-check-inline" (change)="showBloodPressureInputFeild = false">
-							<input class="form-check-input" type="radio" id="bloodPressurRadio2" name="bloodPressurRadio" formControlName="bloodPressurRadio" value="no">
-							<label class="form-check-label" for="bloodPressurRadio2">No</label>
-						</div>
-					</div>
-					<div class="col-3">
-						<p *ngIf="showBloodPressureInputFeild">Please Explain</p>
-						<div class="input-group mb-3" *ngIf="showBloodPressureInputFeild">
-							<input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
-						</div>
+					<div class="col-3" *ngIf="showAsthamaInputFeild">
+						<label class="label-input-gap">Please Explain</label>
+						<input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
 					</div>
 					<div class="col-6"></div>
 				</div>
-				<div class="row">
+				<div class="row formrow">
 					<div class="col-3">
-						<p>Cancer</p>
-						<div class="form-check form-check-inline" (change)="showCancerInputFeild = true">
-							<input class="form-check-input" type="radio" id="cancerRadio1" name="cancerRadio" formControlName="cancerRadio" value="yes">
-							<label class="form-check-label" for="cancerRadio1">Yes</label>
-						</div>
-						<div class="form-check form-check-inline" (change)="showCancerInputFeild = false">
-							<input class="form-check-input" type="radio" id="cancerRadio2" name="cancerRadio" formControlName="cancerRadio" value="no">
-							<label class="form-check-label" for="cancerRadio2">No</label>
+						<p class="label-input-gap">Blood Pressure</p>
+						<div class="two-radios">
+							<div class="yes-no-radio" (change)="showBloodPressureInputFeild = true">
+								<input class="form-check-input" type="radio" id="bloodPressurRadio1"
+									name="bloodPressurRadio" formControlName="bloodPressurRadio" value="yes">
+								<label class="form-check-label" for="bloodPressurRadio1">Yes</label>
+							</div>
+							<div class="yes-no-radio" (change)="showBloodPressureInputFeild = false">
+								<input class="form-check-input" type="radio" id="bloodPressurRadio2"
+									name="bloodPressurRadio" formControlName="bloodPressurRadio" value="no">
+								<label class="form-check-label" for="bloodPressurRadio2">No</label>
+							</div>
 						</div>
 					</div>
+					<div class="col-3" *ngIf="showBloodPressureInputFeild">
+						<label class="label-input-gap">Please Explain</label>
+						<input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+					</div>
+					<div class="col-6"></div>
+				</div>
+				<div class="row formrow">
 					<div class="col-3">
-						<p *ngIf="showCancerInputFeild">Please Explain</p>
-						<div class="input-group mb-3" *ngIf="showCancerInputFeild">
-							<input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+						<p class="label-input-gap">Cancer</p>
+						<div class="two-radios">
+							<div class="yes-no-radio" (change)="showCancerInputFeild = true">
+								<input class="form-check-input" type="radio" id="cancerRadio1" name="cancerRadio"
+									formControlName="cancerRadio" value="yes">
+								<label class="form-check-label" for="cancerRadio1">Yes</label>
+							</div>
+							<div class="yes-no-radio" (change)="showCancerInputFeild = false">
+								<input class="form-check-input" type="radio" id="cancerRadio2" name="cancerRadio"
+									formControlName="cancerRadio" value="no">
+								<label class="form-check-label" for="cancerRadio2">No</label>
+							</div>
 						</div>
+					</div>
+					<div class="col-3" *ngIf="showCancerInputFeild">
+						<label class="label-input-gap">Please Explain</label>
+						<input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
 					</div>
 					<div class="col-6"></div>
 				</div>
 			</div>
 			<div class="section" id="dentalConditions">
-				<div class="row">
-					<h6 class="heading">Dental Conditions</h6>
-				</div>
-				<div class="row">
+				<h6 class="heading">Dental Conditions</h6>
+				<div class="row formrow">
 					<div class="col-3">
-						<p>Do you have any pending Dental work?</p>
-						<div class="form-check form-check-inline" (change)="showDentalInputFeild = true">
-							<input class="form-check-input" type="radio" id="dentalRadio1" name="dentalRadio" formControlName="dentalRadio" value="yes">
-							<label class="form-check-label" for="dentalRadio1">Yes</label>
-						</div>
-						<div class="form-check form-check-inline" (change)="showDentalInputFeild = false">
-							<input class="form-check-input" type="radio" id="dentalRadio2" name="dentalRadio" formControlName="dentalRadio" value="no">
-							<label class="form-check-label" for="dentalRadio2">No</label>
+						<p class="label-input-gap">Do you have any pending Dental work?</p>
+						<div class="two-radios">
+							<div class="yes-no-radio" (change)="showDentalInputFeild = true">
+								<input class="form-check-input" type="radio" id="dentalRadio1" name="dentalRadio"
+									formControlName="dentalRadio" value="yes">
+								<label class="form-check-label" for="dentalRadio1">Yes</label>
+							</div>
+							<div class="yes-no-radio" (change)="showDentalInputFeild = false">
+								<input class="form-check-input" type="radio" id="dentalRadio2" name="dentalRadio"
+									formControlName="dentalRadio" value="no">
+								<label class="form-check-label" for="dentalRadio2">No</label>
+							</div>
 						</div>
 					</div>
-					<div class="col-6">
-						<p *ngIf="showDentalInputFeild">Please list all pending dental work</p>
-						<div class="input-group mb-3" *ngIf="showDentalInputFeild">
-							<textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-						</div>
+					<div class="col-6" *ngIf="showDentalInputFeild">
+						<label class="label-input-gap">Please list all pending dental work</label>
+						<textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+							style="height: 100px; resize: none;"></textarea>
 					</div>
 					<div class="col-3"></div>
 				</div>
 			</div>
 			<div class="section" id="consents&Signature">
-				<div class="row">
-					<h6 class="heading">Consents</h6>
-				</div>
-				<div class="row">
+				<h6 class="heading">Consents</h6>
+				<div class="row formrow">
 					<div class="col-12">
 						<div class="form-check form-check-inline gap-5 mb-3">
-							<input class="form-check-input" type="checkbox" value="" [(ngModel)]="check1" id="flexCheckDefault" formControlName="check1" (change)="checkTNC($event)">
-							<label class="form-check-label" for="flexCheckDefault" style="white-space: normal !important; margin-top: -3rem;">
-								I understand that the information that I have given today is correct to the best of my knowledge. I also understand that this information will be held in strictest 
-confidence and it is my responsibility to inform this office of any changes in my/my child's medical status. I authorize the dental staff to perform any necessary 
-dental services that I/my child may need during diagnosis and treatment with my informed consent.
+							<input class="form-check-input" type="checkbox" value="" [(ngModel)]="check1"
+								id="flexCheckDefault" formControlName="check1" (change)="checkTNC($event)">
+							<label class="form-check-label" for="flexCheckDefault"
+								style="white-space: normal !important; margin-top: -3rem;">
+								I understand that the information that I have given today is correct to the best of my
+								knowledge. I also understand that this information will be held in strictest
+								confidence and it is my responsibility to inform this office of any changes in my/my
+								child's medical status. I authorize the dental staff to perform any necessary
+								dental services that I/my child may need during diagnosis and treatment with my informed
+								consent.
 							</label>
 						</div>
 						<div class="form-check form-check-inline gap-5 mb-3">
-							<input class="form-check-input" type="checkbox" value="" [(ngModel)]="check2" id="flexCheckChecked" formControlName="check2" (change)="checkTNC($event)">
-							<label class="form-check-label" for="flexCheckChecked" style="white-space: normal !important; margin-top: -3rem;">
-								I understand that the information that I have given today is correct to the best of my knowledge. I also understand that this information will be held in strictest 
-								confidence and it is my responsibility to inform this office of any changes in my/my child's medical status. I authorize the dental staff to perform any necessary 
-								dental services that I/my child may need during diagnosis and treatment with my informed consent
+							<input class="form-check-input" type="checkbox" value="" [(ngModel)]="check2"
+								id="flexCheckChecked" formControlName="check2" (change)="checkTNC($event)">
+							<label class="form-check-label" for="flexCheckChecked"
+								style="white-space: normal !important; margin-top: -3rem;">
+								I understand that the information that I have given today is correct to the best of my
+								knowledge. I also understand that this information will be held in strictest
+								confidence and it is my responsibility to inform this office of any changes in my/my
+								child's medical status. I authorize the dental staff to perform any necessary
+								dental services that I/my child may need during diagnosis and treatment with my informed
+								consent
 							</label>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="section">
-				<div class="row mb-3">
+				<div class="row formrow">
 					<div class="col-6">
 						<h6 class="heading">Legal Guardian's Signature</h6>
 						<div class="box"></div>
@@ -211,9 +217,9 @@ dental services that I/my child may need during diagnosis and treatment with my 
 						<div class="box"></div>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row formrow">
 					<div class="col-3">
-						<p>Legal Guardian's Name</p>
+						<p class="label-input-gap">Legal Guardian's Name</p>
 						<select class="form-select" aria-label="Default select example">
 							<option value="1">Name1</option>
 							<option value="2">Name2</option>
@@ -221,13 +227,12 @@ dental services that I/my child may need during diagnosis and treatment with my 
 						</select>
 					</div>
 					<div class="col-3">
-						<p>Date</p>
-						<div class="input-group mb-3">
-							<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" disabled>
-						</div>
+						<p class="label-input-gap">Date</p>
+						<input type="text" class="form-control" aria-label="Sizing example input"
+							aria-describedby="inputGroup-sizing-default" disabled>
 					</div>
 					<div class="col-3">
-						<p>Provider's Name</p>
+						<p class="label-input-gap">Provider's Name</p>
 						<select class="form-select" aria-label="Default select example">
 							<option value="1">Name1</option>
 							<option value="2">Name2</option>
@@ -235,10 +240,9 @@ dental services that I/my child may need during diagnosis and treatment with my 
 						</select>
 					</div>
 					<div class="col-3">
-						<p>Date</p>
-						<div class="input-group mb-3">
-							<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" disabled>
-						</div>
+						<p class="label-input-gap">Date</p>
+						<input type="text" class="form-control" aria-label="Sizing example input"
+							aria-describedby="inputGroup-sizing-default" disabled>
 					</div>
 				</div>
 			</div>

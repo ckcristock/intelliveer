@@ -39,7 +39,7 @@ export class AddInsuranceSubscriberComponent implements OnInit, OnDestroy {
       //   .createPractice(this.selectedBusinessGroup.bgId, data)
       //   .subscribe({
       //     next: (res) => {
-      //       this.router.navigate(['/dashboard/onboarding/referer']);
+      //       this.router.navigate(['/dashboard/settings/onboarding/referer']);
       //     },
       //     error: () => {},
       //   });
