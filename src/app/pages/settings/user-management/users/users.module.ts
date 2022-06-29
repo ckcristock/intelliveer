@@ -6,9 +6,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsersComponent } from "./users.component";
+import { AddUserComponent } from './add-user/add-user.component';
 
 @NgModule({
-  declarations: [UsersComponent],
+  declarations: [UsersComponent, AddUserComponent],
   imports: [
     CommonModule,
     UsersRoutingModule,
