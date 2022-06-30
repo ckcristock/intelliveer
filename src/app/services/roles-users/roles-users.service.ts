@@ -13,6 +13,10 @@ export class RolesUsersService {
   private rolesCounter: number = 0;
   private roles: any [] = [];
   private roles$: BehaviorSubject<any []> = new BehaviorSubject<any>([]);
+
+  private manageUsersCounter: number = 0;
+  private manageUsers: any [] = [];
+  private manageUsers$: BehaviorSubject<any []> = new BehaviorSubject<any>([]);
   
   constructor() { }
 
@@ -54,6 +58,28 @@ export class RolesUsersService {
     })
     this.roles=roleDeleted;
     this.roles$.next(this.roles);
+  }
+
+  //manage User
+  pushManageUser(manageUser: any){
+    console.log("serviceee", manageUser);
+    
+    this.manageUsersCounter++;
+    manageUser.id=this.manageUsersCounter;
+    this.manageUsers.push(manageUser);
+    this.manageUsers$.next(this.manageUsers);
+  }
+
+  getManageUser(): Observable<any[]>{
+    return this.manageUsers$;
+  }
+
+  deleteManageUser(id: number){
+    let manageUserDeleted = this.manageUsers.filter((x)=>{
+      return x.id!=id;
+    })
+    this.manageUsers=manageUserDeleted;
+    this.manageUsers$.next(this.manageUsers);
   }
 
 }

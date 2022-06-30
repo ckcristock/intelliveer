@@ -22,6 +22,14 @@ const routes: Routes = [
             ),
       },
       {
+        path: 'manage-user/add',
+        loadChildren: () =>
+          import(
+            '@pages/settings/user-management/users/add-user/add-user.module').then(
+              (m) => m.AddUserModule
+            ),
+      },
+      {
         path: 'user-policy',
         loadChildren: () =>
           import(

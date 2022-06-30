@@ -1,30 +1,31 @@
-<div class="section" >
+<div class="section">
     <h6 class="heading">Create User</h6>
     <div class="row formrow">
         <div class="col-3">
             <label class="label-input-gap">First Name</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" [(ngModel)]="user['profile'].firstName" [ngModelOptions]="{standalone: true}">
         </div>
         <div class="col-3">
             <label class="label-input-gap">Last Name</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" [(ngModel)]="user['profile'].lastName" [ngModelOptions]="{standalone: true}">
         </div>
     </div>
     <div class="row formrow">
         <div class="col-3">
             <label class="label-input-gap">Email</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" [(ngModel)]="userEmail" [ngModelOptions]="{standalone: true}">
         </div>
         <div class="col-3">
             <label class="label-input-gap">Password</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" [(ngModel)]="user['creds'].password" [ngModelOptions]="{standalone: true}">
         </div>
     </div>
     <div class="row formrow">
         <div class="col-3">
             <label class="label-input-gap">Roles</label>
-            <ng-select placeholder="Role template name">
-                <ng-option>Select</ng-option>
+            <ng-select [multiple]="true" placeholder="Role template name" [(ngModel)]="user['roles']"
+                [ngModelOptions]="{standalone: true}">
+                <ng-option *ngFor="let role of roles" [value]="role._id">{{role.name}}</ng-option>
             </ng-select>
         </div>
         <div class="col-3">
@@ -35,9 +36,9 @@
             </ng-select>
         </div>
     </div>
-    <div class="row formrow" >
+    <div class="row formrow">
         <div class="col-3" style="margin-top: 4px;">
-            <button type="button" class="btn btn-dark btn-dark-custom">Create</button>
+            <button type="button" class="btn btn-dark btn-dark-custom" (click)="saveUser()">Create</button>
         </div>
     </div>
 </div>

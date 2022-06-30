@@ -212,7 +212,10 @@ export class GlobalRoutesService {
     {
       title: "Manage User",
       url: `${this.urlUserManage}/manage-user`,
-      child: []
+      child: [{
+        title: "Add",
+        url: `${this.urlUserManage}/manage-user/add`
+      },]
     },
     {
       title: "User Policy",
