@@ -1,0 +1,324 @@
+<div class="row" *ngIf="Form">
+    <app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
+        [disableSaveBtn]="Form.invalid" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills>
+    <form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
+        <div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
+            <div class="section-active" id="overview">
+                <div class="row">
+                    <div *ngFor="let letter of letters">
+                        <div class="row">
+                            <div class="principal">
+                                <div class="colm" style="margin-left: 52px">
+                                    <div class="letterandtext">
+                                        <div class="letter">
+                                            <p>{{ letter.letter }}</p>
+                                            <div id="orange">
+                                                <span>{{ letter.status }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="columsp">
+                                            <span class="special">Ins. Company Name</span>
+                                            <div class="horizont">
+                                                <div class="colums">
+                                                    <span>Phone No.:</span>
+                                                    <span>Plan Type:</span>
+                                                    <span>Group No.:</span>
+                                                </div>
+                                                <div class="colums">
+                                                    <span>1234567890</span>
+                                                    <span>PPO</span>
+                                                    <span>GG595</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="colm" style="margin-left: 79px">
+                                    <div class="horizont" style="width: 203px; justify-content: space-between">
+                                        <div class="colums">
+                                            <span>Subscriber Name:</span>
+                                            <span>Subscriber ID/SSN:</span>
+                                            <span>Subscriber DOB:</span>
+                                            <span>Relationship:</span>
+                                        </div>
+                                        <div class="colums">
+                                            <span>Kim Doe</span>
+                                            <span>256465</span>
+                                            <span>May, 10, 1992</span>
+                                            <span>Father</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="colm" style="margin-left: 71px">
+                                    <div class="colums" style="width: 102px">
+                                        <span><span class="special">Olivia Doe</span>
+                                            (P1001</span>
+                                        <span>256465</span>
+                                        <span>May, 10, 1992</span>
+                                        <span>Father</span>
+                                    </div>
+                                </div>
+                                <div class="colm" style="margin-left: -45px">
+                                    <div class="horizont" style="width: 186px; justify-content: space-between">
+                                        <div class="colums">
+                                            <span>LE TIN:</span>
+                                            <span>NPI I & NPI II:</span>
+                                            <span>Dental Licence No.:</span>
+                                            <span>Creation Date: </span>
+                                        </div>
+                                        <div class="colums">
+                                            <span>&nbsp;</span>
+                                            <span>&nbsp;</span>
+                                            <span>22585</span>
+                                            <span>Feb 15, 2022</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section" id="profile">
+                <div class="mainformsection">
+                    <h6 class="heading">Profile</h6>
+
+                    <div class="formrow">
+                        <div class="row">
+                            <div class="col">
+                                <div class="mainformset">
+                                    <label class="label-input-gap">Log-in email</label>
+                                    <input class="form-control" type="text" placeholder="" name=""
+                                        [(ngModel)]="user.profile.email" [ngModelOptions]="{standalone: true}" />
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mainformset">
+                                    <label class="label-input-gap">Title</label>
+                                    <ng-select placeholder="Select">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mainformset">
+                                    <label class="label-input-gap">First Name</label>
+                                    <input class="form-control" type="text" placeholder="" name=""
+                                        [(ngModel)]="user.profile.firstName" [ngModelOptions]="{standalone: true}" />
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mainformset">
+                                    <label class="label-input-gap">Middle Name</label>
+                                    <input class="form-control" type="text" placeholder="" name="" />
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mainformset">
+                                    <label class="label-input-gap">Last Name</label>
+                                    <input class="form-control" type="text" placeholder="" name=""
+                                        [(ngModel)]="user.profile.lastName" [ngModelOptions]="{standalone: true}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="formrow">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="mainformset">
+                                    <label class="label-input-gap" data-toggle="tooltip" title="Preferred Name">Date of
+                                        Birth</label>
+                                    <input class="form-control" type="date" placeholder="" name="DOB" />
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="mainformset">
+                                    <label class="label-input-gap">Gender</label>
+                                    <ng-select placeholder="Select">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="mainformset">
+                                    <label class="label-input-gap">Abbreviation</label>
+                                    <input class="form-control" type="text" placeholder="" name="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section" id="address">
+                <h6 class="heading">Address</h6>
+                <div class="row formrow">
+                    <div class="col-6">
+                        <div class="mainformset">
+                            <label class=" label-input-gap">Address Line 1</label>
+                            <input class="form-control" type="text" placeholder="Street address, P.O.box" name="" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="mainformset">
+                            <label class=" label-input-gap">Address Line 2</label>
+                            <input class="form-control" type="text"
+                                placeholder="Apartment, Suite, Unit, Building, Floor, etc." name="" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row formrow">
+                    <div class="col-3">
+                        <div class="mainformset">
+                            <label class="label-input-gap">Zip Code</label>
+                            <input class="form-control" type="text" placeholder="" name="" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mainformset">
+                            <label class="label-input-gap">City</label>
+                            <input class="form-control" type="text" placeholder="" name="" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mainformset">
+                            <label class=" label-input-gap">State</label>
+                            <input class="form-control" type="text" placeholder="" name="" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mainformset">
+                            <label class=" label-input-gap">Country</label>
+                            <input class="form-control" type="text" placeholder="" name="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section" id="contact">
+                <h6 class="heading">Contact</h6>
+                <div class="row formrow">
+                    <div class="col-4">
+                        <div class="mainformset">
+                            <label class=" label-input-gap">Primary Phone Type</label>
+                            <ng-select placeholder="Select">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="mainformset">
+                            <label class=" label-input-gap">Primary Phone Number</label>
+                            <input class="form-control" type="text" placeholder="" name="" />
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="mainformset">
+                            <label class=" label-input-gap">Email</label>
+                            <input class="form-control" type="text" placeholder="" name="" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row formrow">
+                    <div class="col-4">
+                        <div class="mainformset">
+                            <label class="label-input-gap">Secondary Phone Type</label>
+                            <ng-select placeholder="Select">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="mainformset">
+                            <label class="label-input-gap">Secondary Phone Number</label>
+                            <input class="form-control" type="text" placeholder="" name="" />
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="mainformset">
+                            <label class=" label-input-gap">Preferred Communication Method</label>
+                            <ng-select placeholder="Select">
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section" id="relationsType">
+                <h6 class="heading">Relations/Type</h6>
+                <div class="row formrow">
+                    <div class="col-3">
+                        <div class="mainformset">
+                            <label class="label-input-gap">Employee Flag</label>
+                            <ng-select placeholder="Select">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mainformset">
+                            <label class="label-input-gap">Status</label>
+                            <ng-select placeholder="Select">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mainformset">
+                            <label class=" label-input-gap">Default Location</label>
+                            <ng-select placeholder="Select">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mainformset">
+                            <label class=" label-input-gap">Default Practice</label>
+                            <ng-select placeholder="Select">
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row formrow">
+                    <div class="col-3">
+                        <div class="mainformset">
+                            <label class="label-input-gap">Default Provider</label>
+                            <ng-select placeholder="Select">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mainformset">
+                            <label class="label-input-gap">Time Card Flag</label>
+                            <ng-select placeholder="Select">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mainformset">
+                            <label class=" label-input-gap">Default Legal Entity</label>
+                            <ng-select placeholder="Select">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mainformset">
+                            <label class=" label-input-gap">Roles</label>
+                            <ng-select placeholder="Role name">
+                                <ng-option *ngFor="let role of user.roles" [value]="role">{{role}}</ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section" id="emergencyContact">
+                <h6 class="heading">Emergency Contact</h6>
+                <div class="row formrow">
+                    <div class="col-3">
+                        <div class="mainformset">
+                            <label class="label-input-gap">Emergency Contact Name</label>
+                            <input class="form-control" type="text" placeholder="" name="" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mainformset">
+                            <label class="label-input-gap">Emergency Contact Number</label>
+                            <input class="form-control" type="text" placeholder="" name="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

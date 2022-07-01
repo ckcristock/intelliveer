@@ -30,6 +30,14 @@ const routes: Routes = [
             ),
       },
       {
+        path: 'manage-user/user-personal-info',
+        loadChildren: () =>
+          import(
+            '@pages/settings/user-management/users/personal-info/personal-info.module').then(
+              (m) => m.PersonalInfoModule
+            ),
+      },
+      {
         path: 'user-policy',
         loadChildren: () =>
           import(

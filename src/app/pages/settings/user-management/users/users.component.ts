@@ -10,34 +10,68 @@ import { Router } from '@angular/router';
 })
 export class UsersComponent implements OnInit {
 
-  usersManage: any [] = [];
+  users: any[] = [];
+  roles: any[] = [];
   addRoute: string = "";
+  popContent: string = "";
+  popContentCounter: number = 0;
 
   constructor(private router: Router,
     private globalRoutes: GlobalRoutesService,
     private userServ: UserService) { }
 
-    ngOnInit(): void {
-      console.log("Users Manage", this.usersManage);
-      
-      this.addRoute = this.globalRoutes.getSettingsUserManageRoutes()[0].child[0].url;
-      this.userServ.getManageUser().subscribe(
-        (resp: any) => {
-          this.usersManage = resp;
-          console.log("insidee", this.usersManage);
-          
-        }
-      );
-    }
+  ngOnInit(): void {
+    this.addRoute = this.globalRoutes.getSettingsUserManageRoutes()[0].child[0].url;
+    this.userServ.refreshUsers();
+    this.userServ.getUsers().subscribe(
+      (resp: any) => {
+        this.users = resp;
 
-  addUserManage()
-  {
+        this.userServ.getRoles().subscribe(
+          (resp: any) => {
+            this.roles = resp;
+            for (let i = 0; i < this.users.length; i++) {
+              for (let j = 0; j < this.roles.length; j++) {
+                for (let y = 0; y < this.users[i]['roles'].length; y++) {
+                  if (this.users[i]['roles'][y] == this.roles[j]._id) {
+                    this.users[i]['roles'][y] = this.roles[j];
+                  }
+                }
+              }
+            }
+          }
+        );
+      }
+    );
+  }
+
+  addUser() {
     //this.router.navigate(['/dashboard/settings/role-management/manage-role-template/add']);
     this.router.navigate([this.globalRoutes.getSettingsUserManageRoutes()[0].child[0].url]);
   }
 
-  deleteUserManage(id:number){
+  deleteUser(id: number) {
     this.userServ.deleteManageUser(id);
   }
 
+  usersPopUp(roles: any) {
+    if (this.popContentCounter == 0) {
+      this.popContentCounter++;
+      roles.forEach((element: any) => {
+        if (this.popContentCounter == 1) {
+          this.popContentCounter++;
+          this.popContent = `${element.name}`;
+        } else {
+          this.popContent = `${this.popContent}, ${element.name}`;
+        }
+      });
+    }
+  }
+
+  gotoPersonalInfo(user: any){
+    this.userServ.refreshUserById(user._id);
+    //this.router.navigate(['/dashboard/settings/user-management/manage-user/user-personal-info']);
+    this.router.navigate([this.globalRoutes.getSettingsUserManageRoutes()[0].child[1].url]);
+    
+  }
 }

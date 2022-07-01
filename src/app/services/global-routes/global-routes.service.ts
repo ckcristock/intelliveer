@@ -215,6 +215,10 @@ export class GlobalRoutesService {
       child: [{
         title: "Add",
         url: `${this.urlUserManage}/manage-user/add`
+      },
+      {
+        title: "Personal Info",
+        url: `${this.urlUserManage}/manage-user/user-personal-info`
       },]
     },
     {

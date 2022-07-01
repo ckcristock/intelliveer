@@ -13,8 +13,8 @@ export class AddUserComponent implements OnInit {
   Form!: FormGroup;
   @Input() formData: any | undefined = undefined;
   //user = { firstName: '', lastName: '', email: '', password: '', roles:'' };
-  userEmail:any="";
-  user={
+  userEmail: any = "";
+  user = {
     creds: {
       "email": "",
       "password": ""
@@ -24,41 +24,42 @@ export class AddUserComponent implements OnInit {
       "lastName": "",
       "email": ""
     },
-    roles: [""]
+    roles: []
   };
-  roles: any [] = [];
+  roles: any[] = [];
 
   constructor(private router: Router,
     private fb: FormBuilder,
     private userServ: UserService) { }
 
-    ngOnInit(): void {
-      this.initForm(this.formData);
-      this.userServ.getRoles().subscribe((resp:any)=>{
-        this.roles = resp;
-      });
-    }
-  
-    initForm(data?: any) {
-      data = data || {};
-      this.Form = this.fb.group({
-        roleName: [data?.fName || '', Validators.required],
-        roleDescrip: [data?.lName || '', Validators.required],
-      });
-    }
-  
-    save(data: any) {
-      console.log(data);
-    }
+  ngOnInit(): void {
+    this.initForm(this.formData);
+    this.userServ.getRoles().subscribe((resp: any) => {
+      this.roles = resp;
+    });
+  }
 
-    saveUser() {
-      this.user.creds.email = this.userEmail;
-      this.user.profile.email = this.userEmail;
-      this.userServ.pushManageUser(this.user).subscribe((resp:any)=>{
-        console.log("Responsee", resp);
-        
-      });
+  initForm(data?: any) {
+    data = data || {};
+    this.Form = this.fb.group({
+      firstName: [data?.firstName || '', Validators.required],
+      lastName: [data?.lastName || '', Validators.required],
+      userEmail: [data?.userEmail || '', Validators.required],
+      password: [data?.password || '', Validators.required],
+      userRoles: [data?.userRoles || '', Validators.required],
+    });
+  }
+
+  save(data: any) {
+    console.log(data);
+  }
+
+  saveUser() {
+    this.user.creds.email = this.userEmail;
+    this.user.profile.email = this.userEmail;
+    this.userServ.pushManageUser(this.user).subscribe((resp: any) => {
+      this.userServ.refreshUsers();
       this.router.navigate(['/dashboard/settings/user-management/manage-user']);
-    }
-
+    });
+  }
 }

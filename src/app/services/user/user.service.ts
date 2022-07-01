@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { CONFIG } from '@config/index';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthService } from "@services/auth/auth.service";
-import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,70 +10,74 @@ import { CookieService } from 'ngx-cookie-service';
 export class UserService {
 
   private manageUsersCounter: number = 0;
-  private manageUsers: any [] = [];
-  private manageUsers$: BehaviorSubject<any []> = new BehaviorSubject<any>([]);
+  private users: any[] = [];
+  private users$: BehaviorSubject<any[]> = new BehaviorSubject<any>([]);
+
+  private user: any[] = [];
+  private user$: BehaviorSubject<any[]> = new BehaviorSubject<any>([]);
 
   userUrl: string = `${CONFIG.backend.host}/user/user`;
   roleUrl: string = `${CONFIG.backend.host}/role/role`;
 
   constructor(private authService: AuthService,
-    private http: HttpClient,
-    private cookieService: CookieService,) { }
+    private http: HttpClient,) { }
 
-  pushManageUser(user: any){
-    // console.log("serviceee", manageUser);
-    
-    // this.manageUsersCounter++;
-    // manageUser.id=this.manageUsersCounter;
-    // this.manageUsers.push(manageUser);
-    // this.manageUsers$.next(this.manageUsers);
-
-    console.log(this.authService.getOrgId());
-    
-    // const url = `${CONFIG.backend.host}/user/user`
-    // console.log(url);
-
-    // const headers = new HttpHeaders({
-    //   'X-ORG-ID': this.authService.getOrgId(),
-    //   'Authorization':
-    //   `Bearer ${this.cookieService.get('token')}`
-    // });
-    // return this.http.get(url, { headers}
-    // );
-   
-    console.log(this.userUrl);
-
+  pushManageUser(user: any) {
     const headers = new HttpHeaders({
       'X-ORG-ID': this.authService.getOrgId(),
-      'Authorization':
-      `Bearer ${this.cookieService.get('token')}`
     });
-    return this.http.post(this.userUrl, user, {headers});
+    return this.http.post(this.userUrl, user, { headers });
   }
 
-  getRoles(){
+  getRoles() {
     const headers = new HttpHeaders({
       'X-ORG-ID': this.authService.getOrgId(),
-      'Authorization':
-      `Bearer ${this.cookieService.get('token')}`
     });
-    return this.http.get(this.roleUrl, { headers}
+    return this.http.get(this.roleUrl, { headers }
     );
-
   }
 
-  getManageUser(){
+  getRoleById(id: any) {
+    const headers = new HttpHeaders({
+      'X-ORG-ID': this.authService.getOrgId(),
+    });
+    return this.http.get(`${this.roleUrl}/id`, { headers }
+    );
+  }
+
+  refreshUsers(){
     const headers = new HttpHeaders({
       'X-ORG-ID': this.authService.getOrgId()
     });
-    return this.http.get(this.userUrl, { headers});
+    this.http.get<any>(this.userUrl, { headers }).subscribe((resp:any)=>{
+      this.users = resp;
+      this.users$.next(this.users);
+    });
   }
 
-  deleteManageUser(id: number){
-    let manageUserDeleted = this.manageUsers.filter((x)=>{
-      return x.id!=id;
+  getUsers(): Observable<any[]>{
+    return this.users$;
+  }
+
+  refreshUserById(userId: number){
+    const headers = new HttpHeaders({
+      'X-ORG-ID': this.authService.getOrgId()
+    });
+    this.http.get<any>(`${this.userUrl}/${userId}`, { headers }).subscribe((resp:any)=>{
+      this.user = resp;
+      this.user$.next(this.user);
+    });
+  }
+
+  getUser(): Observable<any[]>{
+    return this.user$;
+  }
+
+  deleteManageUser(id: number) {
+    let manageUserDeleted = this.users.filter((x) => {
+      return x.id != id;
     })
-    this.manageUsers=manageUserDeleted;
-    this.manageUsers$.next(this.manageUsers);
+    this.users = manageUserDeleted;
+    this.users$.next(this.users);
   }
 }
