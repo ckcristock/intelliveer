@@ -193,6 +193,9 @@ export class GlobalRoutesService {
       child: [{
         title: "Add",
         url: `${this.urlRoleManage}/manage-role-template/add`
+      },{
+        title: "edit",
+        url: `${this.urlRoleManage}/manage-role-template/edit`
       },]
     },
     {

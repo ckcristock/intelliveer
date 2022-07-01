@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AddRolTemplateComponent } from './add-rol-template.component';
+import { AddRoleTemplateComponent } from './add-role-template.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: AddRolTemplateComponent,
+    component: AddRoleTemplateComponent,
   },
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AddRolTemplateRoutingModule { }
+export class AddRoleTemplateRoutingModule { }
