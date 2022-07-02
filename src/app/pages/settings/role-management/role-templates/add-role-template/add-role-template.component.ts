@@ -1,5 +1,5 @@
 import { Component, Input, NgZone, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '@services/alert/alert.service';
 import { RolesUsersService } from '@services/settings/role-management/roles-users.service';
@@ -26,6 +26,7 @@ export class AddRoleTemplateComponent implements OnInit {
   roleTemplate = { id: '', name: '', description: '' };
   finalArray:any = [];
 
+  
 
   constructor(private router: Router,
     private rolesUserServ: RolesUsersService,
@@ -47,10 +48,24 @@ export class AddRoleTemplateComponent implements OnInit {
       description: [''],
       businessGroups: [''],
       type: [''],
-      permissions: this.fb.array([])
+      permissions: this.fb.array([
+        
+      ])
     });
   }
+
   get f() { return this.roleTemplateForm.controls; }
+
+  /** First Array form value*/
+  get sectionNested(){
+    return (<FormArray>this.roleTemplateForm.get("permissions")).controls;
+  } 
+
+    /** Get Second Array form value*/
+  permissionNested(i:any){
+    return (<FormArray>this.sectionNested[i].get("permissions")).controls;
+  } 
+
   /** Get ID from Query Params */
   getRoleTemplateID(){
     this.route.queryParams.subscribe((params: any) => {
@@ -61,6 +76,7 @@ export class AddRoleTemplateComponent implements OnInit {
       }
     })
   }
+
   /** This array for permission Sections */
   sectionsArray() : FormArray {
     return (<FormArray>this.roleTemplateForm.get("permissions"));
@@ -68,13 +84,14 @@ export class AddRoleTemplateComponent implements OnInit {
 
    newSections(): FormGroup {
     return this.roleNestedForm = this.fb.group({
-      roles: '',
-      section: '',
+      roles: new FormControl(),
+      section: new FormControl(),
       permissions:this.fb.array([]),
       
     })
   }
 
+  
   /** This array for permission */
    permissionArray() : FormArray {
     return (<FormArray>this.roleNestedForm.get("permissions"));
@@ -82,10 +99,10 @@ export class AddRoleTemplateComponent implements OnInit {
  
   newPermissions(): FormGroup {
     return  this.fb.group({
-      name: '',
-      enabled: false,
-      locked: false,
-      allowOverride: false,
+      name: new FormControl(),
+      enabled: new FormControl(false),
+      locked: new FormControl(false),
+      allowOverride: new FormControl(false),
       attrs: {}
     })
   }
@@ -108,6 +125,7 @@ export class AddRoleTemplateComponent implements OnInit {
     }
     
   }
+
   /** Add Role Template */
   addRoleTemplateForm(){
     this.alertService.conformAlert('Are you sure?', 'You want to update a role template')
@@ -144,6 +162,7 @@ export class AddRoleTemplateComponent implements OnInit {
           }
         });
   }
+
   /** get Single Role Template */
   roleTemplateDetail(ID:any){
     this._ngZone.run(() => { 
@@ -155,6 +174,7 @@ export class AddRoleTemplateComponent implements OnInit {
     }, 500)
     })
   }
+
   /** Get Permission Data */
 
   getRolePermissions(){
@@ -177,10 +197,6 @@ export class AddRoleTemplateComponent implements OnInit {
       });
       
     })
-
-    
-    
-    
   }
   
 /** Get Types */
@@ -188,6 +204,9 @@ export class AddRoleTemplateComponent implements OnInit {
    console.log(event)
    if(event === "specific"){
     this.isTypeSpecific = true;
+   }else{
+    this.isTypeSpecific = false;
+    this.roleTemplateForm.patchValue({businessGroups: ''})
    }
   }
 

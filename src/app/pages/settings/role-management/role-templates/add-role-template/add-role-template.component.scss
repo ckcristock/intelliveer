@@ -33,3 +33,6 @@
 		}
 	}
 }
+input[type=text].form-control.ng-invalid.invalid-errors {
+    border: 1px solid red !important;
+}
