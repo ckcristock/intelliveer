@@ -22,8 +22,15 @@ const routes: Routes = [
       {
         path: 'manage-role-template/add',
         loadChildren: () =>
-          import('@pages/settings/role-management/role-templates/add-rol-template/add-rol-template.module').then(
-            (m) => m.AddRolTemplateModule
+          import('@pages/settings/role-management/role-templates/add-role-template/add-role-template.module').then(
+            (m) => m.AddRoleTemplateModule
+          ),
+      },
+      {
+        path: 'manage-role-template/edit',
+        loadChildren: () =>
+          import('@pages/settings/role-management/role-templates/add-role-template/add-role-template.module').then(
+            (m) => m.AddRoleTemplateModule
           ),
       },
       {

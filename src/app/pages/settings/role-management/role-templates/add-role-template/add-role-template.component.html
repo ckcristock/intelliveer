@@ -1,0 +1,107 @@
+<form autocomplete="off" [formGroup]="roleTemplateForm" #f="ngForm">
+    <div class="row sticky" style="width: 101%;">
+        <div class="col-11">
+            <div class="col pills menuheight">
+                <p>&nbsp;</p>
+            </div>
+        </div>
+        <div class="col-1 d-flex justify-content-center align-items-center mb-3 gap-2">
+            <button [disabled]="roleTemplateForm?.invalid" (click)="saveRoleTemplate()"> <img src="/assets/icons/save.svg"
+                    style="width: 37px; height: 37px; cursor: pointer;" alt="" /></button>
+            <img src="/assets/icons/cancel.svg"
+                [routerLink]="'/dashboard/settings/role-management/manage-role-template'"
+                style="width: 37px; height: 37px; cursor: pointer;" alt="" />
+        </div>
+    </div>
+
+    <!-- content -->
+
+    <div class="section" id="main">
+        <h6 class="heading">Create Role Template</h6>
+        <div class="row formrow">
+            <div class="col-6">
+                <label class="label-input-gap">Name of role</label>
+                <input type="text" class="form-control" formControlName="name"
+                >
+            </div>
+            <div class="col-6">
+                <label class="label-input-gap">Description</label>
+                <input type="text" class="form-control"
+                    formControlName="description"
+                    >
+            </div>
+        </div>
+        <div class="row formrow">
+            <div class="col-3">
+                <label class="label-input-gap">Type</label>
+                <ng-select placeholder="Select" formControlName="type" (change)="roleTypeValue($event)"
+                >
+                    <ng-option value="public">Public</ng-option>
+                    <ng-option value="private">Private</ng-option>
+                    <ng-option value="specific">Specific</ng-option>
+                </ng-select>
+            </div>
+            <div class="col-3" *ngIf="isTypeSpecific">
+                <label class="label-input-gap">Business Group</label>
+                <ng-select [multiple]="true" placeholder="Select" formControlName="businessGroups">
+                    <ng-option value="BG1">Business Group 1</ng-option>
+                    <ng-option value="BG2">Business Group 2</ng-option>
+                    <ng-option value="BG3">Business Group 3</ng-option>
+                </ng-select>
+            </div>
+        </div>
+
+        <!-- Accordion -->
+        <div class="row formrow">
+            <div class="col-12" style="margin-top: 6px;">
+                <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+                    <!-- Org. Onboarding -->
+                    <ngb-panel cardClass="onboarding" *ngFor="let item of allRolePermissionsMeta;">
+                        <ng-template ngbPanelTitle>
+                            <div>
+                                <p><strong>{{item.name}}</strong> <br>
+                                    <span *ngIf="item.description">{{item.description}}</span>
+                                </p>
+                            </div>
+
+                        </ng-template>
+                        <ng-template ngbPanelContent formArrayName="permissions">
+                            <ngb-accordion #accOnboarding="ngbAccordion" activeIds="ngb-panel-0" *ngFor="let section of sectionNested; let i=index" [formGroupName]="i">
+                                <!-- Business Group -->
+                                <ngb-panel cardClass="businessg" *ngIf="item.name == section.value.roles">
+                                    <ng-template ngbPanelTitle>
+                                        <p><strong>{{section.value.section}}</strong> <br>
+                                        </p>
+                                        
+                                    </ng-template>
+                                    <ng-template ngbPanelContent formArrayName="permissions">
+                                        <table class="table">
+                                            <thead>
+                                                <tr style="background-color: #f1f2f2; height: 30px;">
+                                                    <th></th>
+                                                    <th>Permission</th>
+                                                    <th>Lock</th>
+                                                    <th>Allow Override</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let perm of permissionNested(i); let j=index" [formGroupName]="j">
+                                                    <td><input type="checkbox" formControlName="enabled" value=""/></td>
+                                                    <td> <input type="hidden" formControlName="name" >{{section.value.permissions[j].name}}</td>
+                                                    <td><input type="checkbox" formControlName="locked" value="" /></td>
+                                                    <td><input type="checkbox" value=""  formControlName="allowOverride"/></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </ng-template>
+                                </ngb-panel>
+
+                                
+                            </ngb-accordion>
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
+            </div>
+        </div>
+    </div>
+</form>

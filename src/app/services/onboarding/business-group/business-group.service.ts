@@ -1,14 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CONFIG } from '@config/index';
+import { AuthService } from '@services/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BusinessGroupService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    private authService: AuthService) {}
   getBusinessGroups() {
-    return this.http.get(`${CONFIG.backend.host}/bg/business-group`);
+    return this.http.get(`${CONFIG.backend.host}/bg/business-group`,{
+      headers: {
+        'X-ORG-ID': this.authService.getOrgId()
+      }
+    });
   }
   getBusinessGroup(bgId: string) {
     return this.http.get(

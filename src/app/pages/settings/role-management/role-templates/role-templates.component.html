@@ -1,11 +1,11 @@
-<div *ngIf="roleTemplates.length == 0" class="section" style="height: 90%;">
+<div *ngIf="roleTemplates?.length == 0" class="section" style="height: 90%;">
     <div style="text-align: center; padding-top: 7%;">
         <h5><b>You haven’t added yet</b></h5>
         <p>Click here, <img src="assets/icons/add.svg" width="36" height="36" (click)="addRoleTemplate()" /> to add
             Role Template</p>
     </div>
 </div>
-<div *ngIf="roleTemplates.length != 0">
+<div *ngIf="roleTemplates?.length != 0">
 
     <!-- search, plus button -->
     <div class="container">
@@ -57,7 +57,7 @@
                 <tbody *ngIf="roleTemplates">
                     <tr *ngFor="let roleTemplate of roleTemplates; let i = index">
                         <td><input type="checkbox" value="{{i}}" /></td>
-                        <td>{{roleTemplate.id}}</td>
+                        <td>{{roleTemplate._id}}</td>
                         <td>{{roleTemplate?.name}}</td>
                         <td>{{roleTemplate?.description}}</td>
                         <td>
@@ -66,7 +66,8 @@
                                 <ul ngbDropdownMenu aria-labelledby="dropdownBasic">
                                     <li ngbDropdownItem>Export as a pdf</li>
                                     <li ngbDropdownItem>Print</li>
-                                    <li ngbDropdownItem (click)="deleteRoleT(roleTemplate.id)">Delete</li>
+                                    <li ngbDropdownItem (click)="editRoleTemplate(roleTemplate._id)">Edit</li>
+                                    <li ngbDropdownItem (click)="deleteRoleT(roleTemplate._id)">Delete</li>
                                 </ul>
                             </div>
                         </td>
