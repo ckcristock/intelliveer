@@ -1,0 +1,12 @@
+#main {
+	height: calc(100vh - 310px);
+	overflow-y: auto;
+  overflow-x: hidden;
+	padding-bottom: 5rem;
+	form {
+		input,
+		select {
+			margin-bottom: 5px;
+		}
+	}
+}
