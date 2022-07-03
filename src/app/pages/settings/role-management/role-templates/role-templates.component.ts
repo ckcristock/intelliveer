@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { RolesUsersService } from "@services/roles-users/roles-users.service";
 import { GlobalRoutesService } from "@services/global-routes/global-routes.service";
+import { AlertService } from '@services/alert/alert.service';
+import { RolesUsersService } from '@services/settings/role-management/roles-users.service';
 
 @Component({
   selector: 'app-role-templates',
@@ -10,20 +11,24 @@ import { GlobalRoutesService } from "@services/global-routes/global-routes.servi
 })
 export class RoleTemplatesComponent implements OnInit {
 
-  roleTemplates: any [] = [];
+  // roleTemplates: any [] = [];
+  roleTemplates:any;
   addRoute: string = "";
 
   constructor(private router: Router,
     private rolesUserServ: RolesUsersService,
+    private alertService: AlertService,
+    private _ngZone: NgZone,
     private globalRoutes: GlobalRoutesService) { }
 
   ngOnInit(): void {
     this.addRoute = this.globalRoutes.getSettingsRoleManageRoutes()[0].child[0].url;
-    this.rolesUserServ.getRoleTemplates().subscribe(
-      (resp: any) => {
-        this.roleTemplates = resp;
-      }
-    );
+    // this.rolesUserServ.getRoleTemplates().subscribe(
+    //   (resp: any) => {
+    //     this.roleTemplates = resp;
+    //   }
+    // );
+    this.roleTemplateList();
   }
 
   addRoleTemplate()
@@ -31,9 +36,34 @@ export class RoleTemplatesComponent implements OnInit {
     //this.router.navigate(['/dashboard/settings/role-management/manage-role-template/add']);
     this.router.navigate([this.globalRoutes.getSettingsRoleManageRoutes()[0].child[0].url]);
   }
-
-  deleteRoleT(id:number){
-    this.rolesUserServ.deleteRoleTemplate(id);
+  editRoleTemplate(ID:any)
+  {
+    //this.router.navigate(['/dashboard/settings/role-management/manage-role-template/add']);
+    this.router.navigate([this.globalRoutes.getSettingsRoleManageRoutes()[0].child[1].url],{queryParams: {_id:ID}});
   }
 
+  deleteRoleT(id:number){
+    this.alertService.conformAlert('Are you sure?', 'You want to delete a role template')
+    .then((result: any) => {
+      if (result.value) {
+    this.rolesUserServ.deleteRoleTemplateById(id).subscribe(res=>{
+      this.alertService.success(
+        'Success',
+        'Role Template has been deleted successfully'
+      );
+      this._ngZone.run(() => { this.roleTemplateList() });
+      
+    }, error => {
+      console.log(error)
+    });
+  }
+});
+    //this.rolesUserServ.deleteRoleTemplate(id);
+  }
+
+  roleTemplateList(){
+    this.rolesUserServ.listRoleTemplate().subscribe(res=>{
+      this.roleTemplates = res
+    })
+  }
 }
