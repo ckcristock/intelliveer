@@ -69,8 +69,39 @@ export class UserService {
     });
   }
 
-  getUser(): Observable<any[]>{
-    return this.user$;
+  getSomething(userId: number): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const headers = new HttpHeaders({
+        'X-ORG-ID': this.authService.getOrgId()
+      });
+      this.http.get<any>(`${this.userUrl}/${userId}`, { headers }).subscribe({
+          next: (data) => resolve(data),
+          error: (err) => reject(err),
+        });
+    });
+  }
+
+  async gotoPersonalInfo(userH: any){
+    //this.userServ.refreshUserById(user._id);
+    this.user = userH;
+  }
+
+  getUser(){
+    return this.user;
+  }
+
+  updateUserProfile(userProf:any, userId: number){
+    console.log("////////");
+    console.log("update funct services, profile:", userProf);
+    console.log("userId", userId);
+    
+    console.log("////////");
+    
+    
+    const headers = new HttpHeaders({
+      'X-ORG-ID': this.authService.getOrgId()
+    });
+    return this.http.put<any>(`${this.userUrl}/update-user-profile/${userId}`,  userProf , { headers });
   }
 
   deleteManageUser(id: number) {

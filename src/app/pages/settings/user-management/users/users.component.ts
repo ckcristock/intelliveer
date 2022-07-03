@@ -68,8 +68,14 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  gotoPersonalInfo(user: any){
-    this.userServ.refreshUserById(user._id);
+  async gotoPersonalInfo(user: any){
+    //this.userServ.refreshUserById(user._id);
+    const data = await this.userServ.getSomething(user._id);
+    console.log("dataaaaaaaaaa", data);
+
+    const data2 = await this.userServ.gotoPersonalInfo(data);
+    console.log("dataaaaaaaaaa", data2);
+    
     //this.router.navigate(['/dashboard/settings/user-management/manage-user/user-personal-info']);
     this.router.navigate([this.globalRoutes.getSettingsUserManageRoutes()[0].child[1].url]);
     
