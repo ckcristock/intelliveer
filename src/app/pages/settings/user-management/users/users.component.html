@@ -46,19 +46,19 @@
                     </tr>
                 </thead>
                 <tbody *ngIf="users">
-                    <tr *ngFor="let user of users; let i = index" (click)="gotoPersonalInfo(user)">
-                        <td><input type="checkbox" value="{{i}}" /></td>
-                        <td>{{user._id}}</td>
-                        <td>{{user['profile'].firstName}}</td>
-                        <td *ngIf="user['roles'].length >1">
+                    <tr *ngFor="let user of users; let i = index">
+                        <td  (click)="gotoPersonalInfo(user)"><input type="checkbox" value="{{i}}" /></td>
+                        <td  (click)="gotoPersonalInfo(user)">{{user._id}}</td>
+                        <td  (click)="gotoPersonalInfo(user)">{{user['profile'].firstName}}</td>
+                        <td  (click)="gotoPersonalInfo(user)" *ngIf="user['roles'].length >1">
                             {{user['roles'][0].name}} <span class="redcircle" triggers="mouseenter:mouseleave"
-                                #p1="ngbPopover" (mouseover)="usersPopUp(user['roles'])" [ngbPopover]="popContent"
-                                > +2</span>
+                                #p1="ngbPopover" (mouseover)="usersPopUp(user['roles'], i)"
+                                [ngbPopover]="popContentArray[i]"> +2</span>
                         </td>
-                        <td *ngIf="user['roles'].length ==1">
+                        <td  (click)="gotoPersonalInfo(user)" *ngIf="user['roles'].length ==1">
                             {{user['roles'][0].name}}
                         </td>
-                        <td>{{user?.status}}</td>
+                        <td  (click)="gotoPersonalInfo(user)">{{user?.status}}</td>
                         <td>
                             <div ngbDropdown container="body" placement="bottom-end">
                                 <i class="bi bi-three-dots-vertical" id="dropdownBasic" ngbDropdownToggle></i>

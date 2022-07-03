@@ -14,6 +14,7 @@ export class UsersComponent implements OnInit {
   roles: any[] = [];
   addRoute: string = "";
   popContent: string = "";
+  popContentArray: any[] = [];
   popContentCounter: number = 0;
 
   constructor(private router: Router,
@@ -54,30 +55,32 @@ export class UsersComponent implements OnInit {
     this.userServ.deleteManageUser(id);
   }
 
-  usersPopUp(roles: any) {
-    if (this.popContentCounter == 0) {
+  usersPopUp(roles: any, index: any) {
+    if (this.popContentArray[index] == null) {
       this.popContentCounter++;
       roles.forEach((element: any) => {
         if (this.popContentCounter == 1) {
           this.popContentCounter++;
           this.popContent = `${element.name}`;
+
         } else {
           this.popContent = `${this.popContent}, ${element.name}`;
         }
+        this.popContentArray[index]=this.popContent;
+
       });
+      this.popContent="";
+      this.popContentCounter=0;
     }
   }
 
-  async gotoPersonalInfo(user: any){
-    //this.userServ.refreshUserById(user._id);
-    const data = await this.userServ.getSomething(user._id);
-    console.log("dataaaaaaaaaa", data);
+  async gotoPersonalInfo(user: any) {
+    const data = await this.userServ.getUserByIdAPI(user._id);
+    const data2 = await this.userServ.setUser(data);
 
-    const data2 = await this.userServ.gotoPersonalInfo(data);
-    console.log("dataaaaaaaaaa", data2);
-    
     //this.router.navigate(['/dashboard/settings/user-management/manage-user/user-personal-info']);
     this.router.navigate([this.globalRoutes.getSettingsUserManageRoutes()[0].child[1].url]);
-    
+
   }
+
 }

@@ -27,7 +27,6 @@ export class PersonalInfoComponent implements OnInit {
   testCounter: number = 0;
 
   letters = [{ "letter": "A", "status": "PRIMARY" },];
-  // user2:any []=[];
   user:any = {
     _id: 0,
     profile: {
@@ -60,7 +59,6 @@ export class PersonalInfoComponent implements OnInit {
     this.initForm(this.formData);
 
     this.user= this.userServ.getUser();
-    console.log("user", this.user);
     if(this.user._id == null){
       this.router.navigate([this.globalRoutes.getSettingsUserManageRoutes()[0].url]);
     }
@@ -85,12 +83,11 @@ export class PersonalInfoComponent implements OnInit {
       email: this.user.profile.email,
     }
     this.userServ.updateUserProfile(this.userProfile, this.user._id).subscribe((resp: any) => {
-      console.log("update Resp", resp);
       this.router.navigate([this.globalRoutes.getSettingsUserManageRoutes()[0].url]);
     });
   }
   cancel() {
-    // this.onCancel.emit();
+    this.router.navigate([this.globalRoutes.getSettingsUserManageRoutes()[0].url]);
   }
 
   onSectionChange(sectionId: string) {

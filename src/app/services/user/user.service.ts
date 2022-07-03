@@ -69,7 +69,7 @@ export class UserService {
     });
   }
 
-  getSomething(userId: number): Promise<any> {
+  getUserByIdAPI(userId: number): Promise<any> {
     return new Promise((resolve, reject) => {
       const headers = new HttpHeaders({
         'X-ORG-ID': this.authService.getOrgId()
@@ -81,8 +81,7 @@ export class UserService {
     });
   }
 
-  async gotoPersonalInfo(userH: any){
-    //this.userServ.refreshUserById(user._id);
+  async setUser(userH: any){
     this.user = userH;
   }
 
@@ -91,13 +90,6 @@ export class UserService {
   }
 
   updateUserProfile(userProf:any, userId: number){
-    console.log("////////");
-    console.log("update funct services, profile:", userProf);
-    console.log("userId", userId);
-    
-    console.log("////////");
-    
-    
     const headers = new HttpHeaders({
       'X-ORG-ID': this.authService.getOrgId()
     });
