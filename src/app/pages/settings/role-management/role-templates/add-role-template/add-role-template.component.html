@@ -66,14 +66,11 @@
 
                         </ng-template>
                         <ng-template ngbPanelContent formArrayName="permissions">
-                            <ngb-accordion #accOnboarding="ngbAccordion" activeIds="ngb-panel-0" *ngFor="let section of sectionsArray().controls; let i=index" [formGroupName]="i">
+                            <ngb-accordion #accOnboarding="ngbAccordion" activeIds="ngb-panel-0" *ngFor="let section of sectionNested; let i=index" [formGroupName]="i">
                                 <!-- Business Group -->
                                 <ngb-panel cardClass="businessg" *ngIf="item.name == section.value.roles">
                                     <ng-template ngbPanelTitle>
                                         <p><strong>{{section.value.section}}</strong> <br>
-                                            <!-- <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-                                                nonummy
-                                                nibh</span> -->
                                         </p>
                                         
                                     </ng-template>
@@ -88,7 +85,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let perm of permissionArray().controls; let j=index" [formGroupName]="j">
+                                                <tr *ngFor="let perm of permissionNested(i); let j=index" [formGroupName]="j">
                                                     <td><input type="checkbox" formControlName="enabled" value=""/></td>
                                                     <td> <input type="hidden" formControlName="name" >{{section.value.permissions[j].name}}</td>
                                                     <td><input type="checkbox" formControlName="locked" value="" /></td>
@@ -103,45 +100,6 @@
                             </ngb-accordion>
                         </ng-template>
                     </ngb-panel>
-
-                    <!-- Module 1 -->
-                    <!-- <ngb-panel cardClass="module1">
-                        <ng-template ngbPanelTitle>
-                            <p><strong>Module 1</strong> <br>
-                                <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
-                                    nibh</span>
-                            </p>
-                        </ng-template>
-                        <ng-template ngbPanelContent>
-                        </ng-template>
-                    </ngb-panel> -->
-
-                    <!-- Module 2 -->
-                    <!-- <ngb-panel cardClass="module2">
-                        <ng-template ngbPanelTitle>
-                            <p><strong>Module 2</strong></p>
-                        </ng-template>
-                        <ng-template ngbPanelContent>
-                        </ng-template>
-                    </ngb-panel> -->
-
-                    <!-- Module 3 -->
-                    <!-- <ngb-panel cardClass="module3">
-                        <ng-template ngbPanelTitle>
-                            <p><strong>Module 3</strong></p>
-                        </ng-template>
-                        <ng-template ngbPanelContent>
-                        </ng-template>
-                    </ngb-panel> -->
-
-                    <!-- Module 4 -->
-                    <!-- <ngb-panel cardClass="module4">
-                        <ng-template ngbPanelTitle>
-                            <p><strong>Module 4</strong></p>
-                        </ng-template>
-                        <ng-template ngbPanelContent>
-                        </ng-template>
-                    </ngb-panel> -->
                 </ngb-accordion>
             </div>
         </div>
