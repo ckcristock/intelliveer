@@ -49,7 +49,6 @@ export class EditRoleComponent implements OnInit {
   getRoleById(id: string)
   {
     this.roleService.getRoleById(id).subscribe((data: any) => {
-      console.log(data)
       this.roleObj = data;
       this.Form.patchValue(data);
     }, error => {
@@ -136,43 +135,24 @@ export class EditRoleComponent implements OnInit {
 	}
 
   save(data: any) {
-    this.roleObj.permissions.map((items: any) =>
+    this.Form.value.permissions.map((items: any) =>
     {
+      delete items.roles;
       items.permissions.map((permissionItem: any) =>
       {
         permissionItem.attrs = {};
-        delete permissionItem._id
+        delete permissionItem._id;
+        
       })
       delete items._id
     })
-    let roleObj = {
-      name: data.name,
-      description: data.description,
-      permissions: this.roleObj.permissions
-    }
-    console.log(this.roleObj);
     if(this.roleObj.roleTemplateId)
     {
-      console.log("dddddddddddddddddddddddddddddddddddddddddddddddd")
-      // this.saveRoleFromTemplate(roleObj)
-      this.saveRoleFromScratch(roleObj)
+      this.saveRoleFromScratch(this.Form.value)
     }
     else{
-      console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
-      this.saveRoleFromScratch(roleObj);
-      // this.saveRoleFromTemplate(roleObj)
+      this.saveRoleFromScratch(this.Form.value);
     }
-    // this.businessGroupDropdownService.getBusinessGroups().subscribe(list =>
-    //   {
-    //     if(list.length == 0)
-    //     {
-    //       this.saveRoleFromScratch(roleObj);
-    //     }
-    //     else
-    //     {
-    //       this.saveRoleFromTemplate(roleObj);
-    //     }
-    //   })
   }
 
   saveRoleFromScratch(data: any)
