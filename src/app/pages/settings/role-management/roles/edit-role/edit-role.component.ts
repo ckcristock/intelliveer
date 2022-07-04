@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '@services/alert/alert.service';
 import { BusinessGroupDropdownService } from '@services/business-group-dropdown/business-group-dropdown.service';
@@ -21,6 +21,8 @@ export class EditRoleComponent implements OnInit {
   practiceList: any[] = [];
   displayShowAdvanced: boolean = false;
   displayCreateRoleYesNoOption: boolean = false;
+  roleNestedForm!: FormGroup;
+  permissionsList: any[] = [];
 
   constructor(
     private router: Router,
@@ -36,17 +38,19 @@ export class EditRoleComponent implements OnInit {
       ? this.displayCreateRoleYesNoOption = true 
       : this.displayCreateRoleYesNoOption = false;
     this.initForm(this.formData);
-    let id: any = this.route.snapshot.paramMap.get('id');
-    this.getRoleById(id);
+    let id: any = this.route.snapshot.paramMap.get('id');    
     this.getLegelEntityList();
     this.getLocationList();
     this.getPracticeList();
+    this.getPermissionList();
+    this.getRoleById(id);
   }
 
   getRoleById(id: string)
   {
     this.roleService.getRoleById(id).subscribe((data: any) => {
       this.roleObj = data;
+      this.Form.patchValue(data);
     }, error => {
       console.log(error)
     });
@@ -57,35 +61,98 @@ export class EditRoleComponent implements OnInit {
     this.Form = this.fb.group({
       name: [data?.fName || '', Validators.required],
       description: [data?.lName || '', Validators.required],
+      permissions: this.fb.array([])
     });
   }
 
+  get sectionNested() {
+		return (<FormArray>this.Form.get('permissions')).controls;
+	}
+
+	permissionNested(i: any) {
+		return (<FormArray>this.sectionNested[i].get('permissions')).controls;
+	}
+
+	sectionsArray(): FormArray {
+		return <FormArray>this.Form.get('permissions');
+	}
+
+	newSections(): FormGroup {
+		return (this.roleNestedForm = this.fb.group({
+			section: new FormControl(),
+      roles: new FormControl(),
+			permissions: this.fb.array([])
+		}));
+	}
+
+	permissionArray(): FormArray {
+		return <FormArray>this.roleNestedForm.get('permissions');
+	}
+
+	newPermissions(): FormGroup {
+		return this.fb.group({
+			name: new FormControl(),
+			enabled: new FormControl(false),
+			locked: new FormControl(false),
+			allowOverride: new FormControl(false),
+			attrs: {}
+		});
+	}
+
+  getPermissionList() {
+		this.roleService.getPermissionList().subscribe(
+			(list: any) => {
+				for (let i = 0; i < list.length; i++) {
+					const subPermissionList = list[i].permissions;
+					for (let j = 0; j < subPermissionList.length; j++) {
+						const sectionFormGroup = this.newSections();
+						const childPermisssion =
+							subPermissionList[j].permissions;
+						for (let k = 0; k < childPermisssion.length; k++) {
+							const permissionFormGroup = this.newPermissions();
+							permissionFormGroup.patchValue({
+								name: childPermisssion[k].name,
+								enabled: false,
+								locked: false,
+								allowOverride: false,
+								attrs: {}
+							});
+							this.permissionArray().push(permissionFormGroup);
+						}
+            sectionFormGroup.patchValue({
+							section: subPermissionList[j].section,
+              roles: list[i].name
+						});
+						this.sectionsArray().push(sectionFormGroup);
+					}
+				}
+				this.permissionsList = list;
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
+	}
+
   save(data: any) {
-    this.roleObj.permissions.map((items: any) =>
+    this.Form.value.permissions.map((items: any) =>
     {
+      delete items.roles;
       items.permissions.map((permissionItem: any) =>
       {
         permissionItem.attrs = {};
-        delete permissionItem._id
+        delete permissionItem._id;
+        
       })
       delete items._id
     })
-    let roleObj = {
-      name: data.name,
-      description: data.description,
-      permissions: this.roleObj.permissions
+    if(this.roleObj.roleTemplateId)
+    {
+      this.saveRoleFromScratch(this.Form.value)
     }
-    this.businessGroupDropdownService.getBusinessGroups().subscribe(list =>
-      {
-        if(list.length == 0)
-        {
-          this.saveRoleFromScratch(roleObj);
-        }
-        else
-        {
-          this.saveRoleFromTemplate(roleObj);
-        }
-      })
+    else{
+      this.saveRoleFromScratch(this.Form.value);
+    }
   }
 
   saveRoleFromScratch(data: any)
