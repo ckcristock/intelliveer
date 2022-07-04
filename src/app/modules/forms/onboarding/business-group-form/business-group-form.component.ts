@@ -44,7 +44,7 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 		private addressFormService: AddressFormService,
 		private contactPersonFormService: ContactPersonFormService,
 		private contactDetailsFormService: ContactDetailsFormService,
-		private geoService: GeoService,
+		private geoService: GeoService
 	) {}
 
 	ngOnInit() {
@@ -81,7 +81,8 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 				{
 					firstName: true,
 					lastName: true,
-					phone: { type: true, number: true, countryCode: true }
+					phone: { type: true, number: true, countryCode: true },
+					email: true
 				}
 			)
 		});
