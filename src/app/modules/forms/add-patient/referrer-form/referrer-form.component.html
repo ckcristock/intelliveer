@@ -8,7 +8,7 @@
                 <a class="heading a-link" (click)="closeSaveCancelFunc()">Cancel</a>
             </div>
         </div>
-        <div class="row" style="margin-top: 11px; margin-bottom: 18px;">
+        <div class="row formrow" style="margin-top: 11px; margin-bottom: 18px;">
             <textarea *ngIf="openTextAreaVar==true"
                         class="form-control"
                         placeholder="Leave a comment here"
@@ -17,7 +17,7 @@
                     ></textarea
                     >
         </div>
-        <div class="row" style="margin-top: -15px;">
+        <div class="row formrow" style="margin-top: -15px;">
             <div class="col-12">
                 <div
                     class="btn-group"
@@ -54,7 +54,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top: 11px;" *ngIf="openFormBool==true">
+        <div class="row formrow" style="margin-top: 11px;" *ngIf="openFormBool==true">
             <div class="col-6">
                 <div class="mainformset">
                     <label class="label-input-gap"
@@ -73,7 +73,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top: 4px;" *ngIf="openFormBool==true">
+        <div class="row formrow" style="margin-top: 4px;" *ngIf="openFormBool==true">
             <div class="col-3">
                 <div class="mainformset">
                     <label class="label-input-gap"
@@ -123,7 +123,7 @@
                 </div>
             </div>
         </div>
-        <div class="row two-final-buttons">
+        <div class="row formrow two-final-buttons">
             <div class="two-items">
                 <button class="btn btn-light btn-light-custom" >Exit</button>
                 <button type="button" class="btn btn-dark btn-dark-custom"  (click)="continueToInsurance()" >Save and continue</button>

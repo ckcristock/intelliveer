@@ -1,1 +1,265 @@
-<p>user-policy works!</p>
+<div class="row sticky" style="width: 101%;">
+    <div class="col-11">
+        <div class="col pills menuheight">
+            <p>&nbsp;</p>
+        </div>
+    </div>
+    <div class="col-1 d-flex justify-content-center align-items-center mb-3 gap-2">
+        <img src="../../../../../assets/icons/save.svg" style="width: 37px; height: 37px; cursor: pointer;" alt="" />
+        <button class="btn btn-dark pluscentered">
+            <i class="bi bi-plus-lg"></i>
+        </button>
+    </div>
+</div>
+
+<!-- content -->
+<div class="section" id="main">
+    <h6 class="heading">Role Assignment</h6>
+    
+    <div class="row formrow">
+        <div class="col-3">
+            <label class="label-input-gap">Roles</label>
+            <ng-select placeholder="Select">
+                <ng-option>Select</ng-option>
+            </ng-select>
+        </div>
+    </div>
+
+    <h6 class="heading">User Policy</h6>
+    
+    <div class="row formrow">
+        <div class="twenty">
+            <label class="label-input-gap">Legal Entity</label>
+            <ng-select placeholder="Select">
+                <ng-option>Select</ng-option>
+            </ng-select>
+        </div>
+        <div class="twenty">
+            <label class="label-input-gap">Location</label>
+            <ng-select placeholder="Select">
+                <ng-option>Select</ng-option>
+            </ng-select>
+        </div>
+        <div class="twenty">
+            <label class="label-input-gap">Practice</label>
+            <ng-select placeholder="Select">
+                <ng-option>Select</ng-option>
+            </ng-select>
+        </div>
+    </div>
+    
+
+    <!-- Accordion -->
+    <div class="row formrow">
+        <div class="col-12">
+            <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+                <!-- Org. Onboarding -->
+                <ngb-panel cardClass="onboarding">
+                    <ng-template ngbPanelTitle>
+                        <p><strong>Org. Onboarding</strong> <br>
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh</p>
+                    </ng-template>
+                    <ng-template ngbPanelContent>
+                        <ngb-accordion #accOnboarding="ngbAccordion" activeIds="ngb-panel-0">
+                            <!-- Business Group -->
+                            <ngb-panel cardClass="businessg">
+                                <ng-template ngbPanelTitle>
+                                    <p><strong>Business Group</strong> <br>
+                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+                                    </p>
+                                </ng-template>
+                                <ng-template ngbPanelContent>
+                                    <div class="container">
+                                        <div class="row">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr style="background-color: #f1f2f2; height: 30px;">
+                                                        <th scope="col"></th>
+                                                        <th scope="col">Permission</th>
+                                                        <th scope="col">Attribute</th>
+                                                        <th scope="col">Value</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody *ngIf="permissions">
+                                                    <tr *ngFor="let permission of permissions; let i = index">
+                                                        <td><input type="checkbox" value="{{i}}" /></td>
+                                                        <td>{{permission?.description}}</td>
+                                                        <td>
+                                                            <ng-select placeholder="Select">
+                                                                <ng-option>Select</ng-option>
+                                                            </ng-select>
+                                                        </td>
+                                                        <td>
+                                                            <ng-select placeholder="Select">
+                                                                <ng-option>Select</ng-option>
+                                                            </ng-select>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ngb-panel>
+
+                            <!-- Legal Entity -->
+                            <ngb-panel cardClass="legalenti">
+                                <ng-template ngbPanelTitle>
+                                    <p><strong>Legal Entity</strong></p>
+                                </ng-template>
+                                <ng-template ngbPanelContent>
+                                    <div class="container">
+                                        <div class="row">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr style="background-color: #f1f2f2; height: 30px;">
+                                                        <th scope="col"></th>
+                                                        <th scope="col">Permission</th>
+                                                        <th scope="col">Attribute</th>
+                                                        <th scope="col">Value</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody *ngIf="permissions">
+                                                    <tr *ngFor="let permission of permissions; let i = index">
+                                                        <td><input type="checkbox" value="{{i}}" /></td>
+                                                        <td>{{permission?.description}}</td>
+                                                        <td>
+                                                            <ng-select placeholder="Select">
+                                                                <ng-option>Select</ng-option>
+                                                            </ng-select>
+                                                        </td>
+                                                        <td>
+                                                            <ng-select placeholder="Select">
+                                                                <ng-option>Select</ng-option>
+                                                            </ng-select>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ngb-panel>
+
+                            <!-- Location -->
+                            <ngb-panel cardClass="location">
+                                <ng-template ngbPanelTitle>
+                                    <p><strong>Location</strong></p>
+                                </ng-template>
+                                <ng-template ngbPanelContent>
+                                    <div class="container">
+                                        <div class="row">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr style="background-color: #f1f2f2; height: 30px;">
+                                                        <th scope="col"></th>
+                                                        <th scope="col">Permission</th>
+                                                        <th scope="col">Attribute</th>
+                                                        <th scope="col">Value</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody *ngIf="permissions">
+                                                    <tr *ngFor="let permission of permissions; let i = index">
+                                                        <td><input type="checkbox" value="{{i}}" /></td>
+                                                        <td>{{permission?.description}}</td>
+                                                        <td>
+                                                            <ng-select placeholder="Select">
+                                                                <ng-option>Select</ng-option>
+                                                            </ng-select>
+                                                        </td>
+                                                        <td>
+                                                            <ng-select placeholder="Select">
+                                                                <ng-option>Select</ng-option>
+                                                            </ng-select>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ngb-panel>
+
+                            <!-- Practice -->
+                            <ngb-panel cardClass="practice">
+                                <ng-template ngbPanelTitle>
+                                    <p><strong>Practice</strong></p>
+                                </ng-template>
+                                <ng-template ngbPanelContent>
+                                    <div class="container">
+                                        <div class="row">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr style="background-color: #f1f2f2; height: 30px;">
+                                                        <th scope="col"></th>
+                                                        <th scope="col">Permission</th>
+                                                        <th scope="col">Attribute</th>
+                                                        <th scope="col">Value</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody *ngIf="permissions">
+                                                    <tr *ngFor="let permission of permissions; let i = index">
+                                                        <td><input type="checkbox" value="{{i}}" /></td>
+                                                        <td>{{permission?.description}}</td>
+                                                        <td>
+                                                            <ng-select placeholder="Select">
+                                                                <ng-option>Select</ng-option>
+                                                            </ng-select>
+                                                        </td>
+                                                        <td>
+                                                            <ng-select placeholder="Select">
+                                                                <ng-option>Select</ng-option>
+                                                            </ng-select>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ngb-panel>
+                        </ngb-accordion>
+                    </ng-template>
+                </ngb-panel>
+
+                <!-- Module 1 -->
+                <ngb-panel cardClass="module1">
+                    <ng-template ngbPanelTitle>
+                        <p><strong>Module 1</strong> <br>
+                            <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh</span>
+                        </p>
+                    </ng-template>
+                    <ng-template ngbPanelContent>
+                    </ng-template>
+                </ngb-panel>
+
+                <!-- Module 2 -->
+                <ngb-panel cardClass="module2">
+                    <ng-template ngbPanelTitle>
+                        <p><strong>Module 2</strong></p>
+                    </ng-template>
+                    <ng-template ngbPanelContent>
+                    </ng-template>
+                </ngb-panel>
+
+                <!-- Module 3 -->
+                <ngb-panel cardClass="module3">
+                    <ng-template ngbPanelTitle>
+                        <p><strong>Module 3</strong></p>
+                    </ng-template>
+                    <ng-template ngbPanelContent>
+                    </ng-template>
+                </ngb-panel>
+
+                <!-- Module 4 -->
+                <ngb-panel cardClass="module4">
+                    <ng-template ngbPanelTitle>
+                        <p><strong>Module 4</strong></p>
+                    </ng-template>
+                    <ng-template ngbPanelContent>
+                    </ng-template>
+                </ngb-panel>
+            </ngb-accordion>
+        </div>
+    </div>
+</div>

@@ -7,6 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserPolicyComponent implements OnInit {
 
+  permissions: any [] = [
+    {description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"},
+    {description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"},
+    {description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"},
+    {description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"},
+    {description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"},
+    {description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"},
+    {description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"},
+  ];
+
   constructor() { }
 
   ngOnInit(): void {

@@ -38,7 +38,7 @@ export class SettingsComponent implements OnInit {
   businessGroups: any;
   disableBGDropdown: boolean = false;
   moduleName: string = '';
-  currentRoute: string = "";
+  currentRoute: string = "Onboarding";
 
   constructor(
     public router: Router,

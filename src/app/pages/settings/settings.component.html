@@ -20,12 +20,12 @@
 		<div class="col" style="max-width: 200px;">
 			<ul class="ul">
 				<ol class="ol">
-					<li *ngFor="let menuItem of menuItems">
+					<li *ngFor="let menuItem of menuItems; let i = index">
 						<ngb-accordion [closeOthers]="true" #acc="ngbAccordion" activeIds="patient-panel"
 							class="accord-transparent">
 							<ngb-panel id="patient-panel">
 								<ng-template ngbPanelTitle>
-									<span>{{ menuItem.name }}
+									<span [class.active]="currentRoute == menuItems[i].name">{{ menuItem.name }}
 										<i style="
 												margin-left: 18px;
 											"></i>
