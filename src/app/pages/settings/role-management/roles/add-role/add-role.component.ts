@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from '@services/alert/alert.service';
+import { BusinessGroupDropdownService } from '@services/business-group-dropdown/business-group-dropdown.service';
 import { RoleService } from '@services/role/role.service';
 
 export class RoleTemplate {
@@ -16,6 +17,7 @@ export class RoleTemplate {
 	description: string | undefined;
 	permissions: any[] = [];
 	businessGroups: any[] = [];
+	roleTemplateId: string | undefined;
 }
 
 @Component({
@@ -37,12 +39,14 @@ export class AddRoleComponent implements OnInit {
 	displayShowAdvanced: boolean = false;
 	displayCreateRoleYesNoOption: boolean = false;
 	permissionsList: any[] = [];
+	bgName: any;
 
 	constructor(
 		private router: Router,
 		private roleService: RoleService,
 		private alertService: AlertService,
-		private fb: FormBuilder
+		private fb: FormBuilder,
+		private businessGroupDropdownService: BusinessGroupDropdownService
 	) {}
 
 	ngOnInit(): void {
@@ -55,6 +59,15 @@ export class AddRoleComponent implements OnInit {
 		this.getLegelEntityList();
 		this.getLocationList();
 		this.getPracticeList();
+		this.businessGroupDropdownService
+			.getBusinessGroups()
+			.subscribe((list) => {
+				console.log(list);
+				if(list.length)
+				{
+					this.bgName = list[0]._id;
+				}
+			});
 	}
 
 	initForm(data?: any) {
@@ -66,7 +79,7 @@ export class AddRoleComponent implements OnInit {
 			permissions: this.fb.array([])
 		});
 	}
-  
+
 	get sectionNested() {
 		return (<FormArray>this.Form.get('permissions')).controls;
 	}
@@ -82,7 +95,7 @@ export class AddRoleComponent implements OnInit {
 	newSections(): FormGroup {
 		return (this.roleNestedForm = this.fb.group({
 			section: new FormControl(),
-      roles: new FormControl(),
+			roles: new FormControl(),
 			permissions: this.fb.array([])
 		}));
 	}
@@ -162,10 +175,9 @@ export class AddRoleComponent implements OnInit {
 	}
 
 	saveRoleFromScratch(data: any) {
-    data.permissions.map((item: any) =>
-    {
-      delete item.roles
-    })
+		data.permissions.map((item: any) => {
+			delete item.roles;
+		});
 		let roleObj = {
 			name: data.name,
 			description: data.description,
@@ -206,7 +218,7 @@ export class AddRoleComponent implements OnInit {
 					this.roleService
 						.saveRoleFromRoleTemplate(
 							roleObj,
-							this.roleTemplate.businessGroups[0]
+							this.bgName
 						)
 						.subscribe(
 							(data: any) => {
@@ -277,9 +289,9 @@ export class AddRoleComponent implements OnInit {
 							});
 							this.permissionArray().push(permissionFormGroup);
 						}
-            sectionFormGroup.patchValue({
+						sectionFormGroup.patchValue({
 							section: subPermissionList[j].section,
-              roles: list[i].name
+							roles: list[i].name
 						});
 						this.sectionsArray().push(sectionFormGroup);
 					}
