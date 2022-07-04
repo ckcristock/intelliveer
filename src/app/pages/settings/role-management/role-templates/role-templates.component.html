@@ -61,15 +61,42 @@
                         <td>{{roleTemplate?.name}}</td>
                         <td>{{roleTemplate?.description}}</td>
                         <td>
-                            <div ngbDropdown container="body" placement="bottom-end">
-                                <i class="bi bi-three-dots-vertical" id="dropdownBasic" ngbDropdownToggle></i>
-                                <ul ngbDropdownMenu aria-labelledby="dropdownBasic">
-                                    <li ngbDropdownItem>Export as a pdf</li>
-                                    <li ngbDropdownItem>Print</li>
-                                    <li ngbDropdownItem (click)="editRoleTemplate(roleTemplate._id)">Edit</li>
-                                    <li ngbDropdownItem (click)="deleteRoleT(roleTemplate._id)">Delete</li>
-                                </ul>
-                            </div>
+                            <div
+							ngbDropdown
+							container="body"
+							placement="bottom-end"
+						>
+							<button
+								class="btn btn-light btn-sm more_btn"
+								ngbDropdownToggle
+							>
+								<i class="bi bi-three-dots-vertical"></i>
+							</button>
+							<div ngbDropdownMenu>
+								<button
+								ngbDropdownItem>
+                                Export as a pdf
+								</button>
+								<button
+									ngbDropdownItem
+								>
+                                Print
+								</button>
+								<div class="dropdown-divider"></div>
+								<button
+									ngbDropdownItem
+                                    (click)="editRoleTemplate(roleTemplate._id)"
+								>
+									Edit
+								</button>
+								<button
+									ngbDropdownItem
+									(click)="deleteRoleT(roleTemplate._id)"
+								>
+									Delete
+								</button>
+							</div>
+						</div>
                         </td>
                     </tr>
                 </tbody>
