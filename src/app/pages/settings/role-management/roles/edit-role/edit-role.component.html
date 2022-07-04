@@ -1,244 +1,91 @@
-<div class="row sticky" style="width: 101%;">
-    <div class="col-11">
-        <div class="col pills menuheight">
-            <p>&nbsp;</p>
+<app-nav-bar-pills [cancelBtn]="true" [saveBtn]="true" [disableSaveBtn]="Form.invalid" (onCancel)="cancel()"
+    (onSave)="save(Form.value)"></app-nav-bar-pills>
+
+<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
+
+    <!-- content -->
+    <div class="section" id="main">
+        <h6 class="heading">Edit Role</h6>
+
+        <div class="row formrow">
+            <div class="col-6">
+                <label class="label-input-gap">Name of role</label>
+                <input type="text" class="form-control" [(ngModel)]="roleObj.name" formControlName="name">
+            </div>
+            <div class="col-6">
+                <label class="label-input-gap">Description</label>
+                <input type="text" class="form-control" [(ngModel)]="roleObj.description" formControlName="description">
+            </div>
+        </div>
+
+
+        <!-- Accordion -->
+        <div class="row formrow">
+            <div class="col-12">
+                <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+                    <!-- Org. Onboarding -->
+                    <ngb-panel cardClass="onboarding" *ngFor="let permissions of roleObj.permissions">
+                        <ng-template ngbPanelTitle>
+                            <p><strong>{{permissions.section}}</strong></p>
+                        </ng-template>
+                        <ng-template ngbPanelContent>
+                            <div [align]="'end'">
+                                <input type="checkbox" style="float: inherit;" (change)="displayShowAdvanced = !displayShowAdvanced">
+                                <label class="form-check-label" style="padding-bottom: 1.3rem;">
+                                    Show Advanced
+                                </label>
+                            </div>
+                            <table class="table" *ngIf="permissions.permissions?.length != 0">
+                                <thead>
+                                    <tr style="background-color: #f1f2f2; height: 30px;">
+                                        <th></th>
+                                        <th>Permission</th>
+                                        <th>Lock</th>
+                                        <th>Allow Override</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let childPermision of permissions.permissions">
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" value="{{childPermision.enabled}}" [checked]="childPermision.enabled" (change)="childPermision.enabled = !childPermision.enabled" *ngIf="displayCreateRoleYesNoOption" />
+                                            <input type="checkbox" value="{{childPermision.enabled}}" [checked]="childPermision.enabled" [disabled]="childPermision.locked" (change)="childPermision.enabled = !childPermision.enabled" *ngIf="!displayCreateRoleYesNoOption" />
+                                        </td>
+                                        <td>{{childPermision?.name}}</td>
+                                        <td>
+                                            <input type="checkbox" value="{{childPermision.locked}}" [checked]="childPermision.locked" (change)="childPermision.locked = !childPermision.locked" *ngIf="!childPermision.locked" />
+                                            <img src="../../../../../../assets/icons/locked.svg" *ngIf="childPermision.locked" width="25" height="25" />
+                                        </td>
+                                        <td><input type="checkbox" value="{{childPermision.allowOverride}}" [checked]="childPermision.allowOverride" /></td>
+                                    </tr>
+                                    <tr *ngIf="displayShowAdvanced">
+                                        <td></td>
+                                        <td>
+                                            <label>Legal Entity</label>
+                                            <ng-select placeholder="Select">
+                                                <ng-option *ngFor="let legalEntity of legelEntityList">{{legalEntity.name}}</ng-option>
+                                            </ng-select>
+                                        </td>
+                                        <td>
+                                            <label>Location</label>
+                                            <ng-select placeholder="Select">
+                                                <ng-option *ngFor="let location of locationList">{{location.name}}}</ng-option>
+                                            </ng-select>
+                                        </td>
+                                        <td>
+                                            <label>Practice</label>
+                                            <ng-select placeholder="Select">
+                                                <ng-option *ngFor="let practice of practiceList">
+                                                    <input type="checkbox" value="{{practice}}" checked  />&nbsp;{{practice.name}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
+            </div>
         </div>
     </div>
-    <div class="col-1 d-flex justify-content-center align-items-center mb-3 gap-2">
-        <img src="../../../../../assets/icons/save.svg" style="width: 37px; height: 37px; cursor: pointer;" alt="" />
-        <button class="btn btn-dark pluscentered">
-            <i class="bi bi-plus-lg"></i>
-        </button>
-    </div>
-</div>
-
-<!-- content -->
-<div class="section" id="main">
-    <h6 class="heading">Edit Role</h6>
-    
-    <div class="row formrow">
-        <div class="col-6">
-            <label class="label-input-gap">Name of role</label>
-            <input type="text" class="form-control">
-        </div>
-        <div class="col-6">
-            <label class="label-input-gap">Description</label>
-            <input type="text" class="form-control">
-        </div>
-    </div>
-    
-
-    <!-- Accordion -->
-    <div class="row formrow">
-        <div class="col-12">
-            <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
-                <!-- Org. Onboarding -->
-                <ngb-panel cardClass="onboarding">
-                    <ng-template ngbPanelTitle>
-                        <p><strong>Org. Onboarding</strong> <br>
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh</p>
-                    </ng-template>
-                    <ng-template ngbPanelContent>
-                        <ngb-accordion #accOnboarding="ngbAccordion" activeIds="ngb-panel-0">
-                            <!-- Business Group -->
-                            <ngb-panel cardClass="businessg">
-                                <ng-template ngbPanelTitle>
-                                    <p><strong>Business Group</strong> <br>
-                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
-                                    </p>
-                                </ng-template>
-                                <ng-template ngbPanelContent>
-                                    <div class="container">
-                                        <div class="row">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr style="background-color: #f1f2f2; height: 30px;">
-                                                        <th scope="col"></th>
-                                                        <th scope="col">Permission</th>
-                                                        <th scope="col">Attribute</th>
-                                                        <th scope="col">Value</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody *ngIf="permissions">
-                                                    <tr *ngFor="let permission of permissions; let i = index">
-                                                        <td><input type="checkbox" value="{{i}}" /></td>
-                                                        <td>{{permission?.description}}</td>
-                                                        <td>
-                                                            <ng-select placeholder="Select">
-                                                                <ng-option>Select</ng-option>
-                                                            </ng-select>
-                                                        </td>
-                                                        <td>
-                                                            <ng-select placeholder="Select">
-                                                                <ng-option>Select</ng-option>
-                                                            </ng-select>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </ng-template>
-                            </ngb-panel>
-
-                            <!-- Legal Entity -->
-                            <ngb-panel cardClass="legalenti">
-                                <ng-template ngbPanelTitle>
-                                    <p><strong>Legal Entity</strong></p>
-                                </ng-template>
-                                <ng-template ngbPanelContent>
-                                    <div class="container">
-                                        <div class="row">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr style="background-color: #f1f2f2; height: 30px;">
-                                                        <th scope="col"></th>
-                                                        <th scope="col">Permission</th>
-                                                        <th scope="col">Attribute</th>
-                                                        <th scope="col">Value</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody *ngIf="permissions">
-                                                    <tr *ngFor="let permission of permissions; let i = index">
-                                                        <td><input type="checkbox" value="{{i}}" /></td>
-                                                        <td>{{permission?.description}}</td>
-                                                        <td>
-                                                            <ng-select placeholder="Select">
-                                                                <ng-option>Select</ng-option>
-                                                            </ng-select>
-                                                        </td>
-                                                        <td>
-                                                            <ng-select placeholder="Select">
-                                                                <ng-option>Select</ng-option>
-                                                            </ng-select>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </ng-template>
-                            </ngb-panel>
-
-                            <!-- Location -->
-                            <ngb-panel cardClass="location">
-                                <ng-template ngbPanelTitle>
-                                    <p><strong>Location</strong></p>
-                                </ng-template>
-                                <ng-template ngbPanelContent>
-                                    <div class="container">
-                                        <div class="row">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr style="background-color: #f1f2f2; height: 30px;">
-                                                        <th scope="col"></th>
-                                                        <th scope="col">Permission</th>
-                                                        <th scope="col">Attribute</th>
-                                                        <th scope="col">Value</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody *ngIf="permissions">
-                                                    <tr *ngFor="let permission of permissions; let i = index">
-                                                        <td><input type="checkbox" value="{{i}}" /></td>
-                                                        <td>{{permission?.description}}</td>
-                                                        <td>
-                                                            <ng-select placeholder="Select">
-                                                                <ng-option>Select</ng-option>
-                                                            </ng-select>
-                                                        </td>
-                                                        <td>
-                                                            <ng-select placeholder="Select">
-                                                                <ng-option>Select</ng-option>
-                                                            </ng-select>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </ng-template>
-                            </ngb-panel>
-
-                            <!-- Practice -->
-                            <ngb-panel cardClass="practice">
-                                <ng-template ngbPanelTitle>
-                                    <p><strong>Practice</strong></p>
-                                </ng-template>
-                                <ng-template ngbPanelContent>
-                                    <div class="container">
-                                        <div class="row">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr style="background-color: #f1f2f2; height: 30px;">
-                                                        <th scope="col"></th>
-                                                        <th scope="col">Permission</th>
-                                                        <th scope="col">Attribute</th>
-                                                        <th scope="col">Value</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody *ngIf="permissions">
-                                                    <tr *ngFor="let permission of permissions; let i = index">
-                                                        <td><input type="checkbox" value="{{i}}" /></td>
-                                                        <td>{{permission?.description}}</td>
-                                                        <td>
-                                                            <ng-select placeholder="Select">
-                                                                <ng-option>Select</ng-option>
-                                                            </ng-select>
-                                                        </td>
-                                                        <td>
-                                                            <ng-select placeholder="Select">
-                                                                <ng-option>Select</ng-option>
-                                                            </ng-select>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </ng-template>
-                            </ngb-panel>
-                        </ngb-accordion>
-                    </ng-template>
-                </ngb-panel>
-
-                <!-- Module 1 -->
-                <ngb-panel cardClass="module1">
-                    <ng-template ngbPanelTitle>
-                        <p><strong>Module 1</strong> <br>
-                            <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh</span>
-                        </p>
-                    </ng-template>
-                    <ng-template ngbPanelContent>
-                    </ng-template>
-                </ngb-panel>
-
-                <!-- Module 2 -->
-                <ngb-panel cardClass="module2">
-                    <ng-template ngbPanelTitle>
-                        <p><strong>Module 2</strong></p>
-                    </ng-template>
-                    <ng-template ngbPanelContent>
-                    </ng-template>
-                </ngb-panel>
-
-                <!-- Module 3 -->
-                <ngb-panel cardClass="module3">
-                    <ng-template ngbPanelTitle>
-                        <p><strong>Module 3</strong></p>
-                    </ng-template>
-                    <ng-template ngbPanelContent>
-                    </ng-template>
-                </ngb-panel>
-
-                <!-- Module 4 -->
-                <ngb-panel cardClass="module4">
-                    <ng-template ngbPanelTitle>
-                        <p><strong>Module 4</strong></p>
-                    </ng-template>
-                    <ng-template ngbPanelContent>
-                    </ng-template>
-                </ngb-panel>
-            </ngb-accordion>
-        </div>
-    </div>
-</div>
+</form>
