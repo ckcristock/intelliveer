@@ -35,6 +35,7 @@ export class AddLegalEntityComponent implements OnInit, OnDestroy {
 	}
 	createLegalEntity(data: any) {
 		if (this.selectedBusinessGroup) {
+			data['slug'] = '';
 			this.legalEntityService
 				.createLegalEntity(this.selectedBusinessGroup.bgId, data)
 				.subscribe({

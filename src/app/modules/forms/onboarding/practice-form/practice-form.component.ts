@@ -22,7 +22,7 @@ export class PracticeFormComponent implements OnInit {
 	practiceTypeData: any = [];
 	countries: any;
 	imageSrc: any;
-	currentSelection: string = ''; 
+	currentSelection: string = '';
 	menuItems: MenuItem[] = [
 		{ title: 'Overview', id: 'overview' },
 		{ title: 'Profile', id: 'profile' },
@@ -51,7 +51,7 @@ export class PracticeFormComponent implements OnInit {
 		private http: HttpClient,
 		private addressFormService: AddressFormService,
 		private contactPersonFormService: ContactPersonFormService,
-		private contactDetailsFormService: ContactDetailsFormService,
+		private contactDetailsFormService: ContactDetailsFormService
 	) {}
 
 	ngOnInit() {
@@ -92,7 +92,7 @@ export class PracticeFormComponent implements OnInit {
 	}
 	getStaticData() {
 		this.http
-			.get(`${CONFIG.backend.host}/auth/api/v1/global-data/static-types`)
+			.get(`${CONFIG.backend.host}/auth/global-data/static-types`)
 			.subscribe({
 				next: (data) => {
 					this.staticData = data;
