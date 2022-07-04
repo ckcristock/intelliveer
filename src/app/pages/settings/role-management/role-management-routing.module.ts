@@ -50,7 +50,7 @@ const routes: Routes = [
             ),
       },
       {
-        path: 'manage-role/edit',
+        path: 'manage-role/edit/:id',
         loadChildren: () =>
           import(
             '@pages/settings/role-management/roles/edit-role/edit-role.module').then(

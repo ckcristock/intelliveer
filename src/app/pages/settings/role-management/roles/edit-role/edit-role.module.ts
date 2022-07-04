@@ -6,6 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditRoleComponent } from "./edit-role.component";
+import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
 
 @NgModule({
   declarations: [EditRoleComponent],
@@ -15,7 +16,8 @@ import { EditRoleComponent } from "./edit-role.component";
     NgbModule,
     NgSelectModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NavBarPillsModule
   ]
 })
 export class EditRoleModule { }
