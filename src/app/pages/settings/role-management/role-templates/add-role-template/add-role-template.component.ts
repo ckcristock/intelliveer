@@ -44,7 +44,7 @@ export class AddRoleTemplateComponent implements OnInit {
   initForm(data?: any) {
     data = data || {};
     this.roleTemplateForm = this.fb.group({
-      name: [''],
+      name: ['',Validators.required],
       description: [''],
       businessGroups: [''],
       type: [''],
@@ -72,7 +72,6 @@ export class AddRoleTemplateComponent implements OnInit {
       if (params._id) {
         this.getRolesID = params._id;
         this.roleTemplateDetail(this.getRolesID);
-        this.isTypeSpecific = true;
       }
     })
   }
@@ -117,6 +116,9 @@ export class AddRoleTemplateComponent implements OnInit {
     this.roleTemplateForm.value.permissions.map((item: any) => {
       delete item.roles
     })
+    if(this.roleTemplateForm.value.businessGroups =="" || this.roleTemplateForm.value.businessGroups == null || this.roleTemplateForm.value.businessGroups == undefined ){
+      this.roleTemplateForm.value.businessGroups = [];
+    }
     console.log(this.roleTemplateForm.value);
     if(this.getRolesID){
       this.editRoleTemplateForm();
@@ -169,7 +171,12 @@ export class AddRoleTemplateComponent implements OnInit {
       setTimeout(() => {
       this.rolesUserServ.singleRoleTemplate(ID).subscribe(res=>{
         console.log(res);
-          this.roleTemplateForm.patchValue(res) 
+          this.roleTemplateForm.patchValue(res);
+          if(this.roleTemplateForm.value.businessGroups.length == 0){
+            this.isTypeSpecific = false;
+          }else{
+            this.isTypeSpecific = true;
+          }
       })
     }, 500)
     })

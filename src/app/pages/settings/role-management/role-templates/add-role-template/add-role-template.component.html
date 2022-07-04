@@ -6,14 +6,14 @@
             </div>
         </div>
         <div class="col-1 d-flex justify-content-center align-items-center mb-3 gap-2">
-            <button [disabled]="roleTemplateForm?.invalid" (click)="saveRoleTemplate()"> <img src="/assets/icons/save.svg"
+            <button [disabled]="roleTemplateForm?.invalid" (click)="saveRoleTemplate()" class="save"> <img src="/assets/icons/save.svg"
                     style="width: 37px; height: 37px; cursor: pointer;" alt="" /></button>
+
             <img src="/assets/icons/cancel.svg"
                 [routerLink]="'/dashboard/settings/role-management/manage-role-template'"
                 style="width: 37px; height: 37px; cursor: pointer;" alt="" />
         </div>
     </div>
-
     <!-- content -->
 
     <div class="section" id="main">
@@ -21,7 +21,7 @@
         <div class="row formrow">
             <div class="col-6">
                 <label class="label-input-gap">Name of role</label>
-                <input type="text" class="form-control" formControlName="name"
+                <input type="text" class="form-control required-field" formControlName="name"                
                 >
             </div>
             <div class="col-6">
@@ -34,7 +34,7 @@
         <div class="row formrow">
             <div class="col-3">
                 <label class="label-input-gap">Type</label>
-                <ng-select placeholder="Select" formControlName="type" (change)="roleTypeValue($event)"
+                <ng-select placeholder="Select" class="required-field" formControlName="type" (change)="roleTypeValue($event)"
                 >
                     <ng-option value="public">Public</ng-option>
                     <ng-option value="private">Private</ng-option>

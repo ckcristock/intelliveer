@@ -96,7 +96,8 @@ input.search {
 	background: #fff;
 	min-height: 500px;
 	padding: 2rem;
-	max-height: calc(100vh - 150px);
+	/* max-height: calc(100vh - 150px); */
+    height: 100%;
 }
 
 .active {
