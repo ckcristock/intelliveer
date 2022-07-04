@@ -1,6 +1,6 @@
 <form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)" style=" margin-top:0px;">
     <div class="mainformsection">
-        <div *ngIf="tab!='addPatient'">
+        <div *ngIf="tab!='addPatient'" class="row formrow">
             <div class="two-items">
                 <h6 class="heading" style="font-weight: bolder;">Legal Guardian</h6>
                 <a class="heading a-link" *ngIf="showButtonSaveCancel==false" (click)="openTextarea()">Add Script</a>
@@ -9,18 +9,19 @@
                     <a class="heading a-link" (click)="closeSaveCancelFunc()">Cancel</a>
                 </div>
             </div>
-            <div class="row" style="margin-top: 11px; margin-bottom: 18px;">
-                <textarea *ngIf="openTextAreaVar==true"
-                            class="form-control"
-                            placeholder="Leave a comment here"
-                            id="floatingTextarea2"
-                            style="height: 98px; padding: 5px 10px 8px 6px; font-size: 12px; line-height : 20px; border: 2px solid #7a7a7c; font-style: oblique; resize: none;"
-                        ></textarea
-                        >
-            </div>
+            
+        </div>
+        <div class="row formrow" style="margin-top: 11px;" *ngIf="openTextAreaVar==true">
+            <textarea 
+                        class="form-control"
+                        placeholder="Leave a comment here"
+                        id="floatingTextarea2"
+                        style="height: 98px; padding: 5px 10px 8px 6px; font-size: 12px; line-height : 20px; border: 2px solid #7a7a7c; font-style: oblique; resize: none;"
+                    ></textarea
+                    >
         </div>
         <!-- search -->
-        <div class="row" style=" margin-top:0px;">
+        <div class="row formrow" >
             <!-- legal Guardian textbox and button -->
             <div class="col-6">
                 <div class="mainformset">
@@ -49,7 +50,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top: 17px;">
+        <div class="row formrow" >
             <div class="col-4">
                 <div class="mainformset">
                     <label class="label-input-gap">Relationship to patient?</label>
@@ -86,7 +87,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:4px;">
+        <div class="row formrow">
             <div class="col-6">
                 <div class="mainformset">
                     <label class=" label-input-gap"
@@ -114,7 +115,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:5px;">
+        <div class="row formrow" >
             <div class="col-3">
                 <div class="mainformset">
                     <label class="label-input-gap">Zip Code</label>
@@ -160,7 +161,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:5px;">
+        <div class="row formrow" >
             <div class="col-3">
                 <div class="mainformset">
                     <label class=" label-input-gap"
@@ -194,7 +195,7 @@
                 </div>
             </div>
         </div>
-        <div  *ngIf="tab!='addPatient'" class="row two-final-buttons" >
+        <div  *ngIf="tab!='addPatient'" class="row formrow two-final-buttons" >
             <div class="two-items">
                 <button class="btn btn-light btn-light-custom" >Exit</button>
                 <button type="button" class="btn btn-dark btn-dark-custom" (click)="continueToDentist()" [disabled]="Form?.invalid">Save and continue</button>

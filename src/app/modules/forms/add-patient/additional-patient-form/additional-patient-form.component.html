@@ -8,7 +8,7 @@
                 <a class="heading a-link" (click)="closeSaveCancelFunc()">Cancel</a>
             </div>
         </div>
-        <div *ngIf="openTextAreaVar==true" class="row" style="margin: 5px 1px 14px 1px;">
+        <div *ngIf="openTextAreaVar==true" class="row formrow" style="margin: 5px 1px 14px 1px;">
             <textarea 
                         class="form-control"
                         placeholder="Leave a comment here"
@@ -19,7 +19,7 @@
         </div>
 
         <!-- patient-textbox-button -->
-        <div class="row" style="margin-bottom: 32px;">
+        <div class="row formrow" style="margin-bottom: 32px;">
             <div class="col-6">
                 <div class="mainformset">
                     <label class="label-input-gap input-button-label"
@@ -49,7 +49,7 @@
         </div>
 
         <!-- patient-textboxes-->
-        <div class="row">
+        <div class="row formrow">
             <div class="col-3">
                 <div class="mainformset">
                     <label class="label-input-gap"
@@ -96,7 +96,7 @@
         </div>
 
         <!-- legal Guardian radios-->
-        <div class="row">
+        <div class="row formrow">
             <div class="mainformset">
                 <h6 class="heading subti-radio-b">Legal Guardian</h6>
                 <div
@@ -150,13 +150,13 @@
         <br />
         
         <!-- legal TextBoxes Reusable-->
-        <div class="row" style="margin-top: -9px;">
+        <div class="row formrow" style="margin-top: -9px;">
             <app-legal-guardian-form
         [tab]="'addPatient'"></app-legal-guardian-form>
         </div>
 
         <!-- Dentist radios-->
-        <div class="row" style="margin-bottom: 7px;">
+        <div class="row formrow" style="margin-bottom: 7px;">
             <div class="mainformset">
                 <h6 class="heading subti-radio-b">Dentist</h6>
                 <div
@@ -207,7 +207,7 @@
             </div>
         </div>
         <!-- Dentist textbox and button -->
-        <div class="row" style="margin-bottom: 17px;">
+        <div class="row formrow" style="margin-bottom: 17px;">
             <div class="col-6">
                 <div class="mainformset">
                     <label class="label-input-gap input-button-label"
@@ -236,7 +236,7 @@
             </div>
         </div>
         <!-- Dentist textboxes-->
-        <div class="row">
+        <div class="row formrow">
             <div class="col-3">
                 <div class="mainformset">
                     <label class="label-input-gap"
@@ -290,7 +290,7 @@
         </div>
 
         <!-- Referrer radios-->
-        <div class="row" style="margin-bottom: 7px;">
+        <div class="row formrow" style="margin-bottom: 7px;">
             <div class="mainformset">
                 <h6 class="heading subti-radio-b">Referrer</h6>
                 <div
@@ -342,7 +342,7 @@
         </div>
         
         <!-- Referrer textbox and button -->
-        <div class="row" style="margin-bottom: 17px;">
+        <div class="row formrow" style="margin-bottom: 17px;">
             <div class="col-6">
                 <div class="mainformset">
                     <label class="label-input-gap input-button-label"
@@ -372,7 +372,7 @@
         </div>
 
         <!-- Referrer textboxes-->
-        <div class="row">
+        <div class="row formrow">
             <div class="col-3">
                 <div class="mainformset">
                     <label class="label-input-gap"
@@ -424,7 +424,7 @@
         </div>
 
         <!-- Insurance radios-->
-        <div class="row">
+        <div class="row formrow">
             <h6 class="heading" style="font-weight: bolder; margin-top: 20px;">Insurance</h6>
             <div class="col-6">
                 <!-- first radios -->
@@ -526,12 +526,12 @@
 
         <hr *ngIf="provideInsurance" style="position: relative; top: 30px; height: 1px;">
         <!-- Insurance tabs-->
-        <div class="row"  *ngIf="provideInsurance" style="margin-top:-14px;">
+        <div class="row formrow"  *ngIf="provideInsurance" style="margin-top:-14px;">
             <nav ngbNav #nav4="ngbNav" class="nav-pills">
                 <ng-container ngbNavItem>
                     <a ngbNavLink *ngIf="checkInsuranceCount == 1 || checkInsuranceCount > 1" class="tabs">Insurance 1</a>
                     <ng-template ngbNavContent>
-                        <div class="row" style="margin-top: 22px;">
+                        <div class="row formrow" style="margin-top: 22px;">
                             <!-- radios -->
                             <div class="mainformset">
                                 <div
@@ -581,7 +581,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="margin-top: 5px;">
+                        <div class="row formrow" style="margin-top: 5px;">
                             <!-- textbox and button -->
                             <div class="col-6">
                                 <div class="mainformset">
@@ -600,7 +600,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="margin-top: 6px;">
+                        <div class="row formrow" style="margin-top: 6px;">
                             <!-- textboxes -->
                             <div class="col-3">
                                 <div class="mainformset">
@@ -634,7 +634,7 @@
                 <ng-container ngbNavItem>
                     <a ngbNavLink *ngIf="checkInsuranceCount > 1" class="tabs">Insurance 2</a>
                     <ng-template ngbNavContent>
-                        <div class="row" style="margin-top: 22px;">
+                        <div class="row formrow" style="margin-top: 22px;">
                             <!-- radios -->
                             <div class="mainformset">
                                 <div
@@ -684,7 +684,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="margin-top: 5px;">
+                        <div class="row formrow" style="margin-top: 5px;">
                             <!-- textbox and button -->
                             <div class="col-6">
                                 <div class="mainformset">
@@ -703,7 +703,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="margin-top: 6px;">
+                        <div class="row formrow" style="margin-top: 6px;">
                             <!-- textboxes -->
                             <div class="col-3">
                                 <div class="mainformset">
@@ -737,7 +737,7 @@
                 <ng-container ngbNavItem>
                     <a ngbNavLink *ngIf="checkInsuranceCount == 3" class="tabs">Insurance 3</a>
                     <ng-template ngbNavContent>
-                        <div class="row" style="margin-top: 22px;">
+                        <div class="row formrow" style="margin-top: 22px;">
                             <!-- radios -->
                             <div class="mainformset">
                                 <div
@@ -787,7 +787,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="margin-top: 5px;">
+                        <div class="row formrow" style="margin-top: 5px;">
                             <!-- textbox and button -->
                             <div class="col-6">
                                 <div class="mainformset">
@@ -806,7 +806,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="margin-top: 6px;">
+                        <div class="row formrow" style="margin-top: 6px;">
                             <!-- textboxes -->
                             <div class="col-3">
                                 <div class="mainformset">
@@ -843,7 +843,7 @@
         </div>
         
         <!-- Subscriber radios -->
-        <div class="row">
+        <div class="row formrow">
             <div class="mainformset">
                 <h6 class="heading subti-radio-b">Subscriber</h6>
                 <div
@@ -906,7 +906,7 @@
         </div>
 
         <!-- Subscriber textbox and button -->
-        <div class="row"  style="margin-top: 3px;">
+        <div class="row formrow"  style="margin-top: 3px;">
             <div class="col-6">
                 <div class="mainformset">
                     <label class="label-input-gap"
@@ -926,7 +926,7 @@
         </div>
 
         <!-- Subscriber textboxes-->
-        <div class="row" style="margin-top: 5px;">
+        <div class="row formrow" style="margin-top: 5px;">
             <div class="twenty">
                 <div class="mainformset">
                     <label class="label-input-gap"

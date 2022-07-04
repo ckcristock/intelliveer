@@ -1,23 +1,15 @@
 <div class="container content">
-	<div
-		class="container d-flex justify-content-end align-items-end global-bg-dropdown formrow"
-	>
+	<div class="container d-flex justify-content-end align-items-end global-bg-dropdown formrow">
 		<div class="col">
-			<span
-				>Settings/ {{ currentRoute }} /
-				{{ selectedBusinessGroup }}</span
-			>
+			<span>Settings/ {{ currentRoute }} /
+				{{ selectedBusinessGroup }}</span>
 		</div>
 		<!-- <div class="col-3 text-end me-2">
 					<label class="fw-bold">Business Group:</label>
 				</div> -->
 		<div class="col-3">
-			<select
-				class="form-select"
-				[(ngModel)]="selectedBusinessGroup"
-				(change)="setBusinessGroup($event)"
-				[disabled]="disableBGDropdown"
-			>
+			<select class="form-select" [(ngModel)]="selectedBusinessGroup" (change)="setBusinessGroup($event)"
+				[disabled]="disableBGDropdown">
 				<option value="intelliveer">**INTELLIVEER**</option>
 				<option *ngFor="let bg of businessGroups" [value]="bg._id">
 					{{ bg.name }}
@@ -30,30 +22,22 @@
 		<div class="col" style="max-width: 200px">
 			<ul class="ul">
 				<ol class="ol">
-					<li *ngFor="let menuItem of menuItems">
-						<ngb-accordion
-							[closeOthers]="true"
-							#acc="ngbAccordion"
-							activeIds="patient-panel"
-							class="accord-transparent"
-						>
+					<li *ngFor="let menuItem of menuItems; let i = index">
+						<ngb-accordion [closeOthers]="true" #acc="ngbAccordion" activeIds="patient-panel"
+							class="accord-transparent">
 							<ngb-panel id="patient-panel">
 								<ng-template ngbPanelTitle>
-									<span
-										>{{ menuItem.name }}
-										<i style="margin-left: 18px"></i>
+									<span [class.active]="currentRoute == menuItems[i].name">{{ menuItem.name }}
+										<i style="
+												margin-left: 18px;
+											"></i>
 									</span>
 								</ng-template>
 								<ng-template ngbPanelContent>
 									<ul class="ol">
-										<li
-											*ngFor="
+										<li *ngFor="
 												let child of menuItem.childs
-											"
-											class="pointer"
-											routerLinkActive="active"
-											[routerLink]="child.url"
-										>
+											" class="pointer" routerLinkActive="active" [routerLink]="child.url">
 											{{ child.title }}
 										</li>
 									</ul>
