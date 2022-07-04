@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { CONFIG } from '@config/index';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -9,7 +9,8 @@ import { CookieService } from 'ngx-cookie-service';
 export class AuthService {
 	constructor(
 		private cookieService: CookieService,
-		private http: HttpClient
+		private http: HttpClient,
+		private injector: Injector
 	) {}
 	isLoggedIn() {
 		const session = this.cookieService.get('isLoggedIn');
@@ -21,6 +22,10 @@ export class AuthService {
 	}
 	getOrgId() {
 		return this.cookieService.get('orgId');
+	}
+	getSelectedBusinessGroup() {
+		const bg = localStorage.getItem('selected_business_group');
+		return bg?.toString() || 'intelliveer';
 	}
 	logout() {
 		return this.http.post(

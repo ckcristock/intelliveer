@@ -5,7 +5,7 @@ import { CONFIG } from '@config/index';
 import { AlertService } from '@services/alert/alert.service';
 import {
 	BusinessGroupDropdownService,
-	SelectedBusinessGroup,
+	SelectedBusinessGroup
 } from '@services/business-group-dropdown/business-group-dropdown.service';
 import { LegalEntityService } from '@services/onboarding/legal-entity/legal-entity.service';
 import { LocationService } from '@services/onboarding/location/location.service';
@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
 @Component({
 	selector: 'app-mapping',
 	templateUrl: './mapping.component.html',
-	styleUrls: ['./mapping.component.scss'],
+	styleUrls: ['./mapping.component.scss']
 })
 export class MappingComponent implements OnInit, OnDestroy {
 	locations: any = [];
@@ -71,7 +71,7 @@ export class MappingComponent implements OnInit, OnDestroy {
 								}
 							});
 						}
-					},
+					}
 				});
 		}
 	}
@@ -83,7 +83,7 @@ export class MappingComponent implements OnInit, OnDestroy {
 					next: (res) => {
 						this.locations = res;
 					},
-					error: () => {},
+					error: () => {}
 				});
 		}
 	}
@@ -95,7 +95,7 @@ export class MappingComponent implements OnInit, OnDestroy {
 					next: (res) => {
 						this.legalEntities = res;
 					},
-					error: () => {},
+					error: () => {}
 				});
 		}
 	}
@@ -107,7 +107,7 @@ export class MappingComponent implements OnInit, OnDestroy {
 					next: (res) => {
 						this.practices = res;
 					},
-					error: () => {},
+					error: () => {}
 				});
 		}
 	}
@@ -119,14 +119,15 @@ export class MappingComponent implements OnInit, OnDestroy {
 				{
 					locId: item['_id'],
 					legalEntities: item['legalEntities'],
-					practices: item['practices'],
-				},
+					practices: item['practices']
+				}
 			];
 			return acc;
 		}, []);
+
 		if (this.selectedBusinessGroup) {
 			this.mappingService
-				.updateMapping(this.selectedBusinessGroup.bgId, relation)
+				.updateMapping(this.selectedBusinessGroup.bgId, { relation })
 				.subscribe({
 					next: (res) => {
 						this.alertService.success(
@@ -136,20 +137,20 @@ export class MappingComponent implements OnInit, OnDestroy {
 					},
 					error: (err) => {
 						console.error(err);
-					},
+					}
 				});
 		}
 	}
 	handleCancel() {
-		this.alertService.conformAlert('Are you sure?', 'You want to exit')
-		.then((result) => {
-			if (result.value) {
-				this.routeLocation.back();
-			}
-		});
+		this.alertService
+			.conformAlert('Are you sure?', 'You want to exit')
+			.then((result) => {
+				if (result.value) {
+					this.routeLocation.back();
+				}
+			});
 	}
-	selectionValueChange()
-	{
+	selectionValueChange() {
 		this.saveButtonEnable = false;
 	}
 }

@@ -35,6 +35,7 @@ export class AddLocationComponent implements OnInit, OnDestroy {
 	}
 	create(data: any) {
 		if (this.selectedBusinessGroup) {
+			data['slug'] = '';
 			this.locationService
 				.createLocation(this.selectedBusinessGroup.bgId, data)
 				.subscribe({

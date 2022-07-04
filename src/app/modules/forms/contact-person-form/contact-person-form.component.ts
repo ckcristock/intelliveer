@@ -6,7 +6,7 @@ import { CONFIG } from '@config/index';
 @Component({
 	selector: 'app-contact-person-form',
 	templateUrl: './contact-person-form.component.html',
-	styleUrls: ['./contact-person-form.component.scss'],
+	styleUrls: ['./contact-person-form.component.scss']
 })
 export class ContactPersonFormComponent implements OnInit {
 	@Input() parentGroup!: FormGroup;
@@ -34,13 +34,13 @@ export class ContactPersonFormComponent implements OnInit {
 	}
 	getStaticData() {
 		this.http
-			.get(`${CONFIG.backend.host}/auth/api/v1/global-data/static-types`)
+			.get(`${CONFIG.backend.host}/auth/global-data/static-types`)
 			.subscribe({
 				next: (data) => {
 					this.staticData = data;
 				},
 				error: () => {},
-				complete: () => {},
+				complete: () => {}
 			});
 	}
 }
