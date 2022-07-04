@@ -47,7 +47,7 @@ export class AddRoleTemplateComponent implements OnInit {
       name: ['',Validators.required],
       description: [''],
       businessGroups: [''],
-      type: [''],
+      type: ['',Validators.required],
       permissions: this.fb.array([
         
       ])
