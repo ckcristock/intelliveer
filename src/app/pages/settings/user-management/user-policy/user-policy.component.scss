@@ -11,3 +11,42 @@
 		}
 	}
 }
+
+.permission {
+	border: 1px solid #eceeee;
+	background-color: #f1f2f2;
+	label {
+		font-weight: bold !important;
+		margin-left: 10px;
+	}
+	height: 31px !important;
+	display: flex;
+	align-items: center;
+	align-content: center;
+	justify-content: flex-start;
+}
+
+.show{
+	height: 31px !important;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 10px;
+	margin-top: 10px;
+}
+
+.checkandtext{
+	height: 31px !important;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 10px;
+}
+
+.roles{
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 10px;
+	margin-top: 10px;
+}

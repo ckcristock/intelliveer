@@ -6,7 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserPolicyComponent } from "./user-policy.component";
-
+import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
 
 @NgModule({
   declarations: [UserPolicyComponent],
@@ -16,7 +16,8 @@ import { UserPolicyComponent } from "./user-policy.component";
     NgbModule,
     NgSelectModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NavBarPillsModule
   ]
 })
 export class UserPolicyModule { }

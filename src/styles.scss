@@ -387,7 +387,7 @@ input[type='checkbox'] {
 	border-color: #f9f9f9;
 }
 
-input:checked[type='checkbox'] {
+input[type='checkbox']:checked {
 	background-image: url('/../assets/images/checkbox-checked.png');
 }
 
@@ -793,32 +793,32 @@ form {
 .module1,
 .module2,
 .module3,
-.module4{
+.module4 {
 
 	.accordion-button {
 
 		span {
 			color: #a6a8aa !important;
 		}
-	
+
 		background-color: white !important;
 		box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
 	}
-	
+
 	.accordion-button:not(.collapsed) {
-	
+
 		span {
 			color: #a6a8aa !important;
 		}
-	
+
 		p {
 			color: #f0896e !important;
 		}
-	
+
 		background-color: white !important;
 		border-bottom: 1px solid #e5e5e5;
 	}
-	
+
 
 }
 
@@ -831,10 +831,11 @@ form {
 
 	.accordion-button:not(.collapsed) {
 
-		p{
+		p {
 			color: #000 !important;
 			margin-bottom: -10px;
 		}
+
 		span {
 			color: #a6a8aa !important;
 		}
@@ -843,7 +844,7 @@ form {
 		border-bottom-style: none !important;
 	}
 
-	.accordion-body:hover:focus:checked{
+	.accordion-body:hover:focus:checked {
 		border-top-style: none !important;
 		border-top: none !important;
 	}
@@ -851,11 +852,19 @@ form {
 }
 
 
-td{
-	line-height:30px !important;
+td {
+	line-height: 30px !important;
 	border-style: none !important;
 }
 
 table {
-    border-collapse:unset !important;
+	border-collapse: unset !important;
+}
+
+
+input[type='checkbox'] {
+	appearance: none;
+	border-radius: 10%;
+	box-shadow: none;
+	font-size: 1em;
 }
