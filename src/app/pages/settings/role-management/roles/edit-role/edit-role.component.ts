@@ -19,7 +19,6 @@ export class EditRoleComponent implements OnInit {
   legelEntityList: any[] = [];
   locationList: any[] = [];
   practiceList: any[] = [];
-  displayShowAdvanced: boolean = false;
   displayCreateRoleYesNoOption: boolean = false;
   roleNestedForm!: FormGroup;
   permissionsList: any[] = [];
@@ -81,6 +80,7 @@ export class EditRoleComponent implements OnInit {
 		return (this.roleNestedForm = this.fb.group({
 			section: new FormControl(),
       roles: new FormControl(),
+      displayShowAdvanced: new FormControl(false),
 			permissions: this.fb.array([])
 		}));
 	}
@@ -121,7 +121,8 @@ export class EditRoleComponent implements OnInit {
 						}
             sectionFormGroup.patchValue({
 							section: subPermissionList[j].section,
-              roles: list[i].name
+              roles: list[i].name,
+              displayShowAdvanced: false,
 						});
 						this.sectionsArray().push(sectionFormGroup);
 					}
@@ -138,6 +139,7 @@ export class EditRoleComponent implements OnInit {
     this.Form.value.permissions.map((items: any) =>
     {
       delete items.roles;
+      delete items.displayShowAdvanced
       items.permissions.map((permissionItem: any) =>
       {
         permissionItem.attrs = {};

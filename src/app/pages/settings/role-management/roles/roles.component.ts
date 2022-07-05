@@ -24,7 +24,6 @@ export class RolesComponent implements OnInit {
   {
     this.roleService.getRoleList().subscribe((list: any) =>
     {
-      console.log(list)
       this.roleList = list;
     })
   }

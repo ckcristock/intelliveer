@@ -36,10 +36,10 @@ export class AddRoleComponent implements OnInit {
 	legelEntityList: any[] = [];
 	locationList: any[] = [];
 	practiceList: any[] = [];
-	displayShowAdvanced: boolean = false;
 	displayCreateRoleYesNoOption: boolean = false;
 	permissionsList: any[] = [];
 	bgName: any;
+	roleType: any;
 
 	constructor(
 		private router: Router,
@@ -62,7 +62,6 @@ export class AddRoleComponent implements OnInit {
 		this.businessGroupDropdownService
 			.getBusinessGroups()
 			.subscribe((list) => {
-				console.log(list);
 				if(list.length)
 				{
 					this.bgName = list[0]._id;
@@ -96,6 +95,7 @@ export class AddRoleComponent implements OnInit {
 		return (this.roleNestedForm = this.fb.group({
 			section: new FormControl(),
 			roles: new FormControl(),
+			displayShowAdvanced: new FormControl(false),
 			permissions: this.fb.array([])
 		}));
 	}
@@ -177,6 +177,7 @@ export class AddRoleComponent implements OnInit {
 	saveRoleFromScratch(data: any) {
 		data.permissions.map((item: any) => {
 			delete item.roles;
+			delete item.displayShowAdvanced
 		});
 		let roleObj = {
 			name: data.name,
@@ -218,7 +219,8 @@ export class AddRoleComponent implements OnInit {
 					this.roleService
 						.saveRoleFromRoleTemplate(
 							roleObj,
-							this.bgName
+							this.bgName,
+							this.roleType
 						)
 						.subscribe(
 							(data: any) => {
@@ -256,6 +258,7 @@ export class AddRoleComponent implements OnInit {
 	}
 
 	selectRoleTemplateChange(Obj: any) {
+		this.roleType = Obj.type
 		this.roleTemplate = Obj;
 		this.permissionsList = Obj.permissions;
 	}
@@ -291,6 +294,7 @@ export class AddRoleComponent implements OnInit {
 						}
 						sectionFormGroup.patchValue({
 							section: subPermissionList[j].section,
+							displayShowAdvanced: false,
 							roles: list[i].name
 						});
 						this.sectionsArray().push(sectionFormGroup);

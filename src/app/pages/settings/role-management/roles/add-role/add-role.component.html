@@ -59,10 +59,12 @@
                                     </ng-template>
                                     <ng-template ngbPanelContent formArrayName="permissions">
                                         <div [align]="'end'">
-                                            <input type="checkbox" style="float: inherit;" (change)="displayShowAdvanced = !displayShowAdvanced">
-                                            <label class="form-check-label" style="padding-bottom: 1.3rem;">
-                                                Show Advanced
-                                            </label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" style="float: none;" (change)="subPermission.value.displayShowAdvanced = !subPermission.value.displayShowAdvanced">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Show Advanced
+                                                </label>
+                                            </div>
                                         </div>
                                         <table class="table">
                                             <thead>
@@ -79,18 +81,8 @@
                                                     <td> <input type="hidden" formControlName="name" >{{subPermission.value.permissions[j].name}}</td>
                                                     <td><input type="checkbox" formControlName="locked" value="" /></td>
                                                     <td><input type="checkbox" value=""  formControlName="allowOverride"/></td>
-                                                    <!-- <td>
-                                                        <input type="checkbox" value="{{childPermision.enabled}}" [checked]="childPermision.enabled" (change)="childPermision.enabled = !childPermision.enabled" *ngIf="displayCreateRoleYesNoOption" />
-                                                        <input type="checkbox" value="{{childPermision.enabled}}" [checked]="childPermision.enabled" [disabled]="childPermision.locked" (change)="childPermision.enabled = !childPermision.enabled" *ngIf="!displayCreateRoleYesNoOption" />
-                                                    </td>
-                                                    <td>{{subPermission.value.permissions[j].name}}{{childPermision | json}}</td>
-                                                    <td>
-                                                        <input type="checkbox" value="{{childPermision.locked}}" [checked]="childPermision.locked" (change)="childPermision.locked = !childPermision.locked" *ngIf="!childPermision.locked" />
-                                                        <img src="../../../../../../assets/icons/locked.svg" *ngIf="childPermision.locked" width="25" height="25" />
-                                                    </td>
-                                                    <td><input type="checkbox" formControlName="enabled" value="{{childPermision.allowOverride}}" [checked]="childPermision.allowOverride" /></td> -->
                                                 </tr>
-                                                <tr *ngIf="displayShowAdvanced">
+                                                <tr *ngIf="subPermission.value.displayShowAdvanced">
                                                     <td></td>
                                                     <td>
                                                         <label>Legal Entity</label>
