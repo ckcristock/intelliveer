@@ -40,56 +40,67 @@ export const patientUserHeaderIconMenuItems = [
 	{
 		title: '',
 		url: '/dashboard/patient/patient-user',
+		class:'',
 		icon: '/assets/icons/users.svg',
 	},
 	{
 		title: '',
 		url: '/+',
+		class:'',
 		icon: '/assets/icons/chat.svg',
 	},
 	{
 		title: '',
 		url: '/+',
+		class:'',
 		icon: '/assets/icons/paper.svg',
 	},
 	{
 		title: '',
 		url: '/dashboard/patient/insurance',
+		class:'',
 		icon: '/assets/icons/teeth.svg',
 	},
 	{
 		title: '',
 		url: '/+',
+		class:'',
 		icon: '/assets/icons/folder.svg',
 	},
 	{
 		title: '',
 		url: '/+',
+		class:'camera',
 		icon: '/assets/icons/camera.svg',
 	},
 	{
 		title: '',
 		url: '/+',
+		class:'',
 		icon: '/assets/icons/image.svg',
 	},
 	{
 		title: '',
+		class:'',
 		url: '/dashboard/patient/consultation',
 		icon: '/assets/icons/user_chat.svg',
 	},
 	{
 		title: '',
 		url: '/+',
+		class:'',
 		icon: '/assets/icons/user_card.svg',
 	},
 	{
 		title: '',
 		url: '/+',
+		class:'',
 		icon: '/assets/icons/calendar.svg',
 	},
 	{
 		title: '',
 		url: '/+',
+		class:'',
 		icon: '/assets/icons/jar.svg',
 	},
 ]
