@@ -1,8 +1,7 @@
 <div>
 	<div id="navbar-pills">
-		<div class="left" style="margin-left: 0px; padding-left:44px;">
+		<div class="left" style="margin-left: 0px;">
 			<a
-				style="margin-right:21px;"
 				*ngFor="let menu of menuItems"
 				[ngClass]="{ active: activeClass === menu.id }"
 				(click)="scroll(menu)"
