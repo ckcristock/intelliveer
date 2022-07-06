@@ -70,7 +70,7 @@ export const patientUserHeaderIconMenuItems = [
 	{
 		title: '',
 		url: '/+',
-		class:'camera',
+		class:'camera px-4',
 		icon: '/assets/icons/camera.svg',
 	},
 	{
