@@ -26,9 +26,9 @@ export class RoleService {
     return this.http.get(`${CONFIG.backend.host}/role/role/`, this.header);
   }
 
-  saveRoleFromRoleTemplate(Obj: any, bgName: any)
+  saveRoleFromRoleTemplate(Obj: any, bgName: any, roleType: string)
   {
-    return this.http.post(`${CONFIG.backend.host}/role/template-based-role/specific?bg=` + bgName, Obj, this.header);
+    return this.http.post(`${CONFIG.backend.host}/role/template-based-role/` + roleType + `?bg=` + bgName, Obj, this.header);
   }
 
   updateRoleFromRoleTemplate(Obj: any, roleId: any)

@@ -1,74 +1,107 @@
-<div *ngIf="roleList.length == 0" class="section" style="height: 90%;">
-    <div style="text-align: center; padding-top: 7%;">
-        <h5><b>You haven’t added yet</b></h5>
-        <p>Click here, <img src="assets/icons/add.svg" width="36" height="36" (click)="addRole()" /> to add
-            Role</p>
-    </div>
+<div *ngIf="roleList.length == 0" class="section" style="height: 90%">
+	<div style="text-align: center; padding-top: 7%">
+		<h5><b>You haven’t added yet</b></h5>
+		<p>
+			Click here,
+			<img
+				src="assets/icons/add.svg"
+				width="36"
+				height="36"
+				(click)="addRole()"
+			/>
+			to add Role
+		</p>
+	</div>
 </div>
 <div *ngIf="roleList.length != 0">
-    <div class="container">
-        <div class="d-flex justify-content-between call-to-actions">
-            <div class="col-4">
-                <div class="input-group search_box">
-                    <span
-                        class="input-group-text border-0 bg-transparent"
-                        id="basic-addon1"
-                    >
-                        <i class="bi bi-search"></i>
-                    </span>
-                    <input
-                        type="text"
-                        class="form-control border-0"
-                        placeholder="Search"
-                        aria-describedby="basic-addon1"
-                    />
-                </div>
-            </div>
-            <div class="d-flex gap-2">
-                <button
-                    class="add_btn"
-                    routerLink="/dashboard/settings/role-management/manage-role/add"
-                >
-                    <img src="/assets/icons/add.svg" alt="" />
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <div class="container mt-4">
-        <div class="row">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col"><input type="checkbox" /></th>
-                        <th scope="col">ID</th>
-                        <th scope="col">Roles</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Template</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody *ngIf="roleList">
-                    <tr *ngFor="let role of roleList; let i = index">
-                        <td><input type="checkbox" value="{{role?._id}}" /></td>
-                        <td>{{role?._id}}</td>
-                        <td>{{role?.name}}</td>
-                        <td>{{role?.description}}</td>
-                        <td>{{role?.roleTemplateId}}</td>
-                        <td>
-                            <div ngbDropdown container="body" placement="bottom-end">
-                                <i class="bi bi-three-dots-vertical" id="dropdownBasic" ngbDropdownToggle></i>
-                                <ul ngbDropdownMenu aria-labelledby="dropdownBasic">
-                                    <li ngbDropdownItem>Export as a pdf</li>
-                                    <li ngbDropdownItem (click)="gotoEdit(role?._id)" >Edit</li>
-                                    <li ngbDropdownItem (click)="deleteRole(role?._id)">Delete</li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+	<div class="container">
+		<div class="d-flex justify-content-between call-to-actions">
+			<div class="col-4">
+				<div class="input-group search_box">
+					<span
+						class="input-group-text border-0 bg-transparent"
+						id="basic-addon1"
+					>
+						<i class="bi bi-search"></i>
+					</span>
+					<input
+						type="text"
+						class="form-control border-0"
+						placeholder="Search"
+						aria-describedby="basic-addon1"
+					/>
+				</div>
+			</div>
+			<div class="d-flex gap-2">
+				<button
+					class="add_btn"
+					routerLink="/dashboard/settings/role-management/manage-role/add"
+				>
+					<img src="/assets/icons/add.svg" alt="" />
+				</button>
+			</div>
+		</div>
+	</div>
 
+	<div class="container mt-4" id="main">
+		<div class="row">
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col"><input type="checkbox" /></th>
+						<th scope="col">ID</th>
+						<th scope="col">Roles</th>
+						<th scope="col">Description</th>
+						<th scope="col">Template</th>
+						<th scope="col">Actions</th>
+					</tr>
+				</thead>
+				<tbody *ngIf="roleList">
+					<tr *ngFor="let role of roleList; let i = index">
+						<td>
+							<input type="checkbox" value="{{ role?._id }}" />
+						</td>
+						<td>{{ role?._id }}</td>
+						<td>{{ role?.name }}</td>
+						<td>{{ role?.description }}</td>
+						<td>{{ role?.roleTemplateId }}</td>
+						<td>
+							<div
+								ngbDropdown
+								container="body"
+								placement="bottom-end"
+							>
+								<button
+									class="btn btn-light btn-sm more_btn"
+									ngbDropdownToggle
+								>
+									<i class="bi bi-three-dots-vertical"></i>
+								</button>
+								<div ngbDropdownMenu>
+									<button ngbDropdownItem>
+										Export as a pdf
+									</button>
+									<div class="dropdown-divider"></div>
+									<button
+										ngbDropdownItem
+										routerLink="/dashboard/settings/role-management/manage-role/edit/{{
+											role?._id
+										}}"
+									>
+										Edit
+									</button>
+									<button
+										ngbDropdownItem
+										(click)="deleteRole(role?._id)"
+									>
+										Delete
+									</button>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

@@ -2,90 +2,95 @@
     (onSave)="save(Form.value)"></app-nav-bar-pills>
 
 <form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
-
     <!-- content -->
     <div class="section" id="main">
-        <h6 class="heading">Edit Role</h6>
-
         <div class="row formrow">
             <div class="col-6">
                 <label class="label-input-gap">Name of role</label>
-                <input type="text" class="form-control" [(ngModel)]="roleObj.name" formControlName="name">
+                <input type="text" class="form-control required-field" [(ngModel)]="roleObj.name" formControlName="name">
             </div>
             <div class="col-6">
                 <label class="label-input-gap">Description</label>
-                <input type="text" class="form-control" [(ngModel)]="roleObj.description" formControlName="description">
+                <input type="text" class="form-control required-field" [(ngModel)]="roleObj.description" formControlName="description">
             </div>
         </div>
 
-
-        <!-- Accordion -->
         <div class="row formrow">
-            <div class="col-12">
+            <div class="col-12" style="margin-top: 6px;">
                 <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
                     <!-- Org. Onboarding -->
-                    <ngb-panel cardClass="onboarding" *ngFor="let permissions of roleObj.permissions">
+                    <ngb-panel cardClass="onboarding" *ngFor="let permissions of permissionsList">
                         <ng-template ngbPanelTitle>
-                            <p><strong>{{permissions.section}}</strong></p>
-                        </ng-template>
-                        <ng-template ngbPanelContent>
-                            <div [align]="'end'">
-                                <input type="checkbox" style="float: inherit;" (change)="displayShowAdvanced = !displayShowAdvanced">
-                                <label class="form-check-label" style="padding-bottom: 1.3rem;">
-                                    Show Advanced
-                                </label>
+                            <div>
+                                <p><strong>{{permissions.name}}</strong></p>
                             </div>
-                            <table class="table" *ngIf="permissions.permissions?.length != 0">
-                                <thead>
-                                    <tr style="background-color: #f1f2f2; height: 30px;">
-                                        <th></th>
-                                        <th>Permission</th>
-                                        <th>Lock</th>
-                                        <th>Allow Override</th>
-                                    </tr>
-                                </thead>
-                                <tbody *ngFor="let childPermision of permissions.permissions">
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" value="{{childPermision.enabled}}" [checked]="childPermision.enabled" (change)="childPermision.enabled = !childPermision.enabled" *ngIf="displayCreateRoleYesNoOption" />
-                                            <input type="checkbox" value="{{childPermision.enabled}}" [checked]="childPermision.enabled" [disabled]="childPermision.locked" (change)="childPermision.enabled = !childPermision.enabled" *ngIf="!displayCreateRoleYesNoOption" />
-                                        </td>
-                                        <td>{{childPermision?.name}}</td>
-                                        <td>
-                                            <input type="checkbox" value="{{childPermision.locked}}" [checked]="childPermision.locked" (change)="childPermision.locked = !childPermision.locked" *ngIf="!childPermision.locked" />
-                                            <img src="../../../../../../assets/icons/locked.svg" *ngIf="childPermision.locked" width="25" height="25" />
-                                        </td>
-                                        <td><input type="checkbox" value="{{childPermision.allowOverride}}" [checked]="childPermision.allowOverride" /></td>
-                                    </tr>
-                                    <tr *ngIf="displayShowAdvanced">
-                                        <td></td>
-                                        <td>
-                                            <label>Legal Entity</label>
-                                            <ng-select placeholder="Select">
-                                                <ng-option *ngFor="let legalEntity of legelEntityList">{{legalEntity.name}}</ng-option>
-                                            </ng-select>
-                                        </td>
-                                        <td>
-                                            <label>Location</label>
-                                            <ng-select placeholder="Select">
-                                                <ng-option *ngFor="let location of locationList">{{location.name}}}</ng-option>
-                                            </ng-select>
-                                        </td>
-                                        <td>
-                                            <label>Practice</label>
-                                            <ng-select placeholder="Select">
-                                                <ng-option *ngFor="let practice of practiceList">
-                                                    <input type="checkbox" value="{{practice}}" checked  />&nbsp;{{practice.name}}
-                                                </ng-option>
-                                            </ng-select>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+
+                        </ng-template>
+                        <ng-template ngbPanelContent formArrayName="permissions">
+                            <ngb-accordion #accOnboarding="ngbAccordion" activeIds="ngb-panel-0" *ngFor="let subPermission of sectionNested; let i=index" [formGroupName]="i">
+                                <!-- Business Group -->
+                                <ngb-panel cardClass="businessg"  *ngIf="permissions.name == subPermission.value.roles">
+                                    <ng-template ngbPanelTitle>
+                                        <p><strong>{{subPermission.value.section}}</strong></p>
+                                    </ng-template>
+                                    <ng-template ngbPanelContent formArrayName="permissions">
+                                        <div [align]="'end'">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" style="float: none;" (change)="subPermission.value.displayShowAdvanced = !subPermission.value.displayShowAdvanced">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Show Advanced
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <table class="table">
+                                            <thead>
+                                                <tr style="background-color: #f1f2f2; height: 30px;">
+                                                    <th></th>
+                                                    <th>Permission</th>
+                                                    <th>Lock</th>
+                                                    <th>Allow Override</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngFor="let childPermision of permissionNested(i); let j=index" [formGroupName]="j">
+                                                <tr>
+                                                    <td><input type="checkbox" formControlName="enabled" value=""/></td>
+                                                    <td> <input type="hidden" formControlName="name" >{{subPermission.value.permissions[j].name}}</td>
+                                                    <td><input type="checkbox" formControlName="locked" value="" /></td>
+                                                    <td><input type="checkbox" value=""  formControlName="allowOverride"/></td>
+                                                </tr>
+                                                <tr *ngIf="subPermission.value.displayShowAdvanced">
+                                                    <td></td>
+                                                    <td>
+                                                        <label>Legal Entity</label>
+                                                        <ng-select placeholder="Select">
+                                                            <ng-option *ngFor="let legalEntity of legelEntityList">{{legalEntity.name}}</ng-option>
+                                                        </ng-select>
+                                                    </td>
+                                                    <td>
+                                                        <label>Location</label>
+                                                        <ng-select placeholder="Select">
+                                                            <ng-option *ngFor="let location of locationList">{{location.name}}}</ng-option>
+                                                        </ng-select>
+                                                    </td>
+                                                    <td>
+                                                        <label>Practice</label>
+                                                        <ng-select placeholder="Select">
+                                                            <ng-option *ngFor="let practice of practiceList">
+                                                                <input type="checkbox" value="{{practice}}" checked  />&nbsp;{{practice.name}}
+                                                            </ng-option>
+                                                        </ng-select>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </ng-template>
+                                </ngb-panel>
+                            </ngb-accordion>
                         </ng-template>
                     </ngb-panel>
                 </ngb-accordion>
             </div>
         </div>
+
     </div>
 </form>

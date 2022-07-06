@@ -16,7 +16,7 @@ import { AddRoleTemplateComponent } from "./add-role-template.component";
     NgbModule,
     NgSelectModule,
     FormsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ]
 })
 export class AddRoleTemplateModule { }

@@ -96,7 +96,8 @@ input.search {
 	background: #fff;
 	min-height: 500px;
 	padding: 2rem;
-	max-height: calc(100vh - 150px);
+	/* max-height: calc(100vh - 150px); */
+    height: 100%;
 }
 
 .active {
@@ -499,8 +500,10 @@ form {
 
 
 .form-check-input:checked {
-	background: none !important;
-	border: 3.5px solid #434243 !important;
+	background-color: #434243;
+    border-color: #212529;
+	// background: none !important;
+	// border: 3.5px solid #434243 !important;
 }
 
 .subti-radio-b {
@@ -868,4 +871,16 @@ input[type='checkbox'] {
 	border-radius: 10%;
 	box-shadow: none;
 	font-size: 1em;
+}
+
+
+#main {
+	height: calc(100vh - 310px);
+	overflow: auto;
+	padding-bottom: 5rem;
+}
+
+.row.mini-icon-navbar .camera {
+	border-left: 1px solid;
+	border-right: 1px solid;
 }
