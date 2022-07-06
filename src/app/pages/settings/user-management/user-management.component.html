@@ -1,1 +1,33 @@
-<router-outlet></router-outlet>
+<div class="row" *ngIf="onManageUSer">
+  <div class="col-2">
+    <div class="settings-row">
+      <i class="bi bi-arrow-left-circle" style="font-size: 2rem; cursor: pointer;" [routerLink]="urlSettings"></i>
+      <p>Settings</p>
+    </div>
+    <ul class="ul" style="margin-top: 27px;">
+      <li class="pointer" *ngFor="let item of menuItems" routerLinkActive="active" [routerLink]="item.url">
+        {{ item.title }}
+      </li>
+    </ul>
+  </div>
+  <div class="col-10 component-view">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<div class="row" *ngIf="!onManageUSer">
+  <div class="col-2">
+    <div class="settings-row">
+      <i class="bi bi-arrow-left-circle" style="font-size: 2rem; cursor: pointer;" [routerLink]="menuItems[0].url"></i>
+      <p>Manage Users</p>
+    </div>
+    <ul class="ul" style="margin-top: 27px;">
+      <li class="pointer" *ngFor="let item of menuItemsUsers" routerLinkActive="active" [routerLink]="item.url">
+        {{ item.title }}
+      </li>
+    </ul>
+  </div>
+  <div class="col-10 component-view">
+    <router-outlet></router-outlet>
+  </div>
+</div>

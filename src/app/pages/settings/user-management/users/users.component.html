@@ -44,12 +44,12 @@
                         <th scope="col">Status</th>
                         <th scope="col">Actions</th>
                     </tr>
-                </thead>
+                </thead> 
                 <tbody *ngIf="users">
                     <tr *ngFor="let user of users; let i = index">
                         <td><input type="checkbox" value="{{i}}" /></td>
-                        <td>{{user._id}}</td>
-                        <td>{{user['profile'].firstName}}</td>
+                        <td>{{user['profile'].firstName}} {{user['profile'].lastName}}</td>
+                        <td>{{user['profile'].email}}</td>
                         <td *ngIf="user['roles'].length >1">
                             {{user['roles'][0].name}} <span class="redcircle" triggers="mouseenter:mouseleave"
                                 #p1="ngbPopover" (mouseover)="usersPopUp(user['roles'], i)"

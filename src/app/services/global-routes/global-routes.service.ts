@@ -11,6 +11,7 @@ export class GlobalRoutesService {
   private urlOnboarding: string = "/dashboard/settings/onboarding";
   private urlRoleManage: string = "/dashboard/settings/role-management";
   private urlUserManage: string = "/dashboard/settings/user-management";
+  private urlSettings: string = "/dashboard/settings";
 
   constructor() { }
 
@@ -243,15 +244,19 @@ export class GlobalRoutesService {
     return this.urlInsurance;
   }
 
+  getSettingsUrl() {
+    return this.urlSettings;
+  }
+
   getSettingsOnboardingUrl() {
     return this.urlOnboarding;
   }
 
-  getSettingsRoleManage() {
+  getSettingsRoleManageUrl() {
     return this.urlRoleManage;
   }
 
-  getSettingsUserManage() {
+  getSettingsUserManageUrl() {
     return this.urlUserManage;
   }
 

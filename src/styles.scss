@@ -884,3 +884,16 @@ input[type='checkbox'] {
 	border-left: 1px solid;
 	border-right: 1px solid;
 }
+
+.settings-row{
+	display: flex;
+	justify-content: flex-start;
+	height: 36px;
+	align-items: center;
+	gap: 10px;
+	p{
+		padding: 0px;
+		margin: 0px;
+	}
+	margin-left: 0px;
+}
