@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
 import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 import { UserService } from '@services/user/user.service';
+import { RoleService } from '@services/role/role.service';
 
 @Component({
   selector: 'app-personal-info',
@@ -27,7 +28,7 @@ export class PersonalInfoComponent implements OnInit {
   testCounter: number = 0;
 
   letters = [{ "letter": "A", "status": "PRIMARY" },];
-  user:any = {
+  user: any = {
     _id: 0,
     profile: {
       email: "",
@@ -48,21 +49,36 @@ export class PersonalInfoComponent implements OnInit {
     roles: []
   }
 
+  undefinedH = {
+    name: "undefined"
+  }
+
 
   constructor(private router: Router,
     private globalRoutes: GlobalRoutesService,
     private fb: FormBuilder,
-    private userServ: UserService) { }
+    private userServ: UserService,
+    private roleSev: RoleService) { }
 
   ngOnInit(): void {
 
     this.initForm(this.formData);
 
-    this.user= this.userServ.getUser();
-    if(this.user._id == null){
+    this.user = this.userServ.getUser();
+    console.log("user", this.user);
+    if (this.user._id == null) {
       this.router.navigate([this.globalRoutes.getSettingsUserManageRoutes()[0].url]);
     }
-    
+
+    for (let i = 0; i < this.user['roles'].length; i++) {
+      this.roleSev.getRoleById(this.user.roles[i]).subscribe((resp: any) => {
+        if (resp != null) {
+          this.user.roles[i] = resp;
+        } else {
+          this.user['roles'][i] = this.undefinedH;
+        }
+      });
+    }
   }
 
   initForm(data?: any) {

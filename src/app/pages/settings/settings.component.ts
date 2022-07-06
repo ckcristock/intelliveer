@@ -13,6 +13,7 @@ import { GlobalRoutesService } from "@services/global-routes/global-routes.servi
 })
 export class SettingsComponent implements OnInit {
 
+  onPage: boolean = false;
   selectedBusinessGroup: string | undefined;
   onboardingChilds: any []=[];
   roleManagementchilds: any []=[];
@@ -79,6 +80,14 @@ export class SettingsComponent implements OnInit {
       } else if (event.url.includes("user")) {
         this.currentRoute = "User Management";
       }
+
+      if(event.url == "/dashboard/settings"){
+        this.onPage = true;
+      } else {
+        this.onPage = false;
+      }
+
+
     });
 
   }
@@ -90,6 +99,8 @@ export class SettingsComponent implements OnInit {
     this.menuItems[0].childs=this.onboardingChilds;
     this.menuItems[1].childs=this.roleManagementchilds;
     this.menuItems[2].childs=this.userManagementchilds;
+
+    
   }
 
   setBusinessGroup(e: any) {

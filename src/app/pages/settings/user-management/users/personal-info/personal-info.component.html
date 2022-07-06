@@ -296,7 +296,7 @@
                         <div class="mainformset">
                             <label class=" label-input-gap">Roles</label>
                             <ng-select placeholder="Role name">
-                                <ng-option *ngFor="let role of user.roles" [value]="role">{{role}}</ng-option>
+                                <ng-option *ngFor="let role of user['roles']" [value]="role._id">{{role.name}}</ng-option>
                             </ng-select>
                         </div>
                     </div>

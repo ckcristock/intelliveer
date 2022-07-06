@@ -8,17 +8,15 @@
 
         <label class="label-input-gap" style="font-weight: bold;">Current Roles</label>
         <div class="roles">
-            <div class="" *ngFor="let role of roles; let i = index">
-                <div class="input-group flex-nowrap formrow" style="width: 100px; height: 30px;">
-                    <span class="input-group-text" style="background-color: #faf2e9; border: 1px solid #f9b85f;"><i
-                            class="bi bi-x-lg"></i></span>
-                    <input type="text" class="form-control" value="{{role.name}}" readonly
-                        style="border-color: #f9b85f; background-color: #faf2e9; height: 25px;">
+            <div *ngFor="let role of roles; let i = index">
+                <div class="xandroles formrow" style="width: 80px;">
+                    <span class="input-text"><i class="bi bi-x-lg"></i></span>
+                    <input type="text" class="form-control" value="{{role.name}}" readonly>
                 </div>
             </div>
         </div>
 
-        <div class="row formrow">
+        <div class="row " style="margin-bottom: 48px !important;">
             <div class="col-3">
                 <label class="label-input-gap">Roles</label>
                 <ng-select placeholder="Select">
@@ -28,7 +26,7 @@
         </div>
 
         <h6 class="heading" style="font-weight: bold;">User Policy</h6>
-        <div class="row formrow">
+        <div class="row" style="margin-bottom: 31px;">
             <div class="twenty">
                 <label class="label-input-gap">Legal Entity</label>
                 <ng-select placeholder="Select">
@@ -56,7 +54,7 @@
                     <!-- Org. Onboarding -->
                     <ngb-panel cardClass="onboarding">
                         <ng-template ngbPanelTitle>
-                            <p><strong>Org. Onboarding</strong> <br>
+                            <p><span><strong>Org. Onboarding</strong></span> <br>
                                 Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh</p>
                         </ng-template>
                         <ng-template ngbPanelContent>
@@ -71,104 +69,42 @@
                                     </ng-template>
                                     <ng-template ngbPanelContent>
                                         <div class="permission"><span>Permission</span></div>
-                                        <div class="show"><input type="checkbox" value="" id="show" checked /><label
-                                                for="show">Show Advanced</label></div>
-                                        <div class="checkandtext formrow"><input type="checkbox" value=""
-                                                id="checkandtext" checked /> <label for="checkandtext">Lorem ipsum dolor
-                                                sit amet,
-                                                consectetuer adipiscing elit, sed diam</label></div>
-                                        <div class="row formrow" style="margin-left: 26px;">
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Legal Entity</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Location</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Practice</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                        </div>
-                                        <div class="checkandtext formrow"><input type="checkbox" value=""
-                                                id="checkandtext1" /> <label for="checkandtext1">Lorem ipsum dolor sit
-                                                amet,
-                                                consectetuer adipiscing elit, sed diam</label></div>
-                                        <div class="row formrow" style="margin-left: 26px;">
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Legal Entity</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Location</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Practice</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
+                                        <div class="show"><input (change)="showAdvBG()" type="checkbox" value=""
+                                                id="showBG" checked /><label for="showBG">Show Advanced</label></div>
+
+                                        <div *ngFor="let permission of permissionsBG; let i = index">
+                                            <div *ngIf="i==0" class="checkandtext"><input type="checkbox" value=""
+                                                    id="`checkandtext{{i+1}}`" checked /> <label
+                                                    for="`checkandtext{{i+1}}`">Lorem ipsum dolor
+                                                    sit amet,
+                                                    consectetuer adipiscing elit, sed diam</label></div>
+                                            <div *ngIf="i!=0" class="checkandtext"><input type="checkbox" value=""
+                                                    id="`checkandtext{{i+1}}`" /> <label
+                                                    for="`checkandtext{{i+1}}`">Lorem ipsum dolor
+                                                    sit amet,
+                                                    consectetuer adipiscing elit, sed diam</label></div>
+                                            <div *ngIf="showAdvanceBG" class="row three-selects">
+                                                <div class="col-3">
+                                                    <label class="label-input-gap">Legal Entity</label>
+                                                    <ng-select placeholder="Select">
+                                                        <ng-option>Select</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                                <div class="col-3">
+                                                    <label class="label-input-gap">Location</label>
+                                                    <ng-select placeholder="Select">
+                                                        <ng-option>Select</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                                <div class="col-3">
+                                                    <label class="label-input-gap">Practice</label>
+                                                    <ng-select placeholder="Select">
+                                                        <ng-option>Select</ng-option>
+                                                    </ng-select>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="checkandtext formrow"><input type="checkbox" value=""
-                                                id="checkandtext2" /> <label for="checkandtext2">Lorem ipsum dolor sit
-                                                amet,
-                                                consectetuer adipiscing elit, sed diam</label></div>
-                                        <div class="row formrow" style="margin-left: 26px;">
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Legal Entity</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Location</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Practice</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                        </div>
-                                        <div class="checkandtext formrow"><input type="checkbox" value=""
-                                                id="checkandtext3" /> <label for="checkandtext3">Lorem ipsum dolor sit
-                                                amet,
-                                                consectetuer adipiscing elit, sed diam</label></div>
-                                        <div class="row formrow" style="margin-left: 26px;">
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Legal Entity</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Location</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Practice</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                        </div>
+
                                     </ng-template>
                                 </ngb-panel>
 
@@ -179,318 +115,129 @@
                                     </ng-template>
                                     <ng-template ngbPanelContent>
                                         <div class="permission"><span>Permission</span></div>
-                                        <div class="show"><input type="checkbox" value="" id="show" checked /><label
-                                                for="show">Show Advanced</label></div>
-                                        <div class="checkandtext formrow"><input type="checkbox" value=""
-                                                id="checkandtext" checked /> <label for="checkandtext">Lorem ipsum dolor
-                                                sit amet,
-                                                consectetuer adipiscing elit, sed diam</label></div>
-                                        <div class="row formrow" style="margin-left: 26px;">
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Legal Entity</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Location</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Practice</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                        </div>
-                                        <div class="checkandtext formrow"><input type="checkbox" value=""
-                                                id="checkandtext1" /> <label for="checkandtext1">Lorem ipsum dolor sit
-                                                amet,
-                                                consectetuer adipiscing elit, sed diam</label></div>
-                                        <div class="row formrow" style="margin-left: 26px;">
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Legal Entity</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Location</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Practice</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                        </div>
-                                        <div class="checkandtext formrow"><input type="checkbox" value=""
-                                                id="checkandtext2" /> <label for="checkandtext2">Lorem ipsum dolor sit
-                                                amet,
-                                                consectetuer adipiscing elit, sed diam</label></div>
-                                        <div class="row formrow" style="margin-left: 26px;">
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Legal Entity</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Location</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Practice</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                        </div>
-                                        <div class="checkandtext formrow"><input type="checkbox" value=""
-                                                id="checkandtext3" /> <label for="checkandtext3">Lorem ipsum dolor sit
-                                                amet,
-                                                consectetuer adipiscing elit, sed diam</label></div>
-                                        <div class="row formrow" style="margin-left: 26px;">
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Legal Entity</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Location</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Practice</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
+                                        <div class="show"><input (change)="showAdvLE()" type="checkbox" value=""
+                                                id="showLE" checked /><label for="showLE">Show Advanced</label></div>
+
+                                        <div *ngFor="let permission of permissionsLE; let i = index">
+                                            <div *ngIf="i==0" class="checkandtext"><input type="checkbox" value=""
+                                                    id="`checkandtextle{{i+1}}`" checked /> <label
+                                                    for="`checkandtextle{{i+1}}`">Lorem ipsum dolor
+                                                    sit amet,
+                                                    consectetuer adipiscing elit, sed diam</label></div>
+                                            <div *ngIf="i!=0" class="checkandtext"><input type="checkbox" value=""
+                                                    id="`checkandtextle{{i+1}}`" /> <label
+                                                    for="`checkandtextle{{i+1}}`">Lorem ipsum dolor
+                                                    sit amet,
+                                                    consectetuer adipiscing elit, sed diam</label></div>
+                                            <div *ngIf="showAdvanceLE" class="row three-selects">
+                                                <div class="col-3">
+                                                    <label class="label-input-gap">Legal Entity</label>
+                                                    <ng-select placeholder="Select">
+                                                        <ng-option>Select</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                                <div class="col-3">
+                                                    <label class="label-input-gap">Location</label>
+                                                    <ng-select placeholder="Select">
+                                                        <ng-option>Select</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                                <div class="col-3">
+                                                    <label class="label-input-gap">Practice</label>
+                                                    <ng-select placeholder="Select">
+                                                        <ng-option>Select</ng-option>
+                                                    </ng-select>
+                                                </div>
                                             </div>
                                         </div>
                                     </ng-template>
                                 </ngb-panel>
 
                                 <!-- Location -->
-                                <ngb-panel cardClass="legalenti">
+                                <ngb-panel cardClass="location">
                                     <ng-template ngbPanelTitle>
                                         <p><strong>Location</strong></p>
                                     </ng-template>
                                     <ng-template ngbPanelContent>
                                         <div class="permission"><span>Permission</span></div>
-                                        <div class="show"><input type="checkbox" value="" id="show" checked /><label
-                                                for="show">Show Advanced</label></div>
-                                        <div class="checkandtext formrow"><input type="checkbox" value=""
-                                                id="checkandtext" checked /> <label for="checkandtext">Lorem ipsum dolor
-                                                sit amet,
-                                                consectetuer adipiscing elit, sed diam</label></div>
-                                        <div class="row formrow" style="margin-left: 26px;">
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Legal Entity</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Location</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Practice</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                        </div>
-                                        <div class="checkandtext formrow"><input type="checkbox" value=""
-                                                id="checkandtext1" /> <label for="checkandtext1">Lorem ipsum dolor sit
-                                                amet,
-                                                consectetuer adipiscing elit, sed diam</label></div>
-                                        <div class="row formrow" style="margin-left: 26px;">
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Legal Entity</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Location</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Practice</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                        </div>
-                                        <div class="checkandtext formrow"><input type="checkbox" value=""
-                                                id="checkandtext2" /> <label for="checkandtext2">Lorem ipsum dolor sit
-                                                amet,
-                                                consectetuer adipiscing elit, sed diam</label></div>
-                                        <div class="row formrow" style="margin-left: 26px;">
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Legal Entity</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Location</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Practice</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                        </div>
-                                        <div class="checkandtext formrow"><input type="checkbox" value=""
-                                                id="checkandtext3" /> <label for="checkandtext3">Lorem ipsum dolor sit
-                                                amet,
-                                                consectetuer adipiscing elit, sed diam</label></div>
-                                        <div class="row formrow" style="margin-left: 26px;">
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Legal Entity</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Location</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Practice</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
+                                        <div class="show"><input (change)="showAdvLOC()" type="checkbox" value=""
+                                                id="showLOC" checked /><label for="showLOC">Show Advanced</label></div>
+
+                                        <div *ngFor="let permission of permissionsLOC; let i = index">
+                                            <div *ngIf="i==0" class="checkandtext"><input type="checkbox" value=""
+                                                    id="`checkandtextloc{{i+1}}`" checked /> <label
+                                                    for="`checkandtextloc{{i+1}}`">Lorem ipsum dolor
+                                                    sit amet,
+                                                    consectetuer adipiscing elit, sed diam</label></div>
+                                            <div *ngIf="i!=0" class="checkandtext"><input type="checkbox" value=""
+                                                    id="`checkandtextloc{{i+1}}`" /> <label
+                                                    for="`checkandtextloc{{i+1}}`">Lorem ipsum dolor
+                                                    sit amet,
+                                                    consectetuer adipiscing elit, sed diam</label></div>
+                                            <div *ngIf="showAdvanceLOC" class="row three-selects">
+                                                <div class="col-3">
+                                                    <label class="label-input-gap">Legal Entity</label>
+                                                    <ng-select placeholder="Select">
+                                                        <ng-option>Select</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                                <div class="col-3">
+                                                    <label class="label-input-gap">Location</label>
+                                                    <ng-select placeholder="Select">
+                                                        <ng-option>Select</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                                <div class="col-3">
+                                                    <label class="label-input-gap">Practice</label>
+                                                    <ng-select placeholder="Select">
+                                                        <ng-option>Select</ng-option>
+                                                    </ng-select>
+                                                </div>
                                             </div>
                                         </div>
                                     </ng-template>
                                 </ngb-panel>
 
                                 <!-- Practice -->
-                                <ngb-panel cardClass="legalenti">
+                                <ngb-panel cardClass="practice">
                                     <ng-template ngbPanelTitle>
                                         <p><strong>Practice</strong></p>
                                     </ng-template>
                                     <ng-template ngbPanelContent>
                                         <div class="permission"><span>Permission</span></div>
-                                        <div class="show"><input type="checkbox" value="" id="show" checked /><label
-                                                for="show">Show Advanced</label></div>
-                                        <div class="checkandtext formrow"><input type="checkbox" value=""
-                                                id="checkandtext" checked /> <label for="checkandtext">Lorem ipsum dolor
-                                                sit amet,
-                                                consectetuer adipiscing elit, sed diam</label></div>
-                                        <div class="row formrow" style="margin-left: 26px;">
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Legal Entity</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Location</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Practice</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                        </div>
-                                        <div class="checkandtext formrow"><input type="checkbox" value=""
-                                                id="checkandtext1" /> <label for="checkandtext1">Lorem ipsum dolor sit
-                                                amet,
-                                                consectetuer adipiscing elit, sed diam</label></div>
-                                        <div class="row formrow" style="margin-left: 26px;">
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Legal Entity</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Location</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Practice</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                        </div>
-                                        <div class="checkandtext formrow"><input type="checkbox" value=""
-                                                id="checkandtext2" /> <label for="checkandtext2">Lorem ipsum dolor sit
-                                                amet,
-                                                consectetuer adipiscing elit, sed diam</label></div>
-                                        <div class="row formrow" style="margin-left: 26px;">
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Legal Entity</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Location</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Practice</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                        </div>
-                                        <div class="checkandtext formrow"><input type="checkbox" value=""
-                                                id="checkandtext3" /> <label for="checkandtext3">Lorem ipsum dolor sit
-                                                amet,
-                                                consectetuer adipiscing elit, sed diam</label></div>
-                                        <div class="row formrow" style="margin-left: 26px;">
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Legal Entity</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Location</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
-                                            </div>
-                                            <div class="col-3">
-                                                <label class="label-input-gap">Practice</label>
-                                                <ng-select placeholder="Select">
-                                                    <ng-option>Select</ng-option>
-                                                </ng-select>
+                                        <div class="show"><input (change)="showAdvPC()" type="checkbox" value=""
+                                                id="showPC" checked /><label for="showPC">Show Advanced</label></div>
+
+                                        <div *ngFor="let permission of permissionsPC; let i = index">
+                                            <div *ngIf="i==0" class="checkandtext"><input type="checkbox" value=""
+                                                    id="`checkandtextpc{{i+1}}`" checked /> <label
+                                                    for="`checkandtextpc{{i+1}}`">Lorem ipsum dolor
+                                                    sit amet,
+                                                    consectetuer adipiscing elit, sed diam</label></div>
+                                            <div *ngIf="i!=0" class="checkandtext"><input type="checkbox" value=""
+                                                    id="`checkandtextpc{{i+1}}`" /> <label
+                                                    for="`checkandtextpc{{i+1}}`">Lorem ipsum dolor
+                                                    sit amet,
+                                                    consectetuer adipiscing elit, sed diam</label></div>
+                                            <div *ngIf="showAdvancePC" class="row three-selects">
+                                                <div class="col-3">
+                                                    <label class="label-input-gap">Legal Entity</label>
+                                                    <ng-select placeholder="Select">
+                                                        <ng-option>Select</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                                <div class="col-3">
+                                                    <label class="label-input-gap">Location</label>
+                                                    <ng-select placeholder="Select">
+                                                        <ng-option>Select</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                                <div class="col-3">
+                                                    <label class="label-input-gap">Practice</label>
+                                                    <ng-select placeholder="Select">
+                                                        <ng-option>Select</ng-option>
+                                                    </ng-select>
+                                                </div>
                                             </div>
                                         </div>
                                     </ng-template>
@@ -502,10 +249,8 @@
                     <!-- Module 1 -->
                     <ngb-panel cardClass="module1">
                         <ng-template ngbPanelTitle>
-                            <p><strong>Module 1</strong> <br>
-                                <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
-                                    nibh</span>
-                            </p>
+                            <p><span><strong>Module 1</strong></span> <br>
+                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh</p>
                         </ng-template>
                         <ng-template ngbPanelContent>
                         </ng-template>
@@ -514,7 +259,7 @@
                     <!-- Module 2 -->
                     <ngb-panel cardClass="module2">
                         <ng-template ngbPanelTitle>
-                            <p><strong>Module 2</strong></p>
+                            <p><span><strong>Module 2</strong></span></p>
                         </ng-template>
                         <ng-template ngbPanelContent>
                         </ng-template>
@@ -523,7 +268,7 @@
                     <!-- Module 3 -->
                     <ngb-panel cardClass="module3">
                         <ng-template ngbPanelTitle>
-                            <p><strong>Module 3</strong></p>
+                            <p><span><strong>Module 3</strong></span></p>
                         </ng-template>
                         <ng-template ngbPanelContent>
                         </ng-template>
@@ -532,7 +277,7 @@
                     <!-- Module 4 -->
                     <ngb-panel cardClass="module4">
                         <ng-template ngbPanelTitle>
-                            <p><strong>Module 4</strong></p>
+                            <p><span><strong>Module 4</strong></span></p>
                         </ng-template>
                         <ng-template ngbPanelContent>
                         </ng-template>
