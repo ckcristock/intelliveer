@@ -60,32 +60,36 @@ export class PersonalInfoComponent implements OnInit {
     private userServ: UserService,
     private roleSev: RoleService) { }
 
-  ngOnInit(): void {
+  async ngOnInit(){
 
     this.initForm(this.formData);
 
-    this.user = this.userServ.getUser();
+    //this.user = await this.userServ.getUser();
+    this.user = await JSON.parse(localStorage.getItem("user") || '[]');
     console.log("user", this.user);
     if (this.user._id == null) {
       this.router.navigate([this.globalRoutes.getSettingsUserManageRoutes()[0].url]);
     }
 
-    for (let i = 0; i < this.user['roles'].length; i++) {
-      this.roleSev.getRoleById(this.user.roles[i]).subscribe((resp: any) => {
-        if (resp != null) {
-          this.user.roles[i] = resp;
-        } else {
-          this.user['roles'][i] = this.undefinedH;
-        }
-      });
+    if(this.user.length != 0){
+      for (let i = 0; i < this.user['roles'].length; i++) {
+        this.roleSev.getRoleById(this.user.roles[i]).subscribe((resp: any) => {
+          if (resp != null) {
+            this.user.roles[i] = resp;
+          } else {
+            this.user['roles'][i] = this.undefinedH;
+          }
+        });
+      }
     }
+    
   }
 
   initForm(data?: any) {
     data = data || {};
     this.Form = this.fb.group({
-      check1: [data?.check1 || '', Validators.required],
-      check2: [data?.check2 || '', Validators.required],
+      email: [data?.check1 || ''],
+      check2: [data?.check2 || ''],
     });
   }
 

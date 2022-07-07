@@ -89,15 +89,12 @@ export class SettingsComponent implements OnInit {
         this.currentRoute = "User Management";
       }
 
-      if (event.url == "/dashboard/settings") {
+      if (event.url == this.globalRoutes.getSettingsUrl()) {
         this.onPage = true;
       } else {
         this.onPage = false;
       }
-
-
     });
-
   }
 
   ngOnInit(): void {

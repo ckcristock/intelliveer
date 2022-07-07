@@ -17,32 +17,24 @@ const routes: Routes = [
         path: 'manage-user',
         loadChildren: () =>
           import(
-            '@pages/settings/user-management/users/users.module').then(
-              (m) => m.UsersModule
+            '@pages/settings/user-management/manage-user/manage-user.module').then(
+              (m) => m.ManageUserModule
             ),
       },
       {
-        path: 'manage-user/add',
+        path: 'manage-user/add-user',
         loadChildren: () =>
           import(
-            '@pages/settings/user-management/users/add-user/add-user.module').then(
+            '@pages/settings/user-management/manage-user/add-user/add-user.module').then(
               (m) => m.AddUserModule
             ),
       },
       {
-        path: 'manage-user/user-personal-info',
+        path: 'edit-user',
         loadChildren: () =>
           import(
-            '@pages/settings/user-management/users/personal-info/personal-info.module').then(
-              (m) => m.PersonalInfoModule
-            ),
-      },
-      {
-        path: 'user-policy',
-        loadChildren: () =>
-          import(
-            '@pages/settings/user-management/user-policy/user-policy.module').then(
-              (m) => m.UserPolicyModule
+            '@pages/settings/user-management/edit-user/edit-user.module').then(
+              (m) => m.EditUserModule
             ),
       },
     ],

@@ -1,0 +1,16 @@
+@import 'buttons';
+@import 'inputs';
+@import 'table';
+
+ul {
+	font-size: 13px;
+	font-weight: bold;
+	li {
+		line-height: 3.2;
+	}
+}
+
+.password, .password:focus{
+    border: 1px solid #dddedf;
+    height: 36px;
+}

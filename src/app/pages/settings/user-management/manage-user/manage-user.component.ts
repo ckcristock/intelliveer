@@ -1,25 +1,46 @@
 import { Component, OnInit } from '@angular/core';
-import { GlobalRoutesService } from "@services/global-routes/global-routes.service";
-import { UserService } from "@services/user/user.service";
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
+import { UserService } from '@services/user/user.service';
+import { filter } from 'rxjs';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  selector: 'app-manage-user',
+  templateUrl: './manage-user.component.html',
+  styleUrls: ['./manage-user.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class ManageUserComponent implements OnInit {
 
+  onManagUser: boolean = true;
   users: any[] = [];
   roles: any[] = [];
   addRoute: string = "";
   popContent: string = "";
   popContentArray: any[] = [];
   popContentCounter: number = 0;
+  urlSettings!: string;
+  menuItems: any[] = [
+    { title: "", url: '' },
+  ];
 
   constructor(private router: Router,
     private globalRoutes: GlobalRoutesService,
-    private userServ: UserService) { }
+    private userServ: UserService) {
+      this.urlSettings = this.globalRoutes.getSettingsUrl();
+      this.menuItems.push(this.globalRoutes.getSettingsUserManageRoutes()[0]);
+      console.log("menuitemss", this.menuItems);
+      
+
+      router.events.pipe(
+        filter(event => event instanceof NavigationEnd)
+      ).subscribe((event: any) => {
+        if (event.url == this.globalRoutes.getSettingsUserManageRoutes()[0].child[0]) {
+          this.onManagUser = false;
+        } else {
+          this.onManagUser = true;
+        }
+      });
+     }
 
   ngOnInit(): void {
     this.addRoute = this.globalRoutes.getSettingsUserManageRoutes()[0].child[0].url;
@@ -76,10 +97,11 @@ export class UsersComponent implements OnInit {
 
   async gotoPersonalInfo(user: any) {
     const data = await this.userServ.getUserByIdAPI(user._id);
+    localStorage.setItem("user", JSON.stringify(data));
     const data2 = await this.userServ.setUser(data);
 
-    //this.router.navigate(['/dashboard/settings/user-management/manage-user/user-personal-info']);
-    this.router.navigate([this.globalRoutes.getSettingsUserManageRoutes()[0].child[1].url]);
+    this.router.navigate(['/dashboard/settings/user-management/edit-user']);
+    //this.router.navigate([this.globalRoutes.getSettingsUserManageRoutes()[0].child[1].url]);
 
   }
 

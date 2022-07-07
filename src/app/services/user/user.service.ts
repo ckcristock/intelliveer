@@ -85,7 +85,7 @@ export class UserService {
     this.user = userH;
   }
 
-  getUser(){
+  async getUser(){
     return this.user;
   }
 

@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-2">
+      <div class="settings-row">
+        <i class="bi bi-arrow-left-circle" style="font-size: 2rem; cursor: pointer;" [routerLink]="urlManageUser"></i>
+        <p>Manage Users</p>
+      </div>
+      <ul class="ul" style="margin-top: 23px;">
+        <li class="pointer" *ngFor="let item of menuItems" routerLinkActive="active" [routerLink]="item.url">
+          {{ item.title }}
+        </li>
+      </ul>
+    </div>
+    <div class="col-10 component-view">
+        <router-outlet></router-outlet>
+    </div>
+  </div>
