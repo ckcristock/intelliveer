@@ -2,6 +2,7 @@ import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '@services/alert/alert.service';
+import { BusinessGroupDropdownService } from '@services/business-group-dropdown/business-group-dropdown.service';
 import { RolesUsersService } from '@services/settings/role-management/roles-users.service';
 
 import { RolesTemplate, Section,Permissions } from 'src/app/interfaces/settings/role-management/roles-template.model.';
@@ -22,6 +23,7 @@ export class AddRoleTemplateComponent implements OnInit {
   sectionPermissions: Permissions = new Permissions()
   getRolesID:any;
   submitted:boolean = false;
+  businessGroups: any;
   @Input() formData: any | undefined = undefined;
   roleTemplate = { id: '', name: '', description: '' };
   finalArray:any = [];
@@ -32,6 +34,7 @@ export class AddRoleTemplateComponent implements OnInit {
     private rolesUserServ: RolesUsersService,
     private route: ActivatedRoute,
     private alertService: AlertService,
+    private businessGroupDropdownService: BusinessGroupDropdownService,
     private _ngZone: NgZone,
     private fb: FormBuilder) { }
 
@@ -39,6 +42,7 @@ export class AddRoleTemplateComponent implements OnInit {
     this.initForm(this.formData);
     this.getRolePermissions();
     this.getRoleTemplateID();
+    this.bussinesGroupList();
   }
 
   initForm(data?: any) {
@@ -206,6 +210,18 @@ export class AddRoleTemplateComponent implements OnInit {
     })
   }
   
+ /** Bussines groups list */
+
+ bussinesGroupList(){
+  this.businessGroupDropdownService
+      .getBusinessGroups()
+      .subscribe((res) => {
+        console.log(res);
+        if (res && res.length > 0) {
+          this.businessGroups = res;
+        }
+      });
+}
 /** Get Types */
   roleTypeValue(event:any){
    console.log(event)

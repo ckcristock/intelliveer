@@ -44,9 +44,7 @@
             <div class="col-3" *ngIf="isTypeSpecific">
                 <label class="label-input-gap">Business Group</label>
                 <ng-select [multiple]="true" placeholder="Select" formControlName="businessGroups">
-                    <ng-option value="BG1">Business Group 1</ng-option>
-                    <ng-option value="BG2">Business Group 2</ng-option>
-                    <ng-option value="BG3">Business Group 3</ng-option>
+                    <ng-option *ngFor="let bg of businessGroups" [value]="bg._id">{{ bg.name }}</ng-option>
                 </ng-select>
             </div>
         </div>
