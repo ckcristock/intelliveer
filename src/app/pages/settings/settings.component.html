@@ -11,7 +11,7 @@
 			<select class="form-select" [(ngModel)]="selectedBusinessGroup" (change)="setBusinessGroup($event)"
 				[disabled]="disableBGDropdown">
 				<option value="intelliveer">**INTELLIVEER**</option>
-				<option *ngFor="let bg of businessGroups" [value]="bg._id">
+				<option *ngFor="let bg of businessGroups" [value]="bg._id" [disabled]="disableBGDropdown">
 					{{ bg.name }}
 				</option>
 			</select>
