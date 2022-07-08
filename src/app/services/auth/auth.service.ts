@@ -20,6 +20,14 @@ export class AuthService {
 			return false;
 		}
 	}
+	getLoggedInUser() {
+		const user = this.cookieService.get('user');
+		if (user) {
+			return JSON.parse(user);
+		} else {
+			return null;
+		}
+	}
 	getOrgId() {
 		return this.cookieService.get('orgId');
 	}
