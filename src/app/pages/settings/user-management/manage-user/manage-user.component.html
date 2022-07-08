@@ -21,8 +21,7 @@
         <div *ngIf="users.length != 0">
 
             <!-- search, plus button -->
-            <div class="container">
-                <div class="d-flex justify-content-between call-to-actions">
+                <div class="d-flex justify-content-between">
 
                     <!-- search -->
                     <div class="col-4">
@@ -36,23 +35,22 @@
                     </div>
 
                     <!-- plus icon -->
-                    <div class="d-flex gap-2">
+                    <div class="d-flex">
                         <button class="add_btn" [routerLink]="addRoute">
                             <img src="/assets/icons/add.svg" alt="" />
                         </button>
                     </div>
                 </div>
-            </div>
 
             <!-- table -->
-            <div class="container mt-4">
+            <div class="mt-4">
                 <div class="row formrow">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col"><input type="checkbox" /></th>
-                                <th scope="col">ID</th>
-                                <th scope="col">User Name</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
                                 <th scope="col">Roles</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Actions</th>
@@ -62,7 +60,9 @@
                             <tr *ngFor="let user of users; let i = index">
                                 <td><input type="checkbox" value="{{i}}" /></td>
                                 <td>{{user['profile'].firstName}} {{user['profile'].lastName}}</td>
-                                <td>{{user['profile'].email}}</td>
+                                <td *ngIf="user['profile'].email == null">No email</td>
+                                <td *ngIf="user['profile'].email != null">{{user['profile'].email}}</td>
+                                <td *ngIf="user['roles'].length == 0">No roles</td>
                                 <td *ngIf="user['roles'].length >1">
                                     {{user['roles'][0].name}} <span class="redcircle" triggers="mouseenter:mouseleave"
                                         #p1="ngbPopover" (mouseover)="usersPopUp(user['roles'], i)"

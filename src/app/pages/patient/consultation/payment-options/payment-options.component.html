@@ -1,0 +1,41 @@
+<div class="container">
+    <app-nav-bar-pills [cancelBtn]="true" [saveBtn]="true" [disableSaveBtn]="false" (onCancel)="cancel()"
+        (onSave)="save($event)"></app-nav-bar-pills>
+    <div class="row">
+        <div class="col-6" *ngFor="let numberofColum of numberofColums; let i = index">
+            <div class="section">
+                <div class="row formrow">
+                    <div class="col-6">
+                        <label class="label-input-gap">Choose your Treatment Option</label>
+                        <input class="form-control" type="text" placeholder="Type Name" name="" />
+                    </div>
+                </div>
+
+                <div class="row formrow">
+                    <label class="label-input-gap">Tx Option Name 1</label>
+                </div>
+                <hr>
+
+                <div *ngFor="let txOption of txOptions; let i = index">
+                    <div class="row formrow">
+                        <div class="col-6">{{ txOption.subtitle }}</div>
+                        <div class="col-6">{{ txOption.content }}</div>
+                    </div>
+                </div>
+
+                <div class="row formrow">
+                    <label class="label-input-gap">Tx Fee Estimate</label>
+                </div>
+                <hr>
+                <div *ngFor="let txFee of txFees; let i = index">
+                    <div class="row formrow">
+                        <div class="col-6">{{ txFee.subtitle }}</div>
+                        <div class="col-6">{{ txFee.content }}</div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+        </div>
+    </div>
+</div>

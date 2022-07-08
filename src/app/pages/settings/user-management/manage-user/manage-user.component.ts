@@ -61,6 +61,8 @@ export class ManageUserComponent implements OnInit {
                 }
               }
             }
+            console.log("usersss", this.users);
+            
           }
         );
       }

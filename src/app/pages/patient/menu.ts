@@ -144,7 +144,7 @@ export const patientConsultationMenuItems = [
 					},
 					{
 						title: 'Payment Options',
-						url: '/+',
+						url: '/dashboard/patient/consultation/payment-options',
 						icon: 'bi bi-house-door',
 					}
 				]

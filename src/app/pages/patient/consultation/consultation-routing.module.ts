@@ -50,6 +50,14 @@ const routes: Routes = [
 						'@pages/patient/patient-user/provider/edit-provider/edit-provider.module'
 					).then((m) => m.EditProviderModule),
 			},
+      {
+        path: 'payment-options',
+        loadChildren: () =>
+          import(
+            '@pages/patient/consultation/payment-options/payment-options.module').then(
+              (m) => m.PaymentOptionsModule
+            ),
+      },
     ],
   },
 ];
