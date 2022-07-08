@@ -11,7 +11,8 @@
 		<div class="col-3" *ngIf="!onPage">
 			<select class="form-select" [(ngModel)]="selectedBusinessGroup" (change)="setBusinessGroup($event)"
 				[disabled]="disableBGDropdown">
-				<option *ngFor="let bg of businessGroups" [value]="bg._id">
+				<option value="intelliveer">**INTELLIVEER**</option>
+				<option *ngFor="let bg of businessGroups" [value]="bg._id" [disabled]="disableBGDropdown">
 					{{ bg.name }}
 				</option>
 			</select>
