@@ -7,6 +7,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddUserComponent } from "./add-user.component";
 
+
 @NgModule({
   declarations: [AddUserComponent],
   imports: [

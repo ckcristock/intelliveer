@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-user-management',
@@ -7,12 +10,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserManagementComponent implements OnInit {
 
-  menuItems:any [] = [
-    {title: "Manage User", url: '/dashboard/settings/user-management/manage-user'},
-    {title: "User policy", url: '/dashboard/settings/user-management/user-policy'},
-  ];
-
-  constructor() { }
+  constructor( ) {
+  }
 
   ngOnInit(): void {
   }

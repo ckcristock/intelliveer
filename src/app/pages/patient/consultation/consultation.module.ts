@@ -9,7 +9,7 @@ import { ProgressBarModule } from '@modules/forms/progress-bar/progress-bar.modu
 
 @NgModule({
   declarations: [
-    ConsultationComponent
+    ConsultationComponent,
   ],
   imports: [
     CommonModule,

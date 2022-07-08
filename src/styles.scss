@@ -127,7 +127,7 @@ input.search {
 }
 
 .section {
-	background-color: #f9f9f9;
+	background-color: #f9fafb;
 	padding: 53px;
 	padding-top: 37px;
 	padding-bottom: 19px;
@@ -801,7 +801,7 @@ form {
 	.accordion-button {
 
 		span {
-			color: #a6a8aa !important;
+			color: #000000 !important;
 		}
 
 		background-color: white !important;
@@ -811,11 +811,12 @@ form {
 	.accordion-button:not(.collapsed) {
 
 		span {
-			color: #a6a8aa !important;
+			color: #f0896e !important;
+			font-weight: bold;
 		}
 
 		p {
-			color: #f0896e !important;
+			color: #000000 !important;
 		}
 
 		background-color: white !important;
@@ -882,4 +883,17 @@ input[type='checkbox'] {
 .row.mini-icon-navbar .camera {
 	border-left: 1px solid #999797;
 	border-right: 1px solid #999797;
+}
+
+.settings-row{
+	display: flex;
+	justify-content: flex-start;
+	height: 36px;
+	align-items: center;
+	gap: 10px;
+	p{
+		padding: 0px;
+		margin: 0px;
+	}
+	margin-left: 0px;
 }

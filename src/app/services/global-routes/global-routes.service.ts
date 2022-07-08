@@ -11,6 +11,7 @@ export class GlobalRoutesService {
   private urlOnboarding: string = "/dashboard/settings/onboarding";
   private urlRoleManage: string = "/dashboard/settings/role-management";
   private urlUserManage: string = "/dashboard/settings/user-management";
+  private urlSettings: string = "/dashboard/settings";
 
   constructor() { }
 
@@ -216,20 +217,29 @@ export class GlobalRoutesService {
       title: "Manage User",
       url: `${this.urlUserManage}/manage-user`,
       child: [{
-        title: "Add",
-        url: `${this.urlUserManage}/manage-user/add`
-      },
-      {
-        title: "Personal Info",
-        url: `${this.urlUserManage}/manage-user/user-personal-info`
+        title: "Create User",
+        url: `${this.urlUserManage}/manage-user/add-user`
       },]
     },
     {
-      title: "User Policy",
+      title: "Edit User",
       url: `${this.urlUserManage}/user-policy`,
-      child: []
+      child: [{
+        title: "Personal Information",
+        url: `${this.urlUserManage}/edit-user/personal-info`
+      },{
+        title: "Role Assignment & User Policy",
+        url: `${this.urlUserManage}/edit-user/user-policy`
+      },{
+        title: "Provider",
+        url: `${this.urlUserManage}/edit-user/user-provider`
+      },{
+        title: "Document",
+        url: `${this.urlUserManage}/edit-user/user-document`
+      },]
     },
   ];
+
   // get base URL
   getPatientUserUrl() {
     return this.urlPatientUser;
@@ -243,15 +253,19 @@ export class GlobalRoutesService {
     return this.urlInsurance;
   }
 
+  getSettingsUrl() {
+    return this.urlSettings;
+  }
+
   getSettingsOnboardingUrl() {
     return this.urlOnboarding;
   }
 
-  getSettingsRoleManage() {
+  getSettingsRoleManageUrl() {
     return this.urlRoleManage;
   }
 
-  getSettingsUserManage() {
+  getSettingsUserManageUrl() {
     return this.urlUserManage;
   }
 

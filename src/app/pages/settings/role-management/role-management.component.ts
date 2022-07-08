@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 
 @Component({
   selector: 'app-role-management',
@@ -7,13 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RoleManagementComponent implements OnInit {
 
+  urlSettings!: string;
   menuItems:any [] = [
     {title: "Manage Role Templates", url: '/dashboard/settings/role-management/manage-role-template'},
     {title: "Manage Role", url: '/dashboard/settings/role-management/manage-role'},
   ];
 
 
-  constructor() { }
+  constructor(private routes: GlobalRoutesService,) { 
+    this.urlSettings = this.routes.getSettingsUrl();
+  }
 
   ngOnInit(): void {
   }

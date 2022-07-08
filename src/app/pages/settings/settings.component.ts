@@ -14,21 +14,30 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class SettingsComponent implements OnInit {
 
+  onPage: boolean = false;
   selectedBusinessGroup: string | undefined;
-  onboardingChilds: any []=[];
-  roleManagementchilds: any []=[];
-  userManagementchilds: any []=[];
+  onboardingChilds: any[] = [];
+  roleManagementchilds: any[] = [];
+  userManagementchilds: any[] = [];
   menuItems: any[] = [
     {
-      name: "Onboarding",
+      name: "Organization Onboarding",
+      route: "",
       childs: [],
     },
     {
       name: "Role Management",
+      route: "",
       childs: [],
     },
     {
       name: "User Management",
+      route: "",
+      childs: [],
+    },
+    {
+      name: "Practice Management",
+      route: "",
       childs: [],
     },
   ];
@@ -82,7 +91,7 @@ export class SettingsComponent implements OnInit {
 
     router.events.pipe(
       filter(event => event instanceof NavigationEnd)
-    ).subscribe((event:any) => {
+    ).subscribe((event: any) => {
       if (event.url.includes("onboarding")) {
         this.currentRoute = "Onboarding";
       } else if (event.url.includes("role")) {
@@ -90,11 +99,21 @@ export class SettingsComponent implements OnInit {
       } else if (event.url.includes("user")) {
         this.currentRoute = "User Management";
       }
-    });
 
+      if (event.url == this.globalRoutes.getSettingsUrl()) {
+        this.onPage = true;
+      } else {
+        this.onPage = false;
+      }
+    });
   }
 
   ngOnInit(): void {
+    
+    //getting principal routes
+    this.menuItems[0].url = this.globalRoutes.getSettingsOnboardingUrl();
+    this.menuItems[1].url = this.globalRoutes.getSettingsRoleManageUrl();
+    this.menuItems[2].url = this.globalRoutes.getSettingsUserManageUrl();
     this.onboardingChilds = this.globalRoutes.getSettingsOnboardingRoutes();
     this.roleManagementchilds = this.globalRoutes.getSettingsRoleManageRoutes();
     this.userManagementchilds = this.globalRoutes.getSettingsUserManageRoutes();

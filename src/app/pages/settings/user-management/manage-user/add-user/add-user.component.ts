@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from "@services/user/user.service";
+import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
+import { UserService } from '@services/user/user.service';
 
 @Component({
   selector: 'app-add-user',
@@ -13,7 +14,9 @@ export class AddUserComponent implements OnInit {
   Form!: FormGroup;
   @Input() formData: any | undefined = undefined;
   //user = { firstName: '', lastName: '', email: '', password: '', roles:'' };
+  urlManageUser: string ="";
   userEmail: any = "";
+  menuItems:any [] =[];
   user = {
     creds: {
       "email": "",
@@ -30,7 +33,11 @@ export class AddUserComponent implements OnInit {
 
   constructor(private router: Router,
     private fb: FormBuilder,
-    private userServ: UserService) { }
+    private userServ: UserService,
+    private globalRoutes: GlobalRoutesService,) {
+      this.urlManageUser = this.globalRoutes.getSettingsUserManageUrl();
+      this.menuItems.push(this.globalRoutes.getSettingsUserManageRoutes()[0].child[0]);
+     }
 
   ngOnInit(): void {
     this.initForm(this.formData);
@@ -62,4 +69,5 @@ export class AddUserComponent implements OnInit {
       this.router.navigate(['/dashboard/settings/user-management/manage-user']);
     });
   }
+
 }

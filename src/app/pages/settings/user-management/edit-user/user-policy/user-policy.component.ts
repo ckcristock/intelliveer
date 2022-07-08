@@ -11,6 +11,10 @@ export class UserPolicyComponent implements OnInit {
 
   Form!: FormGroup;
   formData: any | undefined = undefined;
+  showAdvanceBG: boolean = true;
+  showAdvanceLE: boolean = true;
+  showAdvanceLOC: boolean = true;
+  showAdvancePC: boolean = true;
 
   roles: any [] = [
     {name: "Role 1"},
@@ -20,11 +24,25 @@ export class UserPolicyComponent implements OnInit {
     {name: "Role 5"},
   ];
 
-  permissions: any [] = [
+  permissionsBG: any [] = [
     {description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"},
     {description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"},
     {description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"},
     {description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"},
+  ];
+
+  permissionsLE: any [] = [
+    {description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"},
+    {description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"},
+    {description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"},
+  ];
+
+  permissionsLOC: any [] = [
+    {description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"},
+    {description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"},
+  ];
+
+  permissionsPC: any [] = [
     {description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"},
     {description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"},
     {description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"},
@@ -54,6 +72,22 @@ export class UserPolicyComponent implements OnInit {
   }
 
   cancel() {
+  }
+
+  showAdvBG(){
+    this.showAdvanceBG = !this.showAdvanceBG;
+  }
+
+  showAdvLE(){
+    this.showAdvanceLE = !this.showAdvanceLE;
+  }
+
+  showAdvLOC(){
+    this.showAdvanceLOC = !this.showAdvanceLOC;
+  }
+
+  showAdvPC(){
+    this.showAdvancePC = !this.showAdvancePC;
   }
 
 
