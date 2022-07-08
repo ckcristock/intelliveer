@@ -32,6 +32,7 @@ export class AddBusinessGroupComponent
 	createBG(data: any) {
 		if (data) {
 			data['slug'] = '';
+			data['belongsToUserId'] = '';
 			this.businessGroupService
 				.createBusinessGroup({
 					user: {
