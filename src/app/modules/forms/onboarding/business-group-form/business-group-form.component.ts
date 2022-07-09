@@ -23,6 +23,7 @@ import { GeoService } from '@services/global-data/public/geo/geo.service';
 export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 	@Input() title: string = '';
 	@Input() formData: any | undefined = undefined;
+	@Input() password: any;
 	@Output() onCancel = new EventEmitter();
 	@Output() onSubmit = new EventEmitter();
 	BGForm: FormGroup | undefined;
@@ -38,6 +39,7 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 		{ title: 'Contact', id: 'contactDetails' },
 		{ title: 'Contact Person Info', id: 'contactPerson' }
 	];
+	userPassword:any
 	constructor(
 		private fb: FormBuilder,
 		private http: HttpClient,
@@ -63,6 +65,7 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 			TIN: [data?.TIN || ''],
 			country: [data?.country || '', Validators.required],
 			currency: [data?.currency || '', Validators.required],
+			password: [this.password && '', Validators.required],
 			physicalAddress: this.addressFormService.getAddressForm(
 				data?.physicalAddress || {}
 			),

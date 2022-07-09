@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BusinessGroupService } from '@services/onboarding/business-group/business-group.service';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 
 export interface SelectedBusinessGroup {
 	bgId: string;
@@ -18,7 +19,9 @@ export class BusinessGroupDropdownService {
 	private selectedBusinessGroup = new BehaviorSubject<
 		SelectedBusinessGroup | undefined
 	>(undefined);
-	constructor(private businessGroupService: BusinessGroupService) {
+	constructor(private businessGroupService: BusinessGroupService,
+		private cookieService: CookieService,
+		 ) {
 		this._getBusinessGroups();
 	}
 	businessGroup(): Observable<SelectedBusinessGroup | undefined> {
@@ -50,13 +53,25 @@ export class BusinessGroupDropdownService {
 		}
 	}
 	private _getBusinessGroups() {
+	    let bgId:any =	localStorage.getItem('selected_business_group');
+
+		if(bgId == ''){
+			const orgId:any =this.cookieService.get('orgId');
+			if(orgId != 'intelliveer'){
+				this.disabled = true;
+			}else{
+				this.disabled = false
+			}
+			bgId = orgId;
+		}
 		this.businessGroupService.getBusinessGroups().subscribe({
 			next: (data: any) => {
 				if (data && data.length > 0) {
 					this.selectedBG = {
-						bgId: data[0]?._id,
+						bgId: bgId,
 						disabled: this.disabled
 					};
+					console.log(this.selectedBG);
 					this.selectedBusinessGroup.next(this.selectedBG);
 					this.businessGroups.next(data);
 				}
@@ -64,5 +79,5 @@ export class BusinessGroupDropdownService {
 			error: () => {},
 			complete: () => {}
 		});
-	}
+	}	
 }

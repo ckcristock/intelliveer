@@ -19,6 +19,7 @@ export class NavbarComponent implements OnInit {
 	searchFocus: boolean = false;
 	showSelectedPatient: boolean = false;
 	selectedPatient: any;
+	username: any;
 	searchResults: any = [
 		{ user: 'Smith John', dob: '30/12/1984', active: true, id: 'P001' },
 		{ user: 'Smith Doe', dob: '23/08/1988', active: true, id: 'P002' },
@@ -38,7 +39,9 @@ export class NavbarComponent implements OnInit {
 		});
 	}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		this.getUsername()
+	}
 	logOut() {
 		this.authService.logout().subscribe({
 			next: (res) => {
@@ -69,5 +72,14 @@ export class NavbarComponent implements OnInit {
 	{
 		this.searchFocus = false;
 		this.router.navigate(['/dashboard/header/add-patient']);
+	}
+	getUsername() {
+		const user = this.cookieService.get('user');
+		console.log(user)
+		if (user) {
+			this.username =  JSON.parse(user);
+		} else {
+			this.username = null;
+		}
 	}
 }
