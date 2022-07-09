@@ -40,19 +40,22 @@ export class AddRoleComponent implements OnInit {
 	permissionsList: any[] = [];
 	bgName: any;
 	roleType: any;
-
+    orgId: any;
+	addRoleTitle: string = "Create Role";
+	roleTemplatePlaceholder: string = "Role template name";
 	constructor(
 		private router: Router,
 		private roleService: RoleService,
 		private alertService: AlertService,
 		private fb: FormBuilder,
 		private businessGroupDropdownService: BusinessGroupDropdownService
-	) {}
+	) {
+	}
 
 	ngOnInit(): void {
-		this.roleService.authService.getOrgId().trim() === 'intelliveer'
-			? (this.displayCreateRoleYesNoOption = true)
-			: (this.displayCreateRoleYesNoOption = false);
+		//  this.roleService.authService.getOrgId().trim() === 'intelliveer'
+		// 	? (this.displayCreateRoleYesNoOption = true)
+		// 	: (this.displayCreateRoleYesNoOption = false);
 		this.createRoleTemplete = 'yes';
 		this.initForm(this.formData);
 		this.getRoleList();
@@ -67,8 +70,9 @@ export class AddRoleComponent implements OnInit {
 					this.bgName = list[0]._id;
 				}
 			});
-	}
 
+			this.getSelectedBusinessGroupId();
+	}
 	initForm(data?: any) {
 		data = data || {};
 		this.Form = this.fb.group({
@@ -152,11 +156,13 @@ export class AddRoleComponent implements OnInit {
 
 	save(data: any) {
 		if (this.displayCreateRoleYesNoOption) {
-			if (this.createRoleTemplete == 'yes') {
+			if(this.createRoleTemplete == 'yes') {
 				this.saveRoleFromTemplate(data);
-			} else {
+			}else if(this.createRoleTemplete == 'no') {
 				this.saveRoleFromScratch(data);
 			}
+		}else{
+			this.saveRoleFromTemplate(data);
 		}
 		// else
 		// {
@@ -207,6 +213,7 @@ export class AddRoleComponent implements OnInit {
 	}
 
 	saveRoleFromTemplate(data: any) {
+		console.log(data);
 		let roleObj = {
 			name: data.name,
 			description: data.description,
@@ -258,8 +265,9 @@ export class AddRoleComponent implements OnInit {
 	}
 
 	selectRoleTemplateChange(Obj: any) {
+		let roleManage = {...Obj};
 		this.roleType = Obj.type
-		this.roleTemplate = Obj;
+		this.roleTemplate = roleManage;
 		this.permissionsList = Obj.permissions;
 	}
 
@@ -306,5 +314,21 @@ export class AddRoleComponent implements OnInit {
 				console.log(error);
 			}
 		);
+	}
+
+	/** Get Selected Org Id */
+	getSelectedBusinessGroupId(){
+		this.businessGroupDropdownService.businessGroup().subscribe((res) => {
+			this.orgId = res?.bgId;
+			if(this.orgId != "intelliveer"){
+				this.addRoleTitle = "Create Role from Role Template";
+				this.roleTemplatePlaceholder = "Select role template";
+				this.displayCreateRoleYesNoOption = false;
+			}else{
+				this.addRoleTitle = "Create Role";
+				this.roleTemplatePlaceholder = "Role template name";
+				this.displayCreateRoleYesNoOption = true;
+			}
+		  });
 	}
 }

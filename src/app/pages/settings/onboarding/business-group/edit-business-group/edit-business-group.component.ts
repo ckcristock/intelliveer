@@ -47,6 +47,7 @@ export class EditBusinessGroupComponent
 		});
 	}
 	updateBG(data: any) {
+		delete data.password;
 		if (data && this.id) {
 			data['slug'] = '';
 			this.businessGroupService
