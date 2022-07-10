@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { PaymentOptionsRoutingModule } from './payment-options-routing.module';
 import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaymentOptionsComponent } from "./payment-options.component";
 
 @NgModule({
@@ -10,7 +13,11 @@ import { PaymentOptionsComponent } from "./payment-options.component";
   imports: [
     CommonModule,
     PaymentOptionsRoutingModule,
-    NavBarPillsModule
+    NavBarPillsModule,
+    NgbModule,
+    NgSelectModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class PaymentOptionsModule { }
