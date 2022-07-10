@@ -4,7 +4,7 @@
 <form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
     <!-- content -->
     <div class="section" id="main">
-        <h6 class="heading">Create Role</h6>
+        <h6 class="heading">{{addRoleTitle}}</h6>
         <div class="row formrow">
             <div class="col-3" *ngIf="displayCreateRoleYesNoOption">
                 <label class="label-input-gap">Create using role template?</label>
@@ -23,7 +23,7 @@
             </div>
             <div class="col-3" *ngIf="createRoleTemplete === 'yes'">
                 <label class="label-input-gap">Role Template</label>
-                <ng-select placeholder="Role template name" (change)="selectRoleTemplateChange($event)">
+                <ng-select placeholder="{{roleTemplatePlaceholder}}" (change)="selectRoleTemplateChange($event)">
                     <ng-option *ngFor="let roleTemplate of roleTemplateList" [value]="roleTemplate">{{roleTemplate.name}}</ng-option>
                 </ng-select>
             </div>

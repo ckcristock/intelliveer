@@ -16,6 +16,7 @@ export class AddRoleTemplateComponent implements OnInit {
 
   roleTemplateForm!: FormGroup;
   roleNestedForm!: FormGroup;
+  roleModuleNestedForm!: FormGroup;
   allRolePermissionsMeta: any;
   isTypeSpecific:boolean = false;
   rolesTemplates: RolesTemplate = new RolesTemplate();
@@ -61,15 +62,19 @@ export class AddRoleTemplateComponent implements OnInit {
   get f() { return this.roleTemplateForm.controls; }
 
   /** First Array form value*/
-  get sectionNested(){
+  get moduleNested(){
     return (<FormArray>this.roleTemplateForm.get("permissions")).controls;
+  }
+  /** Get Second Array form value*/
+  sectionNested(i:any){
+    return (<FormArray>this.moduleNested[i].get("sections")).controls;
   } 
 
-    /** Get Second Array form value*/
-  permissionNested(i:any){
-    return (<FormArray>this.sectionNested[i].get("permissions")).controls;
+    /** Get Third Array form value*/
+  permissionNested(i:any,j:any){
+    let sectionForm = (<FormArray>this.moduleNested[i].get("sections")).controls
+    return (<FormArray>sectionForm[j].get("permissions")).controls
   } 
-
   /** Get ID from Query Params */
   getRoleTemplateID(){
     this.route.queryParams.subscribe((params: any) => {
@@ -79,15 +84,23 @@ export class AddRoleTemplateComponent implements OnInit {
       }
     })
   }
-
+  /** This array for permission */
+  moduleArray() : FormArray {
+    return (<FormArray>this.roleTemplateForm.get("permissions"));
+   }
+  newModule(): FormGroup {
+    return this.roleModuleNestedForm = this.fb.group({
+      module: new FormControl(),
+      sections:this.fb.array([]),
+    })
+  }
   /** This array for permission Sections */
   sectionsArray() : FormArray {
-    return (<FormArray>this.roleTemplateForm.get("permissions"));
+    return (<FormArray>this.roleModuleNestedForm.get("sections"));
    }
 
    newSections(): FormGroup {
     return this.roleNestedForm = this.fb.group({
-      roles: new FormControl(),
       section: new FormControl(),
       permissions:this.fb.array([]),
       
@@ -192,22 +205,23 @@ export class AddRoleTemplateComponent implements OnInit {
     this.rolesUserServ.getRoleTemplateMeta().subscribe(res=>{
       this.allRolePermissionsMeta = res;
       this.allRolePermissionsMeta.forEach((section:any) => {
+        const formGroup = this.newModule();
         section.permissions.forEach((element:any) => {
-          const formGroup = this.newSections();
+          const formGroupFirst = this.newSections();
           element.permissions.forEach((perm:any) =>{
             const formGroupSecond = this.newPermissions();
             formGroupSecond.patchValue({name: perm.name, enabled: false, locked: false, allowOverride: false});
             this.permissionArray().push(formGroupSecond);           
           })
-          
-          formGroup.patchValue({section:element.section,roles: section.name});
-          this.sectionsArray().push(formGroup)
-          
+          formGroupFirst.patchValue({section:element.section});
+          this.sectionsArray().push(formGroupFirst)
         });
-        
+        formGroup.patchValue({module:section.name})
+        this.moduleArray().push(formGroup)
       });
       
     })
+    console.log(this.roleTemplateForm)
   }
   
  /** Bussines groups list */
@@ -232,5 +246,4 @@ export class AddRoleTemplateComponent implements OnInit {
     this.roleTemplateForm.patchValue({businessGroups: ''})
    }
   }
-
 }

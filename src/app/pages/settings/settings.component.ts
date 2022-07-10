@@ -73,12 +73,6 @@ export class SettingsComponent implements OnInit {
       if (res) {
         this.selectedBusinessGroup = res.bgId;
         this.disableBGDropdown = res.disabled;
-        if(this.orgID != 'intelliveer'){
-          this.disableBGDropdown = true;
-        }else{
-          this.disableBGDropdown = false
-        }
-        console.log(this.disableBGDropdown,this.selectedBusinessGroup);
       }
       
     });
@@ -117,23 +111,19 @@ export class SettingsComponent implements OnInit {
     this.onboardingChilds = this.globalRoutes.getSettingsOnboardingRoutes();
     this.roleManagementchilds = this.globalRoutes.getSettingsRoleManageRoutes();
     this.userManagementchilds = this.globalRoutes.getSettingsUserManageRoutes();
-    this.removeMenu(this.orgID);
-    if(this.orgID != 'intelliveer'){
-      console.log(this.orgID)
-      this.roleManagementchilds.forEach((element:any,index:any )=> {
-        if(element.title == 'Manage Role Templates'){
-          delete element.title;
-        }
-      });
-    }
     this.menuItems[0].childs=this.onboardingChilds;
     this.menuItems[1].childs=this.roleManagementchilds;
     this.menuItems[2].childs=this.userManagementchilds;
    
   }
   getUserOrdID(){
-   this.orgID = this.cookieService.get('orgId');
-  //this.orgID = "BG1";
+    let bgOrdID:any = localStorage.getItem('selected_business_group');
+    if(bgOrdID){
+      this.orgID = bgOrdID
+    }else{
+      this.orgID = this.cookieService.get('orgId');
+    }
+ // this.orgID = "BG1";
   
   }
   
@@ -142,16 +132,5 @@ export class SettingsComponent implements OnInit {
     this.businessGroupDropdownService.setSelectedBusinessGroup(
       e.target.value
     );
-    this.removeMenu(e.target.value);
-  }
-  /** Remove Manage Role Templates */
-  removeMenu(orgId:any){
-    if(orgId != 'intelliveer'){
-      this.roleManagementchilds.forEach((element:any,index:any )=> {
-        if(element.title == 'Manage Role Templates'){
-          delete element.title;
-        }
-      });
-    }
   }
 }
