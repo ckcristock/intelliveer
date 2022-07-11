@@ -1,59 +1,121 @@
 <div class="container">
-    <app-nav-bar-pills
+	<app-nav-bar-pills
 		[cancelBtn]="true"
 		[saveBtn]="true"
 		[disableSaveBtn]="false"
-        (onCancel)="cancel()"
+		(onCancel)="cancel()"
 		(onSave)="save($event)"
 	></app-nav-bar-pills>
-    <div class="row">
-        <div class="col-5">
-            <div class="section" style="height: 40rem;">
-                <router-outlet></router-outlet>
-            </div>
-        </div>
-        <div class="col-5">
-            <div class="section" style="height: 40rem;" *ngIf="!showImageGallery">
-                <div class="container">
-                    <h6 class="heading">Problem List</h6>
-                    <hr />
-                    <div class="scroll">
-                        <div class="row" *ngFor="let problem of problemList; let i = index;">
-                            <div class="col" *ngIf="problem.child?.length != 0">
-                                <ul>
-                                    <li>
-                                        <h5 class="heading">{{problem.title | titlecase }}</h5>
-                                        <div class="row" *ngFor="let item of problem.child; let i = index;">
-                                            <div class="col">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        checked="{{item.checked}}" value="{{item.title}}"
-                                                        id="flexCheckDefault{{i}}" readonly />
-                                                    <label class="form-check-label" for="flexCheckDefault{{i}}">
-                                                        {{item.title}}
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <app-image-gallery [galleryImagesList]="galleryImagesList" (closeImageGallery)="showImageGallery = false" [width]="'37rem'" [heigth]="'40rem'" *ngIf="showImageGallery"></app-image-gallery>
-        </div>
-        <div class="col-2">
-            <h6 class="heading">Gallery</h6>
-            <div class="row">
-                <!-- <div class="col" *ngFor="let imageGallery of galleryImagesList">
-                    <img src="{{imageGallery.imageUrl}}" width="65" height="60" (click)="showImageGallery = true" />
-                </div> -->
-                <div class="col-1">
-                    <img src="/assets/images/doctor2.jpg" width="50" height="50" (click)="showImageGallery = true" />
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="row">
+		<div class="col-10">
+			<div class="row">
+				<div class="col">
+					<div class="section" style="height: 30rem">
+						<router-outlet></router-outlet>
+					</div>
+				</div>
+				<div class="col">
+					<div
+						class="section"
+						style="height: 30rem"
+						*ngIf="!showImageGallery"
+					>
+						<div class="container">
+							<h6 class="heading">Problem List</h6>
+							<hr />
+							<div class="scroll" id="scrollDiv">
+								<div
+									class="row"
+									*ngFor="
+										let problem of problemLst;
+										let i = index
+									"
+								>
+									<div
+										class="col"
+										*ngIf="problem.child?.length != 0"
+									>
+										<ul>
+											<li>
+												<h5 class="heading">
+													{{
+														problem.title
+															| titlecase
+													}}
+												</h5>
+												<div
+													class="row"
+													*ngFor="
+														let item of problem.child;
+														let i = index
+													"
+												>
+													<div class="col">
+														<div class="form-check">
+															<input
+																class="form-check-input"
+																type="checkbox"
+																checked="{{
+																	item.checked
+																}}"
+																value="{{
+																	item.title
+																}}"
+																id="flexCheckDefault{{
+																	i
+																}}"
+																readonly
+															/>
+															<label
+																class="form-check-label"
+																for="flexCheckDefault{{
+																	i
+																}}"
+															>
+																{{ item.title }}
+															</label>
+														</div>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<app-image-gallery
+						[galleryImagesList]="galleryImagesList"
+						(closeImageGallery)="showImageGallery = false"
+						[width]="400"
+						[height]="'min-content'"
+						*ngIf="showImageGallery"
+					></app-image-gallery>
+				</div>
+			</div>
+			<app-toothchart
+				[toothChartType]="1"
+				[width]="50"
+				[height]="50"
+				[showDropdownMenu]="true" 
+				(onSelectOption)="onSelectOption($event)"
+			></app-toothchart>
+		</div>
+		<div class="col-2">
+			<h6 class="heading">Gallery</h6>
+			<div class="row">
+				<div class="col">
+					<div *ngFor="let imageGallery of galleryImagesList">
+						<img
+							src="{{ imageGallery.imageUrl }}"
+							class="gallery"
+							width="60"
+							height="60"
+							(click)="showImageGallery = true"
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
