@@ -41,19 +41,19 @@
 
         <div class="row formrow" *ngIf="createRoleTemplete == 'no'">
             <div class="col-12" style="margin-top: 6px;">
-                <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+                <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" formArrayName="permissions">
                     <!-- Org. Onboarding -->
-                    <ngb-panel cardClass="onboarding" *ngFor="let permissions of permissionsList">
+                    <ngb-panel cardClass="onboarding" *ngFor="let module of moduleNested; let i=index" [formGroupName]="i">
                         <ng-template ngbPanelTitle>
                             <div>
-                                <p><strong>{{permissions.name}}</strong></p>
+                                <p><strong>{{module.value.module}}</strong></p>
                             </div>
 
                         </ng-template>
-                        <ng-template ngbPanelContent formArrayName="permissions">
-                            <ngb-accordion #accOnboarding="ngbAccordion" activeIds="ngb-panel-0" *ngFor="let subPermission of sectionNested; let i=index" [formGroupName]="i">
+                        <ng-template ngbPanelContent formArrayName="sections">
+                            <ngb-accordion #accOnboarding="ngbAccordion" activeIds="ngb-panel-0" *ngFor="let subPermission of sectionNested(i); let j=index" [formGroupName]="j">
                                 <!-- Business Group -->
-                                <ngb-panel cardClass="businessg"  *ngIf="permissions.name == subPermission.value.roles">
+                                <ngb-panel cardClass="businessg">
                                     <ng-template ngbPanelTitle>
                                         <p><strong>{{subPermission.value.section}}</strong></p>
                                     </ng-template>
@@ -75,10 +75,10 @@
                                                     <th>Allow Override</th>
                                                 </tr>
                                             </thead>
-                                            <tbody *ngFor="let childPermision of permissionNested(i); let j=index" [formGroupName]="j">
+                                            <tbody *ngFor="let childPermision of permissionNested(i,j); let k=index" [formGroupName]="k">
                                                 <tr>
                                                     <td><input type="checkbox" formControlName="enabled" value=""/></td>
-                                                    <td> <input type="hidden" formControlName="name" >{{subPermission.value.permissions[j].name}}</td>
+                                                    <td> <input type="hidden" formControlName="name" >{{childPermision.value.name}}</td>
                                                     <td><input type="checkbox" formControlName="locked" value="" /></td>
                                                     <td><input type="checkbox" value=""  formControlName="allowOverride"/></td>
                                                 </tr>

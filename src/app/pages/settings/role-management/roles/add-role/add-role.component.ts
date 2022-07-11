@@ -28,6 +28,7 @@ export class RoleTemplate {
 export class AddRoleComponent implements OnInit {
 	Form!: FormGroup;
 	roleNestedForm!: FormGroup;
+	roleModuleNestedForm!: FormGroup;
 	public formData: any | undefined = undefined;
 	createRoleTemplete: string | undefined;
 	roleTemplateList: any[] = [];
@@ -83,27 +84,41 @@ export class AddRoleComponent implements OnInit {
 		});
 	}
 
-	get sectionNested() {
-		return (<FormArray>this.Form.get('permissions')).controls;
+	/** First Array form value*/
+	get moduleNested(){
+		return (<FormArray>this.Form.get("permissions")).controls;
+	  }
+	/** Get Second Array form value*/
+	sectionNested(i:any){
+	 return (<FormArray>this.moduleNested[i].get("sections")).controls;
 	}
 
-	permissionNested(i: any) {
-		return (<FormArray>this.sectionNested[i].get('permissions')).controls;
+	/** Get Third Array form value*/
+	permissionNested(i:any,j:any){
+		let sectionForm = (<FormArray>this.moduleNested[i].get("sections")).controls
+		return (<FormArray>sectionForm[j].get("permissions")).controls
 	}
-
-	sectionsArray(): FormArray {
-		return <FormArray>this.Form.get('permissions');
+	/** This array for permission */
+	moduleArray() : FormArray {
+		return (<FormArray>this.Form.get("permissions"));
+	}
+	newModule(): FormGroup {
+		return this.roleModuleNestedForm = this.fb.group({
+			module: new FormControl(),
+			sections:this.fb.array([]),
+		})
+	}
+	/** This array for permission Sections */
+	sectionsArray() : FormArray {
+		return (<FormArray>this.roleModuleNestedForm.get("sections"));
 	}
 
 	newSections(): FormGroup {
-		return (this.roleNestedForm = this.fb.group({
+		return this.roleNestedForm = this.fb.group({
 			section: new FormControl(),
-			roles: new FormControl(),
-			displayShowAdvanced: new FormControl(false),
-			permissions: this.fb.array([])
-		}));
+			permissions:this.fb.array([]),
+		})
 	}
-
 	permissionArray(): FormArray {
 		return <FormArray>this.roleNestedForm.get('permissions');
 	}
@@ -284,6 +299,7 @@ export class AddRoleComponent implements OnInit {
 		this.roleService.getPermissionList().subscribe(
 			(list: any) => {
 				for (let i = 0; i < list.length; i++) {
+					const formGroup = this.newModule();
 					const subPermissionList = list[i].permissions;
 					for (let j = 0; j < subPermissionList.length; j++) {
 						const sectionFormGroup = this.newSections();
@@ -303,10 +319,11 @@ export class AddRoleComponent implements OnInit {
 						sectionFormGroup.patchValue({
 							section: subPermissionList[j].section,
 							displayShowAdvanced: false,
-							roles: list[i].name
 						});
 						this.sectionsArray().push(sectionFormGroup);
 					}
+					formGroup.patchValue({module:list[i].name})
+                    this.moduleArray().push(formGroup)
 				}
 				this.permissionsList = list;
 			},

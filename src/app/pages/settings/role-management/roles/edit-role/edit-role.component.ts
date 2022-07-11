@@ -14,6 +14,7 @@ import { RoleTemplate } from '../add-role/add-role.component';
 export class EditRoleComponent implements OnInit {
 
   Form!: FormGroup;
+  roleModuleNestedForm!: FormGroup;
   public formData: any | undefined = undefined;
   public roleObj: RoleTemplate = new RoleTemplate();
   legelEntityList: any[] = [];
@@ -64,27 +65,41 @@ export class EditRoleComponent implements OnInit {
     });
   }
 
-  get sectionNested() {
-		return (<FormArray>this.Form.get('permissions')).controls;
+  /** First Array form value*/
+	get moduleNested(){
+		return (<FormArray>this.Form.get("permissions")).controls;
+	  }
+	/** Get Second Array form value*/
+	sectionNested(i:any){
+	 return (<FormArray>this.moduleNested[i].get("sections")).controls;
 	}
 
-	permissionNested(i: any) {
-		return (<FormArray>this.sectionNested[i].get('permissions')).controls;
+	/** Get Third Array form value*/
+	permissionNested(i:any,j:any){
+		let sectionForm = (<FormArray>this.moduleNested[i].get("sections")).controls
+		return (<FormArray>sectionForm[j].get("permissions")).controls
 	}
-
-	sectionsArray(): FormArray {
-		return <FormArray>this.Form.get('permissions');
+	/** This array for permission */
+	moduleArray() : FormArray {
+		return (<FormArray>this.Form.get("permissions"));
+	}
+	newModule(): FormGroup {
+		return this.roleModuleNestedForm = this.fb.group({
+			module: new FormControl(),
+			sections:this.fb.array([]),
+		})
+	}
+	/** This array for permission Sections */
+	sectionsArray() : FormArray {
+		return (<FormArray>this.roleModuleNestedForm.get("sections"));
 	}
 
 	newSections(): FormGroup {
-		return (this.roleNestedForm = this.fb.group({
+		return this.roleNestedForm = this.fb.group({
 			section: new FormControl(),
-      roles: new FormControl(),
-      displayShowAdvanced: new FormControl(false),
-			permissions: this.fb.array([])
-		}));
+			permissions:this.fb.array([]),
+		})
 	}
-
 	permissionArray(): FormArray {
 		return <FormArray>this.roleNestedForm.get('permissions');
 	}
@@ -103,6 +118,7 @@ export class EditRoleComponent implements OnInit {
 		this.roleService.getPermissionList().subscribe(
 			(list: any) => {
 				for (let i = 0; i < list.length; i++) {
+          const formGroup = this.newModule();
 					const subPermissionList = list[i].permissions;
 					for (let j = 0; j < subPermissionList.length; j++) {
 						const sectionFormGroup = this.newSections();
@@ -121,11 +137,12 @@ export class EditRoleComponent implements OnInit {
 						}
             sectionFormGroup.patchValue({
 							section: subPermissionList[j].section,
-              roles: list[i].name,
               displayShowAdvanced: false,
 						});
 						this.sectionsArray().push(sectionFormGroup);
 					}
+          formGroup.patchValue({module:list[i].name})
+          this.moduleArray().push(formGroup)
 				}
 				this.permissionsList = list;
 			},
@@ -140,9 +157,9 @@ export class EditRoleComponent implements OnInit {
     {
       delete items.roles;
       delete items.displayShowAdvanced
-      items.permissions.map((permissionItem: any) =>
+      items.sections.map((permissionItem: any) =>
       {
-        permissionItem.attrs = {};
+        //permissionItem.attrs = {};
         delete permissionItem._id;
         
       })
