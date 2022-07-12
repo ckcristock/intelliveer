@@ -53,25 +53,14 @@ export class BusinessGroupDropdownService {
 		}
 	}
 	private _getBusinessGroups() {
-	    let bgId:any =	localStorage.getItem('selected_business_group');
-
-		if(bgId == ''){
-			const orgId:any =this.cookieService.get('orgId');
-			if(orgId != 'intelliveer'){
-				this.disabled = true;
-			}else{
-				this.disabled = false
-			}
-			bgId = orgId;
-		}
 		this.businessGroupService.getBusinessGroups().subscribe({
 			next: (data: any) => {
+				console.log(data);
 				if (data && data.length > 0) {
 					this.selectedBG = {
-						bgId: bgId,
+						bgId: data[0]?._id,
 						disabled: this.disabled
 					};
-					console.log(this.selectedBG);
 					this.selectedBusinessGroup.next(this.selectedBG);
 					this.businessGroups.next(data);
 				}
@@ -79,5 +68,5 @@ export class BusinessGroupDropdownService {
 			error: () => {},
 			complete: () => {}
 		});
-	}	
+	}
 }

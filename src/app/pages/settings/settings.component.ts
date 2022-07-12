@@ -71,7 +71,7 @@ export class SettingsComponent implements OnInit {
        
     this.businessGroupDropdownService.businessGroup().subscribe((res) => {
       if (res) {
-        this.selectedBusinessGroup = res.bgId;
+        this.selectedBusinessGroup = this.orgID;
         this.disableBGDropdown = res.disabled;
       }
       
