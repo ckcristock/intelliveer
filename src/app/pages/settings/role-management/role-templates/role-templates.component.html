@@ -28,7 +28,14 @@
                     />
                 </div>
             </div>
-
+            <div class="col-4" *ngIf="isSuperUser">
+                <select class="form-select" (change)="chooseTypes($event)" >
+                <option value="" selected>Select Type</option>
+				<option value="public">Public</option>
+				<option value="private">Private</option>
+                <option value="specific">Specific</option>
+			</select>
+            </div>
             <!-- plus icon -->
             <div class="d-flex gap-2">
                 <button

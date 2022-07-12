@@ -22,7 +22,8 @@ export class BusinessGroupDropdownService {
 	constructor(private businessGroupService: BusinessGroupService,
 		private cookieService: CookieService,
 		 ) {
-		this._getBusinessGroups();
+		//this._getBusinessGroups();
+		this.getOrgBgId()
 	}
 	businessGroup(): Observable<SelectedBusinessGroup | undefined> {
 		return this.selectedBusinessGroup.asObservable();
@@ -68,5 +69,35 @@ export class BusinessGroupDropdownService {
 			error: () => {},
 			complete: () => {}
 		});
+	}
+
+	private _getBusinessGroup(bgId:any) {
+		this.businessGroupService.getBusinessGroup(bgId).subscribe({
+			next: (data: any) => {
+				data = [data];
+				console.log(data)
+				if (data && data.length > 0) {
+					this.selectedBG = {
+						bgId: data[0]?._id,
+						disabled: true
+					};
+					this.selectedBusinessGroup.next(this.selectedBG);
+					this.businessGroups.next(data);
+				}
+			},
+			error: () => {},
+			complete: () => {}
+		});
+	}
+	getOrgBgId(){
+	 let user:any =	this.cookieService.get('user');
+	 user = JSON.parse(user);
+	 if (user) {
+		if(user?.__ISSU__){
+		   this._getBusinessGroups()
+		}else{
+		   this._getBusinessGroup(user.bg[0]?._id)
+		}
+	}
 	}
 }

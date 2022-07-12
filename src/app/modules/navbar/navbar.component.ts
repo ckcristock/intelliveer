@@ -50,6 +50,7 @@ export class NavbarComponent implements OnInit {
 					'/',
 					environment.domain
 				);
+				localStorage.clear();
 				window.location.href = CONFIG.auth.host;
 			},
 			error: (err) => {

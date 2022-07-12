@@ -337,7 +337,9 @@ export class AddRoleComponent implements OnInit {
 	getSelectedBusinessGroupId(){
 		this.businessGroupDropdownService.businessGroup().subscribe((res) => {
 			this.orgId = res?.bgId;
-			if(this.orgId != "intelliveer"){
+			let bgOrdID:any = localStorage.getItem('selected_business_group');
+			console.log(bgOrdID)
+			if(this.orgId != "intelliveer" && bgOrdID != null){
 				this.addRoleTitle = "Create Role from Role Template";
 				this.roleTemplatePlaceholder = "Select role template";
 				this.displayCreateRoleYesNoOption = false;
