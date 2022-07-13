@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
 import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 import { UserService } from '@services/user/user.service';
-import { RoleService } from '@services/role/role.service';
 import { BusinessGroupDropdownService, SelectedBusinessGroup } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { AuthService } from '@services/auth/auth.service';
 
 @Component({
 	selector: 'app-personal-info',
@@ -54,51 +54,67 @@ export class PersonalInfoComponent implements OnInit {
 	};
   businessGroupDropdownSupscription: any;
   selectedBusinessGroup: SelectedBusinessGroup | undefined;
+	roleList: any;
 
 	constructor(
 		private router: Router,
 		private globalRoutes: GlobalRoutesService,
 		private fb: FormBuilder,
-		private userServ: UserService,
-		private roleSev: RoleService,
+		private userService: UserService,
+		private authService: AuthService,
     private businessGroupDropdownService: BusinessGroupDropdownService
     ) {
-      this.businessGroupDropdownSupscription =
-        this.businessGroupDropdownService
-          .businessGroup()
-          .subscribe((bg) => {
-            if (bg) {
-              this.selectedBusinessGroup = bg;
-            }
-          });}
-
-	async ngOnInit() {
-		this.initForm(this.formData);
-
-		//this.user = await this.userServ.getUser();
-		this.user = await JSON.parse(localStorage.getItem('user') || '[]');
-		console.log('user', this.user);
-		// if (this.user._id == null) {
-		// 	this.router.navigate([
-		// 		this.globalRoutes.getSettingsUserManageRoutes()[0].url
-		// 	]);
-		// }
-
-		if (this.user.length != 0) {
-      console.log(this.user)
-			for (let i = 0; i < this.user['roles'].length; i++) {
-				this.roleSev
-					.getRoleById(this.user.roles[i])
-					.subscribe((resp: any) => {
-						if (resp != null) {
-							this.user.roles[i] = resp;
-						} else {
-							this.user['roles'][i] = this.undefinedH;
-						}
-					});
-			}
+		this.businessGroupDropdownSupscription =
+		this.businessGroupDropdownService
+			.businessGroup()
+			.subscribe((bg) => {
+				if (bg) {
+					this.selectedBusinessGroup = bg;
+					this.getOrgBgId();
+				}
+			});
 		}
+
+	ngOnInit() {
+		this.initForm(this.formData);		
 	}
+
+	getUserData(bgId: any)
+	{
+		let userId = localStorage.getItem('userId')
+		this.userService.getUserData(bgId, userId).subscribe({
+			next: (res: any) => {
+				this.user = res;
+				if(res)
+				{
+					for (let i = 0; i < res.roles.length; i++) {
+						this.userService.getUserRoleData(bgId, this.user.roles[i]).subscribe({
+							next: (roledata: any) => {
+								(this.roleList) ? this.roleList = this.roleList + roledata.name + ", " : this.roleList = roledata.name + ", ";
+							},
+							error: () => {}
+						});
+					}						  
+				}
+			},
+			error: () => {}
+		});
+	}
+
+	getOrgBgId(){
+		let bgOrdID:any = localStorage.getItem('selected_business_group');
+		console.log(bgOrdID)
+			let user = this.authService.getLoggedInUser();
+			if (user?.__ISSU__) {
+		  if(bgOrdID == 'intelliveer' || bgOrdID == null){
+			this.getUserData('intelliveer');
+		  }else{
+			this.getUserData(this.selectedBusinessGroup?.bgId)
+		  }
+		  }else{
+		  this.getUserData(this.selectedBusinessGroup?.bgId)
+		}
+		}
 
 	initForm(data?: any) {
 		data = data || {};
@@ -118,7 +134,7 @@ export class PersonalInfoComponent implements OnInit {
 		};
     if(this.selectedBusinessGroup)
     {
-      this.userServ
+      this.userService
 			.updateUserProfile(this.userProfile, this.user._id, this.selectedBusinessGroup.bgId)
 			.subscribe((resp: any) => {
 				this.router.navigate([

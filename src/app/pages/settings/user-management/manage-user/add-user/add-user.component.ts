@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '@services/auth/auth.service';
 import { BusinessGroupDropdownService, SelectedBusinessGroup } from '@services/business-group-dropdown/business-group-dropdown.service';
 import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 import { UserService } from '@services/user/user.service';
@@ -39,6 +40,7 @@ export class AddUserComponent implements OnInit {
 		private fb: FormBuilder,
 		private userService: UserService,
 		private globalRoutes: GlobalRoutesService,
+		private authService: AuthService,
     private businessGroupDropdownService: BusinessGroupDropdownService
 	) {
 		this.businessGroupDropdownSupscription =
@@ -47,7 +49,7 @@ export class AddUserComponent implements OnInit {
 				.subscribe((bg) => {
 					if (bg) {
 						this.selectedBusinessGroup = bg;
-            this.getRolesList();
+						this.getOrgBgId();
 					}
 				});
 		this.urlManageUser = this.globalRoutes.getSettingsUserManageUrl();
@@ -57,26 +59,31 @@ export class AddUserComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.initForm(this.formData);    
-    this.getRolesList();
+		this.initForm(this.formData);
 	}
 
-  getRolesList()
+	getOrgBgId(){
+		let bgOrdID:any = localStorage.getItem('selected_business_group');
+		console.log(bgOrdID)
+			let user = this.authService.getLoggedInUser();
+			if (user?.__ISSU__) {
+		  if(bgOrdID == 'intelliveer' || bgOrdID == null){
+			this.getRolesList('intelliveer');
+		  }else{
+			this.getRolesList(this.selectedBusinessGroup?.bgId)
+		  }
+		  }else{
+		  this.getRolesList(this.selectedBusinessGroup?.bgId)
+		}
+		}
+
+  getRolesList(bgId: any)
   {
-    console.log(this.selectedBusinessGroup)
-    if(this.selectedBusinessGroup)
-    {
-      this.userService.getRoles(this.selectedBusinessGroup.bgId).subscribe((resp: any) => {
+	console.log(bgId);
+	this.userService.getRoles(bgId).subscribe((resp: any) => {
         this.roles = resp;
+		console.log(this.roles)
       });
-    }
-    else
-    {
-      this.userService.getRoles("intelliveer").subscribe((resp: any) => {
-        this.roles = resp;
-        console.log(resp);
-      });
-    }
   }
 
 	initForm(data?: any) {

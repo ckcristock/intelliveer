@@ -46,9 +46,9 @@ export class UserService {
 
 	getRoles(bgId: string) {
 		const headers = new HttpHeaders({
-			'X-ORG-ID': this.authService.getOrgId()
+			'X-ORG-ID': bgId
 		});
-		return this.http.get(this.roleUrl, { headers });
+		return this.http.get(`${CONFIG.backend.host}/role/role`, { headers });
 	}
 
 	getRoleById(id: any) {
@@ -115,6 +115,24 @@ export class UserService {
 			userProf,
 			{ headers }
 		);
+	}
+
+	getUserData(bgId: any, userId: any)
+	{
+		return this.http.get(`${CONFIG.backend.host}/user/user/`+userId, {
+			headers: {
+				'X-ORG-ID': bgId
+			}
+		});
+	}
+
+	getUserRoleData(bgId: any, roleId: any)
+	{
+		return this.http.get(`${CONFIG.backend.host}/role/role/`+ roleId, {
+			headers: {
+				'X-ORG-ID': bgId
+			}
+		});
 	}
 
 	deleteManageUser(id: number) {
