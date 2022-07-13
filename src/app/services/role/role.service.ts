@@ -25,15 +25,45 @@ export class RoleService {
   {
     return this.http.get(`${CONFIG.backend.host}/role/role/`, this.header);
   }
-
-  saveRoleFromRoleTemplate(Obj: any, bgName: any, roleType: string)
+  /** Get data from BG User ID */
+  getRoleListByID(bgId:any)
   {
-    return this.http.post(`${CONFIG.backend.host}/role/template-based-role/` + roleType + `?bg=` + bgName, Obj, this.header);
+    return this.http.get(`${CONFIG.backend.host}/role/role/`, 
+     {
+      headers: {
+        'X-ORG-ID': bgId
+      }
+     }
+    );
   }
 
-  updateRoleFromRoleTemplate(Obj: any, roleId: any)
+  saveRoleFromRoleTemplate(Obj: any, bgName: any, roleType: string, bgId?: any)
   {
-    return this.http.put(`${CONFIG.backend.host}/role/template-based-role/` + roleId, Obj, this.header);
+    if(!bgId){
+      bgId = "intelliveer"
+    }
+    console.log(bgId);
+    return this.http.post(`${CONFIG.backend.host}/role/template-based-role/` + roleType + `?bg=` + bgName, Obj, 
+    {
+      headers: {
+        'X-ORG-ID': bgId
+      }
+     }
+     );
+  }
+
+  updateRoleFromRoleTemplate(Obj: any, roleId: any, bgId?: any)
+  {
+    if(!bgId){
+      bgId = "intelliveer"
+    }
+    console.log(bgId);
+    return this.http.put(`${CONFIG.backend.host}/role/template-based-role/` + roleId, Obj,  {
+      headers: {
+        'X-ORG-ID': bgId
+      }
+     }
+     );
   }
 
   saveRoleFromRoleScratch(Obj: any)
@@ -46,14 +76,32 @@ export class RoleService {
     return this.http.put(`${CONFIG.backend.host}/role/role/` + roleId, Obj, this.header);
   }
 
-  deleteRole(id: string)
+  deleteRole(id: string,bgId?: any)
   {
-    return this.http.delete(`${CONFIG.backend.host}/role/role/` + id, this.header);
+    if(!bgId){
+      bgId = "intelliveer"
+    }
+    return this.http.delete(`${CONFIG.backend.host}/role/role/` + id, {
+      headers: {
+        'X-ORG-ID': bgId
+      }
+     }
+     );
   }
 
   getRoleById(id: string)
   {
     return this.http.get(`${CONFIG.backend.host}/role/role/` + id, this.header);
+  }
+
+  getRoleByIdBgId(id: string,bgId:any)
+  {
+    return this.http.get(`${CONFIG.backend.host}/role/role/` + id,  {
+      headers: {
+        'X-ORG-ID': bgId
+      }
+     }
+     );
   }
 
   getLegelEntityList()

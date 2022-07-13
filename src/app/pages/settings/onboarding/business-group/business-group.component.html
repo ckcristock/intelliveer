@@ -16,7 +16,7 @@
 				/>
 			</div>
 		</div>
-		<div class="d-flex gap-2">
+		<div class="d-flex gap-2" *ngIf="isSuperUser">
 			<button
 				class="add_btn"
 				routerLink="/dashboard/settings/onboarding/business-group/add"
@@ -98,6 +98,7 @@
 								<button
 									ngbDropdownItem
 									(click)="deleteBG(d._id)"
+									*ngIf="isSuperUser"
 								>
 									Delete
 								</button>

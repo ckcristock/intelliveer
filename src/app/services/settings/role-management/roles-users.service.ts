@@ -62,7 +62,13 @@ export class RolesUsersService {
       }
     });
   }
-  
+  listRoleTemplateListByBGId(type:any,bgId:any){
+    return this.http.get(`${CONFIG.backend.host}/role/role-template/`+type+`?bg=`+bgId,{
+      headers: {
+        'X-ORG-ID': this.authService.getOrgId()
+      }
+    });
+  }
   /** get single Role Template */
   singleRoleTemplate(ID:any){
     return this.http.get(`${CONFIG.backend.host}/role/role-template/${ID}`,{
