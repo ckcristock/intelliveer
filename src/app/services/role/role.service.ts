@@ -42,6 +42,7 @@ export class RoleService {
     if(!bgId){
       bgId = "intelliveer"
     }
+    console.log(bgId);
     return this.http.post(`${CONFIG.backend.host}/role/template-based-role/` + roleType + `?bg=` + bgName, Obj, 
     {
       headers: {
@@ -51,9 +52,18 @@ export class RoleService {
      );
   }
 
-  updateRoleFromRoleTemplate(Obj: any, roleId: any)
+  updateRoleFromRoleTemplate(Obj: any, roleId: any, bgId?: any)
   {
-    return this.http.put(`${CONFIG.backend.host}/role/template-based-role/` + roleId, Obj, this.header);
+    if(!bgId){
+      bgId = "intelliveer"
+    }
+    console.log(bgId);
+    return this.http.put(`${CONFIG.backend.host}/role/template-based-role/` + roleId, Obj,  {
+      headers: {
+        'X-ORG-ID': bgId
+      }
+     }
+     );
   }
 
   saveRoleFromRoleScratch(Obj: any)
@@ -66,14 +76,32 @@ export class RoleService {
     return this.http.put(`${CONFIG.backend.host}/role/role/` + roleId, Obj, this.header);
   }
 
-  deleteRole(id: string)
+  deleteRole(id: string,bgId?: any)
   {
-    return this.http.delete(`${CONFIG.backend.host}/role/role/` + id, this.header);
+    if(!bgId){
+      bgId = "intelliveer"
+    }
+    return this.http.delete(`${CONFIG.backend.host}/role/role/` + id, {
+      headers: {
+        'X-ORG-ID': bgId
+      }
+     }
+     );
   }
 
   getRoleById(id: string)
   {
     return this.http.get(`${CONFIG.backend.host}/role/role/` + id, this.header);
+  }
+
+  getRoleByIdBgId(id: string,bgId:any)
+  {
+    return this.http.get(`${CONFIG.backend.host}/role/role/` + id,  {
+      headers: {
+        'X-ORG-ID': bgId
+      }
+     }
+     );
   }
 
   getLegelEntityList()

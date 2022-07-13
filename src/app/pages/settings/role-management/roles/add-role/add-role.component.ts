@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from '@services/alert/alert.service';
+import { AuthService } from '@services/auth/auth.service';
 import { BusinessGroupDropdownService } from '@services/business-group-dropdown/business-group-dropdown.service';
 import { RoleService } from '@services/role/role.service';
 
@@ -49,6 +50,7 @@ export class AddRoleComponent implements OnInit {
 		private roleService: RoleService,
 		private alertService: AlertService,
 		private fb: FormBuilder,
+		private authService: AuthService,
 		private businessGroupDropdownService: BusinessGroupDropdownService
 	) {
 	}
@@ -172,7 +174,7 @@ export class AddRoleComponent implements OnInit {
 	save(data: any) {
 		if (this.displayCreateRoleYesNoOption) {
 			if(this.createRoleTemplete == 'yes') {
-				this.saveRoleFromTemplate(data);
+				this.addRoleWithTemplate(data);
 			}else if(this.createRoleTemplete == 'no') {
 				this.saveRoleFromScratch(data);
 			}
@@ -243,6 +245,41 @@ export class AddRoleComponent implements OnInit {
 							roleObj,
 							this.bgName,
 							this.roleType
+						)
+						.subscribe(
+							(data: any) => {
+								this.alertService.success(
+									'Success',
+									'Role has been save successfully'
+								);
+								this.router.navigate([
+									'/dashboard/settings/role-management/manage-role'
+								]);
+							},
+							(error) => {
+								console.log(error);
+							}
+						);
+				}
+			});
+	}
+	saveRoleFromTemplateBYBgId(data: any) {
+		console.log(data);
+		let roleObj = {
+			name: data.name,
+			description: data.description,
+			roleTemplateId: this.roleTemplate._id
+		};
+		this.alertService
+			.conformAlert('Are you sure?', 'You want to save a role')
+			.then((result: any) => {
+				if (result.value) {
+					this.roleService
+						.saveRoleFromRoleTemplate(
+							roleObj,
+							this.bgName,
+							this.roleType,
+							this.orgId
 						)
 						.subscribe(
 							(data: any) => {
@@ -339,15 +376,31 @@ export class AddRoleComponent implements OnInit {
 			this.orgId = res?.bgId;
 			let bgOrdID:any = localStorage.getItem('selected_business_group');
 			console.log(bgOrdID)
-			if(this.orgId != "intelliveer" && bgOrdID != null){
+			let user = this.authService.getLoggedInUser();
+		    if(user?.__ISSU__){
+				if(this.orgId != "intelliveer" && bgOrdID != null){
+					this.addRoleTitle = "Create Role from Role Template";
+					this.roleTemplatePlaceholder = "Select role template";
+					this.displayCreateRoleYesNoOption = false;
+				}else{
+					this.addRoleTitle = "Create Role";
+					this.roleTemplatePlaceholder = "Role template name";
+					this.displayCreateRoleYesNoOption = true;
+				}
+			}else{
 				this.addRoleTitle = "Create Role from Role Template";
 				this.roleTemplatePlaceholder = "Select role template";
 				this.displayCreateRoleYesNoOption = false;
-			}else{
-				this.addRoleTitle = "Create Role";
-				this.roleTemplatePlaceholder = "Role template name";
-				this.displayCreateRoleYesNoOption = true;
 			}
 		  });
+	}
+	/** Update Role with Template  */
+	addRoleWithTemplate(data:any){
+		let user = this.authService.getLoggedInUser();
+		if(user?.__ISSU__){
+			this.saveRoleFromTemplate(data);
+		}else{
+			this.saveRoleFromTemplateBYBgId(data)
+		}
 	}
 }

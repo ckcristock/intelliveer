@@ -26,6 +26,7 @@ export class BusinessGroupComponent
 	checkedItems: any = [];
 	checkAllState = false;
 	bgOrdID: any;
+	isSuperUser:any;
 	constructor(
 		private router: Router,
 		private businessGroupDropdownService: BusinessGroupDropdownService,
@@ -94,6 +95,7 @@ export class BusinessGroupComponent
 		if (user) {
 			if(user?.__ISSU__){
 			   this.fetchBgList()
+			   this.isSuperUser = true;
 			}else{
 			   this.fetchBgListByBGId(user.bg[0]?._id)
 			}
