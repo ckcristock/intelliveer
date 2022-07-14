@@ -186,7 +186,7 @@
 														}}
 													</td>
 													<td>
-														<input
+														<!-- <input
 															type="checkbox"
 															formControlName="locked"
 															value=""
@@ -195,7 +195,7 @@
 																	.value
 																	.locked
 															"
-														/>
+														/> -->
 														<img
 															src="assets/icons/locked.svg"
 															width="20"
@@ -210,49 +210,8 @@
 													<td>
 														<input
 															type="checkbox"
-															checked
-															disabled
-															*ngIf="
-																childPermision
-																	.value
-																	.allowOverride &&
-																childPermision
-																	.value
-																	.locked
-															"
-														/>
-														<input
-															type="checkbox"
 															formControlName="allowOverride"
-															*ngIf="
-																childPermision
-																	.value
-																	.allowOverride &&
-																!childPermision
-																	.value
-																	.locked
-															"
-														/>
-														<input
-															type="checkbox"
-															disabled
-															*ngIf="
-																!childPermision
-																	.value
-																	.allowOverride &&
-																childPermision
-																	.value
-																	.locked
-															"
-														/>
-														<input
-															type="checkbox"
-															formControlName="allowOverride"
-															*ngIf="
-																!childPermision
-																	.value
-																	.allowOverride &&
-																!childPermision
+															*ngIf="childPermision
 																	.value
 																	.locked
 															"
