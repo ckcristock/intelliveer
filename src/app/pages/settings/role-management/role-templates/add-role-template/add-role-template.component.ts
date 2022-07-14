@@ -116,7 +116,7 @@ export class AddRoleTemplateComponent implements OnInit {
   newPermissions(): FormGroup {
     return  this.fb.group({
       name: new FormControl(),
-      enabled: new FormControl(false),
+      enabled: new FormControl(),
       locked: new FormControl(false),
       allowOverride: new FormControl(false),
       attrs: {}
@@ -187,8 +187,15 @@ export class AddRoleTemplateComponent implements OnInit {
     this._ngZone.run(() => { 
       setTimeout(() => {
       this.rolesUserServ.singleRoleTemplate(ID).subscribe(res=>{
-        console.log(res);
           this.roleTemplateForm.patchValue(res);
+          console.log(res)
+          this.roleNestedForm.value.permissions.forEach((eli:any,index:any)=>{
+            eli.sections.forEach((section:any)=>{
+              section.permissions.forEach((perm:any)=>{
+                console.group(perm)
+              })
+            })
+          })
           if(this.roleTemplateForm.value.businessGroups.length == 0){
             this.isTypeSpecific = false;
           }else{
@@ -245,5 +252,15 @@ export class AddRoleTemplateComponent implements OnInit {
     this.isTypeSpecific = false;
     this.roleTemplateForm.patchValue({businessGroups: ''})
    }
+  }
+
+  checkedLocked(event:any){
+    console.log(event)
+    if(event.value.locked){
+      event.get('enabled').disable();
+    }else{
+      event.get('enabled').enable();
+    }
+   return
   }
 }
