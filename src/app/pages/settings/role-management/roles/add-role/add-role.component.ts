@@ -179,7 +179,7 @@ export class AddRoleComponent implements OnInit {
 				this.saveRoleFromScratch(data);
 			}
 		}else{
-			this.saveRoleFromTemplate(data);
+			this.addRoleWithTemplate(data);
 		}
 		// else
 		// {
@@ -308,6 +308,7 @@ export class AddRoleComponent implements OnInit {
 	getRoleList() {
 		this.roleService.getRoleTemplateList().subscribe(
 			(list: any) => {
+				console.log(list)
 				this.roleTemplateList = list;
 			},
 			(error) => {
