@@ -88,8 +88,8 @@
                             <div class="col">
                                 <div class="mainformset">
                                     <label class="label-input-gap">Log-in email</label>
-                                    <input class="form-control" type="text" placeholder="" name="email"
-                                        [(ngModel)]="user.profile.email" [ngModelOptions]="{standalone: true}" />
+                                    <input class="form-control" type="text" placeholder="" name="email" [disabled]="true"
+                                        [(ngModel)]="user?.profile.email" [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                             <div class="col">
@@ -103,7 +103,7 @@
                                 <div class="mainformset">
                                     <label class="label-input-gap">First Name</label>
                                     <input class="form-control value-must" type="text" placeholder="" name="firstName"
-                                        [(ngModel)]="user.profile.firstName" [ngModelOptions]="{standalone: true}" />
+                                        [(ngModel)]="user?.profile.firstName" [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                             <div class="col">
@@ -116,7 +116,7 @@
                                 <div class="mainformset">
                                     <label class="label-input-gap">Last Name</label>
                                     <input class="form-control value-must" type="text" placeholder="" name="lastName"
-                                        [(ngModel)]="user.profile.lastName" [ngModelOptions]="{standalone: true}" />
+                                        [(ngModel)]="user?.profile.lastName" [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                         </div>
@@ -295,11 +295,12 @@
                     <div class="col-3">
                         <div class="mainformset">
                             <label class=" label-input-gap">Roles</label>
-                            <ng-select [placeholder]="user['roles'][0].name">
+                            <input class="form-control" type="text" placeholder="" name="" [value]="roleList" [disabled]="true" />
+                            <!-- <ng-select [placeholder]="user['roles'][0]?.name">
                                 <ng-option *ngFor="let role of user['roles']; let i = index" [value]="role._id"
-                                    name="role.name" [(ngModel)]="user['roles'][0]._id"
+                                    name="role.name" [(ngModel)]="user['roles'][0]._id" [disabled]="true"
                                     [ngModelOptions]="{standalone: true}" >{{role.name}}</ng-option>
-                            </ng-select>
+                            </ng-select> -->
                         </div>
                     </div>
                 </div>
