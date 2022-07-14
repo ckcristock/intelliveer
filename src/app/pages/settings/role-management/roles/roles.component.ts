@@ -54,6 +54,22 @@ export class RolesComponent implements OnInit {
     this.router.navigate(['/dashboard/settings/role-management/manage-role/add']);
     // this.router.navigate([this.globalRoutes.getSettingsRoleManageRoutes()[1].child[0].url]);
   }
+  deleteRoleByBg(roleId: string){
+    this.alertService.conformAlert('Are you sure?', 'You want to delete a role')
+      .then((result: any) => {
+        if (result.value) {
+          this.roleService.deleteRole(roleId,this.selectedBusinessGroup?.bgId).subscribe((data: any) => {
+            this.alertService.success(
+              'Success',
+              'Role has been delete successfully'
+            );
+            this.getRoleListByBgId(this.selectedBusinessGroup?.bgId)
+          }, error => {
+            console.log(error)
+          });
+        }
+      });
+  }
 
   deleteRole(roleId: string) 
   {
@@ -87,4 +103,12 @@ export class RolesComponent implements OnInit {
       this.getRoleListByBgId(this.selectedBusinessGroup?.bgId)
     }
 	}
+  delteRoleUser(roleId:any){
+    let user = this.authService.getLoggedInUser();
+    if (user?.__ISSU__) {
+      this.deleteRole(roleId)
+    }else{
+      this.deleteRoleByBg(roleId)
+    }
+  }
 }
