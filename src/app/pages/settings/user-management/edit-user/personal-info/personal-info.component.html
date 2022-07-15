@@ -88,8 +88,8 @@
                             <div class="col">
                                 <div class="mainformset">
                                     <label class="label-input-gap">Log-in email</label>
-                                    <input class="form-control" type="text" placeholder="" name="email"
-                                        [(ngModel)]="user.profile.email" [ngModelOptions]="{standalone: true}" />
+                                    <input class="form-control" type="text" placeholder="" name="email" [disabled]="true"
+                                        [(ngModel)]="user?.profile.email" [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                             <div class="col">
@@ -103,7 +103,7 @@
                                 <div class="mainformset">
                                     <label class="label-input-gap">First Name</label>
                                     <input class="form-control value-must" type="text" placeholder="" name="firstName"
-                                        [(ngModel)]="user.profile.firstName" [ngModelOptions]="{standalone: true}" />
+                                        [(ngModel)]="user?.profile.firstName" [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                             <div class="col">
@@ -116,7 +116,7 @@
                                 <div class="mainformset">
                                     <label class="label-input-gap">Last Name</label>
                                     <input class="form-control value-must" type="text" placeholder="" name="lastName"
-                                        [(ngModel)]="user.profile.lastName" [ngModelOptions]="{standalone: true}" />
+                                        [(ngModel)]="user?.profile.lastName" [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                         </div>

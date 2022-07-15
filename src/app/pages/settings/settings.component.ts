@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { GlobalRoutesService } from "@services/global-routes/global-routes.service";
 import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from '@services/auth/auth.service';
 
 @Component({
   selector: 'app-settings',
@@ -19,6 +20,7 @@ export class SettingsComponent implements OnInit {
   onboardingChilds: any[] = [];
   roleManagementchilds: any[] = [];
   userManagementchilds: any[] = [];
+  isSuperUser: boolean = false;
   menuItems: any[] = [
     {
       name: "Organization Onboarding",
@@ -56,6 +58,7 @@ export class SettingsComponent implements OnInit {
     private menuBarService: MenuBarService,
     private globalRoutes: GlobalRoutesService,
     private cookieService: CookieService,
+    private authService: AuthService,
   ) {
     this.getUserOrdID();
     this.menuBarService.compactSideMenu(this.compactSidebar);
@@ -65,13 +68,14 @@ export class SettingsComponent implements OnInit {
         .subscribe((res) => {
           if (res && res.length > 0) {
             this.businessGroups = res;
-            this.selectedBusinessGroup = this.orgID;
+            this.selectedBusinessGroup = (this.orgID) ? this.orgID : res[0]._id;
           }
         });
        
     this.businessGroupDropdownService.businessGroup().subscribe((res) => {
       if (res) {
-        this.selectedBusinessGroup = res.bgId;
+        console.log(res)
+        this.selectedBusinessGroup = (this.orgID) ? this.orgID : res.bgId;
         this.disableBGDropdown = res.disabled;
       }
       
@@ -118,12 +122,18 @@ export class SettingsComponent implements OnInit {
   }
   getUserOrdID(){
     let bgOrdID:any = localStorage.getItem('selected_business_group');
+    let user = this.authService.getLoggedInUser()
+    console.log(bgOrdID)
     if(bgOrdID){
       this.orgID = bgOrdID
     }else{
-      this.orgID = this.cookieService.get('orgId');
+     if(user?.__ISSU__){
+      this.orgID = 'intelliveer'
+     }
     }
- // this.orgID = "BG1";
+    if(user?.__ISSU__){
+      this.isSuperUser = user?.__ISSU__;
+    }
   
   }
   
