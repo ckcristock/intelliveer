@@ -3,130 +3,80 @@
         <div class="two-items">
             <h6 class="heading" style="font-weight: bolder;">Referrer</h6>
             <a class="heading a-link" *ngIf="showButtonSaveCancel==false" (click)="openTextarea()">Add Script</a>
-            <div class="two-little-button" *ngIf="showButtonSaveCancel==true" >
+            <div class="two-little-button" *ngIf="showButtonSaveCancel==true">
                 <a class="heading a-link" (click)="closeSaveCancelFunc()">Save Script</a>
                 <a class="heading a-link" (click)="closeSaveCancelFunc()">Cancel</a>
             </div>
         </div>
         <div class="row formrow" style="margin-top: 11px; margin-bottom: 18px;">
-            <textarea *ngIf="openTextAreaVar==true"
-                        class="form-control"
-                        placeholder="Leave a comment here"
-                        id="floatingTextarea2"
-                        style="height: 98px; padding: 5px 10px 8px 6px; font-size: 12px; line-height : 20px; border: 2px solid #7a7a7c; font-style: oblique; resize: none;"
-                    ></textarea
-                    >
+            <textarea *ngIf="openTextAreaVar==true" class="form-control" placeholder="Leave a comment here"
+                id="floatingTextarea2"
+                style="height: 98px; padding: 5px 10px 8px 6px; font-size: 12px; line-height : 20px; border: 2px solid #7a7a7c; font-style: oblique; resize: none;"></textarea>
         </div>
         <div class="row formrow" style="margin-top: -15px;">
             <div class="col-12">
-                <div
-                    class="btn-group"
-                    role="group"
-                    aria-label="Basic radio toggle button group"
-                >
-                <div class="form-check form-check-inline">
-                    <input
-                    class="form-check-input"
-                        type="radio"
-                        name="btnradio1"
-                        id="btnradio2"
-                        autocomplete="off"
-                        checked
-                        (change)="openForm()"
-                    />
-                    <label class="form-check-label" for="btnradio2"
-                        >Add a new one</label
-                    >
-                </div>
-                <div class="form-check form-check-inline">
-                    <input
-                    class="form-check-input"
-                        type="radio"
-                        name="btnradio1"
-                        id="btnradio1"
-                        autocomplete="off"
-                        (change)="closeForm()"
-                    />
-                    <label class="form-check-label" for="btnradio1"
-                        >Same as dentist</label
-                    >
-                </div>
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="btnradio1" id="btnradio1" checked
+                            (change)="sameAsDentistFunct(true)" />
+                        <label class="form-check-label" for="btnradio1">Same as dentist</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="btnradio1" id="btnradio2"
+                            (change)="sameAsDentistFunct(false)" />
+                        <label class="form-check-label" for="btnradio2">Add a new one</label>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="row formrow" style="margin-top: 11px;" *ngIf="openFormBool==true">
+        <div class="row formrow" style="margin-top: 11px;">
             <div class="col-6">
                 <div class="mainformset">
-                    <label class="label-input-gap"
-                        >Who may we thank for referring you to our
-                        office?</label
-                    >
+                    <label class="label-input-gap">Who may we thank for referring you to our
+                        office?</label>
                     <div class="input-button">
-                        <input
-                            class="form-control"
-                            type="text"
-                            placeholder="Type Name"
-                            name=""
-                        />
+                        <input class="form-control" type="text" placeholder="Type Name" name="" 
+                        [(ngModel)]="referrer.thanksfor" [ngModelOptions]="{standalone: true}"/>
                         <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row formrow" style="margin-top: 4px;" *ngIf="openFormBool==true">
+        <div class="row formrow" style="margin-top: 4px;">
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="label-input-gap"
-                        >Company Name</label
-                    >
-                    <input
-                        class="form-control"
-                        type="text"
-                        placeholder=""
-                        name=""
-                    />
+                    <label class="label-input-gap">Company Name</label>
+                    <input class="form-control" type="text" placeholder="" name="" 
+                    [(ngModel)]="referrer.companyName" [ngModelOptions]="{standalone: true}"/>
                 </div>
             </div>
             <div class="col-3">
                 <div class="mainformset">
                     <label class="label-input-gap">First Name</label>
-                    <input
-                        class="form-control"
-                        type="text"
-                        placeholder=""
-                        name=""
-                    />
+                    <input class="form-control red-bottom-line" type="text" placeholder="" name="" 
+                    [(ngModel)]="referrer.firstName" [ngModelOptions]="{standalone: true}"/>
                 </div>
             </div>
             <div class="col-3">
                 <div class="mainformset">
                     <label class="label-input-gap">Last Name</label>
-                    <input
-                        class="form-control"
-                        type="text"
-                        placeholder=""
-                        name=""
-                    />
+                    <input class="form-control red-bottom-line" type="text" placeholder="" name="" 
+                    [(ngModel)]="referrer.lastName" [ngModelOptions]="{standalone: true}"/>
                 </div>
             </div>
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="label-input-gap"
-                        >Phone Number</label
-                    >
-                    <input
-                        class="form-control"
-                        type="text"
-                        placeholder=""
-                        name=""
-                    />
+                    <label class="label-input-gap">Phone Number</label>
+                    <input class="form-control" type="text" placeholder="" name="" 
+                    [(ngModel)]="referrer.phoneNumber" [ngModelOptions]="{standalone: true}"/>
                 </div>
             </div>
         </div>
         <div class="row formrow two-final-buttons">
             <div class="two-items">
-                <button class="btn btn-light btn-light-custom" >Exit</button>
-                <button type="button" class="btn btn-dark btn-dark-custom"  (click)="continueToInsurance()" >Save and continue</button>
+                <button class="btn btn-light btn-light-custom">Exit</button>
+                <button type="button" class="btn btn-dark btn-dark-custom" (click)="continueToInsurance()">Save and
+                    continue</button>
             </div>
         </div>
     </div>
