@@ -1,20 +1,12 @@
 <div class="row">
 	<div class="col-2">
 		<div class="settings-row">
-			<i
-				class="bi bi-arrow-left-circle"
-				style="font-size: 2rem; cursor: pointer"
-				[routerLink]="'/dashboard/settings'"
-			></i>
+			<i class="bi bi-arrow-left-circle" style="font-size: 2rem; cursor: pointer"
+				[routerLink]="'/dashboard/settings'"></i>
 			<p>Settings</p>
 		</div>
 		<ul class="ul" style="margin-top: 23px">
-			<li
-				class="pointer"
-				*ngFor="let item of menuItems"
-				routerLinkActive="active"
-				[routerLink]="item.url"
-			>
+			<li class="pointer" *ngFor="let item of menuItems" routerLinkActive="active" [routerLink]="item.url">
 				{{ item.title }}
 			</li>
 		</ul>
@@ -25,12 +17,8 @@
 				<h5><b>You haven’t added yet</b></h5>
 				<p>
 					Click here,
-					<img
-						src="assets/icons/add.svg"
-						width="36"
-						height="36"
-                        routerLink="/dashboard/settings/user-management/manage-user/add-user"
-					/>
+					<img src="assets/icons/add.svg" width="36" height="36"
+						routerLink="/dashboard/settings/user-management/manage-user/add-user" />
 					to add User
 				</p>
 			</div>
@@ -41,18 +29,11 @@
 				<!-- search -->
 				<div class="col-4">
 					<div class="input-group search_box">
-						<span
-							class="input-group-text border-0 bg-transparent"
-							id="basic-addon1"
-						>
+						<span class="input-group-text border-0 bg-transparent" id="basic-addon1">
 							<i class="bi bi-search"></i>
 						</span>
-						<input
-							type="text"
-							class="form-control border-0"
-							placeholder="Search"
-							aria-describedby="basic-addon1"
-						/>
+						<input type="text" class="form-control border-0" placeholder="Search"
+							aria-describedby="basic-addon1" />
 					</div>
 				</div>
 
@@ -65,8 +46,8 @@
 			</div>
 
 			<!-- table -->
-			<div class="mt-4" id="main">
-				<div class="row formrow">
+			<div class="mt-4" >
+				<div class="row formrow" id="main">
 					<table class="table">
 						<thead>
 							<tr>
@@ -98,47 +79,29 @@
 								</td>
 								<td *ngIf="user['roles'].length > 1">
 									{{ user['roles'][0].name }}
-									<span
-										class="redcircle"
-										triggers="mouseenter:mouseleave"
-										#p1="ngbPopover"
+									<span class="redcircle" triggers="mouseenter:mouseleave" #p1="ngbPopover"
 										(mouseover)="
 											usersPopUp(user['roles'], i)
-										"
-										[ngbPopover]="popContentArray[i]"
-									>
-										+2</span
-									>
+										" [ngbPopover]="popContentArray[i]">
+										+2</span>
 								</td>
 								<td *ngIf="user['roles'].length == 1">
 									{{ user['roles'][0].name }}
 								</td>
 								<td>{{ user?.status }}</td>
 								<td>
-									<div
-										ngbDropdown
-										container="body"
-										placement="bottom-end"
-									>
-										<i
-											class="bi bi-three-dots-vertical"
-											id="dropdownBasic"
-											ngbDropdownToggle
-										></i>
-										<ul
-											ngbDropdownMenu
-											aria-labelledby="dropdownBasic"
-										>
-											<li ngbDropdownItem>
+									<div ngbDropdown container="body" placement="bottom-end">
+										<button class="btn btn-light btn-sm more_btn" ngbDropdownToggle>
+											<i class="bi bi-three-dots-vertical"></i>
+										</button>
+										<div ngbDropdownMenu>
+											<button ngbDropdownItem>
 												Resend activation email
-											</li>
-											<li
-												(click)="gotoPersonalInfo(user)"
-												ngbDropdownItem
-											>
+											</button>
+											<button (click)="gotoPersonalInfo(user)" ngbDropdownItem>
 												Edit
-											</li>
-										</ul>
+											</button>
+										</div>
 									</div>
 								</td>
 							</tr>
