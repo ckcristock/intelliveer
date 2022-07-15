@@ -9,8 +9,13 @@
 			<span>Settings/ {{ currentRoute }} / {{ selectedBusinessGroup }}</span>
 		</div>
 		<div class="col-3" *ngIf="!onPage">
+			<div *ngIf="!isSuperUser">
+				<div *ngFor="let bg of businessGroups">
+					<input type="text" class="form-control" [value]="bg.name" readonly>
+				</div>
+			</div>
 			<select class="form-select" [(ngModel)]="selectedBusinessGroup" (change)="setBusinessGroup($event)"
-				[disabled]="disableBGDropdown">
+				[disabled]="disableBGDropdown" *ngIf="isSuperUser">
 				<option value="intelliveer" *ngIf="isSuperUser">**INTELLIVEER**</option>
 				<option *ngFor="let bg of businessGroups" [value]="bg._id" [disabled]="disableBGDropdown">
 					{{ bg.name }}
