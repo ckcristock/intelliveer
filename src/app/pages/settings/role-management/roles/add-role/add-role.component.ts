@@ -208,6 +208,7 @@ export class AddRoleComponent implements OnInit {
 			description: data.description,
 			permissions: data.permissions
 		};
+		console.log(roleObj)
 		this.alertService
 			.conformAlert('Are you sure?', 'You want to save a role')
 			.then((result: any) => {
@@ -309,7 +310,6 @@ export class AddRoleComponent implements OnInit {
 	getRoleList() {
 		this.roleService.getRoleTemplateList().subscribe(
 			(list: any) => {
-				console.log(list)
 				this.roleTemplateList = list;
 			},
 			(error) => {
