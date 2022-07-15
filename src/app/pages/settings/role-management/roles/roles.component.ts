@@ -46,6 +46,15 @@ export class RolesComponent implements OnInit {
   {
     this.roleService.getRoleListByID(bgId).subscribe((list: any) =>
     {
+      for (let i = 0; i < list.length; i++) {
+        this.roleService.getRoleTemplateById(bgId, list[i].roleTemplateId).subscribe((roleTemplateData: any) =>
+          {
+            list[i].roleTemplateName = roleTemplateData.name;
+          }, error =>
+          {
+            console.log(error);
+          })
+      }
       this.roleList = list;
     })
   }
