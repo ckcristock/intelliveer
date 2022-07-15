@@ -115,6 +115,10 @@ export class SettingsComponent implements OnInit {
     this.onboardingChilds = this.globalRoutes.getSettingsOnboardingRoutes();
     this.roleManagementchilds = this.globalRoutes.getSettingsRoleManageRoutes();
     this.userManagementchilds = this.globalRoutes.getSettingsUserManageRoutes();
+    let user = this.authService.getLoggedInUser();
+    if(!user?.__ISSU__){
+     this.menuItems[1].url = "/dashboard/settings/role-management/manage-role"
+    }
     this.menuItems[0].childs=this.onboardingChilds;
     this.menuItems[1].childs=this.roleManagementchilds;
     this.menuItems[2].childs=this.userManagementchilds;

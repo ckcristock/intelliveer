@@ -87,7 +87,7 @@
                                                         *ngIf="perm.value.locked"/>
                                                         <input type="checkbox" formControlName="enabled"  *ngIf="!perm.value.locked"/></td>
                                                     <td> <input type="hidden" formControlName="name">{{perm.value.name}}</td>
-                                                    <td><input type="checkbox" formControlName="locked" (change)="checkedLocked(perm)"/></td>
+                                                    <td><input type="checkbox" formControlName="locked"/></td>
                                                     <td><input type="checkbox" formControlName="allowOverride" *ngIf="perm.value.locked"/></td>
                                                 </tr>
                                             </tbody>
