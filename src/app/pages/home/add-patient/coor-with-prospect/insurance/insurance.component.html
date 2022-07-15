@@ -3,19 +3,14 @@
         <div class="two-items">
             <h6 class="heading" style="font-weight: bolder;">Insurance</h6>
             <a class="heading a-link" *ngIf="showButtonSaveCancel==false" (click)="openTextarea()">Add Script</a>
-            <div class="two-little-button" *ngIf="showButtonSaveCancel==true" >
+            <div class="two-little-button" *ngIf="showButtonSaveCancel==true">
                 <a class="heading a-link" (click)="closeSaveCancelFunc()">Save Script</a>
                 <a class="heading a-link" (click)="closeSaveCancelFunc()">Cancel</a>
             </div>
         </div>
         <div *ngIf="openTextAreaVar==true" class="row formrow" style="margin: 5px 1px 14px 1px;">
-            <textarea 
-                        class="form-control"
-                        placeholder="Leave a comment here"
-                        id="floatingTextarea2"
-                        style="height: 98px; padding: 5px 10px 8px 6px; font-size: 12px; line-height : 20px; border: 2px solid #7a7a7c; font-style: oblique; resize: none;"
-                    ></textarea
-                    >
+            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                style="height: 98px; padding: 5px 10px 8px 6px; font-size: 12px; line-height : 20px; border: 2px solid #7a7a7c; font-style: oblique; resize: none;"></textarea>
         </div>
         <div class="row formrow" style="margin-top: 14px;">
             <div class="col-6">
@@ -24,91 +19,39 @@
                         Is there any insurance you would like us to
                         check for you?
                     </p>
-                    <div
-                        class="btn-group"
-                        role="group"
-                        aria-label="Basic radio toggle button group"
-                    >
-                    <div class="form-check form-check-inline">
-                        <input
-                        class="form-check-input"
-                            type="radio"
-                            name="radioyesno"
-                            id="radioyesno1"
-                            autocomplete="off"
-                            checked
-                            (change)="yesfunction()"
-                        />
-                        <label class="form-check-label" for="radioyesno1"
-                            >Yes</label
-                        >
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input
-                        class="form-check-input"
-                            type="radio"
-                            name="radioyesno"
-                            id="radioyesno2"
-                            autocomplete="off"
-                            (change)="provideInsurance = false"
-                        />
-                        <label class="form-check-label" for="radioyesno2"
-                            >No</label
-                        >
-                    </div>
+                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radioyesno" id="radioyesno1"
+                                autocomplete="off" checked (change)="yesfunction()" />
+                            <label class="form-check-label" for="radioyesno1">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radioyesno" id="radioyesno2"
+                                autocomplete="off" (change)="provideInsurance = false" />
+                            <label class="form-check-label" for="radioyesno2">No</label>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-6">
                 <div class="mainformset" *ngIf="provideInsurance">
                     <p class="required">How many?</p>
-                    <div
-                        class="btn-group"
-                        role="group"
-                        aria-label="Basic radio toggle button group"
-                    >
-                    <div class="form-check form-check-inline">
-                        <input
-                        class="form-check-input"
-                            type="radio"
-                            name="radiohowmany"
-                            id="btnradio1"
-                            autocomplete="off"
-                            checked
-                            (click)="checkInsuranceCount = 1"
-                            
-                        />
-                        <label class="form-check-label" for="btnradio1"
-                            >1</label
-                        >
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input
-                        class="form-check-input"
-                            type="radio"
-                            name="radiohowmany"
-                            id="btnradio2"
-                            autocomplete="off"
-                            (click)="checkInsuranceCount = 2"
-                        />
-                        <label class="form-check-label" for="btnradio2"
-                            >2</label
-                        >
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input
-                        class="form-check-input"
-                            type="radio"
-                            name="radiohowmany"
-                            id="btnradio3"
-                            autocomplete="off"
-                            
-                            (click)="checkInsuranceCount = 3"
-                        />
-                        <label class="form-check-label" for="btnradio3"
-                            >3</label
-                        >
-                    </div>
+                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radiohowmany" id="btnradio1"
+                                autocomplete="off" checked (click)="checkInsuranceCount = 1" />
+                            <label class="form-check-label" for="btnradio1">1</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radiohowmany" id="btnradio2"
+                                autocomplete="off" (click)="checkInsuranceCount = 2" />
+                            <label class="form-check-label" for="btnradio2">2</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radiohowmany" id="btnradio3"
+                                autocomplete="off" (click)="checkInsuranceCount = 3" />
+                            <label class="form-check-label" for="btnradio3">3</label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -116,23 +59,17 @@
 
         <hr *ngIf="provideInsurance" style="position: relative; top: 29px; height: 1px;">
         <div class="row formrow" *ngIf="provideInsurance" style="margin-top: -15px;">
-            <ul  ngbNav #nav="ngbNav" class="nav-pills" [(activeId)]="active" (navChange)="onNavChange($event)">
+            <ul ngbNav #nav="ngbNav" class="nav-pills" [(activeId)]="active" (navChange)="onNavChange($event)">
                 <li [ngbNavItem]="1">
-                    <a ngbNavLink *ngIf="checkInsuranceCount == 1 || checkInsuranceCount > 1" class="tabs">Insurance 1</a>
+                    <a ngbNavLink *ngIf="checkInsuranceCount == 1 || checkInsuranceCount > 1" class="tabs">Insurance
+                        1</a>
                     <ng-template ngbNavContent>
                         <div class="row formrow" style="margin-top: 22px;">
                             <div class="col-6">
                                 <div class="mainformset">
-                                    <label class="label-input-gap"
-                                        >Search Insurance</label
-                                    >
+                                    <label class="label-input-gap">Search Insurance</label>
                                     <div class="input-button">
-                                        <input
-                                            class="form-control"
-                                            type="text"
-                                            placeholder="Type Name"
-                                            name=""
-                                        />
+                                        <input class="form-control" type="text" placeholder="Type Name" name="" />
                                         <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
                                     </div>
                                 </div>
@@ -141,96 +78,52 @@
                         <div class="row formrow" style="margin-top: 5px;">
                             <div class="col-4">
                                 <div class="mainformset">
-                                    <label class="label-input-gap"
-                                        >Name of Insurance</label
-                                    >
-                                    <input
-                                        class="form-control"
-                                        type="text"
-                                        placeholder=""
-                                        name=""
-                                    />
+                                    <label class="label-input-gap">Name of Insurance</label>
+                                    <input class="form-control" type="text" placeholder="" name="" />
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="mainformset">
-                                    <label class="label-input-gap"
-                                        >Phone</label
-                                    >
-                                    <input
-                                        class="form-control"
-                                        type="text"
-                                        placeholder=""
-                                        name=""
-                                    />
+                                    <label class="label-input-gap">Phone</label>
+                                    <input class="form-control" type="text" placeholder="" name="" />
                                 </div>
                             </div>
                         </div>
                         <!-- Subscriber radios -->
-                        <div class="row formrow">
+                        <div class="row formrow" style="margin-top: 31px;">
                             <div class="mainformset">
-                                <h6 class="heading subti-radio-b">Subscriber</h6>
-                                <div
-                                    class="btn-group radios"
-                                    role="group"
-                                    aria-label="Basic radio toggle button group"
-                                    style="margin-top: -2px;"
-                                >
-                                <div class="subscriber-divs">
-                                    <input
-                                    class="form-check-input"
-                                        type="radio"
-                                        name="subscriRadio"
-                                        id="subscriRadio1"
-                                        autocomplete="off"
-                                        checked
-                                    />
-                                    <label class="form-check-label subscriber-labels" for="subscriRadio1"
-                                        >Use existing one</label
-                                    >
-                                </div>
-                                <div class="subscriber-divs">
-                                    <input
-                                    class="form-check-input"
-                                        type="radio"
-                                        name="subscriRadio"
-                                        id="subscriRadio2"
-                                        autocomplete="off"
-                                    />
-                                    <label class="form-check-label subscriber-labels" for="subscriRadio2"
-                                        >Same as patient</label
-                                    >
-                                </div>
-                                <div class="subscriber-divs">
-                                    <input
-                                    class="form-check-input"
-                                        type="radio"
-                                        name="subscriRadio"
-                                        id="subscriRadio3"
-                                        autocomplete="off"
-                                    />
-                                    <label class="form-check-label subscriber-labels" for="subscriRadio3"
-                                        >Same as legal guardian</label
-                                    >
-                                </div>
+                                <h6 class="heading formrow" style="font-size: 12px;color: black;">Subscriber</h6>
+                                <div class="btn-group radios" role="group" aria-label="Basic radio toggle button group"
+                                    style="margin-top: -2px;">
+                                    <div class="subscriber-divs">
+                                        <input class="form-check-input" type="radio" name="subscriRadio"
+                                            id="subscriRadio1" (change)="subscriberRadios(1)" checked />
+                                        <label class="form-check-label subscriber-labels" for="subscriRadio1">Search/Add
+                                            new one</label>
+                                    </div>
+                                    <div class="subscriber-divs">
+                                        <input class="form-check-input" type="radio" name="subscriRadio"
+                                            id="subscriRadio2" (change)="subscriberRadios(2)" />
+                                        <label class="form-check-label subscriber-labels" for="subscriRadio2">Same as
+                                            patient</label>
+                                    </div>
+                                    <div class="subscriber-divs">
+                                        <input class="form-check-input" type="radio" name="subscriRadio"
+                                            id="subscriRadio3" (change)="subscriberRadios(3)" />
+                                        <label class="form-check-label subscriber-labels" for="subscriRadio3">Same as
+                                            legal guardian</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Subscriber textbox and button -->
-                        <div class="row formrow"  style="margin-top: 3px;">
+                        <div class="row formrow" *ngIf="subscriberRadio == 1" style="margin-top: 3px;">
                             <div class="col-6">
                                 <div class="mainformset">
-                                    <label class="label-input-gap"
-                                        >Search Insurance</label
-                                    >
+                                    <label class="label-input-gap">Search Subscriber</label>
                                     <div class="input-button">
-                                        <input
-                                            class="form-control"
-                                            type="text"
-                                            placeholder="Type Name"
-                                            name=""
-                                        />
+                                        <input class="form-control" type="text" placeholder="Type Name" name="" />
                                         <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
                                     </div>
                                 </div>
@@ -241,36 +134,22 @@
                         <div class="row formrow" style="margin-top: 5px;">
                             <div class="twenty">
                                 <div class="mainformset">
-                                    <label class="label-input-gap"
-                                        >Name of Insurance</label
-                                    >
+                                    <label class="label-input-gap">Subscriber's First Name</label>
 
-                                    <input
-                                        class="form-control"
-                                        type="text"
-                                        placeholder=""
-                                        name=""
-                                    />
+                                    <input class="form-control" type="text" placeholder="" name=""
+                                        [(ngModel)]="subscriber.firstName" [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                             <div class="twenty">
                                 <div class="mainformset">
-                                    <label class="label-input-gap"
-                                        >Subscriber’s Last Name</label
-                                    >
-                                    <input
-                                        class="form-control"
-                                        type="text"
-                                        placeholder=""
-                                        name=""
-                                    />
+                                    <label class="label-input-gap">Subscriber’s Last Name</label>
+                                    <input class="form-control" type="text" placeholder="" name=""
+                                        [(ngModel)]="subscriber.lastName" [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                             <div class="twenty">
                                 <div class="mainformset">
-                                    <label class="label-input-gap"
-                                        >Relationship</label
-                                    >
+                                    <label class="label-input-gap">Relationship with Patient</label>
                                     <ng-select placeholder="Select">
                                         <ng-option>Select</ng-option>
                                     </ng-select>
@@ -279,23 +158,14 @@
                             <div class="twenty">
                                 <div class="mainformset">
                                     <label class="label-input-gap">DOB</label>
-                                    <input
-                                        class="form-control"
-                                        type="text"
-                                        placeholder=""
-                                        name=""
-                                    />
+                                    <input class="form-control" type="date" placeholder="" name=""
+                                        />
                                 </div>
                             </div>
                             <div class="twenty">
                                 <div class="mainformset">
                                     <label class="label-input-gap">SSN/ID</label>
-                                    <input
-                                        class="form-control"
-                                        type="text"
-                                        placeholder=""
-                                        name=""
-                                    />
+                                    <input class="form-control" type="text" placeholder="" name="" />
                                 </div>
                             </div>
                         </div>
@@ -307,16 +177,9 @@
                         <div class="row formrow" style="margin-top: 22px;">
                             <div class="col-6">
                                 <div class="mainformset">
-                                    <label class=" pb-1"
-                                        >Search Insurance</label
-                                    >
+                                    <label class=" pb-1">Search Insurance</label>
                                     <div class="input-button">
-                                        <input
-                                            class="form-control"
-                                            type="text"
-                                            placeholder="Type Name"
-                                            name=""
-                                        />
+                                        <input class="form-control" type="text" placeholder="Type Name" name="" />
                                         <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
                                     </div>
                                 </div>
@@ -325,28 +188,14 @@
                         <div class="row formrow" style="margin-top: 5px;">
                             <div class="col-4">
                                 <div class="mainformset">
-                                    <label class="label-input-gap"
-                                        >Name of Insurance</label
-                                    >
-                                    <input
-                                        class="form-control"
-                                        type="text"
-                                        placeholder=""
-                                        name=""
-                                    />
+                                    <label class="label-input-gap">Name of Insurance</label>
+                                    <input class="form-control" type="text" placeholder="" name="" />
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="mainformset">
-                                    <label class="label-input-gap"
-                                        >Phone</label
-                                    >
-                                    <input
-                                        class="form-control"
-                                        type="text"
-                                        placeholder=""
-                                        name=""
-                                    />
+                                    <label class="label-input-gap">Phone</label>
+                                    <input class="form-control" type="text" placeholder="" name="" />
                                 </div>
                             </div>
                         </div>
@@ -354,67 +203,37 @@
                         <div class="row formrow">
                             <div class="mainformset">
                                 <h6 class="heading subti-radio-b">Subscriber</h6>
-                                <div
-                                    class="btn-group radios"
-                                    role="group"
-                                    aria-label="Basic radio toggle button group"
-                                    style="margin-top: -2px;"
-                                >
-                                <div class="subscriber-divs">
-                                    <input
-                                    class="form-check-input"
-                                        type="radio"
-                                        name="subscriRadio"
-                                        id="subscriRadio1"
-                                        autocomplete="off"
-                                        checked
-                                    />
-                                    <label class="form-check-label subscriber-labels" for="subscriRadio1"
-                                        >Use existing one</label
-                                    >
-                                </div>
-                                <div class="subscriber-divs">
-                                    <input
-                                    class="form-check-input"
-                                        type="radio"
-                                        name="subscriRadio"
-                                        id="subscriRadio2"
-                                        autocomplete="off"
-                                    />
-                                    <label class="form-check-label subscriber-labels" for="subscriRadio2"
-                                        >Same as patient</label
-                                    >
-                                </div>
-                                <div class="subscriber-divs">
-                                    <input
-                                    class="form-check-input"
-                                        type="radio"
-                                        name="subscriRadio"
-                                        id="subscriRadio3"
-                                        autocomplete="off"
-                                    />
-                                    <label class="form-check-label subscriber-labels" for="subscriRadio3"
-                                        >Same as legal guardian</label
-                                    >
-                                </div>
+                                <div class="btn-group radios" role="group" aria-label="Basic radio toggle button group"
+                                    style="margin-top: -2px;">
+                                    <div class="subscriber-divs">
+                                        <input class="form-check-input" type="radio" name="subscriRadio"
+                                            id="subscriRadio1" autocomplete="off" checked />
+                                        <label class="form-check-label subscriber-labels" for="subscriRadio1">Use
+                                            existing one</label>
+                                    </div>
+                                    <div class="subscriber-divs">
+                                        <input class="form-check-input" type="radio" name="subscriRadio"
+                                            id="subscriRadio2" autocomplete="off" />
+                                        <label class="form-check-label subscriber-labels" for="subscriRadio2">Same as
+                                            patient</label>
+                                    </div>
+                                    <div class="subscriber-divs">
+                                        <input class="form-check-input" type="radio" name="subscriRadio"
+                                            id="subscriRadio3" autocomplete="off" />
+                                        <label class="form-check-label subscriber-labels" for="subscriRadio3">Same as
+                                            legal guardian</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Subscriber textbox and button -->
-                        <div class="row formrow"  style="margin-top: 3px;">
+                        <div class="row formrow" style="margin-top: 3px;">
                             <div class="col-6">
                                 <div class="mainformset">
-                                    <label class="label-input-gap"
-                                        >Search Insurance</label
-                                    >
+                                    <label class="label-input-gap">Search Insurance</label>
                                     <div class="input-button">
-                                        <input
-                                            class="form-control"
-                                            type="text"
-                                            placeholder="Type Name"
-                                            name=""
-                                        />
+                                        <input class="form-control" type="text" placeholder="Type Name" name="" />
                                         <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
                                     </div>
                                 </div>
@@ -425,36 +244,20 @@
                         <div class="row formrow" style="margin-top: 5px;">
                             <div class="twenty">
                                 <div class="mainformset">
-                                    <label class="required"
-                                        >Name of Insurance</label
-                                    >
+                                    <label class="required">Name of Insurance</label>
 
-                                    <input
-                                        class="form-control"
-                                        type="text"
-                                        placeholder=""
-                                        name=""
-                                    />
+                                    <input class="form-control" type="text" placeholder="" name="" />
                                 </div>
                             </div>
                             <div class="twenty">
                                 <div class="mainformset">
-                                    <label class="label-input-gap"
-                                        >Subscriber’s Last Name</label
-                                    >
-                                    <input
-                                        class="form-control"
-                                        type="text"
-                                        placeholder=""
-                                        name=""
-                                    />
+                                    <label class="label-input-gap">Subscriber’s Last Name</label>
+                                    <input class="form-control" type="text" placeholder="" name="" />
                                 </div>
                             </div>
                             <div class="twenty">
                                 <div class="mainformset">
-                                    <label class="label-input-gap"
-                                        >Relationship</label
-                                    >
+                                    <label class="label-input-gap">Relationship</label>
                                     <ng-select placeholder="Select">
                                         <ng-option>Select</ng-option>
                                     </ng-select>
@@ -463,23 +266,13 @@
                             <div class="twenty">
                                 <div class="mainformset">
                                     <label class="label-input-gap">DOB</label>
-                                    <input
-                                        class="form-control"
-                                        type="text"
-                                        placeholder=""
-                                        name=""
-                                    />
+                                    <input class="form-control" type="text" placeholder="" name="" />
                                 </div>
                             </div>
                             <div class="twenty">
                                 <div class="mainformset">
                                     <label class="required">SSN/ID</label>
-                                    <input
-                                        class="form-control"
-                                        type="text"
-                                        placeholder=""
-                                        name=""
-                                    />
+                                    <input class="form-control" type="text" placeholder="" name="" />
                                 </div>
                             </div>
                         </div>
@@ -491,16 +284,9 @@
                         <div class="row formrow" style="margin-top: 22px;">
                             <div class="col-6">
                                 <div class="mainformset">
-                                    <label class="label-input-gap"
-                                        >Search Insurance</label
-                                    >
+                                    <label class="label-input-gap">Search Insurance</label>
                                     <div class="input-button">
-                                        <input
-                                            class="form-control"
-                                            type="text"
-                                            placeholder="Type Name"
-                                            name=""
-                                        />
+                                        <input class="form-control" type="text" placeholder="Type Name" name="" />
                                         <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
                                     </div>
                                 </div>
@@ -509,28 +295,14 @@
                         <div class="row formrow" style="margin-top: 5px;">
                             <div class="col-4">
                                 <div class="mainformset">
-                                    <label class="label-input-gap"
-                                        >Name of Insurance</label
-                                    >
-                                    <input
-                                        class="form-control"
-                                        type="text"
-                                        placeholder=""
-                                        name=""
-                                    />
+                                    <label class="label-input-gap">Name of Insurance</label>
+                                    <input class="form-control" type="text" placeholder="" name="" />
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="mainformset">
-                                    <label class="label-input-gap"
-                                        >Phone</label
-                                    >
-                                    <input
-                                        class="form-control"
-                                        type="text"
-                                        placeholder=""
-                                        name=""
-                                    />
+                                    <label class="label-input-gap">Phone</label>
+                                    <input class="form-control" type="text" placeholder="" name="" />
                                 </div>
                             </div>
                         </div>
@@ -538,67 +310,37 @@
                         <div class="row formrow">
                             <div class="mainformset">
                                 <h6 class="heading subti-radio-b">Subscriber</h6>
-                                <div
-                                    class="btn-group radios"
-                                    role="group"
-                                    aria-label="Basic radio toggle button group"
-                                    style="margin-top: -2px;"
-                                >
-                                <div class="subscriber-divs">
-                                    <input
-                                    class="form-check-input"
-                                        type="radio"
-                                        name="subscriRadio"
-                                        id="subscriRadio1"
-                                        autocomplete="off"
-                                        checked
-                                    />
-                                    <label class="form-check-label subscriber-labels" for="subscriRadio1"
-                                        >Use existing one</label
-                                    >
-                                </div>
-                                <div class="subscriber-divs">
-                                    <input
-                                    class="form-check-input"
-                                        type="radio"
-                                        name="subscriRadio"
-                                        id="subscriRadio2"
-                                        autocomplete="off"
-                                    />
-                                    <label class="form-check-label subscriber-labels" for="subscriRadio2"
-                                        >Same as patient</label
-                                    >
-                                </div>
-                                <div class="subscriber-divs">
-                                    <input
-                                    class="form-check-input"
-                                        type="radio"
-                                        name="subscriRadio"
-                                        id="subscriRadio3"
-                                        autocomplete="off"
-                                    />
-                                    <label class="form-check-label subscriber-labels" for="subscriRadio3"
-                                        >Same as legal guardian</label
-                                    >
-                                </div>
+                                <div class="btn-group radios" role="group" aria-label="Basic radio toggle button group"
+                                    style="margin-top: -2px;">
+                                    <div class="subscriber-divs">
+                                        <input class="form-check-input" type="radio" name="subscriRadio"
+                                            id="subscriRadio1" autocomplete="off" checked />
+                                        <label class="form-check-label subscriber-labels" for="subscriRadio1">Use
+                                            existing one</label>
+                                    </div>
+                                    <div class="subscriber-divs">
+                                        <input class="form-check-input" type="radio" name="subscriRadio"
+                                            id="subscriRadio2" autocomplete="off" />
+                                        <label class="form-check-label subscriber-labels" for="subscriRadio2">Same as
+                                            patient</label>
+                                    </div>
+                                    <div class="subscriber-divs">
+                                        <input class="form-check-input" type="radio" name="subscriRadio"
+                                            id="subscriRadio3" autocomplete="off" />
+                                        <label class="form-check-label subscriber-labels" for="subscriRadio3">Same as
+                                            legal guardian</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Subscriber textbox and button -->
-                        <div class="row formrow"  style="margin-top: 3px;">
+                        <div class="row formrow" style="margin-top: 3px;">
                             <div class="col-6">
                                 <div class="mainformset">
-                                    <label class="label-input-gap"
-                                        >Search Insurance</label
-                                    >
+                                    <label class="label-input-gap">Search Insurance</label>
                                     <div class="input-button">
-                                        <input
-                                            class="form-control"
-                                            type="text"
-                                            placeholder="Type Name"
-                                            name=""
-                                        />
+                                        <input class="form-control" type="text" placeholder="Type Name" name="" />
                                         <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
                                     </div>
                                 </div>
@@ -609,36 +351,20 @@
                         <div class="row formrow" style="margin-top: 5px;">
                             <div class="twenty">
                                 <div class="mainformset">
-                                    <label class="required"
-                                        >Name of Insurance</label
-                                    >
+                                    <label class="required">Name of Insurance</label>
 
-                                    <input
-                                        class="form-control"
-                                        type="text"
-                                        placeholder=""
-                                        name=""
-                                    />
+                                    <input class="form-control" type="text" placeholder="" name="" />
                                 </div>
                             </div>
                             <div class="twenty">
                                 <div class="mainformset">
-                                    <label class="label-input-gap"
-                                        >Subscriber’s Last Name</label
-                                    >
-                                    <input
-                                        class="form-control"
-                                        type="text"
-                                        placeholder=""
-                                        name=""
-                                    />
+                                    <label class="label-input-gap">Subscriber’s Last Name</label>
+                                    <input class="form-control" type="text" placeholder="" name="" />
                                 </div>
                             </div>
                             <div class="twenty">
                                 <div class="mainformset">
-                                    <label class="label-input-gap"
-                                        >Relationship</label
-                                    >
+                                    <label class="label-input-gap">Relationship</label>
                                     <ng-select placeholder="Select">
                                         <ng-option>Select</ng-option>
                                     </ng-select>
@@ -647,23 +373,13 @@
                             <div class="twenty">
                                 <div class="mainformset">
                                     <label class="label-input-gap">DOB</label>
-                                    <input
-                                        class="form-control"
-                                        type="text"
-                                        placeholder=""
-                                        name=""
-                                    />
+                                    <input class="form-control" type="text" placeholder="" name="" />
                                 </div>
                             </div>
                             <div class="twenty">
                                 <div class="mainformset">
                                     <label class="required">SSN/ID</label>
-                                    <input
-                                        class="form-control"
-                                        type="text"
-                                        placeholder=""
-                                        name=""
-                                    />
+                                    <input class="form-control" type="text" placeholder="" name="" />
                                 </div>
                             </div>
                         </div>
@@ -673,19 +389,27 @@
             <div [ngbNavOutlet]="nav" class="mt-2"></div>
             <div class="two-final-buttons" style="margin-top: 56px !important;">
                 <div class="two-items">
-                    <button class="btn btn-light btn-light-custom" >Exit</button>
-                    <button type="button" class="btn btn-dark btn-dark-custom" *ngIf="active==1 && checkInsuranceCount>1"  (click)="nav.select(2)" >Next</button>
-                    <button type="button" class="btn btn-dark btn-dark-custom" *ngIf="active==1  && checkInsuranceCount==1" (click)="continueToFamilyMemb()" >Save and continue</button>
-                    <button type="button" class="btn btn-dark btn-dark-custom" *ngIf="active==2 && checkInsuranceCount==3" (click)="nav.select(3)" >Next</button>
-                    <button type="button" class="btn btn-dark btn-dark-custom" *ngIf="active==2  && checkInsuranceCount==2" (click)="continueToFamilyMemb()" >Save and continue</button>
-                    <button type="button" class="btn btn-dark btn-dark-custom" *ngIf="active==3" (click)="continueToFamilyMemb()" >Save and continue</button>
+                    <button class="btn btn-light btn-light-custom">Exit</button>
+                    <button type="button" class="btn btn-dark btn-dark-custom"
+                        *ngIf="active==1 && checkInsuranceCount>1" (click)="nav.select(2)">Next</button>
+                    <button type="button" class="btn btn-dark btn-dark-custom"
+                        *ngIf="active==1  && checkInsuranceCount==1" (click)="continueToFamilyMemb()">Save and
+                        continue</button>
+                    <button type="button" class="btn btn-dark btn-dark-custom"
+                        *ngIf="active==2 && checkInsuranceCount==3" (click)="nav.select(3)">Next</button>
+                    <button type="button" class="btn btn-dark btn-dark-custom"
+                        *ngIf="active==2  && checkInsuranceCount==2" (click)="continueToFamilyMemb()">Save and
+                        continue</button>
+                    <button type="button" class="btn btn-dark btn-dark-custom" *ngIf="active==3"
+                        (click)="continueToFamilyMemb()">Save and continue</button>
                 </div>
             </div>
         </div>
         <div class="two-final-buttons" *ngIf="!provideInsurance" style="margin-top: 61px !important;">
             <div class="two-items">
-                <button class="btn btn-light btn-light-custom" >Exit</button>
-                <button type="button" class="btn btn-dark btn-dark-custom" (click)="continueToFamilyMemb()" >Save and continue</button>
+                <button class="btn btn-light btn-light-custom">Exit</button>
+                <button type="button" class="btn btn-dark btn-dark-custom" (click)="continueToFamilyMemb()">Save and
+                    continue</button>
             </div>
         </div>
     </div>

@@ -54,6 +54,29 @@ export class PaymentOptionsComponent implements OnInit {
     },
   ];
 
+  minDownPayms: any[] = [
+    {
+      subtitle: '',
+      content: '',
+      type: "dropdown"
+    },
+    {
+      subtitle: 'Min. Down Payment',
+      content: '$500',
+      type: ""
+    },
+    {
+      subtitle: "Max. Number of Installments",
+      content: '22',
+      type: ""
+    },
+    {
+      subtitle: "Monthly Installments",
+      content: '$250',
+      type: ""
+    },
+  ];
+
   constructor() { }
 
   ngOnInit(): void {
@@ -63,5 +86,13 @@ export class PaymentOptionsComponent implements OnInit {
 	}
 	cancel() {
 	}
+
+  checkOdd(i: number){
+    if (i % 2 == 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
 }

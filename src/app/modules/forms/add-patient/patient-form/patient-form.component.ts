@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { addPatientCordinateMenuItems, addPatientQuickMenuItems } from '@pages/home/add-patient/menu';
+import { AddPatientService } from '@services/add-patient/add-patient.service';
 
 @Component({
   selector: 'app-patient-form',
@@ -11,28 +12,62 @@ import { addPatientCordinateMenuItems, addPatientQuickMenuItems } from '@pages/h
 })
 export class PatientFormComponent implements OnInit {
 
+  callersInfo: any = {
+    phoneNumber: "",
+    firstName: "",
+    lastName: "",
+    callerSelfPatient: true,
+  };
+  patient: any = {
+    practice: "",
+    firstName: "",
+    lastName: "",
+    dateBirth: "",
+    gender: "",
+  };
+  patientArray: any = {
+    practice: "",
+    firstName: "",
+    lastName: "",
+    dateBirth: "",
+    gender: "",
+  };
   menuItemsOfCordinate: IMenuItem[] = addPatientCordinateMenuItems;
   menuItemsOfQuickAdd: IMenuItem[] = addPatientQuickMenuItems;
   Form!: FormGroup;
   @Input() formData: any | undefined = undefined;
   @Input() tab: string = "";
-  showButtonSaveCancel:boolean = false;
-  openTextAreaVar:boolean = false;
+  showButtonSaveCancel: boolean = false;
+  openTextAreaVar: boolean = false;
 
-  constructor(private router: Router, private fb: FormBuilder,) { }
+  constructor(private router: Router,
+    private fb: FormBuilder,
+    private addPatientServ: AddPatientService,) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.patientArray = await this.addPatientServ.getPatientCWP();
+    if (this.patientArray != null) {
+      this.patient.firstName = this.patientArray.firstName;
+      this.patient.lastName = this.patientArray.lastName;
+    }
+
+    this.callersInfo = await this.addPatientServ.getCallerInfoCWP();
+    if (this.callersInfo.callerSelfPatient == true) {
+      this.patient.firstName = this.callersInfo.firstName;
+      this.patient.lastName = this.callersInfo.lastName;
+    }
     this.initForm(this.formData);
   }
 
-  continueToLegalGuar(){
-    if(this.tab=="coordWithProspect"){
+  continueToLegalGuar() {
+    if (this.tab == "coordWithProspect") {
+      this.addPatientServ.setPatientCWP(this.patient);
       let visitedArray: any = JSON.parse(localStorage.getItem("visitedArray") || '[]');
       visitedArray.push("Patient");
       localStorage.setItem("visitedArray", JSON.stringify(visitedArray));
       this.router.navigate([this.menuItemsOfCordinate[2].url]);
 
-    } else if(this.tab=="quickAdd"){
+    } else if (this.tab == "quickAdd") {
       let visitedArrayQuick: any = JSON.parse(localStorage.getItem("visitedArrayQuick") || '[]');
       visitedArrayQuick.push("Patient");
       localStorage.setItem("visitedArrayQuick", JSON.stringify(visitedArrayQuick));
@@ -40,7 +75,7 @@ export class PatientFormComponent implements OnInit {
     }
   }
 
-  
+
   initForm(data?: any) {
     data = data || {};
     this.Form = this.fb.group({
@@ -52,21 +87,20 @@ export class PatientFormComponent implements OnInit {
     });
   }
 
-  save(data: any)
-  {
+  save(data: any) {
     console.log(data);
   }
 
-  showButtonSaveCancelFunc(){
+  showButtonSaveCancelFunc() {
     this.showButtonSaveCancel = true;
   }
 
-  closeSaveCancelFunc(){
+  closeSaveCancelFunc() {
     this.openTextAreaVar = false;
     this.showButtonSaveCancel = false;
   }
 
-  openTextarea(){
+  openTextarea() {
     this.openTextAreaVar = true;
     this.showButtonSaveCancel = true;
   }
