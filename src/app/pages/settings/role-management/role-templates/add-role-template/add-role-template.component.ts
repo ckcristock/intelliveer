@@ -187,12 +187,7 @@ export class AddRoleTemplateComponent implements OnInit {
     this._ngZone.run(() => { 
       setTimeout(() => {
       this.rolesUserServ.singleRoleTemplate(ID).subscribe(res=>{
-          this.roleTemplateForm.patchValue(res);
-          if(this.roleTemplateForm.value.businessGroups.length == 0){
-            this.isTypeSpecific = false;
-          }else{
-            this.isTypeSpecific = true;
-          }
+        this.setPermissionWithTemplateId(res);
       })
     }, 500)
     })
@@ -202,25 +197,12 @@ export class AddRoleTemplateComponent implements OnInit {
 
   getRolePermissions(){
     this.rolesUserServ.getRoleTemplateMeta().subscribe(res=>{
+      localStorage.removeItem('permissions');
       this.allRolePermissionsMeta = res;
-      this.allRolePermissionsMeta.forEach((section:any) => {
-        const formGroup = this.newModule();
-        section.permissions.forEach((element:any) => {
-          const formGroupFirst = this.newSections();
-          element.permissions.forEach((perm:any) =>{
-            const formGroupSecond = this.newPermissions();
-            formGroupSecond.patchValue({name: perm.name, enabled: false, locked: false, allowOverride: false});
-            this.permissionArray().push(formGroupSecond);           
-          })
-          formGroupFirst.patchValue({section:element.section});
-          this.sectionsArray().push(formGroupFirst)
-        });
-        formGroup.patchValue({module:section.name})
-        this.moduleArray().push(formGroup)
-      });
+      localStorage.setItem('permissions',JSON.stringify(res));
+      this.getAllPermissions(this.allRolePermissionsMeta)
       
     })
-    console.log(this.roleTemplateForm)
   }
   
  /** Bussines groups list */
@@ -244,5 +226,164 @@ export class AddRoleTemplateComponent implements OnInit {
     this.isTypeSpecific = false;
     this.roleTemplateForm.patchValue({businessGroups: ''})
    }
+  }
+/** Search for Permissions */
+  searchPermission(event:any){
+    let searchKey = event.target.value;
+    let data:any = localStorage.getItem('permissions');
+    let permissions =JSON.parse(data);
+    console.log(permissions)
+    if(searchKey.length < 3){
+      if(searchKey.length == 2){
+       this.setSearchPermissions(permissions)
+      }
+      return
+    }
+   if(this.getRolesID){
+    permissions.forEach((per:any,i:any) => {
+      per.sections.forEach((element:any,index:any) => {
+            let resultArray = element.permissions.filter((s:any) => s.name.toString()
+            .toLowerCase()
+            .includes(searchKey.toLowerCase()));
+            element.permissions = resultArray;
+            console.log(element.permissions)
+            if(resultArray.length == 0){
+             delete per.sections[index]
+            }
+            if((per.sections.length-1) == index){
+              if(permissions[i].sections[0]){
+                console.log(permissions[i].sections)
+              }else{
+                delete permissions[i]
+              }
+            }
+        });
+      });
+   }else{
+    permissions.forEach((per:any,i:any) => {
+      per.permissions.forEach((element:any,index:any) => {
+            let resultArray = element.permissions.filter((s:any) => s.name.toString()
+            .toLowerCase()
+            .includes(searchKey.toLowerCase()));
+            element.permissions = resultArray;
+            if(resultArray.length == 0){
+             delete per.permissions[index]
+            }
+            if((per.permissions.length-1) == index){
+              if(permissions[i].permissions[0]){
+                console.log(permissions[i].permissions)
+              }else{
+                delete permissions[i]
+              }
+            }
+        });
+      });
+   }
+    console.log(permissions)
+    this.setSearchPermissions(permissions)
+
+  }
+/** New set Permissions */
+  setSearchPermissions(permissions:any){
+    this.roleTemplateForm.reset(this.roleTemplateForm.value);
+    this.moduleArray().clear();
+    this.sectionsArray().clear()
+    this.permissionArray().clear()
+    if(this.getRolesID){
+      this.getAllPermissionsEditTemplateRole(permissions);
+    }else{
+      this.getAllPermissionsWithOutTemplatID(permissions);
+    }
+    // this.roleTemplateForm.patchValue({
+    //   permissions: permissions
+    // })
+  }
+  /**Get all Permissions */
+  getAllPermissions(data:any){
+    if(!this.getRolesID){
+      this.getAllPermissionsWithOutTemplatID(data)
+    }
+  }
+  /** Get All modules and permission without ID */
+  getAllPermissionsWithOutTemplatID(data:any){
+    data.forEach((section:any) => {
+      const formGroup = this.newModule();
+      section.permissions.forEach((element:any) => {
+        const formGroupFirst = this.newSections();
+        element.permissions.forEach((perm:any) =>{
+          const formGroupSecond = this.newPermissions();
+          formGroupSecond.patchValue({name: perm.name, enabled: false, locked: false, allowOverride: false});
+          this.permissionArray().push(formGroupSecond);
+        })
+        formGroupFirst.patchValue({section:element.section});
+        this.sectionsArray().push(formGroupFirst)
+      });
+      formGroup.patchValue({module:section.name})
+      this.moduleArray().push(formGroup)
+    });
+  }
+  /** Get All Modules search When role template edit mode */
+  getAllPermissionsEditTemplateRole(data:any){
+    data.forEach((section:any) => {
+      const formGroup = this.newModule();
+      section.sections.forEach((elem:any) => {
+        console.log(elem,elem.section)
+        const formGroupFirst = this.newSections();
+        elem.permissions.forEach((perm:any) =>{
+          const formGroupSecond = this.newPermissions();
+          formGroupSecond.patchValue({name: perm.name, enabled: perm.enabled, locked: perm.locked, allowOverride: perm.allowOverride});
+          this.permissionArray().push(formGroupSecond);
+        })
+        formGroupFirst.patchValue({section: elem.section});
+        this.sectionsArray().push(formGroupFirst)
+      });
+      formGroup.patchValue({module:section.module})
+      this.moduleArray().push(formGroup)
+    });
+    console.log(this.roleTemplateForm.value)
+  }
+   /** Get All modules and permission with ID */
+  getAllPermissionsTemplateID(data:any,permissionsObj?:any){
+    localStorage.removeItem('permissions');
+    data.forEach((section:any) => {
+      const formGroup = this.newModule();
+      section.permissions.forEach((element:any) => {
+        const formGroupFirst = this.newSections();
+        element.permissions.forEach((perm:any) =>{
+          let formGroupSecond = this.newPermissions();
+          const permOBJ = permissionsObj.find((name:any) => name.name == perm.name);
+          if(permOBJ){
+            formGroupSecond.patchValue({name: permOBJ.name, enabled: permOBJ.enabled, locked: permOBJ.locked, allowOverride: permOBJ.allowOverride});
+          }else{
+            formGroupSecond.patchValue({name: perm.name, enabled: false, locked: false, allowOverride: false});
+          }
+          this.permissionArray().push(formGroupSecond);
+        })
+        formGroupFirst.patchValue({section:element.section});
+        this.sectionsArray().push(formGroupFirst)
+      });
+      formGroup.patchValue({module:section.name})
+      this.moduleArray().push(formGroup)
+    });
+    localStorage.setItem('permissions',JSON.stringify(this.roleTemplateForm.value.permissions));
+  }
+  setPermissionWithTemplateId(data:any){
+    let allPermissions:any = localStorage.getItem('permissions');
+    let permissions =JSON.parse(allPermissions);
+    let permissionsObj:Array<any> = [];
+    data.permissions.forEach((element:any) => {
+      element.sections.forEach((sec:any)=> {
+        sec.permissions.forEach((perms:any)=> {
+          permissionsObj.push(perms);
+        })
+      });
+    });
+    this.getAllPermissionsTemplateID(permissions,permissionsObj);
+    this.roleTemplateForm.patchValue({name:data.name,description:data.description,businessGroups:data.businessGroups,type: data.type });
+    if(this.roleTemplateForm.value.businessGroups.length == 0){
+      this.isTypeSpecific = false;
+    }else{
+      this.isTypeSpecific = true;
+    }
   }
 }

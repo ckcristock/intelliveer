@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { AlertService } from '@services/alert/alert.service';
 import { AuthService } from '@services/auth/auth.service';
 import {
 	BusinessGroupDropdownService,
@@ -25,11 +26,14 @@ export class ManageUserComponent implements OnInit {
 	urlSettings!: string;
 	menuItems: any[] = [{ title: '', url: '' }];
 	businessGroupDropdownSupscription: any;
+	loginStatus: boolean = true;
+	loginStatusButtonName: any = "Deactivate";
 	selectedBusinessGroup: SelectedBusinessGroup | undefined;
 
 	constructor(
 		private router: Router,
 		private globalRoutes: GlobalRoutesService,
+		private alertService: AlertService,
 		private userService: UserService,
 		private authService: AuthService,
 		private businessGroupDropdownService: BusinessGroupDropdownService
@@ -145,4 +149,45 @@ export class ManageUserComponent implements OnInit {
 		// const data2 = await this.userService.setUser(data);
 		this.router.navigate(['/dashboard/settings/user-management/edit-user']);
 	}
+
+	updateUserLoginStatus(status:any,userId:any){
+		if(this.loginStatus == true){
+			this.loginStatus = false
+			this.loginStatusButtonName = "Reactivate"
+		}else{
+			this.loginStatus = true
+			this.loginStatusButtonName = "Deactivate"
+		}
+		let user = this.authService.getLoggedInUser();
+		if (user?.__ISSU__) {
+		  this.alertService.conformAlert('Are you sure?', 'You want to update a user login status')
+			.then((result: any) => {
+			  if (result.value) {
+			    this.userService.userLoginStatus(this.loginStatus,userId,'intelliveer').subscribe(res=>{
+				this.alertService.success(
+					'Success',
+					'User login status updated successfully'
+				);
+			    }, error => {
+				console.log(error)
+				});
+		    }
+		  })
+	   }else{
+		this.alertService.conformAlert('Are you sure?', 'You want to update a user login status')
+		.then((result: any) => {
+		  if (result.value) {
+			this.userService.userLoginStatus(this.loginStatus,userId,this.selectedBusinessGroup?.bgId).subscribe(res=>{
+			this.alertService.success(
+				'Success',
+				'User login status updated successfully'
+			);
+			}, error => {
+			console.log(error)
+			});
+		}
+	  })
+	   }
+    }
+
 }

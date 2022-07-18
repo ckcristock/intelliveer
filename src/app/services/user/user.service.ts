@@ -178,4 +178,16 @@ export class UserService {
 		this.users = manageUserDeleted;
 		this.users$.next(this.users);
 	}
+
+	/** User change status */
+	userLoginStatus(userStatus:any,userId:any,bgId:any){
+		let data = {
+			loginEnabled: JSON.parse(userStatus)
+		}
+		return this.http.put(`${CONFIG.backend.host}/user/user/update-login-status/`+ userId, data, {
+			headers: {
+				'X-ORG-ID': bgId
+			}
+		});
+	}
 }

@@ -48,7 +48,11 @@
                 </ng-select>
             </div>
         </div>
-
+        <div class="row formrow">
+            <div class="col-3">
+                <input type="text" class="form-control" placeholder="Search permissions ..." (input)="searchPermission($event);">
+            </div>
+        </div>
         <!-- Accordion -->
         <div class="row formrow">
             <div class="col-12" style="margin-top: 6px;">
