@@ -135,6 +135,42 @@ export class UserService {
 		});
 	}
 
+	getRoleList(bgId: any)
+	{
+		return this.http.get(`${CONFIG.backend.host}/role/role`, {
+			headers: {
+				'X-ORG-ID': bgId
+			}
+		});
+	}
+
+	getLegelEntityList(bgId: any)
+	{
+		return this.http.get(`${CONFIG.backend.host}/bg/legal-entity`, {
+			headers: {
+				'X-ORG-ID': bgId
+			}
+		});
+	}
+
+	getLocationList(bgId: any)
+	{
+		return this.http.get(`${CONFIG.backend.host}/bg/location`, {
+			headers: {
+				'X-ORG-ID': bgId
+			}
+		});
+	}
+
+	getPracticeList(bgId: any)
+	{
+		return this.http.get(`${CONFIG.backend.host}/bg/practice`, {
+			headers: {
+				'X-ORG-ID': bgId
+			}
+		});
+	}
+
 	deleteManageUser(id: number) {
 		let manageUserDeleted = this.users.filter((x) => {
 			return x.id != id;
