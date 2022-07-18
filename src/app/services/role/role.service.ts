@@ -16,6 +16,23 @@ export class RoleService {
 
   constructor(private http: HttpClient, public authService : AuthService) { }
 
+  getSpecificRoleTemplateList(bgId:any){
+    return this.http.get(`${CONFIG.backend.host}/role/role-template/specific?bg=`+bgId,{
+      headers: {
+        'X-ORG-ID': this.authService.getOrgId()
+      }
+    });
+  }
+
+  getPublicRoleTemplateList()
+  {
+    return this.http.get(`${CONFIG.backend.host}/role/role-template/public`,{
+      headers: {
+        'X-ORG-ID': this.authService.getOrgId()
+      }
+    });
+  }
+
   getRoleTemplateList()
   {
     return this.http.get(`${CONFIG.backend.host}/role/role-template`, this.header);
@@ -28,7 +45,18 @@ export class RoleService {
   /** Get data from BG User ID */
   getRoleListByID(bgId:any)
   {
-    return this.http.get(`${CONFIG.backend.host}/role/role/`, 
+    return this.http.get(`${CONFIG.backend.host}/role/template-based-role/`, 
+     {
+      headers: {
+        'X-ORG-ID': bgId
+      }
+     }
+    );
+  }
+
+  getRoleTemplateById(bgId: any, roleTemplateId: any)
+  {
+    return this.http.get(`${CONFIG.backend.host}/role/role-template/`+roleTemplateId, 
      {
       headers: {
         'X-ORG-ID': bgId

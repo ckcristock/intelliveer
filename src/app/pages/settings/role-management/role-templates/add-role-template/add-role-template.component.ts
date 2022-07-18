@@ -187,7 +187,6 @@ export class AddRoleTemplateComponent implements OnInit {
     this._ngZone.run(() => { 
       setTimeout(() => {
       this.rolesUserServ.singleRoleTemplate(ID).subscribe(res=>{
-        console.log(res);
           this.roleTemplateForm.patchValue(res);
           if(this.roleTemplateForm.value.businessGroups.length == 0){
             this.isTypeSpecific = false;

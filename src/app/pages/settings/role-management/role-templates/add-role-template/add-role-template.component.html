@@ -83,10 +83,12 @@
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let perm of permissionNested(i,j); let k=index" [formGroupName]="k">
-                                                    <td><input type="checkbox" formControlName="enabled" value=""/></td>
-                                                    <td> <input type="hidden" formControlName="name" >{{perm.value.name}}</td>
-                                                    <td><input type="checkbox" formControlName="locked" value="" /></td>
-                                                    <td><input type="checkbox" value=""  formControlName="allowOverride"/></td>
+                                                    <td><input type="checkbox" formControlName="enabled" [attr.disabled]="perm.value.locked"
+                                                        *ngIf="perm.value.locked"/>
+                                                        <input type="checkbox" formControlName="enabled"  *ngIf="!perm.value.locked"/></td>
+                                                    <td> <input type="hidden" formControlName="name">{{perm.value.name}}</td>
+                                                    <td><input type="checkbox" formControlName="locked"/></td>
+                                                    <td><input type="checkbox" formControlName="allowOverride" *ngIf="perm.value.locked"/></td>
                                                 </tr>
                                             </tbody>
                                         </table>

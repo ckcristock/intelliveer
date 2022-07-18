@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '@services/auth/auth.service';
 import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 
 @Component({
@@ -15,11 +16,17 @@ export class RoleManagementComponent implements OnInit {
   ];
 
 
-  constructor(private routes: GlobalRoutesService,) { 
+  constructor(private routes: GlobalRoutesService,
+    private authService: AuthService
+    ) {
     this.urlSettings = this.routes.getSettingsUrl();
   }
 
   ngOnInit(): void {
+    let user = this.authService.getLoggedInUser();
+    if(!user?.__ISSU__){
+      delete this.menuItems[0].title
+    }
   }
 
 }

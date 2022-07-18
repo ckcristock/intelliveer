@@ -12,3 +12,7 @@
 		}
 	}
 }
+
+.formrow tbody tr td input:disabled {
+    opacity: 0.5;
+}

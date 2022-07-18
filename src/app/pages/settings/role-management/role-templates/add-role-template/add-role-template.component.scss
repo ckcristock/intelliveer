@@ -44,3 +44,6 @@ input[type=text].form-control.ng-invalid.invalid-errors {
 .save:disabled {
     opacity: .5;
 }
+.formrow tbody tr td input:disabled {
+    opacity: 0.5;
+}

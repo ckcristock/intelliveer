@@ -61,7 +61,7 @@ export class AddRoleComponent implements OnInit {
 		// 	: (this.displayCreateRoleYesNoOption = false);
 		this.createRoleTemplete = 'yes';
 		this.initForm(this.formData);
-		this.getRoleList();
+		// this.getRoleList();
 		this.getLegelEntityList();
 		this.getLocationList();
 		this.getPracticeList();
@@ -71,6 +71,7 @@ export class AddRoleComponent implements OnInit {
 				if(list.length)
 				{
 					this.bgName = list[0]._id;
+					console.log(list);
 				}
 			});
 
@@ -179,7 +180,7 @@ export class AddRoleComponent implements OnInit {
 				this.saveRoleFromScratch(data);
 			}
 		}else{
-			this.saveRoleFromTemplate(data);
+			this.addRoleWithTemplate(data);
 		}
 		// else
 		// {
@@ -207,6 +208,7 @@ export class AddRoleComponent implements OnInit {
 			description: data.description,
 			permissions: data.permissions
 		};
+		console.log(roleObj)
 		this.alertService
 			.conformAlert('Are you sure?', 'You want to save a role')
 			.then((result: any) => {
@@ -370,6 +372,24 @@ export class AddRoleComponent implements OnInit {
 		);
 	}
 
+	getRoleListSpecific()
+	{
+		this.roleService.getSpecificRoleTemplateList(this.orgId).subscribe((specificList: any) =>
+			{
+				this.roleService.getPublicRoleTemplateList().subscribe((list: any) =>
+					{
+						this.roleTemplateList =  specificList.concat(list);
+					}, error =>
+					{
+						console.log(error)
+					})
+			}, error =>
+			{
+				console.log(error)
+			})
+			
+	}
+
 	/** Get Selected Org Id */
 	getSelectedBusinessGroupId(){
 		this.businessGroupDropdownService.businessGroup().subscribe((res) => {
@@ -382,15 +402,18 @@ export class AddRoleComponent implements OnInit {
 					this.addRoleTitle = "Create Role from Role Template";
 					this.roleTemplatePlaceholder = "Select role template";
 					this.displayCreateRoleYesNoOption = false;
+					this.getRoleListSpecific();
 				}else{
 					this.addRoleTitle = "Create Role";
 					this.roleTemplatePlaceholder = "Role template name";
 					this.displayCreateRoleYesNoOption = true;
+					this.getRoleList();
 				}
 			}else{
 				this.addRoleTitle = "Create Role from Role Template";
 				this.roleTemplatePlaceholder = "Select role template";
 				this.displayCreateRoleYesNoOption = false;
+				this.getRoleListSpecific();
 			}
 		  });
 	}
