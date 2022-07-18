@@ -518,14 +518,16 @@
                                     <label class="label-input-gap">Subscriber’s First Name</label>
 
                                     <input class="form-control" type="text" placeholder="" name=""
-                                        [(ngModel)]="subscriber.firstName" [ngModelOptions]="{standalone: true}" />
+                                        [(ngModel)]="additionalPatient.insurances.insurance1.subscriber1.firstName"
+                                        [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                             <div class="twenty">
                                 <div class="mainformset">
                                     <label class="label-input-gap">Subscriber’s Last Name</label>
                                     <input class="form-control" type="text" placeholder="" name=""
-                                        [(ngModel)]="subscriber.lastName" [ngModelOptions]="{standalone: true}" />
+                                        [(ngModel)]="additionalPatient.insurances.insurance1.subscriber1.lastName"
+                                        [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                             <div class="twenty">

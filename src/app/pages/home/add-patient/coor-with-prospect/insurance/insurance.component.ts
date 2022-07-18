@@ -13,6 +13,52 @@ import { AddPatientService } from '@services/add-patient/add-patient.service';
 })
 export class InsuranceComponent implements OnInit {
 
+  insurances!: {
+    insurance1: {
+      insuranName: "",
+      phoneNumb: "",
+      subscriber1: {
+        firstName: "",
+        lastName: "",
+        relationship: "",
+        DOB: "",
+        SSNID: "",
+        phoneNumb: "",
+      }
+    },
+    insurance2: {
+      insuranName: "",
+      phoneNumb: "",
+      subscriber2: {
+        firstName: "",
+        lastName: "",
+        relationship: "",
+        DOB: "",
+        SSNID: "",
+        phoneNumb: "",
+      }
+    },
+    insurance3: {
+      insuranName: "",
+      phoneNumb: "",
+      subscriber3: {
+        firstName: "",
+        lastName: "",
+        relationship: "",
+        DOB: "",
+        SSNID: "",
+        phoneNumb: "",
+      }
+    },
+  }
+
+  insurances1: any[] = [];
+  insurances2: any[] = [];
+  insurances3: any[] = [];
+  subscribers1: any[] = [];
+  subscribers2: any[] = [];
+  subscribers3: any[] = [];
+
   subscriber = {
     firstName: "",
     lastName: "",
@@ -38,9 +84,12 @@ export class InsuranceComponent implements OnInit {
   subscriberRadio: number = 1
 
   constructor(private router: Router,
-    private addPatientServ: AddPatientService,) { }
+    private AddPatientService: AddPatientService,) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.insurances1 = await this.AddPatientService.getinsurances1CwpApi();
+    this.insurances2 = await this.AddPatientService.getinsurances2CwpApi();
+    this.insurances3 = await this.AddPatientService.getinsurances3CwpApi();
   }
 
   continueToFamilyMemb() {
@@ -86,14 +135,14 @@ export class InsuranceComponent implements OnInit {
       this.subscriber.firstName = "";
         this.subscriber.lastName = "";
     } else if (this.subscriberRadio == 2) {
-      this.subscriberArray = await this.addPatientServ.getPatientCWP();
+      this.subscriberArray = await this.AddPatientService.getPatientCWP();
       console.log("subscriberArray", this.subscriberArray);
       if (this.subscriberArray != null) {
         this.subscriber.firstName = this.subscriberArray.firstName;
         this.subscriber.lastName = this.subscriberArray.lastName;
       }
     } else if (this.subscriberRadio == 3){
-      this.subscriberArray = await this.addPatientServ.getLegalGuardCWP(1);
+      this.subscriberArray = await this.AddPatientService.getLegalGuardCWP(1);
       console.log("subscriberArray", this.subscriberArray);
       if (this.subscriberArray != null) {
         this.subscriber.firstName = this.subscriberArray.firstName;

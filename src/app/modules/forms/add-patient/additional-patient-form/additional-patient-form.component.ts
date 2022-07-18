@@ -81,17 +81,6 @@ export class AdditionalPatientFormComponent implements OnInit {
   subscribers2: any[] = [];
   subscribers3: any[] = [];
 
-  subscriber = {
-    firstName: "",
-    lastName: "",
-    relationship: "",
-    DOB: "",
-    SSNID: "",
-    phoneNumb: "",
-    selected: true,
-    activated: true
-  }
-
   radioLGuard: number = 1;
   radioDentist: number = 1;
   radioReferrer: number = 1;
@@ -174,22 +163,22 @@ export class AdditionalPatientFormComponent implements OnInit {
     // For Subscriber1
     for (let i = 0; i < this.subscribers1.length; i++) {
       if (this.subscribers1[i].selected) {
-        this.subscriber.firstName = this.subscribers1[i].firstName;
-        this.subscriber.lastName = this.subscribers1[i].lastName;
+        this.additionalPatient.insurances.insurance1.subscriber1.firstName = this.subscribers1[i].firstName;
+        this.additionalPatient.insurances.insurance1.subscriber1.lastName = this.subscribers1[i].lastName;
       }
     }
     // For Subscriber2
     for (let i = 0; i < this.subscribers2.length; i++) {
       if (this.subscribers2[i].selected) {
-        this.subscriber.firstName = this.subscribers2[i].firstName;
-        this.subscriber.lastName = this.subscribers2[i].lastName;
+        this.additionalPatient.insurances.insurance2.subscriber2.firstName = this.subscribers2[i].firstName;
+        this.additionalPatient.insurances.insurance2.subscriber2.lastName = this.subscribers2[i].lastName;
       }
     }
     // For Subscriber3
     for (let i = 0; i < this.subscribers3.length; i++) {
       if (this.subscribers3[i].selected) {
-        this.subscriber.firstName = this.subscribers3[i].firstName;
-        this.subscriber.lastName = this.subscribers3[i].lastName;
+        this.additionalPatient.insurances.insurance3.subscriber3.firstName = this.subscribers3[i].firstName;
+        this.additionalPatient.insurances.insurance3.subscriber3.lastName = this.subscribers3[i].lastName;
       }
     }
   }
@@ -359,16 +348,16 @@ export class AdditionalPatientFormComponent implements OnInit {
           this.subscribers1[i].selected = true;
         } else {
           this.subscribers1[i].selected = false;
-          this.subscriber.firstName = "";
-          this.subscriber.lastName = "";
+          this.additionalPatient.insurances.insurance1.subscriber1.firstName = "";
+          this.additionalPatient.insurances.insurance1.subscriber1.lastName = "";
         }
       }
     }
 
     for (let i = 0; i < this.subscribers1.length; i++) {
       if (this.subscribers1[i].selected) {
-        this.subscriber.firstName = this.subscribers1[i].firstName;
-        this.subscriber.lastName = this.subscribers1[i].lastName;
+        this.additionalPatient.insurances.insurance1.subscriber1.firstName = this.subscribers1[i].firstName;
+        this.additionalPatient.insurances.insurance1.subscriber1.lastName = this.subscribers1[i].lastName;
       }
     }
   }
@@ -381,16 +370,16 @@ export class AdditionalPatientFormComponent implements OnInit {
           this.subscribers2[i].selected = true;
         } else {
           this.subscribers2[i].selected = false;
-          this.subscriber.firstName = "";
-          this.subscriber.lastName = "";
+          this.additionalPatient.insurances.insurance2.subscriber2.firstName = "";
+          this.additionalPatient.insurances.insurance2.subscriber2.lastName = "";
         }
       }
     }
 
     for (let i = 0; i < this.subscribers2.length; i++) {
       if (this.subscribers2[i].selected) {
-        this.subscriber.firstName = this.subscribers2[i].firstName;
-        this.subscriber.lastName = this.subscribers2[i].lastName;
+        this.additionalPatient.insurances.insurance2.subscriber2.firstName = this.subscribers2[i].firstName;
+        this.additionalPatient.insurances.insurance2.subscriber2.lastName = this.subscribers2[i].lastName;
       }
     }
   }
@@ -403,16 +392,16 @@ export class AdditionalPatientFormComponent implements OnInit {
           this.subscribers3[i].selected = true;
         } else {
           this.subscribers3[i].selected = false;
-          this.subscriber.firstName = "";
-          this.subscriber.lastName = "";
+          this.additionalPatient.insurances.insurance3.subscriber3.firstName = "";
+          this.additionalPatient.insurances.insurance3.subscriber3.lastName = "";
         }
       }
     }
 
     for (let i = 0; i < this.subscribers3.length; i++) {
       if (this.subscribers3[i].selected) {
-        this.subscriber.firstName = this.subscribers3[i].firstName;
-        this.subscriber.lastName = this.subscribers3[i].lastName;
+        this.additionalPatient.insurances.insurance3.subscriber3.firstName = this.subscribers3[i].firstName;
+        this.additionalPatient.insurances.insurance3.subscriber3.lastName = this.subscribers3[i].lastName;
       }
     }
   }
@@ -513,8 +502,8 @@ export class AdditionalPatientFormComponent implements OnInit {
           this.subscribers1[i].activated = false;
           if (this.subscribers1[i].selected) {
             this.subscribers1[i].selected = false;
-            this.subscriber.firstName = "";
-            this.subscriber.lastName = "";
+            this.additionalPatient.insurances.insurance1.subscriber1.firstName = "";
+            this.additionalPatient.insurances.insurance1.subscriber1.lastName = "";
           }
         }
       }
@@ -530,8 +519,8 @@ export class AdditionalPatientFormComponent implements OnInit {
           this.subscribers2[i].activated = false;
           if (this.subscribers2[i].selected) {
             this.subscribers2[i].selected = false;
-            this.subscriber.firstName = "";
-            this.subscriber.lastName = "";
+            this.additionalPatient.insurances.insurance2.subscriber2.firstName = "";
+            this.additionalPatient.insurances.insurance2.subscriber2.lastName = "";
           }
         }
       }
@@ -547,8 +536,8 @@ export class AdditionalPatientFormComponent implements OnInit {
           this.subscribers3[i].activated = false;
           if (this.subscribers3[i].selected) {
             this.subscribers3[i].selected = false;
-            this.subscriber.firstName = "";
-            this.subscriber.lastName = "";
+            this.additionalPatient.insurances.insurance3.subscriber3.firstName = "";
+            this.additionalPatient.insurances.insurance3.subscriber3.lastName = "";
           }
         }
       }
@@ -698,8 +687,8 @@ export class AdditionalPatientFormComponent implements OnInit {
 
   async radioSubsc1Fuct(value: number) {
     this.radioSubscriber1 = value;
-    this.additionalPatient.insurances.insurance1.subscriber1.firstName=";"
-    this.additionalPatient.insurances.insurance1.subscriber1.lastName=";"
+    this.additionalPatient.insurances.insurance1.subscriber1.firstName="";
+    this.additionalPatient.insurances.insurance1.subscriber1.lastName="";
 
     if (this.radioSubscriber1 == 1) {
       for (let i = 0; i < this.dentists.length; i++) {
