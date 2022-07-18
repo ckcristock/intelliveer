@@ -90,6 +90,23 @@ export class InsuranceComponent implements OnInit {
     this.insurances1 = await this.AddPatientService.getinsurances1CwpApi();
     this.insurances2 = await this.AddPatientService.getinsurances2CwpApi();
     this.insurances3 = await this.AddPatientService.getinsurances3CwpApi();
+    this.subscribers1 = await this.AddPatientService.getsubscribers1CwpApi();
+    this.subscribers2 = await this.AddPatientService.getsubscribers2CwpApi();
+    this.subscribers3 = await this.AddPatientService.getsubscribers3CwpApi();
+    // For Insurance1
+    for (let i = 0; i < this.insurances1.length; i++) {
+      if (this.insurances1[i].selected) {
+        this.insurances.insurance1.insuranName = this.insurances1[i].insuranName;
+        this.insurances.insurance1.phoneNumb = this.insurances1[i].phoneNumb;
+      }
+    }
+    // For Subscriber1
+    for (let i = 0; i < this.subscribers1.length; i++) {
+      if (this.subscribers1[i].selected) {
+        this.insurances.insurance1.subscriber1.firstName = this.subscribers1[i].firstName;
+        this.insurances.insurance1.subscriber1.lastName = this.subscribers1[i].lastName;
+      }
+    }
   }
 
   continueToFamilyMemb() {
