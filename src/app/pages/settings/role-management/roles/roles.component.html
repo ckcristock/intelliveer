@@ -64,7 +64,9 @@
 						<td>{{ role?._id }}</td>
 						<td>{{ role?.name }}</td>
 						<td>{{ role?.description }}</td>
-						<td>{{ role?.roleTemplateName }}</td>
+						<td *ngIf="role?.roleTemplateName">{{ role?.roleTemplateName }}</td>
+						<td *ngIf="(role?.roleTemplateName == undefined && role?.roleTemplate == undefined) || role?.roleTemplate?.length == 0">Without Role Template</td>
+						<td *ngIf="role?.roleTemplate?.length == 1">{{ role?.roleTemplate[0].name }}</td>
 						<td>
 							<div
 								ngbDropdown

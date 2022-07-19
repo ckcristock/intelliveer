@@ -135,11 +135,59 @@ export class UserService {
 		});
 	}
 
+	getRoleList(bgId: any)
+	{
+		return this.http.get(`${CONFIG.backend.host}/role/role`, {
+			headers: {
+				'X-ORG-ID': bgId
+			}
+		});
+	}
+
+	getLegelEntityList(bgId: any)
+	{
+		return this.http.get(`${CONFIG.backend.host}/bg/legal-entity`, {
+			headers: {
+				'X-ORG-ID': bgId
+			}
+		});
+	}
+
+	getLocationList(bgId: any)
+	{
+		return this.http.get(`${CONFIG.backend.host}/bg/location`, {
+			headers: {
+				'X-ORG-ID': bgId
+			}
+		});
+	}
+
+	getPracticeList(bgId: any)
+	{
+		return this.http.get(`${CONFIG.backend.host}/bg/practice`, {
+			headers: {
+				'X-ORG-ID': bgId
+			}
+		});
+	}
+
 	deleteManageUser(id: number) {
 		let manageUserDeleted = this.users.filter((x) => {
 			return x.id != id;
 		});
 		this.users = manageUserDeleted;
 		this.users$.next(this.users);
+	}
+
+	/** User change status */
+	userLoginStatus(userStatus:any,userId:any,bgId:any){
+		let data = {
+			loginEnabled: JSON.parse(userStatus)
+		}
+		return this.http.put(`${CONFIG.backend.host}/user/user/update-login-status/`+ userId, data, {
+			headers: {
+				'X-ORG-ID': bgId
+			}
+		});
 	}
 }
