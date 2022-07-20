@@ -98,13 +98,11 @@ export class RoleTemplatesComponent implements OnInit {
         this.roleTemplateListByBGId(this.selectedType,this.selectedBusinessGroup.bgId);
         this.selectedType = null;
        }else if(!this.selectedType && bgOrdID !='intelliveer' && bgOrdID !=null){
-        this.isSuperUser = false;
          this.roleTemplateListByBGId('specific',this.selectedBusinessGroup.bgId)
        }else{
         this.roleTemplateList()
        }
 		}else{
-      this.isSuperUser = false;
 			  this.roleTemplateListByBGId('specific',this.selectedBusinessGroup.bgId)
     }
 	}
