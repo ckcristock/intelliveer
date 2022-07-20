@@ -1,3 +1,4 @@
+@import 'accordion';
 #main {
 	height: calc(100vh - 310px);
 	overflow: auto;
@@ -9,52 +10,6 @@
 		select {
 			margin-bottom: 5px;
 		}
-	}
-}
-
-.permission {
-	margin-top: 5px;
-	border: 1px solid #eceeee;
-	background-color: #f1f2f2;
-	margin-left: -10px;
-
-	span {
-		font-weight: bold !important;
-		margin-left: 10px;
-	}
-
-	height: 31px !important;
-	display: flex;
-	align-items: center;
-	align-content: center;
-	justify-content: flex-start;
-}
-
-.show {
-	height: 31px !important;
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-	gap: 10px;
-	margin-top: 16px;
-	margin-bottom: 9px;
-	input, label {
-		padding: 0px !important;
-		margin: 0px !important;
-	}
-}
-
-.checkandtext {
-	height: 31px !important;
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-	gap: 10px;
-	margin-bottom: 6px !important;
-
-	input, label {
-		padding: 0px !important;
-		margin: 0px !important;
 	}
 }
 
@@ -96,6 +51,6 @@
 	}
 }
 
-.three-selects{
-	margin-left: 20px; margin-bottom: 26px;
+.formrow tbody tr td input:disabled {
+    opacity: 0.5;
 }

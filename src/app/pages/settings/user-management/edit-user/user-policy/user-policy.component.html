@@ -57,16 +57,16 @@
 				>
 					<!-- Org. Onboarding -->
 					<ngb-panel
-						cardClass="onboarding"
+						cardClass="accordion-title"
 						*ngFor="let module of moduleNested; let i = index"
 						[formGroupName]="i"
 					>
 						<ng-template ngbPanelTitle>
-							<div>
+							<!-- <div> -->
 								<p>
 									<strong>{{ module.value.module }}</strong>
 								</p>
-							</div>
+							<!-- </div> -->
 						</ng-template>
 						<ng-template ngbPanelContent formArrayName="sections">
 							<ngb-accordion
@@ -79,7 +79,7 @@
 								[formGroupName]="j"
 							>
 								<!-- Business Group -->
-								<ngb-panel cardClass="businessg">
+								<ngb-panel cardClass="accordion-sub-title">
 									<ng-template ngbPanelTitle>
 										<p>
 											<strong>{{
@@ -138,57 +138,8 @@
 												[formGroupName]="k"
 											>
 												<tr>
-													<td>
-														<input
-															type="checkbox"
-															checked
-															disabled
-															*ngIf="
-																childPermision
-																	.value
-																	.enabled &&
-																childPermision
-																	.value
-																	.locked
-															"
-														/>
-														<input
-															type="checkbox"
-															formControlName="enabled"
-															*ngIf="
-																childPermision
-																	.value
-																	.enabled &&
-																!childPermision
-																	.value
-																	.locked
-															"
-														/>
-														<input
-															type="checkbox"
-															disabled
-															*ngIf="
-																!childPermision
-																	.value
-																	.enabled &&
-																childPermision
-																	.value
-																	.locked
-															"
-														/>
-														<input
-															type="checkbox"
-															formControlName="enabled"
-															*ngIf="
-																!childPermision
-																	.value
-																	.enabled &&
-																!childPermision
-																	.value
-																	.locked
-															"
-														/>
-													</td>
+													<td><input type="checkbox" formControlName="enabled" [attr.disabled]="childPermision.value.locked"
+                                                        *ngIf="childPermision.value.locked"/>
 													<td>
 														<input
 															type="hidden"
@@ -199,16 +150,6 @@
 														}}
 													</td>
 													<td>
-														<!-- <input
-															type="checkbox"
-															formControlName="locked"
-															value=""
-															*ngIf="
-																!childPermision
-																	.value
-																	.locked
-															"
-														/> -->
 														<img
 															src="assets/icons/locked_green.svg"
 															width="20"
@@ -232,16 +173,6 @@
 															"
 														/>
 													</td>
-													<!-- <td>
-														<input
-															type="checkbox"
-															formControlName="allowOverride"
-															*ngIf="childPermision
-																	.value
-																	.locked
-															"
-														/>
-													</td> -->
 												</tr>
 												<tr
 													*ngIf="

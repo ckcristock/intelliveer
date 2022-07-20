@@ -289,7 +289,7 @@ export class UserPolicyComponent implements OnInit {
 							.getUserRoleData(bgId, userCurrentRole.roles[index])
 							.subscribe({
 								next: (roledata: any) => {
-									console.log(roledata,index)
+									console.log(roledata)
 									if(permissionArray.length == 0){
 									  this.userCurrentRoleListForForm.push(roledata);
 									  roledata.permissions.forEach((eli:any)=>{
@@ -351,7 +351,7 @@ export class UserPolicyComponent implements OnInit {
 									}
 									if(userCurrentRole.roles.length-1 == index){
 										setTimeout(() => {
-											console.log(this.userCurrentRoleListForForm[0]?.permissions, 'permissions');
+											// console.log(this.userCurrentRoleListForForm[0]?.permissions, 'permissions');
 										this.setUserPolicyData(this.userCurrentRoleListForForm[0]?.permissions)
 										}, 1000);
 									}
@@ -389,7 +389,7 @@ export class UserPolicyComponent implements OnInit {
 		formGroup.patchValue({module:section.module})
 		this.moduleArray().push(formGroup)
 	  });
-	  console.log(this.moduleArray().value,'formvalues')
+	//   console.log(this.moduleArray().value,'formvalues')
    }
 	cancleUserCurrentRole(Obj: any, index: number) {
 		this.userCurrentRoleList.length != 1
