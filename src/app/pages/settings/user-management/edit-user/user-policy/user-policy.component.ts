@@ -30,6 +30,7 @@ export class UserPolicyComponent implements OnInit {
 	showAdvancePC: boolean = true;
 
 	userCurrentRoleList: any[] = [];
+	userCurrentRoleListForForm: any[] = [];
 	businessGroupDropdownSupscription: any;
 	selectedBusinessGroup: SelectedBusinessGroup | undefined;
 	roleList: any;
@@ -166,119 +167,215 @@ export class UserPolicyComponent implements OnInit {
 		}
 	}
 
+	// getUserCurrentRoleList(bgId: any) {
+	// 	this.userCurrentRoleList = [];
+	// 	let permissionArray: any[] = [];
+	// 	let userId = localStorage.getItem('userId');
+	// 	this.userService.getUserData(bgId, userId).subscribe(
+	// 		(userCurrentRoleList: any) => {
+	// 			if (userCurrentRoleList) {
+	// 				for (let i = 0; i < userCurrentRoleList.roles.length; i++) {
+	// 					this.userService
+	// 						.getUserRoleData(bgId, userCurrentRoleList.roles[i])
+	// 						.subscribe({
+	// 							next: (roledata: any) => {
+	// 								let rolePermission = roledata.permissions;
+	// 								for (
+	// 									let i = 0;
+	// 									i < rolePermission.length;
+	// 									i++
+	// 								) {
+	// 									const formGroup = this.newModule();
+	// 									const sectionList =
+	// 										rolePermission[i].sections;
+	// 									for (
+	// 										let j = 0;
+	// 										j < sectionList.length;
+	// 										j++
+	// 									) {
+	// 										const sectionFormGroup =
+	// 											this.newSections();
+	// 										const permissionsList =
+	// 											sectionList[j].permissions;
+	// 										for (
+	// 											let k = 0;
+	// 											k < permissionsList.length;
+	// 											k++
+	// 										) {
+	// 											const findDuplicate = permissionArray.find((x: any) => x.name === permissionsList[k].name);
+	// 											if(findDuplicate)
+	// 											{
+	// 												if(findDuplicate.enabled || permissionsList[k].enabled)
+	// 												{
+	// 													permissionsList[k].enabled = true;
+	// 												}
+	// 												if(findDuplicate.locked || permissionsList[k].locked)
+	// 												{
+	// 													permissionsList[k].locked = true;
+	// 												}
+	// 												if(findDuplicate.allowOverride || permissionsList[k].allowOverride)
+	// 												{
+	// 													permissionsList[k].allowOverride = true;
+	// 												}
+	// 												console.log(findDuplicate)
+	// 												console.log("------------------------------------------")
+	// 												console.log(permissionsList[k])
+	// 											}
+	// 											const permissionFormGroup =
+	// 												this.newPermissions();
+	// 											permissionFormGroup.patchValue({
+	// 												name: permissionsList[k]
+	// 													.name,
+	// 												enabled:
+	// 													permissionsList[k]
+	// 														.enabled,
+	// 												locked: permissionsList[k]
+	// 													.locked,
+	// 												allowOverride:
+	// 													permissionsList[k]
+	// 														.allowOverride,
+	// 												attrs: {}
+	// 											});
+	// 											this.permissionArray().push(
+	// 												permissionFormGroup
+	// 											);
+	// 											permissionArray.push(permissionsList[k]);
+	// 										}
+	// 										sectionFormGroup.patchValue({
+	// 											section: sectionList[j].section,
+	// 											displayShowAdvanced: false
+	// 										});
+	// 										this.sectionsArray().push(
+	// 											sectionFormGroup
+	// 										);
+	// 									}
+	// 									const findDuplicateModule = this.moduleArray().value.find((x: any) => x.module === rolePermission[i].module);
+	// 									if(findDuplicateModule == undefined)
+	// 									{
+	// 										formGroup.patchValue({
+	// 											module: rolePermission[i].module
+	// 										});
+	// 										this.moduleArray().push(formGroup);
+	// 									}
+	// 								}
+	// 								console.log(this.Form);
+	// 								this.Form.patchValue(this.moduleArray())
+	// 								if (roledata) {
+	// 									this.userCurrentRoleList.push(roledata);
+	// 								}
+	// 							},
+	// 							error: () => {}
+	// 						});
+	// 				}
+	// 			}
+	// 		},
+	// 		(error) => {
+	// 			console.log(error);
+	// 		}
+	// 	);
+	// }
+
 	getUserCurrentRoleList(bgId: any) {
 		this.userCurrentRoleList = [];
+		this.userCurrentRoleListForForm = [];
 		let permissionArray: any[] = [];
 		let userId = localStorage.getItem('userId');
 		this.userService.getUserData(bgId, userId).subscribe(
-			(userCurrentRoleList: any) => {
-				if (userCurrentRoleList) {
-					for (let i = 0; i < userCurrentRoleList.roles.length; i++) {
+			(userCurrentRole: any) => {
+				if (userCurrentRole) {
+					for (let i = 0; i < userCurrentRole.roles.length; i++) {
 						this.userService
-							.getUserRoleData(bgId, userCurrentRoleList.roles[i])
+							.getUserRoleData(bgId, userCurrentRole.roles[i])
 							.subscribe({
 								next: (roledata: any) => {
-									let rolePermission = roledata.permissions;
-									for (
-										let i = 0;
-										i < rolePermission.length;
-										i++
-									) {
-										const formGroup = this.newModule();
-										const sectionList =
-											rolePermission[i].sections;
-										for (
-											let j = 0;
-											j < sectionList.length;
-											j++
-										) {
-											const sectionFormGroup =
-												this.newSections();
-											const permissionsList =
-												sectionList[j].permissions;
-											for (
-												let k = 0;
-												k < permissionsList.length;
-												k++
-											) {
-												const findDuplicate = permissionArray.find((x: any) => x.name === permissionsList[k].name);
-												if(findDuplicate)
-												{
-													if(findDuplicate.enabled || permissionsList[k].enabled)
-													{
-														permissionsList[k].enabled = true;
-													}
-													if(findDuplicate.locked || permissionsList[k].locked)
-													{
-														permissionsList[k].locked = true;
-													}
-													if(findDuplicate.allowOverride || permissionsList[k].allowOverride)
-													{
-														permissionsList[k].allowOverride = true;
-													}
-													// console.log(findDuplicate)
-													// console.log("------------------------------------------")
-													// console.log(permissionsList[k])
-												}
-												const permissionFormGroup =
-													this.newPermissions();
-												permissionFormGroup.patchValue({
-													name: permissionsList[k]
+									console.log(roledata)
+									if(i == 0){
+									  this.userCurrentRoleListForForm.push(roledata);
+									  roledata.permissions.forEach((eli:any)=>{
+										eli.sections.forEach((section:any)=>{
+											section.permissions.forEach((perm:any)=>{
+												 permissionArray.push({
+													name: perm
 														.name,
 													enabled:
-														permissionsList[k]
+														perm
 															.enabled,
-													locked: permissionsList[k]
+													locked: perm
 														.locked,
 													allowOverride:
-														permissionsList[k]
+														perm
 															.allowOverride,
 													attrs: {}
-												});
-												this.permissionArray().push(
-													permissionFormGroup
-												);
-												permissionArray.push(permissionsList[k]);
-												// console.log(this.permissionArray().value);
-											}
-											sectionFormGroup.patchValue({
-												section: sectionList[j].section,
-												displayShowAdvanced: false
-											});
-											this.sectionsArray().push(
-												sectionFormGroup
-											);
-											// console.log(this.sectionsArray().value);
-										}
-										const findDuplicateModule = this.moduleArray().value.find((x: any) => x.module === rolePermission[i].module);
-										console.log(findDuplicateModule)
-										if(findDuplicateModule == undefined)
-										{
-											console.log("000000000000000000000000000000000000000000000000000")
-											formGroup.patchValue({
-												module: rolePermission[i].module
-											});
-											this.moduleArray().push(formGroup);
-											console.log(this.moduleArray().value);
-										}
+												})
+											})
+										})
+									})
+									}else{
+										roledata.permissions.forEach((eli:any,index:any)=>{
+											eli.sections.forEach((section:any,ind:any)=>{
+												section.permissions.forEach((perm:any,perIndex:any)=>{
+													const findDuplicate = permissionArray.find((x: any) => x.name === perm.name);
+													if(findDuplicate)
+													{
+														if(findDuplicate.enabled || perm.enabled)
+															{
+																this.userCurrentRoleListForForm[0].permissions[index].sections[ind].permissions[perIndex].enabled = true;
+															}
+															if(findDuplicate.locked || perm.locked)
+															{
+																this.userCurrentRoleListForForm[0].permissions[index].sections[ind].permissions[perIndex].locked = true;
+															}
+															if(findDuplicate.allowOverride || perm.allowOverride)
+															{
+																this.userCurrentRoleListForForm[0].permissions[index].sections[ind].permissions[perIndex].allowOverride = true;
+															}
+													}
+												})
+											})
+										})
 									}
-									console.log(this.Form);
-									this.Form.patchValue(this.moduleArray())
-									if (roledata) {
-										this.userCurrentRoleList.push(roledata);
+									if(userCurrentRole.roles.length-1 == i){
+										setTimeout(() => {
+											console.log(this.userCurrentRoleListForForm[0]?.permissions, 'permissions');
+										this.setUserPolicyData(this.userCurrentRoleListForForm[0]?.permissions)
+										}, 1000);
 									}
+									if(roledata){
+										this.userCurrentRoleList.push(roledata)
+									}
+									
 								},
 								error: () => {}
 							});
 					}
 				}
+				
+				
 			},
 			(error) => {
 				console.log(error);
 			}
+			
 		);
 	}
-
+   setUserPolicyData(data:any){
+	data.forEach((section:any) => {
+		const formGroup = this.newModule();
+		section.sections.forEach((elem:any) => {
+		  const formGroupFirst = this.newSections();
+		  elem.permissions.forEach((perm:any) =>{
+			const formGroupSecond = this.newPermissions();
+			formGroupSecond.patchValue({name: perm.name, enabled: perm.enabled, locked: perm.locked, allowOverride: perm.allowOverride});
+			this.permissionArray().push(formGroupSecond);
+		  })
+		  formGroupFirst.patchValue({section: elem.section});
+		  this.sectionsArray().push(formGroupFirst)
+		});
+		formGroup.patchValue({module:section.module})
+		this.moduleArray().push(formGroup)
+	  });
+	  console.log(this.moduleArray().value,'formvalues')
+   }
 	cancleUserCurrentRole(Obj: any, index: number) {
 		this.userCurrentRoleList.length != 1
 			? this.userCurrentRoleList.splice(index, 1)
