@@ -283,13 +283,14 @@ export class UserPolicyComponent implements OnInit {
 		this.userService.getUserData(bgId, userId).subscribe(
 			(userCurrentRole: any) => {
 				if (userCurrentRole) {
-					for (let i = 0; i < userCurrentRole.roles.length; i++) {
+					userCurrentRole.roles.forEach((element:any,index:any) => {
+						
 						this.userService
-							.getUserRoleData(bgId, userCurrentRole.roles[i])
+							.getUserRoleData(bgId, userCurrentRole.roles[index])
 							.subscribe({
 								next: (roledata: any) => {
-									console.log(roledata)
-									if(i == 0){
+									console.log(roledata,index)
+									if(permissionArray.length == 0){
 									  this.userCurrentRoleListForForm.push(roledata);
 									  roledata.permissions.forEach((eli:any)=>{
 										eli.sections.forEach((section:any)=>{
@@ -329,12 +330,26 @@ export class UserPolicyComponent implements OnInit {
 															{
 																this.userCurrentRoleListForForm[0].permissions[index].sections[ind].permissions[perIndex].allowOverride = true;
 															}
+													}else{
+														permissionArray.push({
+															name: perm
+																.name,
+															enabled:
+																perm
+																	.enabled,
+															locked: perm
+																.locked,
+															allowOverride:
+																perm
+																	.allowOverride,
+															attrs: {}
+														})
 													}
 												})
 											})
 										})
 									}
-									if(userCurrentRole.roles.length-1 == i){
+									if(userCurrentRole.roles.length-1 == index){
 										setTimeout(() => {
 											console.log(this.userCurrentRoleListForForm[0]?.permissions, 'permissions');
 										this.setUserPolicyData(this.userCurrentRoleListForForm[0]?.permissions)
@@ -347,7 +362,7 @@ export class UserPolicyComponent implements OnInit {
 								},
 								error: () => {}
 							});
-					}
+					})
 				}
 				
 				
