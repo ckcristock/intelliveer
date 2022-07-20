@@ -279,8 +279,8 @@ export class AddPatientService {
   }
 
   //section Insurance - Patient 1
-  setInsuranceCWP(insurance: any) {
-    localStorage.setItem("insuranceCoorWithProsp", JSON.stringify(insurance));
+  setInsuranceP1CWP(insurance: any) {
+    localStorage.setItem("insuranceP1CoorWithProsp", JSON.stringify(insurance));
   }
 
   async getCallerInfoCWP() {
@@ -316,8 +316,8 @@ export class AddPatientService {
     return this.referrers;
   }
 
-  async getinsurancesCwpApi() {
-    return JSON.parse(localStorage.getItem("insuranceCoorWithProsp") || '[]');
+  async getinsurancesP1Cwp() {
+    return JSON.parse(localStorage.getItem("insuranceP1CoorWithProsp") || '[]');
   }
 
   async getinsurances1CwpApi() {

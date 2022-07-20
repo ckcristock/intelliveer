@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { addPatientCordinateMenuItems } from '@pages/home/add-patient/menu';
@@ -13,7 +13,12 @@ import { AddPatientService } from '@services/add-patient/add-patient.service';
 })
 export class InsuranceComponent implements OnInit {
 
-  insurances!: {
+
+  @ViewChild('radio1') radio1!: ElementRef;
+  @ViewChild('radio2') radio2!: ElementRef;
+  @ViewChild('radio3') radio3!: ElementRef;
+
+  insurances = {
     insurance1: {
       insuranName: "",
       phoneNumb: "",
@@ -23,7 +28,6 @@ export class InsuranceComponent implements OnInit {
         relationship: "",
         DOB: "",
         SSNID: "",
-        phoneNumb: "",
       }
     },
     insurance2: {
@@ -35,7 +39,6 @@ export class InsuranceComponent implements OnInit {
         relationship: "",
         DOB: "",
         SSNID: "",
-        phoneNumb: "",
       }
     },
     insurance3: {
@@ -47,37 +50,15 @@ export class InsuranceComponent implements OnInit {
         relationship: "",
         DOB: "",
         SSNID: "",
-        phoneNumb: "",
       }
     },
   }
 
-  insurances1: any[] = [];
-  insurances2: any[] = [];
-  insurances3: any[] = [];
-  subscribers1: any[] = [];
-  subscribers2: any[] = [];
-  subscribers3: any[] = [];
-
-  subscriber = {
-    firstName: "",
-    lastName: "",
-    relatToPation: "",
-    DOB: "",
-    SSNID: "",
-  }
-
-  subscriberArray = {
-    firstName: "",
-    lastName: "",
-    relatToPation: "",
-    DOB: "",
-    SSNID: "",
-  }
+  insurancesP1: any[] = [];
 
   active: any;
   menuItems: IMenuItem[] = addPatientCordinateMenuItems;
-  checkInsuranceCount: number = 1;
+  checkInsuranceCount!: number;
   provideInsurance: boolean = true;
   showButtonSaveCancel: boolean = false;
   openTextAreaVar: boolean = false;
@@ -87,29 +68,30 @@ export class InsuranceComponent implements OnInit {
     private AddPatientService: AddPatientService,) { }
 
   async ngOnInit() {
-    this.insurances1 = await this.AddPatientService.getinsurances1CwpApi();
-    this.insurances2 = await this.AddPatientService.getinsurances2CwpApi();
-    this.insurances3 = await this.AddPatientService.getinsurances3CwpApi();
-    this.subscribers1 = await this.AddPatientService.getsubscribers1CwpApi();
-    this.subscribers2 = await this.AddPatientService.getsubscribers2CwpApi();
-    this.subscribers3 = await this.AddPatientService.getsubscribers3CwpApi();
-    // For Insurance1
-    for (let i = 0; i < this.insurances1.length; i++) {
-      if (this.insurances1[i].selected) {
-        this.insurances.insurance1.insuranName = this.insurances1[i].insuranName;
-        this.insurances.insurance1.phoneNumb = this.insurances1[i].phoneNumb;
-      }
+    this.insurancesP1[0] = await this.AddPatientService.getinsurancesP1Cwp();
+    this.insurances.insurance1 = this.insurancesP1[0].insurance1;
+    this.insurances.insurance2 = this.insurancesP1[0].insurance2;
+    this.insurances.insurance3 = this.insurancesP1[0].insurance3;
+  }
+
+  ngAfterViewInit() {
+
+    //To get and assign the amount of insurances (Tabs)
+    this.checkInsuranceCount = JSON.parse(localStorage.getItem("insuranceP1Tabs") || '[]');
+    if (this.checkInsuranceCount == 0) {
+      this.checkInsuranceCount = 1;
     }
-    // For Subscriber1
-    for (let i = 0; i < this.subscribers1.length; i++) {
-      if (this.subscribers1[i].selected) {
-        this.insurances.insurance1.subscriber1.firstName = this.subscribers1[i].firstName;
-        this.insurances.insurance1.subscriber1.lastName = this.subscribers1[i].lastName;
-      }
+    if (this.checkInsuranceCount == 1) {
+      this.radio1.nativeElement.checked = true;
+    } else if (this.checkInsuranceCount == 2) {
+      this.radio2.nativeElement.checked = true;
+    } else if (this.checkInsuranceCount == 3) {
+      this.radio3.nativeElement.checked = true;
     }
   }
 
   continueToFamilyMemb() {
+    this.AddPatientService.setInsuranceP1CWP(this.insurances);
     let visitedArray: any = JSON.parse(localStorage.getItem("visitedArray") || '[]');
     visitedArray.push("Insurance");
     localStorage.setItem("visitedArray", JSON.stringify(visitedArray));
@@ -124,6 +106,11 @@ export class InsuranceComponent implements OnInit {
     } else if (changeEvent.nextId === 3) {
       this.active = 3;
     }
+  }
+
+  numberTabs(amount: number) {
+    this.checkInsuranceCount = amount;
+    localStorage.setItem("insuranceP1Tabs", JSON.stringify(this.checkInsuranceCount));
   }
 
   yesfunction() {
@@ -146,26 +133,9 @@ export class InsuranceComponent implements OnInit {
     this.showButtonSaveCancel = true;
   }
 
-  async subscriberRadios(index: number) {
-    this.subscriberRadio = index;
-    if(this.subscriberRadio == 1){
-      this.subscriber.firstName = "";
-        this.subscriber.lastName = "";
-    } else if (this.subscriberRadio == 2) {
-      this.subscriberArray = await this.AddPatientService.getPatientCWP();
-      console.log("subscriberArray", this.subscriberArray);
-      if (this.subscriberArray != null) {
-        this.subscriber.firstName = this.subscriberArray.firstName;
-        this.subscriber.lastName = this.subscriberArray.lastName;
-      }
-    } else if (this.subscriberRadio == 3){
-      this.subscriberArray = await this.AddPatientService.getLegalGuardCWP(1);
-      console.log("subscriberArray", this.subscriberArray);
-      if (this.subscriberArray != null) {
-        this.subscriber.firstName = this.subscriberArray.firstName;
-        this.subscriber.lastName = this.subscriberArray.lastName;
-      }
-    }
+  Hi() {
+    console.log("hiiiiiii");
+
   }
 
 }

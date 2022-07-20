@@ -62,6 +62,9 @@ export class LegalGuardianFormComponent implements OnInit {
     email: ""
   };
 
+  radioLG: number = 1;
+
+
   menuItemsOfCordinate: IMenuItem[] = addPatientCordinateMenuItems;
   menuItemsOfQuickAdd: IMenuItem[] = addPatientQuickMenuItems;
   Form!: FormGroup;
@@ -96,17 +99,7 @@ export class LegalGuardianFormComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.legalGuardianArray = await this.addPatientServ.getLegalGuardCWP(1);
-      if (this.legalGuardianArray != null) {
-        this.legalGuardian.firstName = this.legalGuardianArray.firstName;
-        this.legalGuardian.lastName = this.legalGuardianArray.lastName;
-      }
-
-      this.callersInfo = await this.addPatientServ.getCallerInfoCWP();
-      if (this.callersInfo.callerLegarGuar == true) {
-        this.legalGuardian.firstName = this.callersInfo.firstName;
-        this.legalGuardian.lastName = this.callersInfo.lastName;
-      }
+    this.getData();
     this.initForm(this.formData);
     this.getStaticData();
     this.getCountries();
@@ -119,6 +112,22 @@ export class LegalGuardianFormComponent implements OnInit {
         this.legalGuardian.firstName = this.legalGuardians[i].firstName;
         this.legalGuardian.lastName = this.legalGuardians[i].lastName;
       }
+    }
+  }
+
+  async getData(){
+    this.legalGuardianArray = await this.addPatientServ.getLegalGuardCWP(1);
+    console.log("legaaaaaal", this.legalGuardianArray);
+    
+    if (this.legalGuardianArray != null) {
+      this.legalGuardian.firstName = this.legalGuardianArray.firstName;
+      this.legalGuardian.lastName = this.legalGuardianArray.lastName;
+    }
+
+    this.callersInfo = await this.addPatientServ.getCallerInfoCWP();
+    if (this.callersInfo.callerLegarGuar == true) {
+      this.legalGuardian.firstName = this.callersInfo.firstName;
+      this.legalGuardian.lastName = this.callersInfo.lastName;
     }
   }
 
@@ -297,4 +306,36 @@ export class LegalGuardianFormComponent implements OnInit {
     }
   }
 
+  async radioLGuargFunct(value: number) {
+    this.radioLG = value;
+    this.legalGuardian.firstName  = "";
+    this.legalGuardian.lastName  = "";
+
+    if (this.radioLG == 1) {
+      for (let i = 0; i < this.legalGuardians.length; i++) {
+        if (this.legalGuardians[i].selected) {
+        this.legalGuardian.firstName = this.legalGuardians[i].firstName;
+        this.legalGuardian.lastName = this.legalGuardians[i].lastName;
+        }
+      }
+    } else if (this.radioLG == 2) {
+      let LGLocStora = await this.addPatientServ.getLegalGuardCWP(1);
+      this.legalGuardian.firstName = LGLocStora.firstName;
+      this.legalGuardian.lastName = LGLocStora.lastName;
+
+
+    } else if (this.radioLG == 3) {
+      //Push dentist to API
+    }
+
+
+    // if (value == 1) {
+    //   this.legalGuardian.firstName = "";
+    //   this.legalGuardian.lastName = "";
+    //   this.changeSelect(0, false);
+    // } else if (value == 2) {
+    //     this.legalGuardian.firstName = this.legalGuardianArray.firstName;
+    //     this.legalGuardian.lastName = this.legalGuardianArray.lastName;
+    // }
+  }
 }

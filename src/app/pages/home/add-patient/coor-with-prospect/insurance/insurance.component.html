@@ -38,18 +38,18 @@
                     <p class="required">How many?</p>
                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radiohowmany" id="btnradio1"
-                                autocomplete="off" checked (click)="checkInsuranceCount = 1" />
+                            <input #radio1 class="form-check-input" type="radio" name="radiohowmany" id="btnradio1"
+                                checked (click)="numberTabs(1)" />
                             <label class="form-check-label" for="btnradio1">1</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radiohowmany" id="btnradio2"
-                                autocomplete="off" (click)="checkInsuranceCount = 2" />
+                            <input #radio2 class="form-check-input" type="radio" name="radiohowmany" id="btnradio2"
+                                (click)="numberTabs(2)" />
                             <label class="form-check-label" for="btnradio2">2</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radiohowmany" id="btnradio3"
-                                autocomplete="off" (click)="checkInsuranceCount = 3" />
+                            <input #radio3 class="form-check-input" type="radio" name="radiohowmany" id="btnradio3"
+                                (click)="numberTabs(3)" />
                             <label class="form-check-label" for="btnradio3">3</label>
                         </div>
                     </div>
@@ -79,13 +79,16 @@
                             <div class="col-4">
                                 <div class="mainformset">
                                     <label class="label-input-gap">Name of Insurance</label>
-                                    <input class="form-control" type="text" placeholder="" name="" />
+                                    <input class="form-control" type="text" placeholder="" name=""
+                                        [(ngModel)]="insurances.insurance1.insuranName"
+                                        [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="mainformset">
                                     <label class="label-input-gap">Phone</label>
-                                    <input class="form-control" type="text" placeholder="" name="" />
+                                    <input class="form-control" type="text" placeholder="" name="" [(ngModel)]="insurances.insurance1.phoneNumb
+                                    " [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                         </div>
@@ -97,19 +100,19 @@
                                     style="margin-top: -2px;">
                                     <div class="subscriber-divs">
                                         <input class="form-check-input" type="radio" name="subscriRadio"
-                                            id="subscriRadio1" (change)="subscriberRadios(1)" checked />
+                                            id="subscriRadio1" checked />
                                         <label class="form-check-label subscriber-labels" for="subscriRadio1">Search/Add
                                             new one</label>
                                     </div>
                                     <div class="subscriber-divs">
                                         <input class="form-check-input" type="radio" name="subscriRadio"
-                                            id="subscriRadio2" (change)="subscriberRadios(2)" />
+                                            id="subscriRadio2" />
                                         <label class="form-check-label subscriber-labels" for="subscriRadio2">Same as
                                             patient</label>
                                     </div>
                                     <div class="subscriber-divs">
                                         <input class="form-check-input" type="radio" name="subscriRadio"
-                                            id="subscriRadio3" (change)="subscriberRadios(3)" />
+                                            id="subscriRadio3" />
                                         <label class="form-check-label subscriber-labels" for="subscriRadio3">Same as
                                             legal guardian</label>
                                     </div>
@@ -160,19 +163,23 @@
                             <div class="twenty">
                                 <div class="mainformset">
                                     <label class="label-input-gap">DOB</label>
-                                    <input class="form-control" type="date" placeholder="" name="" />
+                                    <input class="form-control" type="date" placeholder="" name=""
+                                        [(ngModel)]="insurances.insurance1.subscriber1.DOB"
+                                        [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                             <div class="twenty">
                                 <div class="mainformset">
                                     <label class="label-input-gap">SSN/ID</label>
-                                    <input class="form-control" type="text" placeholder="" name="" />
+                                    <input class="form-control" type="text" placeholder="" name=""
+                                        [(ngModel)]="insurances.insurance1.subscriber1.SSNID"
+                                        [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                         </div>
                     </ng-template>
                 </li>
-                <li [ngbNavItem]="2">
+                <li [ngbNavItem]="2" (click)="Hi()">
                     <a ngbNavLink *ngIf="checkInsuranceCount > 1" class="tabs">Insurance 2</a>
                     <ng-template ngbNavContent>
                         <div class="row formrow" style="margin-top: 22px;">
@@ -190,13 +197,17 @@
                             <div class="col-4">
                                 <div class="mainformset">
                                     <label class="label-input-gap">Name of Insurance</label>
-                                    <input class="form-control" type="text" placeholder="" name="" />
+                                    <input class="form-control" type="text" placeholder="" name=""
+                                        [(ngModel)]="insurances.insurance2.insuranName"
+                                        [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="mainformset">
                                     <label class="label-input-gap">Phone</label>
-                                    <input class="form-control" type="text" placeholder="" name="" />
+                                    <input class="form-control" type="text" placeholder="" name=""
+                                        [(ngModel)]="insurances.insurance2.phoneNumb"
+                                        [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                         </div>
@@ -297,13 +308,17 @@
                             <div class="col-4">
                                 <div class="mainformset">
                                     <label class="label-input-gap">Name of Insurance</label>
-                                    <input class="form-control" type="text" placeholder="" name="" />
+                                    <input class="form-control" type="text" placeholder="" name=""
+                                        [(ngModel)]="insurances.insurance3.insuranName"
+                                        [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="mainformset">
                                     <label class="label-input-gap">Phone</label>
-                                    <input class="form-control" type="text" placeholder="" name="" />
+                                    <input class="form-control" type="text" placeholder="" name=""
+                                        [(ngModel)]="insurances.insurance3.phoneNumb"
+                                        [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                         </div>

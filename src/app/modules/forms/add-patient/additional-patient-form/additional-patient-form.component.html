@@ -61,33 +61,7 @@
             </div>
         </div>
 
-        <!-- legal Guardian radios-->
-        <div class="row">
-            <div class="mainformset">
-                <h6 class="heading subti-radio-b">Legal Guardian</h6>
-                <div class="btn-group radios" role="group" aria-label="Basic radio toggle button group"
-                    style="margin-bottom: 0px;">
 
-                    <div class="subscriber-divs">
-                        <input class="form-check-input" type="radio" name="lgGuardianRadio" id="lgGuardianRadio1"
-                            (change)="radioLGuargFunct(1)" checked />
-                        <label class="subscriber-labels" for="lgGuardianRadio1">Use existing one</label>
-                    </div>
-                    <div class="subscriber-divs">
-                        <input class="form-check-input" type="radio" name="lgGuardianRadio" id="lgGuardianRadio2"
-                            (change)="radioLGuargFunct(2)" />
-                        <label class="subscriber-labels" for="lgGuardianRadio2">Same as patient 1</label>
-                    </div>
-                    <div class="subscriber-divs">
-                        <input class="form-check-input" type="radio" name="lgGuardianRadio" id="lgGuardianRadio3"
-                            (change)="radioLGuargFunct(3)" />
-                        <label class="subscriber-labels" for="lgGuardianRadio3">Add a new one</label>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <br />
 
         <!-- legal TextBoxes Reusable-->
         <div class="row formrow" style="margin-top: -9px;">
@@ -125,20 +99,23 @@
         <!-- dentinsts List-->
         <div class="row formrow" *ngIf="radioDentist==1">
             <div class="col-4">
-                <div class="row" *ngFor="let dentist of dentists; let i = index">
-                    <div class="col-6">
+                <div class="row formrow" *ngFor="let dentist of dentists; let i = index">
+                    <div class="col-6" [ngClass]="{'deactivated':!dentist.activated}">
                         {{ dentist.firstName }} {{ dentist.lastName }}
                     </div>
-                    <div class="col-3" *ngIf="dentist.selected" (click)="changeSelDent(i, dentist.selected)">
+                    <div class="col-3 selected" *ngIf="dentist.selected" (click)="changeSelDent(i, dentist.selected)">
                         Selected
                     </div>
-                    <div class="col-3" *ngIf="!dentist.selected" (click)="changeSelDent(i, dentist.selected)">
+                    <div class="col-3" [ngClass]="{'deactivated':!dentist.activated}" *ngIf="!dentist.selected"
+                        (click)="changeSelDent(i, dentist.selected)">
                         Select
                     </div>
-                    <div class="col-3" *ngIf="dentist.activated" (click)="activeDent(i, dentist.activated)">
+                    <div class="col-3 deac-reactive" *ngIf="dentist.activated"
+                        (click)="activeDent(i, dentist.activated)">
                         Deactivate
                     </div>
-                    <div class="col-3" *ngIf="!dentist.activated" (click)="activeDent(i, dentist.activated)">
+                    <div class="col-3 deac-reactive" *ngIf="!dentist.activated"
+                        (click)="activeDent(i, dentist.activated)">
                         Reactivate
                     </div>
                 </div>
@@ -225,20 +202,23 @@
         <!-- Referrers List-->
         <div class="row formrow" *ngIf="radioReferrer==1">
             <div class="col-4">
-                <div class="row" *ngFor="let referrer of referrers; let i = index">
-                    <div class="col-6">
+                <div class="row formrow" *ngFor="let referrer of referrers; let i = index">
+                    <div class="col-6" [ngClass]="{'deactivated':!referrer.activated}">
                         {{ referrer.firstName }} {{ referrer.lastName }}
                     </div>
-                    <div class="col-3" *ngIf="referrer.selected" (click)="changeSelRefe(i, referrer.selected)">
+                    <div class="col-3 selected" *ngIf="referrer.selected" (click)="changeSelRefe(i, referrer.selected)">
                         Selected
                     </div>
-                    <div class="col-3" *ngIf="!referrer.selected" (click)="changeSelRefe(i, referrer.selected)">
+                    <div class="col-3" [ngClass]="{'deactivated':!referrer.activated}" *ngIf="!referrer.selected"
+                        (click)="changeSelRefe(i, referrer.selected)">
                         Select
                     </div>
-                    <div class="col-3" *ngIf="referrer.activated" (click)="activeRefe(i, referrer.activated)">
+                    <div class="col-3 deac-reactive" *ngIf="referrer.activated"
+                        (click)="activeRefe(i, referrer.activated)">
                         Deactivate
                     </div>
-                    <div class="col-3" *ngIf="!referrer.activated" (click)="activeRefe(i, referrer.activated)">
+                    <div class="col-3 deac-reactive" *ngIf="!referrer.activated"
+                        (click)="activeRefe(i, referrer.activated)">
                         Reactivate
                     </div>
                 </div>
@@ -327,18 +307,18 @@
                     <p class="label-input-gap">How many?</p>
                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radiohowmany" id="radiohowmany1"
-                                autocomplete="off" checked (click)="checkInsuranceCount = 1" />
+                            <input #radio1 class="form-check-input" type="radio" name="radiohowmany" id="radiohowmany1"
+                                autocomplete="off" checked (click)="numberTabs(1)" />
                             <label class="form-check-label" for="radiohowmany1">1</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radiohowmany" id="radiohowmany2"
-                                autocomplete="off" (click)="checkInsuranceCount = 2" />
+                            <input #radio2 class="form-check-input" type="radio" name="radiohowmany" id="radiohowmany2"
+                                autocomplete="off" (click)="numberTabs(2)" />
                             <label class="form-check-label" for="radiohowmany2">2</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radiohowmany" id="radiohowmany3"
-                                autocomplete="off" (click)="checkInsuranceCount = 3" />
+                            <input #radio3 class="form-check-input" type="radio" name="radiohowmany" id="radiohowmany3"
+                                autocomplete="off" (click)="numberTabs(3)" />
                             <label class="form-check-label" for="radiohowmany3">3</label>
                         </div>
                     </div>
@@ -361,17 +341,17 @@
 
                                     <div class="subscriber-divs">
                                         <input class="form-check-input" type="radio" name="insuranRadio1"
-                                            id="insuranRadio11" (change)="radioInsuran1Fuct(1)" checked />
+                                            id="insuranRadio11" (change)="radioInsuran1Funct(1)" checked />
                                         <label class="subscriber-labels" for="insuranRadio11">Use existing one</label>
                                     </div>
                                     <div class="subscriber-divs">
                                         <input class="form-check-input" type="radio" name="insuranRadio1"
-                                            id="insuranRadio12" (change)="radioInsuran1Fuct(2)" />
+                                            id="insuranRadio12" (change)="radioInsuran1Funct(2)" />
                                         <label class="subscriber-labels" for="insuranRadio12">Same as patient 1</label>
                                     </div>
                                     <div class="subscriber-divs">
                                         <input class="form-check-input" type="radio" name="insuranRadio1"
-                                            id="insuranRadio13" (change)="radioInsuran1Fuct(3)" />
+                                            id="insuranRadio13" (change)="radioInsuran1Funct(3)" />
                                         <label class="subscriber-labels" for="insuranRadio13">Add a new one</label>
                                     </div>
 
@@ -381,23 +361,23 @@
                         <!-- Insurances List -->
                         <div class="row formrow">
                             <div class="col-4" style="color: black; font-weight:normal;">
-                                <div class="row" *ngFor="let insurance1 of insurances1; let i = index">
-                                    <div class="col-6">
+                                <div class="row formrow" *ngFor="let insurance1 of insurances1; let i = index">
+                                    <div class="col-6" [ngClass]="{'deactivated':!insurance1.activated}">
                                         {{ insurance1.insuranName }}
                                     </div>
-                                    <div class="col-3" *ngIf="insurance1.selected"
+                                    <div class="col-3 selected" *ngIf="insurance1.selected"
                                         (click)="changeSelIns1(i, insurance1.selected)">
                                         Selected
                                     </div>
-                                    <div class="col-3" *ngIf="!insurance1.selected"
-                                        (click)="changeSelIns1(i, insurance1.selected)">
+                                    <div class="col-3" [ngClass]="{'deactivated':!insurance1.activated}"
+                                        *ngIf="!insurance1.selected" (click)="changeSelIns1(i, insurance1.selected)">
                                         Select
                                     </div>
-                                    <div class="col-3" *ngIf="insurance1.activated"
+                                    <div class="col-3 deac-reactive" *ngIf="insurance1.activated"
                                         (click)="activeIns1(i, insurance1.activated)">
                                         Deactivate
                                     </div>
-                                    <div class="col-3" *ngIf="!insurance1.activated"
+                                    <div class="col-3 deac-reactive" *ngIf="!insurance1.activated"
                                         (click)="activeIns1(i, insurance1.activated)">
                                         Reactivate
                                     </div>
@@ -472,25 +452,25 @@
                         </div>
 
                         <!-- Subscribers List-->
-                        <div class="row formrow" style="color: black; font-weight:normal">
+                        <div class="row formrow" *ngIf="radioSubscriber1==1" style="color: black; font-weight:normal">
                             <div class="col-4">
-                                <div class="row" *ngFor="let subscriber of subscribers1; let i = index">
-                                    <div class="col-6">
+                                <div class="row formrow" *ngFor="let subscriber of subscribers1; let i = index">
+                                    <div class="col-6" [ngClass]="{'deactivated':!subscriber.activated}">
                                         {{ subscriber.firstName }} {{ subscriber.lastName }}
                                     </div>
-                                    <div class="col-3" *ngIf="subscriber.selected"
+                                    <div class="col-3 selected" *ngIf="subscriber.selected"
                                         (click)="changeSelSubsc1(i, subscriber.selected)">
                                         Selected
                                     </div>
-                                    <div class="col-3" *ngIf="!subscriber.selected"
-                                        (click)="changeSelSubsc1(i, subscriber.selected)">
+                                    <div class="col-3" [ngClass]="{'deactivated':!subscriber.activated}"
+                                        *ngIf="!subscriber.selected" (click)="changeSelSubsc1(i, subscriber.selected)">
                                         Select
                                     </div>
-                                    <div class="col-3" *ngIf="subscriber.activated"
+                                    <div class="col-3 deac-reactive" *ngIf="subscriber.activated"
                                         (click)="activeSubsc1(i, subscriber.activated)">
                                         Deactivate
                                     </div>
-                                    <div class="col-3" *ngIf="!subscriber.activated"
+                                    <div class="col-3 deac-reactive" *ngIf="!subscriber.activated"
                                         (click)="activeSubsc1(i, subscriber.activated)">
                                         Reactivate
                                     </div>
@@ -564,17 +544,17 @@
 
                                     <div class="subscriber-divs">
                                         <input class="form-check-input" type="radio" name="insuranRadio1"
-                                            id="insuranRadio11" (change)="radioInsuran2Fuct(1)" checked />
+                                            id="insuranRadio11" (change)="radioInsuran2Funct(1)" checked />
                                         <label class="subscriber-labels" for="insuranRadio11">Use existing one</label>
                                     </div>
                                     <div class="subscriber-divs" style="margin-right: 33px !important;;">
                                         <input class="form-check-input" type="radio" name="insuranRadio1"
-                                            id="insuranRadio12" (change)="radioInsuran2Fuct(2)" />
+                                            id="insuranRadio12" (change)="radioInsuran2Funct(2)" />
                                         <label class="subscriber-labels" for="insuranRadio12">Same as patient 1</label>
                                     </div>
                                     <div class="subscriber-divs">
                                         <input class="form-check-input" type="radio" name="insuranRadio1"
-                                            id="insuranRadio13" (change)="radioInsuran2Fuct(3)" />
+                                            id="insuranRadio13" (change)="radioInsuran2Funct(3)" />
                                         <label class="subscriber-labels" for="insuranRadio13">Add a new one</label>
                                     </div>
 
@@ -584,23 +564,23 @@
                         <!-- Insurances List -->
                         <div class="row formrow">
                             <div class="col-4" style="color: black; font-weight:normal;">
-                                <div class="row" *ngFor="let insurance2 of insurances2; let j = index">
-                                    <div class="col-6">
+                                <div class="row formrow" *ngFor="let insurance2 of insurances2; let j = index">
+                                    <div class="col-6" [ngClass]="{'deactivated':!insurance2.activated}">
                                         {{ insurance2.insuranName }}
                                     </div>
-                                    <div class="col-3" *ngIf="insurance2.selected"
+                                    <div class="col-3 selected" *ngIf="insurance2.selected"
                                         (click)="changeSelIns2(j, insurance2.selected)">
                                         Selected
                                     </div>
-                                    <div class="col-3" *ngIf="!insurance2.selected"
-                                        (click)="changeSelIns2(j, insurance2.selected)">
+                                    <div class="col-3" [ngClass]="{'deactivated':!insurance2.activated}"
+                                        *ngIf="!insurance2.selected" (click)="changeSelIns2(j, insurance2.selected)">
                                         Select
                                     </div>
-                                    <div class="col-3" *ngIf="insurance2.activated"
+                                    <div class="col-3 deac-reactive" *ngIf="insurance2.activated"
                                         (click)="activeIns2(j, insurance2.activated)">
                                         Deactivate
                                     </div>
-                                    <div class="col-3" *ngIf="!insurance2.activated"
+                                    <div class="col-3 deac-reactive" *ngIf="!insurance2.activated"
                                         (click)="activeIns2(j, insurance2.activated)">
                                         Reactivate
                                     </div>
@@ -650,17 +630,17 @@
 
                                     <div class="subscriber-divs" style="margin-right: 33px !important;">
                                         <input class="form-check-input" type="radio" name="insuranRadio1"
-                                            id="insuranRadio11" (change)="radioInsuran3Fuct(1)" checked />
+                                            id="insuranRadio11" (change)="radioInsuran3Funct(1)" checked />
                                         <label class="subscriber-labels" for="insuranRadio11">Use existing one</label>
                                     </div>
                                     <div class="subscriber-divs" style="margin-right: 33px !important;;">
                                         <input class="form-check-input" type="radio" name="insuranRadio1"
-                                            id="insuranRadio12" (change)="radioInsuran3Fuct(2)" />
+                                            id="insuranRadio12" (change)="radioInsuran3Funct(2)" />
                                         <label class="subscriber-labels" for="insuranRadio12">Same as patient 1</label>
                                     </div>
                                     <div class="subscriber-divs">
                                         <input class="form-check-input" type="radio" name="insuranRadio1"
-                                            id="insuranRadio13" (change)="radioInsuran3Fuct(3)" />
+                                            id="insuranRadio13" (change)="radioInsuran3Funct(3)" />
                                         <label class="subscriber-labels" for="insuranRadio13">Add a new one</label>
                                     </div>
 
@@ -670,23 +650,23 @@
                         <!-- Insurances List -->
                         <div class="row formrow">
                             <div class="col-4" style="color: black; font-weight:normal;">
-                                <div class="row" *ngFor="let insurance3 of insurances3; let i = index">
-                                    <div class="col-6">
+                                <div class="row formrow" *ngFor="let insurance3 of insurances3; let i = index">
+                                    <div class="col-6" [ngClass]="{'deactivated':!insurance3.activated}">
                                         {{ insurance3.insuranName }}
                                     </div>
-                                    <div class="col-3" *ngIf="insurance3.selected"
+                                    <div class="col-3 selected" *ngIf="insurance3.selected"
                                         (click)="changeSelIns3(i, insurance3.selected)">
                                         Selected
                                     </div>
-                                    <div class="col-3" *ngIf="!insurance3.selected"
-                                        (click)="changeSelIns3(i, insurance3.selected)">
+                                    <div class="col-3" [ngClass]="{'deactivated':!insurance3.activated}"
+                                        *ngIf="!insurance3.selected" (click)="changeSelIns3(i, insurance3.selected)">
                                         Select
                                     </div>
-                                    <div class="col-3" *ngIf="insurance3.activated"
+                                    <div class="col-3 deac-reactive" *ngIf="insurance3.activated"
                                         (click)="activeIns3(i, insurance3.activated)">
                                         Deactivate
                                     </div>
-                                    <div class="col-3" *ngIf="!insurance3.activated"
+                                    <div class="col-3 deac-reactive" *ngIf="!insurance3.activated"
                                         (click)="activeIns3(i, insurance3.activated)">
                                         Reactivate
                                     </div>

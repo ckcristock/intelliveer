@@ -16,23 +16,51 @@
                 style="height: 98px; padding: 5px 10px 8px 6px; font-size: 12px; line-height : 20px; border: 2px solid #7a7a7c; font-style: oblique; resize: none;"></textarea>
         </div>
 
+        <!-- legal Guardian radios-->
+        <div class="row" *ngIf="tab == 'addPatient'">
+            <div class="mainformset">
+                <h6 class="heading subti-radio-b">Legal Guardian</h6>
+                <div class="btn-group radios" role="group" aria-label="Basic radio toggle button group"
+                    style="margin-bottom: 0px;">
+
+                    <div class="subscriber-divs">
+                        <input class="form-check-input" type="radio" name="lgGuardianRadio" id="lgGuardianRadio1"
+                            (change)="radioLGuargFunct(1)" checked />
+                        <label class="subscriber-labels" for="lgGuardianRadio1">Use existing one</label>
+                    </div>
+                    <div class="subscriber-divs">
+                        <input class="form-check-input" type="radio" name="lgGuardianRadio" id="lgGuardianRadio2"
+                            (change)="radioLGuargFunct(2)" />
+                        <label class="subscriber-labels" for="lgGuardianRadio2">Same as patient 1</label>
+                    </div>
+                    <div class="subscriber-divs">
+                        <input class="form-check-input" type="radio" name="lgGuardianRadio" id="lgGuardianRadio3"
+                            (change)="radioLGuargFunct(3)" />
+                        <label class="subscriber-labels" for="lgGuardianRadio3">Add a new one</label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <br />
+
         <!-- legal Guardians -->
-        <div class="row formrow" *ngIf="tab == 'addPatient'">
+        <div class="row formrow" *ngIf="tab == 'addPatient' && radioLG == 1">
             <div class="col-4">
-                <div class="row" *ngFor="let legalGuardian of legalGuardians; let i = index">
-                    <div class="col-6">
+                <div class="row formrow" *ngFor="let legalGuardian of legalGuardians; let i = index">
+                    <div class="col-6" [ngClass]="{'deactivated':!legalGuardian.activated}">
                         {{ legalGuardian.firstName }} {{ legalGuardian.lastName }}
                     </div>
-                    <div class="col-3" *ngIf="legalGuardian.selected" (click)="changeSelect(i, legalGuardian.selected)">
+                    <div class="col-3 selected" *ngIf="legalGuardian.selected" (click)="changeSelect(i, legalGuardian.selected)">
                         Selected
                     </div>
-                    <div class="col-3" *ngIf="!legalGuardian.selected" (click)="changeSelect(i, legalGuardian.selected)">
+                    <div class="col-3" [ngClass]="{'deactivated':!legalGuardian.activated}" *ngIf="!legalGuardian.selected" (click)="changeSelect(i, legalGuardian.selected)">
                         Select
                     </div>
-                    <div class="col-3" *ngIf="legalGuardian.activated" (click)="active(i, legalGuardian.activated)">
+                    <div class="col-3 deac-reactive" *ngIf="legalGuardian.activated" (click)="active(i, legalGuardian.activated)">
                         Deactivate
                     </div>
-                    <div class="col-3" *ngIf="!legalGuardian.activated" (click)="active(i, legalGuardian.activated)">
+                    <div class="col-3 deac-reactive" *ngIf="!legalGuardian.activated" (click)="active(i, legalGuardian.activated)">
                         Reactivate
                     </div>
                 </div>
