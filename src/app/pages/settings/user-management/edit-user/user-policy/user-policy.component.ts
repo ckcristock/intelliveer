@@ -168,6 +168,7 @@ export class UserPolicyComponent implements OnInit {
 
 	getUserCurrentRoleList(bgId: any) {
 		this.userCurrentRoleList = [];
+		let permissionArray: any[] = [];
 		let userId = localStorage.getItem('userId');
 		this.userService.getUserData(bgId, userId).subscribe(
 			(userCurrentRoleList: any) => {
@@ -200,6 +201,25 @@ export class UserPolicyComponent implements OnInit {
 												k < permissionsList.length;
 												k++
 											) {
+												const findDuplicate = permissionArray.find((x: any) => x.name === permissionsList[k].name);
+												if(findDuplicate)
+												{
+													if(findDuplicate.enabled || permissionsList[k].enabled)
+													{
+														permissionsList[k].enabled = true;
+													}
+													if(findDuplicate.locked || permissionsList[k].locked)
+													{
+														permissionsList[k].locked = true;
+													}
+													if(findDuplicate.allowOverride || permissionsList[k].allowOverride)
+													{
+														permissionsList[k].allowOverride = true;
+													}
+													// console.log(findDuplicate)
+													// console.log("------------------------------------------")
+													// console.log(permissionsList[k])
+												}
 												const permissionFormGroup =
 													this.newPermissions();
 												permissionFormGroup.patchValue({
@@ -218,6 +238,8 @@ export class UserPolicyComponent implements OnInit {
 												this.permissionArray().push(
 													permissionFormGroup
 												);
+												permissionArray.push(permissionsList[k]);
+												// console.log(this.permissionArray().value);
 											}
 											sectionFormGroup.patchValue({
 												section: sectionList[j].section,
@@ -226,18 +248,24 @@ export class UserPolicyComponent implements OnInit {
 											this.sectionsArray().push(
 												sectionFormGroup
 											);
+											// console.log(this.sectionsArray().value);
 										}
-										formGroup.patchValue({
-											module: rolePermission[i].module
-										});
-										this.moduleArray().push(formGroup);
+										const findDuplicateModule = this.moduleArray().value.find((x: any) => x.module === rolePermission[i].module);
+										console.log(findDuplicateModule)
+										if(findDuplicateModule == undefined)
+										{
+											console.log("000000000000000000000000000000000000000000000000000")
+											formGroup.patchValue({
+												module: rolePermission[i].module
+											});
+											this.moduleArray().push(formGroup);
+											console.log(this.moduleArray().value);
+										}
 									}
+									console.log(this.Form);
+									this.Form.patchValue(this.moduleArray())
 									if (roledata) {
-										let roleObj = {
-											id: i + 1,
-											name: roledata.name
-										};
-										this.userCurrentRoleList.push(roleObj);
+										this.userCurrentRoleList.push(roledata);
 									}
 								},
 								error: () => {}
@@ -260,7 +288,6 @@ export class UserPolicyComponent implements OnInit {
 	getRolesList(bgId: any) {
 		this.userService.getRoleList(bgId).subscribe({
 			next: (roleList: any) => {
-				console.log(roleList);
 				this.roleList = roleList;
 			},
 			error: () => {}
@@ -268,12 +295,12 @@ export class UserPolicyComponent implements OnInit {
 	}
 
 	selectRoleData($event: any) {
-		console.log($event);
+		const findDuplicate = this.userCurrentRoleList.find((x: any) => x._id === $event._id);
 		let roleObj = {
-			id: this.userCurrentRoleList.length + 1,
+			id: $event._id,
 			name: $event.name
 		};
-		this.userCurrentRoleList.push(roleObj);
+		(findDuplicate == undefined) ? this.userCurrentRoleList.push(roleObj) : '';		
 		this.moduleArray().clear();
 		this.sectionsArray().clear();
 		this.permissionArray().clear();
