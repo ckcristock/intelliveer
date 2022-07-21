@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {
 	BusinessGroupDropdownService,
 	SelectedBusinessGroup,
@@ -16,7 +17,8 @@ export class PracticeComponent implements OnInit {
 	selectedBusinessGroup: SelectedBusinessGroup | undefined;
 	constructor(
 		private businessGroupDropdownService: BusinessGroupDropdownService,
-		private practiceService: PracticeService
+		private practiceService: PracticeService,
+		private router: Router,
 	) {
 		this.businessGroupDropdownSupscription =
 			this.businessGroupDropdownService
@@ -57,4 +59,8 @@ export class PracticeComponent implements OnInit {
 				});
 		}
 	}
+	/** Add new Practice */
+	addPractice(){
+		this.router.navigate(['/dashboard/settings/onboarding/practice/add']);
+    }
 }

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   BusinessGroupDropdownService,
   SelectedBusinessGroup,
@@ -17,7 +18,8 @@ export class LocationComponent implements OnInit, OnDestroy {
   selectedBusinessGroup: SelectedBusinessGroup | undefined;
   constructor(
     private businessGroupDropdownService: BusinessGroupDropdownService,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private router: Router,
   ) {
     this.businessGroupDropdownSupscription = this.businessGroupDropdownService
       .businessGroup()
@@ -56,5 +58,9 @@ export class LocationComponent implements OnInit, OnDestroy {
           error: () => {},
         });
     }
+  }
+  /** Add New locations */
+  addLocation(){
+    this.router.navigate(['/dashboard/settings/onboarding/location/add']);
   }
 }
