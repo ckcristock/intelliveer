@@ -69,9 +69,35 @@ export class InsuranceComponent implements OnInit {
 
   async ngOnInit() {
     this.insurancesP1[0] = await this.AddPatientService.getinsurancesP1Cwp();
-    this.insurances.insurance1 = this.insurancesP1[0].insurance1;
-    this.insurances.insurance2 = this.insurancesP1[0].insurance2;
-    this.insurances.insurance3 = this.insurancesP1[0].insurance3;
+    this.insurances.insurance1.insuranName = await this.insurancesP1[0].insurance1.insuranName;
+    this.insurances.insurance1.phoneNumb = await this.insurancesP1[0].insurance1.phoneNumb;
+    this.insurances.insurance1.subscriber1.firstName = await this.insurancesP1[0].insurance1.subscriber1.firstName;
+    this.insurances.insurance1.subscriber1.lastName = await this.insurancesP1[0].insurance1.subscriber1.lastName;
+    this.insurances.insurance1.subscriber1.relationship = await this.insurancesP1[0].insurance1.subscriber1.relationship;
+    this.insurances.insurance1.subscriber1.DOB = await this.insurancesP1[0].insurance1.subscriber1.DOB;
+    this.insurances.insurance1.subscriber1.SSNID = await this.insurancesP1[0].insurance1.subscriber1.SSNID;
+
+    
+    this.insurances.insurance2.insuranName = await this.insurancesP1[0].insurance2.insuranName;
+    this.insurances.insurance2.phoneNumb = await this.insurancesP1[0].insurance2.phoneNumb;
+    this.insurances.insurance2.subscriber2.firstName = await this.insurancesP1[0].insurance2.subscriber2.firstName;
+    this.insurances.insurance2.subscriber2.lastName = await this.insurancesP1[0].insurance2.subscriber2.lastName;
+    this.insurances.insurance2.subscriber2.relationship = await this.insurancesP1[0].insurance2.subscriber2.relationship;
+    this.insurances.insurance2.subscriber2.DOB = await this.insurancesP1[0].insurance2.subscriber2.DOB;
+    this.insurances.insurance2.subscriber2.SSNID = await this.insurancesP1[0].insurance2.subscriber2.SSNID;
+
+    this.insurances.insurance3.insuranName = await this.insurancesP1[0].insurance3.insuranName;
+    this.insurances.insurance3.phoneNumb = await this.insurancesP1[0].insurance3.phoneNumb;
+    this.insurances.insurance3.subscriber3.firstName = await this.insurancesP1[0].insurance3.subscriber3.firstName;
+    this.insurances.insurance3.subscriber3.lastName = await this.insurancesP1[0].insurance3.subscriber3.lastName;
+    this.insurances.insurance3.subscriber3.relationship = await this.insurancesP1[0].insurance3.subscriber3.relationship;
+    this.insurances.insurance3.subscriber3.DOB = await this.insurancesP1[0].insurance3.subscriber3.DOB;
+    this.insurances.insurance3.subscriber3.SSNID = await this.insurancesP1[0].insurance3.subscriber3.SSNID;
+
+
+
+
+
   }
 
   ngAfterViewInit() {
@@ -133,9 +159,5 @@ export class InsuranceComponent implements OnInit {
     this.showButtonSaveCancel = true;
   }
 
-  Hi() {
-    console.log("hiiiiiii");
-
-  }
 
 }

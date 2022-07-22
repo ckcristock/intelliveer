@@ -78,13 +78,23 @@ export class PatientFormComponent implements OnInit {
 
   initForm(data?: any) {
     data = data || {};
-    this.Form = this.fb.group({
-      practice: [data?.practice || ''],
-      fName: [data?.fName || '', Validators.required],
-      lName: [data?.lName || '', Validators.required],
-      DOB: [data?.DOB || '', Validators.required],
-      gender: [data?.gender || '']
-    });
+    if (this.tab == "coordWithProspect") {
+      this.Form = this.fb.group({
+        practice: [data?.practice || ''],
+        fName: [data?.fName || '', Validators.required],
+        lName: [data?.lName || '', Validators.required],
+        DOB: [data?.DOB || '', Validators.required],
+        gender: [data?.gender || '']
+      });
+    } else if (this.tab == "quickAdd"){
+      this.Form = this.fb.group({
+        practice: [data?.practice || ''],
+        fName: [data?.fName || '', Validators.required],
+        lName: [data?.lName || '', Validators.required],
+        DOB: [data?.DOB || '',],
+        gender: [data?.gender || '']
+      });
+    }
   }
 
   save(data: any) {

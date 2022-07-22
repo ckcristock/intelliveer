@@ -40,7 +40,7 @@
             <div class=" twenty">
                     <div class="mainformset">
                         <label class="label-input-gap">Date of Birth</label>
-                        <input class="form-control value-must" type="date" placeholder="" name=""
+                        <input class="form-control " [ngClass]="{'value-must': tab == 'coordWithProspect'}" type="date" placeholder="" name=""
                             formControlName="DOB" />
                     </div>
                 </div>
