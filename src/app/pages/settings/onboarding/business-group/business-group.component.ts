@@ -41,7 +41,6 @@ export class BusinessGroupComponent
 	}
 	ngOnInit() {
 		this.getOrgBgId();
-		this.fetchBgList();
 	}
 	ngAfterViewInit() {
 		setTimeout(() => {
@@ -57,8 +56,8 @@ export class BusinessGroupComponent
 			error: () => {}
 		});
 	}
-	fetchBgListByBGId(bgId:any){
-		this.businessGroupService.getBusinessGroup(bgId).subscribe({
+	fetchBgListByBGId(bgId:any,orgId:any){
+		this.businessGroupService.getBusinessGroup(bgId,orgId).subscribe({
 			next: (data) => {
 				this.data = [data];
 				console.log(this.data)
@@ -92,12 +91,15 @@ export class BusinessGroupComponent
 
 	getOrgBgId(){
 		let user = this.authService.getLoggedInUser();
+		let orgId = this.authService.getOrgId();
 		if (user) {
 			if(user?.__ISSU__){
 			   this.fetchBgList()
 			   this.isSuperUser = true;
+			}else if(user.bg[0]?._id){
+			   this.fetchBgListByBGId(user.bg[0]?._id,'intelliveer')
 			}else{
-			   this.fetchBgListByBGId(user.bg[0]?._id)
+				this.fetchBgListByBGId(orgId,orgId)
 			}
 		}
 	}

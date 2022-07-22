@@ -386,4 +386,10 @@ export class AddRoleTemplateComponent implements OnInit {
       this.isTypeSpecific = true;
     }
   }
+  checkLockedValue(event:any,data:any){
+    console.log(event.target.checked)
+    if(event.target.checked == false){
+      data.controls.allowOverride.value = false
+    }
+  }
 }
