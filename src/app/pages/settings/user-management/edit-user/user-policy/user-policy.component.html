@@ -140,6 +140,7 @@
 												<tr>
 													<td><input type="checkbox" formControlName="enabled" [attr.disabled]="childPermision.value.locked"
                                                         *ngIf="childPermision.value.locked"/>
+                                                        <input type="checkbox" formControlName="enabled"  *ngIf="!childPermision.value.locked"/></td>
 													<td>
 														<input
 															type="hidden"
