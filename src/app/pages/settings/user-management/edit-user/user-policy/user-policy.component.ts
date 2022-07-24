@@ -25,6 +25,12 @@ export class UserPolicyComponent implements OnInit {
 	roleModuleNestedForm!: FormGroup;
 	roleSectionNestedForm!: FormGroup;
 	formData: any | undefined = undefined;
+	showAdvanceBG: boolean = true;
+	showAdvanceLE: boolean = true;
+	showAdvanceLOC: boolean = true;
+	showAdvancePC: boolean = true;
+    
+	permissionOBJ: any[] = []
 	userCurrentRoleList: any[] = [];
 	userCurrentRoleListForForm: any[] = [];
 	businessGroupDropdownSupscription: any;
@@ -116,7 +122,6 @@ export class UserPolicyComponent implements OnInit {
 	}
 
 	getUserPolicyPermission() {
-		console.log(this.bgUserLogin, localStorage.getItem('userId'));
 		this.userService
 			.getUserPolicyList(this.bgUserLogin, localStorage.getItem('userId'))
 			.subscribe(
@@ -201,267 +206,34 @@ export class UserPolicyComponent implements OnInit {
 		this.getUserPolicyPermission();
 	}
 
-	// getUserCurrentRoleList(bgId: any) {
-	// 	this.userCurrentRoleList = [];
-	// 	let permissionArray: any[] = [];
-	// 	let userId = localStorage.getItem('userId');
-	// 	this.userService.getUserData(bgId, userId).subscribe(
-	// 		(userCurrentRoleList: any) => {
-	// 			if (userCurrentRoleList) {
-	// 				for (let i = 0; i < userCurrentRoleList.roles.length; i++) {
-	// 					this.userService
-	// 						.getUserRoleData(bgId, userCurrentRoleList.roles[i])
-	// 						.subscribe({
-	// 							next: (roledata: any) => {
-	// 								let rolePermission = roledata.permissions;
-	// 								for (
-	// 									let i = 0;
-	// 									i < rolePermission.length;
-	// 									i++
-	// 								) {
-	// 									const formGroup = this.newModule();
-	// 									const sectionList =
-	// 										rolePermission[i].sections;
-	// 									for (
-	// 										let j = 0;
-	// 										j < sectionList.length;
-	// 										j++
-	// 									) {
-	// 										const sectionFormGroup =
-	// 											this.newSections();
-	// 										const permissionsList =
-	// 											sectionList[j].permissions;
-	// 										for (
-	// 											let k = 0;
-	// 											k < permissionsList.length;
-	// 											k++
-	// 										) {
-	// 											const findDuplicate = permissionArray.find((x: any) => x.name === permissionsList[k].name);
-	// 											if(findDuplicate)
-	// 											{
-	// 												if(findDuplicate.enabled || permissionsList[k].enabled)
-	// 												{
-	// 													permissionsList[k].enabled = true;
-	// 												}
-	// 												if(findDuplicate.locked || permissionsList[k].locked)
-	// 												{
-	// 													permissionsList[k].locked = true;
-	// 												}
-	// 												if(findDuplicate.allowOverride || permissionsList[k].allowOverride)
-	// 												{
-	// 													permissionsList[k].allowOverride = true;
-	// 												}
-	// 												console.log(findDuplicate)
-	// 												console.log("------------------------------------------")
-	// 												console.log(permissionsList[k])
-	// 											}
-	// 											const permissionFormGroup =
-	// 												this.newPermissions();
-	// 											permissionFormGroup.patchValue({
-	// 												name: permissionsList[k]
-	// 													.name,
-	// 												enabled:
-	// 													permissionsList[k]
-	// 														.enabled,
-	// 												locked: permissionsList[k]
-	// 													.locked,
-	// 												allowOverride:
-	// 													permissionsList[k]
-	// 														.allowOverride,
-	// 												attrs: {}
-	// 											});
-	// 											this.permissionArray().push(
-	// 												permissionFormGroup
-	// 											);
-	// 											permissionArray.push(permissionsList[k]);
-	// 										}
-	// 										sectionFormGroup.patchValue({
-	// 											section: sectionList[j].section,
-	// 											displayShowAdvanced: false
-	// 										});
-	// 										this.sectionsArray().push(
-	// 											sectionFormGroup
-	// 										);
-	// 									}
-	// 									const findDuplicateModule = this.moduleArray().value.find((x: any) => x.module === rolePermission[i].module);
-	// 									if(findDuplicateModule == undefined)
-	// 									{
-	// 										formGroup.patchValue({
-	// 											module: rolePermission[i].module
-	// 										});
-	// 										this.moduleArray().push(formGroup);
-	// 									}
-	// 								}
-	// 								console.log(this.Form);
-	// 								this.Form.patchValue(this.moduleArray())
-	// 								if (roledata) {
-	// 									this.userCurrentRoleList.push(roledata);
-	// 								}
-	// 							},
-	// 							error: () => {}
-	// 						});
-	// 				}
-	// 			}
-	// 		},
-	// 		(error) => {
-	// 			console.log(error);
-	// 		}
-	// 	);
-	// }
-
 	getUserCurrentRoleList(bgId: any) {
 		this.userCurrentRoleList = [];
 		this.userCurrentRoleListForForm = [];
-		let permissionArray: any[] = [];
 		let userId = localStorage.getItem('userId');
 		this.userService.getUserData(bgId, userId).forEach(
 			(userCurrentRole: any) => {
-				console.log(userCurrentRole)
 				if (userCurrentRole) {
-					userCurrentRole.roles.forEach(
-						(element: any, index: any) => {
-							this.userService
-								.getUserRoleData(
-									bgId,
-									userCurrentRole.roles[index]
-								)
-								.forEach((roledata: any) => {
-										console.log(roledata);
-										if (permissionArray.length == 0) {
-											this.userCurrentRoleListForForm.push(
-												roledata
-											);
-											roledata.permissions.forEach(
-												(eli: any) => {
-													eli.sections.forEach(
-														(section: any) => {
-															section.permissions.forEach(
-																(perm: any) => {
-																	permissionArray.push(
-																		{
-																			name: perm.name,
-																			enabled:
-																				perm.enabled,
-																			locked: perm.locked,
-																			allowOverride:
-																				perm.allowOverride,
-																			attrs: {}
-																		}
-																	);
-																}
-															);
-														}
-													);
-												}
-											);
-										} else {
-											roledata.permissions.forEach(
-												(eli: any, index: any) => {
-													eli.sections.forEach(
-														(
-															section: any,
-															ind: any
-														) => {
-															section.permissions.forEach(
-																(
-																	perm: any,
-																	perIndex: any
-																) => {
-																	let findDuplicate: any = {};
-																	findDuplicate =
-																		permissionArray.find(
-																			(
-																				x: any
-																			) =>
-																				x.name ===
-																				perm.name
-																		);
-																	if (
-																		findDuplicate
-																	) {
-																		if (
-																			findDuplicate.enabled ||
-																			perm.enabled
-																		) {
-																			this.userCurrentRoleListForForm[0].permissions[
-																				index
-																			].sections[
-																				ind
-																			].permissions[
-																				perIndex
-																			].enabled =
-																				true;
-																		}
-																		if (
-																			findDuplicate.locked ||
-																			perm.locked
-																		) {
-																			if(findDuplicate.allowOverride ||
-																				perm.allowOverride)
-																			{
-																				this.userCurrentRoleListForForm[0].permissions[
-																					index
-																				].sections[
-																					ind
-																				].permissions[
-																					perIndex
-																				].locked =
-																					true;
-																				if(findDuplicate.allowOverride && perm.allowOverride)
-																				{
-																					this.userCurrentRoleListForForm[0].permissions[
-																						index
-																					].sections[
-																						ind
-																					].permissions[
-																						perIndex
-																					].allowOverride =
-																						true;
-																				}
-																			}
-																		}
-																	} else {
-																		permissionArray.push(
-																			{
-																				name: perm.name,
-																				enabled:
-																					perm.enabled,
-																				locked: perm.locked,
-																				allowOverride:
-																					perm.allowOverride,
-																				attrs: {}
-																			}
-																		);
-																	}
-																}
-															);
-														}
-													);
-												}
-											);
-										}
-										if (
-											userCurrentRole.roles.length - 1 ==
-											index
-										) {
-											setTimeout(() => {
-												// console.log(this.userCurrentRoleListForForm[0]?.permissions, 'permissions');
-												this.setUserPolicyData(
-													this
-														.userCurrentRoleListForForm[0]
-														?.permissions
-												);
-											}, 1000);
-										}
-										if (roledata) {
-											this.userCurrentRoleList.push(
-												roledata
-											);
-										}
-									},
-								);
-						}
-					);
+					userCurrentRole.roles.forEach((element:any,index:any) => {
+						console.log(element,bgId)
+						this.userService
+							.getUserRoleData(bgId, userCurrentRole.roles[index])
+							.subscribe({
+								next: (roledata: any) => {
+									let rolData:any = roledata
+									if(roledata){
+										this.userCurrentRoleList.push(rolData)
+									}
+									this.setPermissionForCancelANDNew(roledata);
+									if(userCurrentRole.roles.length-1 == index){
+										setTimeout(() => {
+											console.log(this.userCurrentRoleListForForm[0]?.permissions, 'permissions');
+										this.setUserPolicyData(this.userCurrentRoleListForForm[0]?.permissions)
+										}, 200);
+									}	
+								},
+								error: () => {}
+							});
+					})
 				}
 			}
 		);
@@ -496,6 +268,28 @@ export class UserPolicyComponent implements OnInit {
 					'Sorry....',
 					'You can not delete role'
 			  );
+			  this.moduleArray().clear();
+			  this.sectionsArray().clear();
+			  this.permissionArray().clear();
+			  this.userCurrentRoleListForForm = [];
+			  this.permissionOBJ = [];
+			  this.userCurrentRoleList.forEach((ele:any,ind:any)=>{
+                this.userService
+							.getUserRoleData(this.bgUserLogin, ele._id)
+							.subscribe({
+								next: (roledata: any) => {
+									this.setPermissionForCancelANDNew(roledata);
+									  if(this.userCurrentRoleList.length-1 == ind){
+										  setTimeout(() => {
+											  console.log(this.userCurrentRoleListForForm[0]?.permissions, 'permissions');
+										  this.setUserPolicyData(this.userCurrentRoleListForForm[0]?.permissions)
+										  }, 200);
+									  }
+								}
+							})
+			  })
+			  
+		
 	}
 
 	getRolesList(bgId: any) {
@@ -508,46 +302,15 @@ export class UserPolicyComponent implements OnInit {
 	}
 
 	selectRoleData($event: any) {
-		const findDuplicate = this.userCurrentRoleList.find(
-			(x: any) => x._id === $event._id
-		);
-		let roleObj = {
-			id: $event._id,
-			name: $event.name
-		};
-		findDuplicate == undefined
-			? this.userCurrentRoleList.push(roleObj)
-			: '';
+		const findDuplicate = this.userCurrentRoleList.find((x: any) => x._id === $event._id);
+		(findDuplicate == undefined) ? this.userCurrentRoleList.push($event) : '';	
+		console.log(this.userCurrentRoleList);	
 		this.moduleArray().clear();
 		this.sectionsArray().clear();
 		this.permissionArray().clear();
-		let rolePermission = $event.permissions;
-		for (let i = 0; i < rolePermission.length; i++) {
-			const formGroup = this.newModule();
-			const sectionList = rolePermission[i].sections;
-			for (let j = 0; j < sectionList.length; j++) {
-				const sectionFormGroup = this.newSections();
-				const permissionsList = sectionList[j].permissions;
-				for (let k = 0; k < permissionsList.length; k++) {
-					const permissionFormGroup = this.newPermissions();
-					permissionFormGroup.patchValue({
-						name: permissionsList[k].name,
-						enabled: permissionsList[k].enabled,
-						locked: permissionsList[k].locked,
-						allowOverride: permissionsList[k].allowOverride,
-						attrs: {}
-					});
-					this.permissionArray().push(permissionFormGroup);
-				}
-				sectionFormGroup.patchValue({
-					section: sectionList[j].section,
-					displayShowAdvanced: false
-				});
-				this.sectionsArray().push(sectionFormGroup);
-			}
-			formGroup.patchValue({ module: rolePermission[i].module });
-			this.moduleArray().push(formGroup);
-		}
+		this.userCurrentRoleListForForm = [];
+		this.permissionOBJ = [];
+		this.addRolePermissions(this.userCurrentRoleList)
 	}
 
 	getLegelEntityList(bgId: any) {
@@ -585,4 +348,121 @@ export class UserPolicyComponent implements OnInit {
 			}
 		);
 	}
+/** common function for add permission acording roles */
+addRolePermissions(data:any){	
+	data.forEach((element:any,index:any)=>{
+		if(this.permissionOBJ.length == 0){
+			this.userCurrentRoleListForForm.push(element);
+			element.permissions.forEach((eli:any)=>{
+				eli.sections.forEach((section:any)=>{
+					section.permissions.forEach((perm:any)=>{
+						this.permissionOBJ.push({
+							name: perm
+								.name,
+							enabled:
+								perm
+									.enabled,
+							locked: perm
+								.locked,
+							allowOverride:
+								perm
+									.allowOverride,
+							attrs: {}
+						})
+					})
+				})
+			})
+			}else{
+			element.permissions.forEach((eli:any,index:any)=>{
+					eli.sections.forEach((section:any,ind:any)=>{
+						section.permissions.forEach((perm:any,perIndex:any)=>{
+							const findDuplicate = this.permissionOBJ.find((x: any) => x.name === perm.name);
+							if(findDuplicate)
+							{
+								if(findDuplicate.enabled || perm.enabled)
+									{
+										this.userCurrentRoleListForForm[0].permissions[index].sections[ind].permissions[perIndex].enabled = true;
+									}
+									if(findDuplicate.locked || perm.locked)
+									{
+										this.userCurrentRoleListForForm[0].permissions[index].sections[ind].permissions[perIndex].locked = true;
+									}
+									if(findDuplicate.allowOverride || perm.allowOverride)
+									{
+										this.userCurrentRoleListForForm[0].permissions[index].sections[ind].permissions[perIndex].allowOverride = true;
+									}
+							}
+						})
+					})
+				})
+			}	
+			if(data.length-1 == index){
+			setTimeout(() => {
+				console.log(this.userCurrentRoleListForForm[0]?.permissions, 'permissions');
+			this.setUserPolicyData(this.userCurrentRoleListForForm[0]?.permissions)
+			}, 200);
+		} 
+	})
+}
+setPermissionForCancelANDNew(roledata:any){
+	if(this.permissionOBJ.length == 0){
+		this.userCurrentRoleListForForm.push(roledata);
+		roledata.permissions.forEach((eli:any)=>{
+		  eli.sections.forEach((section:any)=>{
+			  section.permissions.forEach((perm:any)=>{
+				  this.permissionOBJ.push({
+					  name: perm
+						  .name,
+					  enabled:
+						  perm
+							  .enabled,
+					  locked: perm
+						  .locked,
+					  allowOverride:
+						  perm
+							  .allowOverride,
+					  attrs: {}
+				  })
+			  })
+		  })
+	  })
+	  }else{
+		  roledata.permissions.forEach((eli:any,index:any)=>{
+			  eli.sections.forEach((section:any,ind:any)=>{
+				  section.permissions.forEach((perm:any,perIndex:any)=>{
+					  const findDuplicate = this.permissionOBJ.find((x: any) => x.name === perm.name);
+					  if(findDuplicate)
+					  {
+						  if(findDuplicate.enabled || perm.enabled)
+							  {
+								  this.userCurrentRoleListForForm[0].permissions[index].sections[ind].permissions[perIndex].enabled = true;
+							  }
+							  if(findDuplicate.locked || perm.locked)
+							  {
+								  this.userCurrentRoleListForForm[0].permissions[index].sections[ind].permissions[perIndex].locked = true;
+							  }
+							  if(findDuplicate.allowOverride || perm.allowOverride)
+							  {
+								  this.userCurrentRoleListForForm[0].permissions[index].sections[ind].permissions[perIndex].allowOverride = true;
+							  }
+					  }else{
+						  this.permissionOBJ.push({
+							  name: perm
+								  .name,
+							  enabled:
+								  perm
+									  .enabled,
+							  locked: perm
+								  .locked,
+							  allowOverride:
+								  perm
+									  .allowOverride,
+							  attrs: {}
+						  })
+					  }
+				  })
+			  })
+		  })
+	  }
+}
 }

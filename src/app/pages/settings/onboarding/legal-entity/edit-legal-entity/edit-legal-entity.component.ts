@@ -17,6 +17,7 @@ export class EditLegalEntityComponent implements OnInit, OnDestroy {
 	data: any;
 	bgDropdownSubscription: Subscription;
 	selectedBusinessGroup: SelectedBusinessGroup | undefined;
+	bgId:any;
 	constructor(
 		private router: Router,
 		private activeRoute: ActivatedRoute,
@@ -28,6 +29,7 @@ export class EditLegalEntityComponent implements OnInit, OnDestroy {
 			.subscribe((bg) => {
 				if (bg) {
 					this.selectedBusinessGroup = bg;
+					this.getUserOrdID();
 				}
 			});
 		this.bgDropdownService.disable(true);
@@ -46,9 +48,12 @@ export class EditLegalEntityComponent implements OnInit, OnDestroy {
 		this.bgDropdownSubscription.unsubscribe();
 	}
 	getLE(id: string) {
+		if(!this.bgId){
+			this.bgId = this.selectedBusinessGroup?.bgId
+		}
 		if (this.selectedBusinessGroup && id) {
 			this.legalEntityService
-				.getLegalEntity(this.selectedBusinessGroup.bgId, id)
+				.getLegalEntity(this.bgId, id)
 				.subscribe({
 					next: (res) => {
 						this.data = res;
@@ -58,11 +63,14 @@ export class EditLegalEntityComponent implements OnInit, OnDestroy {
 		}
 	}
 	update(data: any) {
+		if(!this.bgId){
+			this.bgId = this.selectedBusinessGroup?.bgId
+		}
 		if (this.id && this.selectedBusinessGroup) {
 			data['slug'] = '';
 			this.legalEntityService
 				.updateLegalEntity(
-					this.selectedBusinessGroup.bgId,
+					this.bgId,
 					this.id,
 					data
 				)
@@ -79,4 +87,12 @@ export class EditLegalEntityComponent implements OnInit, OnDestroy {
 	handleCancel() {
 		this.router.navigate(['/dashboard/settings/onboarding/legal-entity']);
 	}
+	getUserOrdID(){
+		let bgOrdID:any = localStorage.getItem('selected_business_group');
+		if(bgOrdID == null){
+		  this.bgId = 'intelliveer';
+		}else{
+		  this.bgId = null;
+		}
+	  }
 }
