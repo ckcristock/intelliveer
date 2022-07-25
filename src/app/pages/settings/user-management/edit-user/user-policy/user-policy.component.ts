@@ -177,14 +177,12 @@ export class UserPolicyComponent implements OnInit {
 		if (user?.__ISSU__) {
 			if (bgOrdID == 'intelliveer' || bgOrdID == null) {
 				this.getUserCurrentRoleList('intelliveer');
-				this.getRolesList('intelliveer');
 				this.getLegelEntityList('intelliveer');
 				this.getLocationList('intelliveer');
 				this.getPracticeList('intelliveer');
 				this.bgUserLogin = 'intelliveer';
 			} else {
 				this.getUserCurrentRoleList(this.selectedBusinessGroup?.bgId);
-				this.getRolesList(this.selectedBusinessGroup?.bgId);
 				this.getLegelEntityList(this.selectedBusinessGroup?.bgId);
 				this.getLocationList(this.selectedBusinessGroup?.bgId);
 				this.getPracticeList(this.selectedBusinessGroup?.bgId);
@@ -192,7 +190,6 @@ export class UserPolicyComponent implements OnInit {
 			}
 		} else {
 			this.getUserCurrentRoleList(this.selectedBusinessGroup?.bgId);
-			this.getRolesList(this.selectedBusinessGroup?.bgId);
 			this.getLegelEntityList(this.selectedBusinessGroup?.bgId);
 			this.getLocationList(this.selectedBusinessGroup?.bgId);
 			this.getPracticeList(this.selectedBusinessGroup?.bgId);
@@ -200,114 +197,6 @@ export class UserPolicyComponent implements OnInit {
 		}
 		this.getUserPolicyPermission();
 	}
-
-	// getUserCurrentRoleList(bgId: any) {
-	// 	this.userCurrentRoleList = [];
-	// 	let permissionArray: any[] = [];
-	// 	let userId = localStorage.getItem('userId');
-	// 	this.userService.getUserData(bgId, userId).subscribe(
-	// 		(userCurrentRoleList: any) => {
-	// 			if (userCurrentRoleList) {
-	// 				for (let i = 0; i < userCurrentRoleList.roles.length; i++) {
-	// 					this.userService
-	// 						.getUserRoleData(bgId, userCurrentRoleList.roles[i])
-	// 						.subscribe({
-	// 							next: (roledata: any) => {
-	// 								let rolePermission = roledata.permissions;
-	// 								for (
-	// 									let i = 0;
-	// 									i < rolePermission.length;
-	// 									i++
-	// 								) {
-	// 									const formGroup = this.newModule();
-	// 									const sectionList =
-	// 										rolePermission[i].sections;
-	// 									for (
-	// 										let j = 0;
-	// 										j < sectionList.length;
-	// 										j++
-	// 									) {
-	// 										const sectionFormGroup =
-	// 											this.newSections();
-	// 										const permissionsList =
-	// 											sectionList[j].permissions;
-	// 										for (
-	// 											let k = 0;
-	// 											k < permissionsList.length;
-	// 											k++
-	// 										) {
-	// 											const findDuplicate = permissionArray.find((x: any) => x.name === permissionsList[k].name);
-	// 											if(findDuplicate)
-	// 											{
-	// 												if(findDuplicate.enabled || permissionsList[k].enabled)
-	// 												{
-	// 													permissionsList[k].enabled = true;
-	// 												}
-	// 												if(findDuplicate.locked || permissionsList[k].locked)
-	// 												{
-	// 													permissionsList[k].locked = true;
-	// 												}
-	// 												if(findDuplicate.allowOverride || permissionsList[k].allowOverride)
-	// 												{
-	// 													permissionsList[k].allowOverride = true;
-	// 												}
-	// 												console.log(findDuplicate)
-	// 												console.log("------------------------------------------")
-	// 												console.log(permissionsList[k])
-	// 											}
-	// 											const permissionFormGroup =
-	// 												this.newPermissions();
-	// 											permissionFormGroup.patchValue({
-	// 												name: permissionsList[k]
-	// 													.name,
-	// 												enabled:
-	// 													permissionsList[k]
-	// 														.enabled,
-	// 												locked: permissionsList[k]
-	// 													.locked,
-	// 												allowOverride:
-	// 													permissionsList[k]
-	// 														.allowOverride,
-	// 												attrs: {}
-	// 											});
-	// 											this.permissionArray().push(
-	// 												permissionFormGroup
-	// 											);
-	// 											permissionArray.push(permissionsList[k]);
-	// 										}
-	// 										sectionFormGroup.patchValue({
-	// 											section: sectionList[j].section,
-	// 											displayShowAdvanced: false
-	// 										});
-	// 										this.sectionsArray().push(
-	// 											sectionFormGroup
-	// 										);
-	// 									}
-	// 									const findDuplicateModule = this.moduleArray().value.find((x: any) => x.module === rolePermission[i].module);
-	// 									if(findDuplicateModule == undefined)
-	// 									{
-	// 										formGroup.patchValue({
-	// 											module: rolePermission[i].module
-	// 										});
-	// 										this.moduleArray().push(formGroup);
-	// 									}
-	// 								}
-	// 								console.log(this.Form);
-	// 								this.Form.patchValue(this.moduleArray())
-	// 								if (roledata) {
-	// 									this.userCurrentRoleList.push(roledata);
-	// 								}
-	// 							},
-	// 							error: () => {}
-	// 						});
-	// 				}
-	// 			}
-	// 		},
-	// 		(error) => {
-	// 			console.log(error);
-	// 		}
-	// 	);
-	// }
 
 	getUserCurrentRoleList(bgId: any) {
 		this.userCurrentRoleList = [];
@@ -488,66 +377,6 @@ export class UserPolicyComponent implements OnInit {
 			this.moduleArray().push(formGroup);
 		});
 		//   console.log(this.moduleArray().value,'formvalues')
-	}
-	cancleUserCurrentRole(Obj: any, index: number) {
-		this.userCurrentRoleList.length != 1
-			? this.userCurrentRoleList.splice(index, 1)
-			: this.alertService.displayAlertMessage(
-					'Sorry....',
-					'You can not delete role'
-			  );
-	}
-
-	getRolesList(bgId: any) {
-		this.userService.getRoleList(bgId).subscribe({
-			next: (roleList: any) => {
-				this.roleList = roleList;
-			},
-			error: () => {}
-		});
-	}
-
-	selectRoleData($event: any) {
-		const findDuplicate = this.userCurrentRoleList.find(
-			(x: any) => x._id === $event._id
-		);
-		let roleObj = {
-			id: $event._id,
-			name: $event.name
-		};
-		findDuplicate == undefined
-			? this.userCurrentRoleList.push(roleObj)
-			: '';
-		this.moduleArray().clear();
-		this.sectionsArray().clear();
-		this.permissionArray().clear();
-		let rolePermission = $event.permissions;
-		for (let i = 0; i < rolePermission.length; i++) {
-			const formGroup = this.newModule();
-			const sectionList = rolePermission[i].sections;
-			for (let j = 0; j < sectionList.length; j++) {
-				const sectionFormGroup = this.newSections();
-				const permissionsList = sectionList[j].permissions;
-				for (let k = 0; k < permissionsList.length; k++) {
-					const permissionFormGroup = this.newPermissions();
-					permissionFormGroup.patchValue({
-						name: permissionsList[k].name,
-						enabled: permissionsList[k].enabled,
-						locked: permissionsList[k].locked,
-						allowOverride: permissionsList[k].allowOverride,
-						attrs: {}
-					});
-					this.permissionArray().push(permissionFormGroup);
-				}
-				sectionFormGroup.patchValue({
-					section: sectionList[j].section,
-					displayShowAdvanced: false
-				});
-				this.sectionsArray().push(sectionFormGroup);
-			}
-			formGroup.patchValue({ module: rolePermission[i].module });
-			this.moduleArray().push(formGroup);
-		}
 	}
 
 	getLegelEntityList(bgId: any) {

@@ -30,23 +30,12 @@
 	gap: 0px;
 	margin-top: 10px;
 
-	span {
-		display: flex;
-		align-items: center;
-		justify-content: flex-start;
-		height: 25px;
-		background-color: #faf2e9;
-		border: 1px solid #f9b85f;
-		padding: 5px;
-	}
-
 	input {
 		border-color: #f9b85f;
 		background-color: #faf2e9;
 		height: 25px;
 		border-top-left-radius: 0%;
 		border-bottom-left-radius: 0%;
-		border-left: 0px solid;
 		width: auto;
 	}
 }
