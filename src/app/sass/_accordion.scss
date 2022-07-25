@@ -50,3 +50,9 @@
 		border-top: none !important;
 	}
 }
+
+.accordion-button:not(.collapsed) {
+    color: #000 !important;
+    background-color: #fff !important;
+    box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+}

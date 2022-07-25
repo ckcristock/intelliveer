@@ -171,6 +171,24 @@ export class UserService {
 		});
 	}
 
+	saveUserPolicyList(bgId: any, userId: any, userPermissions: any)
+	{
+		return this.http.post(`${CONFIG.backend.host}/user/user/user-policy/`+ userId, userPermissions, {
+			headers: {
+				'X-ORG-ID': bgId
+			}
+		});
+	}
+
+	getUserPolicyList(bgId: any, userId: any)
+	{
+		return this.http.get(`${CONFIG.backend.host}/user/user/user-policy/`+ userId, {
+			headers: {
+				'X-ORG-ID': bgId
+			}
+		});
+	}
+
 	deleteManageUser(id: number) {
 		let manageUserDeleted = this.users.filter((x) => {
 			return x.id != id;
