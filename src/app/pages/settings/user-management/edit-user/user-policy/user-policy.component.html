@@ -1,7 +1,7 @@
 <app-nav-bar-pills
 	[cancelBtn]="true"
 	[saveBtn]="true"
-	[disableSaveBtn]="Form.invalid"
+	[disableSaveBtn]="Form.invalid || saveDissable"
 	(onCancel)="cancel()"
 	(onSave)="save(Form.value)"
 ></app-nav-bar-pills>

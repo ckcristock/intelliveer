@@ -37,6 +37,7 @@ export class UserPolicyComponent implements OnInit {
 	selectedLegelEntity: any;
 	selectedLocation: any;
 	selectedPractice: any;
+	saveDissable: boolean = true;
 
 	constructor(
 		private router: Router,
@@ -65,6 +66,9 @@ export class UserPolicyComponent implements OnInit {
 		data = data || {};
 		this.Form = this.fb.group({
 			permissions: this.fb.array([])
+		});
+		this.Form.valueChanges.subscribe(values => {
+			this.saveDissable = false
 		});
 	}
 

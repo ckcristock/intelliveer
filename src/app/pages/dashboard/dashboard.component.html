@@ -40,7 +40,8 @@
 						[routerLink]="'/dashboard/home'"
 						placement="right"
 					>
-						<img src="assets/icons/home.svg" />
+						<img src="assets/icons/home-disable.svg" *ngIf="router.url != '/dashboard/home'" />
+						<img src="assets/icons/home.svg" *ngIf="router.url == '/dashboard/home'" />
 					</li>
 					<li
 						class="icon mb-3"
@@ -121,9 +122,16 @@
 					>
 						<div class="icon">
 							<img
+								src="assets/icons/home-disable.svg"
+								width="20"
+								height="15"
+								*ngIf="router.url != '/dashboard/home'"
+							/>
+							<img
 								src="assets/icons/home.svg"
 								width="20"
 								height="15"
+								*ngIf="router.url == '/dashboard/home'"
 							/>
 							Home
 						</div>
