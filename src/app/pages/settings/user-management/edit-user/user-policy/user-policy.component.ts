@@ -34,6 +34,9 @@ export class UserPolicyComponent implements OnInit {
 	locationList: any[] = [];
 	practiceList: any[] = [];
 	bgUserLogin: string | undefined;
+	selectedLegelEntity: any;
+	selectedLocation: any;
+	selectedPractice: any;
 
 	constructor(
 		private router: Router,
@@ -131,7 +134,7 @@ export class UserPolicyComponent implements OnInit {
 
 	save(data: any) {
 		this.alertService
-			.conformAlert('Are you sure?', 'You want to update a role template')
+			.conformAlert('Are you sure?', 'You want to update a user policy')
 			.then((result: any) => {
 				if (result.value) {
 					this.saveUesrPolicyList();
@@ -156,8 +159,13 @@ export class UserPolicyComponent implements OnInit {
 			)
 			.subscribe(
 				(list) => {
-					console.log('done');
-					console.log(list);
+					this.alertService.success(
+						'Success',
+						'User policy has been updated successfully'
+					);
+					this.router.navigate([
+						'/dashboard/settings/user-management/manage-user'
+					]);
 				},
 				(error) => {
 					console.log(error);
@@ -413,5 +421,56 @@ export class UserPolicyComponent implements OnInit {
 				console.log(error);
 			}
 		);
+	}
+
+	selectLegelEntity(Obj: any)
+	{
+		console.log(Obj);
+		this.selectedLegelEntity = Obj.name;
+		this.Form.value.permissions.map((module: any) => {
+			module.sections.map((section: any) => {
+				section.permissions.map((permission: any) => {
+					permission.attrs = {
+						"BR": {
+							"in": [this.selectedLegelEntity]
+						}
+					}
+				});
+			});
+		});
+	}
+
+	selectLocation(Obj: any)
+	{
+		console.log(Obj)
+		this.selectedLocation = Obj.name;
+		this.Form.value.permissions.map((module: any) => {
+			module.sections.map((section: any) => {
+				section.permissions.map((permission: any) => {
+					permission.attrs = {
+						"BR": {
+							"in": [this.selectedLocation]
+						}
+					}
+				});
+			});
+		});
+	}
+
+	selectPractice(Obj: any)
+	{
+		console.log(Obj)
+		this.selectedPractice = Obj.name;
+		this.Form.value.permissions.map((module: any) => {
+			module.sections.map((section: any) => {
+				section.permissions.map((permission: any) => {
+					permission.attrs = {
+						"BR": {
+							"in": [this.selectedPractice]
+						}
+					}
+				});
+			});
+		});
 	}
 }

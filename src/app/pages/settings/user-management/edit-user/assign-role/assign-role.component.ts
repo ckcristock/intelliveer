@@ -30,6 +30,7 @@ export class AssignRoleComponent implements OnInit {
 	roleList: any[] = [];
 	userAssignRoleIdsList: any[] = [];
 	logInType: string | undefined;
+	tempRoleList: any;
 
 	constructor(
 		private router: Router,
@@ -59,7 +60,7 @@ export class AssignRoleComponent implements OnInit {
 		this.Form = this.fb.group({});
 	}
 
-	save(data: any) {
+	save() {
 		let userAssignRoleObj = {
 			roles: this.userAssignRoleIdsList
 		}
@@ -72,9 +73,10 @@ export class AssignRoleComponent implements OnInit {
 					.subscribe({
 						next: (result: any) => {
 							if (result) {
-								this.router.navigate([
-									'/dashboard/settings/user-management/manage-user'
-								]);
+								this.alertService.success(
+									'Success',
+									'User role has been updated successfully'
+								);
 							}
 						},
 						error: () => {}
@@ -130,13 +132,14 @@ export class AssignRoleComponent implements OnInit {
 								next: (roledata: any) => {
 									if (roledata) {
 										let roleObj = {
-											id: roledata._id,
+											_id: roledata._id,
 											name: roledata.name
 										};
 										this.userCurrentRoleList.push(roleObj);
 										this.userAssignRoleIdsList.push(
 											roledata._id
 										);
+										this.roleList = this.getRoleFilterLst(this.tempRoleList, this.userCurrentRoleList);
 									}
 								},
 								error: () => {}
@@ -153,8 +156,31 @@ export class AssignRoleComponent implements OnInit {
 	cancleUserCurrentRole(Obj: any, index: number) {
 		if(this.userCurrentRoleList.length != 1)
 		{
-			this.userCurrentRoleList.splice(index, 1);
-			this.userAssignRoleIdsList.splice(index, 1);
+			this.alertService
+			.conformAlert('Are you sure?', 'You want to delete role')
+			.then((result: any) => {
+				if (result.value) {
+					this.userCurrentRoleList.splice(index, 1);
+					this.userAssignRoleIdsList.splice(index, 1);
+					let userAssignRoleObj = {
+						roles: this.userAssignRoleIdsList
+					}
+					let userId = localStorage.getItem('userId');
+					this.userService.updateUserRole(this.logInType, userId, userAssignRoleObj)
+					.subscribe({
+						next: (result: any) => {
+							if (result) {
+								this.alertService.success(
+									'Success',
+									'User role has been updated successfully'
+								);
+								this.roleList = this.getRoleFilterLst(this.tempRoleList, this.userCurrentRoleList);
+							}
+						},
+						error: () => {}
+					});
+				}
+			});
 		}
 		else
 		{
@@ -165,12 +191,21 @@ export class AssignRoleComponent implements OnInit {
 		}
 	}
 
-	getRolesList(bgId: any) {
-		this.userService.getRoleList(bgId).subscribe({
+	async getRolesList(bgId: any) {
+		await this.userService.getRoleList(bgId).subscribe({
 			next: (roleList: any) => {
-				this.roleList = roleList;
+				this.tempRoleList = roleList;
 			},
 			error: () => {}
+		});
+	}
+
+	getRoleFilterLst(array1: any, array2: any)
+	{
+		return array1.filter((object1: any) => {
+			return !array2.some((object2: any) => {
+			  return object1._id === object2._id;
+			});
 		});
 	}
 
@@ -179,7 +214,24 @@ export class AssignRoleComponent implements OnInit {
 			id: $event._id,
 			name: $event.name
 		};
-		this.userCurrentRoleList.push(roleObj);
 		this.userAssignRoleIdsList.push($event._id);
+		let userAssignRoleObj = {
+			roles: this.userAssignRoleIdsList
+		}
+		let userId = localStorage.getItem('userId');
+		this.userService.updateUserRole(this.logInType, userId, userAssignRoleObj)
+		.subscribe({
+			next: (result: any) => {
+				if (result) {
+					this.userCurrentRoleList.push(roleObj);
+					this.roleList = this.getRoleFilterLst(this.tempRoleList, this.userCurrentRoleList);
+					this.alertService.success(
+						'Success',
+						'User role has been updated successfully'
+					);
+				}
+			},
+			error: () => {}
+		});
 	}
 }

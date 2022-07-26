@@ -22,7 +22,8 @@ export class PersonalInfoComponent implements OnInit {
 		{ title: 'Address', id: 'address' },
 		{ title: 'Contact', id: 'contact' },
 		{ title: 'Relations/Type', id: 'relationsType' },
-		{ title: 'Emergency Contact', id: 'emergencyContact' }
+		{ title: 'Emergency Contact', id: 'emergencyContact' },
+		{ title: 'Ownership', id: 'ownership' }
 	];
 
 	testCounter: number = 0;
@@ -55,6 +56,9 @@ export class PersonalInfoComponent implements OnInit {
   businessGroupDropdownSupscription: any;
   selectedBusinessGroup: SelectedBusinessGroup | undefined;
 	roleList: any;
+	locationList: any;
+	legelEntityList: any;
+	practiceList: any;
 
 	constructor(
 		private router: Router,
@@ -152,5 +156,41 @@ export class PersonalInfoComponent implements OnInit {
 
 	onSectionChange(sectionId: string) {
 		this.currentSelection = sectionId;
+	}
+
+	getLegelEntityList(bgId: any) {
+		this.userService.getLegelEntityList(bgId).subscribe(
+			(list: any) => {
+				console.log(list);
+				this.legelEntityList = list;
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
+	}
+
+	getLocationList(bgId: any) {
+		this.userService.getLocationList(bgId).subscribe(
+			(list: any) => {
+				console.log(list);
+				this.locationList = list;
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
+	}
+
+	getPracticeList(bgId: any) {
+		this.userService.getPracticeList(bgId).subscribe(
+			(list: any) => {
+				console.log(list);
+				this.practiceList = list;
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
 	}
 }
