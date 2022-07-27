@@ -290,12 +290,12 @@
                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                         <div class="form-check form-check-inline">
                             <input #insuYesNoRadio1 class="form-check-input" type="radio" name="radioyesno" id="radioyesno1"
-                               checked (change)="provideInsurance = true" />
+                               checked (click)="setRadioStatus(1,'insuYesNo')" />
                             <label class="form-check-label" for="radioyesno1">Yes</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input #insuYesNoRadio2 class="form-check-input" type="radio" name="radioyesno" id="radioyesno2"
-                               (change)="provideInsurance = false" />
+                                (click)="setRadioStatus(2,'insuYesNo')" />
                             <label class="form-check-label" for="radioyesno2">No</label>
                         </div>
                     </div>
@@ -308,17 +308,17 @@
                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                         <div class="form-check form-check-inline">
                             <input #howManyInsuRadio1 class="form-check-input" type="radio" name="radiohowmany" id="radiohowmany1"
-                                checked (click)="setRadioStatus(1,'howManyInsu')" />
+                                checked (click)="setRadioStatus(1,'howManyInsu')"  />
                             <label class="form-check-label" for="radiohowmany1">1</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input #howManyInsuRadio2 class="form-check-input" type="radio" name="radiohowmany" id="radiohowmany2"
-                                (click)="setRadioStatus(2,'howManyInsu')" />
+                                (click)="setRadioStatus(2,'howManyInsu')"  />
                             <label class="form-check-label" for="radiohowmany2">2</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input #howManyInsuRadio3 class="form-check-input" type="radio" name="radiohowmany" id="radiohowmany3"
-                                (click)="setRadioStatus(3,'howManyInsu')" />
+                                (click)="setRadioStatus(3,'howManyInsu')"  />
                             <label class="form-check-label" for="radiohowmany3">3</label>
                         </div>
                     </div>
@@ -330,8 +330,8 @@
         <!-- Insurance tabs-->
         <div class="row formrow" *ngIf="provideInsurance" style="margin-top:-14px;">
             <nav ngbNav #nav4="ngbNav" class="nav-pills">
-                <ng-container ngbNavItem [ngbNavItem]="1">
-                    <a ngbNavLink *ngIf="radioHowManyIns == 1 || radioHowManyIns > 1" class="tabs">Insurance
+                <ng-container ngbNavItem [ngbNavItem]="1" >
+                    <a ngbNavLink *ngIf="radioHowManyIns == 1 || radioHowManyIns > 1" class="tabs" (click)="radiosInsurances()">Insurance
                         1</a>
                     <ng-template ngbNavContent>
                         <!-- radios -->
@@ -340,26 +340,26 @@
                                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
 
                                     <div class="subscriber-divs">
-                                        <input #insuran1Radio1 class="form-check-input" type="radio" name="insuranRadio1"
-                                            id="insuranRadio11" (click)="setRadioStatus(1,'insuran1')" checked />
-                                        <label class="subscriber-labels" for="insuranRadio11">Use existing one</label>
+                                        <input #insuran1Radio1 class="form-check-input" type="radio" name="insuran1"
+                                            id="insuran1UseExi" (click)="setRadioStatus(1,'insuran1')" />
+                                        <label class="subscriber-labels" for="insuran1UseExi">Use existing one</label>
                                     </div>
                                     <div class="subscriber-divs">
-                                        <input #insuran1Radio2 class="form-check-input" type="radio" name="insuranRadio1"
-                                            id="insuranRadio12" (click)="setRadioStatus(2,'insuran1')" />
-                                        <label class="subscriber-labels" for="insuranRadio12">Same as patient 1</label>
+                                        <input #insuran1Radio2 class="form-check-input" type="radio" name="insuran1"
+                                            id="insuran1SameAs" (click)="setRadioStatus(2,'insuran1')" />
+                                        <label class="subscriber-labels" for="insuran1SameAs">Same as patient 1</label>
                                     </div>
                                     <div class="subscriber-divs">
-                                        <input #insuran1Radio3 class="form-check-input" type="radio" name="insuranRadio1"
-                                            id="insuranRadio13" (click)="setRadioStatus(3,'insuran1')" />
-                                        <label class="subscriber-labels" for="insuranRadio13">Add a new one</label>
+                                        <input #insuran1Radio3 class="form-check-input" type="radio" name="insuran1"
+                                            id="insuran1AddNew" (click)="setRadioStatus(3,'insuran1')" />
+                                        <label class="subscriber-labels" for="insuran1AddNew">Add a new one</label>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
                         <!-- Insurances List -->
-                        <div class="row formrow">
+                        <div class="row formrow" *ngIf="radioInsuran1==1">
                             <div class="col-4" style="color: black; font-weight:normal;">
                                 <div class="row formrow" *ngFor="let insurance1 of insurances1; let i = index">
                                     <div class="col-6" [ngClass]="{'deactivated':!insurance1.activated}">
@@ -534,35 +534,35 @@
 
                     </ng-template>
                 </ng-container>
-                <ng-container ngbNavItem [ngbNavItem]="2" (change)="radiosInsuran2()">
-                    <a ngbNavLink *ngIf="radioHowManyIns > 1" class="tabs" (click)="radiosInsuran2()">Insurance 2</a>
-                    <ng-template ngbNavContent >
+                <ng-container ngbNavItem [ngbNavItem]="2" >
+                    <a ngbNavLink *ngIf="radioHowManyIns > 1" class="tabs" (click)="radiosInsurances()">Insurance 2</a>
+                    <ng-template ngbNavContent>
                         <!-- radios -->
                         <div class="row formrow" style="margin-top: 22px;">
                             <div class="mainformset">
                                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
 
                                     <div class="subscriber-divs">
-                                        <input #insuran2Radio1 class="form-check-input" type="radio" name="insuranRadio1"
-                                            id="insuranRadio11" (click)="setRadioStatus(1,'insuran2')" checked />
-                                        <label class="subscriber-labels" for="insuranRadio11">Use existing one</label>
+                                        <input #insuran2Radio1 class="form-check-input" type="radio" name="insuran2"
+                                            id="insuran2UseExit" (click)="setRadioStatus(1,'insuran2')" />
+                                        <label class="subscriber-labels" for="insuran2UseExit">Use existing one</label>
                                     </div>
                                     <div class="subscriber-divs" style="margin-right: 33px !important;;">
-                                        <input #insuran2Radio2 class="form-check-input" type="radio" name="insuranRadio1"
-                                            id="insuranRadio12" (click)="setRadioStatus(2,'insuran2')" />
-                                        <label class="subscriber-labels" for="insuranRadio12">Same as patient 1</label>
+                                        <input #insuran2Radio2 class="form-check-input" type="radio" name="insuran2"
+                                            id="insuran2SameAs" (click)="setRadioStatus(2,'insuran2')" />
+                                        <label class="subscriber-labels" for="insuran2SameAs">Same as patient 1</label>
                                     </div>
                                     <div class="subscriber-divs">
-                                        <input #insuran2Radio3 class="form-check-input" type="radio" name="insuranRadio1"
-                                            id="insuranRadio13" (click)="setRadioStatus(3,'insuran2')" />
-                                        <label class="subscriber-labels" for="insuranRadio13">Add a new one</label>
+                                        <input #insuran2Radio3 class="form-check-input" type="radio" name="insuran2"
+                                            id="insuran2AddNwe" (click)="setRadioStatus(3,'insuran2')" />
+                                        <label class="subscriber-labels" for="insuran2AddNwe">Add a new one</label>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
                         <!-- Insurances List -->
-                        <div class="row formrow">
+                        <div class="row formrow"  *ngIf="radioInsuran2==1">
                             <div class="col-4" style="color: black; font-weight:normal;">
                                 <div class="row formrow" *ngFor="let insurance2 of insurances2; let j = index">
                                     <div class="col-6" [ngClass]="{'deactivated':!insurance2.activated}">
@@ -657,7 +657,7 @@
                         <!-- Subscribers List-->
                         <div class="row formrow" *ngIf="radioSubscriber2==1" style="color: black; font-weight:normal">
                             <div class="col-4">
-                                <div class="row formrow" *ngFor="let subscriber of subscribers1; let i = index">
+                                <div class="row formrow" *ngFor="let subscriber of subscribers2; let i = index">
                                     <div class="col-6" [ngClass]="{'deactivated':!subscriber.activated}">
                                         {{ subscriber.firstName }} {{ subscriber.lastName }}
                                     </div>
@@ -701,7 +701,7 @@
                                     <label class="label-input-gap">Subscriber’s First Name</label>
 
                                     <input class="form-control" type="text" placeholder="" name=""
-                                        [(ngModel)]="additionalPatient.insurances.insurance1.subscriber1.firstName"
+                                        [(ngModel)]="additionalPatient.insurances.insurance2.subscriber2.firstName"
                                         [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
@@ -709,7 +709,7 @@
                                 <div class="mainformset">
                                     <label class="label-input-gap">Subscriber’s Last Name</label>
                                     <input class="form-control" type="text" placeholder="" name=""
-                                        [(ngModel)]="additionalPatient.insurances.insurance1.subscriber1.lastName"
+                                        [(ngModel)]="additionalPatient.insurances.insurance2.subscriber2.lastName"
                                         [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
@@ -737,7 +737,7 @@
                     </ng-template>
                 </ng-container>
                 <ng-container ngbNavItem [ngbNavItem]="3">
-                    <a ngbNavLink *ngIf="radioHowManyIns == 3" class="tabs">Insurance 3</a>
+                    <a ngbNavLink *ngIf="radioHowManyIns == 3" class="tabs" (click)="radiosInsurances()">Insurance 3</a>
                     <ng-template ngbNavContent>
                         <!-- radios -->
                         <div class="row formrow" style="margin-top: 22px;">
@@ -745,26 +745,26 @@
                                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
 
                                     <div class="subscriber-divs" style="margin-right: 33px !important;">
-                                        <input #insuran3Radio1 class="form-check-input" type="radio" name="insuranRadio1"
-                                            id="insuranRadio11" (click)="setRadioStatus(1,'insuran3')" checked />
-                                        <label class="subscriber-labels" for="insuranRadio11">Use existing one</label>
+                                        <input #insuran3Radio1 class="form-check-input" type="radio" name="insuran3"
+                                            id="insuran3UseExi" (click)="setRadioStatus(1,'insuran3')" />
+                                        <label class="subscriber-labels" for="insuran3UseExi">Use existing one</label>
                                     </div>
                                     <div class="subscriber-divs" style="margin-right: 33px !important;;">
-                                        <input #insuran3Radio1 class="form-check-input" type="radio" name="insuranRadio1"
-                                            id="insuranRadio12" (click)="setRadioStatus(2,'insuran3')" />
-                                        <label class="subscriber-labels" for="insuranRadio12">Same as patient 1</label>
+                                        <input #insuran3Radio2 class="form-check-input" type="radio" name="insuran3"
+                                            id="insuran3SameAs" (click)="setRadioStatus(2,'insuran3')" />
+                                        <label class="subscriber-labels" for="insuran3SameAs">Same as patient 1</label>
                                     </div>
                                     <div class="subscriber-divs">
-                                        <input #insuran3Radio1 class="form-check-input" type="radio" name="insuranRadio1"
-                                            id="insuranRadio13" (click)="setRadioStatus(3,'insuran3')" />
-                                        <label class="subscriber-labels" for="insuranRadio13">Add a new one</label>
+                                        <input #insuran3Radio3 class="form-check-input" type="radio" name="insuran3"
+                                            id="insuran3AddNew" (click)="setRadioStatus(3,'insuran3')" />
+                                        <label class="subscriber-labels" for="insuran3AddNew">Add a new one</label>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
                         <!-- Insurances List -->
-                        <div class="row formrow">
+                        <div class="row formrow"  *ngIf="radioInsuran3==1">
                             <div class="col-4" style="color: black; font-weight:normal;">
                                 <div class="row formrow" *ngFor="let insurance3 of insurances3; let i = index">
                                     <div class="col-6" [ngClass]="{'deactivated':!insurance3.activated}">

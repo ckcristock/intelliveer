@@ -46,15 +46,19 @@ export class PatientFormComponent implements OnInit {
 
   async ngOnInit() {
     this.patientArray = await this.addPatientServ.getPatientCWP();
+    console.log("this.patientArray", this.patientArray);
+    
     if (this.patientArray != null) {
       this.patient.firstName = this.patientArray.firstName;
       this.patient.lastName = this.patientArray.lastName;
+      this.patient.dateBirth = this.patientArray.DOB;
     }
 
     this.callersInfo = await this.addPatientServ.getCallerInfoCWP();
     if (this.callersInfo.callerSelfPatient == true) {
       this.patient.firstName = this.callersInfo.firstName;
       this.patient.lastName = this.callersInfo.lastName;
+      this.patient.dateBirth = this.patientArray.DOB;
     }
     this.initForm(this.formData);
   }

@@ -24,18 +24,18 @@
                     style="margin-bottom: 0px;">
 
                     <div class="subscriber-divs">
-                        <input class="form-check-input" type="radio" name="lgGuardianRadio" id="lgGuardianRadio1"
-                            (change)="radioLGuargFunct(1)" checked />
+                        <input #legalGuardRadio1 class="form-check-input" type="radio" name="lgGuardianRadio"
+                            id="lgGuardianRadio1" (change)="radioLGuargFunct(1)" checked />
                         <label class="subscriber-labels" for="lgGuardianRadio1">Use existing one</label>
                     </div>
                     <div class="subscriber-divs">
-                        <input class="form-check-input" type="radio" name="lgGuardianRadio" id="lgGuardianRadio2"
-                            (change)="radioLGuargFunct(2)" />
+                        <input #legalGuardRadio2 class="form-check-input" type="radio" name="lgGuardianRadio"
+                            id="lgGuardianRadio2" (change)="radioLGuargFunct(2)" />
                         <label class="subscriber-labels" for="lgGuardianRadio2">Same as patient 1</label>
                     </div>
                     <div class="subscriber-divs">
-                        <input class="form-check-input" type="radio" name="lgGuardianRadio" id="lgGuardianRadio3"
-                            (change)="radioLGuargFunct(3)" />
+                        <input #legalGuardRadio3 class="form-check-input" type="radio" name="lgGuardianRadio"
+                            id="lgGuardianRadio3" (change)="radioLGuargFunct(3)" />
                         <label class="subscriber-labels" for="lgGuardianRadio3">Add a new one</label>
                     </div>
 
@@ -51,16 +51,20 @@
                     <div class="col-6" [ngClass]="{'deactivated':!legalGuardian.activated}">
                         {{ legalGuardian.firstName }} {{ legalGuardian.lastName }}
                     </div>
-                    <div class="col-3 selected" *ngIf="legalGuardian.selected" (click)="changeSelect(i, legalGuardian.selected)">
+                    <div class="col-3 selected" *ngIf="legalGuardian.selected"
+                        (click)="changeSelect(i, legalGuardian.selected)">
                         Selected
                     </div>
-                    <div class="col-3" [ngClass]="{'deactivated':!legalGuardian.activated}" *ngIf="!legalGuardian.selected" (click)="changeSelect(i, legalGuardian.selected)">
+                    <div class="col-3" [ngClass]="{'deactivated':!legalGuardian.activated}"
+                        *ngIf="!legalGuardian.selected" (click)="changeSelect(i, legalGuardian.selected)">
                         Select
                     </div>
-                    <div class="col-3 deac-reactive" *ngIf="legalGuardian.activated" (click)="active(i, legalGuardian.activated)">
+                    <div class="col-3 deac-reactive" *ngIf="legalGuardian.activated"
+                        (click)="active(i, legalGuardian.activated)">
                         Deactivate
                     </div>
-                    <div class="col-3 deac-reactive" *ngIf="!legalGuardian.activated" (click)="active(i, legalGuardian.activated)">
+                    <div class="col-3 deac-reactive" *ngIf="!legalGuardian.activated"
+                        (click)="active(i, legalGuardian.activated)">
                         Reactivate
                     </div>
                 </div>

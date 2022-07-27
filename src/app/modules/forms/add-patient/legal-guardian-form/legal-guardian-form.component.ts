@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CONFIG } from '@config/index';
@@ -16,6 +16,10 @@ import { delay, filter, map } from 'rxjs';
   styleUrls: ['./legal-guardian-form.component.scss']
 })
 export class LegalGuardianFormComponent implements OnInit {
+
+  @ViewChild('legalGuardRadio1') legalGuardRadio1!: ElementRef;
+  @ViewChild('legalGuardRadio2') legalGuardRadio2!: ElementRef;
+  @ViewChild('legalGuardRadio3') legalGuardRadio3!: ElementRef;
 
   phoneTypes: any = {
     phone: ""
@@ -64,7 +68,6 @@ export class LegalGuardianFormComponent implements OnInit {
 
   radioLG: number = 1;
 
-
   menuItemsOfCordinate: IMenuItem[] = addPatientCordinateMenuItems;
   menuItemsOfQuickAdd: IMenuItem[] = addPatientQuickMenuItems;
   Form!: FormGroup;
@@ -99,7 +102,7 @@ export class LegalGuardianFormComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.getData();
+    this.getDataLegaGuarCaller();
     this.initForm(this.formData);
     this.getStaticData();
     this.getCountries();
@@ -115,16 +118,47 @@ export class LegalGuardianFormComponent implements OnInit {
     }
   }
 
-  async getData(){
+  async ngAfterViewInit() {
+    this.radioLG = JSON.parse(localStorage.getItem(`legalGuardianPatie${this.patientPage}`) || '[]');
+    setTimeout(() => {
+      this.checkRadiosStatus();
+    }, 20);
+  }
+
+  async checkRadiosStatus() {
+
+    //Insurance 1 Radio
+    if (this.radioLG == 0) {
+      this.radioLG = 1;
+    }
+    if (this.legalGuardRadio1 != null) {
+      if (this.radioLG == 1) {
+        this.legalGuardRadio1.nativeElement.checked = true;
+        this.radioLGuargFunct(this.radioLG);
+      } else if (this.radioLG == 2) {
+        this.legalGuardRadio2.nativeElement.checked = true;
+        this.radioLGuargFunct(this.radioLG);
+      } else if (this.radioLG == 3) {
+        this.legalGuardRadio3.nativeElement.checked = true;
+        this.radioLGuargFunct(this.radioLG);
+      }
+    }
+
+  }
+
+  async getDataLegaGuarCaller() {
+
     this.legalGuardianArray = await this.addPatientServ.getLegalGuardCWP(1);
     console.log("legaaaaaal", this.legalGuardianArray);
-    
+
     if (this.legalGuardianArray != null) {
       this.legalGuardian.firstName = this.legalGuardianArray.firstName;
       this.legalGuardian.lastName = this.legalGuardianArray.lastName;
     }
 
     this.callersInfo = await this.addPatientServ.getCallerInfoCWP();
+    console.log("caller", this.callersInfo);
+
     if (this.callersInfo.callerLegarGuar == true) {
       this.legalGuardian.firstName = this.callersInfo.firstName;
       this.legalGuardian.lastName = this.callersInfo.lastName;
@@ -308,14 +342,15 @@ export class LegalGuardianFormComponent implements OnInit {
 
   async radioLGuargFunct(value: number) {
     this.radioLG = value;
-    this.legalGuardian.firstName  = "";
-    this.legalGuardian.lastName  = "";
+    localStorage.setItem(`legalGuardianPatie${this.patientPage}`, JSON.stringify(this.radioLG));
+    this.legalGuardian.firstName = "";
+    this.legalGuardian.lastName = "";
 
     if (this.radioLG == 1) {
       for (let i = 0; i < this.legalGuardians.length; i++) {
         if (this.legalGuardians[i].selected) {
-        this.legalGuardian.firstName = this.legalGuardians[i].firstName;
-        this.legalGuardian.lastName = this.legalGuardians[i].lastName;
+          this.legalGuardian.firstName = this.legalGuardians[i].firstName;
+          this.legalGuardian.lastName = this.legalGuardians[i].lastName;
         }
       }
     } else if (this.radioLG == 2) {
@@ -328,14 +363,5 @@ export class LegalGuardianFormComponent implements OnInit {
       //Push dentist to API
     }
 
-
-    // if (value == 1) {
-    //   this.legalGuardian.firstName = "";
-    //   this.legalGuardian.lastName = "";
-    //   this.changeSelect(0, false);
-    // } else if (value == 2) {
-    //     this.legalGuardian.firstName = this.legalGuardianArray.firstName;
-    //     this.legalGuardian.lastName = this.legalGuardianArray.lastName;
-    // }
   }
 }

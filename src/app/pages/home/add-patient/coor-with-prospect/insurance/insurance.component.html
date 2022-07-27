@@ -21,13 +21,13 @@
                     </p>
                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radioyesno" id="radioyesno1"
-                                autocomplete="off" checked (change)="yesfunction()" />
+                            <input #insuYesNoRadio1 class="form-check-input" type="radio" name="radioyesno"
+                                id="radioyesno1" checked (click)="setRadioStatus(1,'insuYesNo')" />
                             <label class="form-check-label" for="radioyesno1">Yes</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radioyesno" id="radioyesno2"
-                                autocomplete="off" (change)="provideInsurance = false" />
+                            <input #insuYesNoRadio2 class="form-check-input" type="radio" name="radioyesno"
+                                id="radioyesno2" (click)="setRadioStatus(2,'insuYesNo')" />
                             <label class="form-check-label" for="radioyesno2">No</label>
                         </div>
                     </div>
@@ -38,18 +38,18 @@
                     <p class="required">How many?</p>
                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                         <div class="form-check form-check-inline">
-                            <input #radio1 class="form-check-input" type="radio" name="radiohowmany" id="btnradio1"
-                                checked (click)="numberTabs(1)" />
+                            <input #howManyInsuRadio1 class="form-check-input" type="radio" name="radiohowmany"
+                                id="btnradio1" checked (click)="setRadioStatus(1,'howManyInsu')" />
                             <label class="form-check-label" for="btnradio1">1</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input #radio2 class="form-check-input" type="radio" name="radiohowmany" id="btnradio2"
-                                (click)="numberTabs(2)" />
+                            <input #howManyInsuRadio2 class="form-check-input" type="radio" name="radiohowmany"
+                                id="btnradio2" (click)="setRadioStatus(2,'howManyInsu')" />
                             <label class="form-check-label" for="btnradio2">2</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input #radio3 class="form-check-input" type="radio" name="radiohowmany" id="btnradio3"
-                                (click)="numberTabs(3)" />
+                            <input #howManyInsuRadio3 class="form-check-input" type="radio" name="radiohowmany"
+                                id="btnradio3" (click)="setRadioStatus(3,'howManyInsu')" />
                             <label class="form-check-label" for="btnradio3">3</label>
                         </div>
                     </div>
@@ -61,7 +61,8 @@
         <div class="row formrow" *ngIf="provideInsurance" style="margin-top: -15px;">
             <ul ngbNav #nav="ngbNav" class="nav-pills" [(activeId)]="active" (navChange)="onNavChange($event)">
                 <li [ngbNavItem]="1">
-                    <a ngbNavLink *ngIf="checkInsuranceCount == 1 || checkInsuranceCount > 1" class="tabs">Insurance
+                    <a ngbNavLink *ngIf="radioHowManyIns == 1 || radioHowManyIns > 1" class="tabs"
+                        (click)="radiosInsurances()">Insurance
                         1</a>
                     <ng-template ngbNavContent>
                         <div class="row formrow" style="margin-top: 22px;">
@@ -99,21 +100,21 @@
                                 <div class="btn-group radios" role="group" aria-label="Basic radio toggle button group"
                                     style="margin-top: -2px;">
                                     <div class="subscriber-divs">
-                                        <input class="form-check-input" type="radio" name="subscriRadio"
-                                            id="subscriRadio1" checked />
-                                        <label class="form-check-label subscriber-labels" for="subscriRadio1">Search/Add
+                                        <input #subscri1Radio1 class="form-check-input" type="radio" name="subscriber1"
+                                            id="subscriAddNew" (click)="setRadioStatus(1,'subscri1')" />
+                                        <label class="form-check-label subscriber-labels" for="subscriAddNew">Search/Add
                                             new one</label>
                                     </div>
                                     <div class="subscriber-divs">
-                                        <input class="form-check-input" type="radio" name="subscriRadio"
-                                            id="subscriRadio2" />
-                                        <label class="form-check-label subscriber-labels" for="subscriRadio2">Same as
+                                        <input #subscri1Radio2 class="form-check-input" type="radio" name="subscriber1"
+                                            id="subscriSameAs" (click)="setRadioStatus(2,'subscri1')" />
+                                        <label class="form-check-label subscriber-labels" for="subscriSameAs">Same as
                                             patient</label>
                                     </div>
                                     <div class="subscriber-divs">
-                                        <input class="form-check-input" type="radio" name="subscriRadio"
-                                            id="subscriRadio3" />
-                                        <label class="form-check-label subscriber-labels" for="subscriRadio3">Same as
+                                        <input #subscri1Radio3 class="form-check-input" type="radio" name="subscriber1"
+                                            id="subscriLegGuard" (click)="setRadioStatus(3,'subscri1')" />
+                                        <label class="form-check-label subscriber-labels" for="subscriLegGuard">Same as
                                             legal guardian</label>
                                     </div>
                                 </div>
@@ -180,7 +181,8 @@
                     </ng-template>
                 </li>
                 <li [ngbNavItem]="2">
-                    <a ngbNavLink *ngIf="checkInsuranceCount > 1" class="tabs">Insurance 2</a>
+                    <a ngbNavLink *ngIf="radioHowManyIns > 1" class="tabs" (click)="radiosInsurances()">Insurance
+                        2</a>
                     <ng-template ngbNavContent>
                         <div class="row formrow" style="margin-top: 22px;">
                             <div class="col-6">
@@ -214,25 +216,26 @@
                         <!-- Subscriber radios -->
                         <div class="row formrow">
                             <div class="mainformset">
-                                <h6 class="heading subti-radio-b">Subscriber</h6>
+                                <h6 class="heading formrow" style="font-size: 12px;color: black;">Subscriber</h6>
                                 <div class="btn-group radios" role="group" aria-label="Basic radio toggle button group"
                                     style="margin-top: -2px;">
                                     <div class="subscriber-divs">
-                                        <input class="form-check-input" type="radio" name="subscriRadio"
-                                            id="subscriRadio1" autocomplete="off" checked />
-                                        <label class="form-check-label subscriber-labels" for="subscriRadio1">Use
+                                        <input #subscri2Radio1 class="form-check-input" type="radio" name="insuran2"
+                                            id="insuran2UseExi" (click)="setRadioStatus(1,'subscri2')" checked />
+                                        <label class="form-check-label subscriber-labels" for="insuran2UseExi">Use
                                             existing one</label>
                                     </div>
                                     <div class="subscriber-divs">
-                                        <input class="form-check-input" type="radio" name="subscriRadio"
-                                            id="subscriRadio2" autocomplete="off" />
-                                        <label class="form-check-label subscriber-labels" for="subscriRadio2">Same as
+                                        <input #subscri2Radio2 class="form-check-input" type="radio" name="insuran2"
+                                            id="insuran2SameAs" (click)="setRadioStatus(2,'subscri2')" />
+                                        <label class="form-check-label subscriber-labels" for="insuran2SameAs">Same as
                                             patient</label>
                                     </div>
                                     <div class="subscriber-divs">
-                                        <input class="form-check-input" type="radio" name="subscriRadio"
-                                            id="subscriRadio3" autocomplete="off" />
-                                        <label class="form-check-label subscriber-labels" for="subscriRadio3">Same as
+                                        <input #subscri2Radio3 class="form-check-input" type="radio" name="insuran2"
+                                            id="insuran2SameLeGuar" (click)="setRadioStatus(3,'subscri2')" />
+                                        <label class="form-check-label subscriber-labels" for="insuran2SameLeGuar">Same
+                                            as
                                             legal guardian</label>
                                     </div>
                                 </div>
@@ -256,15 +259,19 @@
                         <div class="row formrow" style="margin-top: 5px;">
                             <div class="twenty">
                                 <div class="mainformset">
-                                    <label class="required">Name of Insurance</label>
+                                    <label class="required">Subscriber's First Name</label>
 
-                                    <input class="form-control" type="text" placeholder="" name="" />
+                                    <input class="form-control" type="text" placeholder="" name=""
+                                        [(ngModel)]="insurances.insurance2.subscriber2.firstName"
+                                        [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                             <div class="twenty">
                                 <div class="mainformset">
                                     <label class="label-input-gap">Subscriber’s Last Name</label>
-                                    <input class="form-control" type="text" placeholder="" name="" />
+                                    <input class="form-control" type="text" placeholder="" name=""
+                                        [(ngModel)]="insurances.insurance2.subscriber2.lastName"
+                                        [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                             <div class="twenty">
@@ -278,20 +285,25 @@
                             <div class="twenty">
                                 <div class="mainformset">
                                     <label class="label-input-gap">DOB</label>
-                                    <input class="form-control" type="text" placeholder="" name="" />
+                                    <input class="form-control" type="text" placeholder="" name=""
+                                        [(ngModel)]="insurances.insurance2.subscriber2.DOB"
+                                        [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                             <div class="twenty">
                                 <div class="mainformset">
                                     <label class="required">SSN/ID</label>
-                                    <input class="form-control" type="text" placeholder="" name="" />
+                                    <input class="form-control" type="text" placeholder="" name=""
+                                        [(ngModel)]="insurances.insurance2.subscriber2.SSNID"
+                                        [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                         </div>
                     </ng-template>
                 </li>
                 <li [ngbNavItem]="3">
-                    <a ngbNavLink *ngIf="checkInsuranceCount == 3" class="tabs">Insurance 3</a>
+                    <a ngbNavLink *ngIf="radioHowManyIns == 3" class="tabs" (click)="radiosInsurances()">Insurance
+                        3</a>
                     <ng-template ngbNavContent>
                         <div class="row formrow" style="margin-top: 22px;">
                             <div class="col-6">
@@ -325,25 +337,26 @@
                         <!-- Subscriber radios -->
                         <div class="row formrow">
                             <div class="mainformset">
-                                <h6 class="heading subti-radio-b">Subscriber</h6>
+                                <h6 class="heading formrow" style="font-size: 12px;color: black;">Subscriber</h6>
                                 <div class="btn-group radios" role="group" aria-label="Basic radio toggle button group"
                                     style="margin-top: -2px;">
                                     <div class="subscriber-divs">
-                                        <input class="form-check-input" type="radio" name="subscriRadio"
-                                            id="subscriRadio1" autocomplete="off" checked />
-                                        <label class="form-check-label subscriber-labels" for="subscriRadio1">Use
+                                        <input #subscri3Radio1 class="form-check-input" type="radio" name="subscriber3"
+                                            id="subscr1UseExit" (click)="setRadioStatus(1,'subscri3')" />
+                                        <label class="form-check-label subscriber-labels" for="subscr1UseExit">Use
                                             existing one</label>
                                     </div>
                                     <div class="subscriber-divs">
-                                        <input class="form-check-input" type="radio" name="subscriRadio"
-                                            id="subscriRadio2" autocomplete="off" />
-                                        <label class="form-check-label subscriber-labels" for="subscriRadio2">Same as
+                                        <input #subscri3Radio2 class="form-check-input" type="radio" name="subscriber3"
+                                            id="subscriSameAs" (click)="setRadioStatus(2,'subscri3')" />
+                                        <label class="form-check-label subscriber-labels" for="subscriSameAs">Same as
                                             patient</label>
                                     </div>
                                     <div class="subscriber-divs">
-                                        <input class="form-check-input" type="radio" name="subscriRadio"
-                                            id="subscriRadio3" autocomplete="off" />
-                                        <label class="form-check-label subscriber-labels" for="subscriRadio3">Same as
+                                        <input #subscri3Radio3 class="form-check-input" type="radio" name="subscriber3"
+                                            id="subscriSameLeGuar" (click)="setRadioStatus(3,'subscri3')" />
+                                        <label class="form-check-label subscriber-labels" for="subscriSameLeGuar">Same
+                                            as
                                             legal guardian</label>
                                     </div>
                                 </div>
@@ -367,15 +380,19 @@
                         <div class="row formrow" style="margin-top: 5px;">
                             <div class="twenty">
                                 <div class="mainformset">
-                                    <label class="required">Name of Insurance</label>
+                                    <label class="required">Subscriber's First Name</label>
 
-                                    <input class="form-control" type="text" placeholder="" name="" />
+                                    <input class="form-control" type="text" placeholder="" name=""
+                                        [(ngModel)]="insurances.insurance3.subscriber3.firstName"
+                                        [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                             <div class="twenty">
                                 <div class="mainformset">
                                     <label class="label-input-gap">Subscriber’s Last Name</label>
-                                    <input class="form-control" type="text" placeholder="" name="" />
+                                    <input class="form-control" type="text" placeholder="" name=""
+                                        [(ngModel)]="insurances.insurance3.subscriber3.lastName"
+                                        [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                             <div class="twenty">
@@ -389,13 +406,17 @@
                             <div class="twenty">
                                 <div class="mainformset">
                                     <label class="label-input-gap">DOB</label>
-                                    <input class="form-control" type="text" placeholder="" name="" />
+                                    <input class="form-control" type="text" placeholder="" name=""
+                                        [(ngModel)]="insurances.insurance3.subscriber3.DOB"
+                                        [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                             <div class="twenty">
                                 <div class="mainformset">
                                     <label class="required">SSN/ID</label>
-                                    <input class="form-control" type="text" placeholder="" name="" />
+                                    <input class="form-control" type="text" placeholder="" name=""
+                                        [(ngModel)]="insurances.insurance3.subscriber3.SSNID"
+                                        [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                         </div>
@@ -406,15 +427,15 @@
             <div class="two-final-buttons" style="margin-top: 56px !important;">
                 <div class="two-items">
                     <button class="btn btn-light btn-light-custom">Exit</button>
-                    <button type="button" class="btn btn-dark btn-dark-custom"
-                        *ngIf="active==1 && checkInsuranceCount>1" (click)="nav.select(2)">Next</button>
-                    <button type="button" class="btn btn-dark btn-dark-custom"
-                        *ngIf="active==1  && checkInsuranceCount==1" (click)="continueToFamilyMemb()">Save and
+                    <button type="button" class="btn btn-dark btn-dark-custom" *ngIf="active==1 && radioHowManyIns>1"
+                        (click)="nav.select(2)">Next</button>
+                    <button type="button" class="btn btn-dark btn-dark-custom" *ngIf="active==1  && radioHowManyIns==1"
+                        (click)="continueToFamilyMemb()">Save and
                         continue</button>
-                    <button type="button" class="btn btn-dark btn-dark-custom"
-                        *ngIf="active==2 && checkInsuranceCount==3" (click)="nav.select(3)">Next</button>
-                    <button type="button" class="btn btn-dark btn-dark-custom"
-                        *ngIf="active==2  && checkInsuranceCount==2" (click)="continueToFamilyMemb()">Save and
+                    <button type="button" class="btn btn-dark btn-dark-custom" *ngIf="active==2 && radioHowManyIns==3"
+                        (click)="nav.select(3)">Next</button>
+                    <button type="button" class="btn btn-dark btn-dark-custom" *ngIf="active==2  && radioHowManyIns==2"
+                        (click)="continueToFamilyMemb()">Save and
                         continue</button>
                     <button type="button" class="btn btn-dark btn-dark-custom" *ngIf="active==3"
                         (click)="continueToFamilyMemb()">Save and continue</button>
