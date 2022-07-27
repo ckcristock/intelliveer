@@ -8,7 +8,9 @@
 					alt=""
 					routerLinkActive="active"
 					[routerLink]="item.url"
+					ngbTooltip="{{ item.title }}"
 				/>
+				<p *ngIf="router.url.includes(item.url)" class="title" >{{ item.title }}</p>
 			</li>
 		</ul>
 	</div>

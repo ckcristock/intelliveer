@@ -9,7 +9,7 @@
 		<div class="search" #searchDivRef>
 			<div class="search-results" *ngIf="searchFocus">
 				<ul>
-					<li *ngFor="let result of searchResults">
+					<li *ngFor="let result of userSearchLst">
 						<button	class="d-flex justify-content-between" (click)="handleSearchResultsClick(result)">
 							<span> {{ result.user }} ({{ result.dob }}) </span>
 							<span *ngIf="!result.active" class="inactive">
@@ -37,16 +37,7 @@
 								class="btn btn-dark dropdown-toggle-split"
 								ngbDropdownToggle
 							>
-								<!-- <i class="bi bi-chevron-down"></i> -->
 							</button>
-							<!-- <div class="dropdown-menu" ngbDropdownMenu>
-								<button ngbDropdownItem (click)="openAddPatientDialog()">
-									Quick add Patient
-								</button>
-								<button ngbDropdownItem>
-									Coordinate with prospect
-								</button>
-							</div> -->
 						</div>
 					</div>
 					<div>
@@ -69,6 +60,8 @@
 					placeholder="Search"
 					aria-describedby="basic-addon1"
 					(focus)="searchFocus = true"
+					[(ngModel)]="searchWord"
+					(click)="fetchSearch($event)" (keyup)="fetchSearch($event)"
 				/>
 			</div>
 			<div ngbDropdown class="d-inline-block search-dropdown">
@@ -133,15 +126,35 @@
 				class="d-flex justify-content-center align-items-center gap-3"
 				*ngIf="selectedPatient"
 			>
-				<img src="assets/images/doctor2.jpg" alt="" />
+				<img src="{{ selectedPatient.profileUrl }}" alt="" />
 				<span
 					>{{ selectedPatient.user }} ({{ selectedPatient.id }})</span
 				>
 			</div>
-			<div class="d-flex justify-content-center align-items-center">
-				<img src="assets/images/doctor2.jpg" alt="" />
-				<img src="assets/images/doctor.jpg" alt="" />
-				<img src="assets/images/doctor2.jpg" alt="" />
+			<div class="d-flex justify-content-center align-items-center" *ngIf="selectUserLst?.length != 0">
+				<div *ngFor="let selectUser of selectUserLst | slice:1:4">
+					<div ngbDropdown class="d-inline-block drpdown">
+						<img src="{{ selectUser.profileUrl }}" alt="" id="dropdownImage" ngbDropdownToggle />
+						<div ngbDropdownMenu aria-labelledby="dropdownImage">
+							<div class="container">
+								<div class="section">
+									<div class="row">
+										<div class="col" [align]="'end'">
+											<i class="bi bi-pin-angle" (click)="!userPin = userPin"></i>
+											<i class="bi bi-pin-angle-fill" (click)="!userPin = userPin"></i>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col">
+											<img src="{{ selectUser.profileUrl }}" alt="" />
+											<p>{{ selectUser.user }}</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
