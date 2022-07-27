@@ -119,7 +119,7 @@ export class CallersInfoComponent implements OnInit {
     setTimeout(() => {
       // Legal guardian of the patient
       if (this.radioLegalGuar == 0) {
-        this.radioLegalGuar = 1;
+        this.radioLegalGuar = 2;
       }
       if (this.legalGuardPati1 != null) {
         if (this.radioLegalGuar == 1) {
