@@ -40,7 +40,8 @@
 						[routerLink]="'/dashboard/home'"
 						placement="right"
 					>
-						<img src="assets/icons/home.svg" />
+						<img src="assets/icons/home-disable.svg" *ngIf="router.url != '/dashboard/home'" />
+						<img src="assets/icons/home.svg" *ngIf="router.url == '/dashboard/home'" />
 					</li>
 					<li
 						class="icon mb-3"
@@ -64,7 +65,7 @@
 						class="icon mb-3"
 						ngbTooltip="{{ 'Patient Flow' }}"
 						routerLinkActive="active"
-						[routerLink]="'/dashboard/patient'"
+						[routerLink]="'NA'"
 						placement="right"
 					>
 						<img src="assets/icons/patient_flow.svg" />
@@ -121,9 +122,16 @@
 					>
 						<div class="icon">
 							<img
+								src="assets/icons/home-disable.svg"
+								width="20"
+								height="15"
+								*ngIf="router.url != '/dashboard/home'"
+							/>
+							<img
 								src="assets/icons/home.svg"
 								width="20"
 								height="15"
+								*ngIf="router.url == '/dashboard/home'"
 							/>
 							Home
 						</div>
@@ -158,7 +166,7 @@
 					</li>
 					<li
 						routerLinkActive="active"
-						[routerLink]="'/dashboard/patient'"
+						[routerLink]="'NA'"
 						placement="right"
 					>
 						<div class="icon">

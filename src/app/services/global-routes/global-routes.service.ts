@@ -227,8 +227,13 @@ export class GlobalRoutesService {
       child: [{
         title: "Personal Information",
         url: `${this.urlUserManage}/edit-user/personal-info`
-      },{
-        title: "Role Assignment & User Policy",
+      },
+      {
+        title: "Role Assignment",
+        url: `${this.urlUserManage}/edit-user/assign-role`
+      },
+      {
+        title: "User Policy",
         url: `${this.urlUserManage}/edit-user/user-policy`
       },{
         title: "Provider",

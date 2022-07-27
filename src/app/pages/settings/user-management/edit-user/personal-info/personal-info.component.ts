@@ -22,7 +22,8 @@ export class PersonalInfoComponent implements OnInit {
 		{ title: 'Address', id: 'address' },
 		{ title: 'Contact', id: 'contact' },
 		{ title: 'Relations/Type', id: 'relationsType' },
-		{ title: 'Emergency Contact', id: 'emergencyContact' }
+		{ title: 'Emergency Contact', id: 'emergencyContact' },
+		{ title: 'Ownership', id: 'ownership' }
 	];
 
 	testCounter: number = 0;

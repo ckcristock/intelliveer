@@ -40,6 +40,10 @@ export class UserPolicyComponent implements OnInit {
 	locationList: any[] = [];
 	practiceList: any[] = [];
 	bgUserLogin: string | undefined;
+	selectedLegelEntity: any;
+	selectedLocation: any;
+	selectedPractice: any;
+	saveDissable: boolean = true;
 
 	constructor(
 		private router: Router,
@@ -68,6 +72,9 @@ export class UserPolicyComponent implements OnInit {
 		data = data || {};
 		this.Form = this.fb.group({
 			permissions: this.fb.array([])
+		});
+		this.Form.valueChanges.subscribe(values => {
+			this.saveDissable = false
 		});
 	}
 
@@ -136,7 +143,7 @@ export class UserPolicyComponent implements OnInit {
 
 	save(data: any) {
 		this.alertService
-			.conformAlert('Are you sure?', 'You want to update a role template')
+			.conformAlert('Are you sure?', 'You want to update a user policy')
 			.then((result: any) => {
 				if (result.value) {
 					this.saveUesrPolicyList();
@@ -161,8 +168,13 @@ export class UserPolicyComponent implements OnInit {
 			)
 			.subscribe(
 				(list) => {
-					console.log('done');
-					console.log(list);
+					this.alertService.success(
+						'Success',
+						'User policy has been updated successfully'
+					);
+					this.router.navigate([
+						'/dashboard/settings/user-management/manage-user'
+					]);
 				},
 				(error) => {
 					console.log(error);
@@ -182,14 +194,12 @@ export class UserPolicyComponent implements OnInit {
 		if (user?.__ISSU__) {
 			if (bgOrdID == 'intelliveer' || bgOrdID == null) {
 				this.getUserCurrentRoleList('intelliveer');
-				this.getRolesList('intelliveer');
 				this.getLegelEntityList('intelliveer');
 				this.getLocationList('intelliveer');
 				this.getPracticeList('intelliveer');
 				this.bgUserLogin = 'intelliveer';
 			} else {
 				this.getUserCurrentRoleList(this.selectedBusinessGroup?.bgId);
-				this.getRolesList(this.selectedBusinessGroup?.bgId);
 				this.getLegelEntityList(this.selectedBusinessGroup?.bgId);
 				this.getLocationList(this.selectedBusinessGroup?.bgId);
 				this.getPracticeList(this.selectedBusinessGroup?.bgId);
@@ -197,7 +207,6 @@ export class UserPolicyComponent implements OnInit {
 			}
 		} else {
 			this.getUserCurrentRoleList(this.selectedBusinessGroup?.bgId);
-			this.getRolesList(this.selectedBusinessGroup?.bgId);
 			this.getLegelEntityList(this.selectedBusinessGroup?.bgId);
 			this.getLocationList(this.selectedBusinessGroup?.bgId);
 			this.getPracticeList(this.selectedBusinessGroup?.bgId);
@@ -465,4 +474,55 @@ setPermissionForCancelANDNew(roledata:any){
 		  })
 	  }
 }
+
+	selectLegelEntity(Obj: any)
+	{
+		console.log(Obj);
+		this.selectedLegelEntity = Obj.name;
+		this.Form.value.permissions.map((module: any) => {
+			module.sections.map((section: any) => {
+				section.permissions.map((permission: any) => {
+					permission.attrs = {
+						"BR": {
+							"in": [this.selectedLegelEntity]
+						}
+					}
+				});
+			});
+		});
+	}
+
+	selectLocation(Obj: any)
+	{
+		console.log(Obj)
+		this.selectedLocation = Obj.name;
+		this.Form.value.permissions.map((module: any) => {
+			module.sections.map((section: any) => {
+				section.permissions.map((permission: any) => {
+					permission.attrs = {
+						"BR": {
+							"in": [this.selectedLocation]
+						}
+					}
+				});
+			});
+		});
+	}
+
+	selectPractice(Obj: any)
+	{
+		console.log(Obj)
+		this.selectedPractice = Obj.name;
+		this.Form.value.permissions.map((module: any) => {
+			module.sections.map((section: any) => {
+				section.permissions.map((permission: any) => {
+					permission.attrs = {
+						"BR": {
+							"in": [this.selectedPractice]
+						}
+					}
+				});
+			});
+		});
+	}
 }

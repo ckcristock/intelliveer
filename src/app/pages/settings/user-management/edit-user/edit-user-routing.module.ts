@@ -29,6 +29,14 @@ const routes: Routes = [
             ),
       },
       {
+        path: 'assign-role',
+        loadChildren: () =>
+          import(
+            '@pages/settings/user-management/edit-user/assign-role/assign-role.module').then(
+              (m) => m.AssignRoleModule
+            ),
+      },
+      {
         path: 'user-provider',
         loadChildren: () =>
           import(

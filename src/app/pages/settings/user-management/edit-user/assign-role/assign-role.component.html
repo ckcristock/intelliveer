@@ -1,0 +1,66 @@
+<app-nav-bar-pills
+	[cancelBtn]="true"
+	[saveBtn]="true"
+	[disableSaveBtn]="Form.invalid"
+	(onCancel)="cancel()"
+	(onSave)="save()"
+></app-nav-bar-pills>
+
+<div class="section" id="main">
+	<h6 class="heading" style="font-weight: bold">Role Assignment</h6>
+
+	<label class="label-input-gap" style="font-weight: bold"
+		>Current Roles</label
+	>
+
+	<div
+		class="row mb-3"
+		style="padding: 5px"
+		*ngIf="userCurrentRoleList?.length != 0"
+	>
+		<div
+			class="col-3 p-2"
+			*ngFor="let currentRole of userCurrentRoleList; let i = index"
+		>
+			<div class="input-group flex-nowrap">
+				<span
+					class="input-group-text"
+					style="background-color: #faf2e9; border: 1px solid #f9b85f"
+					(click)="cancleUserCurrentRole(currentRole, i)"
+					><i class="bi bi-x-lg"></i
+				></span>
+				<input
+					type="text"
+					class="form-control"
+					value="{{ currentRole.name }}"
+					readonly
+					style="border-color: #f9b85f; background-color: #faf2e9; width: max-content;"
+				/>
+			</div>
+		</div>
+	</div>
+
+	<form
+		autocomplete="off"
+		[formGroup]="Form"
+		#f="ngForm"
+		(submit)="save()"
+	>
+		<div class="row" style="margin-bottom: 48px !important">
+			<div class="col-3">
+				<label class="label-input-gap">Roles</label>
+				<ng-select
+					placeholder="Select Role"
+					(change)="selectRoleData($event)"
+				>
+					<ng-option
+						*ngFor="let role of roleList; let i = index"
+						[value]="role"
+					>
+						{{ role?.name }}
+					</ng-option>
+				</ng-select>
+			</div>
+		</div>
+	</form>
+</div>

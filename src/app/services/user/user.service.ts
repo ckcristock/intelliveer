@@ -126,6 +126,15 @@ export class UserService {
 		});
 	}
 
+	updateUserRole(bgId: any, userId: any, roleList: any)
+	{
+		return this.http.put(`${CONFIG.backend.host}/user/user/update-user-role/`+userId, roleList, {
+			headers: {
+				'X-ORG-ID': bgId
+			}
+		});
+	}
+
 	getUserRoleData(bgId: any, roleId: any)
 	{
 		return this.http.get(`${CONFIG.backend.host}/role/role/`+ roleId, {

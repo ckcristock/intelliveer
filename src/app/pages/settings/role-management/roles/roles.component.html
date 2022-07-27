@@ -49,7 +49,6 @@
 				<thead>
 					<tr>
 						<th scope="col"><input type="checkbox" /></th>
-						<th scope="col">ID</th>
 						<th scope="col">Roles</th>
 						<th scope="col">Description</th>
 						<th scope="col">Template</th>
@@ -61,7 +60,6 @@
 						<td>
 							<input type="checkbox" value="{{ role?._id }}" />
 						</td>
-						<td>{{ role?._id }}</td>
 						<td>{{ role?.name }}</td>
 						<td>{{ role?.description }}</td>
 						<td *ngIf="role?.roleTemplateName">{{ role?.roleTemplateName }}</td>
