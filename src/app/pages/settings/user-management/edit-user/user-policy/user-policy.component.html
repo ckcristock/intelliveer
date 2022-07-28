@@ -145,16 +145,16 @@
 												</tr>
 											</thead>
 											<tbody
-												*ngFor="
-													let childPermision of permissionNested(
-														i,
-														j
-													);
-													let k = index
-												"
-												[formGroupName]="k"
+												
 											>
-												<tr>
+												<tr *ngFor="
+												let childPermision of permissionNested(
+													i,
+													j
+												);
+												let k = index
+											"
+											[formGroupName]="k">
 													<td>
 														<input
 															type="checkbox"
