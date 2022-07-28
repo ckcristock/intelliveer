@@ -4,24 +4,13 @@
 <form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
     <!-- content -->
     <div class="section" id="main">
-        <h6 class="heading" style="font-weight: bold;">Role Assignment</h6>
 
         <label class="label-input-gap" style="font-weight: bold;">Current Roles</label>
         <div class="roles">
             <div *ngFor="let role of userCurrentRoleList; let i = index">
                 <div class="xandroles formrow">
-                    <span class="input-text" (click)="cancleUserCurrentRole(role, i)"><i class="bi bi-x-lg"></i></span>
                     <input type="text" class="form-control" value="{{role.name}}" readonly>
                 </div>
-            </div>
-        </div>
-
-        <div class="row " style="margin-bottom: 48px !important;">
-            <div class="col-3">
-                <label class="label-input-gap">Roles</label>
-                <ng-select placeholder="Select Role" (change)="selectRoleData($event)">
-                    <ng-option *ngFor="let role of roleList; let i = index;" [value]="role"> {{role?.name}} </ng-option>
-                </ng-select>
             </div>
         </div>
 
@@ -140,6 +129,7 @@
 												<tr>
 													<td><input type="checkbox" formControlName="enabled" [attr.disabled]="childPermision.value.locked"
                                                         *ngIf="childPermision.value.locked"/>
+                                                        <input type="checkbox" formControlName="enabled"  *ngIf="!childPermision.value.locked"/></td>
 													<td>
 														<input
 															type="hidden"

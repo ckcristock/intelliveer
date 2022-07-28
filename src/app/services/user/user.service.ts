@@ -126,6 +126,15 @@ export class UserService {
 		});
 	}
 
+	updateUserRole(bgId: any, userId: any, roleList: any)
+	{
+		return this.http.put(`${CONFIG.backend.host}/user/user/update-user-role/`+userId, roleList, {
+			headers: {
+				'X-ORG-ID': bgId
+			}
+		});
+	}
+
 	getUserRoleData(bgId: any, roleId: any)
 	{
 		return this.http.get(`${CONFIG.backend.host}/role/role/`+ roleId, {
@@ -165,6 +174,24 @@ export class UserService {
 	getPracticeList(bgId: any)
 	{
 		return this.http.get(`${CONFIG.backend.host}/bg/practice`, {
+			headers: {
+				'X-ORG-ID': bgId
+			}
+		});
+	}
+
+	saveUserPolicyList(bgId: any, userId: any, userPermissions: any)
+	{
+		return this.http.post(`${CONFIG.backend.host}/user/user/user-policy/`+ userId, userPermissions, {
+			headers: {
+				'X-ORG-ID': bgId
+			}
+		});
+	}
+
+	getUserPolicyList(bgId: any, userId: any)
+	{
+		return this.http.get(`${CONFIG.backend.host}/user/user/user-policy/`+ userId, {
 			headers: {
 				'X-ORG-ID': bgId
 			}
