@@ -134,7 +134,7 @@ export const patientConsultationMenuItems = [
 					},
 					{
 						title: 'Treatment Options',
-						url: '/+',
+						url: '/dashboard/patient/consultation/treatment',
 						icon: 'bi bi-house-door',
 					},
 					{
@@ -298,4 +298,68 @@ export const problemListOfDiagnosis = [
 		title: 'Category 6',
 		child: []
 	},
+]
+
+
+export const patientTreatmentMenuItems = [
+	{
+		title: 'Tx Recommendations',
+		url: '/dashboard/patient/consultation/treatment/recommendations',
+		icon: '/assets/icons/jar.svg',
+		child: []
+	},
+	{
+		title: 'Prerequisites',
+		url: '/dashboard/patient/consultation/treatment/prerequisites',
+		icon: '/assets/icons/jar.svg',
+		child: []
+	},
+	{
+		title: 'Extractions',
+		url: '/dashboard/patient/consultation/treatment/extractions',
+		icon: '/assets/icons/jar.svg',
+		child: []
+	},
+	{
+		title: 'Treatment Mechanics',
+		url: '/dashboard/patient/consultation/treatment/treatment-mechanics',
+		icon: '/assets/icons/jar.svg',
+		child: []
+	},
+	{
+		title: 'Expected Tx Outcome',
+		url: '/dashboard/patient/consultation/treatment/treatment-outcome',
+		icon: '/assets/icons/jar.svg',
+		child: []
+	},
+	{
+		title: 'Risks',
+		url: '/dashboard/patient/consultation/treatment/risk',
+		icon: '/assets/icons/jar.svg',
+		child: []
+	},
+	{
+		title: 'Adjunctive Tx',
+		url: '/dashboard/patient/consultation/treatment/adjunctive-tx',
+		icon: '/assets/icons/jar.svg',
+		child: []
+	},
+	{
+		title: 'Appliance Sequence',
+		url: '/dashboard/patient/consultation/treatment/appliance-sequence',
+		icon: '/assets/icons/jar.svg',
+		child: []
+	},
+	{
+		title: 'Bracket Variations',
+		url: '/dashboard/patient/consultation/treatment/bracket-variations',
+		icon: '/assets/icons/jar.svg',
+		child: []
+	},
+	{
+		title: 'Retention',
+		url: '/dashboard/patient/consultation/treatment/retention',
+		icon: '/assets/icons/jar.svg',
+		child: []
+	}
 ]

@@ -69,10 +69,12 @@ export class OverbiteComponent implements OnInit {
   selectOption($event: any, Obj: any)
   {
     Obj.checked = $event.target.checked;
+    localStorage.setItem('selectObj', JSON.stringify(Obj));
     if($event.target.checked)
     {
       this.problemLst[2].child.push(Obj);
       this.problemListService.problemList = this.problemLst;
+      this.problemListService.toothChartList = Obj;
     }
     else
     {

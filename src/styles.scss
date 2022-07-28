@@ -127,13 +127,10 @@ input.search {
 }
 
 .section {
-	background-color: #f9fafb;
-	padding: 53px;
-	padding-top: 37px;
-	padding-bottom: 19px;
+	background-color: #f9f9f9;
+	padding: 1rem;
 	margin-bottom: 1rem;
 	border-radius: 0.5rem;
-
 	.heading {
 		font-weight: bold;
 		margin-bottom: 1.5rem;
@@ -874,14 +871,14 @@ form {
 // }
 
 
-td {
-	line-height: 30px !important;
-	border-style: none !important;
-}
+// td {
+// 	line-height: 30px !important;
+// 	border-style: none !important;
+// }
 
-table {
-	border-collapse: unset !important;
-}
+// table {
+// 	border-collapse: unset !important;
+// }
 
 
 input[type='checkbox'] {

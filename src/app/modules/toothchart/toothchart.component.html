@@ -1,0 +1,273 @@
+<div *ngIf="toothChartType == 1">
+    <div class="section" [ngStyle]="{ 'outline': showAdultOutline ? 'auto' : 'none' }">
+        <div class="row" style="border-bottom: 1px groove;">
+            <div class="col" style="border-right: 1px groove;">
+                <div class="row">
+                    <div class="col-1" *ngFor="let tooth of adultToothChartLstPart1; let i = index;">
+                        <div *ngIf="!showDropdownMenu">
+                            <div style="margin: auto;"
+                                (click)="actionPerformOnTooth(tooth)">
+                                <img src="/assets/images/tooth_svg/{{tooth.title}}.svg" [width]="width"
+                                    [height]="height" *ngIf="tooth.show" />
+                                <div [ngClass]="missingToothCss" *ngIf="!tooth.show"></div>
+                                <p [align]="'center'" [style.font-size]="textSize" [style.margin-left]="'6px'">{{tooth.title}}</p>
+                            </div>
+                        </div>
+                        <div ngbDropdown class="d-inline-block" *ngIf="showDropdownMenu">
+                            <div style="margin: auto;" ngbDropdownToggle id="dropdownBasic1"
+                                (click)="actionPerformOnTooth(tooth)">
+                                <img src="/assets/images/tooth_svg/{{tooth.title}}.svg" [width]="width"
+                                    [height]="height" *ngIf="tooth.show" />
+                                <div [ngClass]="missingToothCss" *ngIf="!tooth.show"></div>
+                                <div [ngClass]="imageClass" *ngIf="tooth.remove"><i class="bi bi-x-circle"
+                                        style="color: tomato;"></i></div>
+                                <p [align]="'center'" [style.font-size]="textSize">{{tooth.title}}</p>
+                            </div>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" *ngIf="showAdultOutline">
+                                <button ngbDropdownItem (click)="selectToothOption(tooth, 'Aligner')">Aligner</button>
+                                <button ngbDropdownItem (click)="selectToothOption(tooth, 'Braces')">Braces</button>
+                                <button ngbDropdownItem (click)="removeTooth(tooth)">Remove</button>
+                                <button ngbDropdownItem (click)="disableTooth(tooth)">Missing Tooth</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col" style="border-left: 1px groove;">
+                <div class="row">
+                    <div class="col-1" *ngFor="let tooth of adultToothChartLstPart2; let i = index;">
+                        <div *ngIf="!showDropdownMenu">
+                            <div style="margin: auto;"
+                                (click)="actionPerformOnTooth(tooth)">
+                                <img src="/assets/images/tooth_svg/{{tooth.title}}.svg" [width]="width"
+                                    [height]="height" *ngIf="tooth.show" />
+                                <div [ngClass]="missingToothCss" *ngIf="!tooth.show"></div>
+                                <p [align]="'center'" [style.font-size]="textSize" [style.margin-left]="'6px'">{{tooth.title}}</p>
+                            </div>
+                        </div>
+                        <div ngbDropdown class="d-inline-block" *ngIf="showDropdownMenu">
+                            <div style="margin: auto;" ngbDropdownToggle id="dropdownBasic2"
+                                (click)="actionPerformOnTooth(tooth)">
+                                <img src="/assets/images/tooth_svg/{{tooth.title}}.svg" [width]="width"
+                                    [height]="height" *ngIf="tooth.show" />
+                                <div [ngClass]="missingToothCss" *ngIf="!tooth.show"></div>
+                                <div [ngClass]="imageClass" *ngIf="tooth.remove"><i class="bi bi-x-circle"
+                                        style="color: tomato;"></i></div>
+                                <p [align]="'center'" [style.font-size]="textSize">{{tooth.title}}</p>
+                            </div>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic2" *ngIf="showAdultOutline">
+                                <button ngbDropdownItem (click)="selectToothOption(tooth, 'Aligner')">Aligner</button>
+                                <button ngbDropdownItem (click)="selectToothOption(tooth, 'Braces')">Braces</button>
+                                <button ngbDropdownItem (click)="removeTooth(tooth)">Remove</button>
+                                <button ngbDropdownItem (click)="disableTooth(tooth)">Missing Tooth</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="border-top: 1px groove;">
+            <div class="col" style="border-right: 1px groove;">
+                <div class="row">
+                    <div class="col-1" *ngFor="let tooth of adultToothChartLstPart4; let i = index;">
+                        <div *ngIf="!showDropdownMenu">
+                            <div style="margin: auto;"
+                                (click)="actionPerformOnTooth(tooth)">
+                                <img src="/assets/images/tooth_svg/{{tooth.title}}.svg" [width]="width"
+                                    [height]="height" *ngIf="tooth.show" />
+                                <div [ngClass]="missingToothCss" *ngIf="!tooth.show"></div>
+                                <p [align]="'center'" [style.font-size]="textSize" [style.margin-left]="'6px'">{{tooth.title}}</p>
+                            </div>
+                        </div>
+                        <div ngbDropdown class="d-inline-block" *ngIf="showDropdownMenu">
+                            <div style="margin: auto;" ngbDropdownToggle id="dropdownBasic4"
+                                (click)="actionPerformOnTooth(tooth)">
+                                <p [align]="'center'" [style.font-size]="textSize">{{tooth.title}}</p>
+                                <img src="/assets/images/tooth_svg/{{tooth.title}}.svg" [width]="width"
+                                    [height]="height" *ngIf="tooth.show" />
+                                <div [ngClass]="missingToothCss" *ngIf="!tooth.show"></div>
+                                <div [ngClass]="imageClass" *ngIf="tooth.remove"><i class="bi bi-x-circle"
+                                        style="color: tomato;"></i></div>
+                            </div>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic4" *ngIf="showAdultOutline">
+                                <button ngbDropdownItem (click)="selectToothOption(tooth, 'Aligner')">Aligner</button>
+                                <button ngbDropdownItem (click)="selectToothOption(tooth, 'Braces')">Braces</button>
+                                <button ngbDropdownItem (click)="removeTooth(tooth)">Remove</button>
+                                <button ngbDropdownItem (click)="disableTooth(tooth)">Missing Tooth</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col" style="border-left: 1px groove;">
+                <div class="row">
+                    <div class="col-1" *ngFor="let tooth of adultToothChartLstPart3; let i = index;">
+                        <div *ngIf="!showDropdownMenu">
+                            <div style="margin: auto;"
+                                (click)="actionPerformOnTooth(tooth)">
+                                <img src="/assets/images/tooth_svg/{{tooth.title}}.svg" [width]="width"
+                                    [height]="height" *ngIf="tooth.show" />
+                                <div [ngClass]="missingToothCss" *ngIf="!tooth.show"></div>
+                                <p [align]="'center'" [style.font-size]="textSize" [style.margin-left]="'6px'">{{tooth.title}}</p>
+                            </div>
+                        </div>
+                        <div ngbDropdown class="d-inline-block" *ngIf="showDropdownMenu">
+                            <div style="margin: auto;" ngbDropdownToggle id="dropdownBasic3"
+                                (click)="actionPerformOnTooth(tooth)">
+                                <p [align]="'center'" [style.font-size]="textSize">{{tooth.title}}</p>
+                                <img src="/assets/images/tooth_svg/{{tooth.title}}.svg" [width]="width"
+                                    [height]="height" *ngIf="tooth.show" />
+                                <div [ngClass]="missingToothCss" *ngIf="!tooth.show"></div>
+                                <div [ngClass]="imageClass" *ngIf="tooth.remove"><i class="bi bi-x-circle"
+                                        style="color: tomato;"></i></div>
+                            </div>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic3" *ngIf="showAdultOutline">
+                                <button ngbDropdownItem (click)="selectToothOption(tooth, 'Aligner')">Aligner</button>
+                                <button ngbDropdownItem (click)="selectToothOption(tooth, 'Braces')">Braces</button>
+                                <button ngbDropdownItem (click)="removeTooth(tooth)">Remove</button>
+                                <button ngbDropdownItem (click)="disableTooth(tooth)">Missing Tooth</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="toothChartType == 2">
+    <div class="section" [ngStyle]="{ 'outline': showChildOutline ? 'auto' : 'none' }"
+        style="margin-left: 6rem; margin-right: 6rem;">
+        <div class="row" style="border-bottom: 1px groove;">
+            <div class="col" style="border-right: 1px groove;">
+                <div class="row">
+                    <div class="col-2" *ngFor="let tooth of childToothChartLstPart1; let i = index;">
+                        <div *ngIf="!showDropdownMenu">
+                            <div style="margin: auto;"
+                                (click)="actionPerformOnTooth(tooth)">
+                                <img src="/assets/images/tooth_svg/{{tooth.title}}.svg" [width]="width"
+                                    [height]="height" *ngIf="tooth.show" />
+                                <div [ngClass]="missingToothCss" *ngIf="!tooth.show"></div>
+                                <p [align]="'center'" [style.font-size]="textSize" [style.margin-left]="'6px'">{{tooth.title}}</p>
+                            </div>
+                        </div>
+                        <div ngbDropdown class="d-inline-block" *ngIf="showDropdownMenu">
+                            <div style="margin: auto;" ngbDropdownToggle id="dropdownBasic1"
+                                (click)="actionPerformOnTooth(tooth)">
+                                <img src="/assets/images/tooth_svg/{{tooth.title}}.svg" [width]="width"
+                                    [height]="height" *ngIf="tooth.show" />
+                                <div [ngClass]="missingToothCss" *ngIf="!tooth.show"></div>
+                                <div [ngClass]="imageClass" *ngIf="tooth.remove"><i class="bi bi-x-circle"
+                                        style="color: tomato;"></i></div>
+                                <p [align]="'center'" [style.font-size]="textSize">{{tooth.toothNumber}}</p>
+                            </div>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" *ngIf="showChildOutline">
+                                <button ngbDropdownItem (click)="selectToothOption(tooth, 'Aligner')">Aligner</button>
+                                <button ngbDropdownItem (click)="selectToothOption(tooth, 'Braces')">Braces</button>
+                                <button ngbDropdownItem (click)="removeTooth(tooth)">Remove</button>
+                                <button ngbDropdownItem (click)="disableTooth(tooth)">Missing Tooth</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col" style="border-left: 1px groove;">
+                <div class="row">
+                    <div class="col-2" *ngFor="let tooth of childToothChartLstPart2; let i = index;">
+                        <div *ngIf="!showDropdownMenu">
+                            <div style="margin: auto;"
+                                (click)="actionPerformOnTooth(tooth)">
+                                <img src="/assets/images/tooth_svg/{{tooth.title}}.svg" [width]="width"
+                                    [height]="height" *ngIf="tooth.show" />
+                                <div [ngClass]="missingToothCss" *ngIf="!tooth.show"></div>
+                                <p [align]="'center'" [style.font-size]="textSize" [style.margin-left]="'6px'">{{tooth.title}}</p>
+                            </div>
+                        </div>
+                        <div ngbDropdown class="d-inline-block" *ngIf="showDropdownMenu">
+                            <div style="margin: auto;" ngbDropdownToggle id="dropdownBasic2"
+                                (click)="actionPerformOnTooth(tooth)">
+                                <img src="/assets/images/tooth_svg/{{tooth.title}}.svg" [width]="width"
+                                    [height]="height" *ngIf="tooth.show" />
+                                <div [ngClass]="missingToothCss" *ngIf="!tooth.show"></div>
+                                <div [ngClass]="imageClass" *ngIf="tooth.remove"><i class="bi bi-x-circle"
+                                        style="color: tomato;"></i></div>
+                                <p [align]="'center'" [style.font-size]="textSize">{{tooth.toothNumber}}</p>
+                            </div>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic2" *ngIf="showChildOutline">
+                                <button ngbDropdownItem (click)="selectToothOption(tooth, 'Aligner')">Aligner</button>
+                                <button ngbDropdownItem (click)="selectToothOption(tooth, 'Braces')">Braces</button>
+                                <button ngbDropdownItem (click)="removeTooth(tooth)">Remove</button>
+                                <button ngbDropdownItem (click)="disableTooth(tooth)">Missing Tooth</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="border-top: 1px groove;">
+            <div class="col" style="border-right: 1px groove;">
+                <div class="row">
+                    <div class="col-2" *ngFor="let tooth of childToothChartLstPart4; let i = index;">
+                        <div *ngIf="!showDropdownMenu">
+                            <div style="margin: auto;"
+                                (click)="actionPerformOnTooth(tooth)">
+                                <img src="/assets/images/tooth_svg/{{tooth.title}}.svg" [width]="width"
+                                    [height]="height" *ngIf="tooth.show" />
+                                <div [ngClass]="missingToothCss" *ngIf="!tooth.show"></div>
+                                <p [align]="'center'" [style.font-size]="textSize" [style.margin-left]="'6px'">{{tooth.title}}</p>
+                            </div>
+                        </div>
+                        <div ngbDropdown class="d-inline-block" *ngIf="showDropdownMenu">
+                            <div style="margin: auto;" ngbDropdownToggle id="dropdownBasic4"
+                                (click)="actionPerformOnTooth(tooth)">
+                                <p [align]="'center'" [style.font-size]="textSize">{{tooth.toothNumber}}</p>
+                                <img src="/assets/images/tooth_svg/{{tooth.title}}.svg" [width]="width"
+                                    [height]="height" *ngIf="tooth.show" />
+                                <div [ngClass]="missingToothCss" *ngIf="!tooth.show"></div>
+                                <div [ngClass]="imageClass" *ngIf="tooth.remove"><i class="bi bi-x-circle"
+                                        style="color: tomato;"></i></div>
+                            </div>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic4" *ngIf="showChildOutline">
+                                <button ngbDropdownItem (click)="selectToothOption(tooth, 'Aligner')">Aligner</button>
+                                <button ngbDropdownItem (click)="selectToothOption(tooth, 'Braces')">Braces</button>
+                                <button ngbDropdownItem (click)="removeTooth(tooth)">Remove</button>
+                                <button ngbDropdownItem (click)="disableTooth(tooth)">Missing Tooth</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col" style="border-left: 1px groove;">
+                <div class="row">
+                    <div class="col-2" *ngFor="let tooth of childToothChartLstPart3; let i = index;">
+                        <div *ngIf="!showDropdownMenu">
+                            <div style="margin: auto;"
+                                (click)="actionPerformOnTooth(tooth)">
+                                <img src="/assets/images/tooth_svg/{{tooth.title}}.svg" [width]="width"
+                                    [height]="height" *ngIf="tooth.show" />
+                                <div [ngClass]="missingToothCss" *ngIf="!tooth.show"></div>
+                                <p [align]="'center'" [style.font-size]="textSize" [style.margin-left]="'6px'">{{tooth.title}}</p>
+                            </div>
+                        </div>
+                        <div ngbDropdown class="d-inline-block" *ngIf="showDropdownMenu">
+                            <div style="margin: auto;" ngbDropdownToggle id="dropdownBasic3"
+                                (click)="actionPerformOnTooth(tooth)">
+                                <p [align]="'center'" [style.font-size]="textSize">{{tooth.toothNumber}}</p>
+                                <img src="/assets/images/tooth_svg/{{tooth.title}}.svg" [width]="width"
+                                    [height]="height" *ngIf="tooth.show" />
+                                <div [ngClass]="missingToothCss" *ngIf="!tooth.show"></div>
+                                <div [ngClass]="imageClass" *ngIf="tooth.remove"><i class="bi bi-x-circle"
+                                        style="color: tomato;"></i></div>
+                            </div>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic3" *ngIf="showChildOutline">
+                                <button ngbDropdownItem (click)="selectToothOption(tooth, 'Aligner')">Aligner</button>
+                                <button ngbDropdownItem (click)="selectToothOption(tooth, 'Braces')">Braces</button>
+                                <button ngbDropdownItem (click)="removeTooth(tooth)">Remove</button>
+                                <button ngbDropdownItem (click)="disableTooth(tooth)">Missing Tooth</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
