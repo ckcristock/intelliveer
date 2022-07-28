@@ -29,6 +29,7 @@
                             type="text"
                             placeholder="Type Name"
                             name=""
+                            [(ngModel)]="dentist.namesGenrDents" [ngModelOptions]="{standalone: true}"
                         />
                         <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
                     </div>
@@ -46,6 +47,7 @@
                         type="text"
                         placeholder=""
                         name=""
+                        [(ngModel)]="dentist.officeName" [ngModelOptions]="{standalone: true}"
                     />
                 </div>
             </div>
@@ -55,10 +57,11 @@
                         >Dentist’s First Name</label
                     >
                     <input
-                        class="form-control"
+                        class="form-control red-bottom-line"
                         type="text"
                         placeholder=""
                         name=""
+                        [(ngModel)]="dentist.firstName" [ngModelOptions]="{standalone: true}"
                     />
                 </div>
             </div>
@@ -66,10 +69,11 @@
                 <div class="mainformset">
                     <label class="label-input-gap">Last Name</label>
                     <input
-                        class="form-control"
+                        class="form-control red-bottom-line"
                         type="text"
                         placeholder=""
                         name=""
+                        [(ngModel)]="dentist.lastName" [ngModelOptions]="{standalone: true}"
                     />
                 </div>
             </div>
@@ -83,6 +87,7 @@
                         type="text"
                         placeholder=""
                         name=""
+                        [(ngModel)]="dentist.officePhoneNum" [ngModelOptions]="{standalone: true}"
                     />
                 </div>
             </div>

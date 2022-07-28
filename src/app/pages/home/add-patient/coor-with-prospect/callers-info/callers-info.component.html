@@ -1,13 +1,14 @@
-<form >
+<form #f="ngForm" (submit)="save(f.value)">
     <div class="mainformsection">
         <div class="two-items">
             <h6 class="heading" style="font-weight: bolder;">Caller’s Information</h6>
-            <a class="heading a-link" *ngIf="showButtonSaveCancel==false" (click)="showButtonSaveCancelFunc()">Edit Script</a>
-            <div class="two-little-button" *ngIf="showButtonSaveCancel==true" >
+            <a class="heading a-link" *ngIf="showButtonSaveCancel==false" (click)="showButtonSaveCancelFunc()">Edit
+                Script</a>
+            <div class="two-little-button" *ngIf="showButtonSaveCancel==true">
                 <a class="heading a-link" (click)="closeSaveCancelFunc()">Save Script</a>
                 <a class="heading a-link" (click)="closeSaveCancelFunc()">Cancel</a>
             </div>
-            
+
         </div>
 
         <div class="formrow">
@@ -31,65 +32,47 @@
                             zzril delenit augue duis dolore te
                             feugait nulla facilisi.
                         </p>
-                        <textarea *ngIf="showButtonSaveCancel==true"
-                            class="form-control"
-                            placeholder="Leave a comment here"
-                            id="floatingTextarea2"
-                            style="height: 98px; padding: 5px 10px 8px 6px; font-size: 12px; line-height : 20px; border: 2px solid #7a7a7c; font-style: oblique; resize: none;"
-                        >
+                        <textarea *ngIf="showButtonSaveCancel==true" class="form-control"
+                            placeholder="Leave a comment here" id="floatingTextarea2"
+                            style="height: 98px; padding: 5px 10px 8px 6px; font-size: 12px; line-height : 20px; border: 2px solid #7a7a7c; font-style: oblique; resize: none;">
 So I have reserved an hour on Appt. Date at Appt. Time for Pt. Name’s consultation visit. During this visit, Dr.Shah will do an extensive orthodontic
 exam and will explain you his findings and treatment options. Also, our treatment coordinator will discuss fees and payment options with you. If you
 decide to get started, our record technician can take x rays on the same day. Please allow an hour to hour and half for this visit. Also, we require all minors
-to be accompanied by a legal guardian. Do you have any questions for me?</textarea
-                        >
+to be accompanied by a legal guardian. Do you have any questions for me?</textarea>
                     </div>
                 </div>
             </div>
             <div class="row formrow" style="margin-top: 34px;">
                 <div class="col-3 large-width">
                     <div class="mainformset">
-                        <label class="required"
-                            >What is the best phone number to reach
-                            you?</label
-                        >
-                        <input
-                            class="form-control"
-                            type="text"
-                            placeholder=""
-                            name=""
-                        />
+                        <label class="required">What is the best phone number to reach
+                            you?</label>
+                        <input class="form-control" type="text" placeholder="" name=""
+                            [(ngModel)]="callersInfo.phoneNumber" [ngModelOptions]="{standalone: true}" />
                     </div>
                 </div>
                 <div class="col-3 type-width">
                     <div class="mainformset">
                         <label class="required">Type</label>
-                        <ng-select placeholder="Select"  style="height: 36px;">
-                            <ng-option>Select</ng-option>
-                        </ng-select>
+                        <select class="form-select">
+                            <option [value]="type.value" *ngFor="let type of phoneTypes.phone">
+                                {{ type.label }}
+                            </option>
+                        </select>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="mainformset">
-                        <label class="required"
-                            >Caller’s First Name</label
-                        >
-                        <input
-                            class="form-control"
-                            type="text"
-                            placeholder=""
-                            name=""
-                        />
+                        <label class="required">Caller’s First Name</label>
+                        <input class="form-control" type="text" placeholder="" name=""
+                            [(ngModel)]="callersInfo.firstName" [ngModelOptions]="{standalone: true}" />
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="mainformset">
                         <label class="required">Last Name</label>
-                        <input
-                            class="form-control"
-                            type="text"
-                            placeholder=""
-                            name=""
-                        />
+                        <input class="form-control" type="text" placeholder="" name=""
+                            [(ngModel)]="callersInfo.lastName" [ngModelOptions]="{standalone: true}" />
                     </div>
                 </div>
             </div>
@@ -100,45 +83,64 @@ to be accompanied by a legal guardian. Do you have any questions for me?</textar
                             Are you interested in braces for
                             yourself or a family member?
                         </p>
-                        <div
-                            class="btn-group"
-                            role="group"
-                            aria-label="Basic radio toggle button group"
-                            style="margin-top: 7px;"
-                        >
-                        <div class="subscriber-divs" style="margin-right: 12px !important;">
-                            <input
-                            class="form-check-input"
-                                type="radio"
-                                name="btnradio1"
-                                id="btnradio1"
-                                autocomplete="off"
-                                checked
-                            />
-                            <label class="form-check-label" for="btnradio1"
-                                >Self</label
-                            >
-                        </div>
-                        <div class="subscriber-divs" style="margin-right: 12px !important;">
-                            <input
-                            class="form-check-input"
-                                type="radio"
-                                name="btnradio1"
-                                id="btnradio2"
-                                autocomplete="off"
-                            />
-                            <label class="form-check-label" for="btnradio2"
-                                >Family Member</label
-                            >
-                        </div>
+                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group"
+                            style="margin-top: 7px;">
+                            <div class="subscriber-divs" style="margin-right: 12px !important;">
+                                <input #bracesYoursFam1 class="form-check-input" type="radio" name="btnradio1"
+                                    id="btnradio1" (click)="setRadioStatus(1,'braces')" checked />
+                                <label class="form-check-label" for="btnradio1">Self</label>
+                            </div>
+                            <div class="subscriber-divs" style="margin-right: 12px !important;">
+                                <input #bracesYoursFam2 class="form-check-input" type="radio" name="btnradio1"
+                                    id="btnradio2" (click)="setRadioStatus(2,'braces')" />
+                                <label class="form-check-label" for="btnradio2"
+                                    (click)="radiosLegalGuardian()">Family Member</label>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row formrow two-final-buttons" >
+            <div *ngIf="bracesYoursFam2.checked == true">
+                <div class="row formrow">
+                    <div class="col-3">
+                        <div class="mainformset">
+                            <label class="label-input-gap">How are you related to Patient?</label>
+                            <select class="form-select">
+                                <option>
+                                    Select
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row formrow" style="margin-top: 4px;">
+                    <div class="col-12">
+                        <div class="mainformset">
+                            <p class="required">
+                                Are you Legal guardian of the patient?
+                            </p>
+                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group"
+                                style="margin-top: 7px;">
+                                <div class="subscriber-divs" style="margin-right: 12px !important;">
+                                    <input #legalGuardPati1 class="form-check-input" type="radio" name="legalguard"
+                                        id="legalguard1" (click)="setRadioStatus(1,'legalGuardYesNo')" />
+                                    <label class="form-check-label" for="legalguard1">Yes</label>
+                                </div>
+                                <div class="subscriber-divs" style="margin-right: 12px !important;">
+                                    <input #legalGuardPati2 class="form-check-input" type="radio" name="legalguard"
+                                        id="legalguard2" (click)="setRadioStatus(2,'legalGuardYesNo')" />
+                                    <label class="form-check-label" for="legalguard2">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row formrow two-final-buttons">
                 <div class="two-items">
-                    <button class="btn btn-light btn-light-custom" >Exit</button>
-                    <button type="button" class="btn btn-dark btn-dark-custom" (click)="continueToPatient()">Save and continue</button>
+                    <button class="btn btn-light btn-light-custom">Exit</button>
+                    <button type="button" class="btn btn-dark btn-dark-custom" (click)="continueToPatient()">Save and
+                        continue</button>
                 </div>
             </div>
         </div>

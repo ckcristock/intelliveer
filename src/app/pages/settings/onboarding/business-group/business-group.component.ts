@@ -7,8 +7,10 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertService } from '@services/alert/alert.service';
+import { AuthService } from '@services/auth/auth.service';
 import { BusinessGroupDropdownService } from '@services/business-group-dropdown/business-group-dropdown.service';
 import { BusinessGroupService } from '@services/onboarding/business-group/business-group.service';
+import { CookieService } from 'ngx-cookie-service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -23,18 +25,22 @@ export class BusinessGroupComponent
 	data: any;
 	checkedItems: any = [];
 	checkAllState = false;
+	bgOrdID: any;
+	isSuperUser:any;
 	constructor(
 		private router: Router,
 		private businessGroupDropdownService: BusinessGroupDropdownService,
 		private businessGroupService: BusinessGroupService,
 		private alertService: AlertService,
-		private cdRef: ChangeDetectorRef
+		private cookieService: CookieService,
+		private cdRef: ChangeDetectorRef,
+		private authService: AuthService
 	) {}
 	ngOnDestroy(): void {
 		this.businessGroupDropdownService.disable(false);
 	}
 	ngOnInit() {
-		this.fetchBgList();
+		this.getOrgBgId();
 	}
 	ngAfterViewInit() {
 		setTimeout(() => {
@@ -46,6 +52,15 @@ export class BusinessGroupComponent
 		this.businessGroupService.getBusinessGroups().subscribe({
 			next: (data) => {
 				this.data = data;
+			},
+			error: () => {}
+		});
+	}
+	fetchBgListByBGId(bgId:any,orgId:any){
+		this.businessGroupService.getBusinessGroup(bgId,orgId).subscribe({
+			next: (data) => {
+				this.data = [data];
+				console.log(this.data)
 			},
 			error: () => {}
 		});
@@ -72,5 +87,20 @@ export class BusinessGroupComponent
 	navigateTo(bg: string, module: string) {
 		this.businessGroupDropdownService.setSelectedBusinessGroup(bg);
 		this.router.navigate([`dashboard/settings/onboarding/${module}`]);
+	}
+
+	getOrgBgId(){
+		let user = this.authService.getLoggedInUser();
+		let orgId = this.authService.getOrgId();
+		if (user) {
+			if(user?.__ISSU__){
+			   this.fetchBgList()
+			   this.isSuperUser = true;
+			}else if(user.bg[0]?._id){
+			   this.fetchBgListByBGId(user.bg[0]?._id,'intelliveer')
+			}else{
+				this.fetchBgListByBGId(orgId,orgId)
+			}
+		}
 	}
 }

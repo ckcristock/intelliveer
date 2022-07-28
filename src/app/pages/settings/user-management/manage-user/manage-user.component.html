@@ -1,0 +1,124 @@
+<div class="row">
+	<div class="col-2">
+		<div class="settings-row">
+			<i class="bi bi-arrow-left-circle" style="font-size: 2rem; cursor: pointer"
+				[routerLink]="'/dashboard/settings'"></i>
+			<p>Settings</p>
+		</div>
+		<ul class="ul" style="margin-top: 23px">
+			<li class="pointer" *ngFor="let item of menuItems" routerLinkActive="active" [routerLink]="item.url">
+				{{ item.title }}
+			</li>
+		</ul>
+	</div>
+	<div class="col-10 component-view">
+		<div *ngIf="usersList.length == 0" class="section" style="height: 90%">
+			<div style="text-align: center; padding-top: 7%">
+				<h5><b>You haven’t added yet</b></h5>
+				<p>
+					Click here,
+					<img src="assets/icons/add.svg" width="36" height="36"
+						routerLink="/dashboard/settings/user-management/manage-user/add-user" />
+					to add User
+				</p>
+			</div>
+		</div>
+		<div *ngIf="usersList.length != 0">
+			<!-- search, plus button -->
+			<div class="d-flex justify-content-between">
+				<!-- search -->
+				<div class="col-4">
+					<div class="input-group search_box">
+						<span class="input-group-text border-0 bg-transparent" id="basic-addon1">
+							<i class="bi bi-search"></i>
+						</span>
+						<input type="text" class="form-control border-0" placeholder="Search"
+							aria-describedby="basic-addon1" />
+					</div>
+				</div>
+
+				<!-- plus icon -->
+				<div class="d-flex">
+					<button class="add_btn" routerLink="/dashboard/settings/user-management/manage-user/add-user">
+						<img src="/assets/icons/add.svg" alt="" />
+					</button>
+				</div>
+			</div>
+
+			<!-- table -->
+			<div id="main" class="container mt-4" >
+				<div class="row formrow">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col"><input type="checkbox" /></th>
+								<th scope="col">Name</th>
+								<th scope="col">Email</th>
+								<th scope="col">Roles</th>
+								<th scope="col">Status</th>
+								<th scope="col">Actions</th>
+							</tr>
+						</thead>
+						<tbody *ngIf="usersList?.length != 0">
+							<tr *ngFor="let user of usersList; let i = index">
+								<td>
+									<input type="checkbox" value="{{ i }}" />
+								</td>
+								<td>
+									{{ user['profile'].firstName }}
+									{{ user['profile'].lastName }}
+								</td>
+								<td *ngIf="user['profile'].email == null">
+									No email
+								</td>
+								<td *ngIf="user['profile'].email != null">
+									{{ user['profile'].email }}
+								</td>
+								<td *ngIf="user['roles'].length == 0">
+									No roles
+								</td>
+								<td *ngIf="user['roles'].length > 1">
+									{{ user['roles'][0].name }}
+									<span class="redcircle" triggers="mouseenter:mouseleave" #p1="ngbPopover"
+										(mouseover)="
+											usersPopUp(user['roles'], i)
+										" [ngbPopover]="popContentArray[i]">
+										+2</span>
+								</td>
+								<td *ngIf="user['roles'].length == 1">
+									{{ user['roles'][0].name }}
+								</td>
+								<td>
+									<!-- <div class="form-check form-switch form-switch-lg">
+									<input class="form-check-input" name="loginStatus" [(ngModel)]="loginStatus" type="checkbox" id="flexSwitchCheckChecked" checked="false" (change)="updateUserLoginStatus(loginStatus,user._id)" >
+									<label class="form-check-label" for="flexSwitchCheckChecked"></label>
+								  </div> -->
+								</td>
+								<td>
+									<div ngbDropdown container="body" placement="bottom-end">
+										<button class="btn btn-light btn-sm more_btn" ngbDropdownToggle>
+											<i class="bi bi-three-dots-vertical"></i>
+										</button>
+										<div ngbDropdownMenu>
+											<button ngbDropdownItem>
+												Resend activation email
+											</button>
+											<div class="dropdown-divider"></div>
+											<button (click)="gotoPersonalInfo(user)" ngbDropdownItem>
+												Edit
+											</button>
+											<div class="dropdown-divider"></div>
+											<button (click)="updateUserLoginStatus(loginStatus,user._id)" ngbDropdownItem>
+												{{loginStatusButtonName}}
+											</button>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

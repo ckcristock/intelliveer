@@ -5,6 +5,8 @@ import { MenuBarService } from '@services/menu-bar/menu-bar.service';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { GlobalRoutesService } from "@services/global-routes/global-routes.service";
+import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from '@services/auth/auth.service';
 
 @Component({
   selector: 'app-settings',
@@ -13,21 +15,31 @@ import { GlobalRoutesService } from "@services/global-routes/global-routes.servi
 })
 export class SettingsComponent implements OnInit {
 
+  onPage: boolean = false;
   selectedBusinessGroup: string | undefined;
-  onboardingChilds: any []=[];
-  roleManagementchilds: any []=[];
-  userManagementchilds: any []=[];
+  onboardingChilds: any[] = [];
+  roleManagementchilds: any[] = [];
+  userManagementchilds: any[] = [];
+  isSuperUser: boolean = false;
   menuItems: any[] = [
     {
-      name: "Onboarding",
+      name: "Organization Onboarding",
+      route: "",
       childs: [],
     },
     {
       name: "Role Management",
+      route: "",
       childs: [],
     },
     {
       name: "User Management",
+      route: "",
+      childs: [],
+    },
+    {
+      name: "Practice Management",
+      route: "",
       childs: [],
     },
   ];
@@ -39,13 +51,16 @@ export class SettingsComponent implements OnInit {
   disableBGDropdown: boolean = false;
   moduleName: string = '';
   currentRoute: string = "Onboarding";
-
+  orgID:any;
   constructor(
     public router: Router,
     private businessGroupDropdownService: BusinessGroupDropdownService,
     private menuBarService: MenuBarService,
-    private globalRoutes: GlobalRoutesService
+    private globalRoutes: GlobalRoutesService,
+    private cookieService: CookieService,
+    private authService: AuthService,
   ) {
+    this.getUserOrdID();
     this.menuBarService.compactSideMenu(this.compactSidebar);
     this.businessGroupDropdownSupscription =
       this.businessGroupDropdownService
@@ -53,14 +68,17 @@ export class SettingsComponent implements OnInit {
         .subscribe((res) => {
           if (res && res.length > 0) {
             this.businessGroups = res;
-            this.selectedBusinessGroup = res[0]?._id;
+            this.selectedBusinessGroup = (this.orgID) ? this.orgID : res[0]._id;
           }
         });
+       
     this.businessGroupDropdownService.businessGroup().subscribe((res) => {
       if (res) {
-        this.selectedBusinessGroup = res.bgId;
+        console.log(res)
+        this.selectedBusinessGroup = (this.orgID) ? this.orgID : res.bgId;
         this.disableBGDropdown = res.disabled;
       }
+      
     });
     this.menuStatsSubscription =
       this.menuBarService.compactSideMenuStatus.subscribe(
@@ -71,7 +89,7 @@ export class SettingsComponent implements OnInit {
 
     router.events.pipe(
       filter(event => event instanceof NavigationEnd)
-    ).subscribe((event:any) => {
+    ).subscribe((event: any) => {
       if (event.url.includes("onboarding")) {
         this.currentRoute = "Onboarding";
       } else if (event.url.includes("role")) {
@@ -79,18 +97,50 @@ export class SettingsComponent implements OnInit {
       } else if (event.url.includes("user")) {
         this.currentRoute = "User Management";
       }
-    });
 
+      if (event.url == this.globalRoutes.getSettingsUrl()) {
+        this.onPage = true;
+      } else {
+        this.onPage = false;
+      }
+    });
   }
 
   ngOnInit(): void {
+    
+    //getting principal routes
+    this.menuItems[0].url = this.globalRoutes.getSettingsOnboardingUrl();
+    this.menuItems[1].url = this.globalRoutes.getSettingsRoleManageUrl();
+    this.menuItems[2].url = this.globalRoutes.getSettingsUserManageUrl();
     this.onboardingChilds = this.globalRoutes.getSettingsOnboardingRoutes();
     this.roleManagementchilds = this.globalRoutes.getSettingsRoleManageRoutes();
     this.userManagementchilds = this.globalRoutes.getSettingsUserManageRoutes();
+    let user = this.authService.getLoggedInUser();
+    if(!user?.__ISSU__){
+     this.menuItems[1].url = "/dashboard/settings/role-management/manage-role"
+    }
     this.menuItems[0].childs=this.onboardingChilds;
     this.menuItems[1].childs=this.roleManagementchilds;
     this.menuItems[2].childs=this.userManagementchilds;
+   
   }
+  getUserOrdID(){
+    let bgOrdID:any = localStorage.getItem('selected_business_group');
+    let user = this.authService.getLoggedInUser()
+    console.log(bgOrdID)
+    if(bgOrdID){
+      this.orgID = bgOrdID
+    }else{
+     if(user?.__ISSU__){
+      this.orgID = 'intelliveer'
+     }
+    }
+    if(user?.__ISSU__){
+      this.isSuperUser = user?.__ISSU__;
+    }
+  
+  }
+  
 
   setBusinessGroup(e: any) {
     this.businessGroupDropdownService.setSelectedBusinessGroup(

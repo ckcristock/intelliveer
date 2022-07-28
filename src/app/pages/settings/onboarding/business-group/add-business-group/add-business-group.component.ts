@@ -13,6 +13,7 @@ import cryptoRandomString from 'crypto-random-string';
 export class AddBusinessGroupComponent
 	implements OnInit, OnDestroy, AfterViewInit
 {
+	userPassword:any;
 	constructor(
 		private router: Router,
 		private bgDropdownService: BusinessGroupDropdownService,
@@ -30,18 +31,23 @@ export class AddBusinessGroupComponent
 		this.bgDropdownService.disable(false);
 	}
 	createBG(data: any) {
+		this.userPassword = data.password;
+		delete data.password;
 		if (data) {
 			data['slug'] = '';
+			data['belongsToUserId'] = '';
 			this.businessGroupService
 				.createBusinessGroup({
 					user: {
 						creds: {
 							email: data.contactPerson.email,
-							password: cryptoRandomString({ length: 10 }) // Will be replaced
+							//password: cryptoRandomString({ length: 10 }) // Will be replaced
+							password: this.userPassword
 						},
 						profile: {
 							firstName: data.contactPerson.firstName,
-							lastName: data.contactPerson.lastName
+							lastName: data.contactPerson.lastName,
+							email: data.contactPerson.email
 						}
 					},
 					businessGroup: data

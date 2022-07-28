@@ -46,9 +46,17 @@ const routes: Routes = [
 					import(
 						'@pages/patient/consultation/treatment/treatment.module'
 					).then((m) => m.TreatmentModule)
-			}
-		]
-	}
+			},
+      {
+        path: 'payment-options',
+        loadChildren: () =>
+          import(
+            '@pages/patient/consultation/payment-options/payment-options.module').then(
+              (m) => m.PaymentOptionsModule
+            ),
+      },
+    ],
+  },
 ];
 
 @NgModule({

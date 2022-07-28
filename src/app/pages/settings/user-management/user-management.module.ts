@@ -5,7 +5,7 @@ import { UserManagementRoutingModule } from './user-management-routing.module';
 import { UserManagementComponent } from "./user-management.component";
 
 @NgModule({
-  declarations: [UserManagementComponent
+  declarations: [UserManagementComponent,
   ],
   imports: [
     CommonModule,

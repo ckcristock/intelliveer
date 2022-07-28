@@ -70,7 +70,7 @@ export const patientUserHeaderIconMenuItems = [
 	{
 		title: '',
 		url: '/+',
-		class:'camera',
+		class:'camera px-4',
 		icon: '/assets/icons/camera.svg',
 	},
 	{
@@ -144,7 +144,7 @@ export const patientConsultationMenuItems = [
 					},
 					{
 						title: 'Payment Options',
-						url: '/+',
+						url: '/dashboard/patient/consultation/payment-options',
 						icon: 'bi bi-house-door',
 					}
 				]

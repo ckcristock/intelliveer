@@ -32,4 +32,19 @@ export class AlertService {
       backdrop: true
 		})
   }
+  displayAlertMessage(title: string, text: string)
+  {
+    return Swal.fire({
+			title: title,
+			text: text,
+			icon: 'warning',
+			showCancelButton: true,
+      allowOutsideClick: false,
+			confirmButtonText: 'Ok',
+      confirmButtonColor: '#e87442',
+			cancelButtonText: '',
+      cancelButtonColor: '#ffffff',
+      backdrop: true
+		})
+  }
 }

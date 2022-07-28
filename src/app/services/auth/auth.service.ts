@@ -13,11 +13,20 @@ export class AuthService {
 		private injector: Injector
 	) {}
 	isLoggedIn() {
+		console.log(this.cookieService.get('orgId'))
 		const session = this.cookieService.get('isLoggedIn');
 		if (session) {
 			return true;
 		} else {
 			return false;
+		}
+	}
+	getLoggedInUser() {
+		const user = this.cookieService.get('user');
+		if (user) {
+			return JSON.parse(user);
+		} else {
+			return null;
 		}
 	}
 	getOrgId() {
