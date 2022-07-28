@@ -41,7 +41,7 @@
                 <div class="row formrow">
                     <div class="col-3">
                         <label class="label-input-gap">Roles</label>
-                        <ng-select [multiple]="true" placeholder="Role name" [(ngModel)]="user['roles']"
+                        <ng-select [multiple]="true" placeholder="Role name" [(ngModel)]="user['roles']" style="border: none;"
                             formControlName="userRoles">
                             <ng-option *ngFor="let role of roles" [value]="role._id">{{role.name}}</ng-option>
                         </ng-select>
