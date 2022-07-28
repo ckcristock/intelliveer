@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-add-patient',
@@ -8,9 +9,19 @@ import { Router } from '@angular/router';
 })
 export class AddPatientComponent implements OnInit {
 
-  selectTab: string = "coordWithProspect";
+  selectTab: string = "";
 
-  constructor(private router: Router,) { }
+  constructor(private router: Router,) {
+    router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      if (event.url.includes("coor-with-prospect")) {
+        this.selectTab = 'coordWithProspect';
+      } else if (event.url.includes("quick-add")) {
+        this.selectTab = 'quickadd';
+      } 
+    });
+   }
 
   ngOnInit(): void {
   }
