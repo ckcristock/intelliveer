@@ -7,7 +7,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InsuranceComponent } from './insurance.component';
 
-
 @NgModule({
   declarations: [InsuranceComponent],
   imports: [

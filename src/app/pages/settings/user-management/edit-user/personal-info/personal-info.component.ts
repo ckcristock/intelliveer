@@ -45,9 +45,7 @@ export class PersonalInfoComponent implements OnInit {
 		email: ''
 	};
 
-	userRoles = {
-		roles: []
-	};
+	userRoles: any [] = [];
 
 	undefinedH = {
 		name: 'undefined'
@@ -85,16 +83,21 @@ export class PersonalInfoComponent implements OnInit {
 		this.userService.getUserData(bgId, userId).subscribe({
 			next: (res: any) => {
 				this.user = res;
+				console.log("this.user", this.user);
+				
 				if(res)
 				{
 					for (let i = 0; i < res.roles.length; i++) {
 						this.userService.getUserRoleData(bgId, this.user.roles[i]).subscribe({
 							next: (roledata: any) => {
 								(this.roleList) ? this.roleList = this.roleList + roledata.name + ", " : this.roleList = roledata.name + ", ";
+								this.userRoles.push(roledata);
 							},
 							error: () => {}
 						});
-					}						  
+					}		
+					console.log("this.roleList", this.roleList);
+									  
 				}
 			},
 			error: () => {}

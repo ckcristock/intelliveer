@@ -28,7 +28,7 @@ export class AddPatientService {
 
   private patientsSavedUnsaved$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
-  //Array Data For Coordinate With Prospect
+  //List Data For Coordinate With Prospect
   private lgList: any[] = [
     {
       relationshipPatToLG: "",
@@ -204,8 +204,142 @@ export class AddPatientService {
     }
   ];
 
-  // End Coordinate With Prospect
+  // End List Data for Coordinate With Prospect
 
+  //Get Lists Data for Coordinate With Prospect
+
+  async getlgListCwpApi() {
+    return this.lgList;
+  }
+
+  async getdentistsCwpApi() {
+    return this.dentists;
+  }
+
+  async getreferrersCwpApi() {
+    return this.referrers;
+  }
+
+  async getinsurances1CwpApi() {
+    return this.insurances1;
+  }
+
+  async getinsurances2CwpApi() {
+    return this.insurances2;
+  }
+
+  async getinsurances3CwpApi() {
+    return this.insurances3;
+  }
+
+  async getsubscribers1CwpApi() {
+    return this.subscribers1;
+  }
+
+  async getsubscribers2CwpApi() {
+    return this.subscribers2;
+  }
+  async getsubscribers3CwpApi() {
+    return this.subscribers3;
+  }
+
+  //End Get Lists Data for Coordinate With Prospect
+
+  //Set Forms Patient1 Coordinate With Prospect
+
+  setCallerInfoCWP(callersInfo: any) {
+    localStorage.setItem("callerCoorWithProsp", JSON.stringify(callersInfo));
+  }
+
+  setPatientCWP(patient: any) {
+    localStorage.setItem("patientCoorWithProsp", JSON.stringify(patient));
+  }
+
+  setLegalGuardCWP(LG: any, index: number) {
+    localStorage.setItem(`legalGuard${index}CoorWithProsp`, JSON.stringify(LG));
+  }
+
+  setDentistCWP(dentist: any) {
+    localStorage.setItem("dentistCoorWithProsp", JSON.stringify(dentist));
+  }
+
+  setReferrerCWP(referrer: any) {
+    localStorage.setItem("referrerCoorWithProsp", JSON.stringify(referrer));
+  }
+
+  setInsuranceP1CWP(insurance: any) {
+    localStorage.setItem("insuranceP1CoorWithProsp", JSON.stringify(insurance));
+  }
+
+  //End Set Forms Patient1
+
+  //Get Forms Patient1 Coordinate With Prospect
+
+  async getCallerInfoCWP() {
+    return JSON.parse(localStorage.getItem("callerCoorWithProsp") || '[]');
+  }
+
+  async getPatientCWP() {
+    return JSON.parse(localStorage.getItem("patientCoorWithProsp") || '[]');
+  }
+
+  async getLegalGuardCWP(index: number) {
+    return JSON.parse(localStorage.getItem(`legalGuard${index}CoorWithProsp`) || '[]');
+  }
+
+  async getDentistCWP() {
+    return JSON.parse(localStorage.getItem("dentistCoorWithProsp") || '[]');
+  }
+
+  async getReferrerCWP() {
+    return JSON.parse(localStorage.getItem("referrerCoorWithProsp") || '[]');
+  }
+
+  async getinsurancesP1Cwp() {
+    return JSON.parse(localStorage.getItem("insuranceP1CoorWithProsp") || '[]');
+  }
+
+  //End get Forms Patient1
+
+  //Set Forms Patient1 Quick Add
+
+  setPatientQuiAdd(patient: any) {
+    localStorage.setItem("patientQuickAdd", JSON.stringify(patient));
+  }
+
+  setLegalGuardQuiAdd(LG: any) {
+    localStorage.setItem(`legalGuardQuickAdd`, JSON.stringify(LG));
+  }
+
+  setDentistQuiAdd(dentist: any) {
+    localStorage.setItem("dentistQuickAdd", JSON.stringify(dentist));
+  }
+
+  setReferrerQuiAdd(referrer: any) {
+    localStorage.setItem("referrerQuickAdd", JSON.stringify(referrer));
+  }
+
+  //End Set Forms Patient1 Quick Add
+
+  //Get Forms Patient1 Quick Add
+
+  async getPatientQuiAdd() {
+    return JSON.parse(localStorage.getItem("patientQuickAdd") || '[]');
+  }
+
+  async getLegalGuardQuiAdd() {
+    return JSON.parse(localStorage.getItem(`legalGuardQuickAdd`) || '[]');
+  }
+
+  async getDentistQuiAdd() {
+    return JSON.parse(localStorage.getItem("dentistQuickAdd") || '[]');
+  }
+
+  async getReferrerQuiAdd() {
+    return JSON.parse(localStorage.getItem("referrerQuickAdd") || '[]');
+  }
+
+  //End get Forms Patient1 Quick Add
 
   setTaken(numb: any) {
     for (let i = 0; i < numb; i++) {
@@ -258,83 +392,6 @@ export class AddPatientService {
     return keys;
   }
 
-  setCallerInfoCWP(callersInfo: any) {
-    localStorage.setItem("callerCoorWithProsp", JSON.stringify(callersInfo));
-  }
-
-  setPatientCWP(patient: any) {
-    localStorage.setItem("patientCoorWithProsp", JSON.stringify(patient));
-  }
-
-  setLegalGuardCWP(LG: any, index: number) {
-    localStorage.setItem(`legalGuard${index}CoorWithProsp`, JSON.stringify(LG));
-  }
-
-  setDentistCWP(dentist: any) {
-    localStorage.setItem("dentistCoorWithProsp", JSON.stringify(dentist));
-  }
-
-  setReferrerCWP(referrer: any) {
-    localStorage.setItem("referrerCoorWithProsp", JSON.stringify(referrer));
-  }
-
-  async getCallerInfoCWP() {
-    return JSON.parse(localStorage.getItem("callerCoorWithProsp") || '[]');
-  }
-
-  async getPatientCWP() {
-    return JSON.parse(localStorage.getItem("patientCoorWithProsp") || '[]');
-  }
-
-  async getLegalGuardCWP(index: number) {
-    return JSON.parse(localStorage.getItem(`legalGuard${index}CoorWithProsp`) || '[]');
-  }
-
-  async getDentistCWP() {
-    return JSON.parse(localStorage.getItem("dentistCoorWithProsp") || '[]');
-  }
-
-  async getReferrerCWP() {
-    return JSON.parse(localStorage.getItem("referrerCoorWithProsp") || '[]');
-  }
-
-  //Functions for Coordinate With Prospect From API
-  async getlgListCwpApi() {
-    return this.lgList;
-  }
-
-  async getdentistsCwpApi() {
-    return this.dentists;
-  }
-
-  async getreferrersCwpApi() {
-    return this.referrers;
-  }
-
-  async getinsurances1CwpApi() {
-    return this.insurances1;
-  }
-
-  async getinsurances2CwpApi() {
-    return this.insurances2;
-  }
-
-  async getinsurances3CwpApi() {
-    return this.insurances3;
-  }
-
-  async getsubscribers1CwpApi() {
-    return this.subscribers1;
-  }
-
-  async getsubscribers2CwpApi() {
-    return this.subscribers2;
-  }
-  async getsubscribers3CwpApi() {
-    return this.subscribers3;
-  }
-
-  //End Functions for Coordinate With Prospect
 
 
 }
