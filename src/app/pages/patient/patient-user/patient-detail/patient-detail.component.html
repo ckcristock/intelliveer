@@ -27,11 +27,11 @@
 					<div class="colm" style="margin-left: 10px;">
 						<div class="letterandtext">
 							<div class="columsp">
-								<span class="special">Olivia Doe <span style="color: black; font-weight:normal">(P1001)</span></span>
+								<span class="special">{{userObj.user}} <span style="color: black; font-weight:normal">({{userObj.id}})</span></span>
 								<div class="horizont">
 									<div class="colums">
-										<span>Female</span>
-										<span>May 10,1992</span>
+										<span>{{userObj.sex}}</span>
+										<span>{{userObj.dob | date}}</span>
 										<span>29y, 10m</span>
 									</div>
 								</div>
@@ -51,7 +51,7 @@
 							</div>
 							<div class="colums">
 								<span>2</span>
-								<span>Active</span>
+								<span>{{userObj.active}}</span>
 								<span>Kim Doe</span>
 								<span>John Doe</span>
 							</div>

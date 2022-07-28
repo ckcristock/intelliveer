@@ -128,6 +128,33 @@ $search-input-width: 300px;
 }
 
 .section {
-	background-color: #f9fafb;
+	background-color: transparent;
 	padding: 1rem;
+}
+
+.title {
+	width: 50%;
+	height: 2px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: black;
+}
+
+.pinOverlay {
+	border-radius: 100%;
+    background-color: #ec6e4d;
+    position: absolute;
+    top: 0px;
+    left: 23px;
+    right: 0px;
+    bottom: 23px;
+	i {
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		font-size: 6px;
+		color: white;
+		left: 1px;
+	}
 }

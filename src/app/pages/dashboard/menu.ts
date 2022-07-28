@@ -3,6 +3,7 @@ export interface IMenuItem {
 	url: string;
 	icon: string;
 	class?:string;
+	shortTitle?: string;
 	child?: IMenuItem[];
 }
 

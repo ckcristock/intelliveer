@@ -134,20 +134,39 @@
 			<div class="d-flex justify-content-center align-items-center" *ngIf="selectUserLst?.length != 0">
 				<div *ngFor="let selectUser of selectUserLst | slice:1:4">
 					<div ngbDropdown class="d-inline-block drpdown">
-						<img src="{{ selectUser.profileUrl }}" alt="" id="dropdownImage" ngbDropdownToggle />
-						<div ngbDropdownMenu aria-labelledby="dropdownImage">
+						<img src="{{ selectUser.profileUrl }}" alt="" ngbDropdownToggle (click)="showUserCard = true" />
+						<div class="pinOverlay" *ngIf="selectUser.isPin"><i class="bi bi-pin-angle-fill"></i></div>
+						<div ngbDropdownMenu style="width: 28rem;" *ngIf="showUserCard">
 							<div class="container">
 								<div class="section">
 									<div class="row">
-										<div class="col" [align]="'end'">
-											<i class="bi bi-pin-angle" (click)="!userPin = userPin"></i>
-											<i class="bi bi-pin-angle-fill" (click)="!userPin = userPin"></i>
+										<div class="col-12" [align]="'end'">
+											<i class="bi bi-pin-angle" (click)="pinUser(selectUser)" *ngIf="!selectUser.isPin" style="font-size: large;"></i>
+											<i class="bi bi-pin-angle-fill" (click)="unPinUser(selectUser)" *ngIf="selectUser.isPin" style="font-size: large; color: #e5833e;"></i>
+										</div>
+										<div class="col-12" [align]="'center'">
+											<img src="{{ selectUser.profileUrl }}" alt="" style="width: 86px; height: 80px;" />
+											<p><b>{{ selectUser.user }}</b> ({{ selectUser.id }})</p>
+											<p> "{{ selectUser.user }}" (Pronunciation)</p>
+											<p>{{ selectUser.sex }}  | Preferred Pronoun</p>
+											<p>{{ selectUser.dob | date }}</p>
+											<p>(844) 569-8628</p>
 										</div>
 									</div>
-									<div class="row">
-										<div class="col">
-											<img src="{{ selectUser.profileUrl }}" alt="" />
-											<p>{{ selectUser.user }}</p>
+									<div class="row" (click)="selectUserMenuItem(selectUser)">
+										<div class="col" *ngFor="let item of menuItems">
+											<div [align]="'center'" class="gap-5 mb-3" style="background-color: white; border-radius: 5px;">
+												<img
+													src="{{item.icon}}"
+													alt=""
+													routerLinkActive="active"
+													[routerLink]="item.url"
+													*ngIf="item.shortTitle"
+												/>
+											</div>
+											<div [align]="'center'" class="gap-5 mb-3">
+												<span class="title" style="color: black;" *ngIf="item.shortTitle">{{ item.shortTitle }}</span>
+											</div>
 										</div>
 									</div>
 								</div>

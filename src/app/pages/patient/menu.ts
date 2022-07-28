@@ -42,30 +42,35 @@ export const patientUserHeaderIconMenuItems = [
 		url: '/dashboard/patient/patient-user',
 		class:'',
 		icon: '/assets/icons/users.svg',
+		shortTitle: 'Family'
 	},
 	{
 		title: 'Communications',
 		url: '/+',
 		class:'',
 		icon: '/assets/icons/chat.svg',
+		shortTitle: 'Comm.'
 	},
 	{
 		title: 'Financials',
 		url: '/+',
 		class:'',
 		icon: '/assets/icons/paper.svg',
+		shortTitle: 'Ledger'
 	},
 	{
 		title: 'Insurances',
 		url: '/dashboard/patient/insurance',
 		class:'',
 		icon: '/assets/icons/teeth.svg',
+		shortTitle: 'Ins.'
 	},
 	{
-		title: 'Documents',
+		title: 'Files',
 		url: '/+',
 		class:'',
 		icon: '/assets/icons/folder.svg',
+		shortTitle: 'Files'
 	},
 	{
 		title: 'Snapshot',
@@ -78,30 +83,35 @@ export const patientUserHeaderIconMenuItems = [
 		url: '/+',
 		class:'',
 		icon: '/assets/icons/image.svg',
+		shortTitle: 'Images'
 	},
 	{
 		title: 'Counsultations',
 		class:'',
 		url: '/dashboard/patient/consultation',
 		icon: '/assets/icons/user_chat.svg',
+		shortTitle: 'Consult'
 	},
 	{
-		title: 'Treatment Plan & Tooth Chart',
+		title: 'Treatment Plan',
 		url: '/+',
 		class:'',
 		icon: '/assets/icons/user_card.svg',
+		shortTitle: 'Tx Card'
 	},
 	{
 		title: 'Treatment Card',
 		url: '/+',
 		class:'',
 		icon: '/assets/icons/calendar.svg',
+		shortTitle: 'Tooth Chart'
 	},
 	{
 		title: 'Other',
 		url: '/+',
 		class:'',
 		icon: '/assets/icons/jar.svg',
+		shortTitle: 'Other'
 	},
 ]
 

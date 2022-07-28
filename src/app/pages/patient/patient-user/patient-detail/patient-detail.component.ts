@@ -30,6 +30,7 @@ export class PatientDetailComponent implements OnInit {
 		{ title: 'Emergency Contact', id: 'emergencyContact' },
 		{ title: 'Notes', id: 'notes' },
 	];
+  userObj: any = {};
 
   constructor(
     private fb: FormBuilder,
@@ -70,6 +71,7 @@ export class PatientDetailComponent implements OnInit {
     ];
     this.addId();
     this.initForm(this.formData);
+    this.userObj = JSON.parse(localStorage.getItem('selectedPatient') || '');
   }
 
   initForm(data?: any) {

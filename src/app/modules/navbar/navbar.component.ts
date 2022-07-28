@@ -10,6 +10,8 @@ import { AuthService } from '@services/auth/auth.service';
 import { environment } from '@environment/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
+import { IMenuItem } from '@pages/dashboard/menu';
+import { patientUserHeaderIconMenuItems } from '@pages/patient/menu';
 
 @Component({
 	selector: 'top-navbar',
@@ -23,18 +25,21 @@ export class NavbarComponent implements OnInit {
 	username: any;
 	searchWord: string = '';
 	userLst: any = [
-		{ user: 'Smith John', dob: '30/12/1984', active: true, id: 'P001', profileUrl: 'assets/images/doctor.jpg' },
-		{ user: 'Smith Doe', dob: '23/08/1988', active: true, id: 'P002', profileUrl: 'assets/images/doctor2.jpg' },
-		{ user: 'Smith Walker', dob: '12/06/1994', active: true, id: 'P003', profileUrl: 'https://imedica.brainstormforce.com/wp-content/uploads/2015/02/doc1.jpg' },
-		{ user: 'Oil Diva', dob: '15/03/1994', active: true, id: 'P004', profileUrl: 'https://thumbs.dreamstime.com/z/portrait-smiling-woman-doctor-profile-23602015.jpg' },
-		{ user: 'Pie Energy', dob: '30/01/1994', active: true, id: 'P005', profileUrl: 'https://th.bing.com/th/id/OIP.sOWsOOU81OApsLqngmwrzAHaHa?pid=ImgDet&rs=1' },
-		{ user: 'Lemon Serenade', dob: '01/08/1994', active: false, id: 'P006', profileUrl: 'assets/images/doctor2.jpg' }
+		{ user: 'Smith John', dob: '12/30/1984', active: true, id: 'P001', sex:'Female', isPin: false, profileUrl: 'assets/images/doctor.jpg' },
+		{ user: 'Smith Doe', dob: '08/23/1988', active: true, id: 'P002', sex:'Female', isPin: false, profileUrl: 'assets/images/doctor2.jpg' },
+		{ user: 'Smith Walker', dob: '12/06/1994', active: true, id: 'P003', sex:'Male', isPin: false, profileUrl: 'https://imedica.brainstormforce.com/wp-content/uploads/2015/02/doc1.jpg' },
+		{ user: 'Oil Diva', dob: '03/15/1994', active: true, id: 'P004', sex:'Female', isPin: false, profileUrl: 'https://www.parkinsonsdiseasespecialist.com/wp-content/uploads/2020/08/shivam-profile-pic.jpg' },
+		{ user: 'Pie Energy', dob: '01/30/1994', active: true, id: 'P005', sex:'Female', isPin: false, profileUrl: 'https://th.bing.com/th/id/OIP.90CUUa066hZfeG-UXb3mtgHaKA?pid=ImgDet&w=758&h=1024&rs=1' },
+		{ user: 'Lemon Serenade', dob: '01/08/1994', active: false, id: 'P006', sex:'Female', isPin: false, profileUrl: 'assets/images/doctor2.jpg' }
 	];
 	@ViewChild('searchDivRef') searchDivRef!: ElementRef;
 	userSearchLst: any[] = [];
 	selectUserLst: any[] = [];
 	userClickCount: number = 0;
-	userPin: boolean = false;
+	allMenuItems: IMenuItem[] = patientUserHeaderIconMenuItems;
+	menuItems: any[] = [];
+	showUserCard: boolean = false;
+
 	constructor(
 		private authService: AuthService,
 		private cookieService: CookieService,
@@ -51,6 +56,12 @@ export class NavbarComponent implements OnInit {
 	ngOnInit(): void {
 		this.userSearchLst = this.userLst;
 		this.getUsername();
+		for (let i = 0; i < this.allMenuItems.length; i++) {
+			if(this.allMenuItems[i].shortTitle)
+			{
+				this.menuItems.push(this.allMenuItems[i]);
+			}
+		}
 	}
 	logOut() {
 		this.authService.logout().subscribe({
@@ -74,12 +85,38 @@ export class NavbarComponent implements OnInit {
 			this.searchFocus = false;
 			this.showSelectedPatient = true;
 			this.selectedPatient = patient;
-			this.selectUserLst.push(patient);
+			const findDuplicate = this.selectUserLst.filter(item => item.id === patient.id);
+			if(findDuplicate.length == 0)
+			{
+				if(this.selectUserLst.length < 4)
+				{
+					this.selectUserLst.push(patient);
+				}
+				else
+				{
+					let index = this.selectUserLst.findIndex(obj => obj.isPin == true);
+					if(index == -1)
+					{
+						this.selectUserLst.splice(this.selectUserLst.length - 1,1);
+						this.selectUserLst.push(patient);
+					}
+					else
+					{
+						index = index + 1;
+						this.selectUserLst.splice(index, 1);
+						this.selectUserLst.push(patient);
+					}
+				}
+			}
+			else
+			{
+				this.selectedPatient = patient;
+			}
+			localStorage.setItem('selectedPatient', JSON.stringify(this.selectedPatient));
 			this.selectUserLst.reverse();
-			localStorage.setItem('selectedPatient', JSON.stringify(this.selectedPatient))
-			// this.router.navigate([
-			// 	'/dashboard/patient/camera'
-			// ]);
+			this.router.navigate([
+				'/dashboard/patient/camera'
+			]);
 		}
 	}
 
@@ -108,5 +145,24 @@ export class NavbarComponent implements OnInit {
 					.startsWith($event.target.value.toLowerCase());
 			}
 		);
+	}
+
+	selectUserMenuItem(selectUser: any)
+	{
+		this.selectedPatient = selectUser;
+		localStorage.setItem('selectedPatient', JSON.stringify(this.selectedPatient));
+		this.showUserCard = false;
+	}
+
+	pinUser(selectUser: any)
+	{
+		selectUser.isPin = true;
+		this.showUserCard = false;
+	}
+
+	unPinUser(selectUser: any)
+	{
+		selectUser.isPin = false;
+		this.showUserCard = false;
 	}
 }
