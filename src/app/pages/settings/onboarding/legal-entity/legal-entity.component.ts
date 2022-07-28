@@ -58,4 +58,7 @@ export class LegalEntityComponent implements OnInit, OnDestroy {
         });
     }
   }
+  addLegalEntity(){
+    this.router.navigate(['/dashboard/settings/onboarding/legal-entity/add']);
+  }
 }
