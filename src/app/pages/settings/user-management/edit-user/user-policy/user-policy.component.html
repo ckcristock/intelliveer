@@ -1,43 +1,71 @@
-<app-nav-bar-pills [cancelBtn]="true" [saveBtn]="true" [disableSaveBtn]="Form.invalid" (onCancel)="cancel()"
-    (onSave)="save(Form.value)"></app-nav-bar-pills>
+<app-nav-bar-pills
+	[cancelBtn]="true"
+	[saveBtn]="true"
+	[disableSaveBtn]="Form.invalid || saveDissable"
+	(onCancel)="cancel()"
+	(onSave)="save(Form.value)"
+></app-nav-bar-pills>
 
-<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
-    <!-- content -->
-    <div class="section" id="main">
+<form
+	autocomplete="off"
+	[formGroup]="Form"
+	#f="ngForm"
+	(submit)="save(f.value)"
+>
+	<!-- content -->
+	<div class="section" id="main">
+		<label class="label-input-gap" style="font-weight: bold"
+			>Current Roles</label
+		>
+		<div class="roles">
+			<div *ngFor="let role of userCurrentRoleList; let i = index">
+				<div class="xandroles formrow">
+					<input
+						type="text"
+						class="form-control"
+						value="{{ role.name }}"
+						readonly
+					/>
+				</div>
+			</div>
+		</div>
 
-        <label class="label-input-gap" style="font-weight: bold;">Current Roles</label>
-        <div class="roles">
-            <div *ngFor="let role of userCurrentRoleList; let i = index">
-                <div class="xandroles formrow">
-                    <input type="text" class="form-control" value="{{role.name}}" readonly>
-                </div>
-            </div>
-        </div>
+		<h6 class="heading" style="font-weight: bold">User Policy</h6>
+		<div class="row" style="margin-bottom: 31px">
+			<div class="twenty">
+				<label class="label-input-gap">Legal Entity</label>
+				<ng-select placeholder="Select">
+					<ng-option
+						*ngFor="let legelEntity of legelEntityList"
+						(change)="selectLegelEntity(legelEntity)"
+						>{{ legelEntity.name }}</ng-option
+					>
+				</ng-select>
+			</div>
+			<div class="twenty">
+				<label class="label-input-gap">Location</label>
+				<ng-select placeholder="Select">
+					<ng-option
+						*ngFor="let location of locationList"
+						(change)="selectLocation(location)"
+						>{{ location.name }}</ng-option
+					>
+				</ng-select>
+			</div>
+			<div class="twenty">
+				<label class="label-input-gap">Practice</label>
+				<ng-select placeholder="Select">
+					<ng-option
+						*ngFor="let practice of practiceList"
+						(change)="selectPractice(practice)"
+						>{{ practice.name }}</ng-option
+					>
+				</ng-select>
+			</div>
+		</div>
 
-        <h6 class="heading" style="font-weight: bold;">User Policy</h6>
-        <div class="row" style="margin-bottom: 31px;">
-            <div class="twenty">
-                <label class="label-input-gap">Legal Entity</label>
-                <ng-select placeholder="Select">
-                    <ng-option *ngFor="let legelEntity of legelEntityList;">{{legelEntity.name}}</ng-option>
-                </ng-select>
-            </div>
-            <div class="twenty">
-                <label class="label-input-gap">Location</label>
-                <ng-select placeholder="Select">
-                    <ng-option *ngFor="let location of locationList;">{{location.name}}</ng-option>
-                </ng-select>
-            </div>
-            <div class="twenty">
-                <label class="label-input-gap">Practice</label>
-                <ng-select placeholder="Select">
-                    <ng-option *ngFor="let practice of practiceList">{{practice.name}}</ng-option>
-                </ng-select>
-            </div>
-        </div>
-
-        <!-- Accordion -->
-        <div class="row formrow">
+		<!-- Accordion -->
+		<div class="row formrow">
 			<div class="col-12" style="margin-top: 6px">
 				<ngb-accordion
 					#acc="ngbAccordion"
@@ -52,9 +80,9 @@
 					>
 						<ng-template ngbPanelTitle>
 							<!-- <div> -->
-								<p>
-									<strong>{{ module.value.module }}</strong>
-								</p>
+							<p>
+								<strong>{{ module.value.module }}</strong>
+							</p>
 							<!-- </div> -->
 						</ng-template>
 						<ng-template ngbPanelContent formArrayName="sections">
@@ -127,9 +155,46 @@
 												[formGroupName]="k"
 											>
 												<tr>
-													<td><input type="checkbox" formControlName="enabled" [attr.disabled]="childPermision.value.locked"
-                                                        *ngIf="childPermision.value.locked"/>
-                                                        <input type="checkbox" formControlName="enabled"  *ngIf="!childPermision.value.locked"/></td>
+													<td>
+														<input
+															type="checkbox"
+															formControlName="enabled"
+															[attr.disabled]="
+																childPermision
+																	.value
+																	.locked
+															"
+															*ngIf="
+																childPermision
+																	.value
+																	.locked && 
+																	!childPermision
+																	.value
+																	.allowOverride
+															"
+														/>
+														<input
+															type="checkbox"
+															formControlName="enabled"
+															*ngIf="
+																childPermision
+																	.value
+																	.locked && 
+																	childPermision
+																	.value
+																	.allowOverride
+															"
+														/>
+														<input
+															type="checkbox"
+															formControlName="enabled"
+															*ngIf="
+																!childPermision
+																	.value
+																	.locked
+															"
+														/>
+													</td>
 													<td>
 														<input
 															type="hidden"
@@ -144,22 +209,30 @@
 															src="assets/icons/locked_green.svg"
 															width="20"
 															height="20"
-															placement="bottom" ngbTooltip="Permission can be Override"
+															placement="bottom"
+															ngbTooltip="Permission can be Override"
 															*ngIf="
 																childPermision
 																	.value
-																	.locked && childPermision.value.allowOverride
+																	.locked &&
+																childPermision
+																	.value
+																	.allowOverride
 															"
 														/>
 														<img
 															src="assets/icons/locked_red.svg"
 															width="20"
 															height="20"
-															placement="bottom" ngbTooltip="Permission can not be Override"
+															placement="bottom"
+															ngbTooltip="Permission can not be Override"
 															*ngIf="
 																childPermision
 																	.value
-																	.locked && !childPermision.value.allowOverride
+																	.locked &&
+																!childPermision
+																	.value
+																	.allowOverride
 															"
 														/>
 													</td>
@@ -236,5 +309,5 @@
 				</ngb-accordion>
 			</div>
 		</div>
-    </div>
+	</div>
 </form>

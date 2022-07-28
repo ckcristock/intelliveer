@@ -25,6 +25,7 @@ export class MappingComponent implements OnInit, OnDestroy {
 	businessGroupDropdownSupscription: Subscription;
 	selectedBusinessGroup: SelectedBusinessGroup | undefined;
 	saveButtonEnable: boolean = true;
+	bgId:any;
 	constructor(
 		private mappingService: MappingService,
 		private businessGroupDropdownService: BusinessGroupDropdownService,
@@ -40,10 +41,10 @@ export class MappingComponent implements OnInit, OnDestroy {
 				.subscribe((bg) => {
 					if (bg) {
 						this.selectedBusinessGroup = bg;
+						this.getUserOrdID();
 						this.getLocations();
 						this.getLegalEntities();
 						this.getPractices();
-						this.getMapping();
 					}
 				});
 	}
@@ -75,10 +76,34 @@ export class MappingComponent implements OnInit, OnDestroy {
 				});
 		}
 	}
+	getMappingSuperUser(){
+		this.mappingService
+				.getMapping(this.bgId)
+				.subscribe({
+					next: (res: any) => {
+						if (res) {
+							this.locations.map((r: any) => {
+								let c = res.relation.filter(
+									(i: any) => i.locId == r._id
+								);
+
+								if (c && c.length == 1) {
+									r['legalEntities'] =
+										c[0].legalEntities || [];
+									r['practices'] = c[0].practices || [];
+								}
+							});
+						}
+					}
+				});
+	}
 	getLocations() {
+		if(!this.bgId){
+		this.bgId = this.selectedBusinessGroup?.bgId
+		}
 		if (this.selectedBusinessGroup) {
 			this.locationService
-				.getLocations(this.selectedBusinessGroup.bgId)
+				.getLocations(this.bgId)
 				.subscribe({
 					next: (res) => {
 						this.locations = res;
@@ -88,9 +113,12 @@ export class MappingComponent implements OnInit, OnDestroy {
 		}
 	}
 	getLegalEntities() {
+		if(!this.bgId){
+			this.bgId = this.selectedBusinessGroup?.bgId
+		}
 		if (this.selectedBusinessGroup) {
 			this.legalEntityService
-				.getLegalEntites(this.selectedBusinessGroup.bgId)
+				.getLegalEntites(this.bgId)
 				.subscribe({
 					next: (res) => {
 						this.legalEntities = res;
@@ -100,9 +128,12 @@ export class MappingComponent implements OnInit, OnDestroy {
 		}
 	}
 	getPractices() {
+		if(!this.bgId){
+			this.bgId = this.selectedBusinessGroup?.bgId
+		}
 		if (this.selectedBusinessGroup) {
 			this.practiceService
-				.getPractices(this.selectedBusinessGroup.bgId)
+				.getPractices(this.bgId)
 				.subscribe({
 					next: (res) => {
 						this.practices = res;
@@ -153,4 +184,14 @@ export class MappingComponent implements OnInit, OnDestroy {
 	selectionValueChange() {
 		this.saveButtonEnable = false;
 	}
+	getUserOrdID(){
+		let bgOrdID:any = localStorage.getItem('selected_business_group');
+		if(bgOrdID == null){
+		  this.bgId = 'intelliveer';
+		  this.getMappingSuperUser();
+		}else{
+		  this.bgId = '';
+		  this.getMapping();
+		}
+	  }
 }

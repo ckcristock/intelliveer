@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { addPatientCordinateMenuItems, addPatientQuickMenuItems } from '@pages/home/add-patient/menu';
 import { AddPatientService } from '@services/add-patient/add-patient.service';
+import { UserService } from '@services/user/user.service';
 
 @Component({
   selector: 'app-patient-form',
@@ -39,9 +40,12 @@ export class PatientFormComponent implements OnInit {
   @Input() tab: string = "";
   showButtonSaveCancel: boolean = false;
   openTextAreaVar: boolean = false;
+  legelEntityList: any[] = [];
+  locationList: any[] = [];
 
   constructor(private router: Router,
     private fb: FormBuilder,
+    private userService: UserService,
     private addPatientServ: AddPatientService,) { }
 
   async ngOnInit() {
@@ -125,5 +129,29 @@ export class PatientFormComponent implements OnInit {
     this.openTextAreaVar = true;
     this.showButtonSaveCancel = true;
   }
+
+  getLegelEntityList(bgId: any) {
+		this.userService.getLegelEntityList(bgId).subscribe(
+			(list: any) => {
+				console.log(list);
+				this.legelEntityList = list;
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
+	}
+
+	getLocationList(bgId: any) {
+		this.userService.getLocationList(bgId).subscribe(
+			(list: any) => {
+				console.log(list);
+				this.locationList = list;
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
+	}
 
 }

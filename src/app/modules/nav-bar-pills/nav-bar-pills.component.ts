@@ -38,7 +38,9 @@ export class NavBarPillsComponent implements OnInit, AfterContentInit {
 
 	ngOnInit(): void {}
 	ngAfterContentInit(): void {
-		this.activeClass = this.menuItems[0]['id'];
+		(this.menuItems.length != 0) ?
+		this.activeClass = this.menuItems[0]['id'] :
+		this.activeClass = '';
 	}
 	scroll(menu: any) {
 		const element: HTMLElement = document.getElementById(

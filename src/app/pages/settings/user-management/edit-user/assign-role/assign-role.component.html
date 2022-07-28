@@ -3,7 +3,7 @@
 	[saveBtn]="true"
 	[disableSaveBtn]="Form.invalid"
 	(onCancel)="cancel()"
-	(onSave)="save(Form.value)"
+	(onSave)="save()"
 ></app-nav-bar-pills>
 
 <div class="section" id="main">
@@ -44,7 +44,7 @@
 		autocomplete="off"
 		[formGroup]="Form"
 		#f="ngForm"
-		(submit)="save(f.value)"
+		(submit)="save()"
 	>
 		<div class="row" style="margin-bottom: 48px !important">
 			<div class="col-3">
