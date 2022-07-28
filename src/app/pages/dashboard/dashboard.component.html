@@ -1,8 +1,8 @@
 <div
 	class="dashboard-layout"
 	[ngStyle]="{
-		'grid-auto-columns': compactSidebar
-			? '42px 1fr 200px'
+		'grid-auto-columns': (compactSidebar || compactRightSidebar)
+			? '42px 1fr 75px'
 			: '200px 1fr 200px'
 	}"
 >
@@ -281,7 +281,29 @@
 		</ul>
 	</div>
 	<div class="__content">
-		
+		<div
+			class="container d-flex justify-content-end align-items-end global-bg-dropdown"
+			*ngIf="router.url.includes('onboarding')"
+		>
+			<div class="col">
+				<span>Settings/ Manage/ {{ selectedBusinessGroup }}</span>
+			</div>
+			<!-- <div class="col-3 text-end me-2">
+					<label class="fw-bold">Business Group:</label>
+				</div> -->
+			<div class="col-3">
+				<select
+					class="form-select"
+					[(ngModel)]="selectedBusinessGroup"
+					(change)="setBusinessGroup($event)"
+					[disabled]="disableBGDropdown"
+				>
+					<option *ngFor="let bg of businessGroups" [value]="bg._id">
+						{{ bg.name }}
+					</option>
+				</select>
+			</div>
+		</div>
 
 		<!-- <nav aria-label="breadcrumb" *ngIf="router.url.includes('onboarding')">
 			<ol class="breadcrumb">
@@ -293,5 +315,31 @@
 
 		<router-outlet></router-outlet>
 	</div>
-	<div class="__tray"></div>
+	<div class="__tray">
+		<ul>
+			<li
+				class="d-flex justify-content-start"
+				[ngStyle]="{
+					'line-height': compactRightSidebar ? '2' : '1'
+				}"
+			>
+				<i
+					class="bi bi-arrow-left"
+					(click)="toggleRightMenuBar()"
+					*ngIf="compactRightSidebar"
+					ngbTooltip="Expand sidemenu"
+				></i>
+				<i
+					class="bi bi-arrow-right"
+					(click)="toggleRightMenuBar()"
+					*ngIf="!compactRightSidebar"
+					ngbTooltip="Minimize sidemenu"
+				></i>
+			</li>
+			<div *ngIf="compactRightSidebar">
+			</div>
+			<div *ngIf="!compactRightSidebar">
+			</div>
+		</ul>
+	</div>
 </div>

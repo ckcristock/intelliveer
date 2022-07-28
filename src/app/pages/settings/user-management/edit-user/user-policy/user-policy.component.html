@@ -167,7 +167,22 @@
 															*ngIf="
 																childPermision
 																	.value
-																	.locked
+																	.locked && 
+																	!childPermision
+																	.value
+																	.allowOverride
+															"
+														/>
+														<input
+															type="checkbox"
+															formControlName="enabled"
+															*ngIf="
+																childPermision
+																	.value
+																	.locked && 
+																	childPermision
+																	.value
+																	.allowOverride
 															"
 														/>
 														<input

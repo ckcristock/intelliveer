@@ -53,10 +53,11 @@ export class PersonalInfoComponent implements OnInit {
 	};
   businessGroupDropdownSupscription: any;
   selectedBusinessGroup: SelectedBusinessGroup | undefined;
-	roleList: any;
-	locationList: any;
-	legelEntityList: any;
-	practiceList: any;
+  roleList: any;
+  legelEntityList: any[] = [];
+  locationList: any[] = [];
+  practiceList: any[] = [];
+
 
 	constructor(
 		private router: Router,
@@ -115,11 +116,20 @@ export class PersonalInfoComponent implements OnInit {
 			if (user?.__ISSU__) {
 		  if(bgOrdID == 'intelliveer' || bgOrdID == null){
 			this.getUserData('intelliveer');
+			this.getLegelEntityList('intelliveer');
+			this.getLocationList('intelliveer');
+			this.getPracticeList('intelliveer');
 		  }else{
 			this.getUserData(this.selectedBusinessGroup?.bgId)
+			this.getLegelEntityList(this.selectedBusinessGroup?.bgId);
+			this.getLocationList(this.selectedBusinessGroup?.bgId);
+			this.getPracticeList(this.selectedBusinessGroup?.bgId);
 		  }
 		  }else{
 		  this.getUserData(this.selectedBusinessGroup?.bgId)
+		  this.getLegelEntityList(this.selectedBusinessGroup?.bgId);
+		  this.getLocationList(this.selectedBusinessGroup?.bgId);
+		  this.getPracticeList(this.selectedBusinessGroup?.bgId);
 		}
 		}
 
@@ -161,6 +171,7 @@ export class PersonalInfoComponent implements OnInit {
 		this.currentSelection = sectionId;
 	}
 
+	/** Get onboarding Details */
 	getLegelEntityList(bgId: any) {
 		this.userService.getLegelEntityList(bgId).subscribe(
 			(list: any) => {

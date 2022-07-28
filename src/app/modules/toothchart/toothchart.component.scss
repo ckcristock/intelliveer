@@ -1,0 +1,40 @@
+.smallImageOver {
+    content: "100";
+    position: absolute;
+    height: 2rem;
+    top: 1rem;
+    width: 2rem;
+    text-align: center;
+    line-height: 2rem;
+    font-size: 1rem;
+    border-radius: 50%;
+    color: white;
+}
+
+.largeImageOver {
+    content: "100";
+    position: absolute;
+    height: 2rem;
+    top: 1rem;
+    right: 1.2rem;
+    width: 2rem;
+    text-align: center;
+    line-height: 2rem;
+    font-size: 1rem;
+    border-radius: 50%;
+    color: white;
+}
+
+.missingSmallImage {
+    width: 2rem;
+    height: 2.2rem
+}
+
+.missingLargeImage {
+    width: 4rem;
+    height: 4.2rem
+}
+
+.col-1 {
+    width: 11.33333333%
+}

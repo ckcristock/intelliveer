@@ -15,6 +15,7 @@ export class PracticeComponent implements OnInit {
 	data: any;
 	businessGroupDropdownSupscription: Subscription;
 	selectedBusinessGroup: SelectedBusinessGroup | undefined;
+	bgId:any
 	constructor(
 		private businessGroupDropdownService: BusinessGroupDropdownService,
 		private practiceService: PracticeService,
@@ -26,7 +27,7 @@ export class PracticeComponent implements OnInit {
 				.subscribe((bg) => {
 					if (bg) {
 						this.selectedBusinessGroup = bg;
-						this.fetchList();
+						this.getUserOrdID();
 					}
 				});
 	}
@@ -47,13 +48,26 @@ export class PracticeComponent implements OnInit {
 				});
 		}
 	}
+	fetchListSuperUser(bgId:any){
+		this.practiceService
+			.getPractices(bgId)
+			.subscribe({
+				next: (res) => {
+					this.data = res;
+				},
+				error: () => {},
+			});
+	}
 	delete(id: string) {
+		if(!this.bgId){
+			this.bgId = this.selectedBusinessGroup?.bgId
+		}
 		if (this.selectedBusinessGroup && id) {
 			this.practiceService
-				.deletePractice(this.selectedBusinessGroup.bgId, id)
+				.deletePractice(this.bgId, id)
 				.subscribe({
 					next: (res) => {
-						this.fetchList();
+						this.getUserOrdID();
 					},
 					error: () => {},
 				});
@@ -63,4 +77,15 @@ export class PracticeComponent implements OnInit {
 	addPractice(){
 		this.router.navigate(['/dashboard/settings/onboarding/practice/add']);
     }
+	getUserOrdID(){
+		let bgOrdID:any = localStorage.getItem('selected_business_group');
+		if(bgOrdID == null){
+		  console.log(bgOrdID)
+		  this.fetchListSuperUser('intelliveer')
+		  this.bgId = 'intelliveer';
+		}else{
+			this.bgId= '';
+		  this.fetchList();
+		}
+	  }
 }

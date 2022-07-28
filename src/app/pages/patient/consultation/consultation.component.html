@@ -48,14 +48,14 @@
                 </ol>
             </ul>
         </div>
-		<div class="col" style="max-width: 200px;" *ngIf="showProgressBar">
+		<div class="col" [ngStyle]="{ 'max-width': max_width }" *ngIf="showProgressBar">
 			<div class="row">
 				<div class="col-2">
 					<div class="line"></div>
 					<i class="bi bi-arrow-right-circle" style="font-size: x-large;" (click)="showProgressBar=false"></i>
 					<div class="line"></div>
 				</div>
-				<div class="col"><app-progress-bar [title]="'Diagnosis'" [menuItems]="progressbarMmenuItems" [sessionArrayName]="'diagnosisVisitedArray'"></app-progress-bar></div>
+				<div class="col"><app-progress-bar [title]="progressbarTitle" [menuItems]="progressbarMmenuItems" [sessionArrayName]="sessionArrayName"></app-progress-bar></div>
 			</div>
 		</div>
         <div class="col component-view">
