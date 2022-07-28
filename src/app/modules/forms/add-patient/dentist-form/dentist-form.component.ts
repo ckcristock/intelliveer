@@ -43,7 +43,11 @@ export class DentistFormComponent implements OnInit {
     private http: HttpClient) { }
 
   async ngOnInit() {
-    this.dentistArray = await this.addPatientServ.getDentistCWP();
+    if (this.tab == 'coordWithProspect') {
+      this.dentistArray = await this.addPatientServ.getDentistCWP();
+    } else if (this.tab == 'quickAdd') {
+      this.dentistArray = await this.addPatientServ.getDentistQuiAdd();
+    }
     if (this.dentistArray != null) {
       this.dentist.namesGenrDents = this.dentistArray.namesGenrDents;
       this.dentist.officeName = this.dentistArray.officeName;
@@ -69,6 +73,7 @@ export class DentistFormComponent implements OnInit {
       this.router.navigate([this.menuItemsOfCordinate[4].url]);
 
     } else if (this.tab == "quickAdd") {
+      this.addPatientServ.setDentistQuiAdd(this.dentist);
       let visitedArrayQuick: any = JSON.parse(localStorage.getItem("visitedArrayQuick") || '[]');
       visitedArrayQuick.push("Dentist");
       localStorage.setItem("visitedArrayQuick", JSON.stringify(visitedArrayQuick));

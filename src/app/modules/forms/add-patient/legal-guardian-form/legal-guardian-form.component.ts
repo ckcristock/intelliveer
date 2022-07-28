@@ -147,33 +147,37 @@ export class LegalGuardianFormComponent implements OnInit {
   }
 
   async getDataLegaGuarCaller() {
-
-    this.legalGuardianArray = await this.addPatientServ.getLegalGuardCWP(1);
-    console.log("legaaaaaal", this.legalGuardianArray);
-
-    if (this.legalGuardianArray != null) {
-      this.legalGuardian.firstName = this.legalGuardianArray.firstName;
-      this.legalGuardian.lastName = this.legalGuardianArray.lastName;
-    }
-
-    this.callersInfo = await this.addPatientServ.getCallerInfoCWP();
-    console.log("caller", this.callersInfo);
-
-    if (this.callersInfo.callerLegarGuar == true) {
-      this.legalGuardian.firstName = this.callersInfo.firstName;
-      this.legalGuardian.lastName = this.callersInfo.lastName;
+    if (this.tab == 'coordWithProspect') {
+      this.legalGuardianArray = await this.addPatientServ.getLegalGuardCWP(this.patientPage);
+      this.callersInfo = await this.addPatientServ.getCallerInfoCWP();
+      console.log("caller", this.callersInfo);
+      if (this.legalGuardianArray != null) {
+        this.legalGuardian.firstName = this.legalGuardianArray.firstName;
+        this.legalGuardian.lastName = this.legalGuardianArray.lastName;
+      }
+      if (this.callersInfo.callerLegarGuar == true) {
+        this.legalGuardian.firstName = this.callersInfo.firstName;
+        this.legalGuardian.lastName = this.callersInfo.lastName;
+      }
+    } else if (this.tab == 'quickAdd') {
+      this.legalGuardianArray = await this.addPatientServ.getLegalGuardQuiAdd();
+      if (this.legalGuardianArray != null) {
+        this.legalGuardian.firstName = this.legalGuardianArray.firstName;
+        this.legalGuardian.lastName = this.legalGuardianArray.lastName;
+      }
     }
   }
 
   continueToDentist() {
     if (this.tab == "coordWithProspect") {
-      this.addPatientServ.setLegalGuardCWP(this.legalGuardian, 1);
+      this.addPatientServ.setLegalGuardCWP(this.legalGuardian, this.patientPage);
       let visitedArray: any = JSON.parse(localStorage.getItem("visitedArray") || '[]');
       visitedArray.push("Legal Guardian");
       localStorage.setItem("visitedArray", JSON.stringify(visitedArray));
       this.router.navigate([this.menuItemsOfCordinate[3].url]);
 
     } else if (this.tab == "quickAdd") {
+      this.addPatientServ.setLegalGuardQuiAdd(this.legalGuardian);
       let visitedArrayQuick: any = JSON.parse(localStorage.getItem("visitedArrayQuick") || '[]');
       visitedArrayQuick.push("Legal Guardian");
       localStorage.setItem("visitedArrayQuick", JSON.stringify(visitedArrayQuick));
@@ -354,7 +358,7 @@ export class LegalGuardianFormComponent implements OnInit {
         }
       }
     } else if (this.radioLG == 2) {
-      let LGLocStora = await this.addPatientServ.getLegalGuardCWP(1);
+      let LGLocStora = await this.addPatientServ.getLegalGuardCWP(this.patientPage);
       this.legalGuardian.firstName = LGLocStora.firstName;
       this.legalGuardian.lastName = LGLocStora.lastName;
 

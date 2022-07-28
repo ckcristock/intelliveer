@@ -42,8 +42,12 @@ export class ReferrerFormComponent implements OnInit {
   constructor(private router: Router,
     private addPatientServ: AddPatientService,) { }
 
-  ngOnInit(): void {
-    this.dentist = JSON.parse(localStorage.getItem("dentistCoorWithProsp") || '[]');
+    async ngOnInit() {
+    if (this.tab == 'coordWithProspect') {
+      this.dentist = await this.addPatientServ.getDentistCWP();
+    } else if (this.tab == 'quickAdd') {
+      this.dentist = await this.addPatientServ.getDentistQuiAdd();
+    }
     if (this.referrer.sameAsDentist == true) {
       this.referrer.firstName = this.dentist.firstName;
       this.referrer.lastName = this.dentist.lastName;
@@ -91,6 +95,7 @@ export class ReferrerFormComponent implements OnInit {
       this.router.navigate([this.menuItemsOfCordinate[5].url]);
 
     } else if (this.tab == "quickAdd") {
+      this.addPatientServ.setReferrerQuiAdd(this.referrer);
       let visitedArrayQuick: any = JSON.parse(localStorage.getItem("visitedArrayQuick") || '[]');
       visitedArrayQuick.push("Referrer");
       localStorage.setItem("visitedArrayQuick", JSON.stringify(visitedArrayQuick));

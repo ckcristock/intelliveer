@@ -245,7 +245,7 @@ export class AddPatientService {
 
   //End Get Lists Data for Coordinate With Prospect
 
-  //Set Forms Patient1
+  //Set Forms Patient1 Coordinate With Prospect
 
   setCallerInfoCWP(callersInfo: any) {
     localStorage.setItem("callerCoorWithProsp", JSON.stringify(callersInfo));
@@ -273,7 +273,7 @@ export class AddPatientService {
 
   //End Set Forms Patient1
 
-  //Get Forms Patient1
+  //Get Forms Patient1 Coordinate With Prospect
 
   async getCallerInfoCWP() {
     return JSON.parse(localStorage.getItem("callerCoorWithProsp") || '[]');
@@ -300,6 +300,46 @@ export class AddPatientService {
   }
 
   //End get Forms Patient1
+
+  //Set Forms Patient1 Quick Add
+
+  setPatientQuiAdd(patient: any) {
+    localStorage.setItem("patientQuickAdd", JSON.stringify(patient));
+  }
+
+  setLegalGuardQuiAdd(LG: any) {
+    localStorage.setItem(`legalGuardQuickAdd`, JSON.stringify(LG));
+  }
+
+  setDentistQuiAdd(dentist: any) {
+    localStorage.setItem("dentistQuickAdd", JSON.stringify(dentist));
+  }
+
+  setReferrerQuiAdd(referrer: any) {
+    localStorage.setItem("referrerQuickAdd", JSON.stringify(referrer));
+  }
+
+  //End Set Forms Patient1 Quick Add
+
+  //Get Forms Patient1 Quick Add
+
+  async getPatientQuiAdd() {
+    return JSON.parse(localStorage.getItem("patientQuickAdd") || '[]');
+  }
+
+  async getLegalGuardQuiAdd() {
+    return JSON.parse(localStorage.getItem(`legalGuardQuickAdd`) || '[]');
+  }
+
+  async getDentistQuiAdd() {
+    return JSON.parse(localStorage.getItem("dentistQuickAdd") || '[]');
+  }
+
+  async getReferrerQuiAdd() {
+    return JSON.parse(localStorage.getItem("referrerQuickAdd") || '[]');
+  }
+
+  //End get Forms Patient1 Quick Add
 
   setTaken(numb: any) {
     for (let i = 0; i < numb; i++) {

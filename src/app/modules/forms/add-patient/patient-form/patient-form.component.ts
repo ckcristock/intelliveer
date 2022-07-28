@@ -45,20 +45,26 @@ export class PatientFormComponent implements OnInit {
     private addPatientServ: AddPatientService,) { }
 
   async ngOnInit() {
-    this.patientArray = await this.addPatientServ.getPatientCWP();
-    console.log("this.patientArray", this.patientArray);
-    
-    if (this.patientArray != null) {
-      this.patient.firstName = this.patientArray.firstName;
-      this.patient.lastName = this.patientArray.lastName;
-      this.patient.dateBirth = this.patientArray.DOB;
-    }
-
-    this.callersInfo = await this.addPatientServ.getCallerInfoCWP();
-    if (this.callersInfo.callerSelfPatient == true) {
-      this.patient.firstName = this.callersInfo.firstName;
-      this.patient.lastName = this.callersInfo.lastName;
-      this.patient.dateBirth = this.patientArray.DOB;
+    if (this.tab == 'coordWithProspect') {
+      this.patientArray = await this.addPatientServ.getPatientCWP();
+      this.callersInfo = await this.addPatientServ.getCallerInfoCWP();
+      if (this.patientArray != null) {
+        this.patient.firstName = this.patientArray.firstName;
+        this.patient.lastName = this.patientArray.lastName;
+        this.patient.dateBirth = this.patientArray.dateBirth;
+      }
+      if (this.callersInfo.callerSelfPatient == true) {
+        this.patient.firstName = this.callersInfo.firstName;
+        this.patient.lastName = this.callersInfo.lastName;
+        this.patient.dateBirth = this.patientArray.DOB;
+      }
+    } else if (this.tab == 'quickAdd') {
+      this.patientArray = await this.addPatientServ.getPatientQuiAdd();
+      if (this.patientArray != null) {
+        this.patient.firstName = this.patientArray.firstName;
+        this.patient.lastName = this.patientArray.lastName;
+        this.patient.dateBirth = this.patientArray.dateBirth;
+      }
     }
     this.initForm(this.formData);
   }
@@ -72,6 +78,7 @@ export class PatientFormComponent implements OnInit {
       this.router.navigate([this.menuItemsOfCordinate[2].url]);
 
     } else if (this.tab == "quickAdd") {
+      this.addPatientServ.setPatientQuiAdd(this.patient);
       let visitedArrayQuick: any = JSON.parse(localStorage.getItem("visitedArrayQuick") || '[]');
       visitedArrayQuick.push("Patient");
       localStorage.setItem("visitedArrayQuick", JSON.stringify(visitedArrayQuick));
@@ -90,7 +97,7 @@ export class PatientFormComponent implements OnInit {
         DOB: [data?.DOB || '', Validators.required],
         gender: [data?.gender || '']
       });
-    } else if (this.tab == "quickAdd"){
+    } else if (this.tab == "quickAdd") {
       this.Form = this.fb.group({
         practice: [data?.practice || ''],
         fName: [data?.fName || '', Validators.required],
