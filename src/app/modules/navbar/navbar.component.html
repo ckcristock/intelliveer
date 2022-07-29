@@ -132,10 +132,10 @@
 				>
 			</div>
 			<div class="d-flex justify-content-center align-items-center" *ngIf="selectUserLst?.length != 0">
-				<div *ngFor="let selectUser of selectUserLst">
+				<div *ngFor="let selectUser of selectUserLst | slice:1:4">
 					<div ngbDropdown class="d-inline-block drpdown">
 						<img src="{{ selectUser.profileUrl }}" alt="" ngbDropdownToggle (click)="showUserCard = true" />
-						<div class="pinOverlay" *ngIf="selectUser.isPin"><i class="bi bi-pin-angle-fill"></i></div>
+						<div class="pinOverlay" *ngIf="selectUser.isPin"> <img src="assets/icons/pin_fill.svg" alt="" width="10" height="10" /></div>
 						<div ngbDropdownMenu style="width: 28rem;" *ngIf="showUserCard">
 							<div class="container">
 								<div class="section">
@@ -147,7 +147,7 @@
 										<div class="col-12" [align]="'center'">
 											<img src="{{ selectUser.profileUrl }}" alt="" style="width: 86px; height: 80px;" />
 											<p><b>{{ selectUser.user }}</b> ({{ selectUser.id }})</p>
-											<p> "{{ selectUser.user }}" (Pronunciation)</p>
+											<p> "{{ selectUser.user }}" (Pronunciation) <img src="assets/icons/speaker_circle.svg" alt="" /> </p>
 											<p>{{ selectUser.sex }}  | Preferred Pronoun</p>
 											<p>{{ selectUser.dob | date }}</p>
 											<p>(844) 569-8628</p>

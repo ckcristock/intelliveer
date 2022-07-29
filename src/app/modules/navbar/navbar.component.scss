@@ -141,20 +141,15 @@ $search-input-width: 300px;
 	color: black;
 }
 
-.pinOverlay {	
-	border-radius: 100%;
-    background-color: #dd3c12;
+.pinOverlay {
     position: absolute;
     top: 0px;
     left: 20px;
     right: -1px;
-    bottom: 19px
-	i {
-		position: absolute;
-		top: 0px;
-		right: 0px;
-		font-size: 10px;
-		color: white;
-		left: 1px;
+    bottom: 19px;
+	img {
+		width: 1.8rem;
+		height: 1.8rem;
+		border: none;
 	}
 }

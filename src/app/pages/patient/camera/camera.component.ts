@@ -1,19 +1,31 @@
 import { Component, OnInit } from '@angular/core';
+import { timer, switchMap } from 'rxjs';
 
 @Component({
-  selector: 'app-camera',
-  templateUrl: './camera.component.html',
-  styleUrls: ['./camera.component.scss']
+	selector: 'app-camera',
+	templateUrl: './camera.component.html',
+	styleUrls: ['./camera.component.scss']
 })
 export class CameraComponent implements OnInit {
-  selectedPatientProfileUrl: any;
+	selectedPatientProfileUrl: any;
+	subscription: any;
+	myservice: any;
+	statustext: any;
 
-  constructor() { }
+	constructor() {}
 
-  ngOnInit(): void {
-    let selectedPatient = JSON.parse(localStorage.getItem('selectedPatient') || '')
-    // console.log(selectedPatient);
-    this.selectedPatientProfileUrl = selectedPatient.profileUrl;
-  }
+	ngOnInit(): void {
+		this.subscription = timer(0, 1000)
+			.pipe()
+			.subscribe((result) => {
+				let selectedPatient = JSON.parse(
+					localStorage.getItem('selectedPatient') || ''
+				);
+				this.selectedPatientProfileUrl = selectedPatient.profileUrl;
+			});
+	}
 
+	ngOnDestroy() {
+		this.subscription.unsubscribe();
+	}
 }

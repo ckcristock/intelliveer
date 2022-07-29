@@ -224,10 +224,7 @@ export class GlobalRoutesService {
     {
       title: "Edit User",
       url: `${this.urlUserManage}/user-policy`,
-      child: [{
-        title: "Personal Information",
-        url: `${this.urlUserManage}/edit-user/personal-info`
-      },
+      child: [
       {
         title: "Role Assignment",
         url: `${this.urlUserManage}/edit-user/assign-role`
@@ -235,7 +232,12 @@ export class GlobalRoutesService {
       {
         title: "User Policy",
         url: `${this.urlUserManage}/edit-user/user-policy`
-      },{
+      },
+      {
+        title: "Personal Information",
+        url: `${this.urlUserManage}/edit-user/personal-info`
+      },
+      {
         title: "Provider",
         url: `${this.urlUserManage}/edit-user/user-provider`
       },{

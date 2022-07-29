@@ -62,6 +62,19 @@ export class NavbarComponent implements OnInit {
 				this.menuItems.push(this.allMenuItems[i]);
 			}
 		}
+		this.selectedPatient = JSON.parse(
+			localStorage.getItem('selectedPatient') || ''
+		);
+		if(this.selectedPatient)
+		{
+			this.selectUserLst.push(this.selectedPatient)
+			this.showSelectedPatient = true;
+		}
+		else
+		{
+			this.selectUserLst = [];
+			this.showSelectedPatient = false;
+		}
 	}
 	logOut() {
 		this.authService.logout().subscribe({
@@ -95,7 +108,6 @@ export class NavbarComponent implements OnInit {
 				}
 				else
 				{
-					console.log(this.selectUserLst)
 					let indexArray: any[] = [];
 					for (let i = 1; i < this.selectUserLst.length; i++) {
 						if(this.selectUserLst[i].isPin == true )
@@ -124,78 +136,63 @@ export class NavbarComponent implements OnInit {
 					}
 					else if(indexArray.length == 2)
 					{
-						for (let i = 0; i < indexArray.length; i++) {
-							let index = indexArray[i];
-							if(index != this.selectUserLst.length - 1)
+						indexArray.forEach(index =>
 							{
-								index = index - 1;
-								if(index < this.selectUserLst.length)
+								if(index == 1)
 								{
-									this.selectUserLst.splice(0, 1);
-									this.selectUserLst.push(patient);
+									if(!this.selectUserLst[2].isPin)
+									{
+										this.selectUserLst.splice(2, 1);
+										this.selectUserLst.push(patient);
+									}
+									else
+									{
+										this.selectUserLst.splice(3, 1);
+										this.selectUserLst.push(patient);
+									}
 								}
-								else
+								if(index == 2)
 								{
-									this.selectUserLst.splice(index, 1);
-									this.selectUserLst.push(patient);
+									if(!this.selectUserLst[1].isPin)
+									{
+										this.selectUserLst.splice(1, 1);
+										this.selectUserLst.push(patient);
+									}
+									else
+									{
+										this.selectUserLst.splice(3, 1);
+										this.selectUserLst.push(patient);
+									}
 								}
-							}
-						}
+								if(index == 3)
+								{
+									if(!this.selectUserLst[2].isPin)
+									{
+										this.selectUserLst.splice(2, 1);
+										this.selectUserLst.push(patient);
+									}
+									else
+									{
+										this.selectUserLst.splice(1, 1);
+										this.selectUserLst.push(patient);
+									}
+								}
+							})
 					}
-					else if(indexArray.length == 3)
+					else
 					{
-						console.log(this.selectUserLst)
-						console.log("3no me h koi bhi delete nhji hoga")
+						let index = this.selectUserLst.findIndex(obj => obj.isPin == false);
+						this.selectUserLst.splice(index, 1);
+						this.selectUserLst.push(patient);
+						this.selectedPatient = patient;
 					}
-					// let index = this.selectUserLst.findIndex(obj => obj.isPin == true);
-					// if(index == -1)
-					// {
-					// 	this.selectUserLst.splice(1,1);
-					// 	this.selectUserLst.push(patient);
-					// }
-					// else
-					// {
-					// 	if(1 == index)
-					// 	{
-					// 		index = index + 1;
-					// 		this.selectUserLst.splice(index, 1);
-					// 		this.selectUserLst.push(patient);
-					// 	}
-					// 	if(2 == index)
-					// 	{
-					// 		index = index + 1;
-					// 		this.selectUserLst.splice(index, 1);
-					// 		this.selectUserLst.push(patient);
-					// 	}
-					// 	if(3 == index)
-					// 	{
-					// 		index = 1;
-					// 		this.selectUserLst.splice(index, 1);
-					// 		this.selectUserLst.push(patient);
-					// 	}
-						
-
-					// 	if(this.selectUserLst[index].isPin)
-					// 	{
-					// 		index = index + 1;
-					// 		this.selectUserLst.splice(index, 1);
-					// 		this.selectUserLst.push(patient);
-					// 	}
-					// 	for (let i = 0; i < this.selectUserLst.length; i++) {
-					// 		if(!this.selectUserLst[i].isPin)
-					// 		{
-					// 			this.selectUserLst.splice(i + 1, 1);
-					// 			this.selectUserLst.push(patient);
-					// 			console.log(this.selectUserLst);
-					// 			break;
-					// 		}
-					// 	}
-					// 	// 
-					// }
 				}
 			}
 			else
 			{
+				let index = this.selectUserLst.findIndex(obj => obj.id == findDuplicate[0].id);
+				this.selectUserLst.splice(index, 1);
+				this.selectUserLst.push(patient);
 				this.selectedPatient = patient;
 			}
 			localStorage.setItem('selectedPatient', JSON.stringify(this.selectedPatient));
@@ -235,6 +232,8 @@ export class NavbarComponent implements OnInit {
 
 	selectUserMenuItem(selectUser: any)
 	{
+		let index = this.selectUserLst.findIndex(obj => obj.id == selectUser.id);
+		this.selectUserLst.splice(index, 1);
 		this.selectedPatient = selectUser;
 		localStorage.setItem('selectedPatient', JSON.stringify(this.selectedPatient));
 		this.showUserCard = false;

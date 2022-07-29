@@ -309,6 +309,39 @@
 			</div>
 	
 		</div>
+
+		<div class="section" id="ownership">
+			<h6 class="heading">Ownership</h6>
+			<div class="row formrow">
+				<div class="col-3">
+					<label class="label-input-gap">Legal Entity</label>
+					<ng-select placeholder="Select">
+						<ng-option
+							*ngFor="let legelEntity of legelEntityList"
+							>{{ legelEntity.name }}</ng-option
+						>
+					</ng-select>
+				</div>
+				<div class="col-3">
+					<label class="label-input-gap">Location</label>
+					<ng-select placeholder="Select">
+						<ng-option
+							*ngFor="let location of locationList"
+							>{{ location.name }}</ng-option
+						>
+					</ng-select>
+				</div>
+				<div class="col-3">
+					<label class="label-input-gap">Practice</label>
+					<ng-select placeholder="Select">
+						<ng-option
+							*ngFor="let practice of practiceList"
+							>{{ practice.name }}</ng-option
+						>
+					</ng-select>
+				</div>
+			</div>
+		</div>
 	
 		<div class="section" id="notes">
 			<h6 class="heading">Notes</h6>
