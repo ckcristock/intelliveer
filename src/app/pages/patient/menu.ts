@@ -75,7 +75,7 @@ export const patientUserHeaderIconMenuItems = [
 	{
 		title: 'Snapshot',
 		url: '/dashboard/patient/camera',
-		class:'camera px-4',
+		class:'camera px-5',
 		icon: '/assets/icons/camera.svg',
 	},
 	{

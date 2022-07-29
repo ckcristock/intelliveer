@@ -84,28 +84,114 @@ export class NavbarComponent implements OnInit {
 			this.searchWord = "";
 			this.searchFocus = false;
 			this.showSelectedPatient = true;
+			patient.isPin = false;
 			this.selectedPatient = patient;
 			const findDuplicate = this.selectUserLst.filter(item => item.id === patient.id);
 			if(findDuplicate.length == 0)
 			{
 				if(this.selectUserLst.length < 4)
 				{
-					this.selectUserLst.push(patient);
+					this.selectUserLst[this.selectUserLst.length] = patient;
 				}
 				else
 				{
-					let index = this.selectUserLst.findIndex(obj => obj.isPin == true);
-					if(index == -1)
+					console.log(this.selectUserLst)
+					let indexArray: any[] = [];
+					for (let i = 1; i < this.selectUserLst.length; i++) {
+						if(this.selectUserLst[i].isPin == true )
+						{
+							indexArray.push(i);
+						}
+					}
+					if(indexArray.length == 0)
 					{
-						this.selectUserLst.splice(this.selectUserLst.length - 1,1);
+						this.selectUserLst.splice(1,1);
 						this.selectUserLst.push(patient);
 					}
-					else
+					else if(indexArray.length == 1)
 					{
-						index = index + 1;
-						this.selectUserLst.splice(index, 1);
-						this.selectUserLst.push(patient);
+						let index = indexArray[0];
+						if(index == this.selectUserLst.length - 1)
+						{
+							this.selectUserLst.splice(index - 1, 1);
+							this.selectUserLst.push(patient);
+						}
+						else
+						{
+							this.selectUserLst.splice(index + 1, 1);
+							this.selectUserLst.push(patient);
+						}
 					}
+					else if(indexArray.length == 2)
+					{
+						for (let i = 0; i < indexArray.length; i++) {
+							let index = indexArray[i];
+							if(index != this.selectUserLst.length - 1)
+							{
+								index = index - 1;
+								if(index < this.selectUserLst.length)
+								{
+									this.selectUserLst.splice(0, 1);
+									this.selectUserLst.push(patient);
+								}
+								else
+								{
+									this.selectUserLst.splice(index, 1);
+									this.selectUserLst.push(patient);
+								}
+							}
+						}
+					}
+					else if(indexArray.length == 3)
+					{
+						console.log(this.selectUserLst)
+						console.log("3no me h koi bhi delete nhji hoga")
+					}
+					// let index = this.selectUserLst.findIndex(obj => obj.isPin == true);
+					// if(index == -1)
+					// {
+					// 	this.selectUserLst.splice(1,1);
+					// 	this.selectUserLst.push(patient);
+					// }
+					// else
+					// {
+					// 	if(1 == index)
+					// 	{
+					// 		index = index + 1;
+					// 		this.selectUserLst.splice(index, 1);
+					// 		this.selectUserLst.push(patient);
+					// 	}
+					// 	if(2 == index)
+					// 	{
+					// 		index = index + 1;
+					// 		this.selectUserLst.splice(index, 1);
+					// 		this.selectUserLst.push(patient);
+					// 	}
+					// 	if(3 == index)
+					// 	{
+					// 		index = 1;
+					// 		this.selectUserLst.splice(index, 1);
+					// 		this.selectUserLst.push(patient);
+					// 	}
+						
+
+					// 	if(this.selectUserLst[index].isPin)
+					// 	{
+					// 		index = index + 1;
+					// 		this.selectUserLst.splice(index, 1);
+					// 		this.selectUserLst.push(patient);
+					// 	}
+					// 	for (let i = 0; i < this.selectUserLst.length; i++) {
+					// 		if(!this.selectUserLst[i].isPin)
+					// 		{
+					// 			this.selectUserLst.splice(i + 1, 1);
+					// 			this.selectUserLst.push(patient);
+					// 			console.log(this.selectUserLst);
+					// 			break;
+					// 		}
+					// 	}
+					// 	// 
+					// }
 				}
 			}
 			else

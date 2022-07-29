@@ -132,7 +132,7 @@
 				>
 			</div>
 			<div class="d-flex justify-content-center align-items-center" *ngIf="selectUserLst?.length != 0">
-				<div *ngFor="let selectUser of selectUserLst | slice:1:4">
+				<div *ngFor="let selectUser of selectUserLst">
 					<div ngbDropdown class="d-inline-block drpdown">
 						<img src="{{ selectUser.profileUrl }}" alt="" ngbDropdownToggle (click)="showUserCard = true" />
 						<div class="pinOverlay" *ngIf="selectUser.isPin"><i class="bi bi-pin-angle-fill"></i></div>

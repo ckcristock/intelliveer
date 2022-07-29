@@ -12,7 +12,7 @@ export class CameraComponent implements OnInit {
 
   ngOnInit(): void {
     let selectedPatient = JSON.parse(localStorage.getItem('selectedPatient') || '')
-    console.log(selectedPatient);
+    // console.log(selectedPatient);
     this.selectedPatientProfileUrl = selectedPatient.profileUrl;
   }
 
