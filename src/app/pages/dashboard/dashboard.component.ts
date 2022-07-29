@@ -43,6 +43,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	businessGroups: any;
 	disableBGDropdown: boolean = false;
 	moduleName: string = '';
+	compactRightSidebar: boolean = false;
 	constructor(
 		public router: Router,
 		private businessGroupDropdownService: BusinessGroupDropdownService,
@@ -80,6 +81,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	toggleMenuBar() {
 		this.compactSidebar = !this.compactSidebar;
 		this.menuBarService.compactSideMenu(this.compactSidebar);
+	}
+	toggleRightMenuBar(){
+		this.compactRightSidebar = !this.compactRightSidebar;
+		this.menuBarService.compactSideMenu(this.compactRightSidebar);
 	}
 	handleClick(menu: IMenuItem) {
 		if (menu.url) {

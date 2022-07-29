@@ -1,0 +1,106 @@
+<div class="container">
+    <h6 class="heading">{{title | titlecase}}</h6>
+    <hr />
+    <div class="row" style="height: 40rem;">
+        <div class="col">
+            <div class="row mb-3">
+                <div class="col">
+                    <h6 class="heading">Timing</h6>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="timingRadio" id="flexRadioDefault1" [(ngModel)]="timing" value="{{'Treatment at this time'}}" (change)="onTimingOptionChange('1')" >
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Treatment at this time
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="timingRadio" id="flexRadioDefault2" [(ngModel)]="timing" value="{{'Observation'}}" (change)="onTimingOptionChange('2')" >
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Observation
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="timingRadio" id="flexRadioDefault3" [(ngModel)]="timing" value="{{'No treatment'}}" (change)="onTimingOptionChange('3')" >
+                        <label class="form-check-label" for="flexRadioDefault3">
+                            No treatment
+                        </label>
+                    </div>
+                </div>
+                <div class="col" style="margin: auto;" *ngIf="timing == 'Observation'">
+                    <div>
+                        <select class="form-select" [(ngModel)]="timingMonth" (change)="treatmentOption.treatmentOptionsArray.Timing = timingMonth">
+                            <option value="1 month">1 month</option>
+                            <option value="2 month">2 month</option>
+                            <option value="3 month">3 month</option>
+                          </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3" *ngIf="showRecommendation">
+                <div class="col">
+                    <h6 class="heading">Treament Phase</h6>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="treamentPhaseRadioOptions" [(ngModel)]="treamentPhaseOption" (change)="treatmentOption.treatmentOptionsArray.Treament_Phase = treamentPhaseOption"
+                            id="treamentPhaseRadio1" value="Comprehenssive">
+                        <label class="form-check-label" for="treamentPhaseRadio1">Comprehenssive</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="treamentPhaseRadioOptions" [(ngModel)]="treamentPhaseOption" (change)="treatmentOption.treatmentOptionsArray.Treament_Phase = treamentPhaseOption"
+                            id="treamentPhaseRadio2" value="Phase I">
+                        <label class="form-check-label" for="treamentPhaseRadio2">Phase I</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="treamentPhaseRadioOptions" [(ngModel)]="treamentPhaseOption" (change)="treatmentOption.treatmentOptionsArray.Treament_Phase = treamentPhaseOption"
+                            id="treamentPhaseRadio3" value="Limited">
+                        <label class="form-check-label" for="treamentPhaseRadio3">Limited</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="treamentPhaseRadioOptions" [(ngModel)]="treamentPhaseOption" (change)="treatmentOption.treatmentOptionsArray.Treament_Phase = treamentPhaseOption"
+                            id="treamentPhaseRadio4" value="Aligners">
+                        <label class="form-check-label" for="treamentPhaseRadio4">Aligners</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="treamentPhaseRadioOptions" [(ngModel)]="treamentPhaseOption" (change)="treatmentOption.treatmentOptionsArray.Treament_Phase = treamentPhaseOption"
+                            id="treamentPhaseRadio5" value="Observation">
+                        <label class="form-check-label" for="treamentPhaseRadio5">Observation</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3" *ngIf="showRecommendation">
+                <div class="col">
+                    <h6 class="heading">Treament Type</h6>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="treamentTypeRadioOptions" [(ngModel)]="treamentTypeOption" (change)="treatmentOption.treatmentOptionsArray.Treament_Type = treamentTypeOption"
+                            id="treamentTypeRadio1" value="Braces">
+                        <label class="form-check-label" for="treamentTypeRadio1">Braces</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="treamentTypeRadioOptions" [(ngModel)]="treamentTypeOption" (change)="treatmentOption.treatmentOptionsArray.Treament_Type = treamentTypeOption"
+                            id="treamentTypeRadio2" value="Aligners">
+                        <label class="form-check-label" for="treamentTypeRadio2">Aligners</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="showRecommendation">
+                <h6 class="heading">Treament Time</h6>
+                <div class="col-2" class="border-box">
+                    <input type="text" class="input-box" [(ngModel)]="fromTime" (blur)="treatmentTime()" />
+                </div>
+                <div class="col-1" [align]="'center'">
+                    <span style="font-size: 3rem; position: relative; bottom: 1rem;">-</span>
+                </div>
+                <div class="col-2" class="border-box">
+                    <input type="text" class="input-box" [(ngModel)]="toTime" (blur)="treatmentTime()" />
+                </div>
+                <div class="col-1" [align]="'center'">
+                    <span style="position: relative; top: 1rem;">Months</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row gap-3" [align]="'end'">
+        <div class="col p2">
+            <button class="btn btn-dark" (click)="moveToNext()" *ngIf="showRecommendation">Next</button>
+            <button class="btn btn-dark" (click)="moveToNext()" *ngIf="!showRecommendation">Conclusion</button>
+        </div>
+    </div>
+</div>

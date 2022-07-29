@@ -16,6 +16,7 @@ export class LegalEntityComponent implements OnInit, OnDestroy {
   data: any;
   businessGroupDropdownSupscription: Subscription;
   selectedBusinessGroup: SelectedBusinessGroup | undefined;
+  bgId:any;
   constructor(
     private router: Router,
     private businessGroupDropdownService: BusinessGroupDropdownService,
@@ -26,7 +27,7 @@ export class LegalEntityComponent implements OnInit, OnDestroy {
       .subscribe((bg) => {
         if (bg) {
           this.selectedBusinessGroup = bg;
-          this.fetchList();
+          this.getUserOrdID();
         }
       });
   }
@@ -46,16 +47,42 @@ export class LegalEntityComponent implements OnInit, OnDestroy {
         });
     }
   }
-  delete(id: string) {
-    if (this.selectedBusinessGroup && id) {
+  fetchListSuperUser() {
       this.legalEntityService
-        .deleteLegalEntity(this.selectedBusinessGroup.bgId, id)
+        .getLegalEntites(this.bgId)
         .subscribe({
           next: (res) => {
-            this.fetchList();
+            this.data = res;
           },
           error: () => {},
         });
+  }
+  delete(id: string) {
+    if(!this.bgId){
+			this.bgId = this.selectedBusinessGroup?.bgId
+		}
+    if (this.selectedBusinessGroup && id) {
+      this.legalEntityService
+        .deleteLegalEntity(this.bgId, id)
+        .subscribe({
+          next: (res) => {
+            this.getUserOrdID();
+          },
+          error: () => {},
+        });
+    }
+  }
+  addLegalEntity(){
+    this.router.navigate(['/dashboard/settings/onboarding/legal-entity/add']);
+  }
+  getUserOrdID(){
+    let bgOrdID:any = localStorage.getItem('selected_business_group');
+    if(bgOrdID == null){
+      this.bgId = 'intelliveer';
+      this.fetchListSuperUser()
+    }else{
+      this.bgId = '';
+      this.fetchList();
     }
   }
 }

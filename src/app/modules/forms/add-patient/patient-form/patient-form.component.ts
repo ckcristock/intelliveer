@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { addPatientCordinateMenuItems, addPatientQuickMenuItems } from '@pages/home/add-patient/menu';
 import { AddPatientService } from '@services/add-patient/add-patient.service';
+import { UserService } from '@services/user/user.service';
 
 @Component({
   selector: 'app-patient-form',
@@ -39,22 +40,35 @@ export class PatientFormComponent implements OnInit {
   @Input() tab: string = "";
   showButtonSaveCancel: boolean = false;
   openTextAreaVar: boolean = false;
+  legelEntityList: any[] = [];
+  locationList: any[] = [];
 
   constructor(private router: Router,
     private fb: FormBuilder,
+    private userService: UserService,
     private addPatientServ: AddPatientService,) { }
 
   async ngOnInit() {
-    this.patientArray = await this.addPatientServ.getPatientCWP();
-    if (this.patientArray != null) {
-      this.patient.firstName = this.patientArray.firstName;
-      this.patient.lastName = this.patientArray.lastName;
-    }
-
-    this.callersInfo = await this.addPatientServ.getCallerInfoCWP();
-    if (this.callersInfo.callerSelfPatient == true) {
-      this.patient.firstName = this.callersInfo.firstName;
-      this.patient.lastName = this.callersInfo.lastName;
+    if (this.tab == 'coordWithProspect') {
+      this.patientArray = await this.addPatientServ.getPatientCWP();
+      this.callersInfo = await this.addPatientServ.getCallerInfoCWP();
+      if (this.patientArray != null) {
+        this.patient.firstName = this.patientArray.firstName;
+        this.patient.lastName = this.patientArray.lastName;
+        this.patient.dateBirth = this.patientArray.dateBirth;
+      }
+      if (this.callersInfo.callerSelfPatient == true) {
+        this.patient.firstName = this.callersInfo.firstName;
+        this.patient.lastName = this.callersInfo.lastName;
+        this.patient.dateBirth = this.patientArray.DOB;
+      }
+    } else if (this.tab == 'quickAdd') {
+      this.patientArray = await this.addPatientServ.getPatientQuiAdd();
+      if (this.patientArray != null) {
+        this.patient.firstName = this.patientArray.firstName;
+        this.patient.lastName = this.patientArray.lastName;
+        this.patient.dateBirth = this.patientArray.dateBirth;
+      }
     }
     this.initForm(this.formData);
   }
@@ -68,6 +82,7 @@ export class PatientFormComponent implements OnInit {
       this.router.navigate([this.menuItemsOfCordinate[2].url]);
 
     } else if (this.tab == "quickAdd") {
+      this.addPatientServ.setPatientQuiAdd(this.patient);
       let visitedArrayQuick: any = JSON.parse(localStorage.getItem("visitedArrayQuick") || '[]');
       visitedArrayQuick.push("Patient");
       localStorage.setItem("visitedArrayQuick", JSON.stringify(visitedArrayQuick));
@@ -78,13 +93,23 @@ export class PatientFormComponent implements OnInit {
 
   initForm(data?: any) {
     data = data || {};
-    this.Form = this.fb.group({
-      practice: [data?.practice || ''],
-      fName: [data?.fName || '', Validators.required],
-      lName: [data?.lName || '', Validators.required],
-      DOB: [data?.DOB || '', Validators.required],
-      gender: [data?.gender || '']
-    });
+    if (this.tab == "coordWithProspect") {
+      this.Form = this.fb.group({
+        practice: [data?.practice || ''],
+        fName: [data?.fName || '', Validators.required],
+        lName: [data?.lName || '', Validators.required],
+        DOB: [data?.DOB || '', Validators.required],
+        gender: [data?.gender || '']
+      });
+    } else if (this.tab == "quickAdd") {
+      this.Form = this.fb.group({
+        practice: [data?.practice || ''],
+        fName: [data?.fName || '', Validators.required],
+        lName: [data?.lName || '', Validators.required],
+        DOB: [data?.DOB || '',],
+        gender: [data?.gender || '']
+      });
+    }
   }
 
   save(data: any) {
@@ -104,5 +129,29 @@ export class PatientFormComponent implements OnInit {
     this.openTextAreaVar = true;
     this.showButtonSaveCancel = true;
   }
+
+  getLegelEntityList(bgId: any) {
+		this.userService.getLegelEntityList(bgId).subscribe(
+			(list: any) => {
+				console.log(list);
+				this.legelEntityList = list;
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
+	}
+
+	getLocationList(bgId: any) {
+		this.userService.getLocationList(bgId).subscribe(
+			(list: any) => {
+				console.log(list);
+				this.locationList = list;
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
+	}
 
 }

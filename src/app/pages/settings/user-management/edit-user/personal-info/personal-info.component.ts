@@ -22,7 +22,8 @@ export class PersonalInfoComponent implements OnInit {
 		{ title: 'Address', id: 'address' },
 		{ title: 'Contact', id: 'contact' },
 		{ title: 'Relations/Type', id: 'relationsType' },
-		{ title: 'Emergency Contact', id: 'emergencyContact' }
+		{ title: 'Emergency Contact', id: 'emergencyContact' },
+		{ title: 'Ownership', id: 'ownership' }
 	];
 
 	testCounter: number = 0;
@@ -45,16 +46,18 @@ export class PersonalInfoComponent implements OnInit {
 		email: ''
 	};
 
-	userRoles = {
-		roles: []
-	};
+	userRoles: any [] = [];
 
 	undefinedH = {
 		name: 'undefined'
 	};
   businessGroupDropdownSupscription: any;
   selectedBusinessGroup: SelectedBusinessGroup | undefined;
-	roleList: any;
+  roleList: any;
+  legelEntityList: any[] = [];
+  locationList: any[] = [];
+  practiceList: any[] = [];
+
 
 	constructor(
 		private router: Router,
@@ -85,16 +88,21 @@ export class PersonalInfoComponent implements OnInit {
 		this.userService.getUserData(bgId, userId).subscribe({
 			next: (res: any) => {
 				this.user = res;
+				console.log("this.user", this.user);
+				
 				if(res)
 				{
 					for (let i = 0; i < res.roles.length; i++) {
 						this.userService.getUserRoleData(bgId, this.user.roles[i]).subscribe({
 							next: (roledata: any) => {
 								(this.roleList) ? this.roleList = this.roleList + roledata.name + ", " : this.roleList = roledata.name + ", ";
+								this.userRoles.push(roledata);
 							},
 							error: () => {}
 						});
-					}						  
+					}		
+					console.log("this.roleList", this.roleList);
+									  
 				}
 			},
 			error: () => {}
@@ -108,11 +116,20 @@ export class PersonalInfoComponent implements OnInit {
 			if (user?.__ISSU__) {
 		  if(bgOrdID == 'intelliveer' || bgOrdID == null){
 			this.getUserData('intelliveer');
+			this.getLegelEntityList('intelliveer');
+			this.getLocationList('intelliveer');
+			this.getPracticeList('intelliveer');
 		  }else{
 			this.getUserData(this.selectedBusinessGroup?.bgId)
+			this.getLegelEntityList(this.selectedBusinessGroup?.bgId);
+			this.getLocationList(this.selectedBusinessGroup?.bgId);
+			this.getPracticeList(this.selectedBusinessGroup?.bgId);
 		  }
 		  }else{
 		  this.getUserData(this.selectedBusinessGroup?.bgId)
+		  this.getLegelEntityList(this.selectedBusinessGroup?.bgId);
+		  this.getLocationList(this.selectedBusinessGroup?.bgId);
+		  this.getPracticeList(this.selectedBusinessGroup?.bgId);
 		}
 		}
 
@@ -152,5 +169,42 @@ export class PersonalInfoComponent implements OnInit {
 
 	onSectionChange(sectionId: string) {
 		this.currentSelection = sectionId;
+	}
+
+	/** Get onboarding Details */
+	getLegelEntityList(bgId: any) {
+		this.userService.getLegelEntityList(bgId).subscribe(
+			(list: any) => {
+				console.log(list);
+				this.legelEntityList = list;
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
+	}
+
+	getLocationList(bgId: any) {
+		this.userService.getLocationList(bgId).subscribe(
+			(list: any) => {
+				console.log(list);
+				this.locationList = list;
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
+	}
+
+	getPracticeList(bgId: any) {
+		this.userService.getPracticeList(bgId).subscribe(
+			(list: any) => {
+				console.log(list);
+				this.practiceList = list;
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
 	}
 }

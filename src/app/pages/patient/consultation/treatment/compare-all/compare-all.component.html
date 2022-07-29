@@ -1,0 +1,396 @@
+<div class="container">
+	<div class="section">
+		<div class="row">
+			<div class="col">
+				<div style="height: 90%;" *ngIf="compareAllOptionArray?.length == 0">
+					<div style="text-align: center; padding-top: 7%;">
+						<div>
+							<h5><b>You haven’t yet added any option</b></h5>
+						</div>
+					</div>
+				</div>
+				<div class="table-responsive" *ngIf="compareAllOptionArray?.length != 0">
+					<table class="table table-bordered align-middle">
+						<thead>
+							<tr style="border: none" *ngIf="showBestOptionCss">
+								<td style="border: none"></td>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray;
+										let i = index
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'show-best-value-yes'
+											: 'show-best-value-no'
+									"
+								>
+									<p
+										style="
+											color: white;
+											text-align: center;
+											font-size: large;
+											font-weight: bold;
+										"
+									>
+										Best Value
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<td
+									style="
+										background-color: white;
+										border-bottom-color: white;
+									"
+								></td>
+								<th
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray;
+										let i = index
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									style="text-align: center;"
+								>
+									<p>Option {{ i + 1 }}</p>
+									<span style="font-size: medium">
+										<i
+											[ngClass]="
+												treatmentOptionObj.count ===
+													1 ||
+												treatmentOptionObj.count > 1
+													? 'bi bi-hand-thumbs-up-fill'
+													: 'bi bi-hand-thumbs-up'
+											"
+											[ngStyle]="{
+												color: '#e96247'
+											}"
+											(click)="
+												countTreatment(
+													treatmentOptionObj
+												)
+											"
+										></i>
+										&nbsp;
+										<i
+											[ngClass]="
+												treatmentOptionObj.count ===
+													2 ||
+												treatmentOptionObj.count > 2
+													? 'bi bi-hand-thumbs-up-fill'
+													: 'bi bi-hand-thumbs-up'
+											"
+											[ngStyle]="{
+												color: '#e96247'
+											}"
+											(click)="
+												countTreatment(
+													treatmentOptionObj
+												)
+											"
+										></i>
+										&nbsp;
+										<i
+											[ngClass]="
+												treatmentOptionObj.count === 3
+													? 'bi bi-hand-thumbs-up-fill'
+													: 'bi bi-hand-thumbs-up'
+											"
+											[ngStyle]="{
+												color: '#e96247'
+											}"
+											(click)="
+												countTreatment(
+													treatmentOptionObj
+												)
+											"
+										></i>
+									</span>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>Timing</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="treatmentOptionObj.count === 3 ? '#ffffff' : '#ffffff'"
+								>
+									<p>{{ treatmentOptionObj.Timing }}</p>
+								</td>
+							</tr>
+							<tr>
+								<th>Treament Phase</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="treatmentOptionObj.count === 3 ? '#faf2e9' : '#f1f2f2'"
+								>
+									<p>
+										{{ treatmentOptionObj.Treament_Phase }}
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th>Treament Type</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="treatmentOptionObj.count === 3 ? '#ffffff' : '#ffffff'"
+								>
+									<p>
+										{{ treatmentOptionObj.Treament_Type }}
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th>Treament Time</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="treatmentOptionObj.count === 3 ? '#faf2e9' : '#f1f2f2'"
+								>
+									<p>
+										{{ treatmentOptionObj.Treament_Time }}
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th>Prerequisites</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="treatmentOptionObj.count === 3 ? '#ffffff' : '#ffffff'"
+								>
+									<p
+										*ngFor="
+											let prerequisties of treatmentOptionObj.Prerequisites
+										"
+									>
+										{{ prerequisties.name }}
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th>Extractions</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="treatmentOptionObj.count === 3 ? '#faf2e9' : '#f1f2f2'"
+								>
+									<div
+										*ngIf="treatmentOptionObj.Extractions?.length != 0"
+									>
+										<div
+											*ngIf="
+												treatmentOptionObj.Extractions[0].adultTooth
+													?.length != 0
+											"
+										>
+											<b>Adult Tooth</b>
+											<p
+												*ngFor="
+													let adultTooth of treatmentOptionObj.Extractions[0].adultTooth
+												"
+											>
+												Tooth# {{ adultTooth.title }}
+											</p>
+										</div>
+										<div
+											*ngIf="
+												treatmentOptionObj.Extractions[1].childTooth
+													?.length != 0
+											"
+										>
+											<b>Child Tooth</b>
+											<p
+												*ngFor="
+													let childTooth of treatmentOptionObj.Extractions[1].childTooth
+												"
+											>
+												Tooth# {{ childTooth.title }}
+											</p>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>Chief Concerns</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="treatmentOptionObj.count === 3 ? '#ffffff' : '#ffffff'"
+								>
+									<p>
+										Bottom teeth are crowded.:
+										<b>{{
+											treatmentOptionObj.Chief_Concerns_1
+										}}</b>
+									</p>
+									<p>
+										Top teeth are sticking out and spaced.:
+										<b>{{
+											treatmentOptionObj.Chief_Concerns_2
+										}}</b>
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th>Expectations</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="treatmentOptionObj.count === 3 ? '#faf2e9' : '#f1f2f2'"
+								>
+									<p>
+										Bring chin forward.:
+										<b>{{
+											treatmentOptionObj.Expectations
+										}}</b>
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th>Diagnosis</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="treatmentOptionObj.count === 3 ? '#ffffff' : '#ffffff'"
+								>
+									<p>
+										Lorem ipsum dolor sit amet, consectetuer
+										adipiscing.:
+										<b>{{
+											treatmentOptionObj.Diagnosis
+										}}</b>
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th>
+									Problems which are not present but are
+									anticipated
+								</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="treatmentOptionObj.count === 3 ? '#faf2e9' : '#f1f2f2'"
+								>
+									<p>
+										Black Triangles:
+										<b>{{
+											treatmentOptionObj.anticipated_1
+										}}</b>
+									</p>
+									<p>
+										Proclination:
+										<b>{{
+											treatmentOptionObj.anticipated_2
+										}}</b>
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th>Appliance Sequence</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="treatmentOptionObj.count === 3 ? '#ffffff' : '#ffffff'"
+								>
+									<div
+										*ngFor="
+											let applianceSequence of treatmentOptionObj.Appliance_Sequence;
+											let i = index
+										"
+									>
+										{{ applianceSequence.title }}
+										<p
+											*ngFor="
+												let searchLst of treatmentOptionObj
+													.Appliance_Sequence[i]
+													.searchResultLst
+											"
+										>
+											{{ searchLst.name }}
+										</p>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

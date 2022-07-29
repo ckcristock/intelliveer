@@ -15,6 +15,7 @@ import { Subscription } from 'rxjs';
 export class AddLegalEntityComponent implements OnInit, OnDestroy {
 	bgDropdownSubscription: Subscription;
 	selectedBusinessGroup: SelectedBusinessGroup | undefined;
+	bgId:any;
 	constructor(
 		private router: Router,
 		private bgDropdownService: BusinessGroupDropdownService,
@@ -25,6 +26,7 @@ export class AddLegalEntityComponent implements OnInit, OnDestroy {
 			.subscribe((bg) => {
 				if (bg) {
 					this.selectedBusinessGroup = bg;
+					this.getUserOrdID()
 				}
 			});
 	}
@@ -34,10 +36,13 @@ export class AddLegalEntityComponent implements OnInit, OnDestroy {
 		this.bgDropdownSubscription.unsubscribe();
 	}
 	createLegalEntity(data: any) {
+		if(!this.bgId){
+			this.bgId = this.selectedBusinessGroup?.bgId
+		}
 		if (this.selectedBusinessGroup) {
 			data['slug'] = '';
 			this.legalEntityService
-				.createLegalEntity(this.selectedBusinessGroup.bgId, data)
+				.createLegalEntity(this.bgId, data)
 				.subscribe({
 					next: (res) => {
 						this.router.navigate([
@@ -51,4 +56,12 @@ export class AddLegalEntityComponent implements OnInit, OnDestroy {
 	handleCancel() {
 		this.router.navigate(['/dashboard/settings/onboarding/legal-entity']);
 	}
+	getUserOrdID(){
+		let bgOrdID:any = localStorage.getItem('selected_business_group');
+		if(bgOrdID == null){
+		  this.bgId = 'intelliveer';
+		}else{
+		  this.bgId = null;
+		}
+	  }
 }

@@ -1,0 +1,64 @@
+<div class="container">
+	<h6 class="heading">{{ title | titlecase }}</h6>
+	<hr />
+	<div class="row" style="height: 40rem">
+		<div class="col">
+			<app-toothchart
+				[toothChartType]="1"
+				[width]="25"
+				[height]="25"
+				[textSize]="'smaller'"
+				[imageClass]="'smallImageOver'"
+				[showDropdownMenu]="false"
+				(onSelectOption)="onSelectAdultOption($event)"
+			></app-toothchart>
+			<app-toothchart
+				[toothChartType]="2"
+				[width]="25"
+				[height]="25"
+				[textSize]="'smaller'"
+				[imageClass]="'smallImageOver'"
+				[showDropdownMenu]="false"
+				(onSelectOption)="onSelectChildOption($event)"
+			></app-toothchart>
+		</div>
+
+        <div class="row">
+            <div class="col-3" [align]="'center'" style="margin: auto;">
+                <p>Adult Tooth</p>
+            </div>
+            <div class="col">
+                <div class="row mb-3" style="padding: 5px;" *ngIf="selectToothOptionArray[0].adultTooth?.length != 0">
+                    <div class="col-3 p-2" *ngFor="let adultTooth of selectToothOptionArray[0].adultTooth; let i = index">
+                        <div class="input-group flex-nowrap">
+                            <span class="input-group-text" style="background-color: #faf2e9; border: 1px solid #f9b85f;" (click)="cancelSelectionFromAdult(adultTooth, i)"><i class="bi bi-x-lg"></i></span>
+                            <input type="text" class="form-control" value="{{adultTooth.title}}" readonly style="border-color: #f9b85f; background-color: #faf2e9">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3" [align]="'center'" style="margin: auto;">
+                <p>Child Tooth</p>
+            </div>
+            <div class="col">
+                <div class="row mb-3" style="padding: 5px;" *ngIf="selectToothOptionArray[1].childTooth?.length != 0">
+                    <div class="col-3 p-2" *ngFor="let childTooth of selectToothOptionArray[1].childTooth; let i = index">
+                        <div class="input-group flex-nowrap">
+                            <span class="input-group-text" style="background-color: #faf2e9; border: 1px solid #f9b85f;" (click)="cancelSelectionFromChild(childTooth, i)"><i class="bi bi-x-lg"></i></span>
+                            <input type="text" class="form-control" value="{{childTooth.title}}" readonly style="border-color: #f9b85f; background-color: #faf2e9">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+	</div>
+	<div class="row gap-3" [align]="'end'">
+		<div class="col p2">
+			<button class="btn btn-dark" (click)="moveToNext()">Next</button>
+		</div>
+	</div>
+</div>

@@ -86,20 +86,21 @@ to be accompanied by a legal guardian. Do you have any questions for me?</textar
                         <div class="btn-group" role="group" aria-label="Basic radio toggle button group"
                             style="margin-top: 7px;">
                             <div class="subscriber-divs" style="margin-right: 12px !important;">
-                                <input class="form-check-input" type="radio" name="btnradio1" id="btnradio1"
-                                    autocomplete="off" checked (change)="callerSelfPatientFunc(true)" />
+                                <input #bracesYoursFam1 class="form-check-input" type="radio" name="btnradio1"
+                                    id="btnradio1" (click)="setRadioStatus(1,'braces')" checked />
                                 <label class="form-check-label" for="btnradio1">Self</label>
                             </div>
                             <div class="subscriber-divs" style="margin-right: 12px !important;">
-                                <input class="form-check-input" type="radio" name="btnradio1" id="btnradio2"
-                                    autocomplete="off" (change)="callerSelfPatientFunc(false)" />
-                                <label class="form-check-label" for="btnradio2">Family Member</label>
+                                <input #bracesYoursFam2 class="form-check-input" type="radio" name="btnradio1"
+                                    id="btnradio2" (click)="setRadioStatus(2,'braces')" />
+                                <label class="form-check-label" for="btnradio2"
+                                    (click)="radiosLegalGuardian()">Family Member</label>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div *ngIf="callersInfo.callerSelfPatient==false">
+            <div *ngIf="bracesYoursFam2.checked == true">
                 <div class="row formrow">
                     <div class="col-3">
                         <div class="mainformset">
@@ -121,13 +122,13 @@ to be accompanied by a legal guardian. Do you have any questions for me?</textar
                             <div class="btn-group" role="group" aria-label="Basic radio toggle button group"
                                 style="margin-top: 7px;">
                                 <div class="subscriber-divs" style="margin-right: 12px !important;">
-                                    <input class="form-check-input" type="radio" name="legalguard" id="legalguard1"
-                                        autocomplete="off" (change)="callerLegalG(true)" />
+                                    <input #legalGuardPati1 class="form-check-input" type="radio" name="legalguard"
+                                        id="legalguard1" (click)="setRadioStatus(1,'legalGuardYesNo')" />
                                     <label class="form-check-label" for="legalguard1">Yes</label>
                                 </div>
                                 <div class="subscriber-divs" style="margin-right: 12px !important;">
-                                    <input class="form-check-input" type="radio" name="legalguard" id="legalguard2"
-                                        autocomplete="off" checked (change)="callerLegalG(false)" />
+                                    <input #legalGuardPati2 class="form-check-input" type="radio" name="legalguard"
+                                        id="legalguard2" (click)="setRadioStatus(2,'legalGuardYesNo')" />
                                     <label class="form-check-label" for="legalguard2">No</label>
                                 </div>
                             </div>

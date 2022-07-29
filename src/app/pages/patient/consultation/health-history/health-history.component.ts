@@ -32,4 +32,22 @@ export class HealthHistoryComponent implements OnInit {
     this.router.navigate(['/dashboard/patient/consultation/health-history/add']);
   }
 
+
+  public row: any;
+
+endMove($event: any)
+{
+  let children= Array.from($event.target.parentNode.parentNode.children);
+  if(children.indexOf($event.target.parentNode)>children.indexOf(this.row))
+  $event.target.parentNode.after(this.row);
+  else
+  $event.target.parentNode.before(this.row);
+}
+
+move($event: any)
+{
+  this.row = $event.target;
+}
+
+
 }

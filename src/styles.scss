@@ -127,13 +127,10 @@ input.search {
 }
 
 .section {
-	background-color: #f9fafb;
-	padding: 53px;
-	padding-top: 37px;
-	padding-bottom: 19px;
+	background-color: #f9f9f9;
+	padding: 1rem;
 	margin-bottom: 1rem;
 	border-radius: 0.5rem;
-
 	.heading {
 		font-weight: bold;
 		margin-bottom: 1.5rem;
@@ -347,7 +344,7 @@ input[type='date'].form-control.value-must,
 input[type='text'].form-control-inline.value-must {
 	border: 1px solid #ed1c24;
 	box-shadow: 0 -0.5px 0pt 0.1pt #f7ebeb !important;
-	background: #f7ebeb;
+	background: #ffffff;
 }
 
 label {
@@ -788,82 +785,100 @@ form {
 	}
 }
 
+.accordion-button:not(.collapsed) {
+    color: #000 !important;
+    background-color: #fff !important;
+    box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+}
+
 // .accordion-button:hover {
 //     z-index: 2;
 // }
 
-.onboarding,
-.module1,
-.module2,
-.module3,
-.module4 {
+// .onboarding,
+// .module1,
+// .module2,
+// .module3,
+// .module4 {
 
-	.accordion-button {
+// 	.accordion-button {
 
-		span {
-			color: #000000 !important;
-		}
+// 		span {
+// 			color: #000000 !important;
+// 		}
 
-		background-color: white !important;
-		box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
-	}
+// 		background-color: white !important;
+// 		box-shadow: inset 0 0px 0 rgb(0 0 0 / 13%);
+// 	}
 
-	.accordion-button:not(.collapsed) {
+// 	.accordion-button:not(.collapsed) {
 
-		span {
-			color: #f0896e !important;
-			font-weight: bold;
-		}
+// 		span {
+// 			color: #f0896e !important;
+// 			font-weight: bold;
+// 		}
 
-		p {
-			color: #000000 !important;
-		}
+// 		p {
+// 			color: #000000 !important;
+// 		}
 
-		background-color: white !important;
-		border-bottom: 1px solid #e5e5e5;
-	}
+// 		background-color: white !important;
+// 		border-bottom: 1px solid #e5e5e5;
+// 	}
 
-
-}
-
-.businessg,
-.legalenti,
-.location,
-.practice {
-	border-right-style: none !important;
-	border-left: none !important;
-
-	.accordion-button:not(.collapsed) {
-
-		p {
-			color: #000 !important;
-			margin-bottom: -10px;
-		}
-
-		span {
-			color: #a6a8aa !important;
-		}
-
-		background-color: rgb(255, 255, 255) !important;
-		border-bottom-style: none !important;
-	}
-
-	.accordion-body:hover:focus:checked {
-		border-top-style: none !important;
-		border-top: none !important;
-	}
-
-}
+// 	.accordion-button:not(.collapsed) {
+// 		color: #000 !important;
+// 		background-color: #e7f1ff;
+// 		box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+// 	}
 
 
-td {
-	line-height: 30px !important;
-	border-style: none !important;
-}
+// }
 
-table {
-	border-collapse: unset !important;
-}
+// .businessg,
+// .legalenti,
+// .location,
+// .practice {
+// 	border-right-style: none !important;
+// 	border-left: none !important;
+
+// 	.accordion-button:not(.collapsed) {
+
+// 		p {
+// 			color: #000 !important;
+// 			margin-bottom: -10px;
+// 		}
+
+// 		span {
+// 			color: #a6a8aa !important;
+// 		}
+
+// 		background-color: rgb(255, 255, 255) !important;
+// 		border-bottom-style: none !important;
+// 	}
+
+// 	.accordion-body:hover:focus:checked {
+// 		border-top-style: none !important;
+// 		border-top: none !important;
+// 	}
+
+// 	.accordion-button:not(.collapsed) {
+// 		color: #000 !important;
+// 		background-color: #e7f1ff;
+// 		box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+// 	}
+
+// }
+
+
+// td {
+// 	line-height: 30px !important;
+// 	border-style: none !important;
+// }
+
+// table {
+// 	border-collapse: unset !important;
+// }
 
 
 input[type='checkbox'] {
@@ -900,4 +915,16 @@ input[type='checkbox'] {
 
 .red-bottom-line{
     border-bottom: 1px solid #e86469 !important;
+}
+
+.deac-reactive{
+    color: red;
+}
+
+.selected{
+    color: #2596be;
+}
+
+.deactivated{
+    color: #d2d1d0;
 }

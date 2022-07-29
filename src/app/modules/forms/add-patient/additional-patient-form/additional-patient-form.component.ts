@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AddPatientService } from "@services/add-patient/add-patient.service";
 import { GlobalRoutesService } from "@services/global-routes/global-routes.service";
@@ -10,8 +10,49 @@ import { GlobalRoutesService } from "@services/global-routes/global-routes.servi
 })
 export class AdditionalPatientFormComponent implements OnInit {
 
+  counter: number = 0;
+  @ViewChild('dentistRadio1') dentistRadio1!: ElementRef;
+  @ViewChild('dentistRadio2') dentistRadio2!: ElementRef;
+  @ViewChild('dentistRadio3') dentistRadio3!: ElementRef;
+  @ViewChild('referrerRadio1') referrerRadio1!: ElementRef;
+  @ViewChild('referrerRadio2') referrerRadio2!: ElementRef;
+  @ViewChild('referrerRadio3') referrerRadio3!: ElementRef;
+  @ViewChild('insuYesNoRadio1') insuYesNoRadio1!: ElementRef;
+  @ViewChild('insuYesNoRadio2') insuYesNoRadio2!: ElementRef;
+
+  @ViewChild('howManyInsuRadio1') howManyInsuRadio1!: ElementRef;
+  @ViewChild('howManyInsuRadio2') howManyInsuRadio2!: ElementRef;
+  @ViewChild('howManyInsuRadio3') howManyInsuRadio3!: ElementRef;
+
+  @ViewChild('insuran1Radio1') insuran1Radio1!: ElementRef;
+  @ViewChild('insuran1Radio2') insuran1Radio2!: ElementRef;
+  @ViewChild('insuran1Radio3') insuran1Radio3!: ElementRef;
+  @ViewChild('insuran2Radio1') insuran2Radio1!: ElementRef;
+  @ViewChild('insuran2Radio2') insuran2Radio2!: ElementRef;
+  @ViewChild('insuran2Radio3') insuran2Radio3!: ElementRef;
+  @ViewChild('insuran3Radio1') insuran3Radio1!: ElementRef;
+  @ViewChild('insuran3Radio2') insuran3Radio2!: ElementRef;
+  @ViewChild('insuran3Radio3') insuran3Radio3!: ElementRef;
+
+  @ViewChild('subscri1Radio1') subscri1Radio1!: ElementRef;
+  @ViewChild('subscri1Radio2') subscri1Radio2!: ElementRef;
+  @ViewChild('subscri1Radio3') subscri1Radio3!: ElementRef;
+  @ViewChild('subscri1Radio4') subscri1Radio4!: ElementRef;
+
+  @ViewChild('subscri2Radio1') subscri2Radio1!: ElementRef;
+  @ViewChild('subscri2Radio2') subscri2Radio2!: ElementRef;
+  @ViewChild('subscri2Radio3') subscri2Radio3!: ElementRef;
+  @ViewChild('subscri2Radio4') subscri2Radio4!: ElementRef;
+
+  @ViewChild('subscri3Radio1') subscri3Radio1!: ElementRef;
+  @ViewChild('subscri3Radio2') subscri3Radio2!: ElementRef;
+  @ViewChild('subscri3Radio3') subscri3Radio3!: ElementRef;
+  @ViewChild('subscri3Radio4') subscri3Radio4!: ElementRef;
+
+  active = 1;
+
   additionalPatient = {
-    id:"",
+    id: "",
     firstName: "",
     lastName: "",
     birthDate: "",
@@ -74,6 +115,42 @@ export class AdditionalPatientFormComponent implements OnInit {
   lgList: any[] = [];
   dentists: any[] = [];
   referrers: any[] = [];
+
+  insurancesP1 = {
+    insurance1: {
+      insuranName: "",
+      phoneNumb: "",
+      subscriber1: {
+        firstName: "",
+        lastName: "",
+        relationship: "",
+        DOB: "",
+        SSNID: "",
+      }
+    },
+    insurance2: {
+      insuranName: "",
+      phoneNumb: "",
+      subscriber2: {
+        firstName: "",
+        lastName: "",
+        relationship: "",
+        DOB: "",
+        SSNID: "",
+      }
+    },
+    insurance3: {
+      insuranName: "",
+      phoneNumb: "",
+      subscriber3: {
+        firstName: "",
+        lastName: "",
+        relationship: "",
+        DOB: "",
+        SSNID: "",
+      }
+    },
+  }
   insurances1: any[] = [];
   insurances2: any[] = [];
   insurances3: any[] = [];
@@ -81,20 +158,10 @@ export class AdditionalPatientFormComponent implements OnInit {
   subscribers2: any[] = [];
   subscribers3: any[] = [];
 
-  subscriber = {
-    firstName: "",
-    lastName: "",
-    relationship: "",
-    DOB: "",
-    SSNID: "",
-    phoneNumb: "",
-    selected: true,
-    activated: true
-  }
-
-  radioLGuard: number = 1;
   radioDentist: number = 1;
   radioReferrer: number = 1;
+  radioInsuYesNo: number = 1;
+  radioHowManyIns: number = 3;
   radioInsuran1: number = 1;
   radioInsuran2: number = 1;
   radioInsuran3: number = 1;
@@ -104,7 +171,6 @@ export class AdditionalPatientFormComponent implements OnInit {
 
   @Input() patientPage: number = 2;
   familyMemberCount: any = 2;
-  checkInsuranceCount: number = 1;
   provideInsurance: boolean = true;
   coordWithProspRoutes: any[] = [];
   title: string = "";
@@ -122,10 +188,309 @@ export class AdditionalPatientFormComponent implements OnInit {
     this.getCWPData();
   }
 
+  async ngAfterViewInit() {
+    this.radioDentist = JSON.parse(localStorage.getItem(`dentistPatie${this.patientPage}`) || '[]');
+    this.radioReferrer = JSON.parse(localStorage.getItem(`referrerPatie${this.patientPage}`) || '[]');
+    this.radioInsuYesNo = JSON.parse(localStorage.getItem(`insuYesNoPatie${this.patientPage}`) || '[]');
+    this.radioHowManyIns = JSON.parse(localStorage.getItem(`howManyInsuPatie${this.patientPage}`) || '[]');
+    this.radioInsuran1 = JSON.parse(localStorage.getItem(`insuran1Patie${this.patientPage}`) || '[]');
+    this.radioInsuran2 = JSON.parse(localStorage.getItem(`insuran2Patie${this.patientPage}`) || '[]');
+    this.radioInsuran3 = JSON.parse(localStorage.getItem(`insuran3Patie${this.patientPage}`) || '[]');
+    this.radioSubscriber1 = JSON.parse(localStorage.getItem(`subscri1Patie${this.patientPage}`) || '[]');
+    this.radioSubscriber2 = JSON.parse(localStorage.getItem(`subscri2Patie${this.patientPage}`) || '[]');
+    this.radioSubscriber3 = JSON.parse(localStorage.getItem(`subscri3Patie${this.patientPage}`) || '[]');
+    setTimeout(() => {
+      this.checkRadiosStatus();
+    }, 20);
+  }
+
+  async checkRadiosStatus() {
+
+
+    //Dentist Radio
+    if (this.radioDentist == 0) {
+      this.radioDentist = 1;
+    }
+    if (this.radioDentist == 1) {
+      this.dentistRadio1.nativeElement.checked = true;
+      this.radioDentFuct(this.radioDentist);
+    } else if (this.radioDentist == 2) {
+      this.dentistRadio2.nativeElement.checked = true;
+      this.radioDentFuct(this.radioDentist);
+    } else if (this.radioDentist == 3) {
+      this.dentistRadio3.nativeElement.checked = true;
+      this.radioDentFuct(this.radioDentist);
+      console.log("it called");
+
+    }
+
+    //Referrer Radio
+    if (this.radioReferrer == 0) {
+      this.radioReferrer = 1;
+    }
+    if (this.radioReferrer == 1) {
+      this.referrerRadio1.nativeElement.checked = true;
+      this.radioReferrFuct(this.radioReferrer);
+    } else if (this.radioReferrer == 2) {
+      this.referrerRadio2.nativeElement.checked = true;
+      this.radioReferrFuct(this.radioReferrer);
+    } else if (this.radioReferrer == 3) {
+      this.referrerRadio3.nativeElement.checked = true;
+      this.radioReferrFuct(this.radioReferrer);
+    }
+
+    //Insurances Yes No Radio
+    if (this.radioInsuYesNo == 0) {
+      this.radioInsuYesNo = 1;
+    }
+    if (this.radioInsuYesNo == 1) {
+      this.insuYesNoRadio1.nativeElement.checked = true;
+      this.provideInsurance = true;
+    } else if (this.radioInsuYesNo == 2) {
+      this.insuYesNoRadio2.nativeElement.checked = true;
+      this.provideInsurance = false;
+    }
+
+    //How Many Insurances Radio
+    if (this.radioHowManyIns == 0) {
+      this.radioHowManyIns = 1;
+    }
+    if (this.radioHowManyIns == 1) {
+      this.howManyInsuRadio1.nativeElement.checked = true;
+    } else if (this.radioHowManyIns == 2) {
+      this.howManyInsuRadio2.nativeElement.checked = true;
+    } else if (this.radioHowManyIns == 3) {
+      this.howManyInsuRadio3.nativeElement.checked = true;
+    }
+
+    //Insurance 1 Radio
+    if (this.radioInsuran1 == 0) {
+      this.radioInsuran1 = 1;
+    }
+    if (this.radioInsuran1 == 1) {
+      this.insuran1Radio1.nativeElement.checked = true;
+      this.radioInsuran1Funct(this.radioInsuran1);
+    } else if (this.radioInsuran1 == 2) {
+      this.insuran1Radio2.nativeElement.checked = true;
+      this.radioInsuran1Funct(this.radioInsuran1);
+    } else if (this.radioInsuran1 == 3) {
+      this.insuran1Radio3.nativeElement.checked = true;
+      this.radioInsuran1Funct(this.radioInsuran1);
+    }
+
+    //Insurance 2 Radio
+    if (this.radioInsuran2 == 0) {
+      this.radioInsuran2 = 1;
+    }
+    if (this.insuran2Radio1 != null) {
+      if (this.radioInsuran2 == 1) {
+        this.insuran2Radio1.nativeElement.checked = true;
+        this.radioInsuran2Funct(this.radioInsuran2);
+      } else if (this.radioInsuran2 == 2) {
+        this.insuran2Radio2.nativeElement.checked = true;
+        this.radioInsuran2Funct(this.radioInsuran2);
+      } else if (this.radioInsuran2 == 3) {
+        this.insuran2Radio3.nativeElement.checked = true;
+        this.radioInsuran2Funct(this.radioInsuran2);
+      }
+    }
+
+    //Insurance 3 Radio
+    if (this.radioInsuran3 == 0) {
+      this.radioInsuran3 = 1;
+    }
+    if (this.insuran3Radio1 != null) {
+      if (this.radioInsuran3 == 1) {
+        this.insuran3Radio1.nativeElement.checked = true;
+        this.radioInsuran3Funct(this.radioInsuran3);
+      } else if (this.radioInsuran3 == 2) {
+        this.insuran3Radio2.nativeElement.checked = true;
+        this.radioInsuran3Funct(this.radioInsuran3);
+      } else if (this.radioInsuran3 == 3) {
+        this.insuran3Radio3.nativeElement.checked = true;
+        this.radioInsuran3Funct(this.radioInsuran3);
+      }
+    }
+
+    //Subscriber 1 Radio
+    if (this.radioSubscriber1 == 0) {
+      this.radioSubscriber1 = 1;
+    }
+    if (this.radioSubscriber1 == 1) {
+      this.subscri1Radio1.nativeElement.checked = true;
+      this.radioSubsc1Fuct(this.radioSubscriber1);
+    } else if (this.radioSubscriber1 == 2) {
+      this.subscri1Radio2.nativeElement.checked = true;
+      this.radioSubsc1Fuct(this.radioSubscriber1);
+    } else if (this.radioSubscriber1 == 3) {
+      this.subscri1Radio3.nativeElement.checked = true;
+      this.radioSubsc1Fuct(this.radioSubscriber1);
+    } else if (this.radioSubscriber1 == 4) {
+      this.subscri1Radio4.nativeElement.checked = true;
+    }
+
+    //Subscriber 2 Radio
+    if (this.radioSubscriber2 == 0) {
+      this.radioSubscriber2 = 1;
+    }
+    if (this.subscri2Radio1 != null) {
+      if (this.radioSubscriber2 == 1) {
+        this.subscri2Radio1.nativeElement.checked = true;
+        this.radioSubsc2Fuct(this.radioSubscriber2);
+      } else if (this.radioSubscriber2 == 2) {
+        this.subscri2Radio2.nativeElement.checked = true;
+        this.radioSubsc2Fuct(this.radioSubscriber2);
+      } else if (this.radioSubscriber2 == 3) {
+        this.subscri2Radio3.nativeElement.checked = true;
+        this.radioSubsc2Fuct(this.radioSubscriber2);
+      } else if (this.radioSubscriber2 == 4) {
+        this.subscri2Radio4.nativeElement.checked = true;
+        this.radioSubsc2Fuct(this.radioSubscriber2);
+      }
+    }
+
+    //Subscriber 3 Radio
+    if (this.radioSubscriber3 == 0) {
+      this.radioSubscriber3 = 1;
+    }
+    if (this.subscri3Radio1 != null) {
+      if (this.radioSubscriber3 == 1) {
+        this.subscri3Radio1.nativeElement.checked = true;
+        this.radioSubsc3Fuct(this.radioSubscriber3);
+      } else if (this.radioSubscriber3 == 2) {
+        this.subscri3Radio2.nativeElement.checked = true;
+        this.radioSubsc3Fuct(this.radioSubscriber3);
+      } else if (this.radioSubscriber3 == 3) {
+        this.subscri3Radio3.nativeElement.checked = true;
+        this.radioSubsc3Fuct(this.radioSubscriber3);
+      } else if (this.radioSubscriber3 == 4) {
+        this.subscri3Radio4.nativeElement.checked = true;
+        this.radioSubsc3Fuct(this.radioSubscriber3);
+      }
+    }
+  }
+
+  radiosInsurances() {
+    setTimeout(() => {
+      //Insurance 1 Radio
+      if (this.radioInsuran1 == 0) {
+        this.radioInsuran1 = 1;
+      }
+      if (this.insuran1Radio1 != null) {
+        if (this.radioInsuran1 == 1) {
+          this.insuran1Radio1.nativeElement.checked = true;
+          this.radioInsuran1Funct(this.radioInsuran1);
+        } else if (this.radioInsuran1 == 2) {
+          this.insuran1Radio2.nativeElement.checked = true;
+          this.radioInsuran1Funct(this.radioInsuran1);
+        } else if (this.radioInsuran1 == 3) {
+          this.insuran1Radio3.nativeElement.checked = true;
+          this.radioInsuran1Funct(this.radioInsuran1);
+        }
+      }
+
+      //Insurance 2 Radio
+      if (this.radioInsuran2 == 0) {
+        this.radioInsuran2 = 1;
+      }
+      if (this.insuran2Radio1 != null) {
+        if (this.radioInsuran2 == 1) {
+          this.insuran2Radio1.nativeElement.checked = true;
+          this.radioInsuran2Funct(this.radioInsuran2);
+        } else if (this.radioInsuran2 == 2) {
+          this.insuran2Radio2.nativeElement.checked = true;
+          this.radioInsuran2Funct(this.radioInsuran2);
+        } else if (this.radioInsuran2 == 3) {
+          this.insuran2Radio3.nativeElement.checked = true;
+          this.radioInsuran2Funct(this.radioInsuran2);
+        }
+      }
+
+      //Insurance 3 Radio
+      if (this.radioInsuran3 == 0) {
+        this.radioInsuran3 = 1;
+      }
+      if (this.insuran3Radio1 != null) {
+        if (this.radioInsuran3 == 1) {
+          this.insuran3Radio1.nativeElement.checked = true;
+          this.radioInsuran3Funct(this.radioInsuran3);
+        } else if (this.radioInsuran3 == 2) {
+          this.insuran3Radio2.nativeElement.checked = true;
+          this.radioInsuran3Funct(this.radioInsuran3);
+        } else if (this.radioInsuran3 == 3) {
+          this.insuran3Radio3.nativeElement.checked = true;
+          this.radioInsuran3Funct(this.radioInsuran3);
+        }
+      }
+
+      //Subscriber 1 Radio
+      if (this.radioSubscriber1 == 0) {
+        this.radioSubscriber1 = 1;
+      }
+      if (this.subscri1Radio1 != null) {
+        if (this.radioSubscriber1 == 1) {
+          this.subscri1Radio1.nativeElement.checked = true;
+          this.radioSubsc1Fuct(this.radioSubscriber1);
+        } else if (this.radioSubscriber1 == 2) {
+          this.subscri1Radio2.nativeElement.checked = true;
+          this.radioSubsc1Fuct(this.radioSubscriber1);
+        } else if (this.radioSubscriber1 == 3) {
+          this.subscri1Radio3.nativeElement.checked = true;
+          this.radioSubsc1Fuct(this.radioSubscriber1);
+        } else if (this.radioSubscriber1 == 4) {
+          this.subscri1Radio4.nativeElement.checked = true;
+        }
+      }
+
+      //Subscriber 2 Radio
+      if (this.radioSubscriber2 == 0) {
+        this.radioSubscriber2 = 1;
+      }
+      if (this.subscri2Radio1 != null) {
+        if (this.radioSubscriber2 == 1) {
+          this.subscri2Radio1.nativeElement.checked = true;
+          this.radioSubsc2Fuct(this.radioSubscriber2);
+        } else if (this.radioSubscriber2 == 2) {
+          this.subscri2Radio2.nativeElement.checked = true;
+          this.radioSubsc2Fuct(this.radioSubscriber2);
+        } else if (this.radioSubscriber2 == 3) {
+          this.subscri2Radio3.nativeElement.checked = true;
+          this.radioSubsc2Fuct(this.radioSubscriber2);
+        } else if (this.radioSubscriber2 == 4) {
+          this.subscri2Radio4.nativeElement.checked = true;
+          this.radioSubsc2Fuct(this.radioSubscriber2);
+        }
+      }
+
+      //Subscriber 3 Radio
+      if (this.radioSubscriber3 == 0) {
+        this.radioSubscriber3 = 1;
+      }
+      if (this.subscri3Radio1 != null) {
+        if (this.radioSubscriber3 == 1) {
+          this.subscri3Radio1.nativeElement.checked = true;
+          this.radioSubsc3Fuct(this.radioSubscriber3);
+        } else if (this.radioSubscriber3 == 2) {
+          this.subscri3Radio2.nativeElement.checked = true;
+          this.radioSubsc3Fuct(this.radioSubscriber3);
+        } else if (this.radioSubscriber3 == 3) {
+          this.subscri3Radio3.nativeElement.checked = true;
+          this.radioSubsc3Fuct(this.radioSubscriber3);
+        } else if (this.radioSubscriber3 == 4) {
+          this.subscri3Radio4.nativeElement.checked = true;
+          this.radioSubsc3Fuct(this.radioSubscriber3);
+        }
+      }
+    }, 20);
+  }
+
   async getCWPData() {
     this.lgList = await this.AddPatientService.getlgListCwpApi();
     this.dentists = await this.AddPatientService.getdentistsCwpApi();
     this.referrers = await this.AddPatientService.getreferrersCwpApi();
+    this.insurancesP1 = await this.AddPatientService.getinsurancesP1Cwp();
+    console.log("insuranceP111", this.insurancesP1);
+
     this.insurances1 = await this.AddPatientService.getinsurances1CwpApi();
     this.insurances2 = await this.AddPatientService.getinsurances2CwpApi();
     this.insurances3 = await this.AddPatientService.getinsurances3CwpApi();
@@ -135,10 +500,13 @@ export class AdditionalPatientFormComponent implements OnInit {
     // For Dentist
     for (let i = 0; i < this.dentists.length; i++) {
       if (this.dentists[i].selected) {
+
         this.additionalPatient.dentist.firstName = this.dentists[i].firstName;
         this.additionalPatient.dentist.lastName = this.dentists[i].lastName;
         this.additionalPatient.dentist.officeName = this.dentists[i].officeName;
         this.additionalPatient.dentist.officePhoneNumb = this.dentists[i].officePhoneNumb;
+        console.log("getDAtaaaaaaaa", this.additionalPatient.dentist);
+
       }
     }
     // For Referrer
@@ -174,22 +542,22 @@ export class AdditionalPatientFormComponent implements OnInit {
     // For Subscriber1
     for (let i = 0; i < this.subscribers1.length; i++) {
       if (this.subscribers1[i].selected) {
-        this.subscriber.firstName = this.subscribers1[i].firstName;
-        this.subscriber.lastName = this.subscribers1[i].lastName;
+        this.additionalPatient.insurances.insurance1.subscriber1.firstName = this.subscribers1[i].firstName;
+        this.additionalPatient.insurances.insurance1.subscriber1.lastName = this.subscribers1[i].lastName;
       }
     }
     // For Subscriber2
     for (let i = 0; i < this.subscribers2.length; i++) {
       if (this.subscribers2[i].selected) {
-        this.subscriber.firstName = this.subscribers2[i].firstName;
-        this.subscriber.lastName = this.subscribers2[i].lastName;
+        this.additionalPatient.insurances.insurance2.subscriber2.firstName = this.subscribers2[i].firstName;
+        this.additionalPatient.insurances.insurance2.subscriber2.lastName = this.subscribers2[i].lastName;
       }
     }
     // For Subscriber3
     for (let i = 0; i < this.subscribers3.length; i++) {
       if (this.subscribers3[i].selected) {
-        this.subscriber.firstName = this.subscribers3[i].firstName;
-        this.subscriber.lastName = this.subscribers3[i].lastName;
+        this.additionalPatient.insurances.insurance3.subscriber3.firstName = this.subscribers3[i].firstName;
+        this.additionalPatient.insurances.insurance3.subscriber3.lastName = this.subscribers3[i].lastName;
       }
     }
   }
@@ -216,6 +584,54 @@ export class AdditionalPatientFormComponent implements OnInit {
         this.router.navigate([this.coordWithProspRoutes[6].child[i].url]);
 
       }
+    }
+  }
+
+  setRadioStatus(amount: number, section: string) {
+    if (section == 'dentist') {
+      this.radioDentist = amount;
+      localStorage.setItem(`dentistPatie${this.patientPage}`, JSON.stringify(this.radioDentist));
+      this.radioDentFuct(amount);
+    } else if (section == 'referrer') {
+      this.radioReferrer = amount;
+      localStorage.setItem(`referrerPatie${this.patientPage}`, JSON.stringify(this.radioReferrer));
+      this.radioReferrFuct(amount);
+    } else if (section == 'insuYesNo') {
+      this.radioInsuYesNo = amount;
+      localStorage.setItem(`insuYesNoPatie${this.patientPage}`, JSON.stringify(this.radioInsuYesNo));
+      if (amount == 1) {
+        this.provideInsurance = true;
+      } else if (amount == 2) {
+        this.provideInsurance = false;
+      }
+    } else if (section == 'howManyInsu') {
+      this.radioHowManyIns = amount;
+      this.radiosInsurances();
+      localStorage.setItem(`howManyInsuPatie${this.patientPage}`, JSON.stringify(this.radioHowManyIns));
+    } else if (section == 'insuran1') {
+      this.radioInsuran1 = amount;
+      localStorage.setItem(`insuran1Patie${this.patientPage}`, JSON.stringify(this.radioInsuran1));
+      this.radioInsuran1Funct(amount);
+    } else if (section == 'insuran2') {
+      this.radioInsuran2 = amount;
+      localStorage.setItem(`insuran2Patie${this.patientPage}`, JSON.stringify(this.radioInsuran2));
+      this.radioInsuran2Funct(amount);
+    } else if (section == 'insuran3') {
+      this.radioInsuran3 = amount;
+      localStorage.setItem(`insuran3Patie${this.patientPage}`, JSON.stringify(this.radioInsuran3));
+      this.radioInsuran3Funct(amount);
+    } else if (section == 'subscri1') {
+      this.radioSubscriber1 = amount;
+      localStorage.setItem(`subscri1Patie${this.patientPage}`, JSON.stringify(this.radioSubscriber1));
+      this.radioSubsc1Fuct(amount);
+    } else if (section == 'subscri2') {
+      this.radioSubscriber2 = amount;
+      localStorage.setItem(`subscri2Patie${this.patientPage}`, JSON.stringify(this.radioSubscriber2));
+      this.radioSubsc2Fuct(amount);
+    } else if (section == 'subscri3') {
+      this.radioSubscriber3 = amount;
+      localStorage.setItem(`subscri3Patie${this.patientPage}`, JSON.stringify(this.radioSubscriber3));
+      this.radioSubsc3Fuct(amount);
     }
   }
 
@@ -359,16 +775,16 @@ export class AdditionalPatientFormComponent implements OnInit {
           this.subscribers1[i].selected = true;
         } else {
           this.subscribers1[i].selected = false;
-          this.subscriber.firstName = "";
-          this.subscriber.lastName = "";
+          this.additionalPatient.insurances.insurance1.subscriber1.firstName = "";
+          this.additionalPatient.insurances.insurance1.subscriber1.lastName = "";
         }
       }
     }
 
     for (let i = 0; i < this.subscribers1.length; i++) {
       if (this.subscribers1[i].selected) {
-        this.subscriber.firstName = this.subscribers1[i].firstName;
-        this.subscriber.lastName = this.subscribers1[i].lastName;
+        this.additionalPatient.insurances.insurance1.subscriber1.firstName = this.subscribers1[i].firstName;
+        this.additionalPatient.insurances.insurance1.subscriber1.lastName = this.subscribers1[i].lastName;
       }
     }
   }
@@ -381,16 +797,16 @@ export class AdditionalPatientFormComponent implements OnInit {
           this.subscribers2[i].selected = true;
         } else {
           this.subscribers2[i].selected = false;
-          this.subscriber.firstName = "";
-          this.subscriber.lastName = "";
+          this.additionalPatient.insurances.insurance2.subscriber2.firstName = "";
+          this.additionalPatient.insurances.insurance2.subscriber2.lastName = "";
         }
       }
     }
 
     for (let i = 0; i < this.subscribers2.length; i++) {
       if (this.subscribers2[i].selected) {
-        this.subscriber.firstName = this.subscribers2[i].firstName;
-        this.subscriber.lastName = this.subscribers2[i].lastName;
+        this.additionalPatient.insurances.insurance2.subscriber2.firstName = this.subscribers2[i].firstName;
+        this.additionalPatient.insurances.insurance2.subscriber2.lastName = this.subscribers2[i].lastName;
       }
     }
   }
@@ -403,16 +819,16 @@ export class AdditionalPatientFormComponent implements OnInit {
           this.subscribers3[i].selected = true;
         } else {
           this.subscribers3[i].selected = false;
-          this.subscriber.firstName = "";
-          this.subscriber.lastName = "";
+          this.additionalPatient.insurances.insurance3.subscriber3.firstName = "";
+          this.additionalPatient.insurances.insurance3.subscriber3.lastName = "";
         }
       }
     }
 
     for (let i = 0; i < this.subscribers3.length; i++) {
       if (this.subscribers3[i].selected) {
-        this.subscriber.firstName = this.subscribers3[i].firstName;
-        this.subscriber.lastName = this.subscribers3[i].lastName;
+        this.additionalPatient.insurances.insurance3.subscriber3.firstName = this.subscribers3[i].firstName;
+        this.additionalPatient.insurances.insurance3.subscriber3.lastName = this.subscribers3[i].lastName;
       }
     }
   }
@@ -513,8 +929,8 @@ export class AdditionalPatientFormComponent implements OnInit {
           this.subscribers1[i].activated = false;
           if (this.subscribers1[i].selected) {
             this.subscribers1[i].selected = false;
-            this.subscriber.firstName = "";
-            this.subscriber.lastName = "";
+            this.additionalPatient.insurances.insurance1.subscriber1.firstName = "";
+            this.additionalPatient.insurances.insurance1.subscriber1.lastName = "";
           }
         }
       }
@@ -530,8 +946,8 @@ export class AdditionalPatientFormComponent implements OnInit {
           this.subscribers2[i].activated = false;
           if (this.subscribers2[i].selected) {
             this.subscribers2[i].selected = false;
-            this.subscriber.firstName = "";
-            this.subscriber.lastName = "";
+            this.additionalPatient.insurances.insurance2.subscriber2.firstName = "";
+            this.additionalPatient.insurances.insurance2.subscriber2.lastName = "";
           }
         }
       }
@@ -547,16 +963,12 @@ export class AdditionalPatientFormComponent implements OnInit {
           this.subscribers3[i].activated = false;
           if (this.subscribers3[i].selected) {
             this.subscribers3[i].selected = false;
-            this.subscriber.firstName = "";
-            this.subscriber.lastName = "";
+            this.additionalPatient.insurances.insurance3.subscriber3.firstName = "";
+            this.additionalPatient.insurances.insurance3.subscriber3.lastName = "";
           }
         }
       }
     }
-  }
-
-  radioLGuargFunct(value: number) {
-    this.radioLGuard = value;
   }
 
   async radioDentFuct(value: number) {
@@ -565,7 +977,7 @@ export class AdditionalPatientFormComponent implements OnInit {
     this.additionalPatient.dentist.lastName = "";
     this.additionalPatient.dentist.officeName = "";
     this.additionalPatient.dentist.officePhoneNumb = "";
-    if (this.radioDentist == 1) {
+    if (value == 1) {
       for (let i = 0; i < this.dentists.length; i++) {
         if (this.dentists[i].selected) {
           this.additionalPatient.dentist.firstName = this.dentists[i].firstName;
@@ -574,15 +986,13 @@ export class AdditionalPatientFormComponent implements OnInit {
           this.additionalPatient.dentist.officePhoneNumb = this.dentists[i].officePhoneNumb;
         }
       }
-    } else if (this.radioDentist == 2) {
+    } else if (value == 2) {
       let dentistLocStora = await this.AddPatientService.getDentistCWP();
       this.additionalPatient.dentist.firstName = dentistLocStora.firstName;
       this.additionalPatient.dentist.lastName = dentistLocStora.lastName;
       this.additionalPatient.dentist.officeName = dentistLocStora.officeName;
       this.additionalPatient.dentist.officePhoneNumb = dentistLocStora.officePhoneNumb;
-
-
-    } else if (this.radioDentist == 3) {
+    } else if (value == 3) {
       //Push dentist to API
     }
   }
@@ -616,111 +1026,156 @@ export class AdditionalPatientFormComponent implements OnInit {
     }
   }
 
-  async radioInsuran1Fuct(value: number) {
+  async radioInsuran1Funct(value: number) {
     this.radioInsuran1 = value;
     this.additionalPatient.insurances.insurance1.insuranName = "";
     this.additionalPatient.insurances.insurance1.phoneNumb = "";
 
     if (this.radioInsuran1 == 1) {
-      for (let i = 0; i < this.dentists.length; i++) {
+      for (let i = 0; i < this.insurances1.length; i++) {
         if (this.insurances1[i].selected) {
           this.additionalPatient.insurances.insurance1.insuranName = this.insurances1[i].insuranName;
           this.additionalPatient.insurances.insurance1.phoneNumb = this.insurances1[i].phoneNumb;
         }
       }
     } else if (this.radioInsuran1 == 2) {
-
+      this.additionalPatient.insurances.insurance1.insuranName = this.insurancesP1.insurance1.insuranName;
+      this.additionalPatient.insurances.insurance1.phoneNumb = this.insurancesP1.insurance1.phoneNumb;
 
     } else if (this.radioInsuran1 == 3) {
       //Push dentist to API
     }
   }
 
-  async radioInsuran2Fuct(value: number) {
-    this.radioInsuran2 = value;
-    this.radioReferrer = value;
-    this.additionalPatient.referrer.firstName = "";
-    this.additionalPatient.referrer.lastName = "";
-    this.additionalPatient.referrer.companyName = "";
-    this.additionalPatient.referrer.phoneNumb = "";
+  async radioInsuran2Funct(value: number) {
+    console.log("radioInsuran2Funct callled");
 
-    if (this.radioReferrer == 1) {
-      for (let i = 0; i < this.dentists.length; i++) {
-        if (this.referrers[i].selected) {
-          this.additionalPatient.referrer.firstName = this.referrers[i].firstName;
-          this.additionalPatient.referrer.lastName = this.referrers[i].lastName;
-          this.additionalPatient.referrer.companyName = this.referrers[i].companyName;
-          this.additionalPatient.referrer.phoneNumb = this.referrers[i].phoneNumb;
+    this.radioInsuran2 = value;
+    this.additionalPatient.insurances.insurance2.insuranName = "";
+    this.additionalPatient.insurances.insurance2.phoneNumb = "";
+
+    if (this.radioInsuran2 == 1) {
+      for (let i = 0; i < this.insurances2.length; i++) {
+        if (this.insurances2[i].selected) {
+          this.additionalPatient.insurances.insurance2.insuranName = this.insurances2[i].insuranName;
+          this.additionalPatient.insurances.insurance2.phoneNumb = this.insurances2[i].phoneNumb;
         }
       }
-    } else if (this.radioReferrer == 2) {
-      let referrerLocStora = await this.AddPatientService.getReferrerCWP();
-      this.additionalPatient.referrer.firstName = referrerLocStora.firstName;
-      this.additionalPatient.referrer.lastName = referrerLocStora.lastName;
-      this.additionalPatient.referrer.companyName = referrerLocStora.companyName;
-      this.additionalPatient.referrer.phoneNumb = referrerLocStora.phoneNumb;
+    } else if (this.radioInsuran2 == 2) {
+      this.additionalPatient.insurances.insurance2.insuranName = this.insurancesP1.insurance2.insuranName;
+      this.additionalPatient.insurances.insurance2.phoneNumb = this.insurancesP1.insurance2.phoneNumb;
 
-
-    } else if (this.radioReferrer == 3) {
+    } else if (this.radioInsuran2 == 3) {
       //Push dentist to API
     }
   }
 
-  async radioInsuran3Fuct(value: number) {
+  async radioInsuran3Funct(value: number) {
     this.radioInsuran3 = value;
-    this.radioReferrer = value;
-    this.additionalPatient.referrer.firstName = "";
-    this.additionalPatient.referrer.lastName = "";
-    this.additionalPatient.referrer.companyName = "";
-    this.additionalPatient.referrer.phoneNumb = "";
+    this.additionalPatient.insurances.insurance3.insuranName = "";
+    this.additionalPatient.insurances.insurance3.phoneNumb = "";
 
-    if (this.radioReferrer == 1) {
-      for (let i = 0; i < this.dentists.length; i++) {
-        if (this.referrers[i].selected) {
-          this.additionalPatient.referrer.firstName = this.referrers[i].firstName;
-          this.additionalPatient.referrer.lastName = this.referrers[i].lastName;
-          this.additionalPatient.referrer.companyName = this.referrers[i].companyName;
-          this.additionalPatient.referrer.phoneNumb = this.referrers[i].phoneNumb;
+    if (this.radioInsuran3 == 1) {
+      for (let i = 0; i < this.insurances3.length; i++) {
+        if (this.insurances3[i].selected) {
+          this.additionalPatient.insurances.insurance3.insuranName = this.insurances3[i].insuranName;
+          this.additionalPatient.insurances.insurance3.phoneNumb = this.insurances3[i].phoneNumb;
         }
       }
-    } else if (this.radioReferrer == 2) {
-      let referrerLocStora = await this.AddPatientService.getReferrerCWP();
-      this.additionalPatient.referrer.firstName = referrerLocStora.firstName;
-      this.additionalPatient.referrer.lastName = referrerLocStora.lastName;
-      this.additionalPatient.referrer.companyName = referrerLocStora.companyName;
-      this.additionalPatient.referrer.phoneNumb = referrerLocStora.phoneNumb;
+    } else if (this.radioInsuran3 == 2) {
+      this.additionalPatient.insurances.insurance3.insuranName = this.insurancesP1.insurance3.insuranName;
+      this.additionalPatient.insurances.insurance3.phoneNumb = this.insurancesP1.insurance3.phoneNumb;
 
-
-    } else if (this.radioReferrer == 3) {
+    } else if (this.radioInsuran3 == 3) {
       //Push dentist to API
     }
   }
 
   async radioSubsc1Fuct(value: number) {
     this.radioSubscriber1 = value;
-    this.additionalPatient.insurances.insurance1.subscriber1.firstName=";"
-    this.additionalPatient.insurances.insurance1.subscriber1.lastName=";"
-
+    this.additionalPatient.insurances.insurance1.subscriber1.firstName = "";
+    this.additionalPatient.insurances.insurance1.subscriber1.lastName = "";
+    console.log("subscribers1", this.subscribers1);
+    
     if (this.radioSubscriber1 == 1) {
-      for (let i = 0; i < this.dentists.length; i++) {
-        if (this.insurances1[i].selected) {
-          this.additionalPatient.insurances.insurance1.subscriber1.firstName = this.insurances1[i].insuranName;
-          this.additionalPatient.insurances.insurance1.subscriber1.lastName = this.insurances1[i].phoneNumb;
+      for (let i = 0; i < this.subscribers1.length; i++) {
+        if (this.subscribers1[i].selected) {
+          this.additionalPatient.insurances.insurance1.subscriber1.firstName = this.subscribers1[i].firstName;
+          this.additionalPatient.insurances.insurance1.subscriber1.lastName = this.subscribers1[i].lastName;
         }
       }
     } else if (this.radioSubscriber1 == 2) {
-
+      let subsLocStora = await this.AddPatientService.getinsurancesP1Cwp();
+      this.additionalPatient.insurances.insurance1.subscriber1.firstName = subsLocStora.insurance1.subscriber1.firstName;
+      this.additionalPatient.insurances.insurance1.subscriber1.lastName = subsLocStora.insurance1.subscriber1.lastName;
 
     } else if (this.radioSubscriber1 == 3) {
+      let LGLocStora = await this.AddPatientService.getLegalGuardCWP(1);
+      this.additionalPatient.insurances.insurance1.subscriber1.firstName = LGLocStora.firstName;
+      this.additionalPatient.insurances.insurance1.subscriber1.lastName = LGLocStora.lastName;
+
+    } else if (this.radioSubscriber1 == 4) {
       //Push dentist to API
     }
+
+
   }
 
   async radioSubsc2Fuct(value: number) {
     this.radioSubscriber2 = value;
+    this.additionalPatient.insurances.insurance2.subscriber2.firstName = "";
+    this.additionalPatient.insurances.insurance2.subscriber2.lastName = "";
+
+    if (this.radioSubscriber2 == 1) {
+      for (let i = 0; i < this.subscribers2.length; i++) {
+        if (this.subscribers2[i].selected) {
+          this.additionalPatient.insurances.insurance2.subscriber2.firstName = this.subscribers2[i].firstName;
+          this.additionalPatient.insurances.insurance2.subscriber2.lastName = this.subscribers2[i].lastName;
+        }
+      }
+    } else if (this.radioSubscriber2 == 2) {
+      let subsLocStora = await this.AddPatientService.getinsurancesP1Cwp();
+      this.additionalPatient.insurances.insurance2.subscriber2.firstName = subsLocStora.insurance2.subscriber2.firstName;
+      this.additionalPatient.insurances.insurance2.subscriber2.lastName = subsLocStora.insurance2.subscriber2.lastName;
+
+    } else if (this.radioSubscriber2 == 3) {
+      let LGLocStora = await this.AddPatientService.getLegalGuardCWP(1);
+      this.additionalPatient.insurances.insurance2.subscriber2.firstName = LGLocStora.firstName;
+      this.additionalPatient.insurances.insurance2.subscriber2.lastName = LGLocStora.lastName;
+
+    } else if (this.radioSubscriber2 == 4) {
+      //Push dentist to API
+    }
+
+
   }
 
   async radioSubsc3Fuct(value: number) {
     this.radioSubscriber3 = value;
+    this.additionalPatient.insurances.insurance3.subscriber3.firstName = "";
+    this.additionalPatient.insurances.insurance3.subscriber3.lastName = "";
+
+    if (this.radioSubscriber3 == 1) {
+      for (let i = 0; i < this.subscribers3.length; i++) {
+        if (this.subscribers3[i].selected) {
+          this.additionalPatient.insurances.insurance3.subscriber3.firstName = this.subscribers3[i].firstName;
+          this.additionalPatient.insurances.insurance3.subscriber3.lastName = this.subscribers3[i].lastName;
+        }
+      }
+    } else if (this.radioSubscriber3 == 2) {
+      let subsLocStora = await this.AddPatientService.getinsurancesP1Cwp();
+      this.additionalPatient.insurances.insurance3.subscriber3.firstName = subsLocStora.insurance3.subscriber3.firstName;
+      this.additionalPatient.insurances.insurance3.subscriber3.lastName = subsLocStora.insurance3.subscriber3.lastName;
+
+    } else if (this.radioSubscriber3 == 3) {
+      let LGLocStora = await this.AddPatientService.getLegalGuardCWP(1);
+      this.additionalPatient.insurances.insurance3.subscriber3.firstName = LGLocStora.firstName;
+      this.additionalPatient.insurances.insurance3.subscriber3.lastName = LGLocStora.lastName;
+
+    } else if (this.radioSubscriber3 == 4) {
+      //Push dentist to API
+    }
+
+
   }
 }

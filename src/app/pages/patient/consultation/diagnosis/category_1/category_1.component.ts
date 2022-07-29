@@ -61,10 +61,12 @@ export class Category1Component implements OnInit {
   selectOption($event: any, Obj: any)
   {
     Obj.checked = $event.target.checked;
+    localStorage.setItem('selectObj', JSON.stringify(Obj));
     if($event.target.checked)
     {
       this.problemLst[3].child.push(Obj);
       this.problemListService.problemList = this.problemLst;
+      this.problemListService.toothChartList = Obj;
     }
     else
     {

@@ -15,6 +15,7 @@ import { Subscription } from 'rxjs';
 export class AddPracticeComponent implements OnInit, OnDestroy {
 	bgDropdownSubscription: Subscription;
 	selectedBusinessGroup: SelectedBusinessGroup | undefined;
+	bgId:any;
 	constructor(
 		private router: Router,
 		private bgDropdownService: BusinessGroupDropdownService,
@@ -25,6 +26,7 @@ export class AddPracticeComponent implements OnInit, OnDestroy {
 			.subscribe((bg) => {
 				if (bg) {
 					this.selectedBusinessGroup = bg;
+					this.getUserOrdID()
 				}
 			});
 	}
@@ -34,10 +36,13 @@ export class AddPracticeComponent implements OnInit, OnDestroy {
 		this.bgDropdownSubscription.unsubscribe();
 	}
 	create(data: any) {
+		if(!this.bgId){
+			this.bgId = this.selectedBusinessGroup?.bgId
+		}
 		if (this.selectedBusinessGroup) {
 			data['slug'] = '';
 			this.practiceLocation
-				.createPractice(this.selectedBusinessGroup.bgId, data)
+				.createPractice(this.bgId, data)
 				.subscribe({
 					next: (res) => {
 						this.router.navigate([
@@ -51,4 +56,12 @@ export class AddPracticeComponent implements OnInit, OnDestroy {
 	handleCancel() {
 		this.router.navigate(['/dashboard/settings/onboarding/practice']);
 	}
+	getUserOrdID(){
+		let bgOrdID:any = localStorage.getItem('selected_business_group');
+		if(bgOrdID == null){
+		  this.bgId = 'intelliveer';
+		}else{
+		  this.bgId = null;
+		}
+	  }
 }
