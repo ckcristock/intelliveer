@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
 	FormArray,
 	FormBuilder,
@@ -21,6 +21,9 @@ import { UserService } from '@services/user/user.service';
 	styleUrls: ['./user-policy.component.scss']
 })
 export class UserPolicyComponent implements OnInit {
+	@ViewChild('legelEntity') refLegelEntity :ElementRef | any;
+	@ViewChild('location') refLocation :ElementRef | any;
+	@ViewChild('practice') refPractice :ElementRef | any;
 	Form!: FormGroup;
 	roleModuleNestedForm!: FormGroup;
 	roleSectionNestedForm!: FormGroup;
@@ -29,8 +32,8 @@ export class UserPolicyComponent implements OnInit {
 	showAdvanceLE: boolean = true;
 	showAdvanceLOC: boolean = true;
 	showAdvancePC: boolean = true;
-    
-	permissionOBJ: any[] = []
+
+	permissionOBJ: any[] = [];
 	userCurrentRoleList: any[] = [];
 	userCurrentRoleListForForm: any[] = [];
 	businessGroupDropdownSupscription: any;
@@ -44,6 +47,7 @@ export class UserPolicyComponent implements OnInit {
 	selectedLocation: any;
 	selectedPractice: any;
 	saveDissable: boolean = true;
+	legelEntitySearchLst: any[] = [];
 
 	constructor(
 		private router: Router,
@@ -65,6 +69,7 @@ export class UserPolicyComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		console.log(this.refLegelEntity)
 		this.initForm(this.formData);
 	}
 
@@ -73,8 +78,8 @@ export class UserPolicyComponent implements OnInit {
 		this.Form = this.fb.group({
 			permissions: this.fb.array([])
 		});
-		this.Form.valueChanges.subscribe(values => {
-			this.saveDissable = false
+		this.Form.valueChanges.subscribe((values) => {
+			this.saveDissable = false;
 		});
 	}
 
@@ -219,33 +224,54 @@ export class UserPolicyComponent implements OnInit {
 		this.userCurrentRoleList = [];
 		this.userCurrentRoleListForForm = [];
 		let userId = localStorage.getItem('userId');
-		this.userService.getUserData(bgId, userId).forEach(
-			(userCurrentRole: any) => {
+		this.userService
+			.getUserData(bgId, userId)
+			.forEach((userCurrentRole: any) => {
 				if (userCurrentRole) {
-					userCurrentRole.roles.forEach((element:any,index:any) => {
-						console.log(element,bgId)
-						this.userService
-							.getUserRoleData(bgId, userCurrentRole.roles[index])
-							.subscribe({
-								next: (roledata: any) => {
-									let rolData:any = roledata
-									if(roledata){
-										this.userCurrentRoleList.push(rolData)
-									}
-									this.setPermissionForCancelANDNew(roledata);
-									if(userCurrentRole.roles.length-1 == index){
-										setTimeout(() => {
-											console.log(this.userCurrentRoleListForForm[0]?.permissions, 'permissions');
-										this.setUserPolicyData(this.userCurrentRoleListForForm[0]?.permissions)
-										}, 200);
-									}	
-								},
-								error: () => {}
-							});
-					})
+					userCurrentRole.roles.forEach(
+						(element: any, index: any) => {
+							console.log(element, bgId);
+							this.userService
+								.getUserRoleData(
+									bgId,
+									userCurrentRole.roles[index]
+								)
+								.subscribe({
+									next: (roledata: any) => {
+										let rolData: any = roledata;
+										if (roledata) {
+											this.userCurrentRoleList.push(
+												rolData
+											);
+										}
+										this.setPermissionForCancelANDNew(
+											roledata
+										);
+										if (
+											userCurrentRole.roles.length - 1 ==
+											index
+										) {
+											setTimeout(() => {
+												console.log(
+													this
+														.userCurrentRoleListForForm[0]
+														?.permissions,
+													'permissions'
+												);
+												this.setUserPolicyData(
+													this
+														.userCurrentRoleListForForm[0]
+														?.permissions
+												);
+											}, 200);
+										}
+									},
+									error: () => {}
+								});
+						}
+					);
 				}
-			}
-		);
+			});
 	}
 	setUserPolicyData(data: any) {
 		data.forEach((section: any) => {
@@ -277,28 +303,33 @@ export class UserPolicyComponent implements OnInit {
 					'Sorry....',
 					'You can not delete role'
 			  );
-			  this.moduleArray().clear();
-			  this.sectionsArray().clear();
-			  this.permissionArray().clear();
-			  this.userCurrentRoleListForForm = [];
-			  this.permissionOBJ = [];
-			  this.userCurrentRoleList.forEach((ele:any,ind:any)=>{
-                this.userService
-							.getUserRoleData(this.bgUserLogin, ele._id)
-							.subscribe({
-								next: (roledata: any) => {
-									this.setPermissionForCancelANDNew(roledata);
-									  if(this.userCurrentRoleList.length-1 == ind){
-										  setTimeout(() => {
-											  console.log(this.userCurrentRoleListForForm[0]?.permissions, 'permissions');
-										  this.setUserPolicyData(this.userCurrentRoleListForForm[0]?.permissions)
-										  }, 200);
-									  }
-								}
-							})
-			  })
-			  
-		
+		this.moduleArray().clear();
+		this.sectionsArray().clear();
+		this.permissionArray().clear();
+		this.userCurrentRoleListForForm = [];
+		this.permissionOBJ = [];
+		this.userCurrentRoleList.forEach((ele: any, ind: any) => {
+			this.userService
+				.getUserRoleData(this.bgUserLogin, ele._id)
+				.subscribe({
+					next: (roledata: any) => {
+						this.setPermissionForCancelANDNew(roledata);
+						if (this.userCurrentRoleList.length - 1 == ind) {
+							setTimeout(() => {
+								console.log(
+									this.userCurrentRoleListForForm[0]
+										?.permissions,
+									'permissions'
+								);
+								this.setUserPolicyData(
+									this.userCurrentRoleListForForm[0]
+										?.permissions
+								);
+							}, 200);
+						}
+					}
+				});
+		});
 	}
 
 	getRolesList(bgId: any) {
@@ -311,15 +342,17 @@ export class UserPolicyComponent implements OnInit {
 	}
 
 	selectRoleData($event: any) {
-		const findDuplicate = this.userCurrentRoleList.find((x: any) => x._id === $event._id);
-		(findDuplicate == undefined) ? this.userCurrentRoleList.push($event) : '';	
-		console.log(this.userCurrentRoleList);	
+		const findDuplicate = this.userCurrentRoleList.find(
+			(x: any) => x._id === $event._id
+		);
+		findDuplicate == undefined ? this.userCurrentRoleList.push($event) : '';
+		console.log(this.userCurrentRoleList);
 		this.moduleArray().clear();
 		this.sectionsArray().clear();
 		this.permissionArray().clear();
 		this.userCurrentRoleListForForm = [];
 		this.permissionOBJ = [];
-		this.addRolePermissions(this.userCurrentRoleList)
+		this.addRolePermissions(this.userCurrentRoleList);
 	}
 
 	getLegelEntityList(bgId: any) {
@@ -327,6 +360,7 @@ export class UserPolicyComponent implements OnInit {
 			(list: any) => {
 				console.log(list);
 				this.legelEntityList = list;
+				this.legelEntitySearchLst = this.legelEntityList;
 			},
 			(error) => {
 				console.log(error);
@@ -357,170 +391,180 @@ export class UserPolicyComponent implements OnInit {
 			}
 		);
 	}
-/** common function for add permission acording roles */
-addRolePermissions(data:any){	
-	data.forEach((element:any,index:any)=>{
-		if(this.permissionOBJ.length == 0){
-			this.userCurrentRoleListForForm.push(element);
-			element.permissions.forEach((eli:any)=>{
-				eli.sections.forEach((section:any)=>{
-					section.permissions.forEach((perm:any)=>{
-						this.permissionOBJ.push({
-							name: perm
-								.name,
-							enabled:
-								perm
-									.enabled,
-							locked: perm
-								.locked,
-							allowOverride:
-								perm
-									.allowOverride,
-							attrs: {}
-						})
-					})
-				})
-			})
-			}else{
-			element.permissions.forEach((eli:any,index:any)=>{
-					eli.sections.forEach((section:any,ind:any)=>{
-						section.permissions.forEach((perm:any,perIndex:any)=>{
-							const findDuplicate = this.permissionOBJ.find((x: any) => x.name === perm.name);
-							if(findDuplicate)
-							{
-								if(findDuplicate.enabled || perm.enabled)
-									{
-										this.userCurrentRoleListForForm[0].permissions[index].sections[ind].permissions[perIndex].enabled = true;
+	/** common function for add permission acording roles */
+	addRolePermissions(data: any) {
+		data.forEach((element: any, index: any) => {
+			if (this.permissionOBJ.length == 0) {
+				this.userCurrentRoleListForForm.push(element);
+				element.permissions.forEach((eli: any) => {
+					eli.sections.forEach((section: any) => {
+						section.permissions.forEach((perm: any) => {
+							this.permissionOBJ.push({
+								name: perm.name,
+								enabled: perm.enabled,
+								locked: perm.locked,
+								allowOverride: perm.allowOverride,
+								attrs: {}
+							});
+						});
+					});
+				});
+			} else {
+				element.permissions.forEach((eli: any, index: any) => {
+					eli.sections.forEach((section: any, ind: any) => {
+						section.permissions.forEach(
+							(perm: any, perIndex: any) => {
+								const findDuplicate = this.permissionOBJ.find(
+									(x: any) => x.name === perm.name
+								);
+								if (findDuplicate) {
+									if (findDuplicate.enabled || perm.enabled) {
+										this.userCurrentRoleListForForm[0].permissions[
+											index
+										].sections[ind].permissions[
+											perIndex
+										].enabled = true;
 									}
-									if(findDuplicate.locked || perm.locked)
-									{
-										this.userCurrentRoleListForForm[0].permissions[index].sections[ind].permissions[perIndex].locked = true;
+									if (findDuplicate.locked || perm.locked) {
+										this.userCurrentRoleListForForm[0].permissions[
+											index
+										].sections[ind].permissions[
+											perIndex
+										].locked = true;
 									}
-									if(findDuplicate.allowOverride || perm.allowOverride)
-									{
-										this.userCurrentRoleListForForm[0].permissions[index].sections[ind].permissions[perIndex].allowOverride = true;
+									if (
+										findDuplicate.allowOverride ||
+										perm.allowOverride
+									) {
+										this.userCurrentRoleListForForm[0].permissions[
+											index
+										].sections[ind].permissions[
+											perIndex
+										].allowOverride = true;
 									}
+								}
 							}
-						})
-					})
-				})
-			}	
-			if(data.length-1 == index){
-			setTimeout(() => {
-				console.log(this.userCurrentRoleListForForm[0]?.permissions, 'permissions');
-			this.setUserPolicyData(this.userCurrentRoleListForForm[0]?.permissions)
-			}, 200);
-		} 
-	})
-}
-setPermissionForCancelANDNew(roledata:any){
-	if(this.permissionOBJ.length == 0){
-		this.userCurrentRoleListForForm.push(roledata);
-		roledata.permissions.forEach((eli:any)=>{
-		  eli.sections.forEach((section:any)=>{
-			  section.permissions.forEach((perm:any)=>{
-				  this.permissionOBJ.push({
-					  name: perm
-						  .name,
-					  enabled:
-						  perm
-							  .enabled,
-					  locked: perm
-						  .locked,
-					  allowOverride:
-						  perm
-							  .allowOverride,
-					  attrs: {}
-				  })
-			  })
-		  })
-	  })
-	  }else{
-		  roledata.permissions.forEach((eli:any,index:any)=>{
-			  eli.sections.forEach((section:any,ind:any)=>{
-				  section.permissions.forEach((perm:any,perIndex:any)=>{
-					  const findDuplicate = this.permissionOBJ.find((x: any) => x.name === perm.name);
-					  if(findDuplicate)
-					  {
-						  if(findDuplicate.enabled || perm.enabled)
-							  {
-								  this.userCurrentRoleListForForm[0].permissions[index].sections[ind].permissions[perIndex].enabled = true;
-							  }
-							  if(findDuplicate.locked || perm.locked)
-							  {
-								  this.userCurrentRoleListForForm[0].permissions[index].sections[ind].permissions[perIndex].locked = true;
-							  }
-							  if(findDuplicate.allowOverride || perm.allowOverride)
-							  {
-								  this.userCurrentRoleListForForm[0].permissions[index].sections[ind].permissions[perIndex].allowOverride = true;
-							  }
-					  }else{
-						  this.permissionOBJ.push({
-							  name: perm
-								  .name,
-							  enabled:
-								  perm
-									  .enabled,
-							  locked: perm
-								  .locked,
-							  allowOverride:
-								  perm
-									  .allowOverride,
-							  attrs: {}
-						  })
-					  }
-				  })
-			  })
-		  })
-	  }
-}
+						);
+					});
+				});
+			}
+			if (data.length - 1 == index) {
+				setTimeout(() => {
+					console.log(
+						this.userCurrentRoleListForForm[0]?.permissions,
+						'permissions'
+					);
+					this.setUserPolicyData(
+						this.userCurrentRoleListForForm[0]?.permissions
+					);
+				}, 200);
+			}
+		});
+	}
+	setPermissionForCancelANDNew(roledata: any) {
+		if (this.permissionOBJ.length == 0) {
+			this.userCurrentRoleListForForm.push(roledata);
+			roledata.permissions.forEach((eli: any) => {
+				eli.sections.forEach((section: any) => {
+					section.permissions.forEach((perm: any) => {
+						this.permissionOBJ.push({
+							name: perm.name,
+							enabled: perm.enabled,
+							locked: perm.locked,
+							allowOverride: perm.allowOverride,
+							attrs: {}
+						});
+					});
+				});
+			});
+		} else {
+			roledata.permissions.forEach((eli: any, index: any) => {
+				eli.sections.forEach((section: any, ind: any) => {
+					section.permissions.forEach((perm: any, perIndex: any) => {
+						const findDuplicate = this.permissionOBJ.find(
+							(x: any) => x.name === perm.name
+						);
+						if (findDuplicate) {
+							if (findDuplicate.enabled || perm.enabled) {
+								this.userCurrentRoleListForForm[0].permissions[
+									index
+								].sections[ind].permissions[perIndex].enabled =
+									true;
+							}
+							if (findDuplicate.locked || perm.locked) {
+								this.userCurrentRoleListForForm[0].permissions[
+									index
+								].sections[ind].permissions[perIndex].locked =
+									true;
+							}
+							if (
+								findDuplicate.allowOverride ||
+								perm.allowOverride
+							) {
+								this.userCurrentRoleListForForm[0].permissions[
+									index
+								].sections[ind].permissions[
+									perIndex
+								].allowOverride = true;
+							}
+						} else {
+							this.permissionOBJ.push({
+								name: perm.name,
+								enabled: perm.enabled,
+								locked: perm.locked,
+								allowOverride: perm.allowOverride,
+								attrs: {}
+							});
+						}
+					});
+				});
+			});
+		}
+	}
 
-	selectLegelEntity(Obj: any)
-	{
+	selectLegelEntity(Obj: any) {
 		console.log(Obj);
 		this.selectedLegelEntity = Obj.name;
 		this.Form.value.permissions.map((module: any) => {
 			module.sections.map((section: any) => {
 				section.permissions.map((permission: any) => {
 					permission.attrs = {
-						"BR": {
-							"in": [this.selectedLegelEntity]
+						BR: {
+							in: [this.selectedLegelEntity]
 						}
-					}
+					};
 				});
 			});
 		});
 	}
 
-	selectLocation(Obj: any)
-	{
-		console.log(Obj)
+	selectLocation(Obj: any) {
+		console.log(Obj);
 		this.selectedLocation = Obj.name;
 		this.Form.value.permissions.map((module: any) => {
 			module.sections.map((section: any) => {
 				section.permissions.map((permission: any) => {
 					permission.attrs = {
-						"BR": {
-							"in": [this.selectedLocation]
+						BR: {
+							in: [this.selectedLocation]
 						}
-					}
+					};
 				});
 			});
 		});
 	}
 
-	selectPractice(Obj: any)
-	{
-		console.log(Obj)
+	selectPractice(Obj: any) {
+		console.log(Obj);
 		this.selectedPractice = Obj.name;
 		this.Form.value.permissions.map((module: any) => {
 			module.sections.map((section: any) => {
 				section.permissions.map((permission: any) => {
 					permission.attrs = {
-						"BR": {
-							"in": [this.selectedPractice]
+						BR: {
+							in: [this.selectedPractice]
 						}
-					}
+					};
 				});
 			});
 		});

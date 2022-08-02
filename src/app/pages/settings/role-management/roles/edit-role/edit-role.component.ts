@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '@services/alert/alert.service';
@@ -13,6 +13,9 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./edit-role.component.scss']
 })
 export class EditRoleComponent implements OnInit {
+  @ViewChild('legelEntity') refLegelEntity :ElementRef | any;
+	@ViewChild('location') refLocation :ElementRef | any;
+	@ViewChild('practice') refPractice :ElementRef | any;
 
   Form!: FormGroup;
   roleModuleNestedForm!: FormGroup;

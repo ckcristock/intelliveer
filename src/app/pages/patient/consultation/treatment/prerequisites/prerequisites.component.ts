@@ -78,6 +78,10 @@ export class PrerequisitesComponent implements OnInit {
     this.prerequisitesSearchLst = this.prerequisitesLst.filter((searchResultObj: any) => {
       return searchResultObj.name.toLowerCase().startsWith($event.target.value.toLowerCase());
     })
+    // if(this.prerequisitesSearchLst.length != 0 && this.searchWord.length == 3)
+    // {
+    //   this.searchWord = this.prerequisitesSearchLst[0].name
+    // }
   }
 
   cancelSelection(Obj: any, index: any)
