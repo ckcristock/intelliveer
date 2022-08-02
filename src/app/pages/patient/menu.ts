@@ -38,70 +38,80 @@ export const patientUserMenuItems = [
 
 export const patientUserHeaderIconMenuItems = [
 	{
-		title: '',
+		title: 'Family',
 		url: '/dashboard/patient/patient-user',
 		class:'',
 		icon: '/assets/icons/users.svg',
+		shortTitle: 'Family'
 	},
 	{
-		title: '',
+		title: 'Communications',
 		url: '/+',
 		class:'',
 		icon: '/assets/icons/chat.svg',
+		shortTitle: 'Comm.'
 	},
 	{
-		title: '',
+		title: 'Financials',
 		url: '/+',
 		class:'',
 		icon: '/assets/icons/paper.svg',
+		shortTitle: 'Ledger'
 	},
 	{
-		title: '',
+		title: 'Insurances',
 		url: '/dashboard/patient/insurance',
 		class:'',
 		icon: '/assets/icons/teeth.svg',
+		shortTitle: 'Ins.'
 	},
 	{
-		title: '',
+		title: 'Files',
 		url: '/+',
 		class:'',
 		icon: '/assets/icons/folder.svg',
+		shortTitle: 'Files'
 	},
 	{
-		title: '',
-		url: '/+',
-		class:'camera px-4',
+		title: 'Snapshot',
+		url: '/dashboard/patient/camera',
+		class:'camera px-5',
 		icon: '/assets/icons/camera.svg',
 	},
 	{
-		title: '',
+		title: 'Imaging',
 		url: '/+',
 		class:'',
 		icon: '/assets/icons/image.svg',
+		shortTitle: 'Images'
 	},
 	{
-		title: '',
+		title: 'Counsultations',
 		class:'',
 		url: '/dashboard/patient/consultation',
 		icon: '/assets/icons/user_chat.svg',
+		shortTitle: 'Consult'
 	},
 	{
-		title: '',
+		title: 'Treatment Plan',
 		url: '/+',
 		class:'',
 		icon: '/assets/icons/user_card.svg',
+		shortTitle: 'Tx Card'
 	},
 	{
-		title: '',
+		title: 'Treatment Card',
 		url: '/+',
 		class:'',
 		icon: '/assets/icons/calendar.svg',
+		shortTitle: 'Tooth Chart'
 	},
 	{
-		title: '',
+		title: 'Other',
 		url: '/+',
 		class:'',
 		icon: '/assets/icons/jar.svg',
+		shortTitle: 'Other'
 	},
 ]
 

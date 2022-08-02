@@ -9,7 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'personal-info',
+        redirectTo: 'assign-role',
         pathMatch: 'full',
       },
       {

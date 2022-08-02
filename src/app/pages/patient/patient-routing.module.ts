@@ -35,6 +35,14 @@ const routes: Routes = [
               (m) => m.ConsultationModule
             ),
       },
+      {
+        path: 'camera',
+        loadChildren: () =>
+          import(
+            '@pages/patient/camera/camera.module').then(
+              (m) => m.CameraModule
+            ),
+      },
     ],
   },
 ];

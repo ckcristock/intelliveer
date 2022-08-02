@@ -126,3 +126,30 @@ $search-input-width: 300px;
 		color: #fff;
 	}
 }
+
+.section {
+	background-color: transparent;
+	padding: 1rem;
+}
+
+.title {
+	width: 50%;
+	height: 2px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: black;
+}
+
+.pinOverlay {
+    position: absolute;
+    top: 0px;
+    left: 20px;
+    right: -1px;
+    bottom: 19px;
+	img {
+		width: 1.8rem;
+		height: 1.8rem;
+		border: none;
+	}
+}

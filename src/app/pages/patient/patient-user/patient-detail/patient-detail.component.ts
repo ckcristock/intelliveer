@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
+import { AuthService } from '@services/auth/auth.service';
+import { BusinessGroupDropdownService, SelectedBusinessGroup } from '@services/business-group-dropdown/business-group-dropdown.service';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
+import { UserService } from '@services/user/user.service';
 
 @Component({
   selector: 'app-patient-detail',
@@ -28,17 +31,36 @@ export class PatientDetailComponent implements OnInit {
 		{ title: 'Information', id: 'information' },
 		{ title: 'Preferences', id: 'preferences' },
 		{ title: 'Emergency Contact', id: 'emergencyContact' },
+    { title: 'Ownership', id: 'ownership' },
 		{ title: 'Notes', id: 'notes' },
 	];
+  userObj: any = {};
+  legelEntityList: any;
+  locationList: any;
+  practiceList: any;
+  businessGroupDropdownSupscription: any;
+  selectedBusinessGroup: SelectedBusinessGroup | undefined;
 
   constructor(
     private fb: FormBuilder,
     private addressFormService: AddressFormService,
+    private userService: UserService,
+    private businessGroupDropdownService: BusinessGroupDropdownService,
+    private authService: AuthService
   ) {
     this.idForm = this.fb.group({
       // name: '',
       info: this.fb.array([]),
     });
+    this.businessGroupDropdownSupscription =
+		this.businessGroupDropdownService
+			.businessGroup()
+			.subscribe((bg) => {
+				if (bg) {
+          this.selectedBusinessGroup = bg
+					this.getOrgBgId();
+				}
+			});
   }
 
   ngOnInit(): void {
@@ -70,6 +92,7 @@ export class PatientDetailComponent implements OnInit {
     ];
     this.addId();
     this.initForm(this.formData);
+    this.userObj = JSON.parse(localStorage.getItem('selectedPatient') || '');
   }
 
   initForm(data?: any) {
@@ -137,6 +160,63 @@ export class PatientDetailComponent implements OnInit {
 	}
   onSectionChange(sectionId: string) {
 		this.currentSelection = sectionId;
+	}
+
+  getOrgBgId(){
+		let bgOrdID:any = localStorage.getItem('selected_business_group');
+		console.log(bgOrdID)
+			let user = this.authService.getLoggedInUser();
+			if (user?.__ISSU__) {
+		  if(bgOrdID == 'intelliveer' || bgOrdID == null){
+			this.getLegelEntityList('intelliveer');
+			this.getLocationList('intelliveer');
+			this.getPracticeList('intelliveer');
+		  }else{
+			this.getLegelEntityList(this.selectedBusinessGroup?.bgId);
+			this.getLocationList(this.selectedBusinessGroup?.bgId);
+			this.getPracticeList(this.selectedBusinessGroup?.bgId);
+		  }
+		  }else{
+		  this.getLegelEntityList(this.selectedBusinessGroup?.bgId);
+		  this.getLocationList(this.selectedBusinessGroup?.bgId);
+		  this.getPracticeList(this.selectedBusinessGroup?.bgId);
+		}
+		}
+
+  getLegelEntityList(bgId: any) {
+		this.userService.getLegelEntityList(bgId).subscribe(
+			(list: any) => {
+				console.log(list);
+				this.legelEntityList = list;
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
+	}
+
+	getLocationList(bgId: any) {
+		this.userService.getLocationList(bgId).subscribe(
+			(list: any) => {
+				console.log(list);
+				this.locationList = list;
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
+	}
+
+	getPracticeList(bgId: any) {
+		this.userService.getPracticeList(bgId).subscribe(
+			(list: any) => {
+				console.log(list);
+				this.practiceList = list;
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
 	}
 
 

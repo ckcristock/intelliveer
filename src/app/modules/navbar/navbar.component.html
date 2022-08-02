@@ -9,7 +9,7 @@
 		<div class="search" #searchDivRef>
 			<div class="search-results" *ngIf="searchFocus">
 				<ul>
-					<li *ngFor="let result of searchResults">
+					<li *ngFor="let result of userSearchLst">
 						<button	class="d-flex justify-content-between" (click)="handleSearchResultsClick(result)">
 							<span> {{ result.user }} ({{ result.dob }}) </span>
 							<span *ngIf="!result.active" class="inactive">
@@ -37,16 +37,7 @@
 								class="btn btn-dark dropdown-toggle-split"
 								ngbDropdownToggle
 							>
-								<!-- <i class="bi bi-chevron-down"></i> -->
 							</button>
-							<!-- <div class="dropdown-menu" ngbDropdownMenu>
-								<button ngbDropdownItem (click)="openAddPatientDialog()">
-									Quick add Patient
-								</button>
-								<button ngbDropdownItem>
-									Coordinate with prospect
-								</button>
-							</div> -->
 						</div>
 					</div>
 					<div>
@@ -69,6 +60,8 @@
 					placeholder="Search"
 					aria-describedby="basic-addon1"
 					(focus)="searchFocus = true"
+					[(ngModel)]="searchWord"
+					(click)="fetchSearch($event)" (keyup)="fetchSearch($event)"
 				/>
 			</div>
 			<div ngbDropdown class="d-inline-block search-dropdown">
@@ -133,15 +126,54 @@
 				class="d-flex justify-content-center align-items-center gap-3"
 				*ngIf="selectedPatient"
 			>
-				<img src="assets/images/doctor2.jpg" alt="" />
+				<img src="{{ selectedPatient.profileUrl }}" alt="" />
 				<span
 					>{{ selectedPatient.user }} ({{ selectedPatient.id }})</span
 				>
 			</div>
-			<div class="d-flex justify-content-center align-items-center">
-				<img src="assets/images/doctor2.jpg" alt="" />
-				<img src="assets/images/doctor.jpg" alt="" />
-				<img src="assets/images/doctor2.jpg" alt="" />
+			<div class="d-flex justify-content-center align-items-center" *ngIf="selectUserLst?.length != 0">
+				<div *ngFor="let selectUser of selectUserLst | slice:1:4">
+					<div ngbDropdown class="d-inline-block drpdown">
+						<img src="{{ selectUser.profileUrl }}" alt="" ngbDropdownToggle (click)="showUserCard = true" />
+						<div class="pinOverlay" *ngIf="selectUser.isPin"> <img src="assets/icons/pin_fill.svg" alt="" width="10" height="10" /></div>
+						<div ngbDropdownMenu style="width: 28rem;" *ngIf="showUserCard">
+							<div class="container">
+								<div class="section">
+									<div class="row">
+										<div class="col-12" [align]="'end'">
+											<i class="bi bi-pin-angle" (click)="pinUser(selectUser)" *ngIf="!selectUser.isPin" style="font-size: large;"></i>
+											<i class="bi bi-pin-angle-fill" (click)="unPinUser(selectUser)" *ngIf="selectUser.isPin" style="font-size: large; color: #e5833e;"></i>
+										</div>
+										<div class="col-12" [align]="'center'">
+											<img src="{{ selectUser.profileUrl }}" alt="" style="width: 86px; height: 80px;" />
+											<p><b>{{ selectUser.user }}</b> ({{ selectUser.id }})</p>
+											<p> "{{ selectUser.user }}" (Pronunciation) <img src="assets/icons/speaker_circle.svg" alt="" /> </p>
+											<p>{{ selectUser.sex }}  | Preferred Pronoun</p>
+											<p>{{ selectUser.dob | date }}</p>
+											<p>(844) 569-8628</p>
+										</div>
+									</div>
+									<div class="row" (click)="selectUserMenuItem(selectUser)">
+										<div class="col" *ngFor="let item of menuItems">
+											<div [align]="'center'" class="gap-5 mb-3" style="background-color: white; border-radius: 5px;">
+												<img
+													src="{{item.icon}}"
+													alt=""
+													routerLinkActive="active"
+													[routerLink]="item.url"
+													*ngIf="item.shortTitle"
+												/>
+											</div>
+											<div [align]="'center'" class="gap-5 mb-3">
+												<span class="title" style="color: black;" *ngIf="item.shortTitle">{{ item.shortTitle }}</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
