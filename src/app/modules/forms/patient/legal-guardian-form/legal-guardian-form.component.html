@@ -1,15 +1,8 @@
 <div class="row formrow" *ngIf="Form">
-	<app-nav-bar-pills
-		[menuItems]="menuItems"
-		[activeClass]="currentSelection"
-		[cancelBtn]="true"
-		[saveBtn]="true"
-		[disableSaveBtn]="Form.invalid"
-		(onCancel)="cancel()"
-		(onSave)="save(Form.value)"
-	></app-nav-bar-pills>
+	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
+		[disableSaveBtn]="Form.invalid" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills>
 	<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
-		<div class="col-12"	id="main" scrollSpy	(sectionChange)="onSectionChange($event)">
+		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section" id="overview">
 				<div class="row formrow">
 					<div class="col-sm">
@@ -36,15 +29,16 @@
 					</div> -->
 				</div>
 			</div>
-			
+
 			<div class="section container" id="profile">
-		
+
 				<h6 class="heading">Profile</h6>
 				<div class="row formrow">
 					<div class="col-3">
 						<label class="label-input-gap">Relationship with Patient</label>
-						<select class="form-select" formControlName="relation">
-							<option>Select</option>
+						<select class="form-select">
+							<option [value]="relationship">
+								{{relationship}}</option>
 						</select>
 					</div>
 					<div class="col-3">
@@ -58,7 +52,7 @@
 						<input class="form-control value-must" type="text" placeholder="" name="firstName"
 							formControlName="firstName" />
 					</div>
-		
+
 					<div class="col-2">
 						<label class="label-input-gap">Middle Name</label>
 						<input class="form-control" type="text" placeholder="" name="name"
@@ -73,7 +67,8 @@
 				<div class="row formrow">
 					<div class="col-3">
 						<label class="label-input-gap">Date of Birth</label>
-						<input class="form-control" type="date" placeholder="" name="DOB" formControlName="DOB" />
+						<input class="form-control red-bottom-line" type="date" placeholder="" name="DOB"
+							formControlName="DOB" />
 					</div>
 					<div class="col-3">
 						<label class="label-input-gap">Gender</label>
@@ -103,36 +98,37 @@
 						</select>
 					</div>
 				</div>
-		
+
 			</div>
-		
+
 			<div class="section" id="address">
 				<h6 class="heading">Address</h6>
 				<app-address-form [parentGroup]="Form" [formGroupName]="'address'"></app-address-form>
 			</div>
-		
+
 			<div class="section" id="contact">
 				<h6 class="heading">Contact</h6>
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Email</label>
-						<input class="form-control" type="text" placeholder="" name="id" formControlName="emailId" />
+						<input class="form-control red-bottom-line" type="text" placeholder="" name="id"
+							formControlName="emailId" />
 					</div>
-		
+
 					<div class="col">
 						<label class="label-input-gap">Primary Phone Type</label>
-						<select class="form-select value-must" formControlName="pPhoneType">
-							<option>Select</option>
-						</select>
+						<ng-select class="value-must" placeholder="Select" formControlName="gender">
+							<ng-option>Select</ng-option>
+						</ng-select>
 					</div>
-		
+
 					<div class="col">
 						<label class="label-input-gap">Primary Phone Number</label>
 						<input class="form-control value-must" type="text" placeholder="" name="name"
 							formControlName="pPhoneNumber" />
 					</div>
 				</div>
-		
+
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Secondary Phone Type</label>
@@ -140,16 +136,16 @@
 							<option>Select</option>
 						</select>
 					</div>
-		
+
 					<div class="col">
 						<label class="label-input-gap">Secondary Phone Number</label>
 						<input class="form-control" type="text" placeholder="" name="name"
 							formControlName="sPhoneNumber" />
 					</div>
-		
+
 					<div class="col">
 						<label class="label-input-gap">Preferred Communication Method - Primary</label>
-						<select class="form-select" formControlName="CommPrimary">
+						<select class="form-select red-bottom-line" formControlName="CommPrimary">
 							<option>Select</option>
 						</select>
 					</div>
@@ -167,9 +163,9 @@
 					</div>
 					<div class="col"></div>
 				</div>
-		
+
 			</div>
-		
+
 			<!-- <div class="section" #financials>
 				<h6 class="heading">Financials</h6>
 				<div class="row formrow">
@@ -200,7 +196,7 @@
 					</div>
 				</div>
 			</div> -->
-		
+
 			<div class="section" id="notes">
 				<h6 class="heading">Notes</h6>
 				<div class="row formrow">
@@ -213,11 +209,3 @@
 		</div>
 	</form>
 </div>
-
-
-
-
-
-
-
-

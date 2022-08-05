@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 
 @Component({
@@ -27,6 +28,8 @@ export class LegalGuardianFormComponent implements OnInit {
 		{ title: 'Notes', id: 'notes' },
 	];
 
+  relationship!: string;
+
   
   idForm: FormGroup;
   fileName: string = "";
@@ -34,7 +37,8 @@ export class LegalGuardianFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private addressFormService: AddressFormService
+    private addressFormService: AddressFormService,
+    private patientUserServ: PatientUserService,
   ) {
     this.idForm = this.fb.group({
       // name: '',
@@ -44,6 +48,9 @@ export class LegalGuardianFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm(this.formData);
+    this.relationship = this.patientUserServ.getLegalGuardToPati();
+    console.log("relationship", this.relationship);
+    
   }
 
   initForm(data?: any) {

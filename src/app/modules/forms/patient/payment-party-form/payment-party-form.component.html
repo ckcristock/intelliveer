@@ -42,8 +42,9 @@
 				<div class="row formrow">
 					<div class="col-3">
 						<label class="label-input-gap">Relationship with Patient</label>
-						<select class="form-select" formControlName="relation">
-							<option>Select</option>
+						<select class="form-select">
+							<option [value]="relationship">
+								{{relationship}}</option>
 						</select>
 					</div>
 					<div class="col-3">
@@ -72,7 +73,7 @@
 				<div class="row formrow">
 					<div class="col-3">
 						<label class="label-input-gap">Date of Birth</label>
-						<input class="form-control" type="date" placeholder="" name="DOB" formControlName="DOB" />
+						<input class="form-control red-bottom-line" type="date" placeholder="" name="DOB" formControlName="DOB" />
 					</div>
 					<div class="col-3">
 						<label class="label-input-gap">Gender</label>
@@ -104,8 +105,8 @@
 				</div>
 				<div class="row formrow">
 					<div class="col-3">
-						<label class="heading" for="inputGroupFile01"><i class="bi bi-cloud-arrow-up"
-								style="font-size: 15px;"></i>&nbsp; Upload ID</label>
+						<label class="heading" for="inputGroupFile01" style="cursor: pointer;"><i class="bi bi-cloud-arrow-up"
+								style="font-size: 15px; cursor: pointer;"></i>&nbsp; Upload ID</label>
 						<input class="form-control" type="file" placeholder="" id="inputGroupFile01" [hidden]="true"
 							(change)="onFileSelected($event)" />
 						<p *ngIf="fileName">
@@ -126,14 +127,14 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Email</label>
-						<input class="form-control" type="text" placeholder="" name="id" formControlName="emailId" />
+						<input class="form-control red-bottom-line" type="text" placeholder="" name="id" formControlName="emailId" />
 					</div>
 		
 					<div class="col">
 						<label class="label-input-gap">Primary Phone Type</label>
-						<select class="form-select value-must" formControlName="pPhoneType">
-							<option>Select</option>
-						</select>
+						<ng-select class="value-must" placeholder="Select" formControlName="gender">
+                            <ng-option>Select</ng-option>
+                        </ng-select>
 					</div>
 		
 					<div class="col">
@@ -159,7 +160,7 @@
 		
 					<div class="col">
 						<label class="label-input-gap">Preferred Communication Method - Primary</label>
-						<select class="form-select" formControlName="CommPrimary">
+						<select class="form-select red-bottom-line" formControlName="CommPrimary">
 							<option>Select</option>
 						</select>
 					</div>

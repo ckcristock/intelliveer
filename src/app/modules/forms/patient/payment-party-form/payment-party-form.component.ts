@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 
 @Component({
@@ -33,10 +34,12 @@ export class PaymentPartyFormComponent implements OnInit {
   selectTab: string = "overview";
   fileName: string = "";
   filePath: any;
+  relationship!: string;
 
   constructor(
     private fb: FormBuilder,
-    private addressFormService: AddressFormService
+    private addressFormService: AddressFormService,
+    private patientUserServ: PatientUserService,
   ) {
     this.idForm = this.fb.group({
       // name: '',
@@ -46,6 +49,7 @@ export class PaymentPartyFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm(this.formData);
+    this.relationship = this.patientUserServ.getPaymPartyToPati();
   }
 
   initForm(data?: any) {

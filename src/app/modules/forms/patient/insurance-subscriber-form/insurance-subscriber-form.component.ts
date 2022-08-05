@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 
 @Component({
@@ -29,6 +30,8 @@ export class InsuranceSubscriberFormComponent implements OnInit {
     { title: 'Notes', id: 'notes' },
 	];
   
+  relationship!: string;
+
   idForm: FormGroup;
   selectTab: string = "overview";
   fileName: string = "";
@@ -36,7 +39,8 @@ export class InsuranceSubscriberFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private addressFormService: AddressFormService
+    private addressFormService: AddressFormService,
+    private patientUserServ: PatientUserService,
   ) {
     this.idForm = this.fb.group({
       // name: '',
@@ -46,6 +50,7 @@ export class InsuranceSubscriberFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm(this.formData);
+    this.relationship = this.patientUserServ.getInsuSubscToPati();
   }
 
   initForm(data?: any) {
