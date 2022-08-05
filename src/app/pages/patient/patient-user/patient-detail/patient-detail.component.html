@@ -1,359 +1,314 @@
 <div class="row formrow" *ngIf="Form">
-	<app-nav-bar-pills
-		[menuItems]="menuItems"
-		[activeClass]="currentSelection"
-		[cancelBtn]="true"
-		[saveBtn]="false"
-		[disableSaveBtn]="Form.invalid"
-		(onCancel)="cancel()"
-		(onSave)="save(Form.value)"
-	></app-nav-bar-pills>
+	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="false"
+		[disableSaveBtn]="Form.invalid" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills>
 	<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
 
-		<div
-			class="col-12"
-			id="main"
-			scrollSpy
-			(sectionChange)="onSectionChange($event)"
-		>
-		<div class="section" id="overview">
-			<div class="row formrow">
-				<div class="col-2">
-					
-				</div>
-				<div class="principal">
-					<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
-					</app-image-uploader>
-					<div class="colm" style="margin-left: 10px;">
-						<div class="letterandtext">
-							<div class="columsp">
-								<span class="special">{{userObj.user}} <span style="color: black; font-weight:normal">({{userObj.id}})</span></span>
-								<div class="horizont">
-									<div class="colums">
-										<span>{{userObj.sex}}</span>
-										<span>{{userObj.dob | date}}</span>
-										<span>29y, 10m</span>
+		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
+			<div class="section" id="overview">
+				<div class="row formrow">
+					<div class="col-2">
+
+					</div>
+					<div class="principal">
+						<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
+						</app-image-uploader>
+						<div class="colm" style="margin-left: 10px;">
+							<div class="letterandtext">
+								<div class="columsp">
+									<span class="special">Olivia Doe <span
+											style="color: black; font-weight:normal">(P1001)</span></span>
+									<div class="horizont">
+										<div class="colums">
+											<span>Female</span>
+											<span>May 10,1992</span>
+											<span>29y, 10m</span>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="colm" style="margin-left: -35px;">
-						<div
-							class="horizont"
-							style="width: 103px; justify-content: space-between"
-						>
-							<div class="colums">
-								<span>Phase:</span>
-								<span>Status:</span>
-								<span>Dentist:</span>
-								<span>Referrer:</span>
-							</div>
-							<div class="colums">
-								<span>2</span>
-								<span>{{userObj.active}}</span>
-								<span>Kim Doe</span>
-								<span>John Doe</span>
+						<div class="colm" style="margin-left: -35px;">
+							<div class="horizont" style="width: 103px; justify-content: space-between">
+								<div class="colums">
+									<span>Phase:</span>
+									<span>Status:</span>
+									<span>Dentist:</span>
+									<span>Referrer:</span>
+								</div>
+								<div class="colums">
+									<span>2</span>
+									<span>Active</span>
+									<span>Kim Doe</span>
+									<span>John Doe</span>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="colm" style="margin-left: -45px;">
-						<div
-							class="horizont"
-							style="width: 293px; justify-content: space-between"
-						>
-							<div class="colums">
-								<span>Language:</span>
-								<span>Provider:</span>
-								<span>Practice:</span>
-								<span>Location:</span>
-							</div>
-							<div class="colums">
-								<span>English</span>
-								<span>Provider Name</span>
-								<span>Practice Name</span>
-								<span>330
-									2nd Street Huntington Beach, CA 92646</span>
+						<div class="colm" style="margin-left: -45px;">
+							<div class="horizont" style="width: 293px; justify-content: space-between">
+								<div class="colums">
+									<span>Language:</span>
+									<span>Provider:</span>
+									<span>Practice:</span>
+									<span>Location:</span>
+								</div>
+								<div class="colums">
+									<span>English</span>
+									<span>Provider Name</span>
+									<span>Practice Name</span>
+									<span>330
+										2nd Street Huntington Beach, CA 92646</span>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="colm" style="margin-left: 125px;">
-						<div
-							class="horizont"
-							style="width: 206px; justify-content: space-between"
-						>
-							<div class="colums">
-								<span>Chart Number:</span>
-								<span>Creation Date:</span>
-								<span>Treatement Start Date:</span>
-								<span>Treatement End Date: </span>
-							</div>
-							<div class="colums">
-								<span>US-10001</span>
-								<span>Feb 15, 2022</span>
-								<span>Feb 20, 2022</span>
-								<span>March 20, 2022</span>
+						<div class="colm" style="margin-left: 125px;">
+							<div class="horizont" style="width: 206px; justify-content: space-between">
+								<div class="colums">
+									<span>Chart Number:</span>
+									<span>Creation Date:</span>
+									<span>Treatement Start Date:</span>
+									<span>Treatement End Date: </span>
+								</div>
+								<div class="colums">
+									<span>US-10001</span>
+									<span>Feb 15, 2022</span>
+									<span>Feb 20, 2022</span>
+									<span>March 20, 2022</span>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="section" id="profile">
-	
-			<h6 class="heading">Profile</h6>
-			<div class="row formrow">
-				<div class="col">
-					<label class="label-input-gap">Title</label>
-					<select class="form-select" formControlName="title">
-						<option>Select</option>
-					</select>
+			<div class="section" id="profile">
+
+				<h6 class="heading">Profile</h6>
+				<div class="row formrow">
+					<div class="col">
+						<label class="label-input-gap">Title</label>
+						<select class="form-select" formControlName="title">
+							<option [value]="title.value" *ngFor="let title of globalData.title">
+								{{ title.label }}
+							</option>
+						</select>
+					</div>
+					<div class="col">
+						<label class="label-input-gap">First Name</label>
+						<input class="form-control value-must" type="text" placeholder="" name="firstName"
+							formControlName="firstName" />
+					</div>
+
+					<div class="col">
+						<label class="label-input-gap">Middle Name</label>
+						<input class="form-control" type="text" placeholder="" name="name"
+							formControlName="middleName" />
+					</div>
+					<div class="col">
+						<label class="label-input-gap">Last Name</label>
+						<input class="form-control value-must" type="text" placeholder="" name="lastName"
+							formControlName="lastName" />
+					</div>
+					<div class="col">
+						<label class="label-input-gap">Date of Birth</label>
+						<input class="form-control value-must" type="date" placeholder="" name="DOB"
+							formControlName="DOB" />
+					</div>
 				</div>
-				<div class="col">
-					<label class="label-input-gap">First Name</label>
-					<input class="form-control value-must" type="text" placeholder="" name="firstName"
-						formControlName="firstName" />
+				<div class="row formrow">
+					<div class="col">
+						<label class="label-input-gap">Gender</label>
+						<ng-select class="red-bottom-line" placeholder="Select" formControlName="gender">
+                            <ng-option>Male</ng-option>
+                            <ng-option>Female</ng-option>
+                        </ng-select>
+					</div>
+					<div class="col">
+						<label class="label-input-gap">Preferred Pronoun</label>
+						<select class="form-select" formControlName="pronoun">
+							<option>Select</option>
+						</select>
+					</div>
+					<div class="col">
+						<label class="label-input-gap">Language</label>
+						<select class="form-select" formControlName="language">
+							<option value="english">English</option>
+							<option value="hindi">Hindi</option>
+						</select>
+					</div>
+					<div class="col">
+						<label class="label-input-gap">Marital Status</label>
+						<select class="form-select" formControlName="maried">
+							<option value="maried">Maried</option>
+							<option value="single">Single</option>
+						</select>
+					</div>
 				</div>
-	
-				<div class="col">
-					<label class="label-input-gap">Middle Name</label>
-					<input class="form-control" type="text" placeholder="" name="name"
-						formControlName="middleName" />
-				</div>
-				<div class="col">
-					<label class="label-input-gap">Last Name</label>
-					<input class="form-control value-must" type="text" placeholder="" name="lastName"
-						formControlName="lastName" />
-				</div>
-				<div class="col">
-					<label class="label-input-gap">Date of Birth</label>
-					<input class="form-control value-must" type="date" placeholder="" name="DOB"
-						formControlName="DOB" />
-				</div>
+
 			</div>
-			<div class="row formrow">
-				<div class="col">
-					<label class="label-input-gap">Gender</label>
-					<select class="form-select" formControlName="gender">
-						<option value="M">Male</option>
-						<option value="F">Female</option>
-					</select>
-				</div>
-				<div class="col">
-					<label class="label-input-gap">Preferred Pronoun</label>
-					<select class="form-select" formControlName="pronoun">
-						<option>Select</option>
-					</select>
-				</div>
-				<div class="col">
-					<label class="label-input-gap">Language</label>
-					<select class="form-select" formControlName="language">
-						<option value="english">English</option>
-						<option value="hindi">Hindi</option>
-					</select>
-				</div>
-				<div class="col">
-					<label class="label-input-gap">Marital Status</label>
-					<select class="form-select" formControlName="maried">
-						<option value="maried">Maried</option>
-						<option value="single">Single</option>
-					</select>
-				</div>
-			</div>
-	
-		</div>
-	
-		<div class="section" id="information">
-	
-			<h6 class="heading">Information</h6>
-			<div class="row formrow">
-				<div class="col">
-					<label class="label-input-gap">Preferred Name</label>
-					<input class="form-control" type="text" placeholder="" name="id"
-						formControlName="preferredName" />
-				</div>
-				<div class="col">
-					<label class="label-input-gap">Pronounciation</label>
-					<input class="form-control" type="text" placeholder="" name="name"
-						formControlName="pronounciation" />
-				</div>
-	
-				<div class="col">
-					<label class="label-input-gap">School</label>
-					<input class="form-control" type="text" placeholder="" name="name" formControlName="school" />
-				</div>
-				<div class="col">
-					<label class="label-input-gap">Interests</label>
+
+			<div class="section" id="information">
+
+				<h6 class="heading">Information</h6>
+				<div class="row formrow">
+					<div class="col">
+						<label class="label-input-gap">Preferred Name</label>
+						<input class="form-control" type="text" placeholder="" name="id"
+							formControlName="preferredName" />
+					</div>
+					<div class="col">
+						<label class="label-input-gap">Pronounciation</label>
+						<input class="form-control" type="text" placeholder="" name="name"
+							formControlName="pronounciation" />
+					</div>
+
+					<div class="col">
+						<label class="label-input-gap">School</label>
+						<input class="form-control" type="text" placeholder="" name="name" formControlName="school" />
+					</div>
+					<div class="col">
+						<label class="label-input-gap">Interests</label>
 						<ng-select class="" [multiple]="true" formControlName="interest">
 							<ng-option *ngFor="let interest of interestsLst" [value]="interest">{{ interest }}
 							</ng-option>
 						</ng-select>
+					</div>
+					<div class="col">
+						<label class="label-input-gap">Tags</label>
+						<ng-select class="" [multiple]="true" formControlName="tags">
+							<ng-option *ngFor="let tags of tagsLst" [value]="tags">{{ tags }}
+							</ng-option>
+						</ng-select>
+					</div>
 				</div>
-				<div class="col">
-					<label class="label-input-gap">Tags</label>
-					<ng-select class="" [multiple]="true" formControlName="tags">
-						<ng-option *ngFor="let tags of tagsLst" [value]="tags">{{ tags }}
-						</ng-option>
-					</ng-select>
-				</div>
-			</div>
-			<div class="row formrow">
-				<div class="col">
-					<label class="label-input-gap">ID Type</label>
-					<input class="form-control" formControlName="idType" type="text" placeholder="" name="name" />
-				</div>
-	
-				<div class="col">
-					<label class="label-input-gap">ID Number</label>
-					<input class="form-control" formControlName="idNumber" type="text" placeholder="" name="name" />
-				</div>
-	
-				<div class="col"></div>
-				<div class="col"></div>
-				<div class="col"></div>
-			</div>
-			<div class="row formrow">
-				<div class="col">
-					<label class="label-input-gap">ID Type</label>
-					<input class="form-control" formControlName="idType" type="text" placeholder="" name="name" />
-				</div>
-	
-				<div class="col">
-					<label class="label-input-gap">ID Number</label>
-					<input class="form-control" formControlName="idNumber" type="text" placeholder="" name="name" />
-				</div>
-	
-				<div class="col"></div>
-				<div class="col"></div>
-				<div class="col"></div>
-			</div>
-	
-		</div>
-	
-		<div class="section" id="preferences">
-	
-			<h6 class="heading">Preferences</h6>
-			<div class="row formrow">
-				<div class="col">
-					<label class="label-input-gap">Location</label>
-					<select class="form-select" formControlName="location">
-						<option>Select</option>
-					</select>
-				</div>
-				<div class="col">
-					<label class="label-input-gap">Billing Provider</label>
-					<select class="form-select" formControlName="practice">
-						<option>Select</option>
-					</select>
-				</div>
-	
-				<div class="col">
-					<label class="label-input-gap">Treating Provider</label>
-					<select class="form-select" formControlName="provider">
-						<option>Select</option>
-					</select>
-				</div>
-			</div>
-			<div class="row formrow">
-				<div class="col">
-					<label class="label-input-gap">New Patient Coordinator</label>
-					<select class="form-select" formControlName="patientCoordinator">
-						<option>Select</option>
-					</select>
-				</div>
-				<div class="col">
-					<label class="label-input-gap">Treatment Coordinator</label>
-					<select class="form-select" formControlName="treatmentCoordinator">
-						<option>Select</option>
-					</select>
-				</div>
-	
-				<div class="col">
-					<label class="label-input-gap">Chair Side Assistant</label>
-					<select class="form-select" formControlName="CSAssistant">
-						<option>Select</option>
-					</select>
-				</div>
-			</div>
-	
-		</div>
-	
-		<div class="section" id="emergencyContact">
-	
-			<h6 class="heading">Emergency Contact</h6>
-			<div class="row formrow">
-				<div class="col">
-					<label class="label-input-gap">Contact Person</label>
-					<select class="form-select" formControlName="cPerson">
-						<option>Select</option>
-					</select>
-				</div>
-				<div class="col"></div>
-				<div class="col"></div>
-				<div class="col"></div>
-				<div class="col"></div>
-			</div>
-			<div class="row formrow">
-				<div class="col">
-					<label class="label-input-gap">Name</label>
-					<input class="form-control" type="text" placeholder="" name="id" formControlName="name" />
-				</div>
-				<div class="col">
-					<label class="label-input-gap">Emergency Contact</label>
-					<input class="form-control" type="text" placeholder="" name="name" formControlName="eContact" />
-				</div>
-				<div class="col"></div>
-				<div class="col"></div>
-				<div class="col"></div>
-			</div>
-	
-		</div>
+				<div class="row formrow">
+					<div class="col">
+						<label class="label-input-gap">ID Type</label>
+						<input class="form-control" formControlName="idType" type="text" placeholder="" name="name" />
+					</div>
 
-		<div class="section" id="ownership">
-			<h6 class="heading">Ownership</h6>
-			<div class="row formrow">
-				<div class="col-3">
-					<label class="label-input-gap">Legal Entity</label>
-					<ng-select placeholder="Select">
-						<ng-option
-							*ngFor="let legelEntity of legelEntityList"
-							>{{ legelEntity.name }}</ng-option
-						>
-					</ng-select>
+					<div class="col">
+						<label class="label-input-gap">ID Number</label>
+						<input class="form-control" formControlName="idNumber" type="text" placeholder="" name="name" />
+					</div>
+
+					<div class="col"></div>
+					<div class="col"></div>
+					<div class="col"></div>
 				</div>
-				<div class="col-3">
-					<label class="label-input-gap">Location</label>
-					<ng-select placeholder="Select">
-						<ng-option
-							*ngFor="let location of locationList"
-							>{{ location.name }}</ng-option
-						>
-					</ng-select>
+				<div class="row formrow">
+					<div class="col">
+						<label class="label-input-gap">ID Type</label>
+						<input class="form-control" formControlName="idType" type="text" placeholder="" name="name" />
+					</div>
+
+					<div class="col">
+						<label class="label-input-gap">ID Number</label>
+						<input class="form-control" formControlName="idNumber" type="text" placeholder="" name="name" />
+					</div>
+
+					<div class="col"></div>
+					<div class="col"></div>
+					<div class="col"></div>
 				</div>
-				<div class="col-3">
-					<label class="label-input-gap">Practice</label>
-					<ng-select placeholder="Select">
-						<ng-option
-							*ngFor="let practice of practiceList"
-							>{{ practice.name }}</ng-option
-						>
-					</ng-select>
+
+			</div>
+
+			<div class="section" id="preferences">
+
+				<h6 class="heading">Preferences</h6>
+				<div class="row formrow">
+					<div class="col">
+						<label class="label-input-gap">Location</label>
+						<select class="form-select red-bottom-line" formControlName="location">
+							<option>Select</option>
+						</select>
+					</div>
+					<div class="col">
+						<label class="label-input-gap">Billing Provider</label>
+						<select class="form-select red-bottom-line" formControlName="practice">
+							<option>Select</option>
+						</select>
+					</div>
+
+					<div class="col">
+						<label class="label-input-gap">Treating Provider</label>
+						<select class="form-select red-bottom-line" formControlName="provider">
+							<option>Select</option>
+						</select>
+					</div>
+				</div>
+				<div class="row formrow">
+					<div class="col">
+						<label class="label-input-gap">New Patient Coordinator</label>
+						<select class="form-select" formControlName="patientCoordinator">
+							<option>Select</option>
+						</select>
+					</div>
+					<div class="col">
+						<label class="label-input-gap">Treatment Coordinator</label>
+						<select class="form-select" formControlName="treatmentCoordinator">
+							<option>Select</option>
+						</select>
+					</div>
+
+					<div class="col">
+						<label class="label-input-gap">Chair Side Assistant</label>
+						<select class="form-select" formControlName="CSAssistant">
+							<option>Select</option>
+						</select>
+					</div>
+				</div>
+				<div class="row formrow">
+					<div class="col-4">
+						<label class="label-input-gap">Practice</label>
+						<select class="form-select" formControlName="CSAssistant">
+							<option>Select</option>
+						</select>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="section" id="emergencyContact">
+
+				<h6 class="heading">Emergency Contact</h6>
+				<div class="row formrow">
+					<div class="col">
+						<label class="label-input-gap">Contact Person</label>
+						<select class="form-select red-bottom-line" formControlName="cPerson">
+							<option>Select</option>
+						</select>
+					</div>
+					<div class="col"></div>
+					<div class="col"></div>
+					<div class="col"></div>
+					<div class="col"></div>
+				</div>
+				<div class="row formrow">
+					<div class="col">
+						<label class="label-input-gap">Name</label>
+						<input class="form-control red-bottom-line" type="text" placeholder="" name="id" formControlName="name" />
+					</div>
+					<div class="col">
+						<label class="label-input-gap">Emergency Contact</label>
+						<input class="form-control red-bottom-line" type="text" placeholder="" name="name" formControlName="eContact" />
+					</div>
+					<div class="col"></div>
+					<div class="col"></div>
+					<div class="col"></div>
+				</div>
+
+			</div>
+
+			<div class="section" id="notes">
+				<h6 class="heading">Notes</h6>
+				<div class="row formrow">
+					<div class="col-6">
+						<textarea class="form-control" name="note" id="" cols="70" rows="5"
+							formControlName="note"></textarea>
+					</div>
 				</div>
 			</div>
 		</div>
-	
-		<div class="section" id="notes">
-			<h6 class="heading">Notes</h6>
-			<div class="row formrow">
-				<div class="col-6">
-					<textarea class="form-control" name="note" id="" cols="70" rows="5"
-						formControlName="note"></textarea>
-				</div>
-			</div>
-		</div>
-	</div>
 	</form>
 </div>
-
-

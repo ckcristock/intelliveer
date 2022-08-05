@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { PatientUserService } from "@services/dashboard/patient/patient-user/patient-user.service";
+import { GlobalRoutesService } from "@services/global-routes/global-routes.service";
+
 
 @Component({
   selector: 'app-legal-guardian',
@@ -8,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class LegalGuardianComponent implements OnInit {
 
+  form: FormGroup;
   searchFocus: boolean = false;
   showSelectedPatient: boolean = false;
 	selectedPatient: any;
@@ -22,8 +27,21 @@ export class LegalGuardianComponent implements OnInit {
   legalGuardianList: any[] = [];
   patientList: any[] = [];
   searchWord: string = "";
+  relationships: any [] = [
+    {id:0, value:"Father"},
+    {id:1, value:"Mother"},
+    {id:2, value:"Sister"},
+    {id:3, value:"Brother"},
+  ];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+    private patientUserServ: PatientUserService,
+    private globalRoutes: GlobalRoutesService,
+    private fb: FormBuilder) {
+    this.form =  this.fb.group({
+      relationship:[''],
+    });
+   }
 
   ngOnInit(): void {
   }
@@ -70,6 +88,10 @@ export class LegalGuardianComponent implements OnInit {
     this.router.navigate(['/dashboard/patient/patient-user/legal-guardian/add'])
   }
 
-
+  goToAddLegalGuard(){
+    console.log("Form", this.form);
+    this.patientUserServ.setLegalGuardToPati(this.form.value.relationship);
+    this.router.navigate([this.globalRoutes.getPatientUserRoutes()[1].child[0].url]);
+  }
 
 }
