@@ -214,6 +214,41 @@ export const patientConsultationMenuItems = [
 	}
 ]
 
+
+export const settingPatientConsultationMenuItems = [
+	{
+		title: 'Health History',
+		url: '/dashboard/settings/patient/consultation/health-history',
+		icon: 'bi bi-house-door',
+		child: []
+	},
+	{
+		title: 'Diagnosis',
+		url: '/dashboard/patient/consultation/diagnosis',
+		icon: 'bi bi-house-door',
+	},
+	{
+		title: 'Treatment Recommendation',
+		url: '/dashboard/patient/consultation/treatment',
+		icon: 'bi bi-house-door',
+	},
+	{
+		title: 'Treatment Options',
+		url: '/dashboard/patient/consultation/treatment',
+		icon: 'bi bi-house-door',
+	},
+	{
+		title: 'Fee Estimate',
+		url: '/+',
+		icon: 'bi bi-house-door',
+	},
+	{
+		title: 'Payment Options',
+		url: '/dashboard/patient/consultation/payment-options',
+		icon: 'bi bi-house-door',
+	}
+]
+
 export const patientDiagnosisMenuItems = [
 	{
 		title: 'Malocclusion',

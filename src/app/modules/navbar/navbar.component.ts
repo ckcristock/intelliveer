@@ -39,6 +39,7 @@ export class NavbarComponent implements OnInit {
 	allMenuItems: IMenuItem[] = patientUserHeaderIconMenuItems;
 	menuItems: any[] = [];
 	showUserCard: boolean = false;
+	showSelectedPatientUserCard: boolean = false;
 
 	constructor(
 		private authService: AuthService,
@@ -97,14 +98,18 @@ export class NavbarComponent implements OnInit {
 			this.searchWord = "";
 			this.searchFocus = false;
 			this.showSelectedPatient = true;
-			patient.isPin = false;
 			this.selectedPatient = patient;
 			const findDuplicate = this.selectUserLst.filter(item => item.id === patient.id);
 			if(findDuplicate.length == 0)
 			{
+				patient.isPin = false;
 				if(this.selectUserLst.length < 4)
 				{
 					this.selectUserLst[this.selectUserLst.length] = patient;
+					if(this.selectUserLst.length >= 1)
+					{
+						this.selectUserLst.reverse();
+					}
 				}
 				else
 				{
@@ -115,88 +120,72 @@ export class NavbarComponent implements OnInit {
 							indexArray.push(i);
 						}
 					}
-					if(indexArray.length == 0)
-					{
-						this.selectUserLst.splice(1,1);
-						this.selectUserLst.push(patient);
-					}
-					else if(indexArray.length == 1)
-					{
-						let index = indexArray[0];
-						if(index == this.selectUserLst.length - 1)
-						{
-							this.selectUserLst.splice(index - 1, 1);
-							this.selectUserLst.push(patient);
-						}
-						else
-						{
-							this.selectUserLst.splice(index + 1, 1);
-							this.selectUserLst.push(patient);
-						}
-					}
-					else if(indexArray.length == 2)
-					{
-						indexArray.forEach(index =>
-							{
-								if(index == 1)
+					let index: any;
+					switch (indexArray.length) {
+						case 1:
+							index = indexArray[0];
+							for (let i = this.selectUserLst.length - 1; i > 0; i--) {
+								if(index != i)
 								{
-									if(!this.selectUserLst[2].isPin)
+									if(this.selectUserLst[i - 1].isPin)
 									{
-										this.selectUserLst.splice(2, 1);
-										this.selectUserLst.push(patient);
+										this.selectUserLst[i] = this.selectUserLst[i - 2];
 									}
 									else
 									{
-										this.selectUserLst.splice(3, 1);
-										this.selectUserLst.push(patient);
+										this.selectUserLst[i] = this.selectUserLst[i - 1];
 									}
 								}
-								if(index == 2)
+								else
 								{
-									if(!this.selectUserLst[1].isPin)
-									{
-										this.selectUserLst.splice(1, 1);
-										this.selectUserLst.push(patient);
-									}
-									else
-									{
-										this.selectUserLst.splice(3, 1);
-										this.selectUserLst.push(patient);
-									}
-								}
-								if(index == 3)
-								{
-									if(!this.selectUserLst[2].isPin)
-									{
-										this.selectUserLst.splice(2, 1);
-										this.selectUserLst.push(patient);
-									}
-									else
-									{
-										this.selectUserLst.splice(1, 1);
-										this.selectUserLst.push(patient);
-									}
-								}
-							})
-					}
-					else
-					{
-						let index = this.selectUserLst.findIndex(obj => obj.isPin == false);
-						this.selectUserLst.splice(index, 1);
-						this.selectUserLst.push(patient);
-						this.selectedPatient = patient;
+									this.selectUserLst[i] = this.selectUserLst[i];
+								}									
+							}
+							this.selectUserLst[0] = patient;
+							break;						
+						case 2:
+							let a1 = [1, 2, 3];
+							let a2 = indexArray;
+							let missingIndexArray = a1.filter(item => a2.indexOf(item) < 0);
+							this.selectUserLst[missingIndexArray[0]] = this.selectUserLst[0];
+							this.selectUserLst[0] = patient;
+							break;
+						case 3:
+							this.selectedPatient = patient;
+							break;					
+						default:
+							let getLastIndex = this.selectUserLst.length - 1
+							this.selectUserLst.splice(getLastIndex, 1);
+							for (let i = this.selectUserLst.length; i > 0; i--) {
+								this.selectUserLst[i] = this.selectUserLst[i - 1];
+							}
+							this.selectUserLst[0] = patient;
+							break;
 					}
 				}
 			}
 			else
 			{
 				let index = this.selectUserLst.findIndex(obj => obj.id == findDuplicate[0].id);
-				this.selectUserLst.splice(index, 1);
-				this.selectUserLst.push(patient);
-				this.selectedPatient = patient;
+				if(findDuplicate[0].isPin)
+				{
+					this.selectUserLst[index] = this.selectUserLst[0];
+					patient.isPin = false;
+					this.selectUserLst[0] = patient;
+					this.selectedPatient = patient;
+				}
+				else
+				{
+					patient.isPin = false;
+					this.selectUserLst.splice(index, 1);
+					for (let i = this.selectUserLst.length; i > 0; i--) {
+						this.selectUserLst[i] = this.selectUserLst[i - 1];
+					}
+					this.selectUserLst[0] = patient;
+					this.selectedPatient = patient;
+				}
 			}
 			localStorage.setItem('selectedPatient', JSON.stringify(this.selectedPatient));
-			this.selectUserLst.reverse();
 			this.router.navigate([
 				'/dashboard/patient/camera'
 			]);
@@ -230,13 +219,35 @@ export class NavbarComponent implements OnInit {
 		);
 	}
 
-	selectUserMenuItem(selectUser: any)
+	selectUserMenuItem(selectUser: any, displayUI: string)
 	{
 		let index = this.selectUserLst.findIndex(obj => obj.id == selectUser.id);
-		this.selectUserLst.splice(index, 1);
-		this.selectedPatient = selectUser;
+		if(selectUser.isPin)
+		{
+			this.selectUserLst[index] = this.selectUserLst[0];
+			selectUser.isPin = false;
+			this.selectUserLst[0] = selectUser;
+			this.selectedPatient = selectUser;
+		}
+		else
+		{
+			selectUser.isPin = false;
+			this.selectUserLst.splice(index, 1);
+			for (let i = this.selectUserLst.length; i > 0; i--) {
+				this.selectUserLst[i] = this.selectUserLst[i - 1];
+			}
+			this.selectUserLst[0] = selectUser;
+			this.selectedPatient = selectUser;
+		}
 		localStorage.setItem('selectedPatient', JSON.stringify(this.selectedPatient));
-		this.showUserCard = false;
+		if(displayUI == "showSelectedPatientUserCard")
+		{
+			this.showSelectedPatientUserCard = false;
+		}
+		else
+		{
+			this.showUserCard = false;
+		}
 	}
 
 	pinUser(selectUser: any)

@@ -1,0 +1,461 @@
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<div class="section">
+				<div class="row">
+					<div class="col-9">
+						<h6 class="heading">Health History Preferences</h6>
+						<div class="row mb-3">
+							<div class="col">
+								<span
+									>How frequently would you like to get Health
+									History updated?</span
+								>
+							</div>
+							<div class="col-4">
+								<select class="form-select">
+									<option value="1">1 Month</option>
+									<option value="2">2 Month</option>
+									<option value="3">3 Month</option>
+								</select>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col">
+								<span
+									>How much grace priod would you like to
+									give?</span
+								>
+							</div>
+							<div class="col-4">
+								<select class="form-select">
+									<option value="1">1 Month</option>
+									<option value="2">2 Month</option>
+									<option value="3">3 Month</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<div class="section">
+				<div class="row">
+					<div class="col-10">
+						<h6 class="heading">Manage Categories</h6>
+					</div>
+					<div class="col-2" [align]="'end'">
+						<div class="form-check" style="padding-left: 4em;">
+							<input
+								class="form-check-input"
+								type="checkbox"
+								value=""
+								id="flexCheckChecked"
+								checked
+							/>
+							<label
+								class="form-check-label"
+								for="flexCheckChecked"
+								style="padding: 0px"
+							>
+								Show hidden
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-9">
+						<div class="row mb-1">
+							<div class="col-3"><b>Name</b></div>
+						</div>
+						<div
+							class="row mb-1 row-border"
+							*ngFor="let category of categories"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
+						>
+							<div class="col-1">
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+							</div>
+							<div class="col">
+								{{ category }}
+							</div>
+							<div class="col" [align]="'end'">
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row mb-1">
+					<div class="col">
+						<button
+							type="button"
+							class="btn btn-light"
+							(click)="openCategory(contentCategory)"
+						>
+							<img
+								src="/assets/icons/add.svg"
+								alt=""
+								width="20"
+								height="20"
+							/>&nbsp;&nbsp;Add category
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<div class="section">
+				<div class="row">
+					<div class="col-10">
+						<h6 class="heading">Manage Conditions</h6>
+						<div class="row mb-3">
+							<div class="col-4">
+								<select class="form-select">
+									<option *ngFor="let category of categories">
+										{{ category }}
+									</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-2" [align]="'end'">
+						<div class="form-check" style="padding-left: 4em;">
+							<input
+								class="form-check-input"
+								type="checkbox"
+								value=""
+								id="flexCheckChecked"
+								checked
+							/>
+							<label
+								class="form-check-label"
+								for="flexCheckChecked"
+								style="padding: 0px"
+							>
+								Show hidden
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-9">
+						<div class="row mb-1">
+							<div class="col-3"><b>Name</b></div>
+							<div class="col-3" [align]="'end'">
+								<b>Alert</b>
+							</div>
+							<div class="col-3" [align]="'end'">
+								<b>Mandatory</b>
+							</div>
+						</div>
+						<div
+							class="row mb-1 row-border"
+							*ngFor="let condition of conditions"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
+						>
+							<div class="col-1">
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+							</div>
+							<div class="col-2">
+								{{ condition.name }}
+							</div>
+							<div class="col-3" [align]="'end'">
+								<img
+									src="../../../../../../assets/icons/notification-on.svg"
+									width="20"
+									height="20"
+									*ngIf="condition.alert"
+								/>
+								<img
+									src="../../../../../../assets/icons/notification-off.svg"
+									width="20"
+									height="20"
+									*ngIf="!condition.alert"
+								/>
+							</div>
+							<div class="col-3" [align]="'end'">
+								<input type="checkbox" />
+							</div>
+							<div class="col" [align]="'end'">
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row mb-1">
+					<div class="col">
+						<button
+							type="button"
+							class="btn btn-light"
+							(click)="openCondition(contentCondition)"
+						>
+							<img
+								src="/assets/icons/add.svg"
+								alt=""
+								width="20"
+								height="20"
+							/>&nbsp;&nbsp;Add condition
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<ng-template #contentCategory let-modal>
+	<div class="modal-body" style="border-radius: 1rem">
+		<div class="section">
+			<div class="row">
+				<div class="col" [align]="'end'">
+					<button
+						type="button"
+						class="btn-close"
+						aria-label="Close"
+						(click)="modal.dismiss('Cross click')"
+					></button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<h3 class="heading">Create Category</h3>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col">
+					<label for="basic-url" class="form-label"
+						>Category Name</label
+					>
+					<div class="input-group mb-3">
+						<input
+							type="text"
+							class="form-control"
+							id="basic-url"
+							aria-describedby="basic-addon3"
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col" [align]="'end'">
+					<button type="button" class="btn btn-dark">
+						Create Category
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #contentCondition let-modal>
+	<div class="modal-body" style="border-radius: 1rem">
+		<div class="section">
+			<div class="row">
+				<div class="col" [align]="'end'">
+					<button
+						type="button"
+						class="btn-close"
+						aria-label="Close"
+						(click)="modal.dismiss('Cross click')"
+					></button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<h3 class="heading">Manage Conditions</h3>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col">
+					<label class="form-label">Category</label>
+					<select class="form-select">
+						<option *ngFor="let category of categories">
+							{{ category }}
+						</option>
+					</select>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col">
+					<label class="form-label">Condition type</label>
+					<br />
+					<div class="form-check form-check-inline">
+						<input
+							class="form-check-input"
+							type="radio"
+							name="conditionRadioOptions"
+							id="radioButton"
+							value="radioButton"
+                            (change)="onConditionTypeChange($event)"
+						/>
+						<label class="form-check-label" for="radioButton"
+							>Radio Button</label
+						>
+					</div>
+					<div class="form-check form-check-inline">
+						<input
+							class="form-check-input"
+							type="radio"
+							name="conditionRadioOptions"
+							id="question"
+							value="question"
+                            (change)="onConditionTypeChange($event)"
+						/>
+						<label class="form-check-label" for="question"
+							>Question</label
+						>
+					</div>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col">
+					<div class="col">
+						<label for="basic-url" class="form-label"
+							>Condition Name</label
+						>
+						<div class="input-group mb-3">
+							<input
+								type="text"
+								class="form-control"
+								id="basic-url"
+								aria-describedby="basic-addon3"
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+				<div class="row mb-3" *ngIf="conditionType === 'radioButton'">
+					<div class="col">
+						<label class="form-label">Alert</label>
+						<br />
+						<div class="form-check form-check-inline">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="alertRadioOptions"
+								id="alertYes"
+								value="yes"
+							/>
+							<label class="form-check-label" for="alertYes"
+								>Yes</label
+							>
+						</div>
+						<div class="form-check form-check-inline">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="alertRadioOptions"
+								id="alertNo"
+								value="no"
+							/>
+							<label class="form-check-label" for="alertNo"
+								>No</label
+							>
+						</div>
+					</div>
+					<div class="col">
+						<label class="form-label">Mandatory</label>
+						<br />
+						<div class="form-check form-check-inline">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="mandatoryRadioOptions"
+								id="mandatoryYes"
+								value="yes"
+							/>
+							<label class="form-check-label" for="mandatoryYes"
+								>Yes</label
+							>
+						</div>
+						<div class="form-check form-check-inline">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="mandatoryRadioOptions"
+								id="mandatoryNo"
+								value="no"
+							/>
+							<label class="form-check-label" for="mandatoryNo"
+								>No</label
+							>
+						</div>
+					</div>
+				</div>
+			
+				<div class="row mb-3" *ngIf="conditionType === 'question'">
+					<div class="col">
+						<label
+							class="form-label"
+							>Question</label
+						>
+						<textarea
+							class="form-control"
+							rows="3"
+						></textarea>
+					</div>
+				</div>
+			
+			<div class="row">
+				<div class="col" [align]="'end'">
+					<button type="button" class="btn btn-dark">
+						Create Condition
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template>
