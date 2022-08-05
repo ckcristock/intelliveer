@@ -22,7 +22,7 @@ export class HealthHistoryComponent implements OnInit {
 			alert: true
 		}
 	];
-  conditionType: any;
+	conditionType: any;
 
 	constructor(private modalService: NgbModal) {}
 
@@ -44,16 +44,15 @@ export class HealthHistoryComponent implements OnInit {
 		this.row = $event.target;
 	}
 
-  openCategory(content: any) {
-    this.modalService.open(content, { centered: true });
-  }
+	openCategory(content: any) {
+		this.modalService.open(content, { centered: true });
+	}
 
-  openCondition(content: any) {
-    this.modalService.open(content, { centered: true });
-  }
+	openCondition(content: any) {
+		this.modalService.open(content, { centered: true });
+	}
 
-  onConditionTypeChange($event: any)
-  {
-    this.conditionType = $event.target.value
-  }
+	onConditionTypeChange($event: any) {
+		this.conditionType = $event.target.value;
+	}
 }

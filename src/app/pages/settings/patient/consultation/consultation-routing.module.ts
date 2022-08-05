@@ -19,13 +19,13 @@ const routes: Routes = [
 						'@pages/settings/patient/consultation/health-history/health-history.module'
 					).then((m) => m.HealthHistoryModule)
 			},
-			// {
-			// 	path: 'diagnosis',
-			// 	loadChildren: () =>
-			// 		import(
-			// 			'@pages/patient/consultation/diagnosis/diagnosis.module'
-			// 		).then((m) => m.DiagnosisModule)
-			// },
+			{
+				path: 'diagnosis',
+				loadChildren: () =>
+					import(
+						'@pages/settings/patient/consultation/diagnosis/diagnosis.module'
+					).then((m) => m.DiagnosisModule)
+			},
 			// {
 			// 	path: 'treatment',
 			// 	loadChildren: () =>

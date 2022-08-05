@@ -12,6 +12,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { patientUserHeaderIconMenuItems } from '@pages/patient/menu';
+import { Location } from '@angular/common';
 
 @Component({
 	selector: 'top-navbar',
@@ -45,7 +46,8 @@ export class NavbarComponent implements OnInit {
 		private authService: AuthService,
 		private cookieService: CookieService,
 		private renderer: Renderer2,
-		private router: Router
+		private router: Router,
+		private location: Location
 	) {
 		this.renderer.listen('window', 'click', (e: Event) => {
 			if (!this.searchDivRef.nativeElement.contains(e.target)) {
@@ -260,5 +262,12 @@ export class NavbarComponent implements OnInit {
 	{
 		selectUser.isPin = false;
 		this.showUserCard = false;
+	}
+
+	moveToLastPage($event: any)
+	{
+		console.log("last page me jana h");
+		console.log($event)
+		// this.location.back();
 	}
 }

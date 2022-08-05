@@ -130,7 +130,7 @@
 					<div (click)="showSelectedPatientUserCard = true">
 						<img src="{{ selectedPatient.profileUrl }}" alt="" ngbDropdownToggle />
 						<span
-							>{{ selectedPatient.user }} ({{ selectedPatient.id }})</span
+							>{{ selectedPatient.user }} ({{ selectedPatient.id }}) <p  (dblclick)="moveToLastPage($event)">hhhhhhhhhhhhhh</p></span
 						>
 					</div>					
 					<div ngbDropdownMenu style="width: 28rem;" *ngIf="showSelectedPatientUserCard">
