@@ -1,3 +1,29 @@
+@import 'navbar_pills';
+
+.table {
+	tr {
+		border: 1px solid #bdbfc1;
+		table-layout: fixed;
+		width: 100%;
+	}
+
+	th {
+		text-align: left;
+		padding-left: 1rem;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		padding-right: 1rem;
+	}
+}
+
+tr:nth-child(odd) {
+	background-color: #f1f1f1;
+}
+
+tr:nth-child(even) {
+	background-color: #ffffff;
+}
+
 .background-white{
     background-color: white;
 }
@@ -16,3 +42,52 @@
     z-index: 1000;
     margin-top: -6rem;
 }
+
+thead,
+tbody tr {
+	display: table;
+	width: 100%;
+	table-layout: fixed;
+}
+
+th {
+	background-color: white !important;
+}
+
+.table > :not(:first-child) {
+	border-top: 1px solid #f1f2f2;
+}
+
+.best-value-yes {
+	border-style: double;
+	border-right-color: coral;
+	border-left-color: coral;
+	border-bottom-color: coral;
+	tr:nth-child(even) {background: #faf2e9}
+	tr:nth-child(odd) {background: #FFF}
+}
+
+.best-value-no {
+	border-right-color: #dee2e6;
+	border-left-color: #dee2e6 !important;
+	border-bottom-color: #dee2e6;
+}
+
+.table-bordered > :not(caption) > * > * {
+	border-width: 1px;
+}
+
+.show-best-value-yes {
+	background-image: linear-gradient(130deg, #FD6E6A 10%, #FFC600 100%);
+	border: none;
+	border-radius: 1rem 1rem 0rem 0rem;
+}
+
+.show-best-value-no {
+	background-color: white;
+	border: none;
+	border-radius: 0rem 0rem 0rem 0rem;
+}
+
+tr:nth-child(even) {background: #f1f2f2}
+tr:nth-child(odd) {background: #ffffff}
