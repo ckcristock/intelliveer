@@ -64,6 +64,7 @@ export class PaymentOptionsComponent implements OnInit {
 		}
 	];
   splitPayment: boolean = false;
+  downPaymentArray: any[] = [1,2,3]
   closeResult = '';
   model!:NgbDateStruct
   modelTwo!:NgbDateStruct
@@ -88,7 +89,7 @@ export class PaymentOptionsComponent implements OnInit {
  miniMum: number = 1;
  month: number = 1;
  emi: any = 0;
- downPayment: number =  0;
+ downPayment: number =  500;
  downPayment2:number = 0;
  isDownPayment2: boolean = false;
  minDownPayment:number = 500;
@@ -101,7 +102,9 @@ export class PaymentOptionsComponent implements OnInit {
  downPayment1BG:any;
 	constructor(private modalService: NgbModal) {}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		this.emi = this.totalAmount - this.downPayment;
+	}
 
 	save(data: any) {}
 	cancel() {}
@@ -146,6 +149,7 @@ export class PaymentOptionsComponent implements OnInit {
 		let downPayment2: any = this.downPayment2;
 		localStorage.removeItem('totalDownPayment')
 	   if(event == "two"){
+		this.splitPayment = true;
 		this.maxDownPayment1 = this.downPayment;
 		this.isDownPayment2 = true;
 		this.downPayment2 = parseInt(downPayment) / 2;
@@ -154,6 +158,7 @@ export class PaymentOptionsComponent implements OnInit {
 		this.totalAmountDP = parseInt(downPayment) + parseInt(downPayment2);
 	   }else{
 		this.isDownPayment2 = false;
+		this.splitPayment = false;
 		if(this.downPayment2 != 0){
 		  this.downPayment = 500;
 		  this.minDownPayment = 500;
@@ -327,6 +332,7 @@ export class PaymentOptionsComponent implements OnInit {
 		this.calculateInstallments();
 		let totalDPBG =  ((this.downPayment + this.downPayment2) - this.maxDownPayment1) / (this.totalAmount - this.maxDownPayment1) * 100;
 		this.totalDPBG = 'linear-gradient(to right, #E6BD5C, #ff4500 ' + totalDPBG + '%, #E6BD5C ' + totalDPBG + '%, #dee1e2 100%)';
+		this.minDownPayment = this.downPayment;
 	  }
 	  /** range slider */
 	  downPaymentValues(event:any){

@@ -127,490 +127,482 @@
 			[ngClass]="compareAllOptionArray?.length === 1 ? 'col-6' : compareAllOptionArray?.length === 2 ? 'col-9' : 'col-12'"
 		>
 			<div class="table-responsive">
-				<table class="table table-bordered">
-					<thead>
-						<tr style="border: none" *ngIf="showBestOptionCss">
-							<td style="border: none"></td>
-							<td
-								*ngFor="
-									let treatmentOptionObj of compareAllOptionArray;
-									let i = index
-								"
-								[ngClass]="
-									treatmentOptionObj.count === 3
-										? 'show-best-value-yes'
-										: 'show-best-value-no'
-								"
-							>
-								<p
-									style="
-										color: white;
-										text-align: center;
-										font-size: large;
-										font-weight: bold;
+				<form>
+					<table class="table table-bordered">
+						<thead>
+							<tr style="border: none" *ngIf="showBestOptionCss">
+								<td style="border: none"></td>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray;
+										let i = index
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'show-best-value-yes'
+											: 'show-best-value-no'
 									"
 								>
-									Best Value
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td
-								style="
-									background-color: white;
-									border-top-color: white;
-									border-left-color: white;
-									border-bottom-color: white;
-								"
-							></td>
-							<th
-								*ngFor="
-									let treatmentOptionObj of compareAllOptionArray;
-									let i = index
-								"
-								[ngClass]="
-									treatmentOptionObj.count === 3
-										? 'best-value-yes'
-										: 'best-value-no'
-								"
-								style="text-align: center"
-							>
-								<div class="btn-group" style="margin-left: 2rem;">
-									<button type="button" class="btn">
-										<b>Payment Option {{ i + 1 }}</b>
-									</button>
-									<div
-										class="btn-group"
-										ngbDropdown
-										role="group"
-										aria-label="Button group with nested dropdown"
+									<p
+										style="
+											color: white;
+											text-align: center;
+											font-size: large;
+											font-weight: bold;
+										"
 									>
-										<button
-											type="button"
-											class="btn dropdown-toggle-split"
-											ngbDropdownToggle
-										>
-											<i
-												class="bi bi-three-dots-vertical"
-											></i>
+										Best Value
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<td
+									style="
+										background-color: white;
+										border-top-color: white;
+										border-left-color: white;
+										border-bottom-color: white;
+									"
+								></td>
+								<th
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray;
+										let i = index
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									style="text-align: center"
+								>
+									<div class="btn-group" style="margin-left: 2rem;">
+										<button type="button" class="btn">
+											<b>Payment Option {{ i + 1 }}</b>
 										</button>
 										<div
-											class="dropdown-menu"
-											ngbDropdownMenu
-											style="background-color: white"
+											class="btn-group"
+											ngbDropdown
+											role="group"
+											aria-label="Button group with nested dropdown"
 										>
-											<button ngbDropdownItem>
-												Rename
+											<button
+												type="button"
+												class="btn dropdown-toggle-split"
+												ngbDropdownToggle
+											>
+												<i
+													class="bi bi-three-dots-vertical"
+												></i>
 											</button>
-											<button ngbDropdownItem>
-												Hide
-											</button>
+											<div
+												class="dropdown-menu"
+												ngbDropdownMenu
+												style="background-color: white"
+											>
+												<button ngbDropdownItem>
+													Rename
+												</button>
+												<button ngbDropdownItem>
+													Hide
+												</button>
+											</div>
 										</div>
 									</div>
-								</div>
-								<br />
-								<span style="font-size: medium">
-									<i
-										[ngClass]="
-											treatmentOptionObj.count === 1 ||
-											treatmentOptionObj.count > 1
-												? 'bi bi-hand-thumbs-up-fill'
-												: 'bi bi-hand-thumbs-up'
-										"
-										[ngStyle]="{
-											color: '#e96247'
-										}"
-										(click)="
-											countTreatment(treatmentOptionObj)
-										"
-									></i>
-									&nbsp;
-									<i
-										[ngClass]="
-											treatmentOptionObj.count === 2 ||
-											treatmentOptionObj.count > 2
-												? 'bi bi-hand-thumbs-up-fill'
-												: 'bi bi-hand-thumbs-up'
-										"
-										[ngStyle]="{
-											color: '#e96247'
-										}"
-										(click)="
-											countTreatment(treatmentOptionObj)
-										"
-									></i>
-									&nbsp;
-									<i
-										[ngClass]="
-											treatmentOptionObj.count === 3
-												? 'bi bi-hand-thumbs-up-fill'
-												: 'bi bi-hand-thumbs-up'
-										"
-										[ngStyle]="{
-											color: '#e96247'
-										}"
-										(click)="
-											countTreatment(treatmentOptionObj)
-										"
-									></i>
-								</span>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<th style="border-bottom-color: white;">Payment Plan Type</th>
-							<td
-								*ngFor="
-									let treatmentOptionObj of compareAllOptionArray
-								"
-								[ngClass]="
-									treatmentOptionObj.count === 3
-										? 'best-value-yes'
-										: 'best-value-no'
-								"
-								[style.background-color]="
-									treatmentOptionObj.count === 3
-										? '#ffffff'
-										: '#ffffff'
-								"
-								style="padding: 1rem 2rem 1rem 2rem;"
-							>
-								<select class="form-select">
-									<option
-										*ngFor="
-											let paymentPlan of paymentPlanType
-										"
-									>
-										{{ paymentPlan }}
-									</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<th style="border-bottom-color: white; border-top-color: white;">
-								Down Payment
-								<img
-									src="../../../../../assets/icons/split-payment.svg"
-									width="20"
-									height="20"
-									*ngIf="!splitPayment"
-									(click)="splitPayment = true"
-								/>
-								<img
-									src="../../../../../assets/icons/split-payment-green.svg"
-									width="20"
-									height="20"
-									*ngIf="splitPayment"
-								/>
-							</th>
-							<td
-								*ngFor="
-									let treatmentOptionObj of compareAllOptionArray
-								"
-								[ngClass]="
-									treatmentOptionObj.count === 3
-										? 'best-value-yes'
-										: 'best-value-no'
-								"
-								[style.background-color]="
-									treatmentOptionObj.count === 3
-										? '#faf2e9'
-										: '#f1f2f2'
-								"
-								style="padding: 1rem 2rem 1rem 2rem;"
-							>
-								<div class="input-group">
-									<input type="text" class="form-control" />
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<th style="border-bottom-color: white; border-top-color: white;">Split Down payment</th>
-							<td
-								*ngFor="
-									let treatmentOptionObj of compareAllOptionArray
-								"
-								[ngClass]="
-									treatmentOptionObj.count === 3
-										? 'best-value-yes'
-										: 'best-value-no'
-								"
-								[style.background-color]="
-									treatmentOptionObj.count === 3
-										? '#ffffff'
-										: '#ffffff'
-								"
-								style="padding: 1rem 2rem 1rem 2rem;"
-							>
-								<select class="form-select">
-									<option
-										*ngFor="
-											let paymentPlan of downPaymentArray
-										"
-									>
-										{{ paymentPlan }}
-									</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<th style="border-bottom-color: white; border-top-color: white;">Payment Frequency</th>
-							<td
-								*ngFor="
-									let treatmentOptionObj of compareAllOptionArray
-								"
-								[ngClass]="
-									treatmentOptionObj.count === 3
-										? 'best-value-yes'
-										: 'best-value-no'
-								"
-								[style.background-color]="
-									treatmentOptionObj.count === 3
-										? '#faf2e9'
-										: '#f1f2f2'
-								"
-								style="padding: 1rem 2rem 1rem 2rem;"
-							>
-								<select class="form-select">
-									<option
-										*ngFor="
-											let paymentPlan of paymentPlanType
-										"
-									>
-										{{ paymentPlan }}
-									</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<th style="border-bottom-color: white; border-top-color: white;">No. of Payments</th>
-							<td
-								*ngFor="
-									let treatmentOptionObj of compareAllOptionArray
-								"
-								[ngClass]="
-									treatmentOptionObj.count === 3
-										? 'best-value-yes'
-										: 'best-value-no'
-								"
-								[style.background-color]="
-									treatmentOptionObj.count === 3
-										? '#ffffff'
-										: '#ffffff'
-								"
-								style="padding: 1rem 2rem 1rem 2rem;"
-							>
-								<div class="input-group">
-									<input type="text" class="form-control" />
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<th style="border-bottom-color: white; border-top-color: white;">Payment Amount</th>
-							<td
-								*ngFor="
-									let treatmentOptionObj of compareAllOptionArray
-								"
-								[ngClass]="
-									treatmentOptionObj.count === 3
-										? 'best-value-yes'
-										: 'best-value-no'
-								"
-								[style.background-color]="
-									treatmentOptionObj.count === 3
-										? '#faf2e9'
-										: '#f1f2f2'
-								"
-								style="padding: 1rem 2rem 1rem 2rem;"
-							>
-								<div class="input-group">
-									<input type="text" class="form-control" />
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<th style="border-bottom-color: white; border-top-color: white;">Last Payment</th>
-							<td
-								*ngFor="
-									let treatmentOptionObj of compareAllOptionArray
-								"
-								[ngClass]="
-									treatmentOptionObj.count === 3
-										? 'best-value-yes'
-										: 'best-value-no'
-								"
-								[style.background-color]="
-									treatmentOptionObj.count === 3
-										? '#ffffff'
-										: '#ffffff'
-								"
-								style="padding: 1rem 2rem 1rem 2rem;"
-							>
-								<p style="padding-left: 0.5rem;">$114</p>
-							</td>
-						</tr>
-						<tr>
-							<th style="border-bottom-color: white; border-top-color: white;">
-								<div class="form-check" [align]="'center'">
-									<input
-										class="form-check-input"
-										type="checkbox"
-										value=""
-										id="flexCheckChecked"
-										checked
-									/>
-									<label
-										class="form-check-label"
-										for="flexCheckChecked"
-									>
-										Add Remainder 
-										to Last Payment
-									</label>
-								</div>
-							</th>
-							<td
-								*ngFor="
-									let treatmentOptionObj of compareAllOptionArray
-								"
-								[ngClass]="
-									treatmentOptionObj.count === 3
-										? 'best-value-yes'
-										: 'best-value-no'
-								"
-								style="background-color: white; padding: 1rem 2rem 1rem 2rem;"
-							>
-								<div [align]="'end'">
+									<br />
+									<span style="font-size: medium">
+										<i
+											[ngClass]="
+												treatmentOptionObj.count === 1 ||
+												treatmentOptionObj.count > 1
+													? 'bi bi-hand-thumbs-up-fill'
+													: 'bi bi-hand-thumbs-up'
+											"
+											[ngStyle]="{
+												color: '#e96247'
+											}"
+											(click)="
+												countTreatment(treatmentOptionObj)
+											"
+										></i>
+										&nbsp;
+										<i
+											[ngClass]="
+												treatmentOptionObj.count === 2 ||
+												treatmentOptionObj.count > 2
+													? 'bi bi-hand-thumbs-up-fill'
+													: 'bi bi-hand-thumbs-up'
+											"
+											[ngStyle]="{
+												color: '#e96247'
+											}"
+											(click)="
+												countTreatment(treatmentOptionObj)
+											"
+										></i>
+										&nbsp;
+										<i
+											[ngClass]="
+												treatmentOptionObj.count === 3
+													? 'bi bi-hand-thumbs-up-fill'
+													: 'bi bi-hand-thumbs-up'
+											"
+											[ngStyle]="{
+												color: '#e96247'
+											}"
+											(click)="
+												countTreatment(treatmentOptionObj)
+											"
+										></i>
+									</span>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th style="border-bottom-color: white;">Payment Plan Type</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="
+										treatmentOptionObj.count === 3
+											? '#ffffff'
+											: '#ffffff'
+									"
+									style="padding: 1rem 2rem 1rem 2rem;"
+								>
+									<select class="form-select">
+										<option
+											*ngFor="
+												let paymentPlan of paymentPlanType
+											"
+										>
+											{{ paymentPlan }}
+										</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th style="border-bottom-color: white; border-top-color: white;">
+									Down Payment
 									<img
-										src="../../../../../assets/icons/calendar.svg"
+										src="../../../../../assets/icons/split-payment.svg"
 										width="20"
 										height="20"
+										*ngIf="!splitPayment"
+										(click)="changeOptions('two')"
 									/>
 									<img
-										src="../../../../../assets/icons/unlocked.svg"
+										src="../../../../../assets/icons/split-payment-green.svg"
 										width="20"
 										height="20"
-										*ngIf="treatmentOptionObj.locked"
-										(click)="openModel(content)"
+										*ngIf="splitPayment"
+										(click)="changeOptions('one')"
 									/>
-									<img
-										src="../../../../../assets/icons/locked.svg"
-										width="20"
-										height="20"
-										*ngIf="!treatmentOptionObj.locked"
-										(click)="openModel(content)"
-									/>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<th style="border-bottom-color: white; border-top-color: white;"></th>
-							<td
-								*ngFor="
-									let treatmentOptionObj of compareAllOptionArray
-								"
-								[ngClass]="
-									treatmentOptionObj.count === 3
-										? 'best-value-yes'
-										: 'best-value-no'
-								"
-								style="background-color: white; padding: 1rem 2rem 1rem 2rem;"
-							>
-								<div class="row">
-									<div class="col" [align]="'center'">
-										Down Payment  2
+								</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="
+										treatmentOptionObj.count === 3
+											? '#faf2e9'
+											: '#f1f2f2'
+									"
+									style="padding: 1rem 2rem 1rem 2rem;"
+								>
+									<div class="input-group">
+										<input type="text" class="form-control" name="downPayment"  [(ngModel)]="downPayment"/>
 									</div>
-								</div>
-								<div class="row">
-									<div class="col">Down Payment</div>
-									<div class="col" [align]="'end'">$2500</div>
-								</div>
-								<div class="row">
-									<div class="col">No.of payments</div>
-									<div class="col" [align]="'end'">24</div>
-								</div>
-                                <div class="row mt-4 text-center custom-downpayment" *ngIf="isDownPayment2">
-                                    <div class="col-md-6 pe-0">
-                                        <p>Down Payment 1</p>
-                                        <div class="custom-bg">
-                                            <p style="font-weight: bold; font-size: 14px;">${{downPayment}}</p>
-                                            <p *ngIf="tabDate">Due by {{tabDate  | date: 'MM/d/yyyy'}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 ps-0">
-                                        <p>Down Payment 2</p>
-                                        <div class="custom-bg">
-                                            <p style="font-weight: bold; font-size: 14px;">${{downPayment2}}</p>
-                                            <p *ngIf="tabDate">Due by {{tabTwoDate  | date: 'MM/d/yyyy'}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-4 text-center custom-downpayment" *ngIf="!isDownPayment2">
-                                    <div class="col-md-3">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>Down Payment</p>
-                                        <div class="custom-bg">
-                                            <p style="font-weight: bold; font-size: 14px;">${{downPayment}}</p>
-                                            <p *ngIf="tabDate">Due by {{tabDate  | date: 'MM/d/yyyy'}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                    </div>
-                                </div>
-                                <div class="row custom-instalment mt-4 text-center">
-                                    <div class="col-md pe-0">
-                                        <p>No. of Installments</p>
-                                        <div class="custom-bg">
-                                            <p style="font-weight: bold; font-size: 14px;">{{month}}</p>
-                                            <p></p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md ps-0">
-                                        <p>Monthly Installments</p>
-                                        <div class="custom-bg">
-                                            <p style="font-weight: bold; font-size: 14px;">${{emi | number : '1.2-2'}}</p>
-                                            <p *ngIf="tabThreeDate">Due by {{tabThreeDate  | date: 'MM/d/yyyy'}}</p>
-                                        </div>
-                                    </div>
-                                    </div>
-                                    <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="range__slider" *ngIf="isDownPayment2">
-                                            <p>Total Down Payment</p>
-                                            <input class="range-slider__range" type="range" value="{{maxDownPayment1}}" min="{{maxDownPayment1}}" max="{{totalAmount}}" step="25" [style.background]="totalDPBG" (input)="totalDownTable($event,25)">
-                                            <span class="range-slider__value">{{totalAmount}}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12" *ngIf="isDownPayment2">
-                                        <div class="range__slider">
-                                            <p>Down Payment 1</p>
-                                            <input type="range" value="{{minDownPayment}}" class="range-slider__range" min="{{minDownPayment}}" max="{{maxDownPayment1}}" step="25" [style.background]="downPayment1BG" (input)="downPaymentOneValues($event)">
-                                            <span class="range-slider__value">{{maxDownPayment1}}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12" *ngIf="!isDownPayment2">
-                                        <div class="range__slider">
-                                            <p>Down Payment</p>
-                                            <input type="range" value="{{minDownPayment}}" class="range-slider__range" min="{{minDownPayment}}" max="{{totalAmount}}" step="25" [style.background]="sliderBackground" (input)="downPaymentValues($event)">
-                                            <span class="range-slider__value">{{totalAmount}}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col">No.of payments</div>
-                                            <div class="col" [align]="'end'">24</div>
-                                        </div>
-                                        <div class="range__slider month">
-                                            <input class="range-slider__range" type="range" value="1" min="1" max="24" step="1" [style.background]="sliderBGMonth" (input)="noOfPaymentValue($event)">
-                                            <span class="range-slider__value">24</span>
-                                        </div>
-                                    </div>
-                                    </div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+								</td>
+							</tr>
+							<tr>
+								<th style="border-bottom-color: white; border-top-color: white;">Split Down payment</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="
+										treatmentOptionObj.count === 3
+											? '#ffffff'
+											: '#ffffff'
+									"
+									style="padding: 1rem 2rem 1rem 2rem;"
+								>
+									<select class="form-select">
+										<option
+											*ngFor="
+												let paymentPlan of downPaymentArray
+											"
+										>
+											{{ paymentPlan }}
+										</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th style="border-bottom-color: white; border-top-color: white;">Payment Frequency</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="
+										treatmentOptionObj.count === 3
+											? '#faf2e9'
+											: '#f1f2f2'
+									"
+									style="padding: 1rem 2rem 1rem 2rem;"
+								>
+									<select class="form-select">
+										<option
+											*ngFor="
+												let paymentPlan of paymentPlanType
+											"
+										>
+											{{ paymentPlan }}
+										</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th style="border-bottom-color: white; border-top-color: white;">No. of Payments</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="
+										treatmentOptionObj.count === 3
+											? '#ffffff'
+											: '#ffffff'
+									"
+									style="padding: 1rem 2rem 1rem 2rem;"
+								>
+									<div class="input-group">
+										<input type="text" class="form-control" name="month"   [(ngModel)]="month"/>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th style="border-bottom-color: white; border-top-color: white;">Payment Amount</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="
+										treatmentOptionObj.count === 3
+											? '#faf2e9'
+											: '#f1f2f2'
+									"
+									style="padding: 1rem 2rem 1rem 2rem;"
+								>
+									<div class="input-group">
+										<input type="text" class="form-control" name="emi" [(ngModel)]="emi"  />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th style="border-bottom-color: white; border-top-color: white;">Last Payment</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="
+										treatmentOptionObj.count === 3
+											? '#ffffff'
+											: '#ffffff'
+									"
+									style="padding: 1rem 2rem 1rem 2rem;"
+								>
+									<p style="padding-left: 0.5rem;">$114</p>
+								</td>
+							</tr>
+							<tr>
+								<th style="border-bottom-color: white; border-top-color: white;">
+									<div class="form-check" [align]="'center'">
+										<input
+											class="form-check-input"
+											type="checkbox"
+											value=""
+											id="flexCheckChecked"
+											checked
+										/>
+										<label
+											class="form-check-label"
+											for="flexCheckChecked"
+										>
+											Add Remainder 
+											to Last Payment
+										</label>
+									</div>
+								</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									style="background-color: white; padding: 1rem 2rem 1rem 2rem;"
+								>
+									<div [align]="'end'">
+										<img
+											src="../../../../../assets/icons/calendar.svg"
+											width="20"
+											height="20"
+											(click)="open(calendar)"
+										/>
+										<img
+											src="../../../../../assets/icons/unlocked.svg"
+											width="20"
+											height="20"
+											*ngIf="treatmentOptionObj.locked"
+											(click)="openModel(content)"
+										/>
+										<img
+											src="../../../../../assets/icons/locked.svg"
+											width="20"
+											height="20"
+											*ngIf="!treatmentOptionObj.locked"
+											(click)="openModel(content)"
+										/>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th style="border-bottom-color: white; border-top-color: white;"></th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									style="background-color: white; padding: 1rem 2rem 1rem 2rem;"
+								>
+									<div class="row mt-4 text-center custom-downpayment" *ngIf="isDownPayment2">
+										<div class="col-md-6 pe-0">
+											<p style="font-size: 11px;">Down Payment 1</p>
+											<div class="custom-bg">
+												<p style="font-weight: bold; font-size: 14px;">${{downPayment}}</p>
+												<p *ngIf="tabDate">Due by {{tabDate  | date: 'MM/d/yyyy'}}</p>
+											</div>
+										</div>
+										<div class="col-md-6 ps-0">
+											<p style="font-size: 11px;">Down Payment 2</p>
+											<div class="custom-bg">
+												<p style="font-weight: bold; font-size: 14px;">${{downPayment2}}</p>
+												<p *ngIf="tabDate">Due by {{tabTwoDate  | date: 'MM/d/yyyy'}}</p>
+											</div>
+										</div>
+									</div>
+									<div class="row mt-4 text-center custom-downpayment" *ngIf="!isDownPayment2">
+										<div class="col-md-12">
+											<p>Down Payment</p>
+											<div class="custom-bg">
+												<p style="font-weight: bold; font-size: 14px;">${{downPayment}}</p>
+												<p *ngIf="tabDate">Due by {{tabDate  | date: 'MM/d/yyyy'}}</p>
+											</div>
+										</div>
+									</div>
+									<div class="row custom-instalment mt-4 text-center">
+										<div class="col-md pe-0">
+											<p>No. of Installments</p>
+											<div class="custom-bg">
+												<p style="font-weight: bold; font-size: 14px;">{{month}}</p>
+												<p></p>
+											</div>
+										</div>
+										<div class="col-md ps-0">
+											<p>Monthly Installments</p>
+											<div class="custom-bg">
+												<p style="font-weight: bold; font-size: 14px;">${{emi | number : '1.2-2'}}</p>
+												<p *ngIf="tabThreeDate">Due by {{tabThreeDate  | date: 'MM/d/yyyy'}}</p>
+											</div>
+										</div>
+										</div>
+										<div class="row">
+										<div class="col-md-12">
+											<div class="range__slider" *ngIf="isDownPayment2">
+												<div class="row">
+													<div class="col-md-8 py-4">Total Down Payment</div>
+													<div class="col py-4" [align]="'end'">{{totalAmount}}</div>
+												</div>
+												<input class="range-slider__range" type="range" value="{{maxDownPayment1}}" min="{{maxDownPayment1}}" max="{{totalAmount}}" step="25" [style.background]="totalDPBG" (input)="totalDownTable($event,25)">
+											</div>
+										</div>
+										<div class="col-md-12" *ngIf="isDownPayment2">
+											<div class="row">
+												<div class="col-md-8 py-4">Down Payment 1</div>
+												<div class="col py-4" [align]="'end'">{{maxDownPayment1}}</div>
+											</div>
+											<div class="range__slider">
+												<input type="range" value="{{minDownPayment}}" class="range-slider__range" min="{{minDownPayment}}" max="{{maxDownPayment1}}" step="25" [style.background]="downPayment1BG" (input)="downPaymentOneValues($event)">
+											</div>
+										</div>
+										<div class="col-md-12" *ngIf="!isDownPayment2">
+											<div class="row">
+												<div class="col-md-8 py-4">Down Payment</div>
+												<div class="col py-4" [align]="'end'">{{totalAmount}}</div>
+											</div>
+											<div class="range__slider">
+												<input type="range" value="{{minDownPayment}}" class="range-slider__range" min="{{minDownPayment}}" max="{{totalAmount}}" step="25" [style.background]="sliderBackground" (input)="downPaymentValues($event)">
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="row">
+												<div class="col-md-8 py-4">No.of payments</div>
+												<div class="col py-4" [align]="'end'">24</div>
+											</div>
+											<div class="range__slider month">
+												<input class="range-slider__range" type="range" value="1" min="1" max="24" step="1" [style.background]="sliderBGMonth" (input)="noOfPaymentValue($event)">
+											</div>
+										</div>
+										</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
 			</div>
 		</div>
 		<div class="col-2" *ngIf="compareAllOptionArray?.length != 3">
@@ -685,7 +677,7 @@
 		</button>
 	</div>
 </ng-template>
-<ng-template #content let-modal>
+<ng-template #calendar let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Payment Date</h4>
       <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
