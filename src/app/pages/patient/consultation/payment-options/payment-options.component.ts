@@ -64,6 +64,7 @@ export class PaymentOptionsComponent implements OnInit {
 		}
 	];
   splitPayment: boolean = false;
+  downPaymentArray: any[] = [1,2,3]
 
 	constructor(private modalService: NgbModal) {}
 
