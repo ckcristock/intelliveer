@@ -9,105 +9,113 @@
 	<div class="row">
 		<div class="col-6">
 			<div class="section">
-				<h6 class="heading">Option {{ '1' }}</h6>
+				<h6 class="heading" style="padding-left: 2rem; padding-right: 2rem;">Option {{ '1' }}</h6>
 				<hr />
-				<table class="table">
-					<tbody>
-						<tr>
-							<td style="font-weight: bold">Timing</td>
-							<td>
-								<p>{{ 'Observation: 3 months' }}</p>
-							</td>
-						</tr>
-						<tr>
-							<td style="font-weight: bold">Treament Phase</td>
-							<td>
-								<p>
-									{{ 'Comprehenssive' }}
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td style="font-weight: bold">Treament Type</td>
-							<td>
-								<p>
-									{{ 'Braces' }}
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td style="font-weight: bold">Treament Time</td>
-							<td>
-								<p>
-									{{ '30-36 Months' }}
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td style="font-weight: bold">Prerequisites</td>
-							<td>
-								<p
-									*ngFor="
-										let prerequisties of prerequisitesArray
-									"
-								>
-									{{ prerequisties }}
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td style="font-weight: bold">Treatment Steps</td>
-							<td>
-								<p
-									*ngFor="
-										let treatmentStep of treatmentStepArray
-									"
-								>
-									{{ treatmentStep }}
-								</p>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<div  class="scroll" style="padding-left: 2rem; padding-right: 2rem;">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td style="font-weight: bold">Timing</td>
+								<td>
+									<p>{{ 'Observation: 3 months' }}</p>
+								</td>
+							</tr>
+							<tr>
+								<td style="font-weight: bold">Treament Phase</td>
+								<td>
+									<p>
+										{{ 'Comprehenssive' }}
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<td style="font-weight: bold">Treament Type</td>
+								<td>
+									<p>
+										{{ 'Braces' }}
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<td style="font-weight: bold">Treament Time</td>
+								<td>
+									<p>
+										{{ '30-36 Months' }}
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<td style="font-weight: bold">Prerequisites</td>
+								<td>
+									<p
+										*ngFor="
+											let prerequisties of prerequisitesArray
+										"
+									>
+										{{ prerequisties }}
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<td style="font-weight: bold">Treatment Steps</td>
+								<td>
+									<p
+										*ngFor="
+											let treatmentStep of treatmentStepArray
+										"
+									>
+										{{ treatmentStep }}
+									</p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 		<div class="col-6">
 			<div class="section">
-				<h6 class="heading">Option {{ '1' }}</h6>
+				<h6 class="heading" style="padding-left: 2rem; padding-right: 2rem;">Option {{ '1' }}</h6>
 				<hr />
-				<div class="row"><b>Fee Breakdown</b></div>
-				<div class="row">
-					<div class="col">Treatment Charges</div>
-					<div class="col" [align]="'end'">$5,650.00</div>
-					<hr />
-				</div>
-				<div class="row">
-					<div class="col">Discounts</div>
-					<div class="col" [align]="'end'" style="color: #2ea74f">
-						($582.50)
+				<div style="padding-left: 2rem; padding-right: 2rem;">
+					<div class="row mb-3"><b>Fee Breakdown</b></div>
+					<div class="row mb-3">
+						<div class="col">Treatment Charges</div>
+						<div class="col" [align]="'end'">$5,650.00</div>
 					</div>
 					<hr />
-				</div>
-				<div class="row mb-1">
-					<div class="col">Final cost to do treatment</div>
-					<div class="col" [align]="'end'" style="font-weight: 600">
-						$2,567.50
+					<div class="row mb-3">
+						<div class="col">Discounts</div>
+						<div class="col" [align]="'end'" style="color: #2ea74f">
+							($582.50)
+						</div>
 					</div>
-				</div>
-				<div class="row mb-1">
-					<div class="col">Estimated Insurance Coverage</div>
-					<div class="col" [align]="'end'">$2,500.00</div>
-				</div>
-				<div class="row mb-1">
-					<div class="col" style="color: #8a8c8e">
-						Patient's Responsibility
+					<hr />
+					<div class="row mb-3">
+						<div class="col">Final cost to do treatment</div>
+						<div
+							class="col"
+							[align]="'end'"
+							style="font-weight: 600"
+						>
+							$2,567.50
+						</div>
 					</div>
-					<div
-						class="col"
-						[align]="'end'"
-						style="font-weight: 600; font-size: x-large"
-					>
-						$2,567.50
+					<div class="row mb-3">
+						<div class="col">Estimated Insurance Coverage</div>
+						<div class="col" [align]="'end'">$2,500.00</div>
+					</div>
+					<div class="row mb-1">
+						<div class="col" style="color: #8a8c8e; vertical-align: middle; display: flex; margin: auto;">
+							Patient's Responsibility
+						</div>
+						<div
+							class="col"
+							[align]="'end'"
+							style="font-weight: 600; font-size: x-large"
+						>
+							$2,567.50
+						</div>
 					</div>
 					<hr />
 				</div>
@@ -115,7 +123,9 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-10">
+		<div
+			[ngClass]="compareAllOptionArray?.length === 1 ? 'col-6' : compareAllOptionArray?.length === 2 ? 'col-9' : 'col-12'"
+		>
 			<div class="table-responsive">
 				<table class="table table-bordered">
 					<thead>
@@ -165,9 +175,9 @@
 								"
 								style="text-align: center"
 							>
-								<div class="btn-group me-3">
+								<div class="btn-group" style="margin-left: 2rem;">
 									<button type="button" class="btn">
-										Payment Option {{ i + 1 }}
+										<b>Payment Option {{ i + 1 }}</b>
 									</button>
 									<div
 										class="btn-group"
@@ -249,7 +259,7 @@
 					</thead>
 					<tbody>
 						<tr>
-							<th>Payment Plan Type</th>
+							<th style="border-bottom-color: white;">Payment Plan Type</th>
 							<td
 								*ngFor="
 									let treatmentOptionObj of compareAllOptionArray
@@ -264,6 +274,7 @@
 										? '#ffffff'
 										: '#ffffff'
 								"
+								style="padding: 1rem 2rem 1rem 2rem;"
 							>
 								<select class="form-select">
 									<option
@@ -277,20 +288,20 @@
 							</td>
 						</tr>
 						<tr>
-							<th>
+							<th style="border-bottom-color: white; border-top-color: white;">
 								Down Payment
 								<img
 									src="../../../../../assets/icons/split-payment.svg"
 									width="20"
 									height="20"
-                                    *ngIf="!splitPayment"
-                                    (click)="splitPayment = true"
+									*ngIf="!splitPayment"
+									(click)="splitPayment = true"
 								/>
-                                <img
+								<img
 									src="../../../../../assets/icons/split-payment-green.svg"
 									width="20"
 									height="20"
-                                    *ngIf="splitPayment"
+									*ngIf="splitPayment"
 								/>
 							</th>
 							<td
@@ -307,6 +318,7 @@
 										? '#faf2e9'
 										: '#f1f2f2'
 								"
+								style="padding: 1rem 2rem 1rem 2rem;"
 							>
 								<div class="input-group">
 									<input type="text" class="form-control" />
@@ -314,7 +326,7 @@
 							</td>
 						</tr>
 						<tr>
-							<th>Payment Frequency</th>
+							<th style="border-bottom-color: white; border-top-color: white;">Split Down payment</th>
 							<td
 								*ngFor="
 									let treatmentOptionObj of compareAllOptionArray
@@ -329,6 +341,36 @@
 										? '#ffffff'
 										: '#ffffff'
 								"
+								style="padding: 1rem 2rem 1rem 2rem;"
+							>
+								<select class="form-select">
+									<option
+										*ngFor="
+											let paymentPlan of downPaymentArray
+										"
+									>
+										{{ paymentPlan }}
+									</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th style="border-bottom-color: white; border-top-color: white;">Payment Frequency</th>
+							<td
+								*ngFor="
+									let treatmentOptionObj of compareAllOptionArray
+								"
+								[ngClass]="
+									treatmentOptionObj.count === 3
+										? 'best-value-yes'
+										: 'best-value-no'
+								"
+								[style.background-color]="
+									treatmentOptionObj.count === 3
+										? '#faf2e9'
+										: '#f1f2f2'
+								"
+								style="padding: 1rem 2rem 1rem 2rem;"
 							>
 								<select class="form-select">
 									<option
@@ -342,29 +384,7 @@
 							</td>
 						</tr>
 						<tr>
-							<th>No. of Payments</th>
-							<td
-								*ngFor="
-									let treatmentOptionObj of compareAllOptionArray
-								"
-								[ngClass]="
-									treatmentOptionObj.count === 3
-										? 'best-value-yes'
-										: 'best-value-no'
-								"
-								[style.background-color]="
-									treatmentOptionObj.count === 3
-										? '#faf2e9'
-										: '#f1f2f2'
-								"
-							>
-								<div class="input-group">
-									<input type="text" class="form-control" />
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<th>Payment Amount</th>
+							<th style="border-bottom-color: white; border-top-color: white;">No. of Payments</th>
 							<td
 								*ngFor="
 									let treatmentOptionObj of compareAllOptionArray
@@ -379,6 +399,7 @@
 										? '#ffffff'
 										: '#ffffff'
 								"
+								style="padding: 1rem 2rem 1rem 2rem;"
 							>
 								<div class="input-group">
 									<input type="text" class="form-control" />
@@ -386,7 +407,7 @@
 							</td>
 						</tr>
 						<tr>
-							<th>Last Payment</th>
+							<th style="border-bottom-color: white; border-top-color: white;">Payment Amount</th>
 							<td
 								*ngFor="
 									let treatmentOptionObj of compareAllOptionArray
@@ -401,13 +422,37 @@
 										? '#faf2e9'
 										: '#f1f2f2'
 								"
+								style="padding: 1rem 2rem 1rem 2rem;"
 							>
-								<p>$114</p>
+								<div class="input-group">
+									<input type="text" class="form-control" />
+								</div>
 							</td>
 						</tr>
 						<tr>
-							<th>
-								<div class="form-check">
+							<th style="border-bottom-color: white; border-top-color: white;">Last Payment</th>
+							<td
+								*ngFor="
+									let treatmentOptionObj of compareAllOptionArray
+								"
+								[ngClass]="
+									treatmentOptionObj.count === 3
+										? 'best-value-yes'
+										: 'best-value-no'
+								"
+								[style.background-color]="
+									treatmentOptionObj.count === 3
+										? '#ffffff'
+										: '#ffffff'
+								"
+								style="padding: 1rem 2rem 1rem 2rem;"
+							>
+								<p style="padding-left: 0.5rem;">$114</p>
+							</td>
+						</tr>
+						<tr>
+							<th style="border-bottom-color: white; border-top-color: white;">
+								<div class="form-check" [align]="'center'">
 									<input
 										class="form-check-input"
 										type="checkbox"
@@ -419,7 +464,8 @@
 										class="form-check-label"
 										for="flexCheckChecked"
 									>
-										Add Remainder <br/> to Last Payment
+										Add Remainder 
+										to Last Payment
 									</label>
 								</div>
 							</th>
@@ -432,6 +478,7 @@
 										? 'best-value-yes'
 										: 'best-value-no'
 								"
+								style="background-color: white; padding: 1rem 2rem 1rem 2rem;"
 							>
 								<div [align]="'end'">
 									<img
@@ -457,7 +504,7 @@
 							</td>
 						</tr>
 						<tr>
-							<th></th>
+							<th style="border-bottom-color: white; border-top-color: white;"></th>
 							<td
 								*ngFor="
 									let treatmentOptionObj of compareAllOptionArray
@@ -467,7 +514,7 @@
 										? 'best-value-yes'
 										: 'best-value-no'
 								"
-								style="background-color: white"
+								style="background-color: white; padding: 1rem 2rem 1rem 2rem;"
 							>
 								<div class="row">
 									<div class="col" [align]="'center'">
@@ -570,8 +617,8 @@
 			<span (click)="addMoreOption()">
 				<img
 					src="assets/icons/add.svg"
-					width="15"
-					height="15"
+					width="20"
+					height="20"
 				/>&nbsp;Add more option
 			</span>
 		</div>
