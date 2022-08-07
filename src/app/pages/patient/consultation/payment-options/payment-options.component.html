@@ -1,84 +1,816 @@
 <div class="container">
-    <app-nav-bar-pills [cancelBtn]="true" [saveBtn]="true" [disableSaveBtn]="false" (onCancel)="cancel()"
-        (onSave)="save($event)"></app-nav-bar-pills>
-    <div class="row">
-        <div class="col-6" *ngFor="let numberofColum of numberofColums; let i = index">
-            <div class="section">
-                <div class="row formrow">
-                    <div class="col-6">
-                        <label class="label-input-gap" style="font-weight: bold;">Choose your Treatment Option</label>
-                        <input class="form-control" type="text" placeholder="Type Name" name="" />
-                    </div>
-                </div>
+	<app-nav-bar-pills
+		[cancelBtn]="true"
+		[saveBtn]="true"
+		[disableSaveBtn]="false"
+		(onCancel)="cancel()"
+		(onSave)="save($event)"
+	></app-nav-bar-pills>
+	<div class="row">
+		<div class="col-6">
+			<div class="section">
+				<h6 class="heading" style="padding-left: 2rem; padding-right: 2rem;">Option {{ '1' }}</h6>
+				<hr />
+				<div  class="scroll" style="padding-left: 2rem; padding-right: 2rem;">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td style="font-weight: bold">Timing</td>
+								<td>
+									<p>{{ 'Observation: 3 months' }}</p>
+								</td>
+							</tr>
+							<tr>
+								<td style="font-weight: bold">Treament Phase</td>
+								<td>
+									<p>
+										{{ 'Comprehenssive' }}
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<td style="font-weight: bold">Treament Type</td>
+								<td>
+									<p>
+										{{ 'Braces' }}
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<td style="font-weight: bold">Treament Time</td>
+								<td>
+									<p>
+										{{ '30-36 Months' }}
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<td style="font-weight: bold">Prerequisites</td>
+								<td>
+									<p
+										*ngFor="
+											let prerequisties of prerequisitesArray
+										"
+									>
+										{{ prerequisties }}
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<td style="font-weight: bold">Treatment Steps</td>
+								<td>
+									<p
+										*ngFor="
+											let treatmentStep of treatmentStepArray
+										"
+									>
+										{{ treatmentStep }}
+									</p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="section">
+				<h6 class="heading" style="padding-left: 2rem; padding-right: 2rem;">Option {{ '1' }}</h6>
+				<hr />
+				<div style="padding-left: 2rem; padding-right: 2rem;">
+					<div class="row mb-3"><b>Fee Breakdown</b></div>
+					<div class="row mb-3">
+						<div class="col">Treatment Charges</div>
+						<div class="col" [align]="'end'">$5,650.00</div>
+					</div>
+					<hr />
+					<div class="row mb-3">
+						<div class="col">Discounts</div>
+						<div class="col" [align]="'end'" style="color: #2ea74f">
+							($582.50)
+						</div>
+					</div>
+					<hr />
+					<div class="row mb-3">
+						<div class="col">Final cost to do treatment</div>
+						<div
+							class="col"
+							[align]="'end'"
+							style="font-weight: 600"
+						>
+							$2,567.50
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col">Estimated Insurance Coverage</div>
+						<div class="col" [align]="'end'">$2,500.00</div>
+					</div>
+					<div class="row mb-1">
+						<div class="col" style="color: #8a8c8e; vertical-align: middle; display: flex; margin: auto;">
+							Patient's Responsibility
+						</div>
+						<div
+							class="col"
+							[align]="'end'"
+							style="font-weight: 600; font-size: x-large"
+						>
+							$2,567.50
+						</div>
+					</div>
+					<hr />
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div
+			[ngClass]="compareAllOptionArray?.length === 1 ? 'col-6' : compareAllOptionArray?.length === 2 ? 'col-9' : 'col-12'"
+		>
+			<div class="table-responsive">
+				<form>
+					<table class="table table-bordered">
+						<thead>
+							<tr style="border: none" *ngIf="showBestOptionCss">
+								<td style="border: none"></td>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray;
+										let i = index
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'show-best-value-yes'
+											: 'show-best-value-no'
+									"
+								>
+									<p
+										style="
+											color: white;
+											text-align: center;
+											font-size: large;
+											font-weight: bold;
+										"
+									>
+										Best Value
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<td
+									style="
+										background-color: white;
+										border-top-color: white;
+										border-left-color: white;
+										border-bottom-color: white;
+									"
+								></td>
+								<th
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray;
+										let i = index
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									style="text-align: center"
+								>
+									<div class="btn-group" style="margin-left: 2rem;">
+										<button type="button" class="btn">
+											<b>Payment Option {{ i + 1 }}</b>
+										</button>
+										<div
+											class="btn-group"
+											ngbDropdown
+											role="group"
+											aria-label="Button group with nested dropdown"
+										>
+											<button
+												type="button"
+												class="btn dropdown-toggle-split"
+												ngbDropdownToggle
+											>
+												<i
+													class="bi bi-three-dots-vertical"
+												></i>
+											</button>
+											<div
+												class="dropdown-menu"
+												ngbDropdownMenu
+												style="background-color: white"
+											>
+												<button ngbDropdownItem>
+													Rename
+												</button>
+												<button ngbDropdownItem>
+													Hide
+												</button>
+											</div>
+										</div>
+									</div>
+									<br />
+									<span style="font-size: medium">
+										<i
+											[ngClass]="
+												treatmentOptionObj.count === 1 ||
+												treatmentOptionObj.count > 1
+													? 'bi bi-hand-thumbs-up-fill'
+													: 'bi bi-hand-thumbs-up'
+											"
+											[ngStyle]="{
+												color: '#e96247'
+											}"
+											(click)="
+												countTreatment(treatmentOptionObj)
+											"
+										></i>
+										&nbsp;
+										<i
+											[ngClass]="
+												treatmentOptionObj.count === 2 ||
+												treatmentOptionObj.count > 2
+													? 'bi bi-hand-thumbs-up-fill'
+													: 'bi bi-hand-thumbs-up'
+											"
+											[ngStyle]="{
+												color: '#e96247'
+											}"
+											(click)="
+												countTreatment(treatmentOptionObj)
+											"
+										></i>
+										&nbsp;
+										<i
+											[ngClass]="
+												treatmentOptionObj.count === 3
+													? 'bi bi-hand-thumbs-up-fill'
+													: 'bi bi-hand-thumbs-up'
+											"
+											[ngStyle]="{
+												color: '#e96247'
+											}"
+											(click)="
+												countTreatment(treatmentOptionObj)
+											"
+										></i>
+									</span>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th style="border-bottom-color: white;">Payment Plan Type</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="
+										treatmentOptionObj.count === 3
+											? '#ffffff'
+											: '#ffffff'
+									"
+									style="padding: 1rem 2rem 1rem 2rem;"
+								>
+									<select class="form-select">
+										<option
+											*ngFor="
+												let paymentPlan of paymentPlanType
+											"
+										>
+											{{ paymentPlan }}
+										</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th style="border-bottom-color: white; border-top-color: white;">
+									Down Payment
+									<img
+										src="../../../../../assets/icons/split-payment.svg"
+										width="20"
+										height="20"
+										*ngIf="!splitPayment"
+										(click)="changeOptions('two')"
+									/>
+									<img
+										src="../../../../../assets/icons/split-payment-green.svg"
+										width="20"
+										height="20"
+										*ngIf="splitPayment"
+										(click)="changeOptions('one')"
+									/>
+								</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="
+										treatmentOptionObj.count === 3
+											? '#faf2e9'
+											: '#f1f2f2'
+									"
+									style="padding: 1rem 2rem 1rem 2rem;"
+								>
+									<div class="input-group">
+										<input type="text" class="form-control" name="downPayment" (ngModelChange)="customCalculate($event)"  [(ngModel)]="downPayment"/>
+									</div>
+								</td>
+							</tr>
+							<!-- <tr>
+								<th style="border-bottom-color: white; border-top-color: white;">Split Down payment</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="
+										treatmentOptionObj.count === 3
+											? '#ffffff'
+											: '#ffffff'
+									"
+									style="padding: 1rem 2rem 1rem 2rem;"
+								>
+									<select class="form-select">
+										<option
+											*ngFor="
+												let paymentPlan of downPaymentArray
+											"
+										>
+											{{ paymentPlan }}
+										</option>
+									</select>
+								</td>
+							</tr> -->
+							<tr>
+								<th style="border-bottom-color: white; border-top-color: white;">Payment Frequency</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="
+										treatmentOptionObj.count === 3
+											? '#faf2e9'
+											: '#f1f2f2'
+									"
+									style="padding: 1rem 2rem 1rem 2rem;"
+								>
+									<select class="form-select">
+										<!-- <option
+											*ngFor="
+												let paymentPlan of paymentPlanType
+											"
+										>
+											{{ paymentPlan }}
+										</option> -->
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th style="border-bottom-color: white; border-top-color: white;">No. of Payments</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="
+										treatmentOptionObj.count === 3
+											? '#ffffff'
+											: '#ffffff'
+									"
+									style="padding: 1rem 2rem 1rem 2rem;"
+								>
+									<div class="input-group">
+										<input type="text" class="form-control" name="totalMonth" (ngModelChange)="customCalculate()"  [(ngModel)]="totalMonth"/>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th style="border-bottom-color: white; border-top-color: white;">Payment Amount</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="
+										treatmentOptionObj.count === 3
+											? '#faf2e9'
+											: '#f1f2f2'
+									"
+									style="padding: 1rem 2rem 1rem 2rem;"
+								>
+									<div class="input-group">
+										<input type="text" class="form-control" name="emi" (ngModelChange)="customCalculate()" [(ngModel)]="emi" readonly  />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th style="border-bottom-color: white; border-top-color: white;">Last Payment</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="
+										treatmentOptionObj.count === 3
+											? '#ffffff'
+											: '#ffffff'
+									"
+									style="padding: 1rem 2rem 1rem 2rem;"
+								>
+									<p style="padding-left: 0.5rem;">${{lastPayment | number : '1.2-2'}}</p>
+								</td>
+							</tr>
+							<tr>
+								<th style="border-bottom-color: white; border-top-color: white;">
+									<div class="form-check" [align]="'center'">
+										<input
+											class="form-check-input"
+											type="checkbox"
+											value=""
+											id="flexCheckChecked"
+											checked
+										/>
+										<label
+											class="form-check-label"
+											for="flexCheckChecked"
+										>
+											Add Remainder 
+											to Last Payment
+										</label>
+									</div>
+								</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									style="background-color: white; padding: 1rem 2rem 1rem 2rem;"
+								>
+									<div [align]="'end'">
+										<img
+											src="../../../../../assets/icons/calendar.svg"
+											width="20"
+											height="20"
+											(click)="open(calendar)"
+										/>
+										<img
+											src="../../../../../assets/icons/unlocked.svg"
+											width="20"
+											height="20"
+											*ngIf="treatmentOptionObj.locked"
+											(click)="openModel(content)"
+										/>
+										<img
+											src="../../../../../assets/icons/locked.svg"
+											width="20"
+											height="20"
+											*ngIf="!treatmentOptionObj.locked"
+											(click)="openModel(content)"
+										/>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th style="border-bottom-color: white; border-top-color: white;"></th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									style="background-color: white; padding: 1rem 2rem 1rem 2rem;"
+								>
+									<div class="row mt-4 text-center custom-downpayment" *ngIf="isDownPayment2">
+										<div class="col-md-6 pe-0">
+											<p style="font-size: 11px;">Down Payment 1</p>
+											<div class="custom-bg">
+												<p style="font-weight: bold; font-size: 14px;">${{downPayment}}</p>
+												<p *ngIf="tabDate">Due by {{tabDate  | date: 'MM/d/yyyy'}}</p>
+											</div>
+										</div>
+										<div class="col-md-6 ps-0">
+											<p style="font-size: 11px;">Down Payment 2</p>
+											<div class="custom-bg">
+												<p style="font-weight: bold; font-size: 14px;">${{downPayment2}}</p>
+												<p *ngIf="tabDate">Due by {{tabTwoDate  | date: 'MM/d/yyyy'}}</p>
+											</div>
+										</div>
+									</div>
+									<div class="row mt-4 text-center custom-downpayment" *ngIf="!isDownPayment2">
+										<div class="col-md-12">
+											<p>Down Payment</p>
+											<div class="custom-bg">
+												<p style="font-weight: bold; font-size: 14px;">${{downPayment}}</p>
+												<p *ngIf="tabDate">Due by {{tabDate  | date: 'MM/d/yyyy'}}</p>
+											</div>
+										</div>
+									</div>
+									<div class="row custom-instalment mt-4 text-center">
+										<div class="col-md pe-0">
+											<p>No. of Installments</p>
+											<div class="custom-bg">
+												<p style="font-weight: bold; font-size: 14px;">{{month}}</p>
+												<p></p>
+											</div>
+										</div>
+										<div class="col-md ps-0">
+											<p>Monthly Installments</p>
+											<div class="custom-bg">
+												<p style="font-weight: bold; font-size: 14px;">${{emi | number : '1.2-2'}}</p>
+												<p *ngIf="tabThreeDate">Due by {{tabThreeDate  | date: 'MM/d/yyyy'}}</p>
+											</div>
+										</div>
+										</div>
+										<div class="row">
+										<div class="col-md-12">
+											<div class="range__slider" *ngIf="isDownPayment2">
+												<div class="row">
+													<div class="col-md-8 py-4">Total Down Payment</div>
+													<div class="col py-4" [align]="'end'">{{totalAmount}}</div>
+												</div>
+												<input class="range-slider__range" type="range" value="{{maxDownPayment1}}" min="{{maxDownPayment1}}" max="{{totalAmount}}" step="25" [style.background]="totalDPBG" (input)="totalDownTable($event,25)">
+											</div>
+										</div>
+										<!-- <div class="col-md-12" *ngIf="isDownPayment2">
+											<div class="row">
+												<div class="col-md-8 py-4">Down Payment 1</div>
+												<div class="col py-4" [align]="'end'">{{maxDownPayment}}</div>
+											</div>
+											<div class="range__slider">
+												<input type="range" value="{{minDownPayment}}" class="range-slider__range" min="{{minDownPayment}}" max="{{maxDownPayment}}" step="25" [style.background]="downPayment1BG" (input)="downPaymentOneValues($event)">
+											</div>
+										</div> -->
+										<div class="col-md-12" *ngIf="!isDownPayment2">
+											<div class="row">
+												<div class="col-md-8 py-4">Down Payment</div>
+												<div class="col py-4" [align]="'end'">{{totalAmount}}</div>
+											</div>
+											<div class="range__slider">
+												<input type="range" value="{{minDownPayment}}" class="range-slider__range" min="{{minDownPayment}}" max="{{totalAmount}}" step="25" [style.background]="sliderBackground" (input)="downPaymentValues($event)">
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="row">
+												<div class="col-md-8 py-4">No.of payments</div>
+												<div class="col py-4" [align]="'end'">{{totalMonth}}</div>
+											</div>
+											<div class="range__slider month">
+												<input class="range-slider__range" type="range" value="1" min="1" max="{{totalMonth}}" step="1" [style.background]="sliderBGMonth" (input)="noOfPaymentValue($event)">
+											</div>
+										</div>
+										</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+		<div class="col-2" *ngIf="compareAllOptionArray?.length != 3">
+			<span (click)="addMoreOption()">
+				<img
+					src="assets/icons/add.svg"
+					width="20"
+					height="20"
+				/>&nbsp;Add more option
+			</span>
+		</div>
+	</div>
+</div>
 
-                <div class="row formrow">
-                    <label class="label-input-gap" style="font-weight: bold;">Tx Option Name 1</label>
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title"></h4>
+		<button
+			type="button"
+			class="btn-close"
+			aria-label="Close"
+			(click)="modal.dismiss('Cross click')"
+		></button>
+	</div>
+	<div class="modal-body">
+		<div class="row">
+			<div class="col">
+				<p>Minimum Down Payment</p>
+				<div class="input-group mb-3">
+					<input type="text" class="form-control" />
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<p>Split Down Payment</p>
+				<div class="input-group mb-3">
+					<input type="text" class="form-control" />
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<p>Minimum Payment Amount</p>
+				<div class="input-group mb-3">
+					<input type="text" class="form-control" />
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<p>Maximum No. of Months</p>
+				<div class="input-group mb-3">
+					<input type="text" class="form-control" />
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<p>Maximum No. of Payments</p>
+				<p>26</p>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button
+			type="button"
+			class="btn btn-dark"
+			(click)="modal.close('Close click')"
+		>
+			Save
+		</button>
+	</div>
+</ng-template>
+<ng-template #calendar let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Payment Date</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="row" *ngIf="!tabDate || !tabTwoDate || !tabThreeDate">
+            <!-- Tabs navs -->
+        <ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
+            <li class="nav-item" role="presentation">
+            <a
+                class="nav-link"
+                id="ex1-tab-1"
+                data-mdb-toggle="tab"
+                role="tab"
+                aria-controls="ex1-tabs-1"
+                aria-selected="true"
+                [ngClass]="[ tab ? 'active' : '']"
+                >Down Payment</a
+            >
+            </li>
+            <li class="nav-item" role="presentation">
+            <a
+                class="nav-link"
+                id="ex1-tab-2"
+                data-mdb-toggle="tab"
+                role="tab"
+                aria-controls="ex1-tabs-2"
+                aria-selected="false"
+                [ngClass]="[ tabTwo ? 'active' : '']"
+                >Down Payment 2</a
+            >
+            </li>
+            <li class="nav-item" role="presentation">
+            <a
+                class="nav-link"
+                id="ex1-tab-3"
+                data-mdb-toggle="tab"
+                role="tab"
+                aria-controls="ex1-tabs-3"
+                aria-selected="false"
+                [ngClass]="[ tabThree ? 'active' : '']"
+                >Installment</a
+            >
+            </li>
+        </ul>
+        <!-- Tabs navs -->
+        <!-- Tabs content -->
+        <div class="tab-content" id="ex1-content">
+            <div
+            class="tab-pane fade show active"
+            id="ex1-tabs-1"
+            role="tabpanel"
+            aria-labelledby="ex1-tab-1"
+            *ngIf="tab"
+            >
+                <ngb-datepicker #dp [(ngModel)]="model" (click)="getDate('tab',model)"  (navigate)="date = $event.next"></ngb-datepicker>
+            </div>
+            <div class="tab-pane fade show active" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2" *ngIf="tabTwo">
+                <ngb-datepicker #dp [(ngModel)]="modelTwo" (click)="getDate('tabTwo',modelTwo)"  (navigate)="date = $event.next"></ngb-datepicker>
+            </div>
+            <div class="tab-pane fade show active" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3" *ngIf="tabThree">
+                <ngb-datepicker #dp [(ngModel)]="modelThree" (click)="getDate('tabThree',modelThree)"  (navigate)="date = $event.next"></ngb-datepicker>
+                <ng-select placeholder="Select Type" (change)="checkMonthlyValue($event)">
+                    <ng-option value="monthly">Monthly</ng-option>
+                    <ng-option value="byMonthly">Bi-Monthly</ng-option>
+                    <ng-option value="weekly">Weekly</ng-option>
+                </ng-select>
+                <div class="col" *ngIf="isMonthlyStatus">
+                    <button (click)="showDate('tabThree',modelThree)">Save</button>
                 </div>
-                <hr>
-
-                <div *ngFor="let txOption of txOptions; let i = index">
-                    <div class="row" style="border: 1px solid #c0c2c4">
-                        <div class="col-6" [ngClass]="[checkOdd(i) == false ? 'background-gray' : 'background-white']" style="font-weight: bold;">{{ txOption.subtitle }}</div>
-                        <div class="col-6" [ngClass]="[checkOdd(i) == false ? 'background-gray' : 'background-white']">{{ txOption.content }}</div>
-                    </div>
-                </div>
-
-                <div class="row formrow">
-                    <label class="label-input-gap" style="font-weight: bold;">Tx Fee Estimate</label>
-                </div>
-                <hr>
-                <div *ngFor="let txFee of txFees; let i = index">
-                    <div class="row">
-                        <div class="col-6">{{ txFee.subtitle }}</div>
-                        <div class="col-6">{{ txFee.content }}</div>
-                    </div>
-                </div>
-                <hr>
-
-                <br>
-                <div *ngFor="let minDownPaym of minDownPayms; let i = index">
-                    <div class="row">
-                        <div class="col-6" style="font-weight: bold;">{{ minDownPaym.subtitle }}</div>
-                        <div class="col-6" *ngIf="minDownPaym.type == 'dropdown'">
-                            <ng-select placeholder="Payment Option 2">
-                                <ng-option>Payment Option 2</ng-option>
-                            </ng-select>
-                        </div>
-                        <div class="col-6" *ngIf="minDownPaym.type != 'dropdown'" [ngClass]="[checkOdd(i) == false ? 'background-white' : 'background-gray']">{{ minDownPaym.content }}</div>
-                    </div>
-                </div>
-
-                <br/>
-
-                <div class="row">
-                    <div class="col-3"></div>
-                    <div class="col-6" style="margin: auto; background-color: #f1f2f2;">
-                        <div [align]="'center'">
-                            <div class="row" style="border-bottom: 4px solid white;">
-                                <div class="col">
-                                    $500
-                                    <p>Down Payment</p>
-                                </div>
-                                <img src="assets/icons/slider_v.svg" width="20" height="20" class="img-v" />
-                            </div>
-            
-                            <div class="row">
-                                <div class="col" style="border-right: 4px solid white;">
-                                    24
-                                    <p>No. of Installments</p>
-                                    <img src="assets/icons/slider_h.svg" width="20" height="20" class="img-h"/>
-                                </div>
-                                <div class="col" style="border-left: 0px solid white;">
-                                    $250
-                                    <p>Monthly Installments</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3"></div>
-                </div>
-                
             </div>
         </div>
+        <!-- Tabs content -->
+        </div>
+        <div class="row" *ngIf="tabDate && tabTwoDate && tabThreeDate">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Amount($)</th>
+                    <th scope="col">Date</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody class="text-center">
+                  <tr>
+                    <th>Down Payment 1</th>
+                    <td>
+                        ${{downPayment}}
+                    </td>
+                    <td>{{tabDate  | date: 'MM/d/yyyy'}}</td>
+                    <td><img src="assets/icons/Edit.svg" (click)="d.toggle()" style="width:20px">
+                        <input type="hidden" class="form-control" placeholder="yyyy-mm-dd"
+                       name="dp" [(ngModel)]="model" (dateSelect)="getDate('tab',model)" ngbDatepicker #d="ngbDatepicker">
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Down Payment 2</th>
+                    <td>
+                        ${{downPayment2}}
+                    </td>
+                    <td>{{tabTwoDate  | date: 'MM/d/yyyy'}}</td>
+                    <td><img src="assets/icons/Edit.svg" (click)="d2.toggle()" style="width:20px">
+                        <input type="hidden" class="form-control" placeholder="yyyy-mm-dd"
+                       name="dp" [(ngModel)]="modelTwo" (dateSelect)="getDate('tabTwo',modelTwo)"ngbDatepicker #d2="ngbDatepicker">
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Installemnts({{monthlyCount}})</th>
+                    <th scope="col">Amount($)</th>
+                    <th scope="col">Date(Monthly)</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody class="text-center">
+                  <tr *ngFor="let item of monthDateObj; let i = index;">
+                    <th>Payment {{i + 1}} </th>
+                    <td>
+                        ${{monthlyEmi  | number : '1.2-2'}}
+                    </td>
+                    <td >{{item.date  | date: 'MM/d/yyyy'}}</td>
+                    <!-- <td *ngIf="i % 2 !=0">{{monthDateObj[i].date  | date: 'dd MMMM YYYY'}}</td> -->
+                    <td *ngIf="i == 0"><img src="assets/icons/Edit.svg" (click)="d3.toggle()" style="width:20px">
+                        <input type="hidden" class="form-control" placeholder="yyyy-mm-dd"
+                       name="dp" [(ngModel)]="modelThree" (dateSelect)="getDate('tabThree',modelThree)" ngbDatepicker #d3="ngbDatepicker"></td>
+                    <td *ngIf="i != 0"></td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
     </div>
-</div>
+  </ng-template>
