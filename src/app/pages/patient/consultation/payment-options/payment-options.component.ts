@@ -85,7 +85,7 @@ export class PaymentOptionsComponent implements OnInit {
  /** variable for calculator */
  totalAmount: number = 2567.50;
  totalAmountDP: number = 0;
- totalMonth: number = 24;
+ totalMonth: number = 26;
  miniMum: number = 1;
  month: number = 1;
  emi: any = 0;
@@ -100,10 +100,12 @@ export class PaymentOptionsComponent implements OnInit {
  sliderBGMonth: any;
  totalDPBG: any;
  downPayment1BG:any;
+ lastPayment:number = 0;
+ maxDownPayment:number = 0;
 	constructor(private modalService: NgbModal) {}
 
 	ngOnInit(): void {
-		this.emi = this.totalAmount - this.downPayment;
+	this.customCalculate(this.downPayment)
 	}
 
 	save(data: any) {}
@@ -151,6 +153,7 @@ export class PaymentOptionsComponent implements OnInit {
 	   if(event == "two"){
 		this.splitPayment = true;
 		this.maxDownPayment1 = this.downPayment;
+		this.maxDownPayment = this.downPayment;
 		this.isDownPayment2 = true;
 		this.downPayment2 = parseInt(downPayment) / 2;
 		this.downPayment = this.downPayment2;
@@ -316,19 +319,32 @@ export class PaymentOptionsComponent implements OnInit {
 		}
 		let percentage =  (this.downPayment - this.minDownPayment) / (this.totalAmount - this.minDownPayment) * 100;
 		this.sliderBackground = 'linear-gradient(to right, #E6BD5C, #ff4500 ' + percentage + '%, #E6BD5C ' + percentage + '%, #dee1e2 100%)';
-		let percentageMonth = (this.month - 1)/(24-1) * 100;
+		let percentageMonth = (this.month - 1)/(this.totalMonth-1) * 100;
 		this.sliderBGMonth = 'linear-gradient(to right, #49c6ef, #2c3e50 ' + percentageMonth + '%, #ecf7fb ' + percentageMonth + '%, #ecf7fb 100%)';
 	  }
 	  totalDownTable(event:any,step:any){
+		if(this.emi == 0){
+			this.downPayment = this.downPayment2;
+		}
 		let data = event.target.value;
+		console.log(data);
 		 this.downPayment = data / 2;
 		 this.downPayment2 = data / 2;
-		 if(this.month != 0 && this.month <= 24 && (data < this.totalAmount || data == this.totalAmount) ){
-		  this.emi = (this.totalAmount - data)/this.month;
+		 this.minDownPayment = this.downPayment;
+		 this.maxDownPayment = data;
+		 let diffData = this.totalAmount - data;
+		console.log(data)
+		if(diffData < 25){
+		 this.downPayment = this.totalAmount / 2;
+		 this.downPayment2 = this.totalAmount / 2;
+		 this.emi = 0;
+		 this.month = 0;
 		}else{
-		  this.month = 0;
-		  this.emi = 0;
+		 if(this.month == 0){
+			this.month = 1;
+		 }
 		}
+		 this.customCalculate(data)
 		this.calculateInstallments();
 		let totalDPBG =  ((this.downPayment + this.downPayment2) - this.maxDownPayment1) / (this.totalAmount - this.maxDownPayment1) * 100;
 		this.totalDPBG = 'linear-gradient(to right, #E6BD5C, #ff4500 ' + totalDPBG + '%, #E6BD5C ' + totalDPBG + '%, #dee1e2 100%)';
@@ -337,23 +353,37 @@ export class PaymentOptionsComponent implements OnInit {
 	  /** range slider */
 	  downPaymentValues(event:any){
 		let data = event.target.value;
-		this.downPayment = data;
 		if(this.month == 0){
 		  if(data > 0){
 			this.month = 1;
 		  }
 		}
-		if(this.month != 0 && this.month <= 24 && data < this.totalAmount ){
-			this.emi = (this.totalAmount - data)/this.month;
+		let diffData = this.totalAmount - data;
+		console.log(data)
+		if(diffData < 25){
+		 this.downPayment = this.totalAmount;
+		 this.emi = 0;
+		 this.month = 0;
 		}else{
-		  this.month = 0;
-		  this.emi = 0;
+		  this.downPayment = data;
 		}
+		this.customCalculate(data)
 		this.calculateInstallments();
 	  }
 	  noOfPaymentValue(event:any){
 	   this.month = event.target.value;
-	   this.emi = ((this.totalAmount - this.downPayment)/this.month);
+	   console.log(this.month)
+	   let data;
+	   if(this.downPayment2){
+		 data = this.downPayment + this.downPayment2;
+	   }else{
+         data = this.downPayment;
+	   }
+	   if(this.emi == 0){
+		data = this.totalAmount / 2;
+		this.downPayment = this.totalAmount / 2;
+	   }
+	   this.customCalculate(data)
 	   this.calculateInstallments();
 	  }
 	  downPaymentOneValues(event:any){
@@ -362,14 +392,35 @@ export class PaymentOptionsComponent implements OnInit {
 		this.downPayment = downpayment;
 		let data = parseInt(downpayment) + parseInt(downPayment2)
 		console.log(data)
-		if(this.month != 0 && this.month <= 24 && data < this.totalAmount ){
-		  this.emi = (this.totalAmount - data)/this.month;
-	  }else{
-		this.month = 0;
-		this.emi = 0;
-	  }
+		this.customCalculate(data)
 	  this.calculateInstallments();
-	  let downPayment1BG =  (this.downPayment - this.minDownPayment) / (this.maxDownPayment1 - this.minDownPayment) * 100;
+	  let downPayment1BG =  (this.downPayment - this.minDownPayment) / (this.maxDownPayment - this.minDownPayment) * 100;
 	  this.downPayment1BG = 'linear-gradient(to right, #E6BD5C, #ff4500 ' + downPayment1BG + '%, #E6BD5C ' + downPayment1BG + '%, #dee1e2 100%)';
+	  }
+	  customCalculate(data?:any){
+		let emi:any;
+		let decimalValue;
+		if(!data){
+		  data = this.downPayment;
+		}
+		console.log(data,this.downPayment)
+		if(this.month != 0 && this.month <= this.totalMonth && data < this.totalAmount ){
+			emi = (this.totalAmount - data)/this.month;
+			emi = emi.toFixed(2)
+			this.emi = Math.trunc(emi)
+		}else{
+		  this.emi = 0;
+		}
+		if(emi > 0){
+		  decimalValue = this.getDecimalPart(emi)
+		  this.lastPayment = this.emi + (this.month * (decimalValue / 100));
+		}
+	  }
+	   getDecimalPart(num:any) {
+		if (Number.isInteger(num)) {
+		  return 0;
+		}
+		const decimalStr = num.toString().split('.')[1];
+		return Number(decimalStr);
 	  }
 }

@@ -323,11 +323,11 @@
 									style="padding: 1rem 2rem 1rem 2rem;"
 								>
 									<div class="input-group">
-										<input type="text" class="form-control" name="downPayment"  [(ngModel)]="downPayment"/>
+										<input type="text" class="form-control" name="downPayment" (ngModelChange)="customCalculate($event)"  [(ngModel)]="downPayment"/>
 									</div>
 								</td>
 							</tr>
-							<tr>
+							<!-- <tr>
 								<th style="border-bottom-color: white; border-top-color: white;">Split Down payment</th>
 								<td
 									*ngFor="
@@ -355,7 +355,7 @@
 										</option>
 									</select>
 								</td>
-							</tr>
+							</tr> -->
 							<tr>
 								<th style="border-bottom-color: white; border-top-color: white;">Payment Frequency</th>
 								<td
@@ -375,13 +375,13 @@
 									style="padding: 1rem 2rem 1rem 2rem;"
 								>
 									<select class="form-select">
-										<option
+										<!-- <option
 											*ngFor="
 												let paymentPlan of paymentPlanType
 											"
 										>
 											{{ paymentPlan }}
-										</option>
+										</option> -->
 									</select>
 								</td>
 							</tr>
@@ -404,7 +404,7 @@
 									style="padding: 1rem 2rem 1rem 2rem;"
 								>
 									<div class="input-group">
-										<input type="text" class="form-control" name="month"   [(ngModel)]="month"/>
+										<input type="text" class="form-control" name="totalMonth" (ngModelChange)="customCalculate()"  [(ngModel)]="totalMonth"/>
 									</div>
 								</td>
 							</tr>
@@ -427,7 +427,7 @@
 									style="padding: 1rem 2rem 1rem 2rem;"
 								>
 									<div class="input-group">
-										<input type="text" class="form-control" name="emi" [(ngModel)]="emi"  />
+										<input type="text" class="form-control" name="emi" (ngModelChange)="customCalculate()" [(ngModel)]="emi" readonly  />
 									</div>
 								</td>
 							</tr>
@@ -449,7 +449,7 @@
 									"
 									style="padding: 1rem 2rem 1rem 2rem;"
 								>
-									<p style="padding-left: 0.5rem;">$114</p>
+									<p style="padding-left: 0.5rem;">${{lastPayment | number : '1.2-2'}}</p>
 								</td>
 							</tr>
 							<tr>
@@ -570,15 +570,15 @@
 												<input class="range-slider__range" type="range" value="{{maxDownPayment1}}" min="{{maxDownPayment1}}" max="{{totalAmount}}" step="25" [style.background]="totalDPBG" (input)="totalDownTable($event,25)">
 											</div>
 										</div>
-										<div class="col-md-12" *ngIf="isDownPayment2">
+										<!-- <div class="col-md-12" *ngIf="isDownPayment2">
 											<div class="row">
 												<div class="col-md-8 py-4">Down Payment 1</div>
-												<div class="col py-4" [align]="'end'">{{maxDownPayment1}}</div>
+												<div class="col py-4" [align]="'end'">{{maxDownPayment}}</div>
 											</div>
 											<div class="range__slider">
-												<input type="range" value="{{minDownPayment}}" class="range-slider__range" min="{{minDownPayment}}" max="{{maxDownPayment1}}" step="25" [style.background]="downPayment1BG" (input)="downPaymentOneValues($event)">
+												<input type="range" value="{{minDownPayment}}" class="range-slider__range" min="{{minDownPayment}}" max="{{maxDownPayment}}" step="25" [style.background]="downPayment1BG" (input)="downPaymentOneValues($event)">
 											</div>
-										</div>
+										</div> -->
 										<div class="col-md-12" *ngIf="!isDownPayment2">
 											<div class="row">
 												<div class="col-md-8 py-4">Down Payment</div>
@@ -591,10 +591,10 @@
 										<div class="col-md-12">
 											<div class="row">
 												<div class="col-md-8 py-4">No.of payments</div>
-												<div class="col py-4" [align]="'end'">24</div>
+												<div class="col py-4" [align]="'end'">{{totalMonth}}</div>
 											</div>
 											<div class="range__slider month">
-												<input class="range-slider__range" type="range" value="1" min="1" max="24" step="1" [style.background]="sliderBGMonth" (input)="noOfPaymentValue($event)">
+												<input class="range-slider__range" type="range" value="1" min="1" max="{{totalMonth}}" step="1" [style.background]="sliderBGMonth" (input)="noOfPaymentValue($event)">
 											</div>
 										</div>
 										</div>
@@ -762,7 +762,7 @@
                     <th scope="col"></th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-center">
                   <tr>
                     <th>Down Payment 1</th>
                     <td>
@@ -796,7 +796,7 @@
                     <th scope="col"></th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-center">
                   <tr *ngFor="let item of monthDateObj; let i = index;">
                     <th>Payment {{i + 1}} </th>
                     <td>
@@ -807,7 +807,7 @@
                     <td *ngIf="i == 0"><img src="assets/icons/Edit.svg" (click)="d3.toggle()" style="width:20px">
                         <input type="hidden" class="form-control" placeholder="yyyy-mm-dd"
                        name="dp" [(ngModel)]="modelThree" (dateSelect)="getDate('tabThree',modelThree)" ngbDatepicker #d3="ngbDatepicker"></td>
-                    <td></td>
+                    <td *ngIf="i != 0"></td>
                   </tr>
                 </tbody>
               </table>
