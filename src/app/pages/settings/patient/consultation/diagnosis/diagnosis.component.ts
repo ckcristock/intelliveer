@@ -1,42 +1,41 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { problemListOfDiagnosis } from '@pages/patient/menu';
 
 @Component({
-  selector: 'app-diagnosis',
-  templateUrl: './diagnosis.component.html',
-  styleUrls: ['./diagnosis.component.scss']
+	selector: 'app-diagnosis',
+	templateUrl: './diagnosis.component.html',
+	styleUrls: ['./diagnosis.component.scss']
 })
 export class DiagnosisComponent implements OnInit {
-
-  categories: any[] = ['Malocclusion', 'Overjet', 'Overbite', 'Category 4'];
-  values: any[] = [
-    {
+	categories: any[] = problemListOfDiagnosis;
+	values: any[] = [
+		{
 			name: 'Too much overjet',
-      type: 'mm',
+			type: 'mm',
 			chartImpact: true,
-      chartAction: 'Option 1, Option 2, Option 3'
+			chartAction: 'Option 1, Option 2, Option 3'
 		},
 		{
 			name: 'Normal overjet',
-      type: 'Tooth',
+			type: 'Tooth',
 			chartImpact: false,
-      chartAction: ''
+			chartAction: ''
 		},
-    {
+		{
 			name: 'Too less overjet',
-      type: 'Tooth',
+			type: 'Tooth',
 			chartImpact: true,
-      chartAction: 'Option 2'
-		},
-  ];
-  public row: any;
+			chartAction: 'Option 2'
+		}
+	];
+	public row: any;
 
-  constructor(private modalService: NgbModal) { }
+	constructor(private modalService: NgbModal) {}
 
-  ngOnInit(): void {
-  }
+	ngOnInit(): void {}
 
-  endMove($event: any) {
+	endMove($event: any) {
 		let children = Array.from($event.target.parentNode.parentNode.children);
 		if (
 			children.indexOf($event.target.parentNode) >
@@ -57,5 +56,4 @@ export class DiagnosisComponent implements OnInit {
 	openValue(content: any) {
 		this.modalService.open(content, { centered: true });
 	}
-
 }

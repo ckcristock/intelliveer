@@ -47,16 +47,22 @@ const routes: Routes = [
 						'@pages/patient/consultation/treatment/treatment.module'
 					).then((m) => m.TreatmentModule)
 			},
-      {
-        path: 'payment-options',
-        loadChildren: () =>
-          import(
-            '@pages/patient/consultation/payment-options/payment-options.module').then(
-              (m) => m.PaymentOptionsModule
-            ),
-      },
-    ],
-  },
+			{
+				path: 'fee-estimate',
+				loadChildren: () =>
+					import(
+						'@pages/patient/consultation/fee-estimate/fee-estimate.module'
+					).then((m) => m.FeeEstimateModule)
+			},
+			{
+				path: 'payment-options',
+				loadChildren: () =>
+					import(
+						'@pages/patient/consultation/payment-options/payment-options.module'
+					).then((m) => m.PaymentOptionsModule)
+			}
+		]
+	}
 ];
 
 @NgModule({

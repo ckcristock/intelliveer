@@ -569,4 +569,19 @@ export class UserPolicyComponent implements OnInit {
 			});
 		});
 	}
+
+	onChangeLE(legelEntity: any)
+	{
+		legelEntity.itemsList._selectionModel._selected = [];
+	}
+
+	onChangeLOC(location: any)
+	{
+		location.itemsList._selectionModel._selected = [];
+	}
+
+	onChangePR(practice: any)
+	{
+		practice.itemsList._selectionModel._selected = [];
+	}
 }

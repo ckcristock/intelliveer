@@ -26,13 +26,13 @@ const routes: Routes = [
 						'@pages/settings/patient/consultation/diagnosis/diagnosis.module'
 					).then((m) => m.DiagnosisModule)
 			},
-			// {
-			// 	path: 'treatment',
-			// 	loadChildren: () =>
-			// 		import(
-			// 			'@pages/patient/consultation/treatment/treatment.module'
-			// 		).then((m) => m.TreatmentModule)
-			// },
+			{
+				path: 'treatment',
+				loadChildren: () =>
+					import(
+						'@pages/settings/patient/consultation/treatment/treatment.module'
+					).then((m) => m.TreatmentModule)
+			},
 			// {
 			// 	path: 'payment-options',
 			// 	loadChildren: () =>

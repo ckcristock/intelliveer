@@ -127,10 +127,10 @@
 				*ngIf="selectedPatient"
 			>
 				<div ngbDropdown class="d-inline-block drpdown">
-					<div (click)="showSelectedPatientUserCard = true">
+					<div (click)="onSelectPatient('showSelectedPatientUserCard', selectedPatient)">
 						<img src="{{ selectedPatient.profileUrl }}" alt="" ngbDropdownToggle />
 						<span
-							>{{ selectedPatient.user }} ({{ selectedPatient.id }}) <p  (dblclick)="moveToLastPage($event)">hhhhhhhhhhhhhh</p></span
+							>{{ selectedPatient.user }} ({{ selectedPatient.id }})</span
 						>
 					</div>					
 					<div ngbDropdownMenu style="width: 28rem;" *ngIf="showSelectedPatientUserCard">
@@ -172,7 +172,7 @@
 			<div class="d-flex justify-content-center align-items-center" *ngIf="selectUserLst?.length != 0">
 				<div *ngFor="let selectUser of selectUserLst | slice:1:4">
 					<div ngbDropdown class="d-inline-block drpdown">
-						<img src="{{ selectUser.profileUrl }}" alt="" ngbDropdownToggle (click)="showUserCard = true" />
+						<img src="{{ selectUser.profileUrl }}" alt="" ngbDropdownToggle (click)="onSelectPatient('showUserCard', selectUser)" />
 						<div class="pinOverlay" *ngIf="selectUser.isPin"> <img src="assets/icons/pin_fill.svg" alt="" width="10" height="10" /></div>
 						<div ngbDropdownMenu style="width: 28rem;" *ngIf="showUserCard">
 							<div class="container">

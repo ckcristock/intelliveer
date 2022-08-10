@@ -26,12 +26,63 @@ export class NavbarComponent implements OnInit {
 	username: any;
 	searchWord: string = '';
 	userLst: any = [
-		{ user: 'Smith John', dob: '12/30/1984', active: true, id: 'P001', sex:'Female', isPin: false, profileUrl: 'assets/images/doctor.jpg' },
-		{ user: 'Smith Doe', dob: '08/23/1988', active: true, id: 'P002', sex:'Female', isPin: false, profileUrl: 'assets/images/doctor2.jpg' },
-		{ user: 'Smith Walker', dob: '12/06/1994', active: true, id: 'P003', sex:'Male', isPin: false, profileUrl: 'https://imedica.brainstormforce.com/wp-content/uploads/2015/02/doc1.jpg' },
-		{ user: 'Oil Diva', dob: '03/15/1994', active: true, id: 'P004', sex:'Female', isPin: false, profileUrl: 'https://www.parkinsonsdiseasespecialist.com/wp-content/uploads/2020/08/shivam-profile-pic.jpg' },
-		{ user: 'Pie Energy', dob: '01/30/1994', active: true, id: 'P005', sex:'Female', isPin: false, profileUrl: 'https://th.bing.com/th/id/OIP.90CUUa066hZfeG-UXb3mtgHaKA?pid=ImgDet&w=758&h=1024&rs=1' },
-		{ user: 'Lemon Serenade', dob: '01/08/1994', active: false, id: 'P006', sex:'Female', isPin: false, profileUrl: 'assets/images/doctor2.jpg' }
+		{
+			user: 'Smith John',
+			dob: '12/30/1984',
+			active: true,
+			id: 'P001',
+			sex: 'Female',
+			isPin: false,
+			profileUrl: 'assets/images/doctor.jpg'
+		},
+		{
+			user: 'Smith Doe',
+			dob: '08/23/1988',
+			active: true,
+			id: 'P002',
+			sex: 'Female',
+			isPin: false,
+			profileUrl: 'assets/images/doctor2.jpg'
+		},
+		{
+			user: 'Smith Walker',
+			dob: '12/06/1994',
+			active: true,
+			id: 'P003',
+			sex: 'Male',
+			isPin: false,
+			profileUrl:
+				'https://imedica.brainstormforce.com/wp-content/uploads/2015/02/doc1.jpg'
+		},
+		{
+			user: 'Oil Diva',
+			dob: '03/15/1994',
+			active: true,
+			id: 'P004',
+			sex: 'Female',
+			isPin: false,
+			profileUrl:
+				'https://www.parkinsonsdiseasespecialist.com/wp-content/uploads/2020/08/shivam-profile-pic.jpg'
+		},
+		{
+			user: 'Pie Energy',
+			dob: '01/30/1994',
+			active: true,
+			id: 'P005',
+			sex: 'Female',
+			isPin: false,
+			profileUrl:
+				'https://th.bing.com/th/id/OIP.90CUUa066hZfeG-UXb3mtgHaKA?pid=ImgDet&w=758&h=1024&rs=1'
+		},
+		{
+			user: 'Lemon Serenade',
+			dob: '01/08/1994',
+			active: false,
+			id: 'P006',
+			sex: 'Female',
+			isPin: false,
+			profileUrl: 'assets/images/doctor2.jpg'
+		}
 	];
 	@ViewChild('searchDivRef') searchDivRef!: ElementRef;
 	userSearchLst: any[] = [];
@@ -41,6 +92,7 @@ export class NavbarComponent implements OnInit {
 	menuItems: any[] = [];
 	showUserCard: boolean = false;
 	showSelectedPatientUserCard: boolean = false;
+	clickCount: number = 0;
 
 	constructor(
 		private authService: AuthService,
@@ -60,21 +112,17 @@ export class NavbarComponent implements OnInit {
 		this.userSearchLst = this.userLst;
 		this.getUsername();
 		for (let i = 0; i < this.allMenuItems.length; i++) {
-			if(this.allMenuItems[i].shortTitle)
-			{
+			if (this.allMenuItems[i].shortTitle) {
 				this.menuItems.push(this.allMenuItems[i]);
 			}
 		}
 		this.selectedPatient = JSON.parse(
 			localStorage.getItem('selectedPatient') || ''
 		);
-		if(this.selectedPatient)
-		{
-			this.selectUserLst.push(this.selectedPatient)
+		if (this.selectedPatient) {
+			this.selectUserLst.push(this.selectedPatient);
 			this.showSelectedPatient = true;
-		}
-		else
-		{
+		} else {
 			this.selectUserLst = [];
 			this.showSelectedPatient = false;
 		}
@@ -97,28 +145,24 @@ export class NavbarComponent implements OnInit {
 	}
 	handleSearchResultsClick(patient: any) {
 		if (patient.active) {
-			this.searchWord = "";
+			this.searchWord = '';
 			this.searchFocus = false;
 			this.showSelectedPatient = true;
 			this.selectedPatient = patient;
-			const findDuplicate = this.selectUserLst.filter(item => item.id === patient.id);
-			if(findDuplicate.length == 0)
-			{
+			const findDuplicate = this.selectUserLst.filter(
+				(item) => item.id === patient.id
+			);
+			if (findDuplicate.length == 0) {
 				patient.isPin = false;
-				if(this.selectUserLst.length < 4)
-				{
+				if (this.selectUserLst.length < 4) {
 					this.selectUserLst[this.selectUserLst.length] = patient;
-					if(this.selectUserLst.length >= 1)
-					{
+					if (this.selectUserLst.length >= 1) {
 						this.selectUserLst.reverse();
 					}
-				}
-				else
-				{
+				} else {
 					let indexArray: any[] = [];
 					for (let i = 1; i < this.selectUserLst.length; i++) {
-						if(this.selectUserLst[i].isPin == true )
-						{
+						if (this.selectUserLst[i].isPin == true) {
 							indexArray.push(i);
 						}
 					}
@@ -126,58 +170,64 @@ export class NavbarComponent implements OnInit {
 					switch (indexArray.length) {
 						case 1:
 							index = indexArray[0];
-							for (let i = this.selectUserLst.length - 1; i > 0; i--) {
-								if(index != i)
-								{
-									if(this.selectUserLst[i - 1].isPin)
-									{
-										this.selectUserLst[i] = this.selectUserLst[i - 2];
+							for (
+								let i = this.selectUserLst.length - 1;
+								i > 0;
+								i--
+							) {
+								if (index != i) {
+									if (this.selectUserLst[i - 1].isPin) {
+										this.selectUserLst[i] =
+											this.selectUserLst[i - 2];
+									} else {
+										this.selectUserLst[i] =
+											this.selectUserLst[i - 1];
 									}
-									else
-									{
-										this.selectUserLst[i] = this.selectUserLst[i - 1];
-									}
+								} else {
+									this.selectUserLst[i] =
+										this.selectUserLst[i];
 								}
-								else
-								{
-									this.selectUserLst[i] = this.selectUserLst[i];
-								}									
 							}
 							this.selectUserLst[0] = patient;
-							break;						
+							break;
 						case 2:
 							let a1 = [1, 2, 3];
 							let a2 = indexArray;
-							let missingIndexArray = a1.filter(item => a2.indexOf(item) < 0);
-							this.selectUserLst[missingIndexArray[0]] = this.selectUserLst[0];
+							let missingIndexArray = a1.filter(
+								(item) => a2.indexOf(item) < 0
+							);
+							this.selectUserLst[missingIndexArray[0]] =
+								this.selectUserLst[0];
 							this.selectUserLst[0] = patient;
 							break;
 						case 3:
 							this.selectedPatient = patient;
-							break;					
+							break;
 						default:
-							let getLastIndex = this.selectUserLst.length - 1
+							let getLastIndex = this.selectUserLst.length - 1;
 							this.selectUserLst.splice(getLastIndex, 1);
-							for (let i = this.selectUserLst.length; i > 0; i--) {
-								this.selectUserLst[i] = this.selectUserLst[i - 1];
+							for (
+								let i = this.selectUserLst.length;
+								i > 0;
+								i--
+							) {
+								this.selectUserLst[i] =
+									this.selectUserLst[i - 1];
 							}
 							this.selectUserLst[0] = patient;
 							break;
 					}
 				}
-			}
-			else
-			{
-				let index = this.selectUserLst.findIndex(obj => obj.id == findDuplicate[0].id);
-				if(findDuplicate[0].isPin)
-				{
+			} else {
+				let index = this.selectUserLst.findIndex(
+					(obj) => obj.id == findDuplicate[0].id
+				);
+				if (findDuplicate[0].isPin) {
 					this.selectUserLst[index] = this.selectUserLst[0];
 					patient.isPin = false;
 					this.selectUserLst[0] = patient;
 					this.selectedPatient = patient;
-				}
-				else
-				{
+				} else {
 					patient.isPin = false;
 					this.selectUserLst.splice(index, 1);
 					for (let i = this.selectUserLst.length; i > 0; i--) {
@@ -187,10 +237,11 @@ export class NavbarComponent implements OnInit {
 					this.selectedPatient = patient;
 				}
 			}
-			localStorage.setItem('selectedPatient', JSON.stringify(this.selectedPatient));
-			this.router.navigate([
-				'/dashboard/patient/camera'
-			]);
+			localStorage.setItem(
+				'selectedPatient',
+				JSON.stringify(this.selectedPatient)
+			);
+			this.router.navigate(['/dashboard/patient/camera']);
 		}
 	}
 
@@ -212,27 +263,23 @@ export class NavbarComponent implements OnInit {
 		if ($event.target.value === '') {
 			this.userSearchLst = this.userLst;
 		}
-		this.userSearchLst = this.userLst.filter(
-			(searchResultObj: any) => {
-				return searchResultObj.user
-					.toLowerCase()
-					.startsWith($event.target.value.toLowerCase());
-			}
-		);
+		this.userSearchLst = this.userLst.filter((searchResultObj: any) => {
+			return searchResultObj.user
+				.toLowerCase()
+				.startsWith($event.target.value.toLowerCase());
+		});
 	}
 
-	selectUserMenuItem(selectUser: any, displayUI: string)
-	{
-		let index = this.selectUserLst.findIndex(obj => obj.id == selectUser.id);
-		if(selectUser.isPin)
-		{
+	selectUserMenuItem(selectUser: any, displayUI?: string) {
+		let index = this.selectUserLst.findIndex(
+			(obj) => obj.id == selectUser.id
+		);
+		if (selectUser.isPin) {
 			this.selectUserLst[index] = this.selectUserLst[0];
 			selectUser.isPin = false;
 			this.selectUserLst[0] = selectUser;
 			this.selectedPatient = selectUser;
-		}
-		else
-		{
+		} else {
 			selectUser.isPin = false;
 			this.selectUserLst.splice(index, 1);
 			for (let i = this.selectUserLst.length; i > 0; i--) {
@@ -241,33 +288,41 @@ export class NavbarComponent implements OnInit {
 			this.selectUserLst[0] = selectUser;
 			this.selectedPatient = selectUser;
 		}
-		localStorage.setItem('selectedPatient', JSON.stringify(this.selectedPatient));
-		if(displayUI == "showSelectedPatientUserCard")
-		{
+		localStorage.setItem(
+			'selectedPatient',
+			JSON.stringify(this.selectedPatient)
+		);
+		if (displayUI == 'showSelectedPatientUserCard') {
 			this.showSelectedPatientUserCard = false;
-		}
-		else
-		{
+		} else {
 			this.showUserCard = false;
 		}
 	}
 
-	pinUser(selectUser: any)
-	{
+	pinUser(selectUser: any) {
 		selectUser.isPin = true;
 		this.showUserCard = false;
 	}
 
-	unPinUser(selectUser: any)
-	{
+	unPinUser(selectUser: any) {
 		selectUser.isPin = false;
 		this.showUserCard = false;
 	}
 
-	moveToLastPage($event: any)
-	{
-		console.log("last page me jana h");
-		console.log($event)
-		// this.location.back();
+	onSelectPatient(displayUI: any, selectUser: any) {
+		this.clickCount++;
+		setTimeout(() => {
+			if (this.clickCount === 1) {
+				if (displayUI == 'showSelectedPatientUserCard') {
+					this.showSelectedPatientUserCard = true;
+				} else {
+					this.showUserCard = true;
+				}
+			} else if (this.clickCount === 2) {
+				this.selectUserMenuItem(selectUser)
+				this.router.navigate(['/dashboard/patient/patient-user/patient-detail'])
+			}
+			this.clickCount = 0;
+		}, 250);
 	}
 }

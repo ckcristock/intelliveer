@@ -149,7 +149,7 @@ export const patientConsultationMenuItems = [
 					},
 					{
 						title: 'Fee Estimate',
-						url: '/+',
+						url: '/dashboard/patient/consultation/fee-estimate',
 						icon: 'bi bi-house-door',
 					},
 					{
@@ -228,18 +228,13 @@ export const settingPatientConsultationMenuItems = [
 		icon: 'bi bi-house-door',
 	},
 	{
-		title: 'Treatment Recommendation',
-		url: '/dashboard/settings/patient/consultation/treatment',
-		icon: 'bi bi-house-door',
-	},
-	{
 		title: 'Treatment Options',
 		url: '/dashboard/settings/patient/consultation/treatment',
 		icon: 'bi bi-house-door',
 	},
 	{
 		title: 'Fee Estimate',
-		url: '/dashboard/settings/patient/consultation/treatment',
+		url: '/dashboard/settings/patient/consultation/fee',
 		icon: 'bi bi-house-door',
 	},
 	{

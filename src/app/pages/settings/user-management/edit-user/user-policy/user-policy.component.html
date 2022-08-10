@@ -194,15 +194,10 @@
 															<td>
 																<ng-select
 																	#legelEntity
-																	(change)="
-																		refLegelEntity.itemsList._selectionModel[
-																			'_selected'
-																		] = []
-																	"
+																	(change)="onChangeLE(legelEntity)"
 																	[items]="
 																		legelEntityList
 																	"
-																	bindLabel="name"
 																	[multiple]="
 																		true
 																	"
@@ -219,13 +214,7 @@
 																		let-index="index"
 																	>
 																		<input
-																			id="item-{{
-																				index
-																			}}"
 																			type="checkbox"
-																			name="item-{{
-																				index
-																			}}"
 																			style="
 																				margin: auto;
 																			"
@@ -234,9 +223,6 @@
 																			"
 																		/>
 																		<span
-																			id="item-{{
-																				index
-																			}}"
 																			style="
 																				padding: 8px;
 																			"
@@ -273,18 +259,13 @@
 															<td>
 																<ng-select
 																	#location
-																	(change)="
-																		refLocation.itemsList._selectionModel[
-																			'_selected'
-																		] = []
-																	"
+																	(change)="onChangeLOC(location)"
 																	[items]="
 																		locationList
 																	"
 																	[multiple]="
 																		true
 																	"
-																	bindLabel="name"
 																	placeholder="Location"
 																	style="
 																		border: 0px;
@@ -298,13 +279,7 @@
 																		let-index="index"
 																	>
 																		<input
-																			id="item-{{
-																				index
-																			}}"
 																			type="checkbox"
-																			name="item-{{
-																				index
-																			}}"
 																			style="
 																				margin: auto;
 																			"
@@ -361,12 +336,12 @@
 															</td>
 														</tr>
 														<br /><br
-														*ngIf="
-															!childPermision
-																.value
-																.locked
-														"
-													/>
+															*ngIf="
+																!childPermision
+																	.value
+																	.locked
+															"
+														/>
 														<tr
 															*ngIf="
 																subPermission
@@ -377,18 +352,13 @@
 															<td>
 																<ng-select
 																	#practice
-																	(change)="
-																		refPractice.itemsList._selectionModel[
-																			'_selected'
-																		] = []
-																	"
+																	(change)="onChangePR(practice)"
 																	[items]="
 																		practiceList
 																	"
 																	[multiple]="
 																		true
 																	"
-																	bindLabel="name"
 																	placeholder="Practice"
 																	style="
 																		border: 0px;
@@ -402,13 +372,7 @@
 																		let-index="index"
 																	>
 																		<input
-																			id="item-{{
-																				index
-																			}}"
 																			type="checkbox"
-																			name="item-{{
-																				index
-																			}}"
 																			style="
 																				margin: auto;
 																			"

@@ -1,0 +1,124 @@
+<div class="container">
+	<app-nav-bar-pills
+		[cancelBtn]="true"
+		[saveBtn]="true"
+		[disableSaveBtn]="false"
+		(onCancel)="cancel()"
+		(onSave)="save($event)"
+	></app-nav-bar-pills>
+	<div class="row">
+		<div class="col-6">
+			<div class="section">
+				<h6
+					class="heading"
+					style="padding-left: 2rem; padding-right: 2rem"
+				>
+					Fee Estimate
+				</h6>
+				<hr />
+				<div
+					class="scroll"
+					style="padding-left: 2rem; padding-right: 2rem"
+				>
+					<div class="row mb-3">
+						<h6 class="heading">Charges</h6>
+						<div
+							class="input-group border"
+							style="border-radius: 4px; background-color: white;"
+						>
+							<span
+								class="input-group-text border-0 bg-transparent"
+								id="basic-addon1"
+							>
+								<i class="bi bi-search"></i>
+							</span>
+							<input
+								type="text"
+								class="form-control border-0"
+								placeholder="Search"
+								aria-describedby="basic-addon1"
+							/>
+						</div>
+					</div>
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">CDT Code</th>
+								<th scope="col">Description</th>
+								<th scope="col">Amount</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let charges of chargesList">
+								<td>{{ charges.code }}</td>
+								<td>{{ charges.description }}</td>
+								<td>{{ charges.amount }}</td>
+							</tr>							
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="section">
+				<h6
+					class="heading"
+					style="padding-left: 2rem; padding-right: 2rem"
+				>
+					Option {{ '1' }}
+				</h6>
+				<hr />
+				<div style="padding-left: 2rem; padding-right: 2rem">
+					<div class="row mb-3"><b>Fee Breakdown</b></div>
+					<div class="row mb-3">
+						<div class="col">Treatment Charges</div>
+						<div class="col" [align]="'end'">$5,650.00</div>
+					</div>
+					<hr />
+					<div class="row mb-3">
+						<div class="col">Discounts</div>
+						<div class="col" [align]="'end'" style="color: #2ea74f">
+							($582.50)
+						</div>
+					</div>
+					<hr />
+					<div class="row mb-3">
+						<div class="col">Final cost to do treatment</div>
+						<div
+							class="col"
+							[align]="'end'"
+							style="font-weight: 600"
+						>
+							$2,567.50
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col">Estimated Insurance Coverage</div>
+						<div class="col" [align]="'end'">$2,500.00</div>
+					</div>
+					<div class="row mb-1">
+						<div
+							class="col"
+							style="
+								color: #8a8c8e;
+								vertical-align: middle;
+								display: flex;
+								margin: auto;
+							"
+						>
+							Patient's Responsibility
+						</div>
+						<div
+							class="col"
+							[align]="'end'"
+							style="font-weight: 600; font-size: x-large"
+						>
+							$2,567.50
+						</div>
+					</div>
+					<hr />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

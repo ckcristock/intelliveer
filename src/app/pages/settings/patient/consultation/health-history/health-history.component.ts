@@ -36,7 +36,10 @@ export class HealthHistoryComponent implements OnInit {
 			children.indexOf($event.target.parentNode) >
 			children.indexOf(this.row)
 		)
+		{
 			$event.target.parentNode.after(this.row);
+			console.log()
+		}
 		else $event.target.parentNode.before(this.row);
 	}
 
