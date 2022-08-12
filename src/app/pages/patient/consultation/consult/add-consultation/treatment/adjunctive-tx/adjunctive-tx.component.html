@@ -1,0 +1,58 @@
+<div class="container">
+    <h6 class="heading">{{title | titlecase}}</h6>
+    <hr />
+    <div class="row" style="height: 40rem;">
+        <div class="col">
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="box">
+                        <div class="search">
+                            <div class="search-results" *ngIf="searchFocus">
+                                <ul *ngIf="prerequisitesSearchLst?.length != 0">
+                                    <li *ngFor="let result of prerequisitesSearchLst">
+                                        <button class="d-flex justify-content-between"
+                                            (click)="handleSearchResultsClick(result)">
+                                            <span> {{ result.name }}</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="input-group justify-content-between">
+                            <span class="input-group-text bg-transparent" id="basic-addon1" style="border-left-style: none; border-top: 0px;"><i
+                                    class="bi bi-search"></i></span>
+                            <input type="text" class="form-control" placeholder="Type Name" [(ngModel)]="searchWord" (click)="fetchSearch($event)"
+                                (keyup)="fetchSearch($event)" aria-describedby="basic-addon1"
+                                (focus)="searchFocus = true" style="border-left-style: none; border-right: 0px; border-top: 0px;"/>
+                        </div>
+                        <div class="row mb-3" style="padding: 5px;" *ngIf="searchResultLst?.length != 0">
+                            <div class="col-6 p-2" *ngFor="let searchResult of searchResultLst; let i = index">
+                                <div class="input-group flex-nowrap">
+                                    <span class="input-group-text" style="background-color: #faf2e9; border: 1px solid #f9b85f;" (click)="cancelSelection(searchResult, i)"><i class="bi bi-x-lg"></i></span>
+                                    <input type="text" class="form-control" value="{{searchResult.name}}" readonly style="border-color: #f9b85f; background-color: #faf2e9">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col p-2" *ngFor="let result of adjunctiveLst; let i = index">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" [checked]="result.checked" id="{{i}}" (click)="handleSearchResultsClick(result)">
+                        <label class="form-check-label" for="{{i}}">
+                            {{result.name}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row gap-3" [align]="'end'">
+        <div class="col p2">
+            <button class="btn btn-dark" (click)="moveToNext()">Next</button>
+        </div>
+    </div>
+</div>

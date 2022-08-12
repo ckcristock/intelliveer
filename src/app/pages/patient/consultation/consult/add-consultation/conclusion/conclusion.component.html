@@ -1,0 +1,558 @@
+<!-- <div class="row">
+	<div class="col-12" [align]="'end'">
+		<button type="button" class="btn btn-dark">
+			<i class="bi bi-box-arrow-up"></i>
+		</button>
+		<button type="button" class="btn btn-dark">
+			<i class="bi bi-printer"></i>
+		</button>
+		<button type="button" class="btn btn-dark">
+			<i class="bi bi-arrow-clockwise"></i>
+		</button>
+	</div>
+</div> -->
+
+<div class="row">
+	<div class="col-10">
+		<div class="nav-bar-left" style="margin-left: 0px"></div>
+	</div>
+	<div class="col-2">
+		<div id="navbar-pills">
+			<div class="right">
+				<div
+					class="btn-group"
+					ngbDropdown
+					role="group"
+					aria-label="Button group with nested dropdown"
+				>
+					<button
+						type="button"
+						class="btn dropdown-toggle-split"
+						ngbDropdownToggle
+					>
+						<i class="bi bi-box-arrow-up"></i>
+					</button>
+					<div
+						class="dropdown-menu"
+						ngbDropdownMenu
+						style="background-color: white"
+					>
+						<div ngbDropdown container="body" placement="left-top">
+							<button
+								ngbDropdownToggle
+								class="btn btn-light"
+								style="
+									width: 100%;
+									text-align: start;
+									background-color: transparent;
+								"
+							>
+								Share with Dentist
+								<i
+									class="bi bi-chevron-right"
+									style="margin-left: 1rem"
+								></i>
+							</button>
+							<div
+								class="dropdown-menu"
+								ngbDropdownMenu
+								style="background-color: white"
+							>
+								<button ngbDropdownItem>
+									<div class="form-check">
+										<input
+											class="form-check-input"
+											type="checkbox"
+											value=""
+										/>
+										<label class="form-check-label">
+											Consultation Report to Dentist
+										</label>
+									</div>
+								</button>
+								<button ngbDropdownItem>
+									<div class="form-check">
+										<input
+											class="form-check-input"
+											type="checkbox"
+											value=""
+										/>
+										<label class="form-check-label">
+											Thank you letter to referrer
+										</label>
+									</div>
+								</button>
+								<div [align]="'end'" class="me-3">
+									<button class="btn btn-dark">Share</button>
+								</div>
+							</div>
+						</div>
+						<div ngbDropdown container="body" placement="left-top">
+							<button
+								ngbDropdownToggle
+								class="btn btn-light"
+								style="
+									width: 100%;
+									text-align: start;
+									background-color: transparent;
+								"
+							>
+								Share with Patient
+								<i
+									class="bi bi-chevron-right"
+									style="margin-left: 1rem"
+								></i>
+							</button>
+							<div
+								class="dropdown-menu"
+								ngbDropdownMenu
+								style="background-color: white"
+							>
+								<button ngbDropdownItem>
+									<div class="form-check">
+										<input
+											class="form-check-input"
+											type="checkbox"
+											value=""
+										/>
+										<label class="form-check-label">
+											Treatment Option
+										</label>
+									</div>
+								</button>
+								<button ngbDropdownItem>
+									<div class="form-check">
+										<input
+											class="form-check-input"
+											type="checkbox"
+											value=""
+										/>
+										<label class="form-check-label">
+											Fee Estimate
+										</label>
+									</div>
+								</button>
+								<button ngbDropdownItem>
+									<div class="form-check">
+										<input
+											class="form-check-input"
+											type="checkbox"
+											value=""
+										/>
+										<label class="form-check-label">
+											Payment Options
+										</label>
+									</div>
+								</button>
+								<button ngbDropdownItem>
+									<div class="form-check">
+										<input
+											class="form-check-input"
+											type="checkbox"
+											value=""
+										/>
+										<label class="form-check-label">
+											Consultation Report to Patient
+										</label>
+									</div>
+								</button>
+								<div [align]="'end'" class="me-3">
+									<button class="btn btn-dark">Share</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div
+					class="btn-group"
+					ngbDropdown
+					container="body"
+					placement="bottom-left"
+				>
+					<button
+						type="button"
+						class="btn dropdown-toggle-split"
+						ngbDropdownToggle
+					>
+						<i class="bi bi-printer"></i>
+					</button>
+					<div
+						class="dropdown-menu"
+						ngbDropdownMenu
+						style="background-color: white;"
+					>
+						<button ngbDropdownItem>
+							<div class="form-check">
+								<input
+									class="form-check-input"
+									type="checkbox"
+									value=""
+								/>
+								<label class="form-check-label">
+									Treatment Option
+								</label>
+							</div>
+						</button>
+						<button ngbDropdownItem>
+							<div class="form-check">
+								<input
+									class="form-check-input"
+									type="checkbox"
+									value=""
+								/>
+								<label class="form-check-label">
+									Fee Estimate
+								</label>
+							</div>
+						</button>
+						<button ngbDropdownItem>
+							<div class="form-check">
+								<input
+									class="form-check-input"
+									type="checkbox"
+									value=""
+								/>
+								<label class="form-check-label">
+									Payment Options
+								</label>
+							</div>
+						</button>
+						<button ngbDropdownItem>
+							<div class="form-check">
+								<input
+									class="form-check-input"
+									type="checkbox"
+									value=""
+								/>
+								<label class="form-check-label">
+									Consultation Report to Dentist
+								</label>
+							</div>
+						</button>
+						<button ngbDropdownItem>
+							<div class="form-check">
+								<input
+									class="form-check-input"
+									type="checkbox"
+									value=""
+								/>
+								<label class="form-check-label">
+									Consultation Report to Patient
+								</label>
+							</div>
+						</button>
+						<button ngbDropdownItem>
+							<div class="form-check">
+								<input
+									class="form-check-input"
+									type="checkbox"
+									value=""
+								/>
+								<label class="form-check-label">
+									Thank you letter to referrer
+								</label>
+							</div>
+						</button>
+						<div [align]="'end'" class="me-3">
+							<button type="button" class="btn btn-dark">Print</button>
+						</div>
+					</div>
+				</div>
+
+				<button type="button">
+					<i class="bi bi-arrow-clockwise"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div class="section">
+		<div class="row mb-3">
+			<div class="col-4">
+				<h6 class="heading">Conclusion</h6>
+				<select
+					class="form-select"
+					(change)="onChangeConclusionType($event)"
+				>
+					<option
+						*ngFor="
+							let conclusion of conclusionArray;
+							let i = index
+						"
+						value="{{ i + 1 }}"
+					>
+						{{ conclusion }}
+					</option>
+				</select>
+			</div>
+		</div>
+		<div *ngIf="selectConclusion == 1 || selectConclusion == 2">
+			<div class="row mb-3">
+				<div class="col-6">
+					<label class="label-input-gap">Notes</label>
+					<textarea
+						class="form-control"
+						placeholder="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"
+						style="
+							height: 100px;
+							resize: none;
+							border-radius: 0.7em;
+						"
+					></textarea>
+				</div>
+				<div class="col-3" *ngIf="selectConclusion == 2">
+					<label class="label-input-gap">Observation period</label>
+					<ng-select
+						#observationPeriod
+						[items]="observationPeriodList"
+					>
+						<ng-template
+							ng-option-tmp
+							let-item="item"
+							let-item$="item$"
+							let-index="index"
+						>
+							<input
+								type="radio"
+								style="margin: auto"
+								[checked]="item$.selected"
+							/>
+							<span style="padding: 8px">{{ item }}</span>
+						</ng-template>
+					</ng-select>
+				</div>
+				<div class="col-3" *ngIf="selectConclusion == 2">
+					<label class="label-input-gap">Follow up date</label>
+					<div class="input-group">
+						<button
+							class="btn btn-outline-secondary calendar"
+							(click)="d.toggle()"
+							type="button"
+						></button>
+						<input
+							class="form-control"
+							placeholder="yyyy-mm-dd"
+							name="dp"
+							[(ngModel)]="model"
+							ngbDatepicker
+							#d="ngbDatepicker"
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="selectConclusion == 3">
+			<div class="row mb-5">
+				<div class="col-4">
+					<h6 class="heading">
+						Primary Insurance - Delta Dental of CA
+					</h6>
+					<span>Insurance pre-authorization</span>&nbsp;&nbsp;
+					<button type="button" class="redbg">MANDATORY</button>
+				</div>
+				<div class="col-4">
+					<h6 class="heading">Secondary Insurance - Aetna</h6>
+					<span>Insurance pre-authorization</span>&nbsp;&nbsp;
+					<button type="button" class="redbg">MANDATORY</button>
+				</div>
+				<div class="col-4">
+					<h6 class="heading">Tertiary Insurance - Cigna</h6>
+					<span>Insurance pre-authorization</span>
+				</div>
+			</div>
+			<div class="row mb-5">
+				<div class="col-6">
+					<h6 class="heading">
+						Pre-authorization requirements by insurance
+					</h6>
+					<span>1. Study Model</span>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-5">
+					<label class="label-input-gap"
+						>Would you like to start your treatment before
+						pre-authorization?</label
+					>
+					<div class="form-check form-check-inline">
+						<input
+							class="form-check-input"
+							type="radio"
+							name="preAuthorizationOption"
+							value="yes"
+							(change)="preAuthorizationOption = 'yes'"
+							checked
+						/>
+						<label class="form-check-label">Yes</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input
+							class="form-check-input"
+							type="radio"
+							name="preAuthorizationOption"
+							value="no"
+							(change)="preAuthorizationOption = 'no'"
+						/>
+						<label class="form-check-label">No</label>
+					</div>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-4">
+					<label
+						class="label-input-gap"
+						*ngIf="preAuthorizationOption == 'yes'"
+						>When would you like to start your treatment?</label
+					>
+					<label
+						class="label-input-gap"
+						*ngIf="preAuthorizationOption == 'no'"
+						>When would you like to get your study model done?
+						(pre-req by insurance)</label
+					>
+					<div class="form-check form-check-inline">
+						<input
+							class="form-check-input"
+							type="radio"
+							name="inlineRadioOptions"
+							value="today"
+							(change)="preInsuranceOption = 'today'"
+							checked
+						/>
+						<label class="form-check-label">Today</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input
+							class="form-check-input"
+							type="radio"
+							name="inlineRadioOptions"
+							value="later"
+							(change)="preInsuranceOption = 'later'"
+						/>
+						<label class="form-check-label">Later</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="selectConclusion == 4">
+			<div class="row mb-3">
+				<div class="col-6">
+					<label class="label-input-gap">Patient's remark</label>
+					<textarea
+						class="form-control"
+						placeholder="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"
+						style="
+							height: 100px;
+							resize: none;
+							border-radius: 0.7em;
+						"
+					></textarea>
+				</div>
+				<div class="col-3">
+					<label class="label-input-gap">Follow up calendar</label>
+					<div class="input-group">
+						<button
+							class="btn btn-outline-secondary calendar"
+							(click)="d.toggle()"
+							type="button"
+						></button>
+						<input
+							class="form-control"
+							placeholder="yyyy-mm-dd"
+							name="dp"
+							[(ngModel)]="model"
+							ngbDatepicker
+							#d="ngbDatepicker"
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="selectConclusion == 5">
+			<div class="row mb-3">
+				<label class="label-input-gap"
+					>Reasons for declining the treatment by customer</label
+				>
+				<div class="col-9">
+					<div class="form-check form-check-inline">
+						<input
+							class="form-check-input"
+							type="checkbox"
+							id="inlineCheckbox1"
+							value="option1"
+						/>
+						<label class="form-check-label" for="inlineCheckbox1"
+							>Financial constraint</label
+						>
+					</div>
+					<div class="form-check form-check-inline">
+						<input
+							class="form-check-input"
+							type="checkbox"
+							id="inlineCheckbox2"
+							value="option2"
+						/>
+						<label class="form-check-label" for="inlineCheckbox2"
+							>Very high cost of treatment</label
+						>
+					</div>
+					<div class="form-check form-check-inline">
+						<input
+							class="form-check-input"
+							type="checkbox"
+							id="inlineCheckbox3"
+							value="option3"
+						/>
+						<label class="form-check-label" for="inlineCheckbox3"
+							>Wants to get second opinion</label
+						>
+					</div>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-6">
+					<label class="label-input-gap">Other</label>
+					<textarea
+						class="form-control"
+						placeholder="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"
+						style="
+							height: 100px;
+							resize: none;
+							border-radius: 0.7em;
+						"
+					></textarea>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="selectConclusion == 6">
+			<div class="row mb-3">
+				<div class="col-6">
+					<label class="label-input-gap">Notes</label>
+					<textarea
+						class="form-control"
+						placeholder="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam"
+						style="
+							height: 100px;
+							resize: none;
+							border-radius: 0.7em;
+						"
+					></textarea>
+				</div>
+			</div>
+		</div>
+
+		<div class="row" *ngIf="selectConclusion != 3">
+			<div class="col-12" [align]="'end'">
+				<button type="button" class="btn btn-dark">Save</button>
+			</div>
+		</div>
+		<div class="row" *ngIf="selectConclusion == 3">
+			<div class="col-12" [align]="'end'">
+				<button type="button" class="btn btn-dark" *ngIf="preAuthorizationOption == 'no' && preInsuranceOption == 'today'">Save</button>
+				<button type="button" class="btn btn-dark" *ngIf="preAuthorizationOption == 'yes' && preInsuranceOption == 'today'">Start Treatment</button>
+				<button type="button" class="btn btn-dark" *ngIf="preAuthorizationOption == 'no' && preInsuranceOption == 'later'">Schedule an Appointment</button>
+			</div>
+		</div>
+	</div>
+</div>

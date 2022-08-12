@@ -928,3 +928,9 @@ input[type='checkbox'] {
 .deactivated{
     color: #d2d1d0;
 }
+
+.scroll {
+	height: 20rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+}

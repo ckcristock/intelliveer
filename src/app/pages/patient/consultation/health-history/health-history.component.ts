@@ -29,7 +29,7 @@ export class HealthHistoryComponent implements OnInit {
 
   addHealthHistory()
   {
-    this.router.navigate(['/dashboard/patient/consultation/health-history/add']);
+    this.router.navigate(['/dashboard/patient/consultation/consultation/add/health-history/add']);
   }
 
 

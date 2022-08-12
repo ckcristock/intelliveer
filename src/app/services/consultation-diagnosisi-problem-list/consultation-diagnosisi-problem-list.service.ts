@@ -28,7 +28,11 @@ export class ConsultationDiagnosisiProblemListService {
       Diagnosis: any,
       anticipated_1: any,
       anticipated_2: any,
-      Appliance_Sequence: any[]
+      risk: any[],
+      adjunctive: any[],
+      Appliance_Sequence: any[],
+      Bracket_Variations: any[],
+      Retention: any[]
     } = {
       Timing: undefined,
       Treament_Phase: undefined,
@@ -49,7 +53,11 @@ export class ConsultationDiagnosisiProblemListService {
       Diagnosis: undefined,
       anticipated_1: undefined,
       anticipated_2: undefined,
-      Appliance_Sequence: []
+      Appliance_Sequence: [],
+      risk: [],
+      adjunctive: [],
+      Bracket_Variations: [],
+      Retention: []
     };
     treatmentOptionObj: any = {};
 

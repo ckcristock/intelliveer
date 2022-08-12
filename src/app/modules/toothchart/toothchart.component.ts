@@ -142,7 +142,7 @@ export class ToothchartComponent implements OnInit {
     }
   }
 
-  removeTooth(obj: any)
+  removeTooth(obj: any, childTitle: any)
   {
     if(this.toothChartType == 1)
     {
@@ -153,10 +153,15 @@ export class ToothchartComponent implements OnInit {
       this.showChildOutline = false;
     }
     obj.remove = true;
-    this.onSelectOption.emit(obj);
+    let Obj = {
+      title: obj.title + " - " + childTitle,
+      id: obj.title,
+      checked: true
+    }
+    this.onSelectOption.emit(Obj);
   }
 
-  disableTooth(obj: any)
+  disableTooth(obj: any, childTitle: any)
   {
     if(this.toothChartType == 1)
     {
@@ -167,7 +172,12 @@ export class ToothchartComponent implements OnInit {
       this.showChildOutline = false;
     }
     obj.show = false;
-    this.onSelectOption.emit(obj);
+    let Obj = {
+      title: obj.title + " - " + childTitle,
+      id: obj.title,
+      checked: true
+    }
+    this.onSelectOption.emit(Obj);
   }
 
   selectToothOption(obj: any, childTitle: any)
@@ -246,12 +256,12 @@ export class ToothchartComponent implements OnInit {
       if(this.toothChartType == 1)
       {
         this.showAdultOutline = true;
-        this.disableTooth(obj)
+        this.disableTooth(obj, 'Missing');
       }
       else
       {
         this.showChildOutline = true;
-        this.disableTooth(obj)
+        this.disableTooth(obj, 'Missing');
       }
       this.showAdultOutline = true;
       this.showChildOutline = true;
