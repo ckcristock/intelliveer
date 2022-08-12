@@ -1,26 +1,12 @@
 <div class="row" *ngIf="BGForm">
-	<app-nav-bar-pills
-		[menuItems]="menuItems"
-		[activeClass]="currentSelection"
-		[cancelBtn]="true"
-		[saveBtn]="true"
-		[disableSaveBtn]="BGForm.invalid"
-		(onCancel)="cancel()"
-		(onSave)="save(BGForm.value)"
-	></app-nav-bar-pills>
+	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
+		[disableSaveBtn]="BGForm.invalid" (onCancel)="cancel()" (onSave)="save(BGForm.value)"></app-nav-bar-pills>
 	<form [formGroup]="BGForm" #f="ngForm" (submit)="save(f.value)">
-		<div
-			class="col-12"
-			id="main"
-			scrollSpy
-			(sectionChange)="onSectionChange($event)"
-		>
+		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section" id="overview">
 				<div class="row">
-					<app-image-uploader
-						[imageUrl]="formData?.logo || ''"
-						(onUpload)="handleUploadedImage($event)"
-					></app-image-uploader>
+					<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
+					</app-image-uploader>
 				</div>
 			</div>
 			<!-- Profile -->
@@ -31,40 +17,24 @@
 				<div class="row">
 					<div class="col-3">
 						<label class="required">Business Group Name</label>
-						<input
-							type="text"
-							class="form-control required-field"
-							formControlName="name"
-						/>
+						<input type="text" class="form-control value-must" formControlName="name" />
 					</div>
 
 					<div class="col-3">
 						<label class="required">TIN</label>
-						<input
-							type="text"
-							class="form-control"
-							formControlName="TIN"
-						/>
+						<input type="text" class="form-control" formControlName="TIN" />
 					</div>
 					<div class="col-3">
 						<label class="required">Country</label>
-						<ng-select
-							formControlName="country"
-							class="required-ng-select"
-						>
-							<ng-option
-								*ngFor="let country of countries"
-								[value]="country.iso3"
-								>{{ country.name }}</ng-option
+						<ng-select formControlName="country" class="value-must">
 							>
+							<ng-option *ngFor="let country of countries" [value]="country.iso3"
+								aria-selected="country.name==='Afghanistan'">{{ country.name }}</ng-option>
 						</ng-select>
 					</div>
 					<div class="col-3">
 						<label class="required">Currency</label>
-						<select
-							class="form-select required-field"
-							formControlName="currency"
-						>
+						<select class="form-select value-must" formControlName="currency">
 							<option value="usd">USD</option>
 						</select>
 					</div>
@@ -75,10 +45,7 @@
 				<div class="row">
 					<h6 class="heading">Physical Address</h6>
 				</div>
-				<app-address-form
-					[parentGroup]="BGForm"
-					[formGroupName]="'physicalAddress'"
-				></app-address-form>
+				<app-address-form [parentGroup]="BGForm" [formGroupName]="'physicalAddress'"></app-address-form>
 			</div>
 			<!-- Mailing Address -->
 			<div class="section" id="mailingAddress">
@@ -96,10 +63,7 @@
 						</button>
 					</div>
 				</div> -->
-				<app-address-form
-					[parentGroup]="BGForm"
-					[formGroupName]="'mailingAddress'"
-				></app-address-form>
+				<app-address-form [parentGroup]="BGForm" [formGroupName]="'mailingAddress'"></app-address-form>
 			</div>
 			<!-- Insurance Billing Address -->
 			<div class="section" id="insuranceBillingAddress">
@@ -117,38 +81,27 @@
 						</button>
 					</div>
 				</div> -->
-				<app-address-form
-					[parentGroup]="BGForm"
-					[formGroupName]="'insuranceBillingAddress'"
-				></app-address-form>
+				<app-address-form [parentGroup]="BGForm" [formGroupName]="'insuranceBillingAddress'"></app-address-form>
 			</div>
 			<!-- Contact -->
 			<div class="section" id="contactDetails">
 				<div class="row">
 					<h6 class="heading">Contact</h6>
 				</div>
-				<app-contact-details-form
-					[parentGroup]="BGForm"
-					[formGroupName]="'contactDetails'"
-				></app-contact-details-form>
+				<app-contact-details-form [parentGroup]="BGForm" [formGroupName]="'contactDetails'">
+				</app-contact-details-form>
 			</div>
 			<!-- Contact Person-->
 			<div class="section" id="contactPerson">
 				<div class="row">
 					<h6 class="heading">Contact Person Info</h6>
 				</div>
-				<app-contact-person-form
-					[parentGroup]="BGForm"
-					[formGroupName]="'contactPerson'"
-				></app-contact-person-form>
+				<app-contact-person-form [parentGroup]="BGForm" [formGroupName]="'contactPerson'">
+				</app-contact-person-form>
 				<div class="row mt-3" *ngIf="password">
 					<div class="col-4">
 						<label class="required">Password</label>
-						<input
-							type="password"
-							class="form-control required-field"
-							formControlName="password"
-						/>
+						<input type="password" class="form-control value-must" formControlName="password" />
 					</div>
 				</div>
 			</div>

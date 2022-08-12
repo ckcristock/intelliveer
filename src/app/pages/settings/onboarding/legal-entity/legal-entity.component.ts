@@ -17,6 +17,10 @@ export class LegalEntityComponent implements OnInit, OnDestroy {
   businessGroupDropdownSupscription: Subscription;
   selectedBusinessGroup: SelectedBusinessGroup | undefined;
   bgId:any;
+	searchText: any;
+	searchCount: number = 0;
+	dataBackup: any;
+  
   constructor(
     private router: Router,
     private businessGroupDropdownService: BusinessGroupDropdownService,
@@ -85,4 +89,20 @@ export class LegalEntityComponent implements OnInit, OnDestroy {
       this.fetchList();
     }
   }
+
+  search() {
+		this.searchCount++;
+		if (this.searchCount == 1) {
+			this.dataBackup = this.data;
+		}
+		this.data = this.dataBackup;
+		let dataFiltered = this.data.filter((x: any) => {
+			return x._id.toLowerCase().includes(this.searchText.toLowerCase()) || x.name.toLowerCase().includes(this.searchText.toLowerCase()) || x.contactPerson.firstName.toLowerCase().includes(this.searchText.toLowerCase())
+				|| x.contactPerson.lastName.toLowerCase().includes(this.searchText.toLowerCase()) || x.contactPerson.phone.number.toLowerCase().includes(this.searchText.toLowerCase())
+				|| x.createdAt.toString().toLowerCase().includes(this.searchText.toLowerCase()) ||
+				(x.contactPerson.firstName.toLowerCase().concat(" ").concat(x.contactPerson.lastName.toLowerCase())).includes(this.searchText.toLowerCase())
+				;
+		});
+		this.data = dataFiltered;
+	}
 }

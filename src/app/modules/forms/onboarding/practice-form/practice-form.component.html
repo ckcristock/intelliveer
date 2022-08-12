@@ -36,7 +36,7 @@
 						<label class="required">Name</label>
 						<input
 							type="text"
-							class="form-control required-field"
+							class="form-control value-must"
 							formControlName="name"
 						/>
 					</div>
@@ -51,7 +51,7 @@
 					<div class="col" *ngIf="staticData">
 						<label class="required">Practice Type</label>
 						<select
-							class="form-select required-field"
+							class="form-select value-must"
 							formControlName="practiceType"
 						>
 							<option

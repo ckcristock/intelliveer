@@ -59,9 +59,9 @@ export class EditBusinessGroupComponent
 							'Success',
 							'Business group has been updated successfully'
 						);
-						this.router.navigate([
-							'/dashboard/settings/onboarding/business-group'
-						]);
+						// this.router.navigate([
+						// 	'/dashboard/settings/onboarding/business-group'
+						// ]);
 					},
 					error: (err) => {}
 				});

@@ -15,7 +15,11 @@ export class PracticeComponent implements OnInit {
 	data: any;
 	businessGroupDropdownSupscription: Subscription;
 	selectedBusinessGroup: SelectedBusinessGroup | undefined;
-	bgId:any
+	bgId: any;
+	searchText: any;
+	searchCount: number = 0;
+	dataBackup: any;
+
 	constructor(
 		private businessGroupDropdownService: BusinessGroupDropdownService,
 		private practiceService: PracticeService,
@@ -32,7 +36,7 @@ export class PracticeComponent implements OnInit {
 				});
 	}
 
-	ngOnInit(): void {}
+	ngOnInit(): void { }
 	ngOnDestroy(): void {
 		this.businessGroupDropdownSupscription.unsubscribe();
 	}
@@ -44,22 +48,22 @@ export class PracticeComponent implements OnInit {
 					next: (res) => {
 						this.data = res;
 					},
-					error: () => {},
+					error: () => { },
 				});
 		}
 	}
-	fetchListSuperUser(bgId:any){
+	fetchListSuperUser(bgId: any) {
 		this.practiceService
 			.getPractices(bgId)
 			.subscribe({
 				next: (res) => {
 					this.data = res;
 				},
-				error: () => {},
+				error: () => { },
 			});
 	}
 	delete(id: string) {
-		if(!this.bgId){
+		if (!this.bgId) {
 			this.bgId = this.selectedBusinessGroup?.bgId
 		}
 		if (this.selectedBusinessGroup && id) {
@@ -69,23 +73,39 @@ export class PracticeComponent implements OnInit {
 					next: (res) => {
 						this.getUserOrdID();
 					},
-					error: () => {},
+					error: () => { },
 				});
 		}
 	}
 	/** Add new Practice */
-	addPractice(){
+	addPractice() {
 		this.router.navigate(['/dashboard/settings/onboarding/practice/add']);
-    }
-	getUserOrdID(){
-		let bgOrdID:any = localStorage.getItem('selected_business_group');
-		if(bgOrdID == null){
-		  console.log(bgOrdID)
-		  this.fetchListSuperUser('intelliveer')
-		  this.bgId = 'intelliveer';
-		}else{
-			this.bgId= '';
-		  this.fetchList();
+	}
+	getUserOrdID() {
+		let bgOrdID: any = localStorage.getItem('selected_business_group');
+		if (bgOrdID == null) {
+			console.log(bgOrdID)
+			this.fetchListSuperUser('intelliveer')
+			this.bgId = 'intelliveer';
+		} else {
+			this.bgId = '';
+			this.fetchList();
 		}
-	  }
+	}
+
+	search() {
+		this.searchCount++;
+		if (this.searchCount == 1) {
+			this.dataBackup = this.data;
+		}
+		this.data = this.dataBackup;
+		let dataFiltered = this.data.filter((x: any) => {
+			return x._id.toLowerCase().includes(this.searchText.toLowerCase()) || x.name.toLowerCase().includes(this.searchText.toLowerCase()) || x.contactPerson.firstName.toLowerCase().includes(this.searchText.toLowerCase())
+				|| x.contactPerson.lastName.toLowerCase().includes(this.searchText.toLowerCase()) || x.contactPerson.phone.number.toLowerCase().includes(this.searchText.toLowerCase())
+				|| x.createdAt.toString().toLowerCase().includes(this.searchText.toLowerCase()) ||
+				(x.contactPerson.firstName.toLowerCase().concat(" ").concat(x.contactPerson.lastName.toLowerCase())).includes(this.searchText.toLowerCase())
+				;
+		});
+		this.data = dataFiltered;
+	}
 }

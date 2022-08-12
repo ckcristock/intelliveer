@@ -6,6 +6,7 @@ import {
 	OnInit
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbDayTemplateData } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-view-model';
 import { AlertService } from '@services/alert/alert.service';
 import { AuthService } from '@services/auth/auth.service';
 import { BusinessGroupDropdownService } from '@services/business-group-dropdown/business-group-dropdown.service';
@@ -19,14 +20,17 @@ import { Subscription } from 'rxjs';
 	styleUrls: ['./business-group.component.scss']
 })
 export class BusinessGroupComponent
-	implements OnInit, OnDestroy, AfterViewInit
-{
+	implements OnInit, OnDestroy, AfterViewInit {
 	loading: boolean = true;
 	data: any;
 	checkedItems: any = [];
 	checkAllState = false;
 	bgOrdID: any;
-	isSuperUser:any;
+	isSuperUser: any;
+	searchText: any;
+	searchCount: number = 0;
+	dataBackup: any;
+
 	constructor(
 		private router: Router,
 		private businessGroupDropdownService: BusinessGroupDropdownService,
@@ -35,7 +39,7 @@ export class BusinessGroupComponent
 		private cookieService: CookieService,
 		private cdRef: ChangeDetectorRef,
 		private authService: AuthService
-	) {}
+	) { }
 	ngOnDestroy(): void {
 		this.businessGroupDropdownService.disable(false);
 	}
@@ -53,16 +57,16 @@ export class BusinessGroupComponent
 			next: (data) => {
 				this.data = data;
 			},
-			error: () => {}
+			error: () => { }
 		});
 	}
-	fetchBgListByBGId(bgId:any,orgId:any){
-		this.businessGroupService.getBusinessGroup(bgId,orgId).subscribe({
+	fetchBgListByBGId(bgId: any, orgId: any) {
+		this.businessGroupService.getBusinessGroup(bgId, orgId).subscribe({
 			next: (data) => {
 				this.data = [data];
 				console.log(this.data)
 			},
-			error: () => {}
+			error: () => { }
 		});
 	}
 	deleteBG(id: string) {
@@ -78,7 +82,7 @@ export class BusinessGroupComponent
 									this.businessGroupDropdownService.reload();
 									this.fetchBgList();
 								},
-								error: () => {}
+								error: () => { }
 							});
 					}
 				});
@@ -89,18 +93,34 @@ export class BusinessGroupComponent
 		this.router.navigate([`dashboard/settings/onboarding/${module}`]);
 	}
 
-	getOrgBgId(){
+	getOrgBgId() {
 		let user = this.authService.getLoggedInUser();
 		let orgId = this.authService.getOrgId();
 		if (user) {
-			if(user?.__ISSU__){
-			   this.fetchBgList()
-			   this.isSuperUser = true;
-			}else if(user.bg[0]?._id){
-			   this.fetchBgListByBGId(user.bg[0]?._id,'intelliveer')
-			}else{
-				this.fetchBgListByBGId(orgId,orgId)
+			if (user?.__ISSU__) {
+				this.fetchBgList()
+				this.isSuperUser = true;
+			} else if (user.bg[0]?._id) {
+				this.fetchBgListByBGId(user.bg[0]?._id, 'intelliveer')
+			} else {
+				this.fetchBgListByBGId(orgId, orgId)
 			}
 		}
+	}
+
+	search() {
+		this.searchCount++;
+		if (this.searchCount == 1) {
+			this.dataBackup = this.data;
+		}
+		this.data = this.dataBackup;
+		let dataFiltered = this.data.filter((x: any) => {
+			return x._id.toLowerCase().includes(this.searchText.toLowerCase()) || x.name.toLowerCase().includes(this.searchText.toLowerCase()) || x.contactPerson.firstName.toLowerCase().includes(this.searchText.toLowerCase())
+				|| x.contactPerson.lastName.toLowerCase().includes(this.searchText.toLowerCase()) || x.contactPerson.phone.number.toLowerCase().includes(this.searchText.toLowerCase())
+				|| x.createdAt.toString().toLowerCase().includes(this.searchText.toLowerCase()) ||
+				(x.contactPerson.firstName.toLowerCase().concat(" ").concat(x.contactPerson.lastName.toLowerCase())).includes(this.searchText.toLowerCase())
+				;
+		});
+		this.data = dataFiltered;
 	}
 }

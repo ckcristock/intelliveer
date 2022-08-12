@@ -39,7 +39,10 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 		{ title: 'Contact', id: 'contactDetails' },
 		{ title: 'Contact Person Info', id: 'contactPerson' }
 	];
-	userPassword:any
+	userPassword: any;
+	ipAddress: any;
+	userCity: any;
+
 	constructor(
 		private fb: FormBuilder,
 		private http: HttpClient,
@@ -47,13 +50,15 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 		private contactPersonFormService: ContactPersonFormService,
 		private contactDetailsFormService: ContactDetailsFormService,
 		private geoService: GeoService
-	) {}
+	) { }
 
 	ngOnInit() {
 		this.getCountries();
 		this.initBGForm(this.formData);
+		this.getIPAddress();
+		this.loadIp();
 	}
-	ngAfterViewInit(): void {}
+	ngAfterViewInit(): void { }
 	initBGForm(data?: any) {
 		data = data || {};
 		this.BGForm = this.fb.group({
@@ -109,10 +114,33 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 		this.geoService.getCountries().subscribe({
 			next: (res) => {
 				this.countries = res;
+				console.log("countries", res);
+				
 			}
 		});
 	}
 	onSectionChange(sectionId: string) {
 		this.currentSelection = sectionId;
 	}
+
+	getIPAddress() {
+		this.http.get("http://api.ipify.org/?format=json").subscribe((res: any) => {
+			this.ipAddress = res;
+			console.log("this.ipAddress", this.ipAddress);
+
+		});
+	}
+
+	loadIp() {
+		this.http.get('https://jsonip.com')
+			.pipe().subscribe((value: any) => {
+				this.ipAddress = value.ip;
+				let url = `https://api.geoapify.com/v1/ipinfo?&apiKey=f6ddac945f434391ace75449f5fbcb18`
+				return this.http.get(url).pipe().subscribe((value: any) => {
+					this.userCity = value.city;
+					
+				});
+			});
+	}
 }
+

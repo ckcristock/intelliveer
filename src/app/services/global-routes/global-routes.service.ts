@@ -24,17 +24,32 @@ export class GlobalRoutesService {
     {
       title: "Legal Guardian",
       url: `${this.urlPatientUser}/legal-guardian`,
-      child: []
+      child: [
+        {
+          title: "Add",
+          url: `${this.urlPatientUser}/legal-guardian/add`
+        },
+      ]
     },
     {
       title: "Payment Party",
       url: `${this.urlPatientUser}/payment-party`,
-      child: []
+      child: [
+        {
+          title: "Add",
+          url: `${this.urlPatientUser}/payment-party/add`
+        },
+      ]
     },
     {
       title: "Insurance Subscriber",
       url: `${this.urlPatientUser}/insurance-subscriber`,
-      child: []
+      child: [
+        {
+          title: "Add",
+          url: `${this.urlPatientUser}/insurance-subscriber/add`
+        },
+      ]
     },
     {
       title: "External Providers",
@@ -49,7 +64,12 @@ export class GlobalRoutesService {
     {
       title: "Family Members",
       url: `${this.urlPatientUser}/family_members`,
-      child: []
+      child: [
+        {
+          title: "Add",
+          url: `${this.urlPatientUser}/family_members/add`
+        },
+      ]
     },
   ];
 
