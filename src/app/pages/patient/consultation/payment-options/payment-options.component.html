@@ -323,7 +323,7 @@
 									style="padding: 1rem 2rem 1rem 2rem;"
 								>
 									<div class="input-group">
-										<input type="text" class="form-control" name="downPayment" (ngModelChange)="customCalculate($event)"  [(ngModel)]="downPayment"/>
+										<input type="text" class="form-control" name="downPayment" (input)="customCalculate($event)"  [(ngModel)]="downPayment"/>
 									</div>
 								</td>
 							</tr>
@@ -404,7 +404,7 @@
 									style="padding: 1rem 2rem 1rem 2rem;"
 								>
 									<div class="input-group">
-										<input type="text" class="form-control" name="totalMonth" (ngModelChange)="customCalculate()"  [(ngModel)]="totalMonth"/>
+										<input type="text" class="form-control" name="totalMonth" (input)="customCalculate()"  [(ngModel)]="month"/>
 									</div>
 								</td>
 							</tr>
@@ -427,7 +427,7 @@
 									style="padding: 1rem 2rem 1rem 2rem;"
 								>
 									<div class="input-group">
-										<input type="text" class="form-control" name="emi" (ngModelChange)="customCalculate()" [(ngModel)]="emi" readonly  />
+										<input type="text" class="form-control" name="emi" (input)="changeCalculateValue(paymentAmountEmi)" [(ngModel)]="paymentAmountEmi"  />
 									</div>
 								</td>
 							</tr>
@@ -493,14 +493,14 @@
 											src="../../../../../assets/icons/unlocked.svg"
 											width="20"
 											height="20"
-											*ngIf="treatmentOptionObj.locked"
+											*ngIf="!treatmentOptionObj.locked"
 											(click)="openModel(content)"
 										/>
 										<img
 											src="../../../../../assets/icons/locked.svg"
 											width="20"
 											height="20"
-											*ngIf="!treatmentOptionObj.locked"
+											*ngIf="treatmentOptionObj.locked"
 											(click)="openModel(content)"
 										/>
 									</div>
@@ -523,15 +523,15 @@
 										<div class="col-md-6 pe-0">
 											<p style="font-size: 11px;">Down Payment 1</p>
 											<div class="custom-bg">
-												<p style="font-weight: bold; font-size: 14px;">${{downPayment}}</p>
-												<p *ngIf="tabDate">Due by {{tabDate  | date: 'MM/d/yyyy'}}</p>
+												<p style="font-weight: bold; font-size: 14px;">${{downPayment | number : '1.2-2'}}</p>
+												<p *ngIf="tabDate" class="my-0">Due by {{tabDate  | date: 'MM/d/yyyy'}}</p>
 											</div>
 										</div>
 										<div class="col-md-6 ps-0">
 											<p style="font-size: 11px;">Down Payment 2</p>
 											<div class="custom-bg">
-												<p style="font-weight: bold; font-size: 14px;">${{downPayment2}}</p>
-												<p *ngIf="tabDate">Due by {{tabTwoDate  | date: 'MM/d/yyyy'}}</p>
+												<p style="font-weight: bold; font-size: 14px;">${{downPayment2 | number : '1.2-2'}}</p>
+												<p *ngIf="tabTwoDate" class="my-0">Due by {{tabTwoDate  | date: 'MM/d/yyyy'}}</p>
 											</div>
 										</div>
 									</div>
@@ -539,24 +539,25 @@
 										<div class="col-md-12">
 											<p>Down Payment</p>
 											<div class="custom-bg">
-												<p style="font-weight: bold; font-size: 14px;">${{downPayment}}</p>
-												<p *ngIf="tabDate">Due by {{tabDate  | date: 'MM/d/yyyy'}}</p>
+												<p style="font-weight: bold; font-size: 14px;">${{downPayment | number : '1.2-2'}}</p>
+												<p *ngIf="tabDate" class="my-0">Due by {{tabDate  | date: 'MM/d/yyyy'}}</p>
 											</div>
 										</div>
 									</div>
 									<div class="row custom-instalment mt-4 text-center">
 										<div class="col-md pe-0">
-											<p>No. of Installments</p>
+											<p>No. of <br>Payments</p>
 											<div class="custom-bg">
+												<p *ngIf="tabThreeDate" class="my-0" style="height: 18px;"></p>
 												<p style="font-weight: bold; font-size: 14px;">{{month}}</p>
-												<p></p>
+												<p *ngIf="tabThreeDate" class="my-0" style="height: 18px;"></p>
 											</div>
 										</div>
 										<div class="col-md ps-0">
-											<p>Monthly Installments</p>
+											<p>Monthly <br> Payments</p>
 											<div class="custom-bg">
 												<p style="font-weight: bold; font-size: 14px;">${{emi | number : '1.2-2'}}</p>
-												<p *ngIf="tabThreeDate">Due by {{tabThreeDate  | date: 'MM/d/yyyy'}}</p>
+												<p *ngIf="tabThreeDate" class="my-0">Due by {{tabThreeDate  | date: 'MM/d/yyyy'}}</p>
 											</div>
 										</div>
 										</div>
@@ -567,25 +568,37 @@
 													<div class="col-md-8 py-4">Total Down Payment</div>
 													<div class="col py-4" [align]="'end'">{{totalAmount}}</div>
 												</div>
-												<input class="range-slider__range" type="range" value="{{maxDownPayment1}}" min="{{maxDownPayment1}}" max="{{totalAmount}}" step="25" [style.background]="totalDPBG" (input)="totalDownTable($event,25)">
+												<input class="range-slider__range" type="range" value="{{maxDownPayment}}" min="{{maxDownPayment1}}" max="{{totalAmount}}" step="25" [style.background]="totalDPBG" (input)="totalDownTable($event,25)">
 											</div>
 										</div>
-										<!-- <div class="col-md-12" *ngIf="isDownPayment2">
+										<div class="col-md-12" *ngIf="isDownPayment2">
 											<div class="row">
 												<div class="col-md-8 py-4">Down Payment 1</div>
-												<div class="col py-4" [align]="'end'">{{maxDownPayment}}</div>
+												<div class="col py-4" [align]="'end'">{{downPaymentOneMax | number : '1.2-2'}}</div>
 											</div>
 											<div class="range__slider">
-												<input type="range" value="{{minDownPayment}}" class="range-slider__range" min="{{minDownPayment}}" max="{{maxDownPayment}}" step="25" [style.background]="downPayment1BG" (input)="downPaymentOneValues($event)">
+												<input type="range" value="{{downPaymentOneVal}}" class="range-slider__range" min="{{minDownPayment}}" max="{{downPaymentOneMax}}" step="25" [style.background]="downPayment1BG" (input)="downPaymentOneValues($event,'25')">
 											</div>
-										</div> -->
+										</div>
 										<div class="col-md-12" *ngIf="!isDownPayment2">
 											<div class="row">
 												<div class="col-md-8 py-4">Down Payment</div>
 												<div class="col py-4" [align]="'end'">{{totalAmount}}</div>
 											</div>
 											<div class="range__slider">
-												<input type="range" value="{{minDownPayment}}" class="range-slider__range" min="{{minDownPayment}}" max="{{totalAmount}}" step="25" [style.background]="sliderBackground" (input)="downPaymentValues($event)">
+												<input type="range" value="{{downPayment}}" class="range-slider__range" min="{{minDownPayment}}" max="{{totalAmount}}" step="25" [style.background]="sliderBackground" (input)="downPaymentValues($event)">
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="row">
+												<div class="col-md-8 py-4">Monthly payments</div>
+												<div class="col py-4" [align]="'end'">{{maxPaymentAmountEmi}}</div>
+											</div>
+											<div class="range__slider month" *ngIf="emi">
+												<input class="range-slider__range" type="range" value="" min="{{minPaymentAmountEmi}}" max="{{maxPaymentAmountEmi}}" step="25" [style.background]="noOfMonthSlider" (input)="calculateValueMonthly($event)">
+											</div>
+											<div class="range__slider month" *ngIf="emi == 0">
+												<input class="range-slider__range" type="range" value="" min="{{minPaymentAmountEmi}}" max="{{maxPaymentAmountEmi}}" step="25" [style.background]="noOfMonthSlider" (input)="calculateValueMonthly($event)">
 											</div>
 										</div>
 										<div class="col-md-12">
@@ -593,8 +606,11 @@
 												<div class="col-md-8 py-4">No.of payments</div>
 												<div class="col py-4" [align]="'end'">{{totalMonth}}</div>
 											</div>
-											<div class="range__slider month">
-												<input class="range-slider__range" type="range" value="1" min="1" max="{{totalMonth}}" step="1" [style.background]="sliderBGMonth" (input)="noOfPaymentValue($event)">
+											<div class="range__slider month" *ngIf="emi">
+												<input class="range-slider__range" type="range" value="{{month}}" min="0" max="{{totalMonth}}" step="1" [style.background]="sliderBGMonth" (input)="noOfPaymentValue($event)">
+											</div>
+											<div class="range__slider month" *ngIf="emi == 0">
+												<input class="range-slider__range" type="range" value="{{month}}" min="0" max="{{totalMonth}}" step="1" [style.background]="sliderBGMonth" disabled (input)="noOfPaymentValue($event)">
 											</div>
 										</div>
 										</div>
@@ -632,38 +648,22 @@
 			<div class="col">
 				<p>Minimum Down Payment</p>
 				<div class="input-group mb-3">
-					<input type="text" class="form-control" />
+					<input type="text" class="form-control" name="minDownPayment" [(ngModel)]="minDownPayment"/>
 				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col">
-				<p>Split Down Payment</p>
+				<p>Minimum First Down Payment Amount</p>
 				<div class="input-group mb-3">
-					<input type="text" class="form-control" />
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col">
-				<p>Minimum Payment Amount</p>
-				<div class="input-group mb-3">
-					<input type="text" class="form-control" />
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col">
-				<p>Maximum No. of Months</p>
-				<div class="input-group mb-3">
-					<input type="text" class="form-control" />
+					<input type="text" class="form-control" name="minDownPayment" [(ngModel)]="minDownPayment"/>
 				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col">
 				<p>Maximum No. of Payments</p>
-				<p>26</p>
+				<p>{{totalMonth}}</p>
 			</div>
 		</div>
 	</div>
