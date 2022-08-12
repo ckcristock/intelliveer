@@ -125,7 +125,9 @@
 					<div class="col">
 						<label class="label-input-gap">Preferred Pronoun</label>
 						<select class="form-select" formControlName="pronoun">
-							<option>Select</option>
+							<option [value]="pronoun.pronoun" *ngFor="let pronoun of pronouns">
+								{{ pronoun.pronoun }}
+							</option>
 						</select>
 					</div>
 					<div class="col">

@@ -42,10 +42,13 @@ export class PatientDetailComponent implements OnInit {
   practiceList: any;
   businessGroupDropdownSupscription: any;
   selectedBusinessGroup: SelectedBusinessGroup | undefined;
-
   globalData: any = {
     title: ""
   }
+  pronouns: any[] = [
+    { pronoun: 'He' },
+    { pronoun: 'She' },
+  ];
 
   constructor(
     private fb: FormBuilder,

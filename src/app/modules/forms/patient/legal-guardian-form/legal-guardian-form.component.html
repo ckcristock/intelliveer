@@ -1,6 +1,7 @@
 <div class="row formrow" *ngIf="Form">
 	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
-		[disableSaveBtn]="Form.invalid" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills>
+		[disableSaveBtn]="Form.invalid || Form.pristine" (onCancel)="cancel()" (onSave)="save(Form.value)">
+	</app-nav-bar-pills>
 	<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
 		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section" id="overview">
@@ -36,63 +37,67 @@
 				<div class="row formrow">
 					<div class="col-3">
 						<label class="label-input-gap">Relationship with Patient</label>
-						<select class="form-select">
+						<select class="form-select input-upper" formControlName="relationship">
 							<option [value]="relationship">
 								{{relationship}}</option>
 						</select>
 					</div>
 					<div class="col-3">
 						<label class="label-input-gap">Title</label>
-						<select class="form-select" formControlName="title">
-							<option>Select</option>
+						<select class="form-select input-upper" formControlName="title">
+							<option [value]="title.value" *ngFor="let title of famiMembTitle.title">
+								{{ title.label }}
+							</option>
 						</select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">First Name</label>
-						<input class="form-control value-must" type="text" placeholder="" name="firstName"
-							formControlName="firstName" />
+						<input class="form-control value-must input-upper" type="text" placeholder="" name="firstName"
+							formControlName="firstName" [class.valid-mandatory-field]="firstNameValid()" />
 					</div>
 
 					<div class="col-2">
 						<label class="label-input-gap">Middle Name</label>
-						<input class="form-control" type="text" placeholder="" name="name"
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
 							formControlName="middleName" />
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Last Name</label>
-						<input class="form-control value-must" type="text" placeholder="" name="lastName"
-							formControlName="lastName" />
+						<input class="form-control value-must input-upper" type="text" placeholder="" name="lastName"
+							formControlName="lastName" [class.valid-mandatory-field]="lastNameValid()" />
 					</div>
 				</div>
 				<div class="row formrow">
 					<div class="col-3">
 						<label class="label-input-gap">Date of Birth</label>
-						<input class="form-control red-bottom-line" type="date" placeholder="" name="DOB"
-							formControlName="DOB" />
+						<input class="form-control red-bottom-line input-upper" type="date" placeholder="" name="DOB"
+							formControlName="DOB" [class.valid-required-field]="DOBValid()" />
 					</div>
 					<div class="col-3">
 						<label class="label-input-gap">Gender</label>
-						<select class="form-select" formControlName="gender">
+						<select class="form-select input-upper" formControlName="gender">
 							<option value="M">Male</option>
 							<option value="F">Female</option>
 						</select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Preferred Pronoun</label>
-						<select class="form-select" formControlName="pronoun">
-							<option>Select</option>
+						<select class="form-select input-upper" formControlName="pronoun">
+							<option [value]="pronoun.pronoun" *ngFor="let pronoun of pronouns">
+								{{ pronoun.pronoun }}
+							</option>
 						</select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Language</label>
-						<select class="form-select" formControlName="language">
+						<select class="form-select input-upper" formControlName="language">
 							<option value="English">English</option>
 							<option value="Hindi">Hindi</option>
 						</select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Marital Status</label>
-						<select class="form-select" formControlName="maried">
+						<select class="form-select input-upper" formControlName="maried">
 							<option value="M">Maried</option>
 							<option value="S">Single</option>
 						</select>
@@ -111,20 +116,24 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Email</label>
-						<input class="form-control red-bottom-line" type="text" placeholder="" name="id"
-							formControlName="emailId" />
+						<input class="form-control red-bottom-line input-upper" type="text" placeholder="" name="id"
+							formControlName="emailId" [class.valid-required-field]="emailValid()" />
 					</div>
 
 					<div class="col">
 						<label class="label-input-gap">Primary Phone Type</label>
-						<ng-select class="value-must" placeholder="Select" formControlName="gender">
-							<ng-option>Select</ng-option>
-						</ng-select>
+						<select class="form-select required-field input-upper"
+							[class.valid-mandatory-field]="pPhoneTypeValid()" formControlName="pPhoneType">
+							<option [value]="phone.value" *ngFor="let phone of famiMembTitle.phone">
+								{{ phone.label }}
+							</option>
+						</select>
 					</div>
 
 					<div class="col">
 						<label class="label-input-gap">Primary Phone Number</label>
-						<input class="form-control value-must" type="text" placeholder="" name="name"
+						<input class="form-control required-field input-upper"
+							[class.valid-mandatory-field]="pPhoneNumberValid()" type="text" placeholder="" name="name"
 							formControlName="pPhoneNumber" />
 					</div>
 				</div>
@@ -132,20 +141,21 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Secondary Phone Type</label>
-						<select class="form-select" formControlName="sPhoneType">
+						<select class="form-select input-upper" formControlName="sPhoneType">
 							<option>Select</option>
 						</select>
 					</div>
 
 					<div class="col">
 						<label class="label-input-gap">Secondary Phone Number</label>
-						<input class="form-control" type="text" placeholder="" name="name"
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
 							formControlName="sPhoneNumber" />
 					</div>
 
 					<div class="col">
 						<label class="label-input-gap">Preferred Communication Method - Primary</label>
-						<select class="form-select red-bottom-line" formControlName="CommPrimary">
+						<select class="form-select red-bottom-line input-upper"
+							[class.valid-required-field]="commPrimaryValid()" formControlName="CommPrimary">
 							<option>Select</option>
 						</select>
 					</div>
@@ -153,13 +163,14 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Preferred Communication Method - Secondary</label>
-						<select class="form-select" formControlName="CommSecondary">
+						<select class="form-select input-upper" formControlName="CommSecondary">
 							<option>Select</option>
 						</select>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Preferred Timings for Call</label>
-						<input class="form-control" type="number" placeholder="" name="phone" formControlName="phone" />
+						<input class="form-control input-upper" type="number" placeholder="" name="phone"
+							formControlName="phone" />
 					</div>
 					<div class="col"></div>
 				</div>
@@ -171,26 +182,26 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Work Status</label>
-						<select class="form-select" formControlName="workStatus">
+						<select class="form-select input-upper" formControlName="workStatus">
 							<option>Select</option>
 						</select>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Occupation</label>
-						<input class="form-control" type="text" placeholder="" name="name"
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
 							formControlName="occupation" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Employer</label>
-						<input class="form-control" type="text" placeholder="" name="name" formControlName="employer" />
+						<input class="form-control input-upper" type="text" placeholder="" name="name" formControlName="employer" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">SSN</label>
-						<input class="form-control" type="text" placeholder="" name="name" formControlName="ssn" />
+						<input class="form-control input-upper" type="text" placeholder="" name="name" formControlName="ssn" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Credit Rating</label>
-						<select class="form-select" formControlName="rating">
+						<select class="form-select input-upper" formControlName="rating">
 							<option>Select</option>
 						</select>
 					</div>
@@ -201,7 +212,7 @@
 				<h6 class="heading">Notes</h6>
 				<div class="row formrow">
 					<div class="col-6">
-						<textarea class="form-control" name="note" id="" cols="70" rows="5"
+						<textarea class="form-control input-upper" name="note" id="" cols="70" rows="5"
 							formControlName="note"></textarea>
 					</div>
 				</div>

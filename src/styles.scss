@@ -62,7 +62,7 @@ form {
 form {
 	.value-must {
 		// margin-bottom: 0.5rem;
-		background-color: #f7ebeb;
+		background-color: #ffffff;
 		border-color: #ed1c24;
 	}
 }
@@ -173,6 +173,8 @@ label.required {
 
 .ng-select-no-border .ng-select-container {
 	border: none !important;
+    text-transform: uppercase;
+
 }
 
 .dropdown-menu {
@@ -246,6 +248,8 @@ form {
 
 .ng-select .ng-select-container {
 	min-height: 35px;
+    text-transform: uppercase;
+
 }
 
 .ng-select.ng-select-single .ng-select-container {
@@ -253,6 +257,8 @@ form {
 	border-radius: 4px;
 	border: 1px solid transparent;
 	background: transparent;
+    text-transform: uppercase;
+
 }
 
 ::-webkit-scrollbar {
@@ -329,6 +335,8 @@ select.form-select {
 	//margin-bottom: 0;
 	color: #000;
 	margin-bottom: 0px;
+    text-transform: uppercase;
+
 	// box-shadow: 0 -0.5px 0pt 0.1pt #ddd !important;
 }
 
@@ -337,6 +345,7 @@ input[type='date'].form-control,
 input[type='text'].form-control-inline {
 	line-height: 36px;
 	margin-bottom: 0px !important;
+    text-transform: uppercase;
 }
 
 input[type='text'].form-control.value-must,
@@ -345,6 +354,7 @@ input[type='text'].form-control-inline.value-must {
 	border: 1px solid #ed1c24;
 	box-shadow: 0 -0.5px 0pt 0.1pt #f7ebeb !important;
 	background: #ffffff;
+    text-transform: uppercase;
 }
 
 label {
@@ -411,19 +421,22 @@ input[type='checkbox']+label {
 
 .required-field {
 	border: 1px solid #ed1c24 !important;
-	background-color: #f7ebeb !important;
+	background-color: #ffffff !important;
 }
 
 ng-select {
 	border: 1px solid $input-border-color;
 	border-radius: 4px;
 	background: #fff;
+    text-transform: uppercase;
 }
 
 .required-ng-select {
 	border: 1px solid red;
 	border-radius: 4px;
 	background: #f7ebeb !important;
+    text-transform: uppercase;
+
 }
 
 form {
@@ -431,6 +444,8 @@ form {
 	input,
 	select {
 		margin-bottom: 12px;
+		text-transform: uppercase;
+
 	}
 
 	.input-group {
@@ -438,6 +453,7 @@ form {
 		box-shadow: 10px #d4d6d8;
 		height: 36px;
 		border-radius: 5px;
+		text-transform: uppercase;
 
 		label,
 		input {
@@ -927,4 +943,16 @@ input[type='checkbox'] {
 
 .deactivated{
     color: #d2d1d0;
+}
+
+.valid-mandatory-field{
+	border: 2px solid #05b631 !important;
+}
+
+.valid-required-field{
+	border-bottom: 2px solid #05b631 !important;
+}
+
+.input-upper{
+    text-transform: uppercase;
 }

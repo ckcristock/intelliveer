@@ -90,6 +90,8 @@ export class LegalGuardianComponent implements OnInit {
 
   goToAddLegalGuard(){
     console.log("Form", this.form);
+    console.log("to seeeeee", this.form.value.relationship);
+    
     this.patientUserServ.setLegalGuardToPati(this.form.value.relationship);
     this.router.navigate([this.globalRoutes.getPatientUserRoutes()[1].child[0].url]);
   }
