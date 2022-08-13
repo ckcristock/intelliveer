@@ -47,6 +47,25 @@
                     <ng-option *ngFor="let bg of businessGroups" [value]="bg._id">{{ bg.name }}</ng-option>
                 </ng-select>
             </div>
+            <div class="col-md-6">
+                <div class="mainformset">
+                    <p></p>
+                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group"
+                        style="margin-top: 7px;">
+                        <div class="subscriber-divs" style="margin-right: 12px !important;">
+                            <input  class="form-check-input" formControlName="isRestrictedTemplate" type="radio" name="isRestrictedTemplate"
+                                id="btnradio1" value="true" />
+                            <label class="form-check-label" for="btnradio1">Admin</label>
+                        </div>
+                        <div class="subscriber-divs" style="margin-right: 12px !important;">
+                            <input  class="form-check-input" formControlName="isRestrictedTemplate" type="radio" name="isRestrictedTemplate"
+                                id="btnradio2"  value="false"/>
+                            <label class="form-check-label" for="btnradio2"
+                                >Non-Admin</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row formrow">
             <div class="col-3">

@@ -323,8 +323,38 @@
 									style="padding: 1rem 2rem 1rem 2rem;"
 								>
 									<div class="input-group">
+										<input type="text" class="form-control" name="downPayment1" (input)="customCalculate($event)"  [(ngModel)]="downPayment1"/>
+									</div>
+								</td>
+							</tr>
+							<tr *ngIf="isDownPayment2">
+								<th style="border-bottom-color: white; border-top-color: white;">
+									1st Down Payment  & 2nd Down Payment
+								</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="
+										treatmentOptionObj.count === 3
+											? '#faf2e9'
+											: '#f1f2f2'
+									"
+									style="padding: 1rem 2rem 1rem 2rem;"
+								>
+								<div class="row">
+									<div class="col-md-6">
 										<input type="text" class="form-control" name="downPayment" (input)="customCalculate($event)"  [(ngModel)]="downPayment"/>
 									</div>
+									<div class="col-md-6">
+										<input type="text" class="form-control" name="downPayment2" (input)="customCalculate($event)"  [(ngModel)]="downPayment2"/>
+									</div>
+								</div>
 								</td>
 							</tr>
 							<!-- <tr>
@@ -577,7 +607,7 @@
 												<div class="col py-4" [align]="'end'">{{downPaymentOneMax | number : '1.2-2'}}</div>
 											</div>
 											<div class="range__slider">
-												<input type="range" value="{{downPaymentOneVal}}" class="range-slider__range" min="{{minDownPayment}}" max="{{downPaymentOneMax}}" step="25" [style.background]="downPayment1BG" (input)="downPaymentOneValues($event,'25')">
+												<input type="range" value="{{downPaymentOneVal}}" class="range-slider__range" min="{{minDownPayment1}}" max="{{downPaymentOneMax}}" step="25" [style.background]="downPayment1BG" (input)="downPaymentOneValues($event,'25')">
 											</div>
 										</div>
 										<div class="col-md-12" *ngIf="!isDownPayment2">
@@ -592,19 +622,21 @@
 										<div class="col-md-12">
 											<div class="row">
 												<div class="col-md-8 py-4">Monthly payments</div>
-												<div class="col py-4" [align]="'end'">{{maxPaymentAmountEmi}}</div>
+												<div class="col py-4" [align]="'end'" *ngIf="emi">{{maxPaymentAmountEmi | number : '1.2-2'}}</div>
+												<div class="col py-4" [align]="'end'" *ngIf="emi == 0">0</div>
 											</div>
 											<div class="range__slider month" *ngIf="emi">
-												<input class="range-slider__range" type="range" value="" min="{{minPaymentAmountEmi}}" max="{{maxPaymentAmountEmi}}" step="25" [style.background]="noOfMonthSlider" (input)="calculateValueMonthly($event)">
+												<input class="range-slider__range" type="range" value="{{minPaymentAmountEmi}}" min="{{minPaymentAmountEmi}}" max="{{maxPaymentAmountEmi}}" step="25" [style.background]="noOfMonthSlider" (input)="calculateValueMonthly($event)">
 											</div>
 											<div class="range__slider month" *ngIf="emi == 0">
-												<input class="range-slider__range" type="range" value="" min="{{minPaymentAmountEmi}}" max="{{maxPaymentAmountEmi}}" step="25" [style.background]="noOfMonthSlider" (input)="calculateValueMonthly($event)">
+												<input class="range-slider__range" type="range" value="{{minPaymentAmountEmi}}" min="{{minPaymentAmountEmi}}" max="{{maxPaymentAmountEmi}}" step="25" [style.background]="noOfMonthSlider" disabled (input)="calculateValueMonthly($event)">
 											</div>
 										</div>
 										<div class="col-md-12">
 											<div class="row">
 												<div class="col-md-8 py-4">No.of payments</div>
-												<div class="col py-4" [align]="'end'">{{totalMonth}}</div>
+												<div class="col py-4" [align]="'end'" *ngIf="emi">{{totalMonth}}</div>
+												<div class="col py-4" [align]="'end'" *ngIf="emi == 0">0</div>
 											</div>
 											<div class="range__slider month" *ngIf="emi">
 												<input class="range-slider__range" type="range" value="{{month}}" min="0" max="{{totalMonth}}" step="1" [style.background]="sliderBGMonth" (input)="noOfPaymentValue($event)">
@@ -646,17 +678,17 @@
 	<div class="modal-body">
 		<div class="row">
 			<div class="col">
-				<p>Minimum Down Payment</p>
+				<p>Minimum Total Down Payment</p>
 				<div class="input-group mb-3">
-					<input type="text" class="form-control" name="minDownPayment" [(ngModel)]="minDownPayment"/>
+					<input type="text" class="form-control" name="downPayment1" (input)="customCalculate($event)" [(ngModel)]="downPayment1"/>
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" *ngIf="isDownPayment2">
 			<div class="col">
-				<p>Minimum First Down Payment Amount</p>
+				<p>Minimum 1st Down Payment Amount on split</p>
 				<div class="input-group mb-3">
-					<input type="text" class="form-control" name="minDownPayment" [(ngModel)]="minDownPayment"/>
+					<input type="text" class="form-control" name="minDownPayment1" [(ngModel)]="minDownPayment1"/>
 				</div>
 			</div>
 		</div>

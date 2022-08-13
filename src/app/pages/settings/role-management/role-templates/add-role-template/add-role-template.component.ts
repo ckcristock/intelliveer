@@ -52,6 +52,7 @@ export class AddRoleTemplateComponent implements OnInit {
       name: ['',Validators.required],
       description: [''],
       businessGroups: [''],
+      isRestrictedTemplate:['',Validators.required],
       type: ['',Validators.required],
       permissions: this.fb.array([
         
@@ -130,6 +131,7 @@ export class AddRoleTemplateComponent implements OnInit {
       if (this.roleTemplateForm.invalid) {
         return;
       }
+      this.roleTemplateForm.value.isRestrictedTemplate = JSON.parse(this.roleTemplateForm.value.isRestrictedTemplate);
     this.roleTemplateForm.value.permissions.map((item: any) => {
       delete item.roles
     })
