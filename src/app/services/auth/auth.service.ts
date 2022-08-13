@@ -13,7 +13,6 @@ export class AuthService {
 		private injector: Injector
 	) {}
 	isLoggedIn() {
-		console.log(this.cookieService.get('orgId'))
 		const session = this.cookieService.get('isLoggedIn');
 		if (session) {
 			return true;

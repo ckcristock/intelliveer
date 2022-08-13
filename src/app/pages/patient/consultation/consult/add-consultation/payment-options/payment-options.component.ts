@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AlertService } from '@services/alert/alert.service';
 
 @Component({
 	selector: 'app-payment-options',
@@ -85,14 +86,19 @@ export class PaymentOptionsComponent implements OnInit {
  /** variable for calculator */
  totalAmount: number = 2567.50;
  totalAmountDP: number = 0;
- totalMonth: number = 26;
+ totalMonth: number = 24;
  miniMum: number = 1;
- month: number = 1;
+ month: number = 24;
  emi: any = 0;
+ paymentAmountEmi: any = 0;
+ minPaymentAmountEmi: any = 0;
+ maxPaymentAmountEmi: any = 0;
  downPayment: number =  500;
+ downPayment1: number = 500;
  downPayment2:number = 0;
  isDownPayment2: boolean = false;
  minDownPayment:number = 500;
+ minDownPayment1: number = 500;
  maxDownPayment1: number = 0;
  allTotal: any;
  bothDownTable:any
@@ -100,15 +106,29 @@ export class PaymentOptionsComponent implements OnInit {
  sliderBGMonth: any;
  totalDPBG: any;
  downPayment1BG:any;
+ noOfMonthSlider:any;
  lastPayment:number = 0;
  maxDownPayment:number = 0;
-	showDownPaymentArrow: boolean = false;
-	newDownPayment: number = 0;
-	newEmi: number = 0;
-	constructor(private modalService: NgbModal) {}
+ downPaymentOneVal:number = 0;
+ downPaymentOneMax: number = 0;
+ ratioDownPayment:any;
+ ratioDownPayment2:any;
+ ratioTotal:any;
+	constructor(private modalService: NgbModal,
+		private alertService: AlertService) {}
 
 	ngOnInit(): void {
-	this.customCalculate(this.downPayment)
+	this.customCalculate2(this.downPayment);
+	let monthValue:any = 0;
+		if(this.month < 10){
+			let m:any = this.month;
+			monthValue = parseInt(monthValue)+ parseInt(m) + 1;
+		}else{
+			monthValue = this.month;
+		}
+		console.log(monthValue)
+		let percentageMonth = (monthValue - 1)/(this.totalMonth-1) * 100;
+		this.sliderBGMonth = 'linear-gradient(to right, #49c6ef, #2c3e50 ' + percentageMonth + '%, #ecf7fb ' + percentageMonth + '%, #ecf7fb 100%)';
 	}
 
 	save(data: any) {}
@@ -150,24 +170,28 @@ export class PaymentOptionsComponent implements OnInit {
 	}
 
 	changeOptions(event:any){
-		let downPayment:any = this.downPayment;
+		let downPayment:any = this.downPayment1;
 		let downPayment2: any = this.downPayment2;
-		localStorage.removeItem('totalDownPayment')
+		localStorage.removeItem('diffPayments')
+		localStorage.removeItem('DP1')
 	   if(event == "two"){
 		this.splitPayment = true;
-		this.maxDownPayment1 = this.downPayment;
+		this.maxDownPayment1 = this.downPayment1;
 		this.maxDownPayment = this.downPayment;
+		this.downPaymentOneMax = this.downPayment1;
+		this.downPaymentOneVal = this.downPayment1;
 		this.isDownPayment2 = true;
-		this.downPayment2 = parseInt(downPayment) / 2;
+		this.downPayment2 = parseFloat(downPayment) / 2;
 		this.downPayment = this.downPayment2;
-		this.minDownPayment = parseInt(downPayment)/2;
-		this.totalAmountDP = parseInt(downPayment) + parseInt(downPayment2);
+ 		this.minDownPayment = parseFloat(downPayment)/2;
+		 this.minDownPayment1 = parseFloat(downPayment)/2;
+		this.totalAmountDP = parseFloat(downPayment) + parseFloat(downPayment2);
 	   }else{
 		this.isDownPayment2 = false;
 		this.splitPayment = false;
 		if(this.downPayment2 != 0){
-		  this.downPayment = 500;
-		  this.minDownPayment = 500;
+		  this.downPayment = this.downPayment1;
+		  this.minDownPayment = this.minDownPayment;
 		}
 		
 	   }
@@ -307,7 +331,6 @@ export class PaymentOptionsComponent implements OnInit {
 			console.log(this.monthDateObj)
 		  }
 		else{
-		  console.log('month',this.monthlyCount)
 		  this.monthlyEmi = this.emi;
 		  this.monthlyCount = this.month;
 		  for (let index = 0; index < this.monthlyCount; index++) {
@@ -322,48 +345,134 @@ export class PaymentOptionsComponent implements OnInit {
 		}
 		let percentage =  (this.downPayment - this.minDownPayment) / (this.totalAmount - this.minDownPayment) * 100;
 		this.sliderBackground = 'linear-gradient(to right, #E6BD5C, #ff4500 ' + percentage + '%, #E6BD5C ' + percentage + '%, #dee1e2 100%)';
-		let percentageMonth = (this.month - 1)/(this.totalMonth-1) * 100;
-		this.sliderBGMonth = 'linear-gradient(to right, #49c6ef, #2c3e50 ' + percentageMonth + '%, #ecf7fb ' + percentageMonth + '%, #ecf7fb 100%)';
-	  }
-	  totalDownTable(event:any,step:any){
-		if(this.emi == 0){
-			this.downPayment = this.downPayment2;
-		}
-		let data = event.target.value;
-		console.log(data);
-		 this.downPayment = data / 2;
-		 this.downPayment2 = data / 2;
-		 this.minDownPayment = this.downPayment;
-		 this.maxDownPayment = data;
-		 let diffData = this.totalAmount - data;
-		console.log(data)
-		if(diffData < 25){
-		 this.downPayment = this.totalAmount / 2;
-		 this.downPayment2 = this.totalAmount / 2;
-		 this.emi = 0;
-		 this.month = 0;
+		let monthValue:any = 0;
+		if(this.month < 10){
+			let m:any = this.month;
+			monthValue = parseInt(monthValue)+ parseInt(m) + 1;
 		}else{
-		 if(this.month == 0){
-			this.month = 1;
-		 }
+			monthValue = this.month;
 		}
-		 this.customCalculate(data)
+		console.log(monthValue)
+		let percentageMonth = (monthValue - 1)/(this.totalMonth-1) * 100;
+		this.sliderBGMonth = 'linear-gradient(to right, #49c6ef, #2c3e50 ' + percentageMonth + '%, #ecf7fb ' + percentageMonth + '%, #ecf7fb 100%)';
+		this.paymentAmountEmi = this.emi;
+	  }
+	totalDownTable(event:any,step:any){
+		console.log(event)
+		let data = event.target.value;
+		this.maxDownPayment = data;
+		let dp1:any	 = data /2;
+		let dP2:any = data /2;
+		let dp1Diff:any	 = localStorage.getItem('diffPayments');
+		dp1Diff = JSON.parse(dp1Diff);
+		let downP1:any =  localStorage.getItem('DP1');
+		downP1 = JSON.parse(downP1)
+		console.log(data)
+		if(this.downPayment > this.downPayment2 || this.downPayment < this.downPayment2){
+			this.calculateRatio(this.downPayment,this.downPayment2);
+			this.ratioTotal = this.ratioDownPayment + this.ratioDownPayment2;
+			let D1:any = (this.ratioDownPayment /this.ratioTotal)*step;
+			let D2:any = (this.ratioDownPayment2 /this.ratioTotal)*step;
+			let downPayment:any = this.downPayment;
+			let downPayment2:any = this.downPayment2;
+			console.log(downPayment,downPayment2)
+			console.log(D1,D2)
+			if(dP2 > downP1){
+				this.downPayment = parseFloat(downPayment) + parseFloat(D1)
+				this.downPayment2 = parseFloat(downPayment2) + parseFloat(D2)
+			}else{
+				this.downPayment = parseFloat(downPayment) - parseFloat(D1)
+				this.downPayment2 = parseFloat(downPayment2) - parseFloat(D2)
+			}
+		 this.calculateTotalDowntable(this.downPayment,this.downPayment2,data,'DP1')
+		}else if(dp1 == dP2){
+			this.downPayment2 = dP2;
+			this.downPayment = dp1;
+			this.calculateTotalDowntable(this.downPayment,this.downPayment2,data)
+		}
 		this.calculateInstallments();
 		let totalDPBG =  ((this.downPayment + this.downPayment2) - this.maxDownPayment1) / (this.totalAmount - this.maxDownPayment1) * 100;
 		this.totalDPBG = 'linear-gradient(to right, #E6BD5C, #ff4500 ' + totalDPBG + '%, #E6BD5C ' + totalDPBG + '%, #dee1e2 100%)';
-		this.minDownPayment = this.downPayment;
+		localStorage.setItem('DP1',dP2.toString())
 	  }
+	  calculateRatio(num_1:any, num_2:any){
+		for(let num=num_2; num>1; num--) {
+			if((num_1 % num) == 0 && (num_2 % num) == 0) {
+				num_1=num_1/num;
+				num_2=num_2/num;
+			}
+		}
+		var ratio = num_1+":"+num_2;
+		this.ratioDownPayment = num_1;
+		this.ratioDownPayment2 = num_2;
+	}
 	  /** range slider */
+	  calculateTotalDowntable(dP1:any,dP2:any,data:any,type?:any){
+		let dP1DP2 = parseFloat(dP1) + parseFloat(dP2);
+		let diffData = this.totalAmount - data;
+		if(type == "DP1"){
+			console.log(diffData,data)
+			if(diffData < 25){
+				let DPTotal = this.totalAmount - dP1DP2;
+				let DP1:any = (this.ratioDownPayment /this.ratioTotal)*DPTotal;
+				let DP2:any = (this.ratioDownPayment2 /this.ratioTotal)*DPTotal;
+				this.downPayment = parseFloat(dP1) + parseFloat(DP1)
+				this.downPayment2 = parseFloat(dP2) + parseFloat(DP2)
+				this.emi = 0;
+				this.month = 0;
+				this.lastPayment = 0;
+				this.downPaymentOneVal = this.downPayment;
+				this.downPaymentOneMax = this.totalAmount;
+				this.maxDownPayment = this.totalAmount
+			}else{
+				if(this.emi == 0 && this.month == 0){
+					this.month = 1;
+				}
+				if(data == this.maxDownPayment1){
+				let DPTotal = data / 2
+				this.downPayment = DPTotal
+				this.downPayment2 = DPTotal
+				this.downPaymentOneVal = this.downPayment;
+				this.downPaymentOneMax = data;
+				}else{
+					this.downPaymentOneVal = this.downPayment;
+					this.downPaymentOneMax = dP1DP2;
+				}
+				}
+		}else{
+			if(diffData < 25){
+				this.downPayment = this.totalAmount / 2;
+				this.downPayment2 = this.totalAmount / 2;
+				this.emi = 0;
+				this.month = 0;
+				this.lastPayment = 0;
+				this.downPaymentOneVal = this.downPayment;
+				this.downPaymentOneMax = this.totalAmount;
+				this.maxDownPayment = this.totalAmount
+			}else{
+				if(this.emi == 0 && this.month == 0){
+					this.month = this.totalMonth;
+				}
+				this.downPaymentOneVal = this.downPayment;
+				this.downPaymentOneMax = dP1DP2;
+			}
+		}
+		let downPayment1BG =  (this.downPayment - this.minDownPayment1) / (this.downPaymentOneMax - this.minDownPayment1) * 100;
+		this.downPayment1BG = 'linear-gradient(to right, #E6BD5C, #ff4500 ' + downPayment1BG + '%, #E6BD5C ' + downPayment1BG + '%, #dee1e2 100%)';
+		let dpayment:any = this.downPayment;
+		let dpayment2:any = this.downPayment2;
+		let dpTotal = parseFloat(dpayment) + parseFloat(dpayment2);
+		console.log(dpTotal)
+		this.customCalculate2(dpTotal);
+	  }
 	  downPaymentValues(event:any){
-		this.showDownPaymentArrow = true;
 		let data = event.target.value;
 		if(this.month == 0){
 		  if(data > 0){
-			this.month = 1;
+			this.month = this.totalMonth;
 		  }
 		}
 		let diffData = this.totalAmount - data;
-		console.log(data)
 		if(diffData < 25){
 		 this.downPayment = this.totalAmount;
 		 this.emi = 0;
@@ -371,49 +480,231 @@ export class PaymentOptionsComponent implements OnInit {
 		}else{
 		  this.downPayment = data;
 		}
-		this.customCalculate(data)
+		this.customCalculate2(data)
 		this.calculateInstallments();
-	  }
-	  leaveMouse()
-	  {
-		this.showDownPaymentArrow = false;
-		this.newDownPayment = this.downPayment;
-		this.newEmi = this.emi;
 	  }
 	  noOfPaymentValue(event:any){
 	   this.month = event.target.value;
 	   console.log(this.month)
 	   let data;
-	   if(this.downPayment2){
-		 data = this.downPayment + this.downPayment2;
-	   }else{
-         data = this.downPayment;
-	   }
-	   if(this.emi == 0){
+	   if(this.emi == 0 && this.isDownPayment2 == false){
+		console.log(false)
 		data = this.totalAmount / 2;
-		this.downPayment = this.totalAmount / 2;
+		 this.downPayment = this.totalAmount / 2;
+	   }else if((this.emi == 0 || this.month == 0) && this.isDownPayment2){
+		console.log(this.month,this.emi)
+		let data2:any = this.totalAmount;
+		let downPayment2:any = data2 / 2;;
+		let downpayment:any = data2 / 2;
+		if(this.month == 0){
+			this.downPayment = parseFloat(downpayment);
+			this.downPayment2 = parseFloat(downPayment2);
+			data = parseFloat(downpayment) + parseFloat(downPayment2);
+		}else{
+			this.downPayment = parseFloat(downpayment) / 2;
+			this.downPayment2 = parseFloat(downPayment2) / 2
+			data = parseFloat(downpayment)/2 + parseFloat(downPayment2)/2;
+		}
+		this.maxDownPayment = data
+		this.downPaymentOneVal = this.downPayment;
+		this.downPaymentOneMax = data;
+        let totalDPBG =  ((this.downPayment + this.downPayment2) - this.maxDownPayment1) / (this.totalAmount - this.maxDownPayment1) * 100;
+		this.totalDPBG = 'linear-gradient(to right, #E6BD5C, #ff4500 ' + totalDPBG + '%, #E6BD5C ' + totalDPBG + '%, #dee1e2 100%)';
+	   }else if((this.emi != 0 || this.month != 0) && this.isDownPayment2){
+		if(this.month == this.totalMonth - 1){
+			let downP:any = this.downPayment / 2;
+			let downP2:any = this.downPayment2 / 2;
+			this.downPayment = downP;
+			this.downPayment2 = downP2;
+			data = parseFloat(downP) + parseFloat(downP2);
+			this.maxDownPayment = data;
+			this.downPaymentOneMax = data;
+			this.downPaymentOneVal = this.downPayment;
+			let totalDPBG =  ((this.downPayment + this.downPayment2) - this.maxDownPayment1) / (this.totalAmount - this.maxDownPayment1) * 100;
+		    this.totalDPBG = 'linear-gradient(to right, #E6BD5C, #ff4500 ' + totalDPBG + '%, #E6BD5C ' + totalDPBG + '%, #dee1e2 100%)';
+		}else{
+			let downP:any = this.downPayment;
+			let downP2:any = this.downPayment2;
+			data = parseFloat(downP) + parseFloat(downP2);
+		}
+	   }else{
+		if(this.month == 0){
+		  this.downPayment = this.totalAmount;
+		}
+		data = this.downPayment;
 	   }
-	   this.customCalculate(data)
+	   console.log(data,this.downPayment,this.month)
+	   this.customCalculate2(data)
 	   this.calculateInstallments();
 	  }
-	  downPaymentOneValues(event:any){
+	downPaymentOneValues(event:any,step?:any){
 		let downpayment = event.target.value;
 		let downPayment2:any = this.downPayment2;
-		this.downPayment = downpayment;
-		let data = parseInt(downpayment) + parseInt(downPayment2)
-		console.log(data)
-		this.customCalculate(data)
-	  this.calculateInstallments();
-	  let downPayment1BG =  (this.downPayment - this.minDownPayment) / (this.maxDownPayment - this.minDownPayment) * 100;
-	  this.downPayment1BG = 'linear-gradient(to right, #E6BD5C, #ff4500 ' + downPayment1BG + '%, #E6BD5C ' + downPayment1BG + '%, #dee1e2 100%)';
+		console.log(this.downPayment,downpayment)
+		if(this.downPayment > downpayment){
+			let dPayment:any = this.downPayment;
+			console.log(dPayment,'dddddd',this.downPaymentOneMax)
+			this.downPayment  = parseFloat(dPayment) - parseFloat(step);
+			if(this.downPayment < this.minDownPayment1){
+				this.downPayment = this.minDownPayment1
+			}else if(dPayment > this.downPaymentOneMax){
+				this.downPayment = this.downPaymentOneMax
+			 }
+		}else{
+		 let dPayment:any = this.downPayment;
+		 dPayment = parseFloat(dPayment) + parseFloat(step);
+		 if(dPayment < this.minDownPayment1){
+			this.downPayment = this.minDownPayment1;
+		 }else if(dPayment > this.downPaymentOneMax){
+			this.downPayment = this.downPaymentOneMax
+		 }else{
+			this.downPayment = dPayment;
+		 }
+		 console.log(dPayment,'else',this.downPaymentOneMax)
+
+		}
+		console.log(this.downPayment)
+		let data:any = this.downPaymentOneMax;
+		let diffPayments:any = parseFloat(downpayment) - parseFloat(downPayment2);
+		//this.maxDownPayment = parseFloat(downpayment) + parseFloat(downPayment2);
+		this.downPayment2 = parseFloat(data)- this.downPayment;
+		console.log(downPayment2)
+		localStorage.setItem('diffPayments',diffPayments.toString());
+		this.customCalculate2(data)
+		this.calculateInstallments();
+		let downPayment1BG =  (this.downPayment - this.minDownPayment1) / (this.downPaymentOneMax - this.minDownPayment1) * 100;
+		this.downPayment1BG = 'linear-gradient(to right, #E6BD5C, #ff4500 ' + downPayment1BG + '%, #E6BD5C ' + downPayment1BG + '%, #dee1e2 100%)';
 	  }
-	  customCalculate(data?:any){
+	  changeCalculateValue(pmEmi?:any){
+        let emi:any;
+		let decimalValue;
+		let data:any;
+		if(this.isDownPayment2){
+			let dP1:any = this.downPayment
+			let dP2:any = this.downPayment2
+			data = parseFloat(dP1) + parseFloat(dP2);
+		   }else{
+			 data = this.downPayment;
+		   }
+		if(this.month != 0 && this.month <= this.totalMonth && data < this.totalAmount ){
+			emi = pmEmi
+			let pMTotal:any = parseFloat(data);
+			pMTotal = this.totalAmount - pMTotal;
+			console.log(pmEmi);
+			if(parseFloat(emi) < parseFloat(this.minPaymentAmountEmi)){
+				this.alertService.error(
+					'Error',
+					'No. of Payments Greater Then '+this.totalMonth
+				  );
+			}else{
+				let months = pMTotal / emi;
+				let monthsStr = months.toFixed(4);
+				let monthsArray = monthsStr.split(".");
+				months = parseFloat(monthsArray[0]);
+				let reminder = parseFloat(monthsArray[1]);
+				console.log(months, reminder);
+				this.month = months;
+				this.emi = Math.trunc(emi);
+				this.paymentAmountEmi = Math.trunc(emi);
+				let remainingAmount = emi * reminder / 10000
+				this.lastPayment = parseFloat(emi) + remainingAmount;
+				let monthValue:any = 0;
+				if(this.month < 10){
+					let m:any = this.month;
+					monthValue = parseInt(monthValue)+ parseInt(m) + 1;
+				}else{
+					monthValue = this.month;
+				}
+				console.log(monthValue)
+				let percentageMonth = (monthValue - 1)/(this.totalMonth-1) * 100;
+				this.sliderBGMonth = 'linear-gradient(to right, #49c6ef, #2c3e50 ' + percentageMonth + '%, #ecf7fb ' + percentageMonth + '%, #ecf7fb 100%)';
+			}
+		}else{
+		  this.emi = 0;
+		}
+	  }
+	  calculateValueMonthly(event:any){
+		let pmEmi:any = event.target.value;
+		let emi:any;
+		let decimalValue;
+		let data:any
+		if(this.isDownPayment2){
+         let dP1:any = this.downPayment
+		 let dP2:any = this.downPayment2
+		 data = parseFloat(dP1) + parseFloat(dP2);
+		}else{
+		  data = this.downPayment;
+		}
+		if(this.month != 0 && this.month <= this.totalMonth && data < this.totalAmount ){
+			emi = pmEmi
+			let pMTotal:any = parseFloat(data);
+			pMTotal = this.totalAmount - pMTotal;
+			console.log(pmEmi,this.minPaymentAmountEmi)
+			if(parseFloat(emi) < parseFloat(this.minPaymentAmountEmi)){
+				this.alertService.error(
+					'Error',
+					'No. of Payments Greater Then '+this.totalMonth
+				  );
+			}else{
+			  let months = pMTotal / emi;
+		      let monthsStr = months.toFixed(4);
+			  let monthsArray = monthsStr.split(".");
+			  months = parseFloat(monthsArray[0]);
+			  let reminder = parseFloat(monthsArray[1]);
+			  console.log(months, reminder);
+			  this.month = months;
+			  this.emi = Math.trunc(emi);
+			  this.paymentAmountEmi = Math.trunc(emi);
+			  let remainingAmount = emi * reminder / 10000
+			  remainingAmount = parseFloat(emi) + remainingAmount;
+			  decimalValue = this.getDecimalPart(emi)
+			  console.log(decimalValue)
+			  this.lastPayment = remainingAmount + (this.month * (decimalValue / 100));
+			  console.log(this.lastPayment)
+			}
+		}else{
+		  this.emi = 0;
+		}
+		let percentageMonth2 = (pmEmi - 25)/(this.maxPaymentAmountEmi-25) * 100;
+		this.noOfMonthSlider = 'linear-gradient(to right, #49c6ef, #2c3e50 ' + percentageMonth2 + '%, #ecf7fb ' + percentageMonth2 + '%, #ecf7fb 100%)';
+		let monthValue:any = 0;
+		if(this.month < 10){
+			let m:any = this.month;
+			monthValue = parseInt(monthValue)+ parseInt(m) + 1;
+		}else{
+			monthValue = this.month;
+		}
+		console.log(monthValue)
+		let percentageMonth = (monthValue - 1)/(this.totalMonth-1) * 100;
+		this.sliderBGMonth = 'linear-gradient(to right, #49c6ef, #2c3e50 ' + percentageMonth + '%, #ecf7fb ' + percentageMonth + '%, #ecf7fb 100%)';
+
+	  }
+	  customCalculate2(data?:any){
 		let emi:any;
 		let decimalValue;
 		if(!data){
 		  data = this.downPayment;
+		}else{
+			if(this.isDownPayment2){
+             let pData:any = data.target.value;
+			 this.downPayment = parseFloat(pData) / 2;
+			 this.downPayment2 = parseFloat(pData) / 2;
+			 data = pData;
+			 this.maxDownPayment = data;
+			 this.minDownPayment1 = this.downPayment;
+			 this.maxDownPayment1 = data;
+			 this.minDownPayment = data;
+		     this.downPaymentOneMax = data;
+             let totalDPBG =  ((this.downPayment + this.downPayment2) - this.maxDownPayment1) / (this.totalAmount - this.maxDownPayment1) * 100;
+		     this.totalDPBG = 'linear-gradient(to right, #E6BD5C, #ff4500 ' + totalDPBG + '%, #E6BD5C ' + totalDPBG + '%, #dee1e2 100%)';
+			//  let downPayment1BG =  (this.downPaymentOneVal - this.minDownPayment1) / (this.downPaymentOneMax - this.minDownPayment1) * 100;
+		    //  this.downPayment1BG = 'linear-gradient(to right, #E6BD5C, #ff4500 ' + downPayment1BG + '%, #E6BD5C ' + downPayment1BG + '%, #dee1e2 100%)';
+			}else{
+				this.downPayment = data.target.value;
+				data = this.downPayment
+				this.minDownPayment = this.downPayment;
+			}
 		}
-		console.log(data,this.downPayment)
 		if(this.month != 0 && this.month <= this.totalMonth && data < this.totalAmount ){
 			emi = (this.totalAmount - data)/this.month;
 			emi = emi.toFixed(2)
@@ -421,10 +712,62 @@ export class PaymentOptionsComponent implements OnInit {
 		}else{
 		  this.emi = 0;
 		}
+		this.maxPaymentAmountEmi = this.totalAmount - data;
+		this.minPaymentAmountEmi = emi;
 		if(emi > 0){
 		  decimalValue = this.getDecimalPart(emi)
+		  console.log(decimalValue)
 		  this.lastPayment = this.emi + (this.month * (decimalValue / 100));
+		}else{
+			this.lastPayment = 0;
 		}
+		this.paymentAmountEmi = this.emi;
+	  }
+	  customCalculate(payment?:any){
+		let emi:any;
+		let decimalValue;
+		let data:any;
+		if(!payment){
+		  data = this.downPayment;
+		}else{
+			if(this.isDownPayment2){
+             let pData:any = payment.target.value;
+			 this.downPayment = parseFloat(pData) / 2;
+			 this.downPayment2 = parseFloat(pData) / 2;
+			 data = pData;
+			 this.maxDownPayment = data;
+			 this.minDownPayment1 = this.downPayment;
+			 this.maxDownPayment1 = data;
+			 this.minDownPayment = data;
+		     this.downPaymentOneMax = data;
+             let totalDPBG =  ((this.downPayment + this.downPayment2) - this.maxDownPayment1) / (this.totalAmount - this.maxDownPayment1) * 100;
+		     this.totalDPBG = 'linear-gradient(to right, #E6BD5C, #ff4500 ' + totalDPBG + '%, #E6BD5C ' + totalDPBG + '%, #dee1e2 100%)';
+			//  let downPayment1BG =  (this.downPaymentOneVal - this.minDownPayment1) / (this.downPaymentOneMax - this.minDownPayment1) * 100;
+		    //  this.downPayment1BG = 'linear-gradient(to right, #E6BD5C, #ff4500 ' + downPayment1BG + '%, #E6BD5C ' + downPayment1BG + '%, #dee1e2 100%)';
+			}else{
+				this.downPayment = payment.target.value;
+				data = this.downPayment
+				this.minDownPayment = this.downPayment;
+			}
+		}
+		if(this.month != 0 && this.month <= this.totalMonth && data < this.totalAmount ){
+			emi = (this.totalAmount - data)/this.month;
+			emi = emi.toFixed(2)
+			this.emi = Math.trunc(emi)
+		}else{
+		  this.emi = 0;
+		}
+		this.maxPaymentAmountEmi = this.totalAmount - data;
+		this.minPaymentAmountEmi = emi;
+		if(emi > 0){
+		  decimalValue = this.getDecimalPart(emi)
+		  console.log(decimalValue)
+		  this.lastPayment = this.emi + (this.month * (decimalValue / 100));
+		}else{
+			this.lastPayment = 0;
+		}
+		this.paymentAmountEmi = this.emi;
+		this.calculateInstallments();
 	  }
 	   getDecimalPart(num:any) {
 		if (Number.isInteger(num)) {

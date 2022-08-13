@@ -9,17 +9,9 @@
 	<div class="row">
 		<div class="col-6">
 			<div class="section">
-				<h6
-					class="heading"
-					style="padding-left: 2rem; padding-right: 2rem"
-				>
-					Option {{ '1' }}
-				</h6>
+				<h6 class="heading" style="padding-left: 2rem; padding-right: 2rem;">Option {{ '1' }}</h6>
 				<hr />
-				<div
-					class="scroll"
-					style="padding-left: 2rem; padding-right: 2rem"
-				>
+				<div  class="scroll" style="padding-left: 2rem; padding-right: 2rem;">
 					<table class="table">
 						<tbody>
 							<tr>
@@ -29,9 +21,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td style="font-weight: bold">
-									Treament Phase
-								</td>
+								<td style="font-weight: bold">Treament Phase</td>
 								<td>
 									<p>
 										{{ 'Comprehenssive' }}
@@ -67,9 +57,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td style="font-weight: bold">
-									Treatment Steps
-								</td>
+								<td style="font-weight: bold">Treatment Steps</td>
 								<td>
 									<p
 										*ngFor="
@@ -87,14 +75,9 @@
 		</div>
 		<div class="col-6">
 			<div class="section">
-				<h6
-					class="heading"
-					style="padding-left: 2rem; padding-right: 2rem"
-				>
-					Option {{ '1' }}
-				</h6>
+				<h6 class="heading" style="padding-left: 2rem; padding-right: 2rem;">Option {{ '1' }}</h6>
 				<hr />
-				<div style="padding-left: 2rem; padding-right: 2rem">
+				<div style="padding-left: 2rem; padding-right: 2rem;">
 					<div class="row mb-3"><b>Fee Breakdown</b></div>
 					<div class="row mb-3">
 						<div class="col">Treatment Charges</div>
@@ -123,15 +106,7 @@
 						<div class="col" [align]="'end'">$2,500.00</div>
 					</div>
 					<div class="row mb-1">
-						<div
-							class="col"
-							style="
-								color: #8a8c8e;
-								vertical-align: middle;
-								display: flex;
-								margin: auto;
-							"
-						>
+						<div class="col" style="color: #8a8c8e; vertical-align: middle; display: flex; margin: auto;">
 							Patient's Responsibility
 						</div>
 						<div
@@ -149,13 +124,7 @@
 	</div>
 	<div class="row">
 		<div
-			[ngClass]="
-				compareAllOptionArray?.length === 1
-					? 'col-6'
-					: compareAllOptionArray?.length === 2
-					? 'col-9'
-					: 'col-12'
-			"
+			[ngClass]="compareAllOptionArray?.length === 1 ? 'col-6' : compareAllOptionArray?.length === 2 ? 'col-9' : 'col-12'"
 		>
 			<div class="table-responsive">
 				<form>
@@ -207,10 +176,7 @@
 									"
 									style="text-align: center"
 								>
-									<div
-										class="btn-group"
-										style="margin-left: 2rem"
-									>
+									<div class="btn-group" style="margin-left: 2rem;">
 										<button type="button" class="btn">
 											<b>Payment Option {{ i + 1 }}</b>
 										</button>
@@ -247,8 +213,7 @@
 									<span style="font-size: medium">
 										<i
 											[ngClass]="
-												treatmentOptionObj.count ===
-													1 ||
+												treatmentOptionObj.count === 1 ||
 												treatmentOptionObj.count > 1
 													? 'bi bi-hand-thumbs-up-fill'
 													: 'bi bi-hand-thumbs-up'
@@ -257,16 +222,13 @@
 												color: '#e96247'
 											}"
 											(click)="
-												countTreatment(
-													treatmentOptionObj
-												)
+												countTreatment(treatmentOptionObj)
 											"
 										></i>
 										&nbsp;
 										<i
 											[ngClass]="
-												treatmentOptionObj.count ===
-													2 ||
+												treatmentOptionObj.count === 2 ||
 												treatmentOptionObj.count > 2
 													? 'bi bi-hand-thumbs-up-fill'
 													: 'bi bi-hand-thumbs-up'
@@ -275,9 +237,7 @@
 												color: '#e96247'
 											}"
 											(click)="
-												countTreatment(
-													treatmentOptionObj
-												)
+												countTreatment(treatmentOptionObj)
 											"
 										></i>
 										&nbsp;
@@ -291,9 +251,7 @@
 												color: '#e96247'
 											}"
 											(click)="
-												countTreatment(
-													treatmentOptionObj
-												)
+												countTreatment(treatmentOptionObj)
 											"
 										></i>
 									</span>
@@ -302,9 +260,7 @@
 						</thead>
 						<tbody>
 							<tr>
-								<th style="border-bottom-color: white">
-									Payment Plan Type
-								</th>
+								<th style="border-bottom-color: white;">Payment Plan Type</th>
 								<td
 									*ngFor="
 										let treatmentOptionObj of compareAllOptionArray
@@ -319,7 +275,7 @@
 											? '#ffffff'
 											: '#ffffff'
 									"
-									style="padding: 1rem 2rem 1rem 2rem"
+									style="padding: 1rem 2rem 1rem 2rem;"
 								>
 									<select class="form-select">
 										<option
@@ -333,12 +289,7 @@
 								</td>
 							</tr>
 							<tr>
-								<th
-									style="
-										border-bottom-color: white;
-										border-top-color: white;
-									"
-								>
+								<th style="border-bottom-color: white; border-top-color: white;">
 									Down Payment
 									<img
 										src="../../../../../assets/icons/split-payment.svg"
@@ -369,19 +320,41 @@
 											? '#faf2e9'
 											: '#f1f2f2'
 									"
-									style="padding: 1rem 2rem 1rem 2rem"
+									style="padding: 1rem 2rem 1rem 2rem;"
 								>
 									<div class="input-group">
-										<input
-											type="text"
-											class="form-control"
-											name="downPayment"
-											(ngModelChange)="
-												customCalculate($event)
-											"
-											[(ngModel)]="downPayment"
-										/>
+										<input type="text" class="form-control" name="downPayment1" (input)="customCalculate($event)"  [(ngModel)]="downPayment1"/>
 									</div>
+								</td>
+							</tr>
+							<tr *ngIf="isDownPayment2">
+								<th style="border-bottom-color: white; border-top-color: white;">
+									1st Down Payment  & 2nd Down Payment
+								</th>
+								<td
+									*ngFor="
+										let treatmentOptionObj of compareAllOptionArray
+									"
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'best-value-yes'
+											: 'best-value-no'
+									"
+									[style.background-color]="
+										treatmentOptionObj.count === 3
+											? '#faf2e9'
+											: '#f1f2f2'
+									"
+									style="padding: 1rem 2rem 1rem 2rem;"
+								>
+								<div class="row">
+									<div class="col-md-6">
+										<input type="text" class="form-control" name="downPayment" (input)="customCalculate($event)"  [(ngModel)]="downPayment"/>
+									</div>
+									<div class="col-md-6">
+										<input type="text" class="form-control" name="downPayment2" (input)="customCalculate($event)"  [(ngModel)]="downPayment2"/>
+									</div>
+								</div>
 								</td>
 							</tr>
 							<!-- <tr>
@@ -414,14 +387,7 @@
 								</td>
 							</tr> -->
 							<tr>
-								<th
-									style="
-										border-bottom-color: white;
-										border-top-color: white;
-									"
-								>
-									Payment Frequency
-								</th>
+								<th style="border-bottom-color: white; border-top-color: white;">Payment Frequency</th>
 								<td
 									*ngFor="
 										let treatmentOptionObj of compareAllOptionArray
@@ -436,7 +402,7 @@
 											? '#faf2e9'
 											: '#f1f2f2'
 									"
-									style="padding: 1rem 2rem 1rem 2rem"
+									style="padding: 1rem 2rem 1rem 2rem;"
 								>
 									<select class="form-select">
 										<!-- <option
@@ -450,14 +416,7 @@
 								</td>
 							</tr>
 							<tr>
-								<th
-									style="
-										border-bottom-color: white;
-										border-top-color: white;
-									"
-								>
-									No. of Payments
-								</th>
+								<th style="border-bottom-color: white; border-top-color: white;">No. of Payments</th>
 								<td
 									*ngFor="
 										let treatmentOptionObj of compareAllOptionArray
@@ -472,28 +431,15 @@
 											? '#ffffff'
 											: '#ffffff'
 									"
-									style="padding: 1rem 2rem 1rem 2rem"
+									style="padding: 1rem 2rem 1rem 2rem;"
 								>
 									<div class="input-group">
-										<input
-											type="text"
-											class="form-control"
-											name="totalMonth"
-											(ngModelChange)="customCalculate()"
-											[(ngModel)]="totalMonth"
-										/>
+										<input type="text" class="form-control" name="totalMonth" (input)="customCalculate()"  [(ngModel)]="month"/>
 									</div>
 								</td>
 							</tr>
 							<tr>
-								<th
-									style="
-										border-bottom-color: white;
-										border-top-color: white;
-									"
-								>
-									Payment Amount
-								</th>
+								<th style="border-bottom-color: white; border-top-color: white;">Payment Amount</th>
 								<td
 									*ngFor="
 										let treatmentOptionObj of compareAllOptionArray
@@ -508,29 +454,15 @@
 											? '#faf2e9'
 											: '#f1f2f2'
 									"
-									style="padding: 1rem 2rem 1rem 2rem"
+									style="padding: 1rem 2rem 1rem 2rem;"
 								>
 									<div class="input-group">
-										<input
-											type="text"
-											class="form-control"
-											name="emi"
-											(ngModelChange)="customCalculate()"
-											[(ngModel)]="emi"
-											readonly
-										/>
+										<input type="text" class="form-control" name="emi" (input)="changeCalculateValue(paymentAmountEmi)" [(ngModel)]="paymentAmountEmi"  />
 									</div>
 								</td>
 							</tr>
 							<tr>
-								<th
-									style="
-										border-bottom-color: white;
-										border-top-color: white;
-									"
-								>
-									Last Payment
-								</th>
+								<th style="border-bottom-color: white; border-top-color: white;">Last Payment</th>
 								<td
 									*ngFor="
 										let treatmentOptionObj of compareAllOptionArray
@@ -545,20 +477,13 @@
 											? '#ffffff'
 											: '#ffffff'
 									"
-									style="padding: 1rem 2rem 1rem 2rem"
+									style="padding: 1rem 2rem 1rem 2rem;"
 								>
-									<p style="padding-left: 0.5rem">
-										${{ lastPayment | number: '1.2-2' }}
-									</p>
+									<p style="padding-left: 0.5rem;">${{lastPayment | number : '1.2-2'}}</p>
 								</td>
 							</tr>
 							<tr>
-								<th
-									style="
-										border-bottom-color: white;
-										border-top-color: white;
-									"
-								>
+								<th style="border-bottom-color: white; border-top-color: white;">
 									<div class="form-check" [align]="'center'">
 										<input
 											class="form-check-input"
@@ -571,7 +496,8 @@
 											class="form-check-label"
 											for="flexCheckChecked"
 										>
-											Add Remainder to Last Payment
+											Add Remainder 
+											to Last Payment
 										</label>
 									</div>
 								</th>
@@ -584,10 +510,7 @@
 											? 'best-value-yes'
 											: 'best-value-no'
 									"
-									style="
-										background-color: white;
-										padding: 1rem 2rem 1rem 2rem;
-									"
+									style="background-color: white; padding: 1rem 2rem 1rem 2rem;"
 								>
 									<div [align]="'end'">
 										<img
@@ -600,26 +523,21 @@
 											src="../../../../../assets/icons/unlocked.svg"
 											width="20"
 											height="20"
-											*ngIf="treatmentOptionObj.locked"
+											*ngIf="!treatmentOptionObj.locked"
 											(click)="openModel(content)"
 										/>
 										<img
 											src="../../../../../assets/icons/locked.svg"
 											width="20"
 											height="20"
-											*ngIf="!treatmentOptionObj.locked"
+											*ngIf="treatmentOptionObj.locked"
 											(click)="openModel(content)"
 										/>
 									</div>
 								</td>
 							</tr>
 							<tr>
-								<th
-									style="
-										border-bottom-color: white;
-										border-top-color: white;
-									"
-								></th>
+								<th style="border-bottom-color: white; border-top-color: white;"></th>
 								<td
 									*ngFor="
 										let treatmentOptionObj of compareAllOptionArray
@@ -629,293 +547,105 @@
 											? 'best-value-yes'
 											: 'best-value-no'
 									"
-									style="
-										background-color: white;
-										padding: 1rem 2rem 1rem 2rem;
-									"
+									style="background-color: white; padding: 1rem 2rem 1rem 2rem;"
 								>
-									<div
-										class="row mt-4 text-center custom-downpayment"
-										*ngIf="isDownPayment2"
-									>
+									<div class="row mt-4 text-center custom-downpayment" *ngIf="isDownPayment2">
 										<div class="col-md-6 pe-0">
-											<p style="font-size: 11px">
-												Down Payment 1
-											</p>
+											<p style="font-size: 11px;">Down Payment 1</p>
 											<div class="custom-bg">
-												<p
-													style="
-														font-weight: bold;
-														font-size: 14px;
-													"
-												>
-													${{ downPayment }}
-												</p>
-												<p *ngIf="tabDate">
-													Due by
-													{{
-														tabDate
-															| date: 'MM/d/yyyy'
-													}}
-												</p>
+												<p style="font-weight: bold; font-size: 14px;">${{downPayment | number : '1.2-2'}}</p>
+												<p *ngIf="tabDate" class="my-0">Due by {{tabDate  | date: 'MM/d/yyyy'}}</p>
 											</div>
 										</div>
 										<div class="col-md-6 ps-0">
-											<p style="font-size: 11px">
-												Down Payment 2
-											</p>
+											<p style="font-size: 11px;">Down Payment 2</p>
 											<div class="custom-bg">
-												<p
-													style="
-														font-weight: bold;
-														font-size: 14px;
-													"
-												>
-													${{ downPayment2 }}
-												</p>
-												<p *ngIf="tabDate">
-													Due by
-													{{
-														tabTwoDate
-															| date: 'MM/d/yyyy'
-													}}
-												</p>
+												<p style="font-weight: bold; font-size: 14px;">${{downPayment2 | number : '1.2-2'}}</p>
+												<p *ngIf="tabTwoDate" class="my-0">Due by {{tabTwoDate  | date: 'MM/d/yyyy'}}</p>
 											</div>
 										</div>
 									</div>
-									<div
-										class="row mt-4 text-center custom-downpayment"
-										*ngIf="!isDownPayment2"
-									>
+									<div class="row mt-4 text-center custom-downpayment" *ngIf="!isDownPayment2">
 										<div class="col-md-12">
 											<p>Down Payment</p>
 											<div class="custom-bg">
-												<p
-													style="
-														font-weight: bold;
-														font-size: 14px;
-													"
-												>
-													<span
-														style="
-															font-size: x-large;
-															color: #f8ab42;
-														"
-														><i
-															class="bi bi-arrow-down"
-															*ngIf="
-																downPayment <
-																	newDownPayment &&
-																showDownPaymentArrow
-															"
-														></i
-													></span>
-													<span
-														style="
-															font-size: x-large;
-															color: #f8ab42;
-														"
-														><i
-															class="bi bi-arrow-up"
-															*ngIf="
-																downPayment >
-																	newDownPayment &&
-																showDownPaymentArrow
-															"
-														></i></span
-													>${{ downPayment }}
-												</p>
-												<p *ngIf="tabDate">
-													Due by
-													{{
-														tabDate
-															| date: 'MM/d/yyyy'
-													}}
-												</p>
+												<p style="font-weight: bold; font-size: 14px;">${{downPayment | number : '1.2-2'}}</p>
+												<p *ngIf="tabDate" class="my-0">Due by {{tabDate  | date: 'MM/d/yyyy'}}</p>
 											</div>
 										</div>
 									</div>
-									<div
-										class="row custom-instalment mt-4 text-center"
-									>
+									<div class="row custom-instalment mt-4 text-center">
 										<div class="col-md pe-0">
-											<p>No. of Installments</p>
+											<p>No. of <br>Payments</p>
 											<div class="custom-bg">
-												<p
-													style="
-														font-weight: bold;
-														font-size: 14px;
-														margin-top: 11px;
-													"
-												>
-													{{ month }}
-												</p>
-												<p></p>
+												<p *ngIf="tabThreeDate" class="my-0" style="height: 18px;"></p>
+												<p style="font-weight: bold; font-size: 14px;">{{month}}</p>
+												<p *ngIf="tabThreeDate" class="my-0" style="height: 18px;"></p>
 											</div>
 										</div>
 										<div class="col-md ps-0">
-											<p>Monthly Installments</p>
+											<p>Monthly <br> Payments</p>
 											<div class="custom-bg">
-												<p
-													style="
-														font-weight: bold;
-														font-size: 14px;
-													"
-												>
-													<span
-														style="
-															font-size: x-large;
-															color: #49c6ef;
-														"
-														><i
-															class="bi bi-arrow-down"
-															*ngIf="
-																emi < newEmi &&
-																showDownPaymentArrow
-															"
-														></i
-													></span>
-													<span
-														style="
-															font-size: x-large;
-															color: #49c6ef;
-														"
-														><i
-															class="bi bi-arrow-up"
-															*ngIf="
-																emi > newEmi &&
-																showDownPaymentArrow
-															"
-														></i
-													></span>
-													${{ emi | number: '1.2-2' }}
-												</p>
-												<p *ngIf="tabThreeDate">
-													Due by
-													{{
-														tabThreeDate
-															| date: 'MM/d/yyyy'
-													}}
-												</p>
+												<p style="font-weight: bold; font-size: 14px;">${{emi | number : '1.2-2'}}</p>
+												<p *ngIf="tabThreeDate" class="my-0">Due by {{tabThreeDate  | date: 'MM/d/yyyy'}}</p>
 											</div>
 										</div>
-									</div>
-									<div class="row">
+										</div>
+										<div class="row">
 										<div class="col-md-12">
-											<div
-												class="range__slider"
-												*ngIf="isDownPayment2"
-											>
+											<div class="range__slider" *ngIf="isDownPayment2">
 												<div class="row">
-													<div class="col-md-8 py-4">
-														Total Down Payment
-													</div>
-													<div
-														class="col py-4"
-														[align]="'end'"
-													>
-														{{ totalAmount }}
-													</div>
+													<div class="col-md-8 py-4">Total Down Payment</div>
+													<div class="col py-4" [align]="'end'">{{totalAmount}}</div>
 												</div>
-												<input
-													class="range-slider__range"
-													type="range"
-													value="{{
-														maxDownPayment1
-													}}"
-													min="{{ maxDownPayment1 }}"
-													max="{{ totalAmount }}"
-													step="25"
-													[style.background]="
-														totalDPBG
-													"
-													(input)="
-														totalDownTable(
-															$event,
-															25
-														)
-													"
-												/>
+												<input class="range-slider__range" type="range" value="{{maxDownPayment}}" min="{{maxDownPayment1}}" max="{{totalAmount}}" step="25" [style.background]="totalDPBG" (input)="totalDownTable($event,25)">
 											</div>
 										</div>
-										<!-- <div class="col-md-12" *ngIf="isDownPayment2">
+										<div class="col-md-12" *ngIf="isDownPayment2">
 											<div class="row">
 												<div class="col-md-8 py-4">Down Payment 1</div>
-												<div class="col py-4" [align]="'end'">{{maxDownPayment}}</div>
+												<div class="col py-4" [align]="'end'">{{downPaymentOneMax | number : '1.2-2'}}</div>
 											</div>
 											<div class="range__slider">
-												<input type="range" value="{{minDownPayment}}" class="range-slider__range" min="{{minDownPayment}}" max="{{maxDownPayment}}" step="25" [style.background]="downPayment1BG" (input)="downPaymentOneValues($event)">
+												<input type="range" value="{{downPaymentOneVal}}" class="range-slider__range" min="{{minDownPayment1}}" max="{{downPaymentOneMax}}" step="25" [style.background]="downPayment1BG" (input)="downPaymentOneValues($event,'25')">
 											</div>
-										</div> -->
-										<div
-											class="col-md-12"
-											*ngIf="!isDownPayment2"
-										>
+										</div>
+										<div class="col-md-12" *ngIf="!isDownPayment2">
 											<div class="row">
-												<div class="col-md-8 py-4">
-													Down Payment
-												</div>
-												<div
-													class="col py-4"
-													[align]="'end'"
-												>
-													{{ totalAmount }}
-												</div>
+												<div class="col-md-8 py-4">Down Payment</div>
+												<div class="col py-4" [align]="'end'">{{totalAmount}}</div>
 											</div>
 											<div class="range__slider">
-												<input
-													type="range"
-													value="{{ minDownPayment }}"
-													class="range-slider__range"
-													min="{{ minDownPayment }}"
-													max="{{ totalAmount }}"
-													step="25"
-													[style.background]="
-														sliderBackground
-													"
-													(mouseup)="leaveMouse()"
-													(input)="
-														downPaymentValues(
-															$event
-														)
-													"
-												/>
+												<input type="range" value="{{downPayment}}" class="range-slider__range" min="{{minDownPayment}}" max="{{totalAmount}}" step="25" [style.background]="sliderBackground" (input)="downPaymentValues($event)">
 											</div>
 										</div>
 										<div class="col-md-12">
 											<div class="row">
-												<div class="col-md-8 py-4">
-													No.of payments
-												</div>
-												<div
-													class="col py-4"
-													[align]="'end'"
-												>
-													{{ totalMonth }}
-												</div>
+												<div class="col-md-8 py-4">Monthly payments</div>
+												<div class="col py-4" [align]="'end'" *ngIf="emi">{{maxPaymentAmountEmi | number : '1.2-2'}}</div>
+												<div class="col py-4" [align]="'end'" *ngIf="emi == 0">0</div>
 											</div>
-											<div class="range__slider month">
-												<input
-													class="range-slider__range"
-													type="range"
-													value="1"
-													min="1"
-													max="{{ totalMonth }}"
-													step="1"
-													[style.background]="
-														sliderBGMonth
-													"
-													(input)="
-														noOfPaymentValue($event)
-													"
-													[ngStyle]="{ 'opacity': emi == 0 ? '0.3' : '1' }"
-												/>
+											<div class="range__slider month" *ngIf="emi">
+												<input class="range-slider__range" type="range" value="{{minPaymentAmountEmi}}" min="{{minPaymentAmountEmi}}" max="{{maxPaymentAmountEmi}}" step="25" [style.background]="noOfMonthSlider" (input)="calculateValueMonthly($event)">
 											</div>
-											<div class="overlay" *ngIf="emi == 0">
-												You have complete your down payment
+											<div class="range__slider month" *ngIf="emi == 0">
+												<input class="range-slider__range" type="range" value="{{minPaymentAmountEmi}}" min="{{minPaymentAmountEmi}}" max="{{maxPaymentAmountEmi}}" step="25" [style.background]="noOfMonthSlider" disabled (input)="calculateValueMonthly($event)">
 											</div>
 										</div>
-									</div>
+										<div class="col-md-12">
+											<div class="row">
+												<div class="col-md-8 py-4">No.of payments</div>
+												<div class="col py-4" [align]="'end'" *ngIf="emi">{{totalMonth}}</div>
+												<div class="col py-4" [align]="'end'" *ngIf="emi == 0">0</div>
+											</div>
+											<div class="range__slider month" *ngIf="emi">
+												<input class="range-slider__range" type="range" value="{{month}}" min="0" max="{{totalMonth}}" step="1" [style.background]="sliderBGMonth" (input)="noOfPaymentValue($event)">
+											</div>
+											<div class="range__slider month" *ngIf="emi == 0">
+												<input class="range-slider__range" type="range" value="{{month}}" min="0" max="{{totalMonth}}" step="1" [style.background]="sliderBGMonth" disabled (input)="noOfPaymentValue($event)">
+											</div>
+										</div>
+										</div>
 								</td>
 							</tr>
 						</tbody>
@@ -948,40 +678,24 @@
 	<div class="modal-body">
 		<div class="row">
 			<div class="col">
-				<p>Minimum Down Payment</p>
+				<p>Minimum Total Down Payment</p>
 				<div class="input-group mb-3">
-					<input type="text" class="form-control" />
+					<input type="text" class="form-control" name="downPayment1" (input)="customCalculate($event)" [(ngModel)]="downPayment1"/>
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" *ngIf="isDownPayment2">
 			<div class="col">
-				<p>Split Down Payment</p>
+				<p>Minimum 1st Down Payment Amount on split</p>
 				<div class="input-group mb-3">
-					<input type="text" class="form-control" />
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col">
-				<p>Minimum Payment Amount</p>
-				<div class="input-group mb-3">
-					<input type="text" class="form-control" />
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col">
-				<p>Maximum No. of Months</p>
-				<div class="input-group mb-3">
-					<input type="text" class="form-control" />
+					<input type="text" class="form-control" name="minDownPayment1" [(ngModel)]="minDownPayment1"/>
 				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col">
 				<p>Maximum No. of Payments</p>
-				<p>26</p>
+				<p>{{totalMonth}}</p>
 			</div>
 		</div>
 	</div>
@@ -996,210 +710,139 @@
 	</div>
 </ng-template>
 <ng-template #calendar let-modal>
-	<div class="modal-header">
-		<h4 class="modal-title" id="modal-basic-title">Payment Date</h4>
-		<button
-			type="button"
-			class="btn-close"
-			aria-label="Close"
-			(click)="modal.dismiss('Cross click')"
-		></button>
-	</div>
-	<div class="modal-body">
-		<div class="row" *ngIf="!tabDate || !tabTwoDate || !tabThreeDate">
-			<!-- Tabs navs -->
-			<ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
-				<li class="nav-item" role="presentation">
-					<a
-						class="nav-link"
-						id="ex1-tab-1"
-						data-mdb-toggle="tab"
-						role="tab"
-						aria-controls="ex1-tabs-1"
-						aria-selected="true"
-						[ngClass]="[tab ? 'active' : '']"
-						>Down Payment</a
-					>
-				</li>
-				<li class="nav-item" role="presentation">
-					<a
-						class="nav-link"
-						id="ex1-tab-2"
-						data-mdb-toggle="tab"
-						role="tab"
-						aria-controls="ex1-tabs-2"
-						aria-selected="false"
-						[ngClass]="[tabTwo ? 'active' : '']"
-						>Down Payment 2</a
-					>
-				</li>
-				<li class="nav-item" role="presentation">
-					<a
-						class="nav-link"
-						id="ex1-tab-3"
-						data-mdb-toggle="tab"
-						role="tab"
-						aria-controls="ex1-tabs-3"
-						aria-selected="false"
-						[ngClass]="[tabThree ? 'active' : '']"
-						>Installment</a
-					>
-				</li>
-			</ul>
-			<!-- Tabs navs -->
-			<!-- Tabs content -->
-			<div class="tab-content" id="ex1-content">
-				<div
-					class="tab-pane fade show active"
-					id="ex1-tabs-1"
-					role="tabpanel"
-					aria-labelledby="ex1-tab-1"
-					*ngIf="tab"
-				>
-					<ngb-datepicker
-						#dp
-						[(ngModel)]="model"
-						(click)="getDate('tab', model)"
-						(navigate)="date = $event.next"
-					></ngb-datepicker>
-				</div>
-				<div
-					class="tab-pane fade show active"
-					id="ex1-tabs-2"
-					role="tabpanel"
-					aria-labelledby="ex1-tab-2"
-					*ngIf="tabTwo"
-				>
-					<ngb-datepicker
-						#dp
-						[(ngModel)]="modelTwo"
-						(click)="getDate('tabTwo', modelTwo)"
-						(navigate)="date = $event.next"
-					></ngb-datepicker>
-				</div>
-				<div
-					class="tab-pane fade show active"
-					id="ex1-tabs-3"
-					role="tabpanel"
-					aria-labelledby="ex1-tab-3"
-					*ngIf="tabThree"
-				>
-					<ngb-datepicker
-						#dp
-						[(ngModel)]="modelThree"
-						(click)="getDate('tabThree', modelThree)"
-						(navigate)="date = $event.next"
-					></ngb-datepicker>
-					<ng-select
-						placeholder="Select Type"
-						(change)="checkMonthlyValue($event)"
-					>
-						<ng-option value="monthly">Monthly</ng-option>
-						<ng-option value="byMonthly">Bi-Monthly</ng-option>
-						<ng-option value="weekly">Weekly</ng-option>
-					</ng-select>
-					<div class="col" *ngIf="isMonthlyStatus">
-						<button (click)="showDate('tabThree', modelThree)">
-							Save
-						</button>
-					</div>
-				</div>
-			</div>
-			<!-- Tabs content -->
-		</div>
-		<div class="row" *ngIf="tabDate && tabTwoDate && tabThreeDate">
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col"></th>
-						<th scope="col">Amount($)</th>
-						<th scope="col">Date</th>
-						<th scope="col"></th>
-					</tr>
-				</thead>
-				<tbody class="text-center">
-					<tr>
-						<th>Down Payment 1</th>
-						<td>${{ downPayment }}</td>
-						<td>{{ tabDate | date: 'MM/d/yyyy' }}</td>
-						<td>
-							<img
-								src="assets/icons/Edit.svg"
-								(click)="d.toggle()"
-								style="width: 20px"
-							/>
-							<input
-								type="hidden"
-								class="form-control"
-								placeholder="yyyy-mm-dd"
-								name="dp"
-								[(ngModel)]="model"
-								(dateSelect)="getDate('tab', model)"
-								ngbDatepicker
-								#d="ngbDatepicker"
-							/>
-						</td>
-					</tr>
-					<tr>
-						<th>Down Payment 2</th>
-						<td>${{ downPayment2 }}</td>
-						<td>{{ tabTwoDate | date: 'MM/d/yyyy' }}</td>
-						<td>
-							<img
-								src="assets/icons/Edit.svg"
-								(click)="d2.toggle()"
-								style="width: 20px"
-							/>
-							<input
-								type="hidden"
-								class="form-control"
-								placeholder="yyyy-mm-dd"
-								name="dp"
-								[(ngModel)]="modelTwo"
-								(dateSelect)="getDate('tabTwo', modelTwo)"
-								ngbDatepicker
-								#d2="ngbDatepicker"
-							/>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">Installemnts({{ monthlyCount }})</th>
-						<th scope="col">Amount($)</th>
-						<th scope="col">Date(Monthly)</th>
-						<th scope="col"></th>
-					</tr>
-				</thead>
-				<tbody class="text-center">
-					<tr *ngFor="let item of monthDateObj; let i = index">
-						<th>Payment {{ i + 1 }}</th>
-						<td>${{ monthlyEmi | number: '1.2-2' }}</td>
-						<td>{{ item.date | date: 'MM/d/yyyy' }}</td>
-						<!-- <td *ngIf="i % 2 !=0">{{monthDateObj[i].date  | date: 'dd MMMM YYYY'}}</td> -->
-						<td *ngIf="i == 0">
-							<img
-								src="assets/icons/Edit.svg"
-								(click)="d3.toggle()"
-								style="width: 20px"
-							/>
-							<input
-								type="hidden"
-								class="form-control"
-								placeholder="yyyy-mm-dd"
-								name="dp"
-								[(ngModel)]="modelThree"
-								(dateSelect)="getDate('tabThree', modelThree)"
-								ngbDatepicker
-								#d3="ngbDatepicker"
-							/>
-						</td>
-						<td *ngIf="i != 0"></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-</ng-template>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Payment Date</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="row" *ngIf="!tabDate || !tabTwoDate || !tabThreeDate">
+            <!-- Tabs navs -->
+        <ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
+            <li class="nav-item" role="presentation">
+            <a
+                class="nav-link"
+                id="ex1-tab-1"
+                data-mdb-toggle="tab"
+                role="tab"
+                aria-controls="ex1-tabs-1"
+                aria-selected="true"
+                [ngClass]="[ tab ? 'active' : '']"
+                >Down Payment</a
+            >
+            </li>
+            <li class="nav-item" role="presentation">
+            <a
+                class="nav-link"
+                id="ex1-tab-2"
+                data-mdb-toggle="tab"
+                role="tab"
+                aria-controls="ex1-tabs-2"
+                aria-selected="false"
+                [ngClass]="[ tabTwo ? 'active' : '']"
+                >Down Payment 2</a
+            >
+            </li>
+            <li class="nav-item" role="presentation">
+            <a
+                class="nav-link"
+                id="ex1-tab-3"
+                data-mdb-toggle="tab"
+                role="tab"
+                aria-controls="ex1-tabs-3"
+                aria-selected="false"
+                [ngClass]="[ tabThree ? 'active' : '']"
+                >Installment</a
+            >
+            </li>
+        </ul>
+        <!-- Tabs navs -->
+        <!-- Tabs content -->
+        <div class="tab-content" id="ex1-content">
+            <div
+            class="tab-pane fade show active"
+            id="ex1-tabs-1"
+            role="tabpanel"
+            aria-labelledby="ex1-tab-1"
+            *ngIf="tab"
+            >
+                <ngb-datepicker #dp [(ngModel)]="model" (click)="getDate('tab',model)"  (navigate)="date = $event.next"></ngb-datepicker>
+            </div>
+            <div class="tab-pane fade show active" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2" *ngIf="tabTwo">
+                <ngb-datepicker #dp [(ngModel)]="modelTwo" (click)="getDate('tabTwo',modelTwo)"  (navigate)="date = $event.next"></ngb-datepicker>
+            </div>
+            <div class="tab-pane fade show active" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3" *ngIf="tabThree">
+                <ngb-datepicker #dp [(ngModel)]="modelThree" (click)="getDate('tabThree',modelThree)"  (navigate)="date = $event.next"></ngb-datepicker>
+                <ng-select placeholder="Select Type" (change)="checkMonthlyValue($event)">
+                    <ng-option value="monthly">Monthly</ng-option>
+                    <ng-option value="byMonthly">Bi-Monthly</ng-option>
+                    <ng-option value="weekly">Weekly</ng-option>
+                </ng-select>
+                <div class="col" *ngIf="isMonthlyStatus">
+                    <button (click)="showDate('tabThree',modelThree)">Save</button>
+                </div>
+            </div>
+        </div>
+        <!-- Tabs content -->
+        </div>
+        <div class="row" *ngIf="tabDate && tabTwoDate && tabThreeDate">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Amount($)</th>
+                    <th scope="col">Date</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody class="text-center">
+                  <tr>
+                    <th>Down Payment 1</th>
+                    <td>
+                        ${{downPayment}}
+                    </td>
+                    <td>{{tabDate  | date: 'MM/d/yyyy'}}</td>
+                    <td><img src="assets/icons/Edit.svg" (click)="d.toggle()" style="width:20px">
+                        <input type="hidden" class="form-control" placeholder="yyyy-mm-dd"
+                       name="dp" [(ngModel)]="model" (dateSelect)="getDate('tab',model)" ngbDatepicker #d="ngbDatepicker">
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Down Payment 2</th>
+                    <td>
+                        ${{downPayment2}}
+                    </td>
+                    <td>{{tabTwoDate  | date: 'MM/d/yyyy'}}</td>
+                    <td><img src="assets/icons/Edit.svg" (click)="d2.toggle()" style="width:20px">
+                        <input type="hidden" class="form-control" placeholder="yyyy-mm-dd"
+                       name="dp" [(ngModel)]="modelTwo" (dateSelect)="getDate('tabTwo',modelTwo)"ngbDatepicker #d2="ngbDatepicker">
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Installemnts({{monthlyCount}})</th>
+                    <th scope="col">Amount($)</th>
+                    <th scope="col">Date(Monthly)</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody class="text-center">
+                  <tr *ngFor="let item of monthDateObj; let i = index;">
+                    <th>Payment {{i + 1}} </th>
+                    <td>
+                        ${{monthlyEmi  | number : '1.2-2'}}
+                    </td>
+                    <td >{{item.date  | date: 'MM/d/yyyy'}}</td>
+                    <!-- <td *ngIf="i % 2 !=0">{{monthDateObj[i].date  | date: 'dd MMMM YYYY'}}</td> -->
+                    <td *ngIf="i == 0"><img src="assets/icons/Edit.svg" (click)="d3.toggle()" style="width:20px">
+                        <input type="hidden" class="form-control" placeholder="yyyy-mm-dd"
+                       name="dp" [(ngModel)]="modelThree" (dateSelect)="getDate('tabThree',modelThree)" ngbDatepicker #d3="ngbDatepicker"></td>
+                    <td *ngIf="i != 0"></td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+  </ng-template>
