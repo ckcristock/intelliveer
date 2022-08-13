@@ -569,7 +569,34 @@
 										<div class="col-md-12">
 											<p>Down Payment</p>
 											<div class="custom-bg">
-												<p style="font-weight: bold; font-size: 14px;">${{downPayment | number : '1.2-2'}}</p>
+												<p style="font-weight: bold; font-size: 14px;"><span
+													style="
+														font-size: x-large;
+														color: #f8ab42;
+													"
+													><i
+														class="bi bi-arrow-down"
+														*ngIf="
+															downPayment <
+																newDownPayment &&
+															showDownPaymentArrow
+														"
+													></i
+												></span>
+												<span
+													style="
+														font-size: x-large;
+														color: #f8ab42;
+													"
+													><i
+														class="bi bi-arrow-up"
+														*ngIf="
+															downPayment >
+																newDownPayment &&
+															showDownPaymentArrow
+														"
+													></i></span
+												>${{downPayment | number : '1.2-2'}}</p>
 												<p *ngIf="tabDate" class="my-0">Due by {{tabDate  | date: 'MM/d/yyyy'}}</p>
 											</div>
 										</div>
@@ -586,7 +613,32 @@
 										<div class="col-md ps-0">
 											<p>Monthly <br> Payments</p>
 											<div class="custom-bg">
-												<p style="font-weight: bold; font-size: 14px;">${{emi | number : '1.2-2'}}</p>
+												<p style="font-weight: bold; font-size: 14px;"><span
+													style="
+														font-size: x-large;
+														color: #49c6ef;
+													"
+													><i
+														class="bi bi-arrow-down"
+														*ngIf="
+															emi < newEmi &&
+															showDownPaymentArrow
+														"
+													></i
+												></span>
+												<span
+													style="
+														font-size: x-large;
+														color: #49c6ef;
+													"
+													><i
+														class="bi bi-arrow-up"
+														*ngIf="
+															emi > newEmi &&
+															showDownPaymentArrow
+														"
+													></i
+												></span>${{emi | number : '1.2-2'}}</p>
 												<p *ngIf="tabThreeDate" class="my-0">Due by {{tabThreeDate  | date: 'MM/d/yyyy'}}</p>
 											</div>
 										</div>
@@ -623,26 +675,21 @@
 											<div class="row">
 												<div class="col-md-8 py-4">Monthly payments</div>
 												<div class="col py-4" [align]="'end'" *ngIf="emi">{{maxPaymentAmountEmi | number : '1.2-2'}}</div>
-												<div class="col py-4" [align]="'end'" *ngIf="emi == 0">0</div>
 											</div>
 											<div class="range__slider month" *ngIf="emi">
-												<input class="range-slider__range" type="range" value="{{minPaymentAmountEmi}}" min="{{minPaymentAmountEmi}}" max="{{maxPaymentAmountEmi}}" step="25" [style.background]="noOfMonthSlider" (input)="calculateValueMonthly($event)">
-											</div>
-											<div class="range__slider month" *ngIf="emi == 0">
-												<input class="range-slider__range" type="range" value="{{minPaymentAmountEmi}}" min="{{minPaymentAmountEmi}}" max="{{maxPaymentAmountEmi}}" step="25" [style.background]="noOfMonthSlider" disabled (input)="calculateValueMonthly($event)">
+												<input class="range-slider__range" type="range" value="{{minPaymentAmountEmi}}" min="{{minPaymentAmountEmi}}" max="{{maxPaymentAmountEmi}}" step="25" [style.background]="noOfMonthSlider" (mouseup)="leaveMouse()" (input)="calculateValueMonthly($event)">
 											</div>
 										</div>
 										<div class="col-md-12">
 											<div class="row">
 												<div class="col-md-8 py-4">No.of payments</div>
 												<div class="col py-4" [align]="'end'" *ngIf="emi">{{totalMonth}}</div>
-												<div class="col py-4" [align]="'end'" *ngIf="emi == 0">0</div>
 											</div>
 											<div class="range__slider month" *ngIf="emi">
-												<input class="range-slider__range" type="range" value="{{month}}" min="0" max="{{totalMonth}}" step="1" [style.background]="sliderBGMonth" (input)="noOfPaymentValue($event)">
+												<input class="range-slider__range" type="range" value="{{month}}" min="0" max="{{totalMonth}}" step="1" [style.background]="sliderBGMonth" (input)="noOfPaymentValue($event)" [ngStyle]="{ 'opacity': emi == 0 ? '0.3' : '1' }">
 											</div>
-											<div class="range__slider month" *ngIf="emi == 0">
-												<input class="range-slider__range" type="range" value="{{month}}" min="0" max="{{totalMonth}}" step="1" [style.background]="sliderBGMonth" disabled (input)="noOfPaymentValue($event)">
+											<div class="overlay" *ngIf="emi == 0">
+												You have complete your down payment
 											</div>
 										</div>
 										</div>

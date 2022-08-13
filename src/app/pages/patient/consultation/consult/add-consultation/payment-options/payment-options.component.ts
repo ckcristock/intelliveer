@@ -114,6 +114,9 @@ export class PaymentOptionsComponent implements OnInit {
  ratioDownPayment:any;
  ratioDownPayment2:any;
  ratioTotal:any;
+ showDownPaymentArrow: boolean = false;
+	newDownPayment: number = 0;
+	newEmi: number = 0;
 	constructor(private modalService: NgbModal,
 		private alertService: AlertService) {}
 
@@ -624,6 +627,7 @@ export class PaymentOptionsComponent implements OnInit {
 		}
 	  }
 	  calculateValueMonthly(event:any){
+		this.showDownPaymentArrow = true;
 		let pmEmi:any = event.target.value;
 		let emi:any;
 		let decimalValue;
@@ -775,5 +779,11 @@ export class PaymentOptionsComponent implements OnInit {
 		}
 		const decimalStr = num.toString().split('.')[1];
 		return Number(decimalStr);
+	  }
+	  leaveMouse()
+	  {
+		this.showDownPaymentArrow = false;
+		this.newDownPayment = this.downPayment;
+		this.newEmi = this.emi;
 	  }
 }
