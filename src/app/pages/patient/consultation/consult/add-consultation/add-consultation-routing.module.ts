@@ -47,13 +47,13 @@ const routes: Routes = [
 						'@pages/patient/consultation/consult/add-consultation/payment-options/payment-options.module'
 					).then((m) => m.PaymentOptionsModule)
 			},
-			{
-				path: 'conclusion',
-				loadChildren: () =>
-					import(
-						'@pages/patient/consultation/consult/add-consultation/conclusion/conclusion.module'
-					).then((m) => m.ConclusionModule)
-			}
+			// {
+			// 	path: 'conclusion',
+			// 	loadChildren: () =>
+			// 		import(
+			// 			'@pages/patient/consultation/consult/add-consultation/conclusion/conclusion.module'
+			// 		).then((m) => m.ConclusionModule)
+			// }
 		]
     }
 ];

@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
+import { CONFIG } from '@config/index';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-family-member-form',
@@ -11,34 +14,52 @@ import { AddressFormService } from '@services/forms/address-form/address-form.se
 export class FamilyMemberFormComponent implements OnInit {
 
   Form: FormGroup = new FormGroup({});
-	staticData: any;
-	@Input() title: string = '';
-	@Input() formData: any | undefined = undefined;
-	@Output() onCancel = new EventEmitter();
-	@Output() onSubmit = new EventEmitter();
+  staticData: any;
+  @Input() title: string = '';
+  @Input() formData: any | undefined = undefined;
+  @Output() onCancel = new EventEmitter();
+  @Output() onSubmit = new EventEmitter();
 
   currentSelection: string = '';
 
   menuItems: MenuItem[] = [
-		{ title: 'Overview', id: 'overview' },
-		{ title: 'Profile', id: 'profile' },
-	];
-  
+    { title: 'Overview', id: 'overview' },
+    { title: 'Profile', id: 'profile' },
+  ];
+
+  relationship!: string;
   idForm: FormGroup;
- 
+  familyMember: any[] = [];
+  famiMembTitle!: any;
 
   constructor(
+    private http: HttpClient,
     private fb: FormBuilder,
     private addressFormService: AddressFormService,
+    private patientUserServ: PatientUserService,
   ) {
     this.idForm = this.fb.group({
       // name: '',
       info: this.fb.array([]),
     });
+    this.getStaticData();
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.initForm(this.formData);
+    this.familyMember.push(await this.patientUserServ.getFamylMembFamylMemb());
+
+    this.relationship = await this.patientUserServ.getFamylMembToPati();
+    this.Form.controls['relationship'].setValue(this.relationship);
+    // this.Form.controls['title'].setValue(this.familyMember[0].title);
+    this.Form.controls['firstName'].setValue(this.familyMember[0].firstName);
+    this.Form.controls['middleName'].setValue(this.familyMember[0].middleName);
+    this.Form.controls['lastName'].setValue(this.familyMember[0].lastName);
+    this.Form.controls['DOB'].setValue(this.familyMember[0].DOB);
+    this.Form.controls['gender'].setValue(this.familyMember[0].gender);
+    this.Form.controls['pronoun'].setValue(this.familyMember[0].prefePronoun);
+    this.Form.controls['language'].setValue(this.familyMember[0].language);
+    this.Form.controls['maried'].setValue(this.familyMember[0].maritalStatus);
   }
 
   initForm(data?: any) {
@@ -50,25 +71,42 @@ export class FamilyMemberFormComponent implements OnInit {
       lastName: [data?.lastName || '', Validators.required],
       DOB: [data?.DOB || ''],
       gender: [data?.gender || ''],
-      pronoun: [data?.pronoun || '']
+      pronoun: [data?.pronoun || ''],
+      relationship: [data?.relation || ''],
     });
   }
 
+  async getStaticData() {
+    this.http
+      .get(`${CONFIG.backend.host}/auth/global-data/static-types`)
+      .subscribe({
+        next: async (data) => {
+          this.famiMembTitle = data;
+          console.log("this.phoneTypes", this.famiMembTitle);
+
+        },
+        error: () => { },
+        complete: () => { }
+      });
+  }
+
   save(data: any) {
-		this.onSubmit.emit(data);
-	}
-	cancel() {
-		this.onCancel.emit();
-	}
+    this.onSubmit.emit(data);
+    this.patientUserServ.setFamyMemb(data);
+    this.patientUserServ.setPatientFamiMemb(data.relationship, data);
+  }
+  cancel() {
+    this.onCancel.emit();
+  }
 
   onSectionChange(sectionId: string) {
-		this.currentSelection = sectionId;
-	}
+    this.currentSelection = sectionId;
+  }
 
   setAddress(type: string) {
-		let physicalAddress = this.Form?.controls['physicalAddress'].value;
-		this.Form?.controls[type].setValue(physicalAddress);
-	}
+    let physicalAddress = this.Form?.controls['physicalAddress'].value;
+    this.Form?.controls[type].setValue(physicalAddress);
+  }
 
   handleUploadedImage(e: { url: string }) {
     if (e && this.idForm) {

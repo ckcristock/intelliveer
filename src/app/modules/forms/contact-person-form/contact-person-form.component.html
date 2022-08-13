@@ -9,7 +9,7 @@
 						class="form-control"
 						formControlName="designation"
 						[ngClass]="{
-							'required-field':
+							'value-must':
 								isRequiredField('designation') === true
 						}"
 					/>
@@ -20,7 +20,7 @@
 						class="form-select"
 						formControlName="title"
 						[ngClass]="{
-							'required-field': isRequiredField('title') === true
+							'value-must': isRequiredField('title') === true
 						}"
 					>
 						<option
@@ -38,7 +38,7 @@
 						class="form-control"
 						formControlName="firstName"
 						[ngClass]="{
-							'required-field':
+							'value-must':
 								isRequiredField('firstName') === true
 						}"
 					/>
@@ -50,7 +50,7 @@
 						class="form-control"
 						formControlName="lastName"
 						[ngClass]="{
-							'required-field':
+							'value-must':
 								isRequiredField('lastName') === true
 						}"
 					/>
@@ -64,7 +64,7 @@
 						class="form-control"
 						formControlName="email"
 						[ngClass]="{
-							'required-field': isRequiredField('email') === true
+							'value-must': isRequiredField('email') === true
 						}"
 					/>
 				</div>
@@ -78,7 +78,7 @@
 								class="form-select"
 								formControlName="type"
 								[ngClass]="{
-									'required-field':
+									'value-must':
 										isRequiredField('phone.type') === true
 								}"
 							>
@@ -97,7 +97,7 @@
 								class="form-control"
 								formControlName="countryCode"
 								[ngClass]="{
-									'required-field':
+									'value-must':
 										isRequiredField('phone.countryCode') ===
 										true
 								}"
@@ -112,7 +112,7 @@
 								class="form-control"
 								formControlName="number"
 								[ngClass]="{
-									'required-field':
+									'value-must':
 										isRequiredField('phone.number') === true
 								}"
 							/>

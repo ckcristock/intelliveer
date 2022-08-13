@@ -2,25 +2,16 @@
 	<div class="d-flex justify-content-between call-to-actions">
 		<div class="col-4">
 			<div class="input-group search_box">
-				<span
-					class="input-group-text border-0 bg-transparent"
-					id="basic-addon1"
-				>
+				<span class="input-group-text border-0 bg-transparent" id="basic-addon1">
 					<i class="bi bi-search"></i>
 				</span>
-				<input
-					type="text"
-					class="form-control border-0"
-					placeholder="Search"
-					aria-describedby="basic-addon1"
-				/>
+				<input ngbTooltip="For date use format: AAAA-MM-DD" tooltipClass="tooltip-class" type="text" class="form-control border-0" placeholder="Search"
+					aria-describedby="basic-addon1" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}"
+					(keyup)="search()" />
 			</div>
 		</div>
 		<div class="d-flex gap-2" *ngIf="isSuperUser">
-			<button
-				class="add_btn"
-				routerLink="/dashboard/settings/onboarding/business-group/add"
-			>
+			<button class="add_btn" routerLink="/dashboard/settings/onboarding/business-group/add">
 				<img src="/assets/icons/add.svg" alt="" />
 			</button>
 		</div>
@@ -46,7 +37,7 @@
 					<td>{{ d?.name }}</td>
 					<td>
 						{{ d?.contactPerson?.firstName }}&nbsp;{{
-							d?.contactPerson?.lastName
+						d?.contactPerson?.lastName
 						}}
 					</td>
 					<td>
@@ -56,50 +47,27 @@
 						{{ d?.createdAt | date: 'mediumDate' }}
 					</td>
 					<td>
-						<div
-							ngbDropdown
-							container="body"
-							placement="bottom-end"
-						>
-							<button
-								class="btn btn-light btn-sm more_btn"
-								ngbDropdownToggle
-							>
+						<div ngbDropdown container="body" placement="bottom-end">
+							<button class="btn btn-light btn-sm more_btn" ngbDropdownToggle>
 								<i class="bi bi-three-dots-vertical"></i>
 							</button>
 							<div ngbDropdownMenu>
-								<button
-									ngbDropdownItem
-									(click)="navigateTo(d._id, 'legal-entity')"
-								>
+								<button ngbDropdownItem (click)="navigateTo(d._id, 'legal-entity')">
 									Manage Legal Entity
 								</button>
-								<button
-									ngbDropdownItem
-									(click)="navigateTo(d._id, 'location')"
-								>
+								<button ngbDropdownItem (click)="navigateTo(d._id, 'location')">
 									Manage Location
 								</button>
-								<button
-									ngbDropdownItem
-									(click)="navigateTo(d._id, 'practice')"
-								>
+								<button ngbDropdownItem (click)="navigateTo(d._id, 'practice')">
 									Manage Practice
 								</button>
 								<div class="dropdown-divider"></div>
-								<button
-									ngbDropdownItem
-									routerLink="/dashboard/settings/onboarding/business-group/edit/{{
+								<button ngbDropdownItem routerLink="/dashboard/settings/onboarding/business-group/edit/{{
 										d._id
-									}}"
-								>
+									}}">
 									Edit
 								</button>
-								<button
-									ngbDropdownItem
-									(click)="deleteBG(d._id)"
-									*ngIf="isSuperUser"
-								>
+								<button ngbDropdownItem (click)="deleteBG(d._id)" *ngIf="isSuperUser">
 									Delete
 								</button>
 							</div>

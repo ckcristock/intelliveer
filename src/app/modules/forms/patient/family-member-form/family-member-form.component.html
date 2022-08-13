@@ -1,15 +1,8 @@
 <div class="row formrow" *ngIf="Form">
-	<app-nav-bar-pills
-		[menuItems]="menuItems"
-		[activeClass]="currentSelection"
-		[cancelBtn]="true"
-		[saveBtn]="true"
-		[disableSaveBtn]="Form.invalid"
-		(onCancel)="cancel()"
-		(onSave)="save(Form.value)"
-	></app-nav-bar-pills>
+	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
+		[disableSaveBtn]="Form.invalid" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills>
 	<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
-		<div class="col-12"	id="main" scrollSpy	(sectionChange)="onSectionChange($event)">
+		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section" id="overview">
 				<div class="row formrow">
 					<div class="col-sm">
@@ -18,72 +11,52 @@
 					</div>
 				</div>
 			</div>
-		
+
 			<div class="section" id="profile">
 				<h6 class="heading">Profile</h6>
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Title</label>
-						<select class="form-select" formControlName="title">
-							<option>Select</option>
+						<select class="form-select input-upper" formControlName="title">
+							<option [value]="title.value" *ngFor="let title of famiMembTitle.title">
+								{{ title.label }}
+							</option>
 						</select>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">First Name</label>
-						<input
-							class="form-control value-must"
-							type="text"
-							placeholder=""
-							name="firstName"
-							formControlName="firstName"
-						/>
+						<input class="form-control value-must input-upper" type="text" placeholder="" name="firstName"
+							formControlName="firstName" />
 					</div>
-		
+
 					<div class="col">
 						<label class="label-input-gap">Middle Name</label>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="middleName"
-						/>
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
+							formControlName="middleName" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Last Name</label>
-						<input
-							class="form-control value-must"
-							type="text"
-							placeholder=""
-							name="lastName"
-							formControlName="lastName"
-						/>
+						<input class="form-control value-must input-upper" type="text" placeholder="" name="lastName"
+							formControlName="lastName" />
 					</div>
 				</div>
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Date of Birth</label>
-						<input
-							class="form-control"
-							type="date"
-							placeholder=""
-							name="DOB"
-							formControlName="DOB"
-						/>
+						<input class="form-control input-upper" type="date" placeholder="" name="DOB" formControlName="DOB" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Gender</label>
-						<select class="form-select" formControlName="gender">
+						<select class="form-select input-upper" formControlName="gender">
 							<option value="M">Male</option>
 							<option value="F">Female</option>
 						</select>
 					</div>
 					<div class="col">
-						<label
-							class="label-input-gap">Relationship with Patient</label
-						>
-						<select class="form-select" formControlName="pronoun">
-							<option>Select</option>
+						<label class="label-input-gap">Relationship with Patient</label>
+						<select class="form-select input-upper" formControlName="relationship">
+							<option [value]="relationship">
+								{{relationship}}</option>
 						</select>
 					</div>
 					<div class="col"></div>
@@ -92,15 +65,3 @@
 		</div>
 	</form>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
