@@ -25,29 +25,31 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Title</label>
-						<select class="form-select" formControlName="title">
-							<option>Select</option>
+						<select class="form-select input-upper" formControlName="title">
+							<option [value]="title.value" *ngFor="let title of famiMembTitle.title">
+								{{ title.label }}
+							</option>
 						</select>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">First Name</label>
-						<input class="form-control value-must" type="text" placeholder="" name="firstName"
+						<input class="form-control value-must input-upper" type="text" placeholder="" name="firstName"
 							formControlName="firstName" />
 					</div>
 		
 					<div class="col">
 						<label class="label-input-gap">Middle Name</label>
-						<input class="form-control" type="text" placeholder="" name="name"
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
 							fromControlName="middleName" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Last Name</label>
-						<input class="form-control value-must" type="text" placeholder="" name="lastName"
+						<input class="form-control value-must input-upper" type="text" placeholder="" name="lastName"
 							formControlName="lastName" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Practice Name</label>
-						<input class="form-control" type="text" placeholder="" name="name"
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
 							formControlName="praticeName" />
 					</div>
 				</div>
@@ -55,31 +57,31 @@
 		
 					<div class="col">
 						<label class="label-input-gap">Degree</label>
-						<input class="form-control" type="text" placeholder="" name="name" formControlName="degree" />
+						<input class="form-control input-upper" type="text" placeholder="" name="name" formControlName="degree" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Dental/Medical School</label>
-						<input class="form-control" type="text" placeholder="" name="name" formControlName="DMSchool" />
+						<input class="form-control input-upper" type="text" placeholder="" name="name" formControlName="DMSchool" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Specialty</label>
-						<input class="form-control" type="text" placeholder="" name="name"
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
 							formControlName="specialty" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Specialty School</label>
-						<input class="form-control" type="text" placeholder="" name="name"
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
 							formControlName="specialtySchool" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Greeting</label>
-						<input class="form-control" type="text" placeholder="" name="name" formControlNAme="greeting" />
+						<input class="form-control input-upper" type="text" placeholder="" name="name" formControlNAme="greeting" />
 					</div>
 				</div>
 				<div class="row formrow">
 					<div class="col">
 						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="true" id="mailingCheckbox">
+							<input class="form-check-input input-upper" type="checkbox" value="true" id="mailingCheckbox">
 							<label class="form-check-label" for="mailingCheckbox">
 								Prefered Provider
 							</label>
@@ -100,17 +102,17 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Practice Email</label>
-						<input class="form-control" type="text" placeholder="" name="id" formControlName="emailId" />
+						<input class="form-control input-upper" type="text" placeholder="" name="id" formControlName="emailId" />
 					</div>
 		
 					<div class="col">
 						<label class="label-input-gap">Dentist Email</label>
-						<input class="form-control" type="text" placeholder="" name="id" formControlName="demailId" />
+						<input class="form-control input-upper" type="text" placeholder="" name="id" formControlName="demailId" />
 					</div>
 		
 					<div class="col">
 						<label class="label-input-gap">Phone Number - Practice</label>
-						<input class="form-control" type="text" placeholder="" name="name"
+						<input class="form-control red-bottom-line input-upper" type="text" placeholder="" name="name"
 							formControlName="pPhoneNumber" />
 					</div>
 				</div>
@@ -118,13 +120,13 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Phone Number - Mobile</label>
-						<input class="form-control" type="text" placeholder="" name="name"
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
 							formControlName="pPhoneNumber" />
 					</div>
 		
 					<div class="col">
 						<label class="label-input-gap">Preferred Mail Method</label>
-						<select class="form-select" formControlName="preferredMailMethod">
+						<select class="form-select input-upper" formControlName="preferredMailMethod">
 							<option>Select</option>
 						</select>
 					</div>
@@ -133,7 +135,7 @@
 						<label class="label-input-gap">Website</label>
 						<div class="website">
 							<span class="" style="height: 36px;">https://</span>
-							<input type="text" class="form-control"
+							<input type="text" class="form-control input-upper"
 								name="website" placeholder="www.example.com" formControlName="website" />
 						</div>
 					</div>
@@ -144,7 +146,7 @@
 				<h6 class="heading">Notes</h6>
 				<div class="row formrow">
 					<div class="col-6">
-						<textarea class="form-control" name="note" id="" cols="70" rows="5"
+						<textarea class="form-control input-upper" name="note" id="" cols="70" rows="5"
 							formControlName="note"></textarea>
 					</div>
 				</div>

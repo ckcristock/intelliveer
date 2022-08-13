@@ -1,7 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
+import { CONFIG } from '@config/index';
 
 @Component({
   selector: 'app-provider-form',
@@ -10,23 +12,23 @@ import { AddressFormService } from '@services/forms/address-form/address-form.se
 })
 export class ProviderFormComponent implements OnInit {
   Form: FormGroup = new FormGroup({});
-	staticData: any;
-	@Input() title: string = '';
-	@Input() formData: any | undefined = undefined;
-	@Output() onCancel = new EventEmitter();
-	@Output() onSubmit = new EventEmitter();
+  staticData: any;
+  @Input() title: string = '';
+  @Input() formData: any | undefined = undefined;
+  @Output() onCancel = new EventEmitter();
+  @Output() onSubmit = new EventEmitter();
 
   idForm: FormGroup;
 
   currentSelection: string = '';
   menuItems: MenuItem[] = [
-		{ title: 'Overview', id: 'overview' },
-		{ title: 'Profile', id: 'profile' },
-		{ title: 'Address', id: 'address' },
-		{ title: 'Contact', id: 'contact' },
+    { title: 'Overview', id: 'overview' },
+    { title: 'Profile', id: 'profile' },
+    { title: 'Address', id: 'address' },
+    { title: 'Contact', id: 'contact' },
     { title: 'Notes', id: 'notes' },
-	];
-  
+  ];
+
 
   bussinessGroups: any = [
     {
@@ -54,8 +56,10 @@ export class ProviderFormComponent implements OnInit {
       "Treatment_End_Date": "my-bg!"
     },
   ];
+  famiMembTitle!: any;
 
   constructor(
+    private http: HttpClient,
     private fb: FormBuilder,
     private addressFormService: AddressFormService
   ) {
@@ -64,6 +68,7 @@ export class ProviderFormComponent implements OnInit {
       info: this.fb.array([]),
     });
     this.initForm(this.formData);
+    this.getStaticData();
   }
 
   ngOnInit(): void {
@@ -80,7 +85,7 @@ export class ProviderFormComponent implements OnInit {
       lastName: [data?.lastName || '', Validators.required],
       praticeName: [data?.praticeName || ''],
       degree: [data?.degree || ''],
-      DMSchool: [data?.DMSchool || '',Validators.required],
+      DMSchool: [data?.DMSchool || '', Validators.required],
       language: [data?.language || ''],
       specialty: [data?.specialty || ''],
       specialtySchool: [data?.specialtySchool || ''],
@@ -100,21 +105,35 @@ export class ProviderFormComponent implements OnInit {
     });
   }
 
+  async getStaticData() {
+    this.http
+      .get(`${CONFIG.backend.host}/auth/global-data/static-types`)
+      .subscribe({
+        next: async (data) => {
+          this.famiMembTitle = data;
+          console.log("this.phoneTypes", this.famiMembTitle);
+
+        },
+        error: () => { },
+        complete: () => { }
+      });
+  }
+
   save(data: any) {
-		this.onSubmit.emit(data);
-	}
-	cancel() {
-		this.onCancel.emit();
-	}
+    this.onSubmit.emit(data);
+  }
+  cancel() {
+    this.onCancel.emit();
+  }
 
   onSectionChange(sectionId: string) {
-		this.currentSelection = sectionId;
-	}
+    this.currentSelection = sectionId;
+  }
 
   setAddress(type: string) {
-		let physicalAddress = this.Form?.controls['physicalAddress'].value;
-		this.Form?.controls[type].setValue(physicalAddress);
-	}
+    let physicalAddress = this.Form?.controls['physicalAddress'].value;
+    this.Form?.controls[type].setValue(physicalAddress);
+  }
 
   handleUploadedImage(e: { url: string }) {
     if (e && this.idForm) {

@@ -7,7 +7,7 @@ import { InsuranceSubscriberFormComponent } from './insurance-subscriber-form.co
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScrollspyModule } from "@modules/scrollspy/scrollspy.module";
 import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
-
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -22,7 +22,8 @@ import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
     FormsModule,
 		ReactiveFormsModule,
     ScrollspyModule,
-    NavBarPillsModule
+    NavBarPillsModule,
+    NgSelectModule
   ],
   exports: [InsuranceSubscriberFormComponent]
 })

@@ -1,9 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
 import { AuthService } from '@services/auth/auth.service';
 import { BusinessGroupDropdownService, SelectedBusinessGroup } from '@services/business-group-dropdown/business-group-dropdown.service';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
+import { CONFIG } from '@config/index';
 import { UserService } from '@services/user/user.service';
 
 @Component({
@@ -40,10 +42,18 @@ export class PatientDetailComponent implements OnInit {
   practiceList: any;
   businessGroupDropdownSupscription: any;
   selectedBusinessGroup: SelectedBusinessGroup | undefined;
+  globalData: any = {
+    title: ""
+  }
+  pronouns: any[] = [
+    { pronoun: 'He' },
+    { pronoun: 'She' },
+  ];
 
   constructor(
     private fb: FormBuilder,
     private addressFormService: AddressFormService,
+    private http: HttpClient,
     private userService: UserService,
     private businessGroupDropdownService: BusinessGroupDropdownService,
     private authService: AuthService
@@ -92,6 +102,7 @@ export class PatientDetailComponent implements OnInit {
     ];
     this.addId();
     this.initForm(this.formData);
+    this.getStaticData();
     this.userObj = JSON.parse(localStorage.getItem('selectedPatient') || '');
   }
 
@@ -103,7 +114,7 @@ export class PatientDetailComponent implements OnInit {
       middleName: [data?.middleName || ''],
       lastName: [data?.lastName || '', Validators.required],
       DOB: [data?.DOB || '', Validators.required],
-      gender: [data?.gender || ''],
+      gender: [data?.gender || '', Validators.required],
       pronoun: [data?.pronoun || ''],
       language: [data?.language || ''],
       maried: [data?.maried || ''],
@@ -162,6 +173,18 @@ export class PatientDetailComponent implements OnInit {
 		this.currentSelection = sectionId;
 	}
 
+  getStaticData() {
+    this.http
+      .get(`${CONFIG.backend.host}/auth/global-data/static-types`)
+      .subscribe({
+        next: (data) => {
+          this.globalData = data;
+          console.log("this.globalData", this.globalData);
+        },
+        error: () => { },
+        complete: () => { }
+      });
+  }
   getOrgBgId(){
 		let bgOrdID:any = localStorage.getItem('selected_business_group');
 		console.log(bgOrdID)

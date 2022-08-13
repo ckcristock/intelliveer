@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
+import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 
 @Component({
   selector: 'app-payment-party',
@@ -8,38 +11,52 @@ import { Router } from '@angular/router';
 })
 export class PaymentPartyComponent implements OnInit {
 
+  form: FormGroup;
   searchFocus: boolean = false;
   showSelectedPatient: boolean = false;
-	selectedPatient: any;
+  selectedPatient: any;
   showList: boolean = false;
   showRelationList: boolean = false;
-	searchResults: any = [
-		{ user: 'Smith John', dob: '30/12/1984', active: true, id: 'P001' },
-		{ user: 'Smith Doe', dob: '23/08/1988', active: true, id: 'P002' },
-		{ user: 'Smith Walker', dob: '12/06/1994', active: false, id: 'P002' },
-	];
+  searchResults: any = [
+    { user: 'Smith John', dob: '30/12/1984', active: true, id: 'P001' },
+    { user: 'Smith Doe', dob: '23/08/1988', active: true, id: 'P002' },
+    { user: 'Smith Walker', dob: '12/06/1994', active: false, id: 'P002' },
+  ];
 
   paymentPartyList: any[] = [];
   patientList: any[] = [];
   searchWord: string = "";
 
-  constructor(private router: Router) { }
+  relationships: any[] = [
+    { id: 0, value: "Father" },
+    { id: 1, value: "Mother" },
+    { id: 2, value: "Sister" },
+    { id: 3, value: "Brother" },
+  ];
+
+  constructor(private router: Router,
+    private patientUserServ: PatientUserService,
+    private globalRoutes: GlobalRoutesService,
+    private fb: FormBuilder) {
+    this.form = this.fb.group({
+      relationship: [''],
+    });
+  }
 
   ngOnInit(): void {
   }
 
   handleSearchResultsClick(patient: any) {
     console.log(patient);
-		if (patient.active) {
-			this.searchFocus = false;
-			this.showSelectedPatient = true;
-			this.selectedPatient = patient;
+    if (patient.active) {
+      this.searchFocus = false;
+      this.showSelectedPatient = true;
+      this.selectedPatient = patient;
       this.searchWord = patient.user
-		}
-	}
+    }
+  }
 
-  fetchSearch($event: any): void
-  {
+  fetchSearch($event: any): void {
     if ($event.target.value === '') {
       console.log("fgggggggggggggggggggg")
       console.log(this.searchResults);
@@ -51,8 +68,7 @@ export class PaymentPartyComponent implements OnInit {
     })
   }
 
-  addAsPaymentParty()
-  {
+  addAsPaymentParty() {
     let obj = {
       image: "",
       user: this.selectedPatient.user,
@@ -68,6 +84,12 @@ export class PaymentPartyComponent implements OnInit {
 
   gotoDetails(data: any) {
     this.router.navigate(['/dashboard/patient/patient-user/payment-party/add'])
+  }
+
+  goToAddPaymentParty(){
+    console.log("Form", this.form);
+    this.patientUserServ.setPaymPartyToPati(this.form.value.relationship);
+    this.router.navigate([this.globalRoutes.getPatientUserRoutes()[2].child[0].url]);
   }
 
 
