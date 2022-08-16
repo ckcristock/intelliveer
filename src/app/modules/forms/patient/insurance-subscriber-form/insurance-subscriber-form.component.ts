@@ -5,6 +5,7 @@ import { PatientUserService } from '@services/dashboard/patient/patient-user/pat
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 import { CONFIG } from '@config/index';
 import { HttpClient } from '@angular/common/http';
+import { AlertService } from '@services/alert/alert.service';
 
 @Component({
   selector: 'app-insurance-subscriber-form',
@@ -50,6 +51,7 @@ export class InsuranceSubscriberFormComponent implements OnInit {
     private fb: FormBuilder,
     private addressFormService: AddressFormService,
     private patientUserServ: PatientUserService,
+    private alertService: AlertService,
   ) {
     this.idForm = this.fb.group({
       // name: '',
@@ -82,33 +84,68 @@ export class InsuranceSubscriberFormComponent implements OnInit {
     this.Form = this.fb.group({
       relationship: [data?.relation || ''],
       title: [data?.title || ''],
-      firstName: [data?.firstName || '', Validators.required],
+      firstName: [data?.firstName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
       middleName: [data?.middleName || ''],
-      lastName: [data?.lastName || '', Validators.required],
-      DOB: [data?.DOB || ''],
+      lastName: [data?.lastName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
+      DOB: [data?.DOB || '',],
       gender: [data?.gender || ''],
       pronoun: [data?.pronoun || ''],
       language: [data?.language || ''],
       maried: [data?.maried || ''],
-      lastUsedName: [data?.lastUsedName || ''],
-      emailId: [data?.emailId || ''],
+      emailId: ['', ],
       pPhoneType: [data?.pPhoneType || '', Validators.required],
-      pPhoneNumber: [data?.pPhoneNumber || '', Validators.required],
+      pPhoneNumber: [data?.pPhoneNumber || '', [Validators.required, Validators.pattern("^[0-9]*$")]],
       sPhoneType: [data?.sPhoneType || ''],
       sPhoneNumber: [data?.sPhoneNumber || ''],
-      CommPrimary: [data?.CommPrimary || ''],
+      CommPrimary: [data?.CommPrimary || '',],
       CommSecondary: [data?.CommSecondary || ''],
       phone: [data?.phone || ''],
       workStatus: [data?.workStatus || ''],
       occupation: [data?.occupation || ''],
       employer: [data?.employer || ''],
       ssn: [data?.ssn || ''],
-      rating: [data?.rating || ''],
+      rating: [data?.rating || '', Validators.pattern("^[0-9]*$")],
       note: [data?.note || ''],
       address: this.addressFormService.getAddressForm(
         data?.address || {}
       )
     });
+  }
+
+  firstNameValid() {
+    return this.Form.get('firstName')?.valid;
+  }
+
+  middleNameValid() {
+    return this.Form.get('middleName')?.valid;
+  }
+
+  lastNameValid() {
+    return this.Form.get('lastName')?.valid;
+  }
+
+  DOBValid() {
+    return this.Form.get('DOB')?.value.length > 0;
+  }
+
+  pPhoneTypeValid() {
+    return this.Form.get('pPhoneType')?.valid;
+  }
+
+  pPhoneNumberValid() {
+    return this.Form.get('pPhoneNumber')?.valid;
+  }
+
+  commPrimaryValid() {
+    return this.Form.get('CommPrimary')?.value.length > 0;
+  }
+
+  emailValid() {
+    return this.Form.get('emailId')?.value.length > 0;
+  }
+
+  ratingValid(){
+    return this.Form.get('rating')?.value.length > 0 && this.Form.get('rating')?.valid;
   }
 
   async getStaticData() {
@@ -129,6 +166,11 @@ export class InsuranceSubscriberFormComponent implements OnInit {
     this.onSubmit.emit(data);
     this.patientUserServ.setInsuSubsc(data);
     this.patientUserServ.setPatientFamiMemb(data.relationship, data);
+    this.Form.markAsPristine();
+    this.alertService.success(
+      'Success',
+      'Insurance Subscriber has been updated successfully'
+    );
   }
   cancel() {
     this.onCancel.emit();

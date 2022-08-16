@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CONFIG } from '@config/index';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
+import { AlertService } from '@services/alert/alert.service';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 import { ContactDetailsFormService } from '@services/forms/contact-details-form/contact-details-form.service';
 import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
@@ -38,6 +39,7 @@ export class LegalEntityFormComponent implements OnInit {
 		private contactPersonFormService: ContactPersonFormService,
 		private contactDetailsFormService: ContactDetailsFormService,
 		private geoService: GeoService,
+		private alertService: AlertService,
 	) {
 		this.getCountries();
 	}
@@ -47,6 +49,11 @@ export class LegalEntityFormComponent implements OnInit {
 	}
 	save(data: any) {
 		this.onSubmit.emit(data);
+		this.Form?.markAsPristine();
+		this.alertService.success(
+			'Success',
+			'Legal Entity has been updated successfully'
+		);
 	}
 	cancel() {
 		this.onCancel.emit();
@@ -81,6 +88,15 @@ export class LegalEntityFormComponent implements OnInit {
 			)
 		});
 	}
+
+	leNameValid() {
+		return this.Form?.get('name')?.valid;
+	}
+
+	tinValid() {
+		return this.Form?.get('TIN')?.valid;
+	}
+
 	setAddress(type: string) {
 		let physicalAddress = this.Form?.controls['physicalAddress'].value;
 		this.Form?.controls[type].setValue(physicalAddress);

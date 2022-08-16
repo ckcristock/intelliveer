@@ -94,8 +94,8 @@
 					</div>
 					<div class="col">
 						<label class="label-input-gap">First Name</label>
-						<input class="form-control value-must" type="text" placeholder="" name="firstName"
-							formControlName="firstName" />
+						<input class="form-control required-field" type="text" placeholder="" name="firstName"
+							formControlName="firstName" [class.valid-mandatory-field]="firstNameValid()" />
 					</div>
 
 					<div class="col">
@@ -105,22 +105,23 @@
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Last Name</label>
-						<input class="form-control value-must" type="text" placeholder="" name="lastName"
-							formControlName="lastName" />
+						<input class="form-control required-field" type="text" placeholder="" name="lastName"
+							formControlName="lastName" [class.valid-mandatory-field]="lastNameValid()" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Date of Birth</label>
-						<input class="form-control value-must" type="date" placeholder="" name="DOB"
-							formControlName="DOB" />
+						<input class="form-control required-field" type="date" placeholder="" name="DOB"
+							formControlName="DOB" [class.valid-mandatory-field]="DOBValid()" />
 					</div>
 				</div>
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Gender</label>
-						<ng-select class="red-bottom-line" placeholder="Select" formControlName="gender">
-                            <ng-option>Male</ng-option>
-                            <ng-option>Female</ng-option>
-                        </ng-select>
+						<select class="form-select required-field input-upper" formControlName="gender"
+							[class.valid-mandatory-field]="genderValid()">
+							<option value="M">Male</option>
+							<option value="F">Female</option>
+						</select>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Preferred Pronoun</label>
@@ -221,20 +222,23 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Location</label>
-						<select class="form-select red-bottom-line" formControlName="location">
+						<select class="form-select red-bottom-line" [class.valid-required-field]="locationValid()"
+							formControlName="location">
 							<option>Select</option>
 						</select>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Billing Provider</label>
-						<select class="form-select red-bottom-line" formControlName="practice">
+						<select class="form-select red-bottom-line" [class.valid-required-field]="billingValid()"
+							formControlName="practice">
 							<option>Select</option>
 						</select>
 					</div>
 
 					<div class="col">
 						<label class="label-input-gap">Treating Provider</label>
-						<select class="form-select red-bottom-line" formControlName="provider">
+						<select class="form-select red-bottom-line" [class.valid-required-field]="treatingValid()"
+							formControlName="provider">
 							<option>Select</option>
 						</select>
 					</div>
@@ -277,7 +281,8 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Contact Person</label>
-						<select class="form-select red-bottom-line" formControlName="cPerson">
+						<select class="form-select red-bottom-line" [class.valid-required-field]="contPersValid()"
+							formControlName="cPerson">
 							<option>Select</option>
 						</select>
 					</div>
@@ -289,11 +294,13 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Name</label>
-						<input class="form-control red-bottom-line" type="text" placeholder="" name="id" formControlName="name" />
+						<input class="form-control red-bottom-line" type="text" placeholder="" name="id"
+							formControlName="name" [class.valid-required-field]="emerNameValid()"/>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Emergency Contact</label>
-						<input class="form-control red-bottom-line" type="text" placeholder="" name="name" formControlName="eContact" />
+						<input class="form-control red-bottom-line" type="text" placeholder="" name="name"
+							formControlName="eContact" [class.valid-required-field]="eContactValid()"/>
 					</div>
 					<div class="col"></div>
 					<div class="col"></div>

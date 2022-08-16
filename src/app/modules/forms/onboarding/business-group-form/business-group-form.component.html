@@ -1,6 +1,6 @@
 <div class="row" *ngIf="BGForm">
 	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
-		[disableSaveBtn]="BGForm.invalid" (onCancel)="cancel()" (onSave)="save(BGForm.value)"></app-nav-bar-pills>
+		[disableSaveBtn]="BGForm.invalid || BGForm.pristine" (onCancel)="cancel()" (onSave)="save(BGForm.value)"></app-nav-bar-pills>
 	<form [formGroup]="BGForm" #f="ngForm" (submit)="save(f.value)">
 		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section" id="overview">
@@ -17,7 +17,8 @@
 				<div class="row">
 					<div class="col-3">
 						<label class="required">Business Group Name</label>
-						<input type="text" class="form-control value-must" formControlName="name" />
+						<input type="text" class="form-control required-field" formControlName="name"
+							[class.valid-mandatory-field]="bgNameValid()" />
 					</div>
 
 					<div class="col-3">
@@ -26,15 +27,16 @@
 					</div>
 					<div class="col-3">
 						<label class="required">Country</label>
-						<ng-select formControlName="country" class="value-must">
-							>
+						<ng-select formControlName="country" class="required-field"
+							[class.valid-mandatory-field]="countryValid()">
 							<ng-option *ngFor="let country of countries" [value]="country.iso3"
 								aria-selected="country.name==='Afghanistan'">{{ country.name }}</ng-option>
 						</ng-select>
 					</div>
 					<div class="col-3">
 						<label class="required">Currency</label>
-						<select class="form-select value-must" formControlName="currency">
+						<select class="form-select required-field" [class.valid-mandatory-field]="currencyValid()"
+							formControlName="currency">
 							<option value="usd">USD</option>
 						</select>
 					</div>
@@ -101,7 +103,8 @@
 				<div class="row mt-3" *ngIf="password">
 					<div class="col-4">
 						<label class="required">Password</label>
-						<input type="password" class="form-control value-must" formControlName="password" />
+						<input type="password" class="form-control required-field" formControlName="password" 
+						[class.valid-mandatory-field]="passwordValid()"/>
 					</div>
 				</div>
 			</div>

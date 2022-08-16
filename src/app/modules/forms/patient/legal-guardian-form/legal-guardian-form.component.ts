@@ -93,7 +93,7 @@ export class LegalGuardianFormComponent implements OnInit {
       pronoun: [data?.pronoun || ''],
       language: [data?.language || ''],
       maried: [data?.maried || ''],
-      emailId: ['', Validators.minLength(2)],
+      emailId: ['',],
       pPhoneType: [data?.pPhoneType || '', Validators.required],
       pPhoneNumber: [data?.pPhoneNumber || '', [Validators.required, Validators.pattern("^[0-9]*$")]],
       sPhoneType: [data?.sPhoneType || ''],

@@ -4,7 +4,7 @@
 		[activeClass]="currentSelection"
 		[cancelBtn]="true"
 		[saveBtn]="true"
-		[disableSaveBtn]="Form.invalid"
+		[disableSaveBtn]="Form.invalid || Form.pristine"
 		(onCancel)="cancel()"
 		(onSave)="save(Form.value)"
 	></app-nav-bar-pills>
@@ -34,7 +34,7 @@
 					<div class="col">
 						<label class="label-input-gap">First Name</label>
 						<input class="form-control value-must input-upper" type="text" placeholder="" name="firstName"
-							formControlName="firstName" />
+							formControlName="firstName" [class.valid-mandatory-field]="firstNameValid()"/>
 					</div>
 		
 					<div class="col">
@@ -45,7 +45,7 @@
 					<div class="col">
 						<label class="label-input-gap">Last Name</label>
 						<input class="form-control value-must input-upper" type="text" placeholder="" name="lastName"
-							formControlName="lastName" />
+							formControlName="lastName" [class.valid-mandatory-field]="lastNameValid()"/>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Practice Name</label>
@@ -61,7 +61,9 @@
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Dental/Medical School</label>
-						<input class="form-control input-upper" type="text" placeholder="" name="name" formControlName="DMSchool" />
+						<input class="form-control value-must input-upper" type="text" placeholder="" name="name" 
+						formControlName="DMSchool" 
+						[class.valid-mandatory-field]="DMSchoolValid()"/>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Specialty</label>
@@ -113,7 +115,7 @@
 					<div class="col">
 						<label class="label-input-gap">Phone Number - Practice</label>
 						<input class="form-control red-bottom-line input-upper" type="text" placeholder="" name="name"
-							formControlName="pPhoneNumber" />
+							formControlName="pPhoneNumber"[class.valid-required-field]="pPhoneNumberValid()"/>
 					</div>
 				</div>
 		

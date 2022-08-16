@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CONFIG } from '@config/index';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
+import { AlertService } from '@services/alert/alert.service';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 import { ContactDetailsFormService } from '@services/forms/contact-details-form/contact-details-form.service';
 import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
@@ -51,8 +52,9 @@ export class PracticeFormComponent implements OnInit {
 		private http: HttpClient,
 		private addressFormService: AddressFormService,
 		private contactPersonFormService: ContactPersonFormService,
-		private contactDetailsFormService: ContactDetailsFormService
-	) {}
+		private contactDetailsFormService: ContactDetailsFormService,
+		private alertService: AlertService,
+	) { }
 
 	ngOnInit() {
 		this.getStaticData();
@@ -84,8 +86,22 @@ export class PracticeFormComponent implements OnInit {
 			)
 		});
 	}
+
+	firstNameValid() {
+		return this.Form?.get('name')?.valid;
+	}
+
+	pracTypeValid() {
+		return this.Form?.get('practiceType')?.valid;
+	}
+
 	save(data: any) {
 		this.onSubmit.emit(data);
+		this.Form?.markAsPristine();
+		this.alertService.success(
+			'Success',
+			'Practice has been updated successfully'
+		);
 	}
 	cancel() {
 		this.onCancel.emit();
@@ -98,8 +114,8 @@ export class PracticeFormComponent implements OnInit {
 					this.staticData = data;
 					// this.getPracticeTypeData();
 				},
-				error: () => {},
-				complete: () => {}
+				error: () => { },
+				complete: () => { }
 			});
 	}
 	setAddress(type: string) {

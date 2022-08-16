@@ -10,6 +10,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CONFIG } from '@config/index';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
+import { AlertService } from '@services/alert/alert.service';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 import { ContactDetailsFormService } from '@services/forms/contact-details-form/contact-details-form.service';
 import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
@@ -49,7 +50,8 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 		private addressFormService: AddressFormService,
 		private contactPersonFormService: ContactPersonFormService,
 		private contactDetailsFormService: ContactDetailsFormService,
-		private geoService: GeoService
+		private geoService: GeoService,
+		private alertService: AlertService,
 	) { }
 
 	ngOnInit() {
@@ -70,7 +72,7 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 			TIN: [data?.TIN || ''],
 			country: [data?.country || '', Validators.required],
 			currency: [data?.currency || '', Validators.required],
-			password: [this.password && '', Validators.required],
+			password: [ '', Validators.required],
 			physicalAddress: this.addressFormService.getAddressForm(
 				data?.physicalAddress || {}
 			),
@@ -95,8 +97,30 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 			)
 		});
 	}
+
+	bgNameValid(){
+		return this.BGForm?.get('name')?.valid;
+	}
+
+	countryValid(){
+		return this.BGForm?.get('country')?.valid;
+	}
+
+	currencyValid(){
+		return this.BGForm?.get('currency')?.valid;
+	}
+
+	passwordValid(){
+		return this.BGForm?.get('password')?.valid;
+	}
+
 	save(data: any) {
 		this.onSubmit.emit(data);
+		this.BGForm?.markAsPristine();
+		this.alertService.success(
+		  'Success',
+		  'Business Group has been updated successfully'
+		);
 	}
 	cancel() {
 		this.onCancel.emit();
