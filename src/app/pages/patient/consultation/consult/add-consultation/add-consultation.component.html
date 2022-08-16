@@ -13,14 +13,14 @@
             </div>
             <ul class="ul" style="padding-left: 1rem;">
                 <ol class="ol">
-                    <li class="pointer" *ngFor="let item of menuItems" >
+                    <li class="pointer menu-item" *ngFor="let item of menuItems" >
 						<b routerLinkActive="active"
 						[routerLink]="item.url" (click)="selectMenuItem(item)">{{ item.title }}</b>
 					</li>
                 </ol>
             </ul>
         </div>
-		<div class="col" [ngStyle]="{ 'max-width': max_width }" *ngIf="showProgressBar">
+		<div class="col" [ngStyle]="{ 'max-width': max_width }" *ngIf="showProgressBar" [@sideMenu]>
 			<div class="row">
 				<div class="col-2">
 					<div class="line"></div>

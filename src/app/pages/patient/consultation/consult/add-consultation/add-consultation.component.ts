@@ -1,12 +1,32 @@
+import { trigger, state, style, transition, animate, useAnimation } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { patientConsultationOptionsMenuItems, patientDiagnosisMenuItems, patientTreatmentMenuItems } from '@pages/patient/menu';
+import { SidebarOpenAnimation, animationParams } from 'src/app/animations/sidebar';
 
 @Component({
   selector: 'app-add-consultation',
   templateUrl: './add-consultation.component.html',
-  styleUrls: ['./add-consultation.component.scss']
+  styleUrls: ['./add-consultation.component.scss'],
+  animations: [
+    trigger("sideMenu", [
+		transition(":enter", [
+		  useAnimation(SidebarOpenAnimation, {
+			params: {
+			  ...animationParams
+			}
+		  })
+		]),
+		// transition(":leave", [
+		//   useAnimation(SidebarCloseAnimation, {
+		// 	params: {
+		// 	  ...animationParams
+		// 	}
+		//   })
+		// ])
+	  ])
+  ]
 })
 export class AddConsultationComponent implements OnInit {
   menuItems: IMenuItem[] = patientConsultationOptionsMenuItems;
