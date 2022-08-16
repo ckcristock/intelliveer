@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 import { CONFIG } from '@config/index';
+import { AlertService } from '@services/alert/alert.service';
 
 @Component({
   selector: 'app-provider-form',
@@ -61,7 +62,8 @@ export class ProviderFormComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
-    private addressFormService: AddressFormService
+    private addressFormService: AddressFormService,
+    private alertService: AlertService,
   ) {
     this.idForm = this.fb.group({
       // name: '',
@@ -80,9 +82,9 @@ export class ProviderFormComponent implements OnInit {
     this.Form = this.fb.group({
       provider: [data?.relation || ''],
       title: [data?.title || ''],
-      firstName: [data?.firstName || '', Validators.required],
+      firstName: [data?.firstName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
       middleName: [data?.middleName || ''],
-      lastName: [data?.lastName || '', Validators.required],
+      lastName: [data?.lastName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
       praticeName: [data?.praticeName || ''],
       degree: [data?.degree || ''],
       DMSchool: [data?.DMSchool || '', Validators.required],
@@ -93,9 +95,9 @@ export class ProviderFormComponent implements OnInit {
       emailId: [data?.emailId || ''],
       demailId: [data?.emailId || ''],
       pPhoneType: [data?.pPhoneType || ''],
-      pPhoneNumber: [data?.pPhoneNumber || ''],
+      pPhoneNumber: [data?.pPhoneNumber || '',  Validators.pattern("^[0-9]*$")],
       sPhoneType: [data?.sPhoneType || ''],
-      sPhoneNumber: [data?.sPhoneNumber || ''],
+      sPhoneNumber: [data?.sPhoneNumber || '', ],
       preferredMailMethod: [data?.preferredMailMethod || ''],
       website: [data?.website || ''],
       note: [data?.note || ''],
@@ -103,6 +105,26 @@ export class ProviderFormComponent implements OnInit {
         data?.address || {}
       )
     });
+  }
+
+  firstNameValid() {
+    return this.Form.get('firstName')?.valid;
+  }
+
+  middleNameValid() {
+    return this.Form.get('middleName')?.valid;
+  }
+
+  lastNameValid() {
+    return this.Form.get('lastName')?.valid;
+  }
+
+  DMSchoolValid(){
+    return this.Form.get('DMSchool')?.valid;
+  }
+
+  pPhoneNumberValid(){
+    return this.Form.get('pPhoneNumber')?.value.length > 0 && this.Form.get('pPhoneNumber')?.valid;
   }
 
   async getStaticData() {
@@ -121,6 +143,11 @@ export class ProviderFormComponent implements OnInit {
 
   save(data: any) {
     this.onSubmit.emit(data);
+    this.Form.markAsPristine();
+    this.alertService.success(
+      'Success',
+      'Insurance Subscriber has been updated successfully'
+    );
   }
   cancel() {
     this.onCancel.emit();

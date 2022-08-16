@@ -1,29 +1,15 @@
 <div class="row" *ngIf="Form">
-	<app-nav-bar-pills
-		[menuItems]="menuItems"
-		[activeClass]="currentSelection"
-		[cancelBtn]="true"
-		[saveBtn]="true"
-		[disableSaveBtn]="Form.invalid"
-		(onCancel)="cancel()"
-		(onSave)="save(Form.value)"
-	></app-nav-bar-pills>
+	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
+		[disableSaveBtn]="Form.invalid || Form.pristine" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills>
 	<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
-		<div
-			class="col-12"
-			id="main"
-			scrollSpy
-			(sectionChange)="onSectionChange($event)"
-		>
+		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section" id="overview">
 				<!-- <div class="row">
 				<h6 class="heading">Logo</h6>
 			</div> -->
 				<div class="row">
-					<app-image-uploader
-						[imageUrl]="formData?.logo || ''"
-						(onUpload)="handleUploadedImage($event)"
-					></app-image-uploader>
+					<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
+					</app-image-uploader>
 				</div>
 			</div>
 			<!-- Profile -->
@@ -34,40 +20,27 @@
 				<div class="row mb-3">
 					<div class="col">
 						<label class="required">Legal Entity Name</label>
-						<input
-							type="text"
-							class="form-control value-must"
-							formControlName="name"
-						/>
+						<input type="text" class="form-control required-field" formControlName="name" 
+						[class.valid-mandatory-field]="leNameValid()"/>
 					</div>
 
 					<div class="col">
 						<label class="required">Abbreviation</label>
-						<input
-							type="text"
-							class="form-control"
-							formControlName="abbreviation"
-						/>
+						<input type="text" class="form-control" formControlName="abbreviation" />
 					</div>
 
 					<div class="col">
 						<label class="required">TIN</label>
-						<input
-							type="text"
-							class="form-control value-must"
-							formControlName="TIN"
-						/>
+						<input type="text" class="form-control required-field" formControlName="TIN" 
+						[class.valid-mandatory-field]="tinValid()"/>
 					</div>
 				</div>
 				<div class="row mb-3">
 					<div class="col-4">
 						<label class="required">Country</label>
 						<ng-select formControlName="country">
-							<ng-option
-								*ngFor="let country of countries"
-								[value]="country.iso3"
-								>{{ country.name }}</ng-option
-							>
+							<ng-option *ngFor="let country of countries" [value]="country.iso3">{{ country.name }}
+							</ng-option>
 						</ng-select>
 					</div>
 					<div class="col-4">
@@ -79,35 +52,19 @@
 				</div>
 				<div class="row mb-3">
 					<div class="col-4">
-						<label class="required"
-							>Is Legal Entity also Legal Employer?</label
-						>
+						<label class="required">Is Legal Entity also Legal Employer?</label>
 						<div class="d-flex gap-4 pt-3">
 							<label for="">
-								<input
-									type="radio"
-									name=""
-									formControlName="isLegalEmployer"
-									value="yes"
-								/>&nbsp;Yes
+								<input type="radio" name="" formControlName="isLegalEmployer" value="yes" />&nbsp;Yes
 							</label>
 							<label for="">
-								<input
-									type="radio"
-									name=""
-									formControlName="isLegalEmployer"
-									value="no"
-								/>&nbsp;No
+								<input type="radio" name="" formControlName="isLegalEmployer" value="no" />&nbsp;No
 							</label>
 						</div>
 					</div>
 					<div class="col-4">
 						<label class="required">Employer ID</label>
-						<input
-							type="text"
-							class="form-control"
-							formControlName="employerId"
-						/>
+						<input type="text" class="form-control" formControlName="employerId" />
 					</div>
 				</div>
 			</div>
@@ -116,10 +73,7 @@
 				<div class="row">
 					<h6 class="heading">Physical Address</h6>
 				</div>
-				<app-address-form
-					[parentGroup]="Form"
-					[formGroupName]="'physicalAddress'"
-				></app-address-form>
+				<app-address-form [parentGroup]="Form" [formGroupName]="'physicalAddress'"></app-address-form>
 			</div>
 			<!-- Mailing Address -->
 			<div class="section" id="mailingAddress">
@@ -137,10 +91,7 @@
 					</button>
 				</div>
 			</div> -->
-				<app-address-form
-					[parentGroup]="Form"
-					[formGroupName]="'mailingAddress'"
-				></app-address-form>
+				<app-address-form [parentGroup]="Form" [formGroupName]="'mailingAddress'"></app-address-form>
 			</div>
 			<!-- Insurance Billing Address -->
 			<div class="section" id="insuranceBillingAddress">
@@ -158,30 +109,23 @@
 					</button>
 				</div>
 			</div> -->
-				<app-address-form
-					[parentGroup]="Form"
-					[formGroupName]="'insuranceBillingAddress'"
-				></app-address-form>
+				<app-address-form [parentGroup]="Form" [formGroupName]="'insuranceBillingAddress'"></app-address-form>
 			</div>
 			<!-- Contact -->
 			<div class="section" id="contactDetails">
 				<div class="row">
 					<h6 class="heading">Contact</h6>
 				</div>
-				<app-contact-details-form
-					[parentGroup]="Form"
-					[formGroupName]="'contactDetails'"
-				></app-contact-details-form>
+				<app-contact-details-form [parentGroup]="Form" [formGroupName]="'contactDetails'">
+				</app-contact-details-form>
 			</div>
 			<!-- Contact Person-->
 			<div class="section" id="contactPerson">
 				<div class="row">
 					<h6 class="heading">Contact Person Info</h6>
 				</div>
-				<app-contact-person-form
-					[parentGroup]="Form"
-					[formGroupName]="'contactPerson'"
-				></app-contact-person-form>
+				<app-contact-person-form [parentGroup]="Form" [formGroupName]="'contactPerson'">
+				</app-contact-person-form>
 			</div>
 			<!-- <div class="d-flex border-top pt-3 gap-2">
 			<button

@@ -4,6 +4,7 @@ import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 import { CONFIG } from '@config/index';
 import { HttpClient } from '@angular/common/http';
+import { AlertService } from '@services/alert/alert.service';
 
 @Component({
   selector: 'app-referer-form',
@@ -63,6 +64,7 @@ export class RefererFormComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private addressFormService: AddressFormService,
+    private alertService: AlertService,
   ) {
     this.idForm = this.fb.group({
       // name: '',
@@ -80,13 +82,13 @@ export class RefererFormComponent implements OnInit {
     this.Form = this.fb.group({
       companyName: [data?.companyName || ''],
       title: [data?.title || ''],
-      firstName: [data?.firstName || ''],
+      firstName: [data?.firstName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
       middleName: [data?.middleName || ''],
-      lastName: [data?.lastName || ''],
+      lastName: [data?.lastName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
       greeting: [data?.greeting || ''],
       emailId: [data?.emailId || ''],
-      pPhoneType: [data?.pPhoneType || ''],
-      pPhoneNumber: [data?.pPhoneNumber || ''],
+      pPhoneType: [data?.pPhoneType || '', Validators.required],
+      pPhoneNumber: [data?.pPhoneNumber || '', [Validators.required, Validators.pattern("^[0-9]*$")]],
       sPhoneType: [data?.sPhoneType || ''],
       sPhoneNumber: [data?.sPhoneNumber || ''],
       preferredMailMethod: [data?.preferredMailMethod || ''],
@@ -96,6 +98,42 @@ export class RefererFormComponent implements OnInit {
         data?.address || {}
       )
     });
+  }
+
+  firstNameValid() {
+    return this.Form.get('firstName')?.valid;
+  }
+
+  middleNameValid() {
+    return this.Form.get('middleName')?.valid;
+  }
+
+  lastNameValid() {
+    return this.Form.get('lastName')?.valid;
+  }
+
+  DOBValid() {
+    return this.Form.get('DOB')?.value.length > 0;
+  }
+
+  pPhoneTypeValid() {
+    return this.Form.get('pPhoneType')?.valid;
+  }
+
+  pPhoneNumberValid() {
+    return this.Form.get('pPhoneNumber')?.valid;
+  }
+
+  commPrimaryValid() {
+    return this.Form.get('CommPrimary')?.value.length > 0;
+  }
+
+  emailValid() {
+    return this.Form.get('emailId')?.value.length > 0;
+  }
+
+  ratingValid(){
+    return this.Form.get('rating')?.value.length > 0 && this.Form.get('rating')?.valid;
   }
 
   async getStaticData() {
@@ -112,6 +150,11 @@ export class RefererFormComponent implements OnInit {
 
   save(data: any) {
     this.onSubmit.emit(data);
+    this.Form.markAsPristine();
+    this.alertService.success(
+      'Success',
+      'Referrer has been updated successfully'
+    );
   }
   cancel() {
     this.onCancel.emit();

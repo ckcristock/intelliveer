@@ -110,9 +110,9 @@ export class PatientDetailComponent implements OnInit {
     data = data || {};
     this.Form = this.fb.group({
       title: [data?.title || ''],
-      firstName: [data?.firstName || '', Validators.required],
+      firstName: [data?.firstName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
       middleName: [data?.middleName || ''],
-      lastName: [data?.lastName || '', Validators.required],
+      lastName: [data?.lastName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
       DOB: [data?.DOB || '', Validators.required],
       gender: [data?.gender || '', Validators.required],
       pronoun: [data?.pronoun || ''],
@@ -132,10 +132,54 @@ export class PatientDetailComponent implements OnInit {
       treatmentCoordinator: [data?.treatmentCoordinator || ''],
       CSAssistant: [data?.CSAssistant || ''],
       cPerson: [data?.cPerson || ''],
-      name: [data?.name || ''],
-      eContact: [data?.eContact || ''],
+      name: [data?.name || '', Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')],
+      eContact: [data?.eContact || '', Validators.pattern("^[0-9]*$")],
       note: [data?.note || '']
     });
+  }
+  
+  firstNameValid() {
+    return this.Form.get('firstName')?.valid;
+  }
+
+  middleNameValid() {
+    return this.Form.get('middleName')?.valid;
+  }
+
+  lastNameValid() {
+    return this.Form.get('lastName')?.valid;
+  }
+
+  DOBValid() {
+    return this.Form.get('DOB')?.value.length > 0;
+  }
+
+  genderValid() {
+    return this.Form.get('gender')?.value.length > 0;
+  }
+
+  locationValid(){
+    return this.Form.get('location')?.value.length > 0;
+  }
+
+  billingValid(){
+    return this.Form.get('practice')?.value.length > 0;
+  }
+
+  treatingValid(){
+    return this.Form.get('provider')?.value.length > 0;
+  }
+
+  contPersValid(){
+    return this.Form.get('cPerson')?.value.length > 0;
+  }
+
+  emerNameValid(){
+    return this.Form.get('name')?.value.length > 0  && this.Form.get('name')?.valid;
+  }
+
+  eContactValid(){
+    return this.Form.get('eContact')?.value.length > 0 && this.Form.get('eContact')?.valid;
   }
 
   get ids(): FormArray {
