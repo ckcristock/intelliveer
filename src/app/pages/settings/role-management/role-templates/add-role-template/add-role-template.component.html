@@ -36,9 +36,9 @@
                 <label class="label-input-gap">Type</label>
                 <ng-select placeholder="Select" class="required-field" formControlName="type" (change)="roleTypeValue($event)"
                 >
-                    <ng-option value="public">Public</ng-option>
-                    <ng-option value="private">Private</ng-option>
-                    <ng-option value="specific">Specific</ng-option>
+                <ng-option value="public">Public</ng-option>
+                <ng-option value="private" *ngIf="getRoleTemplateType === 'private' || getRoleTemplateType == ''">Private</ng-option>
+                <ng-option value="specific" *ngIf="getRoleTemplateType != 'public' || getRoleTemplateType == ''">Specific</ng-option>
                 </ng-select>
             </div>
             <div class="col-3" *ngIf="isTypeSpecific">

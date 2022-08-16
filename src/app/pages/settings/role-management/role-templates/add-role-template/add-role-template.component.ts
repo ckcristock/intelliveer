@@ -28,6 +28,7 @@ export class AddRoleTemplateComponent implements OnInit {
   @Input() formData: any | undefined = undefined;
   roleTemplate = { id: '', name: '', description: '' };
   finalArray:any = [];
+  getRoleTemplateType: any;
 
   
 
@@ -188,7 +189,8 @@ export class AddRoleTemplateComponent implements OnInit {
   roleTemplateDetail(ID:any){
     this._ngZone.run(() => { 
       setTimeout(() => {
-      this.rolesUserServ.singleRoleTemplate(ID).subscribe(res=>{
+      this.rolesUserServ.singleRoleTemplate(ID).subscribe((res: any)=>{
+        this.getRoleTemplateType = res.type;
         this.setPermissionWithTemplateId(res);
       })
     }, 500)
