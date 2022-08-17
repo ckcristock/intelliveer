@@ -11,16 +11,23 @@
                     <h6 class="heading"><b>Consultations 1</b></h6>
                 </div>
             </div>
-            <ul class="ul" style="padding-left: 1rem;">
-                <ol class="ol">
-                    <li class="pointer menu-item" *ngFor="let item of menuItems" >
-						<b routerLinkActive="active"
-						[routerLink]="item.url" (click)="selectMenuItem(item)">{{ item.title }}</b>
-					</li>
-                </ol>
-            </ul>
+            <div class="row" *ngFor="let item of menuItems">
+                <div class="col">
+                    <ul class="ul" style="padding-left: 1rem;">
+                        <ol class="ol">
+                            <li class="pointer menu-item" routerLinkActive="active"
+                            [routerLink]="item.url" (click)="selectMenuItem(item)">
+                                <span>{{ item.title }}</span>
+                            </li>
+                        </ol>
+                    </ul>
+                </div>
+                <div class="col-2" *ngIf="item.title == 'Diagnosis'">
+                    <span (click)="selectMenuItem(item)"><i class="bi bi-arrow-left-circle" style="font-size: x-large"></i></span>
+                </div>
+            </div>
         </div>
-		<div class="col" [ngStyle]="{ 'max-width': max_width }" *ngIf="showProgressBar" [@sideMenu]>
+		<div class="col" [ngStyle]="{ 'max-width': max_width }" *ngIf="showProgressBar" @fadeSlideInOut>
 			<div class="row">
 				<div class="col-2">
 					<div class="line"></div>

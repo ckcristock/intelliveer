@@ -25,46 +25,52 @@
 		</div>
 		<div class="row mb-3">
 			<div class="col-9" style="margin-left: 10px">
-				<div class="row mb-1">
-					<div class="col-3"><b>Name</b></div>
-				</div>
-				<div
-					class="row mb-1 row-border"
-					*ngFor="let category of categories"
-					draggable="true"
-					(drag)="move($event)"
-					(dragover)="endMove($event)"
-					style="line-height: 3; background-color: white;"
-				>
-					<div class="col-3">
-						<img
-							src="../../../../../../assets/icons/move.svg"
-							width="20"
-							height="20"
-						/>
-						{{ category.title }}
-					</div>
-					<div class="col" [align]="'end'">
-						<div
-							ngbDropdown
-							container="body"
-							placement="bottom-end"
+				<table>
+					<thead>
+						<th>Name</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let category of categories"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
 						>
-							<button
-								class="btn btn-light btn-sm more_btn"
-								ngbDropdownToggle
-								style="background-color: white;"
-							>
-								<i class="bi bi-three-dots-vertical"></i>
-							</button>
-							<div ngbDropdownMenu>
-								<button ngbDropdownItem>Edit</button>
-								<button ngbDropdownItem>Delete</button>
-								<button ngbDropdownItem>Hide</button>
-							</div>
-						</div>
-					</div>
-				</div>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ category.title }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<div class="row mb-1">
@@ -119,65 +125,69 @@
 			</div>
 		</div>
 		<div class="row mb-3">
-			<div class="col-12" style="margin-left: 10px; margin-right: 10px;">
-				<div class="row mb-1">
-					<div class="col-3"><b>Name</b></div>
-					<div class="col-2" [align]="'end'">
-						<b>Value Type</b>
-					</div>
-					<div class="col-3" [align]="'end'">
-						<b>Tooth chart impact</b>
-					</div>
-					<div class="col-3" [align]="'end'">
-						<b>Tooth chart actions</b>
-					</div>
-				</div>
-				<div
-					class="row mb-1 row-border"
-					*ngFor="let value of values"
-					draggable="true"
-					(drag)="move($event)"
-					(dragover)="endMove($event)"
-					style="line-height: 3; background-color: white;"
-				>
-					<div class="col-3">
-						<img
-							src="../../../../../../assets/icons/move.svg"
-							width="20"
-							height="20"
-						/>
-						{{ value.name }}
-					</div>
-					<div class="col-3" [align]="'center'">
-						{{ value.type }}
-					</div>
-					<div class="col-2" [align]="'center'">
-						<input type="checkbox" [checked]="value.chartImpact" style="vertical-align: middle;" />
-					</div>
-					<div class="col-3" [align]="'end'">
-						{{ value.chartAction }}
-					</div>
-					<div class="col" [align]="'end'">
-						<div
-							ngbDropdown
-							container="body"
-							placement="bottom-end"
+			<div class="col-12" style="margin-left: 10px; margin-right: 10px">
+				<table>
+					<thead>
+						<th>Name</th>
+						<th>Value Type</th>
+						<th>Tooth chart impact</th>
+						<th>Tooth chart actions</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let value of values"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
 						>
-							<button
-								class="btn btn-light btn-sm more_btn"
-								ngbDropdownToggle
-								style="background-color: white;"
-							>
-								<i class="bi bi-three-dots-vertical"></i>
-							</button>
-							<div ngbDropdownMenu>
-								<button ngbDropdownItem>Edit</button>
-								<button ngbDropdownItem>Delete</button>
-								<button ngbDropdownItem>Hide</button>
-							</div>
-						</div>
-					</div>
-				</div>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ value.name }}
+							</td>
+							<td>
+								{{ value.type }}
+							</td>
+							<td>
+								<input
+									type="checkbox"
+									[checked]="value.chartImpact"
+									style="vertical-align: middle"
+								/>
+							</td>
+							<td>
+								{{ value.chartAction }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<div class="row mb-1">

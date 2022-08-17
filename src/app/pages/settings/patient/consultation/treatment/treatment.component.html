@@ -24,47 +24,53 @@
 			</div>
 		</div>
 		<div class="row mb-3">
-			<div class="col-9" style="margin-left: 10px;">
-				<div class="row mb-1">
-					<div class="col-3"><b>Name</b></div>
-				</div>
-				<div
-					class="row mb-1 row-border"
-					*ngFor="let phase of treatmentPhase"
-					draggable="true"
-					(drag)="move($event)"
-					(dragover)="endMove($event)"
-					style="line-height: 3; background-color: white;"
-				>
-					<div class="col-3">
-						<img
-							src="../../../../../../assets/icons/move.svg"
-							width="20"
-							height="20"
-						/>
-						{{ phase }}
-					</div>
-					<div class="col" [align]="'end'">
-						<div
-							ngbDropdown
-							container="body"
-							placement="bottom-end"
+			<div class="col-9" style="margin-left: 10px">
+				<table>
+					<thead>
+						<th>Name</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let phase of treatmentPhase"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
 						>
-							<button
-								class="btn btn-light btn-sm more_btn"
-								ngbDropdownToggle
-								style="background-color: white;"
-							>
-								<i class="bi bi-three-dots-vertical"></i>
-							</button>
-							<div ngbDropdownMenu>
-								<button ngbDropdownItem>Edit</button>
-								<button ngbDropdownItem>Delete</button>
-								<button ngbDropdownItem>Hide</button>
-							</div>
-						</div>
-					</div>
-				</div>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ phase }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<div class="row mb-1">
@@ -110,47 +116,53 @@
 			</div>
 		</div>
 		<div class="row mb-3">
-			<div class="col-9" style="margin-left: 10px;">
-				<div class="row mb-1">
-					<div class="col-3"><b>Name</b></div>
-				</div>
-				<div
-					class="row mb-1 row-border"
-					*ngFor="let braces of bracesType"
-					draggable="true"
-					(drag)="move($event)"
-					(dragover)="endMove($event)"
-					style="line-height: 3; background-color: white;"
-				>
-					<div class="col-3">
-						<img
-							src="../../../../../../assets/icons/move.svg"
-							width="20"
-							height="20"
-						/>
-						{{ braces }}
-					</div>
-					<div class="col" [align]="'end'">
-						<div
-							ngbDropdown
-							container="body"
-							placement="bottom-end"
+			<div class="col-9" style="margin-left: 10px">
+				<table>
+					<thead>
+						<th>Name</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let braces of bracesType"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
 						>
-							<button
-								class="btn btn-light btn-sm more_btn"
-								ngbDropdownToggle
-								style="background-color: white;"
-							>
-								<i class="bi bi-three-dots-vertical"></i>
-							</button>
-							<div ngbDropdownMenu>
-								<button ngbDropdownItem>Edit</button>
-								<button ngbDropdownItem>Delete</button>
-								<button ngbDropdownItem>Hide</button>
-							</div>
-						</div>
-					</div>
-				</div>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ braces }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<div class="row mb-1">
@@ -196,47 +208,53 @@
 			</div>
 		</div>
 		<div class="row mb-3">
-			<div class="col-9" style="margin-left: 10px;">
-				<div class="row mb-1">
-					<div class="col-3"><b>Name</b></div>
-				</div>
-				<div
-					class="row mb-1 row-border"
-					*ngFor="let alligner of allignersType"
-					draggable="true"
-					(drag)="move($event)"
-					(dragover)="endMove($event)"
-					style="line-height: 3; background-color: white;"
-				>
-					<div class="col-3">
-						<img
-							src="../../../../../../assets/icons/move.svg"
-							width="20"
-							height="20"
-						/>
-						{{ alligner }}
-					</div>
-					<div class="col" [align]="'end'">
-						<div
-							ngbDropdown
-							container="body"
-							placement="bottom-end"
+			<div class="col-9" style="margin-left: 10px">
+				<table>
+					<thead>
+						<th>Name</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let item of allignersType"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
 						>
-							<button
-								class="btn btn-light btn-sm more_btn"
-								ngbDropdownToggle
-								style="background-color: white;"
-							>
-								<i class="bi bi-three-dots-vertical"></i>
-							</button>
-							<div ngbDropdownMenu>
-								<button ngbDropdownItem>Edit</button>
-								<button ngbDropdownItem>Delete</button>
-								<button ngbDropdownItem>Hide</button>
-							</div>
-						</div>
-					</div>
-				</div>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ item }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<div class="row mb-1">
@@ -282,47 +300,53 @@
 			</div>
 		</div>
 		<div class="row mb-3">
-			<div class="col-9" style="margin-left: 10px;">
-				<div class="row mb-1">
-					<div class="col-3"><b>Name</b></div>
-				</div>
-				<div
-					class="row mb-1 row-border"
-					*ngFor="let requisite of Prerequisite"
-					draggable="true"
-					(drag)="move($event)"
-					(dragover)="endMove($event)"
-					style="line-height: 3; background-color: white;"
-				>
-					<div class="col-3">
-						<img
-							src="../../../../../../assets/icons/move.svg"
-							width="20"
-							height="20"
-						/>
-						{{ requisite }}
-					</div>
-					<div class="col" [align]="'end'">
-						<div
-							ngbDropdown
-							container="body"
-							placement="bottom-end"
+			<div class="col-9" style="margin-left: 10px">
+				<table>
+					<thead>
+						<th>Name</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let item of Prerequisite"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
 						>
-							<button
-								class="btn btn-light btn-sm more_btn"
-								ngbDropdownToggle
-								style="background-color: white;"
-							>
-								<i class="bi bi-three-dots-vertical"></i>
-							</button>
-							<div ngbDropdownMenu>
-								<button ngbDropdownItem>Edit</button>
-								<button ngbDropdownItem>Delete</button>
-								<button ngbDropdownItem>Hide</button>
-							</div>
-						</div>
-					</div>
-				</div>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ item }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<div class="row mb-1">
@@ -368,47 +392,53 @@
 			</div>
 		</div>
 		<div class="row mb-3">
-			<div class="col-9" style="margin-left: 10px;">
-				<div class="row mb-1">
-					<div class="col-3"><b>Name</b></div>
-				</div>
-				<div
-					class="row mb-1 row-border"
-					*ngFor="let risk of risks"
-					draggable="true"
-					(drag)="move($event)"
-					(dragover)="endMove($event)"
-					style="line-height: 3; background-color: white;"
-				>
-					<div class="col-3">
-						<img
-							src="../../../../../../assets/icons/move.svg"
-							width="20"
-							height="20"
-						/>
-						{{ risk }}
-					</div>
-					<div class="col" [align]="'end'">
-						<div
-							ngbDropdown
-							container="body"
-							placement="bottom-end"
+			<div class="col-9" style="margin-left: 10px">
+				<table>
+					<thead>
+						<th>Name</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let item of risks"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
 						>
-							<button
-								class="btn btn-light btn-sm more_btn"
-								ngbDropdownToggle
-								style="background-color: white;"
-							>
-								<i class="bi bi-three-dots-vertical"></i>
-							</button>
-							<div ngbDropdownMenu>
-								<button ngbDropdownItem>Edit</button>
-								<button ngbDropdownItem>Delete</button>
-								<button ngbDropdownItem>Hide</button>
-							</div>
-						</div>
-					</div>
-				</div>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ item }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<div class="row mb-1">
@@ -455,7 +485,9 @@
 		</div>
 		<div class="row mb-1">
 			<div class="col-12">
-				<h6 class="heading" style="font-size: small;">1. CREATE STEP ITEM</h6>
+				<h6 class="heading" style="font-size: small">
+					1. CREATE STEP ITEM
+				</h6>
 			</div>
 		</div>
 		<div class="row mb-1">
@@ -500,67 +532,79 @@
 		</div>
 		<div class="row mb-1">
 			<div class="col-12">
-				<h6 class="heading" style="font-size: small;">2. CREATE STEPS</h6>
+				<h6 class="heading" style="font-size: small">
+					2. CREATE STEPS
+				</h6>
 			</div>
 		</div>
 		<div class="row mb-3">
 			<div class="col-12">
-				<div class="row mb-1">
-					<div class="col-3"><b>Step Name</b></div>
-					<div class="col-3"><b>Step Description</b></div>
-					<div class="col-2"><b>Consents & Agreements</b></div>
-					<div class="col-2"><b>Risks</b></div>
-					<div class="col-2"><b>Favorite</b></div>
-				</div>
-				<div
-					class="row mb-1 row-border"
-					*ngFor="let step of stepsList"
-					draggable="true"
-					(drag)="move($event)"
-					(dragover)="endMove($event)"
-					style="line-height: 3; background-color: white;"
-				>
-					<div class="col-3">
-						<img
-							src="../../../../../../assets/icons/move.svg"
-							width="20"
-							height="20"
-						/>
-						{{ step.name }}
-					</div>
-					<div class="col-3">
-						{{ step.description }}
-					</div>
-					<div class="col-2">
-						{{ step.canda }}
-					</div>
-					<div class="col-2">
-						{{ step.risk }}
-					</div>
-					<div class="col-1" [align]="'end'">
-						<input type="checkbox" [checked]="step.fav" style="vertical-align: middle;" />
-					</div>
-					<div class="col" [align]="'end'">
-						<div
-							ngbDropdown
-							container="body"
-							placement="bottom-end"
+				<table>
+					<thead>
+						<th>Step Name</th>
+						<th>Step Description</th>
+						<th>Consents & Agreements</th>
+						<th>Risks</th>
+						<th>Favorite</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let step of stepsList"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
 						>
-							<button
-								class="btn btn-light btn-sm more_btn"
-								ngbDropdownToggle
-								style="background-color: white;"
-							>
-								<i class="bi bi-three-dots-vertical"></i>
-							</button>
-							<div ngbDropdownMenu>
-								<button ngbDropdownItem>Edit</button>
-								<button ngbDropdownItem>Delete</button>
-								<button ngbDropdownItem>Hide</button>
-							</div>
-						</div>
-					</div>
-				</div>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ step.name }}
+							</td>
+							<td>
+								{{ step.description }}
+							</td>
+							<td>
+								{{ step.canda }}
+							</td>
+							<td>
+								{{ step.risk }}
+							</td>
+							<td>
+								<input
+									type="checkbox"
+									[checked]="step.fav"
+									style="vertical-align: middle"
+								/>
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<div class="row mb-1">
@@ -606,47 +650,53 @@
 			</div>
 		</div>
 		<div class="row mb-3">
-			<div class="col-9" style="margin-left: 10px;">
-				<div class="row mb-1">
-					<div class="col-3"><b>Name</b></div>
-				</div>
-				<div
-					class="row mb-1 row-border"
-					*ngFor="let adjunctive of adjunctive"
-					draggable="true"
-					(drag)="move($event)"
-					(dragover)="endMove($event)"
-					style="line-height: 3; background-color: white;"
-				>
-					<div class="col-3">
-						<img
-							src="../../../../../../assets/icons/move.svg"
-							width="20"
-							height="20"
-						/>
-						{{ adjunctive }}
-					</div>
-					<div class="col" [align]="'end'">
-						<div
-							ngbDropdown
-							container="body"
-							placement="bottom-end"
+			<div class="col-9" style="margin-left: 10px">
+				<table>
+					<thead>
+						<th>Name</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let item of adjunctive"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
 						>
-							<button
-								class="btn btn-light btn-sm more_btn"
-								ngbDropdownToggle
-								style="background-color: white;"
-							>
-								<i class="bi bi-three-dots-vertical"></i>
-							</button>
-							<div ngbDropdownMenu>
-								<button ngbDropdownItem>Edit</button>
-								<button ngbDropdownItem>Delete</button>
-								<button ngbDropdownItem>Hide</button>
-							</div>
-						</div>
-					</div>
-				</div>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ item }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<div class="row mb-1">
@@ -692,47 +742,53 @@
 			</div>
 		</div>
 		<div class="row mb-3">
-			<div class="col-9" style="margin-left: 10px;">
-				<div class="row mb-1">
-					<div class="col-3"><b>Name</b></div>
-				</div>
-				<div
-					class="row mb-1 row-border"
-					*ngFor="let appliances of appliances"
-					draggable="true"
-					(drag)="move($event)"
-					(dragover)="endMove($event)"
-					style="line-height: 3; background-color: white;"
-				>
-					<div class="col-3">
-						<img
-							src="../../../../../../assets/icons/move.svg"
-							width="20"
-							height="20"
-						/>
-						{{ appliances }}
-					</div>
-					<div class="col" [align]="'end'">
-						<div
-							ngbDropdown
-							container="body"
-							placement="bottom-end"
+			<div class="col-9" style="margin-left: 10px">
+				<table>
+					<thead>
+						<th>Name</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let item of appliances"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
 						>
-							<button
-								class="btn btn-light btn-sm more_btn"
-								ngbDropdownToggle
-								style="background-color: white;"
-							>
-								<i class="bi bi-three-dots-vertical"></i>
-							</button>
-							<div ngbDropdownMenu>
-								<button ngbDropdownItem>Edit</button>
-								<button ngbDropdownItem>Delete</button>
-								<button ngbDropdownItem>Hide</button>
-							</div>
-						</div>
-					</div>
-				</div>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ item }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<div class="row mb-1">
@@ -778,47 +834,53 @@
 			</div>
 		</div>
 		<div class="row mb-3">
-			<div class="col-9" style="margin-left: 10px;">
-				<div class="row mb-1">
-					<div class="col-3"><b>Name</b></div>
-				</div>
-				<div
-					class="row mb-1 row-border"
-					*ngFor="let bracket of brackets"
-					draggable="true"
-					(drag)="move($event)"
-					(dragover)="endMove($event)"
-					style="line-height: 3; background-color: white;"
-				>
-					<div class="col-3">
-						<img
-							src="../../../../../../assets/icons/move.svg"
-							width="20"
-							height="20"
-						/>
-						{{ bracket }}
-					</div>
-					<div class="col" [align]="'end'">
-						<div
-							ngbDropdown
-							container="body"
-							placement="bottom-end"
+			<div class="col-9" style="margin-left: 10px">
+				<table>
+					<thead>
+						<th>Name</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let item of brackets"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
 						>
-							<button
-								class="btn btn-light btn-sm more_btn"
-								ngbDropdownToggle
-								style="background-color: white;"
-							>
-								<i class="bi bi-three-dots-vertical"></i>
-							</button>
-							<div ngbDropdownMenu>
-								<button ngbDropdownItem>Edit</button>
-								<button ngbDropdownItem>Delete</button>
-								<button ngbDropdownItem>Hide</button>
-							</div>
-						</div>
-					</div>
-				</div>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ item }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<div class="row mb-1">
@@ -864,47 +926,53 @@
 			</div>
 		</div>
 		<div class="row mb-3">
-			<div class="col-9" style="margin-left: 10px;">
-				<div class="row mb-1">
-					<div class="col-3"><b>Name</b></div>
-				</div>
-				<div
-					class="row mb-1 row-border"
-					*ngFor="let retention of retention"
-					draggable="true"
-					(drag)="move($event)"
-					(dragover)="endMove($event)"
-					style="line-height: 3; background-color: white;"
-				>
-					<div class="col-3">
-						<img
-							src="../../../../../../assets/icons/move.svg"
-							width="20"
-							height="20"
-						/>
-						{{ retention }}
-					</div>
-					<div class="col" [align]="'end'">
-						<div
-							ngbDropdown
-							container="body"
-							placement="bottom-end"
+			<div class="col-9" style="margin-left: 10px">
+				<table>
+					<thead>
+						<th>Name</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let item of retention"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
 						>
-							<button
-								class="btn btn-light btn-sm more_btn"
-								ngbDropdownToggle
-								style="background-color: white;"
-							>
-								<i class="bi bi-three-dots-vertical"></i>
-							</button>
-							<div ngbDropdownMenu>
-								<button ngbDropdownItem>Edit</button>
-								<button ngbDropdownItem>Delete</button>
-								<button ngbDropdownItem>Hide</button>
-							</div>
-						</div>
-					</div>
-				</div>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ item }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<div class="row mb-1">

@@ -3,29 +3,21 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { patientConsultationOptionsMenuItems, patientDiagnosisMenuItems, patientTreatmentMenuItems } from '@pages/patient/menu';
-import { SidebarOpenAnimation, animationParams } from 'src/app/animations/sidebar';
 
 @Component({
   selector: 'app-add-consultation',
   templateUrl: './add-consultation.component.html',
   styleUrls: ['./add-consultation.component.scss'],
   animations: [
-    trigger("sideMenu", [
-		transition(":enter", [
-		  useAnimation(SidebarOpenAnimation, {
-			params: {
-			  ...animationParams
-			}
-		  })
+	trigger('fadeSlideInOut', [
+		transition(':enter', [
+			style({ opacity: 0, transform: 'translateX(10px)' }),
+			animate('500ms', style({ opacity: 1, transform: 'translateX(0)' })),
 		]),
-		// transition(":leave", [
-		//   useAnimation(SidebarCloseAnimation, {
-		// 	params: {
-		// 	  ...animationParams
-		// 	}
-		//   })
-		// ])
-	  ])
+		// transition(':leave', [
+		// 	animate('100ms', style({ opacity: 0, transform: 'translateY(0px)' })),
+		// ]),
+	])
   ]
 })
 export class AddConsultationComponent implements OnInit {
