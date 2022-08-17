@@ -91,15 +91,35 @@ export class BusinessGroupDropdownService {
 			complete: () => {}
 		});
 	}
+	permissionSetOFUsers(){
+	 let orgId:any;
+     this.businessGroupService.getPermissionByUserRole().subscribe({
+		next: (data: any) => {
+		  localStorage.setItem('permissionSet',JSON.stringify(data));
+		  if(data?.bgs[0]?._id){
+			orgId = data?.bgs[0]?._id;
+		  }else{
+            orgId = "intelliveer";
+		  }
+		  this.setSelectedBusinessGroup(
+			orgId
+		  );
+		},
+		error: () => {},
+		complete: () => {}
+	});
+	}
 	getOrgBgId(){
-	 let user:any =	this.cookieService.get('user');
+	 let user:any =	localStorage.getItem('permissionSet');
 	 let orgId = this.authService.getOrgId();
 	 user = JSON.parse(user);
+	 console.log(user);
+	 this.permissionSetOFUsers();
 	 if (user) {
 		if(user?.__ISSU__){
-		   this._getBusinessGroups()
-		}else if(user.bg[0]?._id){
-		   this._getBusinessGroup(user.bg[0]?._id,'intelliveer')
+		   this._getBusinessGroups();
+		}else if(user?.bgs[0]?._id){
+		   this._getBusinessGroup(user?.bgs[0]?._id,'intelliveer');
 		}else{
 		    this._getBusinessGroup(orgId,orgId);
 		}
