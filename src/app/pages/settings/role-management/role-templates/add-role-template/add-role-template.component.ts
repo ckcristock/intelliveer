@@ -129,6 +129,7 @@ export class AddRoleTemplateComponent implements OnInit {
   saveRoleTemplate() {
     this.submitted = true;
        // stop here if form is invalid
+      this.roleTemplateForm.value.isRestrictedTemplate = JSON.parse(this.roleTemplateForm.value.isRestrictedTemplate);
       if (this.roleTemplateForm.invalid) {
         return;
       }
@@ -383,7 +384,7 @@ export class AddRoleTemplateComponent implements OnInit {
       });
     });
     this.getAllPermissionsTemplateID(permissions,permissionsObj);
-    this.roleTemplateForm.patchValue({name:data.name,description:data.description,businessGroups:data.businessGroups,type: data.type });
+    this.roleTemplateForm.patchValue({name:data.name,description:data.description,businessGroups:data.businessGroups,type: data.type,isRestrictedTemplate:data.isRestrictedTemplate.toString() });
     if(this.roleTemplateForm.value.businessGroups.length == 0){
       this.isTypeSpecific = false;
     }else{

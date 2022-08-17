@@ -45,7 +45,17 @@ export class RoleService {
   /** Get data from BG User ID */
   getRoleListByID(bgId:any)
   {
-    return this.http.get(`${CONFIG.backend.host}/role/template-based-role/`, 
+    return this.http.get(`${CONFIG.backend.host}/role/template-based-role/restricted-roles/`,
+     {
+      headers: {
+        'X-ORG-ID': bgId
+      }
+     }
+    );
+  }
+  getRoleListByIDUnRestricted(bgId:any)
+  {
+    return this.http.get(`${CONFIG.backend.host}/role/template-based-role/unrestricted-roles/`,
      {
       headers: {
         'X-ORG-ID': bgId

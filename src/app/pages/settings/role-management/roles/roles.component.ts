@@ -44,18 +44,13 @@ export class RolesComponent implements OnInit {
 
   getRoleListByBgId(bgId:any)
   {
+    console.log(bgId)
     this.roleService.getRoleListByID(bgId).subscribe((list: any) =>
     {
-      for (let i = 0; i < list.length; i++) {
-        this.roleService.getRoleTemplateById(bgId, list[i].roleTemplateId).subscribe((roleTemplateData: any) =>
-          {
-            list[i].roleTemplateName = roleTemplateData.name;
-          }, error =>
-          {
-            console.log(error);
-          })
-      }
-      this.roleList = list;
+      console.log('list',list);
+      this.roleService.getRoleListByIDUnRestricted(bgId).subscribe((list2:any)=>{
+        this.roleList = [...list,...list2];
+      })
     })
   }
 
@@ -102,14 +97,15 @@ export class RolesComponent implements OnInit {
     let bgOrdID:any = localStorage.getItem('selected_business_group');
     console.log(bgOrdID)
 		let user = this.authService.getLoggedInUser();
+    console.log(user)
 		if (user?.__ISSU__) {
       if(bgOrdID == 'intelliveer' || bgOrdID == null){
         this.getRoleList();
       }else{
-        this.getRoleListByBgId(this.selectedBusinessGroup?.bgId)
+        this.getRoleListByBgId(bgOrdID)
       }
       }else{
-      this.getRoleListByBgId(this.selectedBusinessGroup?.bgId)
+      this.getRoleListByBgId(bgOrdID)
     }
 	}
   delteRoleUser(roleId:any){

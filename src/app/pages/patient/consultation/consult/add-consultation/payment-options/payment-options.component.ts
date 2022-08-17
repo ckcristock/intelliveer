@@ -115,8 +115,8 @@ export class PaymentOptionsComponent implements OnInit {
  ratioDownPayment2:any;
  ratioTotal:any;
  showDownPaymentArrow: boolean = false;
-	newDownPayment: number = 0;
-	newEmi: number = 0;
+ newDownPayment: number = 0;
+ newEmi: number = 0;
 	constructor(private modalService: NgbModal,
 		private alertService: AlertService) {}
 
@@ -627,7 +627,6 @@ export class PaymentOptionsComponent implements OnInit {
 		}
 	  }
 	  calculateValueMonthly(event:any){
-		this.showDownPaymentArrow = true;
 		let pmEmi:any = event.target.value;
 		let emi:any;
 		let decimalValue;
@@ -704,7 +703,7 @@ export class PaymentOptionsComponent implements OnInit {
 			//  let downPayment1BG =  (this.downPaymentOneVal - this.minDownPayment1) / (this.downPaymentOneMax - this.minDownPayment1) * 100;
 		    //  this.downPayment1BG = 'linear-gradient(to right, #E6BD5C, #ff4500 ' + downPayment1BG + '%, #E6BD5C ' + downPayment1BG + '%, #dee1e2 100%)';
 			}else{
-				this.downPayment = data.target.value;
+				// this.downPayment = data.target.value;
 				data = this.downPayment
 				this.minDownPayment = this.downPayment;
 			}
