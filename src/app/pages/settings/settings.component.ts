@@ -42,6 +42,11 @@ export class SettingsComponent implements OnInit {
       route: "",
       childs: [],
     },
+    {
+      name: "Preferences",
+      route: "",
+      childs: [],
+    }
   ];
 
   compactSidebar: boolean = true;
@@ -112,6 +117,7 @@ export class SettingsComponent implements OnInit {
     this.menuItems[0].url = this.globalRoutes.getSettingsOnboardingUrl();
     this.menuItems[1].url = this.globalRoutes.getSettingsRoleManageUrl();
     this.menuItems[2].url = this.globalRoutes.getSettingsUserManageUrl();
+    this.menuItems[4].url = this.globalRoutes.getSettingsPreferencesUrl();
     this.onboardingChilds = this.globalRoutes.getSettingsOnboardingRoutes();
     this.roleManagementchilds = this.globalRoutes.getSettingsRoleManageRoutes();
     this.userManagementchilds = this.globalRoutes.getSettingsUserManageRoutes();

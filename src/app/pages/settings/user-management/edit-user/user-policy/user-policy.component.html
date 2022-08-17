@@ -144,159 +144,254 @@
 													<th></th>
 												</tr>
 											</thead>
-											<tbody
-												
-											>
-												<tr *ngFor="
-												let childPermision of permissionNested(
-													i,
-													j
-												);
-												let k = index
-											"
-											[formGroupName]="k">
-													<td>
-														<input
-															type="checkbox"
-															formControlName="enabled"
-															[attr.disabled]="
-																childPermision
-																	.value
-																	.locked
-															"
-															*ngIf="
-																childPermision
-																	.value
-																	.locked && 
-																	!childPermision
-																	.value
-																	.allowOverride
-															"
-														/>
-														<input
-															type="checkbox"
-															formControlName="enabled"
-															*ngIf="
-																childPermision
-																	.value
-																	.locked && 
-																	childPermision
-																	.value
-																	.allowOverride
-															"
-														/>
-														<input
-															type="checkbox"
-															formControlName="enabled"
-															*ngIf="
-																!childPermision
-																	.value
-																	.locked
-															"
-														/>
-													</td>
-													<td>
-														<input
-															type="hidden"
-															formControlName="name"
-														/>{{
-															childPermision.value
-																.name
-														}}
-													</td>
-													<td>
-														<img
-															src="assets/icons/locked_green.svg"
-															width="20"
-															height="20"
-															placement="bottom"
-															ngbTooltip="Permission can be Override"
-															*ngIf="
-																childPermision
-																	.value
-																	.locked &&
-																childPermision
-																	.value
-																	.allowOverride
-															"
-														/>
-														<img
-															src="assets/icons/locked_red.svg"
-															width="20"
-															height="20"
-															placement="bottom"
-															ngbTooltip="Permission can not be Override"
-															*ngIf="
-																childPermision
-																	.value
-																	.locked &&
-																!childPermision
-																	.value
-																	.allowOverride
-															"
-														/>
-													</td>
-												</tr>
+											<tbody>
 												<tr
-													*ngIf="
-														subPermission.value
-															.displayShowAdvanced
+													*ngFor="
+														let childPermision of permissionNested(
+															i,
+															j
+														);
+														let k = index
 													"
+													[formGroupName]="k"
 												>
-													<td></td>
 													<td>
-														<label
-															>Legal Entity</label
-														>
-														<ng-select
-															placeholder="Select"
-														>
-															<ng-option
-																*ngFor="
-																	let legalEntity of legelEntityList
-																"
-																>{{
-																	legalEntity.name
-																}}</ng-option
-															>
-														</ng-select>
-													</td>
-													<td>
-														<label>Location</label>
-														<ng-select
-															placeholder="Select"
-														>
-															<ng-option
-																*ngFor="
-																	let location of locationList
-																"
-																>{{
-																	location.name
-																}}}</ng-option
-															>
-														</ng-select>
-													</td>
-													<td>
-														<label>Practice</label>
-														<ng-select
-															placeholder="Select"
-														>
-															<ng-option
-																*ngFor="
-																	let practice of practiceList
-																"
-															>
+														<tr>
+															<td>
 																<input
 																	type="checkbox"
-																	value="{{
-																		practice
-																	}}"
-																	checked
-																/>&nbsp;{{
-																	practice.name
+																	formControlName="enabled"
+																	[attr.disabled]="
+																		childPermision
+																			.value
+																			.locked
+																	"
+																	*ngIf="
+																		childPermision
+																			.value
+																			.locked
+																	"
+																/>
+																<input
+																	type="checkbox"
+																	formControlName="enabled"
+																	*ngIf="
+																		!childPermision
+																			.value
+																			.locked
+																	"
+																/>
+															</td>
+														</tr>
+
+														<tr
+															*ngIf="
+																subPermission
+																	.value
+																	.displayShowAdvanced
+															"
+														>
+															<td>
+																<ng-select
+																	#legelEntity
+																	(change)="onChangeLE(legelEntity)"
+																	[items]="
+																		legelEntityList
+																	"
+																	[multiple]="
+																		true
+																	"
+																	placeholder="Legal Entity"
+																	style="
+																		border: 0px;
+																	"
+																	class="ng-selection"
+																>
+																	<ng-template
+																		ng-option-tmp
+																		let-item="item"
+																		let-item$="item$"
+																		let-index="index"
+																	>
+																		<input
+																			type="checkbox"
+																			style="
+																				margin: auto;
+																			"
+																			[checked]="
+																				item$.selected
+																			"
+																		/>
+																		<span
+																			style="
+																				padding: 8px;
+																			"
+																			>{{
+																				item.name
+																			}}</span
+																		>
+																	</ng-template>
+																</ng-select>
+															</td>
+														</tr>
+													</td>
+													<td>
+														<tr>
+															<td>
+																<input
+																	type="hidden"
+																	formControlName="name"
+																/>{{
+																	childPermision
+																		.value
+																		.name
 																}}
-															</ng-option>
-														</ng-select>
+															</td>
+														</tr>
+														<br />
+														<tr
+															*ngIf="
+																subPermission
+																	.value
+																	.displayShowAdvanced
+															"
+														>
+															<td>
+																<ng-select
+																	#location
+																	(change)="onChangeLOC(location)"
+																	[items]="
+																		locationList
+																	"
+																	[multiple]="
+																		true
+																	"
+																	placeholder="Location"
+																	style="
+																		border: 0px;
+																	"
+																	class="ng-selection"
+																>
+																	<ng-template
+																		ng-option-tmp
+																		let-item="item"
+																		let-item$="item$"
+																		let-index="index"
+																	>
+																		<input
+																			type="checkbox"
+																			style="
+																				margin: auto;
+																			"
+																			[checked]="
+																				item$.selected
+																			"
+																		/>
+																		<span
+																			style="
+																				padding: 8px;
+																			"
+																			>{{
+																				item.name
+																			}}</span
+																		>
+																	</ng-template>
+																</ng-select>
+															</td>
+														</tr>
+													</td>
+													<td>
+														<tr>
+															<td>
+																<img
+																	src="assets/icons/locked_green.svg"
+																	width="20"
+																	height="20"
+																	placement="bottom"
+																	ngbTooltip="Permission can be Override"
+																	*ngIf="
+																		childPermision
+																			.value
+																			.locked &&
+																		childPermision
+																			.value
+																			.allowOverride
+																	"
+																/>
+																<img
+																	src="assets/icons/locked_red.svg"
+																	width="20"
+																	height="20"
+																	placement="bottom"
+																	ngbTooltip="Permission can not be Override"
+																	*ngIf="
+																		childPermision
+																			.value
+																			.locked &&
+																		!childPermision
+																			.value
+																			.allowOverride
+																	"
+																/>
+															</td>
+														</tr>
+														<br /><br
+															*ngIf="
+																!childPermision
+																	.value
+																	.locked
+															"
+														/>
+														<tr
+															*ngIf="
+																subPermission
+																	.value
+																	.displayShowAdvanced
+															"
+														>
+															<td>
+																<ng-select
+																	#practice
+																	(change)="onChangePR(practice)"
+																	[items]="
+																		practiceList
+																	"
+																	[multiple]="
+																		true
+																	"
+																	placeholder="Practice"
+																	style="
+																		border: 0px;
+																	"
+																	class="ng-selection"
+																>
+																	<ng-template
+																		ng-option-tmp
+																		let-item="item"
+																		let-item$="item$"
+																		let-index="index"
+																	>
+																		<input
+																			type="checkbox"
+																			style="
+																				margin: auto;
+																			"
+																			[checked]="
+																				item$.selected
+																			"
+																		/>
+																		<span
+																			style="
+																				padding: 8px;
+																			"
+																			>{{
+																				item.name
+																			}}</span
+																		>
+																	</ng-template>
+																</ng-select>
+															</td>
+														</tr>
 													</td>
 												</tr>
 											</tbody>

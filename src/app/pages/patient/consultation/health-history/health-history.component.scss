@@ -1,18 +1,3 @@
 @import 'buttons';
 @import 'inputs';
 @import 'table';
-
-td,
-tr,
-th {
-	border: 1px solid black;
-	border-collapse: collapse;
-	cursor: all-scroll;
-}
-table {
-	border-collapse: collapse;
-	-webkit-user-select: none; /* Safari */
-	-ms-user-select: none; /* IE 10+ and Edge */
-	user-select: none; /* Standard syntax */
-	margin: 0 auto;
-}

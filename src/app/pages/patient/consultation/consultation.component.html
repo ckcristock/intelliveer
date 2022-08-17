@@ -1,63 +1,16 @@
 <div>
     <div class="row">
-        <div class="col" style="max-width: 200px" *ngIf="!showProgressBar">
+        <div class="col" style="max-width: 200px"  *ngIf="!router.url.includes('consultation/add')">
             <button type="button" class="btn btn-light" style="border-color: lightgray;">Consultation Phase</button>
             <ul class="ul">
                 <ol class="ol">
                     <li class="pointer" *ngFor="let item of menuItems" >
-						<b *ngIf="item.child?.length == 0" routerLinkActive="active"
+						<b routerLinkActive="active"
 						[routerLink]="item.url">{{ item.title }}</b>
-						<ngb-accordion
-							#acc="ngbAccordion"
-							activeIds="consultations-panel"
-							class="accord-transparent"
-							*ngIf="item.child?.length != 0"
-						>
-							<ngb-panel title="" id="consultations-panel">
-								<ng-template ngbPanelTitle>
-									<span><b>{{ item.title }}</b></span
-									>
-								</ng-template>
-								<ng-template ngbPanelContent>
-									<ul class="ol">
-										<li class="pointer" *ngFor="let childItem of item.child">
-											<ngb-accordion
-												#acc="ngbAccordion"
-												class="accord-transparent"
-											>
-												<ngb-panel id="consultations1-panel">
-													<ng-template ngbPanelTitle>
-														<span><b>{{ childItem.title }}</b></span>
-													</ng-template>
-													<ng-template
-														ngbPanelContent
-													>
-														<ul class="ol">
-															<li class="pointer" *ngFor="let subChild of childItem.child"  routerLinkActive="active"
-															[routerLink]="subChild.url"><span (click)="selectMenuItem(subChild)">{{ subChild.title }}</span></li>
-														</ul>
-													</ng-template>
-												</ngb-panel>
-											</ngb-accordion>
-										</li>
-									</ul>
-								</ng-template>
-							</ngb-panel>
-						</ngb-accordion>
 					</li>
                 </ol>
             </ul>
         </div>
-		<div class="col" [ngStyle]="{ 'max-width': max_width }" *ngIf="showProgressBar">
-			<div class="row">
-				<div class="col-2">
-					<div class="line"></div>
-					<i class="bi bi-arrow-right-circle" style="font-size: x-large;" (click)="showProgressBar=false"></i>
-					<div class="line"></div>
-				</div>
-				<div class="col"><app-progress-bar [title]="progressbarTitle" [menuItems]="progressbarMmenuItems" [sessionArrayName]="sessionArrayName"></app-progress-bar></div>
-			</div>
-		</div>
         <div class="col component-view">
             <router-outlet></router-outlet>
         </div>

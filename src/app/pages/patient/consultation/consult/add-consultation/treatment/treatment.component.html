@@ -1,0 +1,388 @@
+<div class="row">
+	<div class="col-11">
+		<div class="nav-bar-left" style="margin-left: 0px">
+			<div
+				class="btn-group me-3"
+				*ngFor="let menu of menuItems"
+				[ngClass]="{ active: currentSelection === menu.id }"
+				(click)="sectionMenu(menu)"
+			>
+				<button type="button" class="btn">
+					<i
+						class="bi bi-check-circle-fill"
+						style="color: #00a651"
+						*ngIf="menu.showDone"
+					></i
+					>&nbsp;&nbsp;{{ menu.title }}
+				</button>
+				<div
+					class="btn-group"
+					ngbDropdown
+					role="group"
+					aria-label="Button group with nested dropdown"
+				>
+					<button
+						type="button"
+						class="btn dropdown-toggle-split"
+						ngbDropdownToggle
+					>
+						<i class="bi bi-three-dots-vertical"></i>
+					</button>
+					<div
+						class="dropdown-menu"
+						ngbDropdownMenu
+						style="background-color: white"
+					>
+						<button ngbDropdownItem>Recommended</button>
+						<button ngbDropdownItem>Accepted</button>
+						<button
+							ngbDropdownItem
+							(click)="duplicateOptions(menu)"
+						>
+							Duplicate
+						</button>
+						<button ngbDropdownItem (click)="deleteOptions(menu)">
+							Delete
+						</button>
+						<button ngbDropdownItem>Rename</button>
+						<div ngbDropdown container="body" placement="right-top">
+							<button
+								ngbDropdownToggle
+								class="btn btn-light"
+								style="
+									width: 100%;
+									text-align: start;
+									background-color: transparent;
+								"
+							>
+								Copy from
+								<i
+									class="bi bi-chevron-right"
+									style="margin-left: 1rem"
+								></i>
+							</button>
+							<div ngbDropdownMenu>
+								<button class="btn btn-light">
+									<b>Consultation 1</b>
+								</button>
+								<button ngbDropdownItem>Option 1</button>
+								<button class="btn btn-light">
+									<b>Consultation 2</b>
+								</button>
+								<button ngbDropdownItem>Option 1</button>
+								<button ngbDropdownItem>Option 2</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<span (click)="addMoreOption()" *ngIf="!showAddMoreOption">
+				<img
+					src="assets/icons/add.svg"
+					width="15"
+					height="15"
+				/>&nbsp;Add more option
+			</span>
+		</div>
+	</div>
+	<div class="col-1">
+		<div id="navbar-pills">
+			<div class="right">
+				<button
+					class="save"
+					[disabled]="disableSaveButton"
+					(click)="save($event)"
+				>
+					<img src="/assets/icons/save.svg" alt="" />
+				</button>
+				<button class="cancel" (click)="cancel()">
+					<img src="/assets/icons/cancel.svg" alt="" />
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row" id="parent" *ngIf="!showCompareAll">
+		<div [ngClass]="router.url.includes('treatment-outcome') ? 'col-12' : 'col-6'">
+			<div class="section" id="child1">
+				<router-outlet></router-outlet>
+			</div>
+		</div>
+		<div class="col-6" *ngIf="!router.url.includes('treatment-outcome')">
+			<div class="section" id="child2">
+				<div class="container">
+					<div
+						class="row"
+						style="padding-left: 2rem; padding-right: 2rem"
+					>
+						<div class="col">
+							<h6 class="heading" style="margin-bottom: 0.5rem">
+								Option {{ currentSelection }}
+							</h6>
+						</div>
+						<div class="col" [align]="'end'">
+							<span style="font-size: medium">
+								<i
+									[ngClass]="
+										treatmentOptionObj.count === 1 ||
+										treatmentOptionObj.count > 1
+											? 'bi bi-hand-thumbs-up-fill'
+											: 'bi bi-hand-thumbs-up'
+									"
+									[ngStyle]="{
+										color: '#e96247'
+									}"
+									(click)="countTreatment(treatmentOptionObj)"
+								></i>
+								&nbsp;
+								<i
+									[ngClass]="
+										treatmentOptionObj.count === 2 ||
+										treatmentOptionObj.count > 2
+											? 'bi bi-hand-thumbs-up-fill'
+											: 'bi bi-hand-thumbs-up'
+									"
+									[ngStyle]="{
+										color: '#e96247'
+									}"
+									(click)="countTreatment(treatmentOptionObj)"
+								></i>
+								&nbsp;
+								<i
+									[ngClass]="
+										treatmentOptionObj.count === 3
+											? 'bi bi-hand-thumbs-up-fill'
+											: 'bi bi-hand-thumbs-up'
+									"
+									[ngStyle]="{
+										color: '#e96247'
+									}"
+									(click)="countTreatment(treatmentOptionObj)"
+								></i>
+							</span>
+						</div>
+					</div>
+					<hr />
+					<table>
+						<tbody>
+							<tr>
+								<th>Timing</th>
+								<td>
+									<p>{{ treatmentOptionObj.Timing }}</p>
+								</td>
+							</tr>
+							<tr>
+								<th>Treament Phase</th>
+								<td>
+									<p>
+										{{ treatmentOptionObj.Treament_Phase }}
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th>Treament Type</th>
+								<td>
+									<p>
+										{{ treatmentOptionObj.Treament_Type }}
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th>Treament Time</th>
+								<td>
+									<p>
+										{{ treatmentOptionObj.Treament_Time }}
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th>Prerequisites</th>
+								<td>
+									<p
+										*ngFor="
+											let prerequisties of treatmentOptionObj.Prerequisites
+										"
+									>
+										{{ prerequisties.name }}
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th>Extractions</th>
+								<td>
+									<div
+										*ngIf="
+											treatmentOptionObj.Extractions[0]
+												.adultTooth?.length != 0
+										"
+									>
+										Adult Tooth
+										<p
+											*ngFor="
+												let adult of treatmentOptionObj
+													.Extractions[0].adultTooth
+											"
+										>
+											Tooth# {{ adult.title }}
+										</p>
+									</div>
+									<div
+										*ngIf="
+											treatmentOptionObj.Extractions[1]
+												.childTooth?.length != 0
+										"
+									>
+										Child Tooth
+										<p
+											*ngFor="
+												let child of treatmentOptionObj
+													.Extractions[1].childTooth
+											"
+										>
+											Tooth# {{ child.title }}
+										</p>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>Chief Concerns</th>
+								<td>
+									<p>
+										Bottom teeth are crowded.:
+										<b>{{
+											treatmentOptionObj.Chief_Concerns_1
+										}}</b>
+									</p>
+									<p>
+										Top teeth are sticking out and spaced.:
+										<b>{{
+											treatmentOptionObj.Chief_Concerns_2
+										}}</b>
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th>Expectations</th>
+								<td>
+									<p>
+										Bring chin forward.:
+										<b>{{
+											treatmentOptionObj.Expectations
+										}}</b>
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th>Diagnosis</th>
+								<td>
+									<p>
+										Lorem ipsum dolor sit amet, consectetuer
+										adipiscing.:
+										<b>{{
+											treatmentOptionObj.Diagnosis
+										}}</b>
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th>
+									Problems which are not present but are
+									anticipated
+								</th>
+								<td>
+									<p>
+										Black Triangles:
+										<b>{{
+											treatmentOptionObj.anticipated_1
+										}}</b>
+									</p>
+									<p>
+										Proclination:
+										<b>{{
+											treatmentOptionObj.anticipated_2
+										}}</b>
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th>Risk</th>
+								<td>
+									<p
+										*ngFor="
+											let risk of treatmentOptionObj.risk
+										"
+									>
+										{{ risk.name }}
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th>Adjunctive Treatment</th>
+								<td>
+									<p
+										*ngFor="
+											let adjunctive of treatmentOptionObj.adjunctive
+										"
+									>
+										{{ adjunctive.name }}
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th>Appliance Sequence</th>
+								<td>
+									<div
+										*ngFor="
+											let applianceSequence of treatmentOptionObj.Appliance_Sequence;
+											let i = index
+										"
+									>
+										{{ applianceSequence.title }}
+										<p
+											*ngFor="
+												let searchLst of applianceSequence.searchResultLst
+											"
+										>
+											{{ searchLst.name }}
+										</p>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>Bracket Variations</th>
+								<td>
+									<p
+										*ngFor="
+											let bracket of treatmentOptionObj.Bracket_Variations
+										"
+									>
+										{{ bracket.name }}
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th>Retention</th>
+								<td>
+									<p
+										*ngFor="
+											let retent of treatmentOptionObj.Retention
+										"
+									>
+										{{ retent.name }}
+									</p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row" id="compareAll" *ngIf="showCompareAll">
+		<div class="col-12">
+			<app-compare-all></app-compare-all>
+		</div>
+	</div>
+</div>

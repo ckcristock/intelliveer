@@ -35,6 +35,14 @@ const routes: Routes = [
               (m) => m.UserManagementModule
             ),
       },
+      {
+        path: 'patient',
+        loadChildren: () =>
+          import(
+            '@pages/settings/patient/patient.module').then(
+              (m) => m.PatientModule
+            ),
+      },
     ],
   },
 ];

@@ -16,3 +16,10 @@
 .formrow tbody tr td input:disabled {
     opacity: 0.5;
 }
+
+.ng-selection {
+	position: relative;
+    display: block;
+    box-sizing: border-box;
+    width: 24rem;
+}

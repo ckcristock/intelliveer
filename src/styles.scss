@@ -945,6 +945,11 @@ input[type='checkbox'] {
     color: #d2d1d0;
 }
 
+.scroll {
+	height: 20rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 .valid-mandatory-field{
 	border: 2px solid #05b631 !important;
 }

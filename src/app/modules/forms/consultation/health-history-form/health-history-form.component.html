@@ -3,7 +3,7 @@
 		[disableSaveBtn]="Form.invalid || disableSaveButton" (onCancel)="cancel()" (onSave)="save(Form.value)">
 	</app-nav-bar-pills>
 	<div class="row">
-		<div class="col-12" align="end">
+		<div class="col-12" [align]="'end'">
 			<span>{{todayDate | date: 'y/MM/dd'}}</span>
 		</div>
 	</div>
@@ -12,6 +12,13 @@
 			<div class="section" id="allergies">
 				<h6 class="heading">Allergies</h6>
 				<div class="row formrow">
+					<div class="col-1">
+						<img
+							src="../../../../../../assets/icons/notification-on.svg"
+							width="20"
+							height="20"
+						/>
+					</div>
 					<div class="col-3">
 						<p class="label-input-gap">Latex</p>
 						<div class="two-radios">
@@ -34,6 +41,13 @@
 					<div class="col-6"></div>
 				</div>
 				<div class="row formrow">
+					<div class="col-1">
+						<img
+							src="../../../../../../assets/icons/notification-off.svg"
+							width="20"
+							height="20"
+						/>
+					</div>
 					<div class="col-3">
 						<p class="label-input-gap">Metal</p>
 						<div class="two-radios">
@@ -56,6 +70,13 @@
 					<div class="col-6"></div>
 				</div>
 				<div class="row formrow">
+					<div class="col-1">
+						<img
+							src="../../../../../../assets/icons/notification-on.svg"
+							width="20"
+							height="20"
+						/>
+					</div>
 					<div class="col-3">
 						<p class="label-input-gap">Amoxicillin</p>
 						<div class="two-radios">
@@ -81,6 +102,13 @@
 			<div class="section" id="medicalConditions">
 				<h6 class="heading">Medical Conditions</h6>
 				<div class="row formrow">
+					<div class="col-1">
+						<img
+							src="../../../../../../assets/icons/notification-on.svg"
+							width="20"
+							height="20"
+						/>
+					</div>
 					<div class="col-3">
 						<p class="label-input-gap">Asthama</p>
 						<div class="two-radios">
@@ -103,6 +131,13 @@
 					<div class="col-6"></div>
 				</div>
 				<div class="row formrow">
+					<div class="col-1">
+						<img
+							src="../../../../../../assets/icons/notification-on.svg"
+							width="20"
+							height="20"
+						/>
+					</div>
 					<div class="col-3">
 						<p class="label-input-gap">Blood Pressure</p>
 						<div class="two-radios">
@@ -125,6 +160,13 @@
 					<div class="col-6"></div>
 				</div>
 				<div class="row formrow">
+					<div class="col-1">
+						<img
+							src="../../../../../../assets/icons/notification-off.svg"
+							width="20"
+							height="20"
+						/>
+					</div>
 					<div class="col-3">
 						<p class="label-input-gap">Cancer</p>
 						<div class="two-radios">

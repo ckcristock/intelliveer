@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
 	FormArray,
 	FormBuilder,
@@ -27,6 +27,9 @@ export class RoleTemplate {
 	styleUrls: ['./add-role.component.scss']
 })
 export class AddRoleComponent implements OnInit {
+	@ViewChild('legelEntity') refLegelEntity :ElementRef | any;
+	@ViewChild('location') refLocation :ElementRef | any;
+	@ViewChild('practice') refPractice :ElementRef | any;
 	Form!: FormGroup;
 	roleNestedForm!: FormGroup;
 	roleModuleNestedForm!: FormGroup;
