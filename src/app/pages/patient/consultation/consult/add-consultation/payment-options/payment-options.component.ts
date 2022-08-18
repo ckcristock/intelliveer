@@ -689,13 +689,18 @@ export class PaymentOptionsComponent implements OnInit {
 		  data = this.downPayment;
 		}else{
 			if(this.isDownPayment2){
-             let pData:any = data.target.value;
+             let pData:any
+			 if(data?.target?.value){
+				pData = data.target.value;
+			 }else{
+				pData = data;
+			 }
 			 this.downPayment = parseFloat(pData) / 2;
 			 this.downPayment2 = parseFloat(pData) / 2;
 			 data = pData;
 			 this.maxDownPayment = data;
 			 this.minDownPayment1 = this.downPayment;
-			 this.maxDownPayment1 = data;
+			 //this.maxDownPayment1 = data;
 			 this.minDownPayment = data;
 		     this.downPaymentOneMax = data;
              let totalDPBG =  ((this.downPayment + this.downPayment2) - this.maxDownPayment1) / (this.totalAmount - this.maxDownPayment1) * 100;
@@ -703,9 +708,12 @@ export class PaymentOptionsComponent implements OnInit {
 			//  let downPayment1BG =  (this.downPaymentOneVal - this.minDownPayment1) / (this.downPaymentOneMax - this.minDownPayment1) * 100;
 		    //  this.downPayment1BG = 'linear-gradient(to right, #E6BD5C, #ff4500 ' + downPayment1BG + '%, #E6BD5C ' + downPayment1BG + '%, #dee1e2 100%)';
 			}else{
-				// this.downPayment = data.target.value;
-				data = this.downPayment
-				this.minDownPayment = this.downPayment;
+				if(data?.target?.value){
+				 this.downPayment = data.target.value;
+				}else{
+				 this.downPayment = data;
+				}
+				//this.minDownPayment = this.downPayment;
 			}
 		}
 		if(this.month != 0 && this.month <= this.totalMonth && data < this.totalAmount ){
