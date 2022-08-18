@@ -1,66 +1,134 @@
-<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
-    <div class="mainformsection">
-        <div class="two-items">
-            <h6 class="heading" style="font-weight: bolder;">Patient</h6>
-            <a class="heading a-link" *ngIf="showButtonSaveCancel==false" (click)="openTextarea()">Add Script</a>
-            <div class="two-little-button" *ngIf="showButtonSaveCancel==true">
-                <a class="heading a-link" (click)="closeSaveCancelFunc()">Save Script</a>
-                <a class="heading a-link" (click)="closeSaveCancelFunc()">Cancel</a>
-            </div>
-        </div>
+<form
+	autocomplete="off"
+	[formGroup]="Form"
+	#f="ngForm"
+	(submit)="save(f.value)"
+>
+	<div class="mainformsection">
+		<div class="two-items">
+			<h6 class="heading" style="font-weight: bolder">Patient</h6>
+			<a
+				class="heading a-link"
+				*ngIf="!showButtonSaveCancel"
+				(click)="openTextarea()"
+				>Add Script</a
+			>
+			<div class="two-little-button" *ngIf="showButtonSaveCancel">
+				<a class="heading a-link" (click)="closeSaveCancelFunc()"
+					>Save Script</a
+				>
+				<a class="heading a-link" (click)="closeSaveCancelFunc()"
+					>Cancel</a
+				>
+			</div>
+		</div>
 
-        <div class="row" style="margin-top: -4px; margin-bottom: 18px;">
-            <textarea *ngIf="openTextAreaVar==true" class="form-control" placeholder="Leave a comment here"
-                id="floatingTextarea2"
-                style="height: 98px; padding: 5px 10px 8px 6px; font-size: 12px; line-height : 20px; border: 2px solid #7a7a7c; font-style: oblique; resize: none;"></textarea>
+		<div class="row" style="margin-top: -4px; margin-bottom: 18px">
+			<textarea
+				*ngIf="openTextAreaVar == true"
+				class="form-control"
+				placeholder="Leave a comment here"
+				id="floatingTextarea2"
+				style="
+					height: 98px;
+					padding: 5px 10px 8px 6px;
+					font-size: 12px;
+					line-height: 20px;
+					border: 2px solid #7a7a7c;
+					font-style: oblique;
+					resize: none;
+				"
+			></textarea>
+		</div>
+        <div class="row mb-3">
+            <div class="col">
+				<div class="mainformset">
+					<label class="label-input-gap">Practice</label>
+					<ng-select placeholder="Select" formControlName="practice" (change)="onSelectPractice($event)">
+						<ng-option [value]="item._id" *ngFor="let item of practiceList">{{item.name}}</ng-option>
+					</ng-select>
+				</div>
+			</div>
+            <div class="col">
+				<div class="mainformset">
+					<label class="label-input-gap">Location</label>
+					<ng-select placeholder="Select" formControlName="location" (change)="onSelectLocation($event)">
+						<ng-option [value]="item._id" *ngFor="let item of locationList">{{item.name}}</ng-option>
+					</ng-select>
+				</div>
+			</div>
+            <div class="col">
+				<div class="mainformset">
+					<label class="label-input-gap">Legal Entity</label>
+					<ng-select placeholder="Select" formControlName="legalEntity" (change)="onSelectLegalEntity($event)">
+						<ng-option [value]="item._id" *ngFor="let item of legalEntityList">{{item.name}}</ng-option>
+					</ng-select>
+				</div>
+			</div>
         </div>
-        <div class="row" style="margin-top: 10px;">
-            <div class="twenty">
-                <div class="mainformset">
-                    <label class="label-input-gap">Practice</label>
-                    <ng-select placeholder="Select" formControlName="practice">
-                        <ng-option>Select</ng-option>
-                    </ng-select>
-                </div>
-            </div>
-            <div class="twenty">
-                <div class="mainformset">
-                    <label class="label-input-gap">Patient's First Name</label>
-                    <input class="form-control value-must" type="text" placeholder="" name="" formControlName="fName"
-                        [(ngModel)]="patient.firstName" />
-                </div>
-            </div>
-            <div class="twenty">
-                <div class="mainformset">
-                    <label class="label-input-gap">Last Name</label>
-                    <input class="form-control value-must" type="text" placeholder="" name="" formControlName="lName"
-                        [(ngModel)]="patient.lastName" />
-                </div>
-            </div>
-            <div class=" twenty">
-                    <div class="mainformset">
-                        <label class="label-input-gap">Date of Birth</label>
-                        <input class="form-control " [ngClass]="{'value-must': tab == 'coordWithProspect'}" type="date" placeholder="" name=""
-                            formControlName="DOB" 
-                            [(ngModel)]="patient.dateBirth" />
-                    </div>
-                </div>
-                <div class="twenty">
-                    <div class="mainformset">
-                        <label class="required">Gender</label>
-                        <ng-select placeholder="Select" formControlName="gender">
-                            <ng-option>Male</ng-option>
-                            <ng-option>Female</ng-option>
-                        </ng-select>
-                    </div>
-                </div>
-            </div>
-            <div class="row two-final-buttons">
-                <div class="two-items">
-                    <button class="btn btn-light btn-light-custom">Exit</button>
-                    <button type="button" class="btn btn-dark btn-dark-custom" (click)="continueToLegalGuar()"
-                        [disabled]="Form?.invalid">Save and continue</button>
-                </div>
-            </div>
-        </div>
+		<div class="row mb-3">			
+			<div class="col">
+				<div class="mainformset">
+					<label class="label-input-gap">What is First Name of the Patient?</label>
+					<input
+						class="form-control value-must"
+						type="text"
+						placeholder=""
+						name=""
+						formControlName="fName"
+						[(ngModel)]="patient.firstName"
+					/>
+				</div>
+			</div>
+			<div class="col">
+				<div class="mainformset">
+					<label class="label-input-gap">Last Name</label>
+					<input
+						class="form-control value-must"
+						type="text"
+						placeholder=""
+						name=""
+						formControlName="lName"
+						[(ngModel)]="patient.lastName"
+					/>
+				</div>
+			</div>
+			<div class="col">
+				<div class="mainformset">
+					<label class="label-input-gap">Date of Birth</label>
+					<input
+						class="form-control"
+						[ngClass]="{ 'value-must': tab == 'coordWithProspect' }"
+						type="date"
+						placeholder=""
+						name=""
+						formControlName="DOB"
+						[(ngModel)]="patient.dateBirth"
+					/>
+				</div>
+			</div>
+			<div class="col">
+				<div class="mainformset">
+					<label class="required">Gender</label>
+					<ng-select placeholder="Select" formControlName="gender" (change)="onSelectGender($event)">
+						<ng-option [value]="'male'">Male</ng-option>
+						<ng-option [value]="'female'">Female</ng-option>
+					</ng-select>
+				</div>
+			</div>
+		</div>
+		<div class="row two-final-buttons">
+			<div class="two-items">
+				<button class="btn btn-light btn-light-custom">Exit</button>
+				<button
+					type="button"
+					class="btn btn-dark btn-dark-custom"
+					(click)="save(Form)"
+					[disabled]="Form?.invalid"
+				>
+					Save and continue
+				</button>
+			</div>
+		</div>
+	</div>
 </form>

@@ -189,18 +189,20 @@
 									width="20"
 									height="20"
 									*ngIf="condition.alert"
+									(click)="condition.alert = !condition.alert"
 								/>
 								<img
 									src="../../../../../../assets/icons/notification-off.svg"
 									width="20"
 									height="20"
 									*ngIf="!condition.alert"
+									(click)="condition.alert = !condition.alert"
 								/>
 							</td>
 							<td>
 								<input
 									type="checkbox"
-									style="vertical-align: middle"
+									style="vertical-align: middle; margin-left: 2em;"
 								/>
 							</td>
 							<td>

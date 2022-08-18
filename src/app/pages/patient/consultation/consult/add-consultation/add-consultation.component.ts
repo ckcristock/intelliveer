@@ -12,7 +12,7 @@ import { patientConsultationOptionsMenuItems, patientDiagnosisMenuItems, patient
 	trigger('fadeSlideInOut', [
 		transition(':enter', [
 			style({ opacity: 0, transform: 'translateX(10px)' }),
-			animate('500ms', style({ opacity: 1, transform: 'translateX(0)' })),
+			animate('700ms', style({ opacity: 1, transform: 'translateX(0)' })),
 		]),
 		// transition(':leave', [
 		// 	animate('100ms', style({ opacity: 0, transform: 'translateY(0px)' })),
