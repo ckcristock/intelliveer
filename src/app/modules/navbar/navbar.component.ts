@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { patientUserHeaderIconMenuItems } from '@pages/patient/menu';
 import { Location } from '@angular/common';
+import { PatientDetailService } from '@services/patient/family/patient-detail.service';
+import { BusinessGroupDropdownService, SelectedBusinessGroup } from '@services/business-group-dropdown/business-group-dropdown.service';
 
 @Component({
 	selector: 'top-navbar',
@@ -93,19 +95,32 @@ export class NavbarComponent implements OnInit {
 	showUserCard: boolean = false;
 	showSelectedPatientUserCard: boolean = false;
 	clickCount: number = 0;
+	businessGroupDropdownSupscription: any;
+	selectedBusinessGroup: SelectedBusinessGroup | undefined;
 
 	constructor(
 		private authService: AuthService,
 		private cookieService: CookieService,
 		private renderer: Renderer2,
 		private router: Router,
-		private location: Location
+		private location: Location,
+		private patientService: PatientDetailService,
+		private businessGroupDropdownService: BusinessGroupDropdownService
 	) {
 		this.renderer.listen('window', 'click', (e: Event) => {
 			if (!this.searchDivRef.nativeElement.contains(e.target)) {
 				this.searchFocus = false;
 			}
 		});
+		this.businessGroupDropdownSupscription =
+			this.businessGroupDropdownService
+				.businessGroup()
+				.subscribe((bg) => {
+					if (bg) {
+						this.selectedBusinessGroup = bg;
+						this.getOrgBgId();
+					}
+				});
 	}
 
 	ngOnInit(): void {
@@ -241,6 +256,10 @@ export class NavbarComponent implements OnInit {
 				'selectedPatient',
 				JSON.stringify(this.selectedPatient)
 			);
+			localStorage.setItem(
+				'selectedPatientId',
+				JSON.stringify(patient.dbId)
+			);
 			this.router.navigate(['/dashboard/patient/camera']);
 		}
 	}
@@ -292,6 +311,10 @@ export class NavbarComponent implements OnInit {
 			'selectedPatient',
 			JSON.stringify(this.selectedPatient)
 		);
+		localStorage.setItem(
+			'selectedPatientId',
+			JSON.stringify(selectUser.dbId)
+		);
 		if (displayUI == 'showSelectedPatientUserCard') {
 			this.showSelectedPatientUserCard = false;
 		} else {
@@ -325,4 +348,43 @@ export class NavbarComponent implements OnInit {
 			this.clickCount = 0;
 		}, 250);
 	}
+
+	getOrgBgId() {
+		let bgOrdID: any = localStorage.getItem('selected_business_group');
+		console.log(bgOrdID);
+		let user = this.authService.getLoggedInUser();
+		if (user?.__ISSU__) {
+			if (bgOrdID == 'intelliveer' || bgOrdID == null) {
+				this.getPatientList('intelliveer');
+			} else {
+				this.getPatientList(this.selectedBusinessGroup?.bgId);
+			}
+		} else {
+			this.getPatientList(this.selectedBusinessGroup?.bgId);
+		}
+	}
+
+	getPatientList(bgId: any)
+	{
+		let userList: any[] = [];
+		this.patientService.getPatientList(bgId).subscribe((patientList: any) =>
+		{
+			for (let i = 0; i < patientList.length; i++) 
+			{
+				const index = i + 1;
+				userList.push({
+					user: patientList[i].profile.firstName + ' ' + patientList[i].profile.lastName,
+					dob: patientList[i].profile.DOB,
+					active: true,
+					id: "P00"+ index,
+					sex: patientList[i].profile.gender,
+					isPin: false,
+					profileUrl: 'assets/images/doctor2.jpg',
+					dbId: patientList[i]._id
+				});
+			}
+			this.userLst = userList;
+		})
+	}
+
 }
