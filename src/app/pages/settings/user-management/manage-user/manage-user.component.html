@@ -88,12 +88,13 @@
 								<td *ngIf="user['roles'].length == 1">
 									{{ user['roles'][0].name }}
 								</td>
-								<td>
+								<td *ngIf="user.loginStatus.loginIsEnabled">Active
 									<!-- <div class="form-check form-switch form-switch-lg">
 									<input class="form-check-input" name="loginStatus" [(ngModel)]="loginStatus" type="checkbox" id="flexSwitchCheckChecked" checked="false" (change)="updateUserLoginStatus(loginStatus,user._id)" >
 									<label class="form-check-label" for="flexSwitchCheckChecked"></label>
 								  </div> -->
 								</td>
+								<td *ngIf="!user.loginStatus.loginIsEnabled">Deactive</td>
 								<td>
 									<div ngbDropdown container="body" placement="bottom-end">
 										<button class="btn btn-light btn-sm more_btn" ngbDropdownToggle>
@@ -108,8 +109,11 @@
 												Edit
 											</button>
 											<div class="dropdown-divider"></div>
-											<button (click)="updateUserLoginStatus(loginStatus,user._id)" ngbDropdownItem>
-												{{loginStatusButtonName}}
+											<button (click)="updateUserLoginStatus(user.loginStatus.loginIsEnabled,user._id)" ngbDropdownItem *ngIf="!user.loginStatus.loginIsEnabled">
+												Reactivate
+											</button>
+											<button (click)="updateUserLoginStatus(user.loginStatus.loginIsEnabled,user._id)" ngbDropdownItem *ngIf="user.loginStatus.loginIsEnabled">
+												Deactivate
 											</button>
 										</div>
 									</div>

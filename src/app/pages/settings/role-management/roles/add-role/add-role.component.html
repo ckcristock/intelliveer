@@ -62,7 +62,8 @@
 					<ng-option
 						*ngFor="let roleTemplate of roleTemplateList"
 						[value]="roleTemplate"
-						>{{ roleTemplate.name }}</ng-option
+						>
+					{{ roleTemplate.name }} <span class="non-adminURRT" *ngIf="!roleTemplate?.isRestrictedTemplate"> (Non-Admin)</span> <span class="adminRRT" *ngIf="roleTemplate?.isRestrictedTemplate"> (Admin)</span></ng-option
 					>
 				</ng-select>
 			</div>
