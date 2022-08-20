@@ -132,17 +132,23 @@ export class SettingsComponent implements OnInit {
   }
   getUserOrdID(){
     let bgOrdID:any = localStorage.getItem('selected_business_group');
-    let user = this.authService.getLoggedInUser()
+    let user:any =	localStorage.getItem('permissionSet');
+    let orgId = this.authService.getOrgId();
+    user = JSON.parse(user)
     console.log(bgOrdID)
     if(bgOrdID){
       this.orgID = bgOrdID
     }else{
      if(user?.__ISSU__){
       this.orgID = 'intelliveer'
+     }else{
+      this.orgID = orgId
      }
     }
     if(user?.__ISSU__){
       this.isSuperUser = user?.__ISSU__;
+    }else if(user?.isBGAdmin){
+      
     }
   
   }

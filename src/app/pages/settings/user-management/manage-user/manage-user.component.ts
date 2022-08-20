@@ -29,7 +29,7 @@ export class ManageUserComponent implements OnInit {
 	loginStatus: boolean = true;
 	loginStatusButtonName: any = "Deactivate";
 	selectedBusinessGroup: SelectedBusinessGroup | undefined;
-
+    orgId:any;
 	constructor(
 		private router: Router,
 		private globalRoutes: GlobalRoutesService,
@@ -109,17 +109,24 @@ export class ManageUserComponent implements OnInit {
 
 	getOrgBgId(){
 		let bgOrdID:any = localStorage.getItem('selected_business_group');
-		console.log(bgOrdID)
+		let orgId = this.authService.getOrgId();
+		this.orgId = bgOrdID;
 			let user = this.authService.getLoggedInUser();
+			console.log(user)
 			if (user?.__ISSU__) {
-		  if(bgOrdID == 'intelliveer' || bgOrdID == null){
-			this.getList('intelliveer');
-		  }else{
-			this.getList(this.selectedBusinessGroup?.bgId)
-		  }
-		  }else{
-		  this.getList(this.selectedBusinessGroup?.bgId)
-		}
+				if(bgOrdID == 'intelliveer' || bgOrdID == null){
+					this.getList('intelliveer');
+					this.orgId = "intelliveer"
+				}else{
+					this.getList(bgOrdID)
+				}
+		    }else{
+				if(bgOrdID == 'intelliveer' || bgOrdID == null){
+					this.orgId = orgId
+				}
+				console.log(this.orgId)
+				this.getList(this.orgId)
+			}
 		}
 
   
@@ -151,15 +158,13 @@ export class ManageUserComponent implements OnInit {
 	}
 
 	updateUserLoginStatus(status:any,userId:any){
-		if(this.loginStatus == true){
+		if(status == true){
 			this.loginStatus = false
-			this.loginStatusButtonName = "Reactivate"
 		}else{
 			this.loginStatus = true
-			this.loginStatusButtonName = "Deactivate"
 		}
 		let user = this.authService.getLoggedInUser();
-		if (user?.__ISSU__) {
+		if (user?.__ISSU__ && this.orgId =="intelliveer" ) {
 		  this.alertService.conformAlert('Are you sure?', 'You want to update a user login status')
 			.then((result: any) => {
 			  if (result.value) {
@@ -168,6 +173,7 @@ export class ManageUserComponent implements OnInit {
 					'Success',
 					'User login status updated successfully'
 				);
+				this.getOrgBgId()
 			    }, error => {
 				console.log(error)
 				});
@@ -177,11 +183,12 @@ export class ManageUserComponent implements OnInit {
 		this.alertService.conformAlert('Are you sure?', 'You want to update a user login status')
 		.then((result: any) => {
 		  if (result.value) {
-			this.userService.userLoginStatus(this.loginStatus,userId,this.selectedBusinessGroup?.bgId).subscribe(res=>{
+			this.userService.userLoginStatus(this.loginStatus,userId,this.orgId).subscribe(res=>{
 			this.alertService.success(
 				'Success',
 				'User login status updated successfully'
 			);
+			this.getOrgBgId()
 			}, error => {
 			console.log(error)
 			});

@@ -397,8 +397,33 @@ export class AddRoleComponent implements OnInit {
 
 	/** Get Selected Org Id */
 	getSelectedBusinessGroupId(){
-		this.businessGroupDropdownService.businessGroup().subscribe((res) => {
-			this.orgId = res?.bgId;
+		// this.businessGroupDropdownService.businessGroup().subscribe((res) => {
+		// 	this.orgId = res?.bgId;
+		// 	this.bgName = this.orgId;
+		// 	let bgOrdID:any = localStorage.getItem('selected_business_group');
+		// 	console.log(bgOrdID,this.orgId)
+		// 	let user = this.authService.getLoggedInUser();
+		//     if(user?.__ISSU__){
+		// 		if(this.orgId != "intelliveer" && bgOrdID != null){
+		// 			this.addRoleTitle = "Create Role from Role Template";
+		// 			this.roleTemplatePlaceholder = "Select role template";
+		// 			this.displayCreateRoleYesNoOption = false;
+		// 			this.getRoleListSpecific();
+		// 		}else{
+		// 			this.addRoleTitle = "Create Role";
+		// 			this.roleTemplatePlaceholder = "Role template name";
+		// 			this.displayCreateRoleYesNoOption = true;
+		// 			this.getRoleList();
+		// 			console.log('roles')
+		// 		}
+		// 	}else{
+		// 		this.addRoleTitle = "Create Role from Role Template";
+		// 		this.roleTemplatePlaceholder = "Select role template";
+		// 		this.displayCreateRoleYesNoOption = false;
+		// 		this.getRoleListSpecific();
+		// 	}
+		//   });
+		this.orgId = this.authService.getOrgId();
 			this.bgName = this.orgId;
 			let bgOrdID:any = localStorage.getItem('selected_business_group');
 			console.log(bgOrdID,this.orgId)
@@ -414,6 +439,7 @@ export class AddRoleComponent implements OnInit {
 					this.roleTemplatePlaceholder = "Role template name";
 					this.displayCreateRoleYesNoOption = true;
 					this.getRoleList();
+					console.log('roles')
 				}
 			}else{
 				this.addRoleTitle = "Create Role from Role Template";
@@ -421,11 +447,11 @@ export class AddRoleComponent implements OnInit {
 				this.displayCreateRoleYesNoOption = false;
 				this.getRoleListSpecific();
 			}
-		  });
 	}
 	/** Update Role with Template  */
 	addRoleWithTemplate(data:any){
-		let user = this.authService.getLoggedInUser();
+		let user:any =	localStorage.getItem('permissionSet');
+		user = JSON.parse(user);
 		let bgOrdID:any = localStorage.getItem('selected_business_group');
 		if(user?.__ISSU__){
 			if(this.orgId != "intelliveer" && bgOrdID != null){

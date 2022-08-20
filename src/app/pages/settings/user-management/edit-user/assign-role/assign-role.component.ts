@@ -13,6 +13,7 @@ import {
 	BusinessGroupDropdownService,
 	SelectedBusinessGroup
 } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { RoleService } from '@services/role/role.service';
 import { UserService } from '@services/user/user.service';
 
 @Component({
@@ -31,6 +32,14 @@ export class AssignRoleComponent implements OnInit {
 	userAssignRoleIdsList: any[] = [];
 	logInType: string | undefined;
 	tempRoleList: any;
+    roleRRT:boolean = false;
+	roleRRTEdit:boolean = false;
+	roleRRTAdd:boolean = false;
+	roleRRTDelete :boolean = false;
+	roleURRT:boolean = false;
+	roleURRTEdit:boolean = false;
+	roleURRTAdd:boolean = false;
+	roleURRTDelete :boolean = false;
 
 	constructor(
 		private router: Router,
@@ -38,6 +47,7 @@ export class AssignRoleComponent implements OnInit {
 		private userService: UserService,
 		private authService: AuthService,
 		private alertService: AlertService,
+		private roleService: RoleService,
 		private businessGroupDropdownService: BusinessGroupDropdownService
 	) {
 		this.businessGroupDropdownSupscription =
@@ -46,6 +56,7 @@ export class AssignRoleComponent implements OnInit {
 				.subscribe((bg) => {
 					if (bg) {
 						this.selectedBusinessGroup = bg;
+						this.userCurrentRoleList = []
 						this.getOrgBgId();
 					}
 				});
@@ -100,7 +111,8 @@ export class AssignRoleComponent implements OnInit {
 
 	getOrgBgId() {
 		let bgOrdID: any = localStorage.getItem('selected_business_group');
-		let user = this.authService.getLoggedInUser();
+		let user:any =	localStorage.getItem('permissionSet');
+        user = JSON.parse(user);
 		if (user?.__ISSU__) {
 			if (bgOrdID == 'intelliveer' || bgOrdID == null) {
 				this.getUserCurrentRoleList('intelliveer');
@@ -111,9 +123,14 @@ export class AssignRoleComponent implements OnInit {
 				this.getRolesList(this.selectedBusinessGroup?.bgId);
 				this.logInType = this.selectedBusinessGroup?.bgId;
 			}
-		} else {
+		}else if(user?.isBGAdmin){
 			this.getUserCurrentRoleList(this.selectedBusinessGroup?.bgId);
-			this.getRolesList(this.selectedBusinessGroup?.bgId);
+			this.getRoleListByBgAdminId(user?.bgs[0]?._id);
+			this.logInType = this.selectedBusinessGroup?.bgId;
+		} 
+		else {
+			this.getUserCurrentRoleList(this.selectedBusinessGroup?.bgId);
+			this.getRoleListByBgId(this.selectedBusinessGroup?.bgId);
 			this.logInType = this.selectedBusinessGroup?.bgId;
 		}
 	}
@@ -199,10 +216,42 @@ export class AssignRoleComponent implements OnInit {
 			error: () => {}
 		});
 	}
-
+    getRoleListByBgId(bgId:any)
+	{
+	  this.checkPermissionRRTOrURRT()
+	  console.log(bgId)
+	  this.roleService.getRoleListByID(bgId).subscribe((list: any) =>
+	  {
+		console.log('list',list);
+		if(this.roleRRT && !this.roleURRT){
+		  this.tempRoleList = list;
+		}else if(this.roleRRT && this.roleURRT){
+		  this.roleService.getRoleListByIDUnRestricted(bgId).subscribe((list2:any)=>{
+			  this.tempRoleList = [...list,...list2];
+		  })
+		}else if(!this.roleRRT && this.roleURRT){
+		  this.roleService.getRoleListByIDUnRestricted(bgId).subscribe((list2:any)=>{
+			  this.tempRoleList = list2
+		  })
+		}
+		console.log(this.tempRoleList)
+	  })
+	}
+	getRoleListByBgAdminId(bgId:any)
+	{
+		console.log(bgId)
+	  this.roleService.getRoleListByID(bgId).subscribe((list: any) =>
+	  {
+		  this.roleService.getRoleListByIDUnRestricted(bgId).subscribe((list2:any)=>{
+			  this.tempRoleList = [...list,...list2];
+			  console.log(this.tempRoleList)
+		  })
+		  
+	  })
+	}
 	getRoleFilterLst(array1: any, array2: any)
 	{
-		return array1.filter((object1: any) => {
+		return array1?.filter((object1: any) => {
 			return !array2.some((object2: any) => {
 			  return object1._id === object2._id;
 			});
@@ -233,5 +282,52 @@ export class AssignRoleComponent implements OnInit {
 			},
 			error: () => {}
 		});
+	}
+	checkPermissionRRTOrURRT(){
+		let user:any =	localStorage.getItem('permissionSet');
+    user = JSON.parse(user);
+    //this.user = user;
+    console.log(user.roles[0])
+    user?.roles[0]?.permissions[0]?.sections.forEach((element:any) => {
+      console.log(element)
+      if(element.section == 'templateBasedRestrictedRoles'){
+        element.permissions.forEach((RRT:any) => {
+          switch (RRT.name) {
+            case 'CAN_CREATE_TEMPLATE_BASED_RESTRICTED_ROLE':
+              this.roleURRTAdd = RRT.enabled;
+              break;
+            case 'CAN_RETRIEVE_TEMPLATE_BASED_RESTRICTED_ROLE':
+              this.roleURRT = RRT.enabled;
+              break;
+            case 'CAN_EDIT_TEMPLATE_BASED_RESTRICTED_ROLE':
+              this.roleURRTEdit = RRT.enabled;
+              break;
+            case 'CAN_DELETE_TEMPLATE_BASED_RESTRICTED_ROLE':
+              this.roleURRTDelete = RRT.enabled;
+              break;
+           
+          }
+        });
+      }else  if(element.section == 'templateBasedUnRestrictedRoles'){
+        element.permissions.forEach((URRT:any) => {
+          switch (URRT.name) {
+            case 'CAN_CREATE_TEMPLATE_BASED_UNRESTRICTED_ROLE':
+              this.roleRRTAdd = URRT.enabled;
+              break;
+            case 'CAN_RETRIEVE_TEMPLATE_BASED_UNRESTRICTED_ROLE':
+              this.roleRRT = URRT.enabled;
+              break;
+            case 'CAN_EDIT_TEMPLATE_BASED_UNRESTRICTED_ROLE':
+              this.roleRRTEdit = URRT.enabled;
+              break;
+            case 'CAN_DELETE_TEMPLATE_BASED_UNRESTRICTED_ROLE':
+              this.roleRRTDelete = URRT.enabled;
+              break;
+           
+          }
+        });
+      }
+      console.log(this.roleRRT,this.roleRRTAdd,this.roleRRTDelete,this.roleRRTEdit)
+    });
 	}
 }

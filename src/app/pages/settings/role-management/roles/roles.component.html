@@ -1,7 +1,17 @@
 <div *ngIf="roleList.length == 0" class="section" style="height: 90%">
 	<div style="text-align: center; padding-top: 7%">
 		<h5><b>You haven’t added yet</b></h5>
-		<p>
+		<p *ngIf="user?.isBGAdmin || user?.__ISSU__">
+			Click here,
+			<img
+				src="assets/icons/add.svg"
+				width="36"
+				height="36"
+				(click)="addRole()"
+			/>
+			to add Role
+		</p>
+		<p *ngIf="!user?.isBGAdmin && (roleRRTAdd || roleURRTAdd)">
 			Click here,
 			<img
 				src="assets/icons/add.svg"
@@ -34,6 +44,14 @@
 			</div>
 			<div class="d-flex gap-2">
 				<button
+				    *ngIf="user?.isBGAdmin || user?.__ISSU__"
+					class="add_btn"
+					routerLink="/dashboard/settings/role-management/manage-role/add"
+				>
+					<img src="/assets/icons/add.svg" alt="" />
+				</button>
+				<button
+				    *ngIf="!user?.isBGAdmin && (roleRRTAdd || roleURRTAdd)"
 					class="add_btn"
 					routerLink="/dashboard/settings/role-management/manage-role/add"
 				>
@@ -45,7 +63,64 @@
 
 	<div class="container mt-4" id="main">
 		<div class="row">
-			<table class="table">
+			<table class="table" *ngIf="user?.isBGAdmin || user?.__ISSU__">
+				<thead>
+					<tr>
+						<th scope="col"><input type="checkbox" /></th>
+						<th scope="col">Roles</th>
+						<th scope="col">Description</th>
+						<th scope="col">Template</th>
+						<th scope="col">Actions</th>
+					</tr>
+				</thead>
+				<tbody *ngIf="roleList">
+					<tr *ngFor="let role of roleList; let i = index">
+						<td>
+							<input type="checkbox" value="{{ role?._id }}" />
+						</td>
+						<td>{{ role?.name }}</td>
+						<td>{{ role?.description }}</td>
+						<td *ngIf="role?.roleTemplate.length == 1">{{ role?.roleTemplate[0].name }}</td>
+						<td *ngIf="(role?.roleTemplateName == undefined && role?.roleTemplate == undefined) || role?.roleTemplate?.length == 0">Without Role Template</td>
+						<td *ngIf="role?.roleTemplate">{{ role?.roleTemplate.name }}</td>
+						<td>
+							<div
+								ngbDropdown
+								container="body"
+								placement="bottom-end"
+							>
+								<button
+									class="btn btn-light btn-sm more_btn"
+									ngbDropdownToggle
+								>
+									<i class="bi bi-three-dots-vertical"></i>
+								</button>
+								<div ngbDropdownMenu>
+									<button ngbDropdownItem>
+										Export as a pdf
+									</button>
+									<div class="dropdown-divider"></div>
+									<button
+										ngbDropdownItem
+										routerLink="/dashboard/settings/role-management/manage-role/edit/{{
+											role?._id
+										}}"
+									>
+										Edit
+									</button>
+									<button
+										ngbDropdownItem
+										(click)="delteRoleUser(role?._id)"
+									>
+										Delete
+									</button>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="table" *ngIf="!user?.isBGAdmin && !user?.__ISSU__">
 				<thead>
 					<tr>
 						<th scope="col"><input type="checkbox" /></th>
@@ -83,6 +158,7 @@
 									</button>
 									<div class="dropdown-divider"></div>
 									<button
+									    *ngIf="roleRRTEdit || roleURRTEdit"
 										ngbDropdownItem
 										routerLink="/dashboard/settings/role-management/manage-role/edit/{{
 											role?._id
@@ -91,6 +167,7 @@
 										Edit
 									</button>
 									<button
+									    *ngIf="roleRRTDelete || roleURRTDelete"
 										ngbDropdownItem
 										(click)="delteRoleUser(role?._id)"
 									>

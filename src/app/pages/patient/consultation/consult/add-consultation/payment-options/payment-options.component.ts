@@ -593,34 +593,39 @@ export class PaymentOptionsComponent implements OnInit {
 			emi = pmEmi
 			let pMTotal:any = parseFloat(data);
 			pMTotal = this.totalAmount - pMTotal;
-			console.log(pmEmi);
+			console.log(pmEmi,this.minPaymentAmountEmi);
 			if(parseFloat(emi) < parseFloat(this.minPaymentAmountEmi)){
 				this.alertService.error(
 					'Error',
 					'No. of Payments Greater Then '+this.totalMonth
 				  );
+				  return;
 			}else{
-				let months = pMTotal / emi;
-				let monthsStr = months.toFixed(4);
-				let monthsArray = monthsStr.split(".");
-				months = parseFloat(monthsArray[0]);
-				let reminder = parseFloat(monthsArray[1]);
-				console.log(months, reminder);
-				this.month = months;
-				this.emi = Math.trunc(emi);
-				this.paymentAmountEmi = Math.trunc(emi);
-				let remainingAmount = emi * reminder / 10000
-				this.lastPayment = parseFloat(emi) + remainingAmount;
-				let monthValue:any = 0;
-				if(this.month < 10){
-					let m:any = this.month;
-					monthValue = parseInt(monthValue)+ parseInt(m) + 1;
-				}else{
-					monthValue = this.month;
+				console.log(pmEmi)
+				if(pmEmi > parseFloat(this.minPaymentAmountEmi)){
+					console.log(pmEmi,this.emi)
+					let months = pMTotal / emi;
+					let monthsStr = months.toFixed(4);
+					let monthsArray = monthsStr.split(".");
+					months = parseFloat(monthsArray[0]);
+					let reminder = parseFloat(monthsArray[1]);
+					console.log(months, reminder);
+					this.month = months;
+					this.emi = Math.trunc(emi);
+					this.paymentAmountEmi = Math.trunc(emi);
+					let remainingAmount = emi * reminder / 10000
+					this.lastPayment = parseFloat(emi) + remainingAmount;
+					let monthValue:any = 0;
+					if(this.month < 10){
+						let m:any = this.month;
+						monthValue = parseInt(monthValue)+ parseInt(m) + 1;
+					}else{
+						monthValue = this.month;
+					}
+					console.log(monthValue)
+					let percentageMonth = (monthValue - 1)/(this.totalMonth-1) * 100;
+					this.sliderBGMonth = 'linear-gradient(to right, #49c6ef, #2c3e50 ' + percentageMonth + '%, #ecf7fb ' + percentageMonth + '%, #ecf7fb 100%)';
 				}
-				console.log(monthValue)
-				let percentageMonth = (monthValue - 1)/(this.totalMonth-1) * 100;
-				this.sliderBGMonth = 'linear-gradient(to right, #49c6ef, #2c3e50 ' + percentageMonth + '%, #ecf7fb ' + percentageMonth + '%, #ecf7fb 100%)';
 			}
 		}else{
 		  this.emi = 0;

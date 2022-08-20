@@ -55,6 +55,13 @@
                     </div>
                 </div>
                 <div class="row formrow">
+                    <div class="col-6">
+                        <label class="label-input-gap">Time Zone</label>
+                        <ng-moment-timezone-picker [formControlName]="'userTimeZone'">
+                        </ng-moment-timezone-picker>
+                    </div>
+                </div>
+                <div class="row formrow">
                     <div class="col-3" style="margin-top: 4px;">
                         <button type="button" class="btn btn-dark btn-dark-custom" [disabled]="Form?.invalid"
                             (click)="save(f.value)">Create</button>
