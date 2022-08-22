@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { addPatientCordinateMenuItems, addPatientQuickMenuItems } from '@pages/home/add-patient/menu';
@@ -43,8 +43,21 @@ export class DentistFormComponent implements OnInit {
     private http: HttpClient) { }
 
   async ngOnInit() {
+    this.initForm(this.formData);
+    this.addPatientServ.setFalseAllNotPristineCWP();
     if (this.tab == 'coordWithProspect') {
       this.dentistArray = await this.addPatientServ.getDentistCWP();
+      this.Form.statusChanges.subscribe(
+        result => {
+          console.log(result)
+          if (!this.Form.pristine) {
+            console.log("hiiiiii", event);
+            console.log("status", this.Form.pristine);
+  
+            this.addPatientServ.setDentistNotPristineCWP(true);
+          }
+        }
+      );
     } else if (this.tab == 'quickAdd') {
       this.dentistArray = await this.addPatientServ.getDentistQuiAdd();
     }
@@ -55,17 +68,26 @@ export class DentistFormComponent implements OnInit {
       this.dentist.lastName = this.dentistArray.lastName;
       this.dentist.officePhoneNum = this.dentistArray.officePhoneNum;
     }
-    this.initForm(this.formData);
   }
 
   initForm(data?: any) {
     data = data || {};
     this.Form = this.fb.group({
+      namesGenrDents: [data?.namesGenrDents || '',],
+      officeName: [data?.officeName || '',],
+      firstName: [data?.firstName || ''],
+      lastName: [data?.lastName || ''],
+      officePhoneNum: [data?.officePhoneNum || ''],
     });
+  }
+
+  save(data: any) {
+    console.log(data);
   }
 
   continueToReferrer() {
     if (this.tab == "coordWithProspect") {
+      this.addPatientServ.setDentistNotPristineCWP(false);
       this.addPatientServ.setDentistCWP(this.dentist);
       let visitedArray: any = JSON.parse(localStorage.getItem("visitedArray") || '[]');
       visitedArray.push("Dentist");

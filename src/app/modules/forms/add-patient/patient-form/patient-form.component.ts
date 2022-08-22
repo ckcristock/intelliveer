@@ -45,7 +45,9 @@ export class PatientFormComponent implements OnInit {
     private addPatientServ: AddPatientService,) { }
 
   async ngOnInit() {
+    this.initForm(this.formData);
     if (this.tab == 'coordWithProspect') {
+    this.addPatientServ.setFalseAllNotPristineCWP();
       this.patientArray = await this.addPatientServ.getPatientCWP();
       this.callersInfo = await this.addPatientServ.getCallerInfoCWP();
       if (this.patientArray != null) {
@@ -58,6 +60,18 @@ export class PatientFormComponent implements OnInit {
         this.patient.lastName = this.callersInfo.lastName;
         this.patient.dateBirth = this.patientArray.DOB;
       }
+      this.Form?.statusChanges.subscribe(
+        result => {
+          console.log(result)
+          if (!this.Form.pristine) {
+            console.log("hiiiiii", event);
+            console.log("status", this.Form.pristine);
+  
+            this.addPatientServ.setPatientNotPristineCWP(true);
+            
+          }
+        }
+      );
     } else if (this.tab == 'quickAdd') {
       this.patientArray = await this.addPatientServ.getPatientQuiAdd();
       if (this.patientArray != null) {
@@ -66,11 +80,11 @@ export class PatientFormComponent implements OnInit {
         this.patient.dateBirth = this.patientArray.dateBirth;
       }
     }
-    this.initForm(this.formData);
   }
 
   continueToLegalGuar() {
     if (this.tab == "coordWithProspect") {
+      this.addPatientServ.setPatientNotPristineCWP(false);
       this.addPatientServ.setPatientCWP(this.patient);
       let visitedArray: any = JSON.parse(localStorage.getItem("visitedArray") || '[]');
       visitedArray.push("Patient");

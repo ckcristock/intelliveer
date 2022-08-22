@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AddPatientService } from "@services/add-patient/add-patient.service";
 import { GlobalRoutesService } from "@services/global-routes/global-routes.service";
@@ -176,13 +177,35 @@ export class AdditionalPatientFormComponent implements OnInit {
   title: string = "";
   showButtonSaveCancel: boolean = false;
   openTextAreaVar: boolean = false;
+  Form!: FormGroup;
+  @Input() formData: any | undefined = undefined;
 
   constructor(
     private router: Router,
     private routes: GlobalRoutesService,
-    private AddPatientService: AddPatientService) { }
+    private addPatientServ: AddPatientService,
+    private fb: FormBuilder,) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.initForm(this.formData);
+    this.addPatientServ.setFalseAllNotPristineCWP();
+    this.Form.statusChanges.subscribe(
+      result => {
+        console.log(result)
+        if (!this.Form.pristine) {
+          console.log("hiiiiii", event);
+          console.log("status", this.Form.pristine);
+
+          if (this.patientPage == 2) {
+            this.addPatientServ.setPatient2NotPristineCWP(true);
+          } else if (this.patientPage == 3) {
+            this.addPatientServ.setPatient3NotPristineCWP(true);
+          } else if (this.patientPage == 4) {
+            this.addPatientServ.setPatient4NotPristineCWP(true);
+          }
+        }
+      }
+    );
     this.title = `Patient ${this.patientPage}`;
     this.additionalPatient.id = this.patientPage.toString();
     this.getCWPData();
@@ -205,7 +228,6 @@ export class AdditionalPatientFormComponent implements OnInit {
   }
 
   async checkRadiosStatus() {
-
 
     //Dentist Radio
     if (this.radioDentist == 0) {
@@ -485,18 +507,18 @@ export class AdditionalPatientFormComponent implements OnInit {
   }
 
   async getCWPData() {
-    this.lgList = await this.AddPatientService.getlgListCwpApi();
-    this.dentists = await this.AddPatientService.getdentistsCwpApi();
-    this.referrers = await this.AddPatientService.getreferrersCwpApi();
-    this.insurancesP1 = await this.AddPatientService.getinsurancesP1Cwp();
+    this.lgList = await this.addPatientServ.getlgListCwpApi();
+    this.dentists = await this.addPatientServ.getdentistsCwpApi();
+    this.referrers = await this.addPatientServ.getreferrersCwpApi();
+    this.insurancesP1 = await this.addPatientServ.getinsurancesP1Cwp();
     console.log("insuranceP111", this.insurancesP1);
 
-    this.insurances1 = await this.AddPatientService.getinsurances1CwpApi();
-    this.insurances2 = await this.AddPatientService.getinsurances2CwpApi();
-    this.insurances3 = await this.AddPatientService.getinsurances3CwpApi();
-    this.subscribers1 = await this.AddPatientService.getsubscribers1CwpApi();
-    this.subscribers2 = await this.AddPatientService.getsubscribers2CwpApi();
-    this.subscribers3 = await this.AddPatientService.getsubscribers3CwpApi();
+    this.insurances1 = await this.addPatientServ.getinsurances1CwpApi();
+    this.insurances2 = await this.addPatientServ.getinsurances2CwpApi();
+    this.insurances3 = await this.addPatientServ.getinsurances3CwpApi();
+    this.subscribers1 = await this.addPatientServ.getsubscribers1CwpApi();
+    this.subscribers2 = await this.addPatientServ.getsubscribers2CwpApi();
+    this.subscribers3 = await this.addPatientServ.getsubscribers3CwpApi();
     // For Dentist
     for (let i = 0; i < this.dentists.length; i++) {
       if (this.dentists[i].selected) {
@@ -563,13 +585,19 @@ export class AdditionalPatientFormComponent implements OnInit {
   }
 
   moveToAnotherTab() {
+    if (this.patientPage == 2) {
+      this.addPatientServ.setPatient2NotPristineCWP(false);
+    } else if (this.patientPage == 3) {
+      this.addPatientServ.setPatient3NotPristineCWP(false);
+    } else if (this.patientPage == 4) {
+      this.addPatientServ.setPatient4NotPristineCWP(false);
+    }
     this.familyMemberCount = localStorage.getItem('familyMemberCount');
     this.familyMemberCount = parseInt(this.familyMemberCount);
     this.coordWithProspRoutes = this.routes.getCoordWithProspRoutes();
 
-
     if (this.patientPage == 4) {
-      this.AddPatientService.setPatientCWPSaved(2);
+      this.addPatientServ.setPatientCWPSaved(2);
       this.router.navigate([this.coordWithProspRoutes[7].url]);
 
       return;
@@ -577,14 +605,50 @@ export class AdditionalPatientFormComponent implements OnInit {
 
     for (let i = 1; i <= this.familyMemberCount; i++) {
       if (this.patientPage == (i + 1) && this.familyMemberCount === i) {
-        this.AddPatientService.setPatientCWPSaved(i - 1);
+        this.addPatientServ.setPatientCWPSaved(i - 1);
         this.router.navigate([this.coordWithProspRoutes[7].url]);
       } else if (this.patientPage == (i + 1)) {
-        this.AddPatientService.setPatientCWPSaved(i - 1);
+        this.addPatientServ.setPatientCWPSaved(i - 1);
         this.router.navigate([this.coordWithProspRoutes[6].child[i].url]);
 
       }
     }
+  }
+
+  initForm(data?: any) {
+    data = data || {};
+    this.Form = this.fb.group({
+      searchFirst: [data?.searchFirst || '',],
+      patientFirstName: [data?.patientFirstName || '',],
+      patientLastName: [data?.patientLastName || '',],
+      patientDOB: [data?.patientDOB || '',],
+      patientGender: [data?.patientGender || '',],
+
+      dentistOfficeName: [data?.dentistOfficeName || '',],
+      dentistFirstName: [data?.dentistFirstName || '',],
+      dentistLastName: [data?.dentistLastName || '',],
+      dentistOfficePhoneNumb: [data?.dentistOfficePhoneNumb || '',],
+      referrerCompanyName: [data?.referrerCompanyName || '',],
+      referrerFirstName: [data?.referrerFirstName || '',],
+      referrerLastName: [data?.referrerLastName || '',],
+      referrerPhoneNumb: [data?.referrerPhoneNumb || '',],
+      insurance1InsuranName: [data?.insurance1InsuranName || '',],
+      insurance1PhoneNumb: [data?.insurance1PhoneNumb || '',],
+      insurance1Subscriber1FirstName: [data?.insurance1Subscriber1FirstName || '',],
+      insurance1Subscriber1LastName: [data?.insurance1Subscriber1LastName || '',],
+      insurance2InsuranName: [data?.insurance2InsuranName || '',],
+      insurance2PhoneNumb: [data?.insurance2PhoneNumb || '',],
+      insurance2Subscriber2FirstName: [data?.insurance2Subscriber2FirstName || '',],
+      insurance2Subscriber2LastName: [data?.insurance2Subscriber2LastName || '',],
+      insurance3InsuranName: [data?.insurance3InsuranName || '',],
+      insurance3PhoneNumb: [data?.insurance3PhoneNumb || '',],
+      insurance3Subscriber3FirstName: [data?.insurance3Subscriber3FirstName || '',],
+      insurance3Subscriber3LastName: [data?.insurance3Subscriber3LastName || '',],
+    });
+  }
+
+  save(data: any) {
+    console.log(data);
   }
 
   setRadioStatus(amount: number, section: string) {
@@ -987,7 +1051,7 @@ export class AdditionalPatientFormComponent implements OnInit {
         }
       }
     } else if (value == 2) {
-      let dentistLocStora = await this.AddPatientService.getDentistCWP();
+      let dentistLocStora = await this.addPatientServ.getDentistCWP();
       this.additionalPatient.dentist.firstName = dentistLocStora.firstName;
       this.additionalPatient.dentist.lastName = dentistLocStora.lastName;
       this.additionalPatient.dentist.officeName = dentistLocStora.officeName;
@@ -1014,7 +1078,7 @@ export class AdditionalPatientFormComponent implements OnInit {
         }
       }
     } else if (this.radioReferrer == 2) {
-      let referrerLocStora = await this.AddPatientService.getReferrerCWP();
+      let referrerLocStora = await this.addPatientServ.getReferrerCWP();
       this.additionalPatient.referrer.firstName = referrerLocStora.firstName;
       this.additionalPatient.referrer.lastName = referrerLocStora.lastName;
       this.additionalPatient.referrer.companyName = referrerLocStora.companyName;
@@ -1096,7 +1160,7 @@ export class AdditionalPatientFormComponent implements OnInit {
     this.additionalPatient.insurances.insurance1.subscriber1.firstName = "";
     this.additionalPatient.insurances.insurance1.subscriber1.lastName = "";
     console.log("subscribers1", this.subscribers1);
-    
+
     if (this.radioSubscriber1 == 1) {
       for (let i = 0; i < this.subscribers1.length; i++) {
         if (this.subscribers1[i].selected) {
@@ -1105,12 +1169,12 @@ export class AdditionalPatientFormComponent implements OnInit {
         }
       }
     } else if (this.radioSubscriber1 == 2) {
-      let subsLocStora = await this.AddPatientService.getinsurancesP1Cwp();
+      let subsLocStora = await this.addPatientServ.getinsurancesP1Cwp();
       this.additionalPatient.insurances.insurance1.subscriber1.firstName = subsLocStora.insurance1.subscriber1.firstName;
       this.additionalPatient.insurances.insurance1.subscriber1.lastName = subsLocStora.insurance1.subscriber1.lastName;
 
     } else if (this.radioSubscriber1 == 3) {
-      let LGLocStora = await this.AddPatientService.getLegalGuardCWP(1);
+      let LGLocStora = await this.addPatientServ.getLegalGuardCWP(1);
       this.additionalPatient.insurances.insurance1.subscriber1.firstName = LGLocStora.firstName;
       this.additionalPatient.insurances.insurance1.subscriber1.lastName = LGLocStora.lastName;
 
@@ -1134,12 +1198,12 @@ export class AdditionalPatientFormComponent implements OnInit {
         }
       }
     } else if (this.radioSubscriber2 == 2) {
-      let subsLocStora = await this.AddPatientService.getinsurancesP1Cwp();
+      let subsLocStora = await this.addPatientServ.getinsurancesP1Cwp();
       this.additionalPatient.insurances.insurance2.subscriber2.firstName = subsLocStora.insurance2.subscriber2.firstName;
       this.additionalPatient.insurances.insurance2.subscriber2.lastName = subsLocStora.insurance2.subscriber2.lastName;
 
     } else if (this.radioSubscriber2 == 3) {
-      let LGLocStora = await this.AddPatientService.getLegalGuardCWP(1);
+      let LGLocStora = await this.addPatientServ.getLegalGuardCWP(1);
       this.additionalPatient.insurances.insurance2.subscriber2.firstName = LGLocStora.firstName;
       this.additionalPatient.insurances.insurance2.subscriber2.lastName = LGLocStora.lastName;
 
@@ -1163,12 +1227,12 @@ export class AdditionalPatientFormComponent implements OnInit {
         }
       }
     } else if (this.radioSubscriber3 == 2) {
-      let subsLocStora = await this.AddPatientService.getinsurancesP1Cwp();
+      let subsLocStora = await this.addPatientServ.getinsurancesP1Cwp();
       this.additionalPatient.insurances.insurance3.subscriber3.firstName = subsLocStora.insurance3.subscriber3.firstName;
       this.additionalPatient.insurances.insurance3.subscriber3.lastName = subsLocStora.insurance3.subscriber3.lastName;
 
     } else if (this.radioSubscriber3 == 3) {
-      let LGLocStora = await this.AddPatientService.getLegalGuardCWP(1);
+      let LGLocStora = await this.addPatientServ.getLegalGuardCWP(1);
       this.additionalPatient.insurances.insurance3.subscriber3.firstName = LGLocStora.firstName;
       this.additionalPatient.insurances.insurance3.subscriber3.lastName = LGLocStora.lastName;
 

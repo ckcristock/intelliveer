@@ -8,6 +8,20 @@ export class AddPatientService {
 
   constructor() { }
 
+  // Forms Pristine Add Patient Coordinate with Prospect
+
+  callerInfoPristiCWP: boolean = false;
+  patientPristiCWP: boolean = false;
+  legalGuardPristiCWP: boolean = false;
+  dentistPristiCWP: boolean = false;
+  referrerPristiCWP: boolean = false;
+  insurancePristiCWP: boolean = false;
+  patient2PristiCWP: boolean = false;
+  patient3PristiCWP: boolean = false;
+  patient4PristiCWP: boolean = false;
+  appointmPristiCWP: boolean = false;
+  conclusionPristiCWP: boolean = false;
+
   private patientsSavedUnsaved: any[] = [
     {
       name: 'Patient 2',
@@ -206,6 +220,10 @@ export class AddPatientService {
 
   // End List Data for Coordinate With Prospect
 
+  // For CanDeactive Popup
+  myFunc!: () => any;
+
+
   //Get Lists Data for Coordinate With Prospect
 
   async getlgListCwpApi() {
@@ -392,6 +410,121 @@ export class AddPatientService {
     return keys;
   }
 
+  // Forms Pristine Add Patient Coordinate with Prospect
 
+  setCallerInfoNotPristineCWP(value: boolean) {
+    this.callerInfoPristiCWP = value;
+  }
 
+  getCallerInfoNotPristineCWP() {
+    return this.callerInfoPristiCWP;
+  }
+
+  setPatientNotPristineCWP(value: boolean) {
+    this.patientPristiCWP = value;
+  }
+
+  getPatientNotPristineCWP() {
+    return this.patientPristiCWP;
+  }
+
+  setLegalGuardianNotPristineCWP(value: boolean) {
+    this.legalGuardPristiCWP = value;
+  }
+
+  getLegalGuardianNotPristineCWP() {
+    return this.legalGuardPristiCWP;
+  }
+
+  setDentistNotPristineCWP(value: boolean) {
+    this.dentistPristiCWP = value;
+  }
+
+  getDentistNotPristineCWP() {
+    return this.dentistPristiCWP;
+  }
+
+  setReferrerNotPristineCWP(value: boolean) {
+    this.referrerPristiCWP = value;
+  }
+
+  getReferrerNotPristineCWP() {
+    return this.referrerPristiCWP;
+  }
+
+  setInsuranceNotPristineCWP(value: boolean) {
+    this.insurancePristiCWP = value;
+  }
+
+  getInsuranceNotPristineCWP() {
+    return this.insurancePristiCWP;
+  }
+
+  setPatient2NotPristineCWP(value: boolean) {
+    this.patient2PristiCWP = value;
+  }
+
+  getPatient2NotPristineCWP() {
+    return this.patient2PristiCWP;
+  }
+
+  setPatient3NotPristineCWP(value: boolean) {
+    this.patient3PristiCWP = value;
+  }
+
+  getPatient3NotPristineCWP() {
+    return this.patient3PristiCWP;
+  }
+
+  setPatient4NotPristineCWP(value: boolean) {
+    this.patient4PristiCWP = value;
+  }
+
+  getPatient4NotPristineCWP() {
+    return this.patient4PristiCWP;
+  }
+
+  setAppointmNotPristineCWP(value: boolean) {
+    this.appointmPristiCWP = value;
+  }
+
+  getAppointmNotPristineCWP() {
+    return this.appointmPristiCWP;
+  }
+
+  setConclusionNotPristineCWP(value: boolean) {
+    this.conclusionPristiCWP = value;
+  }
+
+  getConclusionNotPristineCWP() {
+    return this.conclusionPristiCWP;
+  }
+
+  setFalseAllNotPristineCWP() {
+    this.setCallerInfoNotPristineCWP(false);
+    this.setPatientNotPristineCWP(false);
+    this.setLegalGuardianNotPristineCWP(false);
+    this.setDentistNotPristineCWP(false);
+    this.setReferrerNotPristineCWP(false);
+    this.setInsuranceNotPristineCWP(false);
+    this.setPatient2NotPristineCWP(false);
+    this.setPatient3NotPristineCWP(false);
+    this.setPatient4NotPristineCWP(false);
+    this.setAppointmNotPristineCWP(false);
+    this.setConclusionNotPristineCWP(false);
+  }
+
+  // For CanDeactive Popup
+
+  getLegalGuardFromCompone(fn: () => void) {
+    this.myFunc = fn;
+  }
+
+  setLegalGuardCWPFromPopup(){
+    console.log("legalGuardData", this.myFunc());
+    let legalGuard:any [] = this.myFunc();
+    console.log("legalGuardDataArray", legalGuard);
+    this.setLegalGuardCWP(legalGuard[0], legalGuard[1]);
+    
+  }
 }

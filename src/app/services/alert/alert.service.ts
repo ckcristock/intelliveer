@@ -25,11 +25,12 @@ export class AlertService {
 			icon: 'warning',
 			showCancelButton: true,
       allowOutsideClick: false,
-			confirmButtonText: 'Yes, go ahead.',
+			confirmButtonText: 'Discard my changes.',
       confirmButtonColor: '#ff4500',
-			cancelButtonText: 'No, let me think',
+			cancelButtonText: 'Save my changes.',
       cancelButtonColor: '#414042',
-      backdrop: true
+      backdrop: true,
+      showCloseButton: true,
 		})
   }
   displayAlertMessage(title: string, text: string)

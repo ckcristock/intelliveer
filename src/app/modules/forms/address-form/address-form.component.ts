@@ -150,6 +150,8 @@ export class AddressFormComponent implements OnInit {
 					return x.name == this.userLocaInfo.country.name;
 				})
 				this.selectedCountry = country[0].iso3;
+				console.log("this.selectedCountry", this.selectedCountry);
+				
 
 				// get state
 				await this.getStates(this.selectedCountry);
