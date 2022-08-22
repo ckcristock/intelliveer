@@ -78,7 +78,19 @@ export class BusinessGroupService {
 			}
 		);
 	}
-
+    getPermissionByUserRole(orgId?:any){
+		if(!orgId){
+			orgId = 'intelliveer';
+		}
+		return this.http.get(
+			`${CONFIG.backend.host}/user/user/user-roles/myroles`,
+			{
+				headers: {
+					'X-ORG-ID': orgId
+				}
+			}
+		);
+	}
 	getOrgBgId(){
 		let user:any =	this.cookieService.get('user');
 		let orgId = this.authService.getOrgId();
@@ -86,9 +98,9 @@ export class BusinessGroupService {
 		if (user) {
 		   if(user?.__ISSU__){
 			  this.orgId = 'intelliveer';
-		   }else if(user.bg[0]?._id){
+		   }else if(user?._id){
 			  this.orgId = 'intelliveer';
-			  this.bgId = user.bg[0]?._id
+			  this.bgId = user._id
 		   }else{
 			this.orgId = orgId;
 			this.bgId = orgId;

@@ -28,6 +28,7 @@ export class AddRoleTemplateComponent implements OnInit {
   @Input() formData: any | undefined = undefined;
   roleTemplate = { id: '', name: '', description: '' };
   finalArray:any = [];
+  getRoleTemplateType: any;
 
   
 
@@ -52,6 +53,7 @@ export class AddRoleTemplateComponent implements OnInit {
       name: ['',Validators.required],
       description: [''],
       businessGroups: [''],
+      isRestrictedTemplate:['',Validators.required],
       type: ['',Validators.required],
       permissions: this.fb.array([
         
@@ -127,9 +129,11 @@ export class AddRoleTemplateComponent implements OnInit {
   saveRoleTemplate() {
     this.submitted = true;
        // stop here if form is invalid
+      this.roleTemplateForm.value.isRestrictedTemplate = JSON.parse(this.roleTemplateForm.value.isRestrictedTemplate);
       if (this.roleTemplateForm.invalid) {
         return;
       }
+      this.roleTemplateForm.value.isRestrictedTemplate = JSON.parse(this.roleTemplateForm.value.isRestrictedTemplate);
     this.roleTemplateForm.value.permissions.map((item: any) => {
       delete item.roles
     })
@@ -186,7 +190,8 @@ export class AddRoleTemplateComponent implements OnInit {
   roleTemplateDetail(ID:any){
     this._ngZone.run(() => { 
       setTimeout(() => {
-      this.rolesUserServ.singleRoleTemplate(ID).subscribe(res=>{
+      this.rolesUserServ.singleRoleTemplate(ID).subscribe((res: any)=>{
+        this.getRoleTemplateType = res.type;
         this.setPermissionWithTemplateId(res);
       })
     }, 500)
@@ -379,7 +384,7 @@ export class AddRoleTemplateComponent implements OnInit {
       });
     });
     this.getAllPermissionsTemplateID(permissions,permissionsObj);
-    this.roleTemplateForm.patchValue({name:data.name,description:data.description,businessGroups:data.businessGroups,type: data.type });
+    this.roleTemplateForm.patchValue({name:data.name,description:data.description,businessGroups:data.businessGroups,type: data.type,isRestrictedTemplate:data.isRestrictedTemplate.toString() });
     if(this.roleTemplateForm.value.businessGroups.length == 0){
       this.isTypeSpecific = false;
     }else{

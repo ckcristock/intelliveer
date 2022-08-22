@@ -1,0 +1,505 @@
+<div class="row">
+	<div class="col-11">
+		<div class="nav-bar-left" style="margin-left: 0px">
+			<div
+				class="btn-group me-3"
+				*ngFor="let menu of menuItems"
+				[ngClass]="{ active: currentSelection === menu.id }"
+				(click)="sectionMenu(menu)"
+			>
+				<button type="button" class="btn">
+					<i
+						class="bi bi-check-circle-fill"
+						style="color: #00a651"
+						*ngIf="menu.showDone"
+					></i
+					>&nbsp;&nbsp;{{ menu.title }}
+				</button>
+				<div
+					class="btn-group"
+					ngbDropdown
+					role="group"
+					aria-label="Button group with nested dropdown"
+				>
+					<button
+						type="button"
+						class="btn dropdown-toggle-split"
+						ngbDropdownToggle
+					>
+						<i class="bi bi-three-dots-vertical"></i>
+					</button>
+					<div
+						class="dropdown-menu"
+						ngbDropdownMenu
+						style="background-color: white"
+					>
+						<button ngbDropdownItem>Duplicate Option</button>
+						<button ngbDropdownItem>Delete</button>
+						<button ngbDropdownItem>Rename</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-1">
+		<div id="navbar-pills">
+			<div class="right">
+				<button
+					class="save"
+					[disabled]="disableSaveButton"
+					(click)="save($event)"
+				>
+					<img src="/assets/icons/save.svg" alt="" />
+				</button>
+				<button class="cancel" (click)="cancel()">
+					<img src="/assets/icons/cancel.svg" alt="" />
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div class="row" id="parent">
+		<div class="col-6">
+			<div class="section" id="child1">
+				<h6
+					class="heading"
+					style="padding-left: 2rem; padding-right: 2rem; margin-bottom: 0rem;"
+				>
+					Fee Estimate
+					<button
+						type="button"
+						class="redbg"
+						*ngIf="checkStatus == 'PENDING'"
+					>
+						PENDING</button
+					>&nbsp;
+					<button
+						type="button"
+						class="greenbg"
+						*ngIf="checkStatus == 'APPROVED'"
+					>
+						APPROVED
+					</button>
+					<button
+						type="button"
+						class="whitebg"
+						*ngIf="checkStatus == ''"
+					>
+						Send for Approval
+					</button>
+				</h6>
+				<hr />
+				<div
+					*ngFor="let option of menuItemsOptions; let i = index"
+					style="padding-left: 2rem; padding-right: 2rem;"
+				>
+					<div *ngIf="currentSelection == i + 1">
+						<div class="row mb-3">
+							<div class="col-6">
+								<h6 class="heading">Fee Schedule</h6>
+								<select class="form-select">
+									<option value="1">Cigna</option>
+									<option value="2">Aetna</option>
+									<option value="3">UCR</option>
+								</select>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col">
+								<h6 class="heading">Charges</h6>
+								<div class="row mb-1">
+									<div class="col">
+										<div class="search" #searchDivRef>
+											<div
+												class="search-results"
+												*ngIf="searchFocus"
+											>
+												<div
+													class="scroll"
+													style="height: 20rem"
+												>
+													<ul
+														*ngIf="
+															cdtSearchLst?.length !=
+															0
+														"
+													>
+														<li
+															*ngFor="
+																let result of cdtSearchLst
+															"
+														>
+															<button
+																class="d-flex justify-content-between"
+																(click)="
+																	handleSearchResultsClick(
+																		result,
+																		option
+																	)
+																"
+															>
+																<span>
+																	{{
+																		result.name
+																	}}</span
+																>
+															</button>
+														</li>
+													</ul>
+												</div>
+												<div
+													class="padding justify-content-between"
+													*ngIf="
+														cdtSearchLst?.length ==
+														0
+													"
+												>
+													<ul>
+														<li>
+															<button
+																class="d-flex justify-content-between"
+															>
+																<span>
+																	No matches
+																	found</span
+																>
+															</button>
+														</li>
+													</ul>
+												</div>
+											</div>
+											<div
+												class="input-group justify-content-between"
+											>
+												<span
+													class="input-group-text bg-transparent"
+													id="basic-addon1"
+													><i class="bi bi-search"></i
+												></span>
+												<input
+													type="text"
+													class="form-control"
+													placeholder="Add description / CDT Code to search"
+													[(ngModel)]="searchWord"
+													(keyup)="
+														fetchSearch($event)
+													"
+													aria-describedby="basic-addon1"
+													(focus)="searchFocus = true"
+													style="
+														border-left-style: none;
+													"
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<table
+									class="table"
+									*ngIf="option.searchResultLst?.length != 0"
+								>
+									<thead>
+										<tr>
+											<th></th>
+											<th scope="col">CDT Code</th>
+											<th scope="col">Description</th>
+											<th scope="col">Amount</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr
+											*ngFor="
+												let search of option.searchResultLst;
+												let i = index
+											"
+										>
+											<td
+												(click)="
+													cancelSelection(
+														search,
+														i,
+														option
+													)
+												"
+											>
+												<i class="bi bi-x-circle"></i>
+											</td>
+											<td>{{ search.name }}</td>
+											<td>{{ search.description }}</td>
+											<td>
+												{{ search.currencyIcon
+												}}{{ search.amount }}
+											</td>
+										</tr>
+										<tr
+											*ngIf="
+												option.totalTreatmentFee != 0
+											"
+										>
+											<td colspan="3">
+												<p
+													style="
+														text-align: center;
+														color: #8a8c8e;
+														margin: auto;
+													"
+												>
+													Total Treatment Fees
+												</p>
+											</td>
+											<td style="font-weight: bold">
+												{{ cdtLst[0].currencyIcon
+												}}{{ option.totalTreatmentFee }}
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col">
+								<h6
+									class="heading"
+									style="margin-bottom: 0px !important"
+								>
+									Discounts
+								</h6>
+								<p
+									style="
+										color: #ed8266;
+										text-decoration: underline;
+									"
+								>
+									Apply discounts
+								</p>
+								<table class="table">
+									<tbody>
+										<tr
+											*ngFor="
+												let discount of option.discount;
+												let i = index
+											"
+										>
+											<td
+												(click)="
+													cancelSelection(
+														discount,
+														i,
+														option
+													)
+												"
+											>
+												<i class="bi bi-x-circle"></i>
+											</td>
+											<td>
+												{{ discount.name }} &nbsp;
+												<span
+													style="color: #00a651;"
+													*ngIf="discount.offer"
+													>{{ discount.offer }}</span
+												>
+											</td>
+											<td>
+												{{ discount.currencyIcon
+												}}{{ discount.amount }}
+											</td>
+										</tr>
+										<tr>
+											<td
+												colspan="2"
+												style="
+													text-align: center;
+													color: #8a8c8e;
+													margin: auto;
+												"
+											>
+												Total Discounts
+											</td>
+											<td style="font-weight: bold">
+												{{ cdtLst[0].currencyIcon
+												}}{{ totalDiscount }}
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col">
+								<h6 class="heading">Insurance Estimates</h6>
+								<div class="row mb-1">
+									<div class="col">PRIMARY</div>
+									<div class="col">
+										<button type="button" class="redbg">
+											NO BENEFITS
+										</button>
+									</div>
+									<div class="col-2"></div>
+								</div>
+								<div class="row mb-3">
+									<div class="col">
+										Delta Dental California
+									</div>
+									<div class="col">
+										<button
+											type="button"
+											class="subheading"
+										>
+											age limit exceeded
+										</button>
+									</div>
+									<div class="col-2">$500.00</div>
+								</div>
+								<hr />
+								<div class="row mb-1">
+									<div class="col">SECONDARY</div>
+									<div class="col">
+										<button
+											type="button"
+											class="subheading"
+										>
+											Pre-authorization
+										</button>
+									</div>
+									<div class="col-2"></div>
+								</div>
+								<div class="row mb-3">
+									<div class="col">Aetna</div>
+									<div class="col">
+										<button type="button" class="redbg">
+											MANDATORY
+										</button>
+									</div>
+									<div class="col-2">$1,000.00</div>
+								</div>
+								<hr />
+								<div class="row mb-1">
+									<div class="col">TERTIARY</div>
+									<div class="col">
+										<button type="button" class="yellowbg" style="position: absolute; bottom: 13rem;">
+											RECOMMENDED
+										</button>
+										<button type="button" class="greenbg">
+											OPTIONAL
+										</button>
+									</div>
+									<div class="col-2"></div>
+								</div>
+								<div class="row mb-3">
+									<div class="col">Cigna</div>
+									<div class="col"></div>
+									<div class="col-2">$1,000.00</div>
+								</div>
+								<hr />
+								<div class="row mb-3">
+									<div class="col"></div>
+									<div
+										class="col"
+										style="
+											color: #8a8c8e;
+											vertical-align: middle;
+											display: flex;
+											margin: auto;
+										"
+									>
+										Total Insurance
+									</div>
+									<div
+										class="col"
+										[align]="'end'"
+										style="font-weight: bold"
+									>
+										$2,567.50
+									</div>
+								</div>
+								<hr/>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col" [align]="'end'">
+							<button
+								class="btn btn-dark"
+								(click)="moveToNextOption(currentSelection)"
+							>
+								Next
+							</button>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="section" id="child2">
+				<h6
+					class="heading"
+					style="padding-left: 2rem; padding-right: 2rem"
+				>
+					Option {{ '1' }}
+				</h6>
+				<hr />
+				<div
+					style="padding-left: 2rem; padding-right: 2rem"
+					*ngFor="let option of menuItemsOptions; let i = index"
+				>
+					<div class="row mb-3"><b>Fee Breakdown</b></div>
+					<div class="row mb-3">
+						<div class="col">Treatment Charges</div>
+						<div class="col" [align]="'end'">
+							{{ cdtLst[0].currencyIcon
+							}}{{ option.totalTreatmentFee }}
+						</div>
+					</div>
+					<hr />
+					<div class="row mb-3">
+						<div class="col">Discounts</div>
+						<div class="col" [align]="'end'" style="color: #2ea74f">
+							({{ cdtLst[0].currencyIcon }}{{ totalDiscount }})
+						</div>
+					</div>
+					<hr />
+					<div class="row mb-3">
+						<div class="col">Final cost to do treatment</div>
+						<div
+							class="col"
+							[align]="'end'"
+							style="font-weight: 600"
+						>
+							$2,567.50
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col">Estimated Insurance Coverage</div>
+						<div class="col" [align]="'end'">
+							{{ cdtLst[0].currencyIcon }}{{ totalInsurance }}
+						</div>
+					</div>
+					<div class="row mb-1">
+						<div
+							class="col"
+							style="
+								color: #8a8c8e;
+								vertical-align: middle;
+								display: flex;
+								margin: auto;
+							"
+						>
+							Patient's Responsibility
+						</div>
+						<div
+							class="col"
+							[align]="'end'"
+							style="font-weight: 600; font-size: x-large"
+						>
+							$2,567.50
+						</div>
+					</div>
+					<hr />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

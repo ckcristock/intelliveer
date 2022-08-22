@@ -1,0 +1,1224 @@
+<div class="container">
+	<div class="section">
+		<div class="row">
+			<div class="col-10">
+				<h6 class="heading">Treatment Phase</h6>
+			</div>
+			<div class="col-2" [align]="'end'">
+				<div class="form-check" style="padding-left: 4em">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						value=""
+						id="flexCheckChecked"
+						checked
+					/>
+					<label
+						class="form-check-label"
+						for="flexCheckChecked"
+						style="padding: 0px"
+					>
+						Show hidden
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-9" style="margin-left: 10px">
+				<table>
+					<thead>
+						<th>Name</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let phase of treatmentPhase"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
+						>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ phase }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row mb-1">
+			<div class="col">
+				<button
+					type="button"
+					class="btn btn-light"
+					(click)="openModel(contentPhase)"
+				>
+					<img
+						src="/assets/icons/add.svg"
+						alt=""
+						width="20"
+						height="20"
+					/>&nbsp;&nbsp;Add phase
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="section">
+		<div class="row">
+			<div class="col-10">
+				<h6 class="heading">Braces Type</h6>
+			</div>
+			<div class="col-2" [align]="'end'">
+				<div class="form-check" style="padding-left: 4em">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						value=""
+						id="flexCheckChecked"
+						checked
+					/>
+					<label
+						class="form-check-label"
+						for="flexCheckChecked"
+						style="padding: 0px"
+					>
+						Show hidden
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-9" style="margin-left: 10px">
+				<table>
+					<thead>
+						<th>Name</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let braces of bracesType"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
+						>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ braces }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row mb-1">
+			<div class="col">
+				<button
+					type="button"
+					class="btn btn-light"
+					(click)="openValue('contentValue')"
+				>
+					<img
+						src="/assets/icons/add.svg"
+						alt=""
+						width="20"
+						height="20"
+					/>&nbsp;&nbsp;Add braces type
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="section">
+		<div class="row">
+			<div class="col-10">
+				<h6 class="heading">Aligners Type</h6>
+			</div>
+			<div class="col-2" [align]="'end'">
+				<div class="form-check" style="padding-left: 4em">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						value=""
+						id="flexCheckChecked"
+						checked
+					/>
+					<label
+						class="form-check-label"
+						for="flexCheckChecked"
+						style="padding: 0px"
+					>
+						Show hidden
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-9" style="margin-left: 10px">
+				<table>
+					<thead>
+						<th>Name</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let item of allignersType"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
+						>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ item }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row mb-1">
+			<div class="col">
+				<button
+					type="button"
+					class="btn btn-light"
+					(click)="openValue('contentValue')"
+				>
+					<img
+						src="/assets/icons/add.svg"
+						alt=""
+						width="20"
+						height="20"
+					/>&nbsp;&nbsp;Add aligners type
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="section">
+		<div class="row">
+			<div class="col-10">
+				<h6 class="heading">Pre-requisite Library</h6>
+			</div>
+			<div class="col-2" [align]="'end'">
+				<div class="form-check" style="padding-left: 4em">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						value=""
+						id="flexCheckChecked"
+						checked
+					/>
+					<label
+						class="form-check-label"
+						for="flexCheckChecked"
+						style="padding: 0px"
+					>
+						Show hidden
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-9" style="margin-left: 10px">
+				<table>
+					<thead>
+						<th>Name</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let item of Prerequisite"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
+						>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ item }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row mb-1">
+			<div class="col">
+				<button
+					type="button"
+					class="btn btn-light"
+					(click)="openModel('contentCategory')"
+				>
+					<img
+						src="/assets/icons/add.svg"
+						alt=""
+						width="20"
+						height="20"
+					/>&nbsp;&nbsp;Add Pre-requisite
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="section">
+		<div class="row">
+			<div class="col-10">
+				<h6 class="heading">Risks Library</h6>
+			</div>
+			<div class="col-2" [align]="'end'">
+				<div class="form-check" style="padding-left: 4em">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						value=""
+						id="flexCheckChecked"
+						checked
+					/>
+					<label
+						class="form-check-label"
+						for="flexCheckChecked"
+						style="padding: 0px"
+					>
+						Show hidden
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-9" style="margin-left: 10px">
+				<table>
+					<thead>
+						<th>Name</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let item of risks"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
+						>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ item }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row mb-1">
+			<div class="col">
+				<button
+					type="button"
+					class="btn btn-light"
+					(click)="openModel('contentCategory')"
+				>
+					<img
+						src="/assets/icons/add.svg"
+						alt=""
+						width="20"
+						height="20"
+					/>&nbsp;&nbsp;Add risks library
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="section">
+		<div class="row">
+			<div class="col-10">
+				<h6 class="heading">Treatment Steps</h6>
+			</div>
+			<div class="col-2" [align]="'end'">
+				<div class="form-check" style="padding-left: 4em">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						value=""
+						id="flexCheckChecked"
+						checked
+					/>
+					<label
+						class="form-check-label"
+						for="flexCheckChecked"
+						style="padding: 0px"
+					>
+						Show hidden
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-1">
+			<div class="col-12">
+				<h6 class="heading" style="font-size: small">
+					1. CREATE STEP ITEM
+				</h6>
+			</div>
+		</div>
+		<div class="row mb-1">
+			<div class="col-1"><b>Name</b></div>
+			<div class="col-3"><b>Library</b></div>
+		</div>
+		<div class="row mb-1">
+			<div class="col-1">Tooth</div>
+			<div class="col-3">
+				<select class="form-select">
+					<option *ngFor="let tooth of toothList">
+						{{ tooth }}
+					</option>
+				</select>
+			</div>
+		</div>
+		<div class="row mb-1">
+			<div class="col-1">Jaw</div>
+			<div class="col-3">
+				<select class="form-select">
+					<option *ngFor="let jaw of jawsList">
+						{{ jaw }}
+					</option>
+				</select>
+			</div>
+		</div>
+		<div class="row mb-5">
+			<div class="col">
+				<button
+					type="button"
+					class="btn btn-light"
+					(click)="openModel(contentStepItem)"
+				>
+					<img
+						src="/assets/icons/add.svg"
+						alt=""
+						width="20"
+						height="20"
+					/>&nbsp;&nbsp;Add step item and it's library
+				</button>
+			</div>
+		</div>
+		<div class="row mb-1">
+			<div class="col-12">
+				<h6 class="heading" style="font-size: small">
+					2. CREATE STEPS
+				</h6>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-12">
+				<table>
+					<thead>
+						<th>Step Name</th>
+						<th>Step Description</th>
+						<th>Consents & Agreements</th>
+						<th>Risks</th>
+						<th>Favorite</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let step of stepsList"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
+						>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ step.name }}
+							</td>
+							<td>
+								{{ step.description }}
+							</td>
+							<td>
+								{{ step.canda }}
+							</td>
+							<td>
+								{{ step.risk }}
+							</td>
+							<td>
+								<input
+									type="checkbox"
+									[checked]="step.fav"
+									style="vertical-align: middle"
+								/>
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row mb-1">
+			<div class="col">
+				<button
+					type="button"
+					class="btn btn-light"
+					(click)="openModel(contentStep)"
+				>
+					<img
+						src="/assets/icons/add.svg"
+						alt=""
+						width="20"
+						height="20"
+					/>&nbsp;&nbsp;Add steps
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="section">
+		<div class="row">
+			<div class="col-10">
+				<h6 class="heading">Adjunctive Treatment Library</h6>
+			</div>
+			<div class="col-2" [align]="'end'">
+				<div class="form-check" style="padding-left: 4em">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						value=""
+						id="flexCheckChecked"
+						checked
+					/>
+					<label
+						class="form-check-label"
+						for="flexCheckChecked"
+						style="padding: 0px"
+					>
+						Show hidden
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-9" style="margin-left: 10px">
+				<table>
+					<thead>
+						<th>Name</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let item of adjunctive"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
+						>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ item }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row mb-1">
+			<div class="col">
+				<button
+					type="button"
+					class="btn btn-light"
+					(click)="openModel('contentCategory')"
+				>
+					<img
+						src="/assets/icons/add.svg"
+						alt=""
+						width="20"
+						height="20"
+					/>&nbsp;&nbsp;Add adjunctive treatment library
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="section">
+		<div class="row">
+			<div class="col-10">
+				<h6 class="heading">Appliances Library</h6>
+			</div>
+			<div class="col-2" [align]="'end'">
+				<div class="form-check" style="padding-left: 4em">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						value=""
+						id="flexCheckChecked"
+						checked
+					/>
+					<label
+						class="form-check-label"
+						for="flexCheckChecked"
+						style="padding: 0px"
+					>
+						Show hidden
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-9" style="margin-left: 10px">
+				<table>
+					<thead>
+						<th>Name</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let item of appliances"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
+						>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ item }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row mb-1">
+			<div class="col">
+				<button
+					type="button"
+					class="btn btn-light"
+					(click)="openModel('contentCategory')"
+				>
+					<img
+						src="/assets/icons/add.svg"
+						alt=""
+						width="20"
+						height="20"
+					/>&nbsp;&nbsp;Add appliances library
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="section">
+		<div class="row">
+			<div class="col-10">
+				<h6 class="heading">Bracket Variations Library</h6>
+			</div>
+			<div class="col-2" [align]="'end'">
+				<div class="form-check" style="padding-left: 4em">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						value=""
+						id="flexCheckChecked"
+						checked
+					/>
+					<label
+						class="form-check-label"
+						for="flexCheckChecked"
+						style="padding: 0px"
+					>
+						Show hidden
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-9" style="margin-left: 10px">
+				<table>
+					<thead>
+						<th>Name</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let item of brackets"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
+						>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ item }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row mb-1">
+			<div class="col">
+				<button
+					type="button"
+					class="btn btn-light"
+					(click)="openModel('contentCategory')"
+				>
+					<img
+						src="/assets/icons/add.svg"
+						alt=""
+						width="20"
+						height="20"
+					/>&nbsp;&nbsp;Add bracket variations library
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="section">
+		<div class="row">
+			<div class="col-10">
+				<h6 class="heading">Retention Library</h6>
+			</div>
+			<div class="col-2" [align]="'end'">
+				<div class="form-check" style="padding-left: 4em">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						value=""
+						id="flexCheckChecked"
+						checked
+					/>
+					<label
+						class="form-check-label"
+						for="flexCheckChecked"
+						style="padding: 0px"
+					>
+						Show hidden
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-9" style="margin-left: 10px">
+				<table>
+					<thead>
+						<th>Name</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let item of retention"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
+						>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ item }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row mb-1">
+			<div class="col">
+				<button
+					type="button"
+					class="btn btn-light"
+					(click)="openModel('contentCategory')"
+				>
+					<img
+						src="/assets/icons/add.svg"
+						alt=""
+						width="20"
+						height="20"
+					/>&nbsp;&nbsp;Add retention library
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<ng-template #contentPhase let-modal>
+	<div class="modal-body" style="border-radius: 1rem">
+		<div class="section">
+			<div class="row">
+				<div class="col" [align]="'end'">
+					<button
+						type="button"
+						class="btn-close"
+						aria-label="Close"
+						(click)="modal.dismiss('Cross click')"
+					></button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<h3 class="heading">Treatment Phase</h3>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col">
+					<label for="basic-url" class="form-label">Phase Name</label>
+					<div class="input-group mb-3">
+						<input
+							type="text"
+							class="form-control"
+							id="basic-url"
+							aria-describedby="basic-addon3"
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col" [align]="'end'">
+					<button type="button" class="btn btn-dark">
+						Create Phase
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #contentStepItem let-modal>
+	<div class="modal-body" style="border-radius: 1rem">
+		<div class="section">
+			<div class="row">
+				<div class="col" [align]="'end'">
+					<button
+						type="button"
+						class="btn-close"
+						aria-label="Close"
+						(click)="modal.dismiss('Cross click')"
+					></button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<h3 class="heading">Create Step Item</h3>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<p class="heading">Step 1</p>
+				<div class="col">
+					<label for="basic-url" class="form-label"
+						>Step item name</label
+					>
+					<div class="input-group mb-3">
+						<input
+							type="text"
+							class="form-control"
+							id="basic-url"
+							aria-describedby="basic-addon3"
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<p class="heading">Step 2</p>
+				<div class="col">
+					<label class="form-label">Library name</label>
+				</div>
+			</div>
+			<div
+				class="row mb-1"
+				*ngFor="let addStep of addStepList; let i = index"
+			>
+				<div class="col-1">
+					{{ i + 1 }}
+				</div>
+				<div class="col">
+					<div class="input-group mb-3">
+						<input type="text" class="form-control" />
+					</div>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col">
+					<button
+						type="button"
+						class="btn btn-light"
+						(click)="addStepList?.push('1')"
+					>
+						<img
+							src="/assets/icons/add.svg"
+							alt=""
+							width="20"
+							height="20"
+						/>&nbsp;&nbsp;Add More
+					</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col" [align]="'end'">
+					<button type="button" class="btn btn-dark">
+						Create Step Item
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #contentStep let-modal>
+	<div class="modal-body" style="border-radius: 1rem">
+		<div class="section">
+			<div class="row">
+				<div class="col" [align]="'end'">
+					<button
+						type="button"
+						class="btn-close"
+						aria-label="Close"
+						(click)="modal.dismiss('Cross click')"
+					></button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<h3 class="heading">Create Steps</h3>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<p class="heading">Step 1</p>
+				<div class="col">
+					<label for="basic-url" class="form-label">Step name</label>
+					<div class="input-group mb-3">
+						<input
+							type="text"
+							class="form-control"
+							id="basic-url"
+							aria-describedby="basic-addon3"
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<p class="heading">Step 2</p>
+				<div class="col">
+					<label for="basic-url" class="form-label"
+						>Step Description</label
+					>
+					<div class="input-group mb-3">
+						<input
+							type="text"
+							class="form-control"
+							id="basic-url"
+							aria-describedby="basic-addon3"
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col">
+					<label class="form-label">Consents & Agreements</label>
+					<select class="form-select">
+						<option *ngFor="let ca of canda">
+							{{ ca }}
+						</option>
+					</select>
+				</div>
+				<div class="col">
+					<label class="form-label">Consents & Agreements</label>
+					<select class="form-select">
+						<option *ngFor="let risk of risks">
+							{{ risk }}
+						</option>
+					</select>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col">
+					<label class="form-label">Favorite</label>
+					<br />
+					<div class="form-check form-check-inline">
+						<input
+							class="form-check-input"
+							type="radio"
+							name="chartImpactRadioOptions"
+							id="chartImpactYes"
+							value="yes"
+						/>
+						<label class="form-check-label" for="chartImpactYes"
+							>Yes</label
+						>
+					</div>
+					<div class="form-check form-check-inline">
+						<input
+							class="form-check-input"
+							type="radio"
+							name="chartImpactRadioOptions"
+							id="chartImpactNo"
+							value="no"
+						/>
+						<label class="form-check-label" for="chartImpactNo"
+							>No</label
+						>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col" [align]="'end'">
+					<button type="button" class="btn btn-dark">
+						Create Step
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template>

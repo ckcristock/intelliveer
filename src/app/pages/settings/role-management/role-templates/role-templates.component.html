@@ -1,115 +1,120 @@
-<div *ngIf="roleTemplates?.length == 0" class="section" style="height: 90%;">
-    <div style="text-align: center; padding-top: 7%;">
-        <h5><b>You haven’t added yet</b></h5>
-        <p>Click here, <img src="assets/icons/add.svg" width="36" height="36" (click)="addRoleTemplate()" /> to add
-            Role Template</p>
-    </div>
+<div *ngIf="roleTemplates?.length == 0" class="section" style="height: 90%">
+	<div style="text-align: center; padding-top: 7%">
+		<h5><b>You haven’t added yet</b></h5>
+		<p>
+			Click here,
+			<img
+				src="assets/icons/add.svg"
+				width="36"
+				height="36"
+				(click)="addRoleTemplate()"
+			/>
+			to add Role Template
+		</p>
+	</div>
 </div>
 <div *ngIf="roleTemplates?.length != 0">
+	<!-- search, plus button -->
+	<div class="container">
+		<div class="d-flex justify-content-between call-to-actions">
+			<!-- search -->
+			<div class="col-4">
+				<div class="input-group search_box">
+					<span
+						class="input-group-text border-0 bg-transparent"
+						id="basic-addon1"
+					>
+						<i class="bi bi-search"></i>
+					</span>
+					<input
+						type="text"
+						class="form-control border-0"
+						placeholder="Search"
+						aria-describedby="basic-addon1"
+					/>
+				</div>
+			</div>
+			<div class="col-4" *ngIf="isSuperUser">
+				<select class="form-select" (change)="chooseTypes($event)">
+					<option value="" selected>Select Type</option>
+					<option value="public">Public</option>
+					<option value="private">Private</option>
+					<option value="specific">Specific</option>
+				</select>
+			</div>
+			<!-- plus icon -->
+			<div class="d-flex gap-2" *ngIf="isSuperUser">
+				<button class="add_btn" [routerLink]="addRoute">
+					<img src="/assets/icons/add.svg" alt="" />
+				</button>
+			</div>
+		</div>
+	</div>
 
-    <!-- search, plus button -->
-    <div class="container">
-        <div class="d-flex justify-content-between call-to-actions">
-
-            <!-- search -->
-            <div class="col-4">
-                <div class="input-group search_box">
-                    <span
-                        class="input-group-text border-0 bg-transparent"
-                        id="basic-addon1"
-                    >
-                        <i class="bi bi-search"></i>
-                    </span>
-                    <input
-                        type="text"
-                        class="form-control border-0"
-                        placeholder="Search"
-                        aria-describedby="basic-addon1"
-                    />
-                </div>
-            </div>
-            <div class="col-4" *ngIf="isSuperUser">
-                <select class="form-select" (change)="chooseTypes($event)" >
-                <option value="" selected>Select Type</option>
-				<option value="public">Public</option>
-				<option value="private">Private</option>
-                <option value="specific">Specific</option>
-			</select>
-            </div>
-            <!-- plus icon -->
-            <div class="d-flex gap-2" *ngIf="isSuperUser">
-                <button
-                    class="add_btn"
-                    [routerLink]="addRoute"
-                >
-                    <img src="/assets/icons/add.svg" alt="" />
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- table -->
-    <div class="container mt-4" id="main">
-        <div class="row formrow">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col"><input type="checkbox" /></th>
-                        <th scope="col">ID</th>
-                        <th scope="col">Role template name</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody *ngIf="roleTemplates">
-                    <tr *ngFor="let roleTemplate of roleTemplates; let i = index">
-                        <td><input type="checkbox" value="{{i}}" /></td>
-                        <td>{{roleTemplate._id}}</td>
-                        <td>{{roleTemplate?.name}}</td>
-                        <td>{{roleTemplate?.description}}</td>
-                        <td>
-                            <div
-							ngbDropdown
-							container="body"
-							placement="bottom-end"
-						>
-							<button
-								class="btn btn-light btn-sm more_btn"
-								ngbDropdownToggle
+	<!-- table -->
+	<div class="container mt-4" id="main">
+		<div class="row formrow">
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col"><input type="checkbox" /></th>
+						<th scope="col">ID</th>
+						<th scope="col">Role template name</th>
+						<th scope="col">Description</th>
+						<th scope="col">Actions</th>
+					</tr>
+				</thead>
+				<tbody *ngIf="roleTemplates">
+					<tr
+						*ngFor="
+							let roleTemplate of roleTemplates;
+							let i = index
+						"
+					>
+						<td><input type="checkbox" value="{{ i }}" /></td>
+						<td>{{ roleTemplate._id }}</td>
+						<td>{{ roleTemplate?.name }}</td>
+						<td>{{ roleTemplate?.description }}</td>
+						<td>
+							<div
+								ngbDropdown
+								container="body"
+								placement="bottom-end"
 							>
-								<i class="bi bi-three-dots-vertical"></i>
-							</button>
-							<div ngbDropdownMenu>
 								<button
-								ngbDropdownItem>
-                                Export as a pdf
-								</button>
-								<button
-									ngbDropdownItem
+									class="btn btn-light btn-sm more_btn"
+									ngbDropdownToggle
 								>
-                                Print
+									<i class="bi bi-three-dots-vertical"></i>
 								</button>
-								<div class="dropdown-divider"></div>
-								<button
-									ngbDropdownItem
-                                    (click)="editRoleTemplate(roleTemplate._id)"
-                                    *ngIf="isSuperUser"
-								>
-									Edit
-								</button>
-								<button
-									ngbDropdownItem
-									(click)="deleteRoleT(roleTemplate._id)"
-                                    *ngIf="isSuperUser"
-								>
-									Delete
-								</button>
+								<div ngbDropdownMenu>
+									<button ngbDropdownItem>
+										Export as a pdf
+									</button>
+									<button ngbDropdownItem>Print</button>
+									<div class="dropdown-divider"></div>
+									<button
+										ngbDropdownItem
+										(click)="
+											editRoleTemplate(roleTemplate._id)
+										"
+										*ngIf="isSuperUser"
+									>
+										Edit
+									</button>
+									<button
+										ngbDropdownItem
+										(click)="deleteRoleT(roleTemplate._id)"
+										*ngIf="isSuperUser && roleTemplate.type==='private'"
+									>
+										Delete
+									</button>
+								</div>
 							</div>
-						</div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>

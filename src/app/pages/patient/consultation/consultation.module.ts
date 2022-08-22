@@ -14,8 +14,7 @@ import { ProgressBarModule } from '@modules/forms/progress-bar/progress-bar.modu
   imports: [
     CommonModule,
     ConsultationRoutingModule,
-    NgbAccordionModule,
-    ProgressBarModule
+    NgbAccordionModule
   ]
 })
 export class ConsultationModule { }

@@ -27,36 +27,21 @@ const routes: Routes = [
 					).then((m) => m.AddHealthHistoryModule)
 			},
 			{
-				path: 'questionnaire',
+				path: 'consultation',
 				loadChildren: () =>
 					import(
-						'@pages/patient/consultation/questionnaire/questionnaire.module'
-					).then((m) => m.QuestionnaireModule)
+						'@pages/patient/consultation/consult/consult.module'
+					).then((m) => m.ConsultModule)
 			},
 			{
-				path: 'diagnosis',
+				path: 'consultation/add',
 				loadChildren: () =>
 					import(
-						'@pages/patient/consultation/diagnosis/diagnosis.module'
-					).then((m) => m.DiagnosisModule)
-			},
-			{
-				path: 'treatment',
-				loadChildren: () =>
-					import(
-						'@pages/patient/consultation/treatment/treatment.module'
-					).then((m) => m.TreatmentModule)
-			},
-      {
-        path: 'payment-options',
-        loadChildren: () =>
-          import(
-            '@pages/patient/consultation/payment-options/payment-options.module').then(
-              (m) => m.PaymentOptionsModule
-            ),
-      },
-    ],
-  },
+						'@pages/patient/consultation/consult/add-consultation/add-consultation.module'
+					).then((m) => m.AddConsultationModule)
+			}
+		]
+	}
 ];
 
 @NgModule({

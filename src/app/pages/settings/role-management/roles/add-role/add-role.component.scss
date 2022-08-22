@@ -16,3 +16,19 @@
 .formrow tbody tr td input:disabled {
     opacity: 0.5;
 }
+
+.ng-selection {
+	position: relative;
+    display: block;
+    box-sizing: border-box;
+    width: 24rem;
+}
+.non-adminURRT {
+    color: green;
+    font-size: 10px;
+}
+
+.adminRRT {
+	color: red;
+    font-size: 10px;
+}

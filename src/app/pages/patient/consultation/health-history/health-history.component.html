@@ -32,7 +32,7 @@
 				</button>
 				<button
 					class="add_btn"
-					routerLink="/dashboard/patient/consultation/health-history/add"
+					routerLink="/dashboard/patient/consultation/consultation/add/health-history/add"
 				>
 					<img src="/assets/icons/add.svg" alt="" />
 				</button>
@@ -79,19 +79,43 @@
 								container="body"
 								placement="bottom-end"
 							>
-								<i
-									class="bi bi-three-dots-vertical"
-									id="dropdownBasic"
+								<button
+									class="btn btn-light btn-sm more_btn"
 									ngbDropdownToggle
-								></i>
-								<ul
-									ngbDropdownMenu
-									aria-labelledby="dropdownBasic"
 								>
-									<li ngbDropdownItem>Export as a pdf</li>
-									<li ngbDropdownItem>Print</li>
-									<li ngbDropdownItem>Delete</li>
-								</ul>
+									<i class="bi bi-three-dots-vertical"></i>
+								</button>
+								<div ngbDropdownMenu>
+									<div
+										ngbDropdown
+										container="body"
+										placement="right-top"
+									>
+										<button ngbDropdownToggle class="btn btn-light" style="width: 100%; text-align: start; background-color: transparent;">
+											Send a link
+											<i class="bi bi-chevron-right" style="margin-left: 1rem;"></i>
+										</button>
+										<div ngbDropdownMenu>
+											<button ngbDropdownItem>
+												Via text
+											</button>
+											<button ngbDropdownItem>
+												Via email
+											</button>
+											<button ngbDropdownItem>
+												To kiosk
+											</button>
+											<button ngbDropdownItem>
+												To patient app
+											</button>
+										</div>
+									</div>
+									<button ngbDropdownItem>
+										Export as a pdf
+									</button>
+									<button ngbDropdownItem>Print</button>
+									<button ngbDropdownItem>Delete</button>
+								</div>
 							</div>
 						</td>
 					</tr>
@@ -100,43 +124,3 @@
 		</div>
 	</div>
 </div>
-
-<table>
-    <thead>
-     <tr>  
-      <th>EMAIL</th>
-     </tr>
-    </thead>
-    <tbody>
-     <tr draggable="true" (drag)="move($event)" (dragover)="endMove($event)">  
-      <td>jhon@gmail.com</td>
-     </tr>
-     <tr draggable="true" (drag)="move($event)" (dragover)="endMove($event)">  
-      <td>marygirl@yahoo.com</td>
-     </tr>
-     <tr draggable="true" (drag)="move($event)" (dragover)="endMove($event)">  
-      <td>cha24@yahoo.com</td>
-     </tr>
-      <tr draggable="true" (drag)="move($event)" (dragover)="endMove($event)">  
-      <td>dom@gmail.com</td>
-     </tr>
-     <tr draggable="true" (drag)="move($event)" (dragover)="endMove($event)">  
-      <td>vicky@yahoo.com</td>
-     </tr>
-     <tr draggable="true" (drag)="move($event)" (dragover)="endMove($event)">  
-      <td>ayushi@yahoo.com</td>
-     </tr>
-      <tr draggable="true" (drag)="move($event)" (dragover)="endMove($event)">  
-      <td>rahul@gmail.com</td>
-     </tr>
-     <tr draggable="true" (drag)="move($event)" (dragover)="endMove($event)">  
-      <td>kajal@yahoo.com</td>
-     </tr>
-     <tr draggable="true" (drag)="move($event)" (dragover)="endMove($event)">  
-      <td>aditya@yahoo.com</td>
-     </tr>
-    </tbody>
-    </table>
-    
-    
-

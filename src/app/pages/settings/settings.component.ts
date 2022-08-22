@@ -42,6 +42,11 @@ export class SettingsComponent implements OnInit {
       route: "",
       childs: [],
     },
+    {
+      name: "Preferences",
+      route: "",
+      childs: [],
+    }
   ];
 
   compactSidebar: boolean = true;
@@ -112,6 +117,7 @@ export class SettingsComponent implements OnInit {
     this.menuItems[0].url = this.globalRoutes.getSettingsOnboardingUrl();
     this.menuItems[1].url = this.globalRoutes.getSettingsRoleManageUrl();
     this.menuItems[2].url = this.globalRoutes.getSettingsUserManageUrl();
+    this.menuItems[4].url = this.globalRoutes.getSettingsPreferencesUrl();
     this.onboardingChilds = this.globalRoutes.getSettingsOnboardingRoutes();
     this.roleManagementchilds = this.globalRoutes.getSettingsRoleManageRoutes();
     this.userManagementchilds = this.globalRoutes.getSettingsUserManageRoutes();
@@ -126,17 +132,23 @@ export class SettingsComponent implements OnInit {
   }
   getUserOrdID(){
     let bgOrdID:any = localStorage.getItem('selected_business_group');
-    let user = this.authService.getLoggedInUser()
+    let user:any =	localStorage.getItem('permissionSet');
+    let orgId = this.authService.getOrgId();
+    user = JSON.parse(user)
     console.log(bgOrdID)
     if(bgOrdID){
       this.orgID = bgOrdID
     }else{
      if(user?.__ISSU__){
       this.orgID = 'intelliveer'
+     }else{
+      this.orgID = orgId
      }
     }
     if(user?.__ISSU__){
       this.isSuperUser = user?.__ISSU__;
+    }else if(user?.isBGAdmin){
+      
     }
   
   }

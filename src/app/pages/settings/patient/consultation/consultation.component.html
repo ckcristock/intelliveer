@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col" style="max-width: 250px;">
+        <ul class="ul">
+            <ol class="ol">
+                <li class="pointer" *ngFor="let item of menuItems">
+                    <b routerLinkActive="active"
+						[routerLink]="item.url">{{ item.title }}</b>
+                </li>
+            </ol>
+        </ul>
+    </div>
+    <div class="col component-view">
+        <router-outlet></router-outlet>
+    </div>
+</div>

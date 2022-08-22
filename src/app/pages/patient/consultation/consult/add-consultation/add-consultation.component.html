@@ -1,0 +1,44 @@
+<div>
+    <div class="row">
+        <div class="col" style="max-width: 200px" *ngIf="!showProgressBar">
+            <button type="button" class="btn btn-light" style="border-color: lightgray;">Consultation Phase</button>
+            <div class="settings-row mb-3">
+                <i class="bi bi-arrow-left-circle" style="font-size: 2rem; cursor: pointer;" [routerLink]="'/dashboard/patient/consultation/consultation'"></i>
+                <p>Consultations</p>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h6 class="heading"><b>Consultations 1</b></h6>
+                </div>
+            </div>
+            <div class="row" *ngFor="let item of menuItems">
+                <div class="col">
+                    <ul class="ul" style="padding-left: 1rem;">
+                        <ol class="ol">
+                            <li class="pointer menu-item" routerLinkActive="active"
+                            [routerLink]="item.url" (click)="selectMenuItem(item)">
+                                <span>{{ item.title }}</span>
+                            </li>
+                        </ol>
+                    </ul>
+                </div>
+                <div class="col-2" *ngIf="item.title == 'Diagnosis'">
+                    <span (click)="selectMenuItem(item)"><i class="bi bi-arrow-left-circle" style="font-size: x-large"></i></span>
+                </div>
+            </div>
+        </div>
+		<div class="col" [ngStyle]="{ 'max-width': max_width }" *ngIf="showProgressBar">
+			<div class="row">
+				<div class="col-2"  @fadeSlideInOut>
+					<div class="line"></div>
+					<i class="bi bi-arrow-right-circle" style="font-size: x-large;" (click)="showProgressBar=false"></i>
+					<div class="line"></div>
+				</div>
+				<div class="col"><app-progress-bar [title]="progressbarTitle" [menuItems]="progressbarMmenuItems" [sessionArrayName]="sessionArrayName"></app-progress-bar></div>
+			</div>
+		</div>
+        <div class="col component-view">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

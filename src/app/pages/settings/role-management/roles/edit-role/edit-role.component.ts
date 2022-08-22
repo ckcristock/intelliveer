@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '@services/alert/alert.service';
@@ -13,6 +13,9 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./edit-role.component.scss']
 })
 export class EditRoleComponent implements OnInit {
+  @ViewChild('legelEntity') refLegelEntity :ElementRef | any;
+	@ViewChild('location') refLocation :ElementRef | any;
+	@ViewChild('practice') refPractice :ElementRef | any;
 
   Form!: FormGroup;
   roleModuleNestedForm!: FormGroup;
@@ -27,6 +30,7 @@ export class EditRoleComponent implements OnInit {
   businessGroupDropdownSupscription: Subscription = new Subscription;
   selectedBusinessGroup: SelectedBusinessGroup | any;
   editRoleID: any;
+  orgID:any;
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -243,7 +247,7 @@ export class EditRoleComponent implements OnInit {
     this.alertService.conformAlert('Are you sure?', 'You want to edit a role')
       .then((result: any) => {
         if (result.value) {
-          this.roleService.updateRoleFromRoleTemplate(data, this.roleObj._id,this.selectedBusinessGroup?.bgId).subscribe((data: any) => {
+          this.roleService.updateRoleFromRoleTemplate(data, this.roleObj._id,this.orgID).subscribe((data: any) => {
             this.alertService.success(
               'Success',
               'Role has been edit successfully'
@@ -296,21 +300,28 @@ export class EditRoleComponent implements OnInit {
    getOrgBgId(){
     let bgOrdID:any = localStorage.getItem('selected_business_group');
 		let user = this.authService.getLoggedInUser();
+    this.orgID = bgOrdID;
 		if (user?.__ISSU__) {
       if(bgOrdID == 'intelliveer' || bgOrdID == null){
         this.getRoleById();
       }else{
-        this.getRoleByBgId(this.editRoleID,this.selectedBusinessGroup?.bgId)
+        this.getRoleByBgId(this.editRoleID,bgOrdID)
       }
       }else{
-      this.getRoleByBgId(this.editRoleID,this.selectedBusinessGroup?.bgId)
+      this.getRoleByBgId(this.editRoleID,bgOrdID)
     }
 	}
   /** Update Role with Template  */
 	addRoleWithTemplate(data:any){
 		let user = this.authService.getLoggedInUser();
+		let bgOrdID:any = localStorage.getItem('selected_business_group');
+    this.orgID = bgOrdID;
 		if(user?.__ISSU__){
-			this.saveRoleFromTemplate(data);
+			if(this.roleObj._id != "intelliveer" && bgOrdID != null){
+			  this.saveRoleFromTemplateBYBgId(data);
+			}else{
+			  this.saveRoleFromTemplate(data);
+			}
 		}else{
 			this.saveRoleFromTemplateBYBgId(data)
 		}

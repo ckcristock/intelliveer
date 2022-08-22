@@ -1,0 +1,379 @@
+<div class="container">
+	<div class="section">
+		<div class="row">
+			<div class="col-10">
+				<h6 class="heading">Manage Categories</h6>
+			</div>
+			<div class="col-2" [align]="'end'">
+				<div class="form-check" style="padding-left: 4em">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						value=""
+						id="flexCheckChecked"
+						checked
+					/>
+					<label
+						class="form-check-label"
+						for="flexCheckChecked"
+						style="padding: 0px"
+					>
+						Show hidden
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-9" style="margin-left: 10px">
+				<table>
+					<thead>
+						<th>Name</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let category of categories"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
+						>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ category.title }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row mb-1">
+			<div class="col">
+				<button
+					type="button"
+					class="btn btn-light"
+					(click)="openCategory(contentCategory)"
+				>
+					<img
+						src="/assets/icons/add.svg"
+						alt=""
+						width="20"
+						height="20"
+					/>&nbsp;&nbsp;Add category
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="section">
+		<div class="row">
+			<div class="col-10">
+				<h6 class="heading">Manage Value</h6>
+				<div class="row mb-3">
+					<div class="col-4">
+						<select class="form-select">
+							<option *ngFor="let category of categories">
+								{{ category.title }}
+							</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-2" [align]="'end'">
+				<div class="form-check" style="padding-left: 4em">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						value=""
+						id="flexCheckChecked"
+						checked
+					/>
+					<label
+						class="form-check-label"
+						for="flexCheckChecked"
+						style="padding: 0px"
+					>
+						Show hidden
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-12" style="margin-left: 10px; margin-right: 10px">
+				<table>
+					<thead>
+						<th>Name</th>
+						<th>Value Type</th>
+						<th>Tooth chart impact</th>
+						<th>Tooth chart actions</th>
+					</thead>
+					<tbody>
+						<tr
+							class="row-border"
+							*ngFor="let value of values"
+							draggable="true"
+							(drag)="move($event)"
+							(dragover)="endMove($event)"
+						>
+							<td>
+								<img
+									src="../../../../../../assets/icons/move.svg"
+									width="20"
+									height="20"
+								/>
+								{{ value.name }}
+							</td>
+							<td>
+								{{ value.type }}
+							</td>
+							<td>
+								<input
+									type="checkbox"
+									[checked]="value.chartImpact"
+									style="vertical-align: middle"
+								/>
+							</td>
+							<td>
+								{{ value.chartAction }}
+							</td>
+							<td>
+								<div
+									ngbDropdown
+									container="body"
+									placement="bottom-end"
+									[align]="'end'"
+								>
+									<button
+										class="btn btn-light btn-sm more_btn"
+										ngbDropdownToggle
+										style="background-color: white"
+									>
+										<i
+											class="bi bi-three-dots-vertical"
+										></i>
+									</button>
+									<div ngbDropdownMenu>
+										<button ngbDropdownItem>Edit</button>
+										<button ngbDropdownItem>Delete</button>
+										<button ngbDropdownItem>Hide</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row mb-1">
+			<div class="col">
+				<button
+					type="button"
+					class="btn btn-light"
+					(click)="openValue(contentValue)"
+				>
+					<img
+						src="/assets/icons/add.svg"
+						alt=""
+						width="20"
+						height="20"
+					/>&nbsp;&nbsp;Add value
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<ng-template #contentCategory let-modal>
+	<div class="modal-body" style="border-radius: 1rem">
+		<div class="section">
+			<div class="row">
+				<div class="col" [align]="'end'">
+					<button
+						type="button"
+						class="btn-close"
+						aria-label="Close"
+						(click)="modal.dismiss('Cross click')"
+					></button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<h3 class="heading">Create Category</h3>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col">
+					<label for="basic-url" class="form-label"
+						>Category Name</label
+					>
+					<div class="input-group mb-3">
+						<input
+							type="text"
+							class="form-control"
+							id="basic-url"
+							aria-describedby="basic-addon3"
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col" [align]="'end'">
+					<button type="button" class="btn btn-dark">
+						Create Category
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template>
+
+<ng-template #contentValue let-modal>
+	<div class="modal-body" style="border-radius: 1rem">
+		<div class="section">
+			<div class="row">
+				<div class="col" [align]="'end'">
+					<button
+						type="button"
+						class="btn-close"
+						aria-label="Close"
+						(click)="modal.dismiss('Cross click')"
+					></button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<h3 class="heading">Manage Value</h3>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col">
+					<label class="form-label">Category</label>
+					<select class="form-select">
+						<option *ngFor="let category of categories">
+							{{ category }}
+						</option>
+					</select>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col">
+					<div class="col">
+						<label for="basic-url" class="form-label"
+							>Value Name</label
+						>
+						<div class="input-group mb-3">
+							<input
+								type="text"
+								class="form-control"
+								id="basic-url"
+								aria-describedby="basic-addon3"
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col">
+					<label class="form-label">Value type</label>
+					<br />
+					<div class="form-check form-check-inline">
+						<input
+							class="form-check-input"
+							type="radio"
+							name="valueRadioOptions"
+							id="valueMm"
+							value="mm"
+						/>
+						<label class="form-check-label" for="valueMm">mm</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input
+							class="form-check-input"
+							type="radio"
+							name="valueRadioOptions"
+							id="valueTooth"
+							value="tooth"
+						/>
+						<label class="form-check-label" for="valueTooth"
+							>Tooth</label
+						>
+					</div>
+				</div>
+				<div class="col">
+					<label class="form-label">Tooth chart impact</label>
+					<br />
+					<div class="form-check form-check-inline">
+						<input
+							class="form-check-input"
+							type="radio"
+							name="chartImpactRadioOptions"
+							id="chartImpactYes"
+							value="yes"
+						/>
+						<label class="form-check-label" for="chartImpactYes"
+							>Yes</label
+						>
+					</div>
+					<div class="form-check form-check-inline">
+						<input
+							class="form-check-input"
+							type="radio"
+							name="chartImpactRadioOptions"
+							id="chartImpactNo"
+							value="no"
+						/>
+						<label class="form-check-label" for="chartImpactNo"
+							>No</label
+						>
+					</div>
+				</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col">
+					<label class="form-label">Tooth chart actions</label>
+					<ng-select>
+						<ng-option>Option 1</ng-option>
+						<ng-option>Option 2</ng-option>
+						<ng-option>Option 3</ng-option>
+					</ng-select>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col" [align]="'end'">
+					<button type="button" class="btn btn-dark">
+						Create Value
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template>

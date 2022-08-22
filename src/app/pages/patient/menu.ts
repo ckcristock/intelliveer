@@ -124,81 +124,15 @@ export const patientConsultationMenuItems = [
 	},
 	{
 		title: 'Consultations',
-		url: '',
+		url: '/dashboard/patient/consultation/consultation',
 		icon: 'bi bi-house-door',
-		child: [
-			{
-				title: 'Consultation 1',
-				url: '',
-				icon: 'bi bi-house-door',
-				child: [
-					{
-						title: 'Questionnaire',
-						url: '/dashboard/patient/consultation/questionnaire',
-						icon: 'bi bi-house-door',
-					},
-					{
-						title: 'Diagnosis',
-						url: '/dashboard/patient/consultation/diagnosis',
-						icon: 'bi bi-house-door',
-					},
-					{
-						title: 'Treatment Options',
-						url: '/dashboard/patient/consultation/treatment',
-						icon: 'bi bi-house-door',
-					},
-					{
-						title: 'Fee Estimate',
-						url: '/+',
-						icon: 'bi bi-house-door',
-					},
-					{
-						title: 'Payment Options',
-						url: '/dashboard/patient/consultation/payment-options',
-						icon: 'bi bi-house-door',
-					}
-				]
-			},
-			{
-				title: 'Consultation 2',
-				url: '',
-				icon: 'bi bi-house-door',
-				child: [
-					{
-						title: 'Questionnaire',
-						url: '/+',
-						icon: 'bi bi-house-door',
-					},
-					{
-						title: 'Diagnosis',
-						url: '/+',
-						icon: 'bi bi-house-door',
-					}
-				]
-			},
-			{
-				title: 'Consultation 3',
-				url: '',
-				icon: 'bi bi-house-door',
-				child: [
-					{
-						title: 'Questionnaire',
-						url: '/+',
-						icon: 'bi bi-house-door',
-					},
-					{
-						title: 'Diagnosis',
-						url: '/+',
-						icon: 'bi bi-house-door',
-					},
-					{
-						title: 'Treatment Options',
-						url: '/+',
-						icon: 'bi bi-house-door',
-					}
-				]
-			}
-		]
+		child: []
+	},
+	{
+		title: 'Start Treatment',
+		url: '/*',
+		icon: 'bi bi-house-door',
+		child: []
 	},
 	{
 		title: 'Follow ups',
@@ -214,58 +148,121 @@ export const patientConsultationMenuItems = [
 	}
 ]
 
+export const patientConsultationOptionsMenuItems = [
+	{
+		title: 'Questionnaire',
+		url: '/dashboard/patient/consultation/consultation/add/questionnaire',
+		icon: 'bi bi-house-door',
+	},
+	{
+		title: 'Diagnosis',
+		url: '/dashboard/patient/consultation/consultation/add/diagnosis',
+		icon: 'bi bi-house-door',
+	},
+	{
+		title: 'Treatment Options',
+		url: '/dashboard/patient/consultation/consultation/add/treatment',
+		icon: 'bi bi-house-door',
+	},
+	{
+		title: 'Fee Estimate',
+		url: '/dashboard/patient/consultation/consultation/add/fee-estimate',
+		icon: 'bi bi-house-door',
+	},
+	{
+		title: 'Payment Options',
+		url: '/dashboard/patient/consultation/consultation/add/payment-options',
+		icon: 'bi bi-house-door',
+	},
+	{
+		title: 'Conclusion',
+		url: '/dashboard/patient/consultation/consultation/add/conclusion',
+		icon: 'bi bi-house-door',
+	}
+]
+
+
+export const settingPatientConsultationMenuItems = [
+	{
+		title: 'Health History',
+		url: '/dashboard/settings/patient/consultation/health-history',
+		icon: 'bi bi-house-door',
+		child: []
+	},
+	{
+		title: 'Diagnosis',
+		url: '/dashboard/settings/patient/consultation/diagnosis',
+		icon: 'bi bi-house-door',
+	},
+	{
+		title: 'Treatment Options',
+		url: '/dashboard/settings/patient/consultation/treatment',
+		icon: 'bi bi-house-door',
+	},
+	{
+		title: 'Fee Estimate',
+		url: '/dashboard/settings/patient/consultation/fee',
+		icon: 'bi bi-house-door',
+	},
+	{
+		title: 'Payment Options',
+		url: '/dashboard/settings/patient/consultation/payment-options',
+		icon: 'bi bi-house-door',
+	}
+]
+
 export const patientDiagnosisMenuItems = [
 	{
 		title: 'Malocclusion',
-		url: '/dashboard/patient/consultation/diagnosis/malocclusion',
+		url: '/dashboard/patient/consultation/consultation/add/diagnosis/malocclusion',
 		icon: '/assets/icons/jar.svg',
 		child: []
 	},
 	{
 		title: 'Overjet',
-		url: '/dashboard/patient/consultation/diagnosis/overjet',
+		url: '/dashboard/patient/consultation/consultation/add/diagnosis/overjet',
 		icon: '/assets/icons/jar.svg',
 		child: []
 	},
 	{
 		title: 'Overbite',
-		url: '/dashboard/patient/consultation/diagnosis/overbite',
+		url: '/dashboard/patient/consultation/consultation/add/diagnosis/overbite',
 		icon: '/assets/icons/jar.svg',
 		child: []
 	},
 	{
 		title: 'Category 1',
-		url: '/dashboard/patient/consultation/diagnosis/category1',
+		url: '/dashboard/patient/consultation/consultation/add/diagnosis/category1',
 		icon: '/assets/icons/jar.svg',
 		child: []
 	},
 	{
 		title: 'Category 2',
-		url: '/dashboard/patient/consultation/diagnosis/category2',
+		url: '/dashboard/patient/consultation/consultation/add/diagnosis/category2',
 		icon: '/assets/icons/jar.svg',
 		child: []
 	},
 	{
 		title: 'Category 3',
-		url: '/dashboard/patient/consultation/diagnosis/category3',
+		url: '/dashboard/patient/consultation/consultation/add/diagnosis/category3',
 		icon: '/assets/icons/jar.svg',
 		child: []
 	},
 	{
 		title: 'Category 4',
-		url: '/dashboard/patient/consultation/diagnosis/category4',
+		url: '/dashboard/patient/consultation/consultation/add/diagnosis/category4',
 		icon: '/assets/icons/jar.svg',
 		child: []
 	},
 	{
 		title: 'Category 5',
-		url: '/dashboard/patient/consultation/diagnosis/category5',
+		url: '/dashboard/patient/consultation/consultation/add/diagnosis/category5',
 		icon: '/assets/icons/jar.svg',
 		child: []
 	},
 	{
 		title: 'Category 6',
-		url: '/dashboard/patient/consultation/diagnosis/category6',
+		url: '/dashboard/patient/consultation/consultation/add/diagnosis/category6',
 		icon: '/assets/icons/jar.svg',
 		child: []
 	},
@@ -308,67 +305,77 @@ export const problemListOfDiagnosis = [
 		title: 'Category 6',
 		child: []
 	},
+	{
+		title: 'Tooth Chart',
+		child: []
+	}
 ]
 
 
 export const patientTreatmentMenuItems = [
 	{
 		title: 'Tx Recommendations',
-		url: '/dashboard/patient/consultation/treatment/recommendations',
+		url: '/dashboard/patient/consultation/consultation/add/treatment/recommendations',
 		icon: '/assets/icons/jar.svg',
 		child: []
 	},
 	{
 		title: 'Prerequisites',
-		url: '/dashboard/patient/consultation/treatment/prerequisites',
+		url: '/dashboard/patient/consultation/consultation/add/treatment/prerequisites',
 		icon: '/assets/icons/jar.svg',
 		child: []
 	},
 	{
 		title: 'Extractions',
-		url: '/dashboard/patient/consultation/treatment/extractions',
+		url: '/dashboard/patient/consultation/consultation/add/treatment/extractions',
 		icon: '/assets/icons/jar.svg',
 		child: []
 	},
 	{
 		title: 'Treatment Mechanics',
-		url: '/dashboard/patient/consultation/treatment/treatment-mechanics',
+		url: '/dashboard/patient/consultation/consultation/add/treatment/treatment-mechanics',
 		icon: '/assets/icons/jar.svg',
 		child: []
 	},
 	{
 		title: 'Expected Tx Outcome',
-		url: '/dashboard/patient/consultation/treatment/treatment-outcome',
+		url: '/dashboard/patient/consultation/consultation/add/treatment/treatment-outcome',
 		icon: '/assets/icons/jar.svg',
 		child: []
 	},
 	{
 		title: 'Risks',
-		url: '/dashboard/patient/consultation/treatment/risk',
+		url: '/dashboard/patient/consultation/consultation/add/treatment/risk',
 		icon: '/assets/icons/jar.svg',
 		child: []
 	},
 	{
 		title: 'Adjunctive Tx',
-		url: '/dashboard/patient/consultation/treatment/adjunctive-tx',
+		url: '/dashboard/patient/consultation/consultation/add/treatment/adjunctive-tx',
 		icon: '/assets/icons/jar.svg',
 		child: []
 	},
 	{
 		title: 'Appliance Sequence',
-		url: '/dashboard/patient/consultation/treatment/appliance-sequence',
+		url: '/dashboard/patient/consultation/consultation/add/treatment/appliance-sequence',
 		icon: '/assets/icons/jar.svg',
 		child: []
 	},
 	{
 		title: 'Bracket Variations',
-		url: '/dashboard/patient/consultation/treatment/bracket-variations',
+		url: '/dashboard/patient/consultation/consultation/add/treatment/bracket-variations',
 		icon: '/assets/icons/jar.svg',
 		child: []
 	},
 	{
 		title: 'Retention',
-		url: '/dashboard/patient/consultation/treatment/retention',
+		url: '/dashboard/patient/consultation/consultation/add/treatment/retention',
+		icon: '/assets/icons/jar.svg',
+		child: []
+	},
+	{
+		title: 'Consents and Agreement',
+		url: '/+',
 		icon: '/assets/icons/jar.svg',
 		child: []
 	}

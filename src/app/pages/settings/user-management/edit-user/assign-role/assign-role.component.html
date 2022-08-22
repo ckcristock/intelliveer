@@ -54,7 +54,7 @@
 					(change)="selectRoleData($event)"
 				>
 					<ng-option
-						*ngFor="let role of roleList; let i = index"
+						*ngFor="let role of tempRoleList; let i = index"
 						[value]="role"
 					>
 						{{ role?.name }}

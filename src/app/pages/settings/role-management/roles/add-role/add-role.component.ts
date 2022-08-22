@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
 	FormArray,
 	FormBuilder,
@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { AlertService } from '@services/alert/alert.service';
 import { AuthService } from '@services/auth/auth.service';
 import { BusinessGroupDropdownService } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { BusinessGroupService } from '@services/onboarding/business-group/business-group.service';
 import { RoleService } from '@services/role/role.service';
 
 export class RoleTemplate {
@@ -27,6 +28,9 @@ export class RoleTemplate {
 	styleUrls: ['./add-role.component.scss']
 })
 export class AddRoleComponent implements OnInit {
+	@ViewChild('legelEntity') refLegelEntity :ElementRef | any;
+	@ViewChild('location') refLocation :ElementRef | any;
+	@ViewChild('practice') refPractice :ElementRef | any;
 	Form!: FormGroup;
 	roleNestedForm!: FormGroup;
 	roleModuleNestedForm!: FormGroup;
@@ -51,7 +55,8 @@ export class AddRoleComponent implements OnInit {
 		private alertService: AlertService,
 		private fb: FormBuilder,
 		private authService: AuthService,
-		private businessGroupDropdownService: BusinessGroupDropdownService
+		private businessGroupDropdownService: BusinessGroupDropdownService,
+		private businessGroupService: BusinessGroupService,
 	) {
 	}
 
@@ -74,7 +79,6 @@ export class AddRoleComponent implements OnInit {
 					console.log(list);
 				}
 			});
-
 			this.getSelectedBusinessGroupId();
 	}
 	initForm(data?: any) {
@@ -232,7 +236,7 @@ export class AddRoleComponent implements OnInit {
 	}
 
 	saveRoleFromTemplate(data: any) {
-		console.log(data);
+		console.log(data,this.bgName);
 		let roleObj = {
 			name: data.name,
 			description: data.description,
@@ -266,7 +270,7 @@ export class AddRoleComponent implements OnInit {
 			});
 	}
 	saveRoleFromTemplateBYBgId(data: any) {
-		console.log(data);
+		console.log(data,this.bgName);
 		let roleObj = {
 			name: data.name,
 			description: data.description,
@@ -323,6 +327,7 @@ export class AddRoleComponent implements OnInit {
 		this.roleType = Obj.type
 		this.roleTemplate = roleManage;
 		this.permissionsList = Obj.permissions;
+		this.bgName = this.roleTemplate.businessGroups[0]
 	}
 
 	onSelectionChanged($event: any) {
@@ -392,10 +397,36 @@ export class AddRoleComponent implements OnInit {
 
 	/** Get Selected Org Id */
 	getSelectedBusinessGroupId(){
-		this.businessGroupDropdownService.businessGroup().subscribe((res) => {
-			this.orgId = res?.bgId;
+		// this.businessGroupDropdownService.businessGroup().subscribe((res) => {
+		// 	this.orgId = res?.bgId;
+		// 	this.bgName = this.orgId;
+		// 	let bgOrdID:any = localStorage.getItem('selected_business_group');
+		// 	console.log(bgOrdID,this.orgId)
+		// 	let user = this.authService.getLoggedInUser();
+		//     if(user?.__ISSU__){
+		// 		if(this.orgId != "intelliveer" && bgOrdID != null){
+		// 			this.addRoleTitle = "Create Role from Role Template";
+		// 			this.roleTemplatePlaceholder = "Select role template";
+		// 			this.displayCreateRoleYesNoOption = false;
+		// 			this.getRoleListSpecific();
+		// 		}else{
+		// 			this.addRoleTitle = "Create Role";
+		// 			this.roleTemplatePlaceholder = "Role template name";
+		// 			this.displayCreateRoleYesNoOption = true;
+		// 			this.getRoleList();
+		// 			console.log('roles')
+		// 		}
+		// 	}else{
+		// 		this.addRoleTitle = "Create Role from Role Template";
+		// 		this.roleTemplatePlaceholder = "Select role template";
+		// 		this.displayCreateRoleYesNoOption = false;
+		// 		this.getRoleListSpecific();
+		// 	}
+		//   });
+		this.orgId = this.authService.getOrgId();
+			this.bgName = this.orgId;
 			let bgOrdID:any = localStorage.getItem('selected_business_group');
-			console.log(bgOrdID)
+			console.log(bgOrdID,this.orgId)
 			let user = this.authService.getLoggedInUser();
 		    if(user?.__ISSU__){
 				if(this.orgId != "intelliveer" && bgOrdID != null){
@@ -408,6 +439,7 @@ export class AddRoleComponent implements OnInit {
 					this.roleTemplatePlaceholder = "Role template name";
 					this.displayCreateRoleYesNoOption = true;
 					this.getRoleList();
+					console.log('roles')
 				}
 			}else{
 				this.addRoleTitle = "Create Role from Role Template";
@@ -415,13 +447,19 @@ export class AddRoleComponent implements OnInit {
 				this.displayCreateRoleYesNoOption = false;
 				this.getRoleListSpecific();
 			}
-		  });
 	}
 	/** Update Role with Template  */
 	addRoleWithTemplate(data:any){
-		let user = this.authService.getLoggedInUser();
+		let user:any =	localStorage.getItem('permissionSet');
+		user = JSON.parse(user);
+		let bgOrdID:any = localStorage.getItem('selected_business_group');
 		if(user?.__ISSU__){
-			this.saveRoleFromTemplate(data);
+			if(this.orgId != "intelliveer" && bgOrdID != null){
+			  this.saveRoleFromTemplateBYBgId(data);
+			}else{
+			  //this.bgName = "intelliveer"
+			  this.saveRoleFromTemplate(data);
+			}
 		}else{
 			this.saveRoleFromTemplateBYBgId(data)
 		}

@@ -15,7 +15,7 @@ export interface SelectedBusinessGroup {
 export class BusinessGroupDropdownService {
 	private selectedBG: SelectedBusinessGroup | undefined;
 	private disabled: boolean = false;
-
+    getCommonOrgId:any;
 	private businessGroups = new BehaviorSubject<any>([]);
 	private selectedBusinessGroup = new BehaviorSubject<
 		SelectedBusinessGroup | undefined
@@ -25,7 +25,8 @@ export class BusinessGroupDropdownService {
 		private authService: AuthService
 		 ) {
 		//this._getBusinessGroups();
-		this.getOrgBgId()
+		//this.getOrgBgId()
+		this.permissionSetOFUsers()
 	}
 	businessGroup(): Observable<SelectedBusinessGroup | undefined> {
 		return this.selectedBusinessGroup.asObservable();
@@ -74,6 +75,7 @@ export class BusinessGroupDropdownService {
 	}
 
 	private _getBusinessGroup(bgId:any,orgId:any) {
+		console.log(bgId,orgId)
 		this.businessGroupService.getBusinessGroup(bgId,orgId).subscribe({
 			next: (data: any) => {
 				data = [data];
@@ -91,18 +93,41 @@ export class BusinessGroupDropdownService {
 			complete: () => {}
 		});
 	}
+	permissionSetOFUsers(){
+	 let orgId = this.authService.getOrgId();
+     this.businessGroupService.getPermissionByUserRole(orgId).subscribe({
+		next: (data: any) => {
+			console.log(data)
+		  localStorage.setItem('permissionSet',JSON.stringify(data));
+		  if(data?.bgs){
+			orgId = data?.bgs[0]?._id;
+		  }else{
+            orgId = "intelliveer";
+		  }
+		  this.setSelectedBusinessGroup(
+			orgId
+		  );
+		  this.getOrgBgId()
+		},
+		error: () => {},
+		complete: () => {}
+	});
+	}
 	getOrgBgId(){
-	 let user:any =	this.cookieService.get('user');
+	 let user:any =	localStorage.getItem('permissionSet');
 	 let orgId = this.authService.getOrgId();
 	 user = JSON.parse(user);
+	 console.log(user)
 	 if (user) {
 		if(user?.__ISSU__){
-		   this._getBusinessGroups()
-		}else if(user.bg[0]?._id){
-		   this._getBusinessGroup(user.bg[0]?._id,'intelliveer')
+		   this._getBusinessGroups();
+		}else if(user?.bgs.length != 0){
+		   this._getBusinessGroup(user?.bgs[0]?._id,'intelliveer');
 		}else{
+			this.getCommonOrgId = orgId;
 		    this._getBusinessGroup(orgId,orgId);
 		}
 	}
+	
 	}
 }
