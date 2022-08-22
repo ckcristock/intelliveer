@@ -221,7 +221,8 @@ export class AddPatientService {
   // End List Data for Coordinate With Prospect
 
   // For CanDeactive Popup
-  myFunc!: () => any;
+  legalGuardFunction!: () => any;
+  conditions:any [] = [];
 
 
   //Get Lists Data for Coordinate With Prospect
@@ -516,13 +517,34 @@ export class AddPatientService {
 
   // For CanDeactive Popup
 
+  // Conditions for canDeactive Guard
+
+  setConditions(){
+    this.conditions = [];
+		this.conditions.push({ condition: this.getCallerInfoNotPristineCWP() });
+		this.conditions.push({ condition: this.getPatientNotPristineCWP() });
+		this.conditions.push({ condition: this.getLegalGuardianNotPristineCWP() });
+		this.conditions.push({ condition: this.getDentistNotPristineCWP() });
+		this.conditions.push({ condition: this.getReferrerNotPristineCWP() });
+		this.conditions.push({ condition: this.getInsuranceNotPristineCWP() });
+		this.conditions.push({ condition: this.getPatient2NotPristineCWP() });
+		this.conditions.push({ condition: this.getPatient3NotPristineCWP() });
+		this.conditions.push({ condition: this.getPatient4NotPristineCWP() });
+		this.conditions.push({ condition: this.getAppointmNotPristineCWP() });
+		this.conditions.push({ condition: this.getConclusionNotPristineCWP() });
+  }
+
+  getConditions(){
+    return this.conditions;
+  }
+
   getLegalGuardFromCompone(fn: () => void) {
-    this.myFunc = fn;
+    this.legalGuardFunction = fn;
   }
 
   setLegalGuardCWPFromPopup(){
-    console.log("legalGuardData", this.myFunc());
-    let legalGuard:any [] = this.myFunc();
+    console.log("legalGuardData", this.legalGuardFunction());
+    let legalGuard:any [] = this.legalGuardFunction();
     console.log("legalGuardDataArray", legalGuard);
     this.setLegalGuardCWP(legalGuard[0], legalGuard[1]);
     

@@ -35,7 +35,7 @@ export class ConfirmationDialogComponent implements OnInit {
 								this.close();
 							} else if (result.isDismissed && result.dismiss == "cancel") {
 								// For Add Patient Module
-								this.addPatientServ.setLegalGuardCWPFromPopup();
+								this.addPatientServ["setLegalGuardCWPFromPopup"]();
 								console.log("result.isDenied", result.isDenied);
 								this.close();
 								// End Add Patient Module

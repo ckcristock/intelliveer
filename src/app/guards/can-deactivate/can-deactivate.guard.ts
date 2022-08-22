@@ -50,17 +50,8 @@ export class CanDeactivateGuard
 
 		this.conditions = [];
 		// For Add Patient Module
-		this.conditions.push({ condition: this.addPatientServ.getCallerInfoNotPristineCWP() });
-		this.conditions.push({ condition: this.addPatientServ.getPatientNotPristineCWP() });
-		this.conditions.push({ condition: this.addPatientServ.getLegalGuardianNotPristineCWP() });
-		this.conditions.push({ condition: this.addPatientServ.getDentistNotPristineCWP() });
-		this.conditions.push({ condition: this.addPatientServ.getReferrerNotPristineCWP() });
-		this.conditions.push({ condition: this.addPatientServ.getInsuranceNotPristineCWP() });
-		this.conditions.push({ condition: this.addPatientServ.getPatient2NotPristineCWP() });
-		this.conditions.push({ condition: this.addPatientServ.getPatient3NotPristineCWP() });
-		this.conditions.push({ condition: this.addPatientServ.getPatient4NotPristineCWP() });
-		this.conditions.push({ condition: this.addPatientServ.getAppointmNotPristineCWP() });
-		this.conditions.push({ condition: this.addPatientServ.getConclusionNotPristineCWP() });
+		this.addPatientServ.setConditions();
+		this.conditions = this.addPatientServ.getConditions();
 		// End Add Patient Module
 
 		console.log("this.conditions", this.conditions);
