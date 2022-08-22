@@ -222,7 +222,8 @@ export class AddPatientService {
 
   // For CanDeactive Popup
   legalGuardFunction!: () => any;
-  conditions:any [] = [];
+  conditions: any[] = [];
+  allConditions: any[] = [];
 
 
   //Get Lists Data for Coordinate With Prospect
@@ -519,22 +520,22 @@ export class AddPatientService {
 
   // Conditions for canDeactive Guard
 
-  setConditions(){
+  setConditions() {
     this.conditions = [];
-		this.conditions.push({ condition: this.getCallerInfoNotPristineCWP() });
-		this.conditions.push({ condition: this.getPatientNotPristineCWP() });
-		this.conditions.push({ condition: this.getLegalGuardianNotPristineCWP() });
-		this.conditions.push({ condition: this.getDentistNotPristineCWP() });
-		this.conditions.push({ condition: this.getReferrerNotPristineCWP() });
-		this.conditions.push({ condition: this.getInsuranceNotPristineCWP() });
-		this.conditions.push({ condition: this.getPatient2NotPristineCWP() });
-		this.conditions.push({ condition: this.getPatient3NotPristineCWP() });
-		this.conditions.push({ condition: this.getPatient4NotPristineCWP() });
-		this.conditions.push({ condition: this.getAppointmNotPristineCWP() });
-		this.conditions.push({ condition: this.getConclusionNotPristineCWP() });
+    this.conditions.push({ function: "", condition: this.getCallerInfoNotPristineCWP() });
+    this.conditions.push({ function: "", condition: this.getPatientNotPristineCWP() });
+    this.conditions.push({ function: "setLegalGuardCWPFromPopup", condition: this.getLegalGuardianNotPristineCWP() });
+    this.conditions.push({ function: "", condition: this.getDentistNotPristineCWP() });
+    this.conditions.push({ function: "", condition: this.getReferrerNotPristineCWP() });
+    this.conditions.push({ function: "", condition: this.getInsuranceNotPristineCWP() });
+    this.conditions.push({ function: "", condition: this.getPatient2NotPristineCWP() });
+    this.conditions.push({ function: "", condition: this.getPatient3NotPristineCWP() });
+    this.conditions.push({ function: "", condition: this.getPatient4NotPristineCWP() });
+    this.conditions.push({ function: "", condition: this.getAppointmNotPristineCWP() });
+    this.conditions.push({ function: "", condition: this.getConclusionNotPristineCWP() });
   }
 
-  getConditions(){
+  getConditions() {
     return this.conditions;
   }
 
@@ -542,11 +543,32 @@ export class AddPatientService {
     this.legalGuardFunction = fn;
   }
 
-  setLegalGuardCWPFromPopup(){
+  setLegalGuardCWPFromPopup() {
     console.log("legalGuardData", this.legalGuardFunction());
-    let legalGuard:any [] = this.legalGuardFunction();
+    let legalGuard: any[] = this.legalGuardFunction();
     console.log("legalGuardDataArray", legalGuard);
     this.setLegalGuardCWP(legalGuard[0], legalGuard[1]);
+
+  }
+
+  setAllConditions(conditions: any) {
+    this.allConditions = conditions;
+  }
+
+  getAllConditions() {
+    return this.allConditions;
+  }
+
+  callFuntion(funct: any) {
+    const name = funct;
+    const fn = { [name]: function () { } }[name];
+    fn.name; // 'myFn'
+    console.log("entereeeed", fn);
     
+  }
+
+  test() {
+    console.log("hi, i'm a test");
+
   }
 }

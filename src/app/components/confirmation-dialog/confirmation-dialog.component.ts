@@ -29,13 +29,22 @@ export class ConfirmationDialogComponent implements OnInit {
 					this.alertService.conformAlert('Please confirm', 'Are you sure to exit without saving changes?')
 						.then((result: any) => {
 							console.log("result", result);
-							
+
 							if (result.isConfirmed) {
 								console.log("result", result);
 								this.close();
 							} else if (result.isDismissed && result.dismiss == "cancel") {
 								// For Add Patient Module
-								this.addPatientServ["setLegalGuardCWPFromPopup"]();
+								// this.addPatientServ["setLegalGuardCWPFromPopup"]();
+								this.addPatientServ["setConditions"]();
+								this.addPatientServ.callFuntion("test");
+								let allConditions = this.addPatientServ.getAllConditions();
+								// for (let i = 0; i < allConditions.length; i++) {
+								// 	if (allConditions[i].condition) {
+								// 		let functionString = allConditions[i].function.toString();
+								// 		this.addPatientServ[functionString]();
+								// 	}
+								// }
 								console.log("result.isDenied", result.isDenied);
 								this.close();
 								// End Add Patient Module

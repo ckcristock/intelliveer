@@ -52,6 +52,8 @@ export class CanDeactivateGuard
 		// For Add Patient Module
 		this.addPatientServ.setConditions();
 		this.conditions = this.addPatientServ.getConditions();
+		this.addPatientServ.setAllConditions(this.conditions);
+		// this.conditions.push(...this.addPatientServ.getConditions());
 		// End Add Patient Module
 
 		console.log("this.conditions", this.conditions);
