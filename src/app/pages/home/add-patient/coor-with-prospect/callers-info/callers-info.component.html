@@ -1,4 +1,4 @@
-<form #f="ngForm" (submit)="save(f.value)">
+<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
     <div class="mainformsection">
         <div class="two-items">
             <h6 class="heading" style="font-weight: bolder;">Caller’s Information</h6>
@@ -48,13 +48,13 @@ to be accompanied by a legal guardian. Do you have any questions for me?</textar
                         <label class="required">What is the best phone number to reach
                             you?</label>
                         <input class="form-control" type="text" placeholder="" name=""
-                            [(ngModel)]="callersInfo.phoneNumber" [ngModelOptions]="{standalone: true}" />
+                            [(ngModel)]="callersInfo.phoneNumber" formControlName="phoneNumber" />
                     </div>
                 </div>
                 <div class="col-3 type-width">
                     <div class="mainformset">
                         <label class="required">Type</label>
-                        <select class="form-select">
+                        <select class="form-select" formControlName="type">
                             <option [value]="type.value" *ngFor="let type of phoneTypes.phone">
                                 {{ type.label }}
                             </option>
@@ -65,14 +65,14 @@ to be accompanied by a legal guardian. Do you have any questions for me?</textar
                     <div class="mainformset">
                         <label class="required">Caller’s First Name</label>
                         <input class="form-control" type="text" placeholder="" name=""
-                            [(ngModel)]="callersInfo.firstName" [ngModelOptions]="{standalone: true}" />
+                            [(ngModel)]="callersInfo.firstName" formControlName="firstName" />
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="mainformset">
                         <label class="required">Last Name</label>
                         <input class="form-control" type="text" placeholder="" name=""
-                            [(ngModel)]="callersInfo.lastName" [ngModelOptions]="{standalone: true}" />
+                            [(ngModel)]="callersInfo.lastName" formControlName="lastName" />
                     </div>
                 </div>
             </div>

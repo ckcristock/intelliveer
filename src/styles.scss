@@ -337,6 +337,11 @@ select.form-select {
 	margin-bottom: 0px;
     text-transform: uppercase;
 
+	option{
+		margin-bottom: 50px !important;
+		padding: 50px !important;
+	}
+
 	// box-shadow: 0 -0.5px 0pt 0.1pt #ddd !important;
 }
 
@@ -960,4 +965,8 @@ input[type='checkbox'] {
 
 .input-upper{
     text-transform: uppercase;
+}
+
+.options2{
+	padding: 80px !important;
 }

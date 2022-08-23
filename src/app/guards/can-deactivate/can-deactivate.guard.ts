@@ -1,4 +1,4 @@
-import { Injectable, ViewChild, ViewChildren } from '@angular/core';
+import { Injectable, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import {
 	ActivatedRouteSnapshot,
 	CanActivate,
@@ -6,6 +6,7 @@ import {
 	RouterStateSnapshot,
 	UrlTree
 } from '@angular/router';
+import { AddPatientService } from '@services/add-patient/add-patient.service';
 import { CanDeactiveGuardService } from '@services/can-deactive-guard/can-deactive-guard.service';
 import { map, Observable, first, take, of } from 'rxjs';
 
@@ -17,9 +18,15 @@ export interface CanComponentDeactivate {
 	providedIn: 'root'
 })
 export class CanDeactivateGuard
-	implements CanActivate, CanDeactivate<CanComponentDeactivate>
+	implements OnInit, CanActivate, CanDeactivate<CanComponentDeactivate>
 {
-	constructor(private canDeactivateRouteService: CanDeactiveGuardService) {}
+	conditions: any[] = [];
+	constructor(private canDeactivateRouteService: CanDeactiveGuardService,
+		private addPatientServ: AddPatientService,) { }
+
+	ngOnInit(): void {
+	}
+
 	canActivate(
 		route: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot
@@ -40,7 +47,23 @@ export class CanDeactivateGuard
 		| Promise<boolean | UrlTree>
 		| boolean
 		| UrlTree {
-		this.canDeactivateRouteService.openDialog();
-		return this.canDeactivateRouteService.modalChoice$;
+
+		this.conditions = [];
+		// For Add Patient Module
+		this.addPatientServ.setConditions();
+		this.conditions = this.addPatientServ.getConditions();
+		this.addPatientServ.setAllConditions(this.conditions);
+		// this.conditions.push(...this.addPatientServ.getConditions());
+		// End Add Patient Module
+
+		console.log("this.conditions", this.conditions);
+
+		for (let i = 0; i < this.conditions.length; i++) {
+			if (this.conditions[i].condition) {
+				this.canDeactivateRouteService.openDialog();
+				return this.canDeactivateRouteService.modalChoice$;
+			}
+		}
+		return true;
 	}
 }

@@ -1,10 +1,11 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { addPatientCordinateMenuItems } from '@pages/home/add-patient/menu';
 
 import { NgbNavChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { AddPatientService } from '@services/add-patient/add-patient.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-insurance',
@@ -86,11 +87,29 @@ export class InsuranceComponent implements OnInit {
   showButtonSaveCancel: boolean = false;
   openTextAreaVar: boolean = false;
   subscriberRadio: number = 1
+  Form!: FormGroup;
+  @Input() formData: any | undefined = undefined;
+
 
   constructor(private router: Router,
-    private AddPatientService: AddPatientService,) { }
+    private AddPatientService: AddPatientService,
+    private fb: FormBuilder,
+    private addPatientServ: AddPatientService,) { }
 
   async ngOnInit() {
+    this.initForm(this.formData);
+    this.addPatientServ.setFalseAllNotPristineCWP();
+    this.Form.statusChanges.subscribe(
+      result => {
+        console.log(result)
+        if (!this.Form.pristine) {
+          console.log("hiiiiii", event);
+          console.log("status", this.Form.pristine);
+
+          this.addPatientServ.setInsuranceNotPristineCWP(true);
+        }
+      }
+    );
     this.insurancesP1[0] = await this.AddPatientService.getinsurancesP1Cwp();
     console.log("insuranceP11111", this.insurancesP1);
     if (this.insurancesP1[0].length != 0) {
@@ -262,12 +281,41 @@ export class InsuranceComponent implements OnInit {
 
   continueToFamilyMemb() {
     this.AddPatientService.setInsuranceP1CWP(this.insurances);
+    this.addPatientServ.setInsuranceNotPristineCWP(false);
     let visitedArray: any = JSON.parse(localStorage.getItem("visitedArray") || '[]');
     visitedArray.push("Insurance");
     localStorage.setItem("visitedArray", JSON.stringify(visitedArray));
     this.router.navigate([this.menuItems[6].url]);
   }
+  
+  initForm(data?: any) {
+    data = data || {};
+    this.Form = this.fb.group({
+      insurance1InsuranName: [data?.insurance1InsuranName || '',],
+      insurance1PhoneNumb: [data?.insurance1PhoneNumb || '',],
+      subscriber1FirstName: [data?.subscriber1FirstName || '',],
+      subscriber1LastName: [data?.subscriber1LastName || '',],
+      subscriber1DOB: [data?.subscriber1DOB || '',],
+      subscriber1SSNID: [data?.subscriber1SSNID || '',],
+      insurance2InsuranName: [data?.insurance2InsuranName || '',],
+      insurance2PhoneNumb: [data?.insurance2PhoneNumb || '',],
+      subscriber2FirstName: [data?.subscriber2FirstName || '',],
+      subscriber2LastName: [data?.subscriber2LastName || '',],
+      subscriber2DOB: [data?.subscriber2DOB || '',],
+      subscriber2SSNID: [data?.subscriber2SSNID || '',],
+      insurance3InsuranName: [data?.insurance3InsuranName || '',],
+      insurance3PhoneNumb: [data?.insurance3PhoneNumb || '',],
+      subscriber3FirstName: [data?.subscriber3FirstName || '',],
+      subscriber3LastName: [data?.subscriber3LastName || '',],
+      subscriber3DOB: [data?.subscriber3DOB || '',],
+      subscriber3SSNID: [data?.subscriber3SSNID || '',],
+    });
+  }
 
+  save(data: any) {
+    console.log(data);
+  }
+  
   onNavChange(changeEvent: NgbNavChangeEvent) {
     if (changeEvent.nextId === 1) {
       this.active = 1;

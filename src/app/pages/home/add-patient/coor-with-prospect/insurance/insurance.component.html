@@ -1,4 +1,4 @@
-<form autocomplete="off">
+<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
     <div class="mainformsection scroll">
         <div class="two-items">
             <h6 class="heading" style="font-weight: bolder;">Insurance</h6>
@@ -82,14 +82,14 @@
                                     <label class="label-input-gap">Name of Insurance</label>
                                     <input class="form-control" type="text" placeholder="" name=""
                                         [(ngModel)]="insurances.insurance1.insuranName"
-                                        [ngModelOptions]="{standalone: true}" />
+                                        formControlName="insurance1InsuranName" />
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="mainformset">
                                     <label class="label-input-gap">Phone</label>
                                     <input class="form-control" type="text" placeholder="" name="" [(ngModel)]="insurances.insurance1.phoneNumb
-                                    " [ngModelOptions]="{standalone: true}" />
+                                    " formControlName="insurance1PhoneNumb" />
                                 </div>
                             </div>
                         </div>
@@ -142,7 +142,7 @@
 
                                     <input class="form-control" type="text" placeholder="" name=""
                                         [(ngModel)]="insurances.insurance1.subscriber1.firstName"
-                                        [ngModelOptions]="{standalone: true}" />
+                                        formControlName="subscriber1FirstName" />
                                 </div>
                             </div>
                             <div class="twenty">
@@ -150,7 +150,7 @@
                                     <label class="label-input-gap">Subscriber’s Last Name</label>
                                     <input class="form-control" type="text" placeholder="" name=""
                                         [(ngModel)]="insurances.insurance1.subscriber1.lastName"
-                                        [ngModelOptions]="{standalone: true}" />
+                                        formControlName=".subscriber1LastName" />
                                 </div>
                             </div>
                             <div class="twenty">
@@ -166,7 +166,7 @@
                                     <label class="label-input-gap">DOB</label>
                                     <input class="form-control" type="date" placeholder="" name=""
                                         [(ngModel)]="insurances.insurance1.subscriber1.DOB"
-                                        [ngModelOptions]="{standalone: true}" />
+                                        formControlName="subscriber1DOB" />
                                 </div>
                             </div>
                             <div class="twenty">
@@ -174,7 +174,7 @@
                                     <label class="label-input-gap">SSN/ID</label>
                                     <input class="form-control" type="text" placeholder="" name=""
                                         [(ngModel)]="insurances.insurance1.subscriber1.SSNID"
-                                        [ngModelOptions]="{standalone: true}" />
+                                        formControlName="subscriber1SSNID" />
                                 </div>
                             </div>
                         </div>
@@ -201,7 +201,7 @@
                                     <label class="label-input-gap">Name of Insurance</label>
                                     <input class="form-control" type="text" placeholder="" name=""
                                         [(ngModel)]="insurances.insurance2.insuranName"
-                                        [ngModelOptions]="{standalone: true}" />
+                                        formControlName="insurance2InsuranName" />
                                 </div>
                             </div>
                             <div class="col-4">
@@ -209,7 +209,7 @@
                                     <label class="label-input-gap">Phone</label>
                                     <input class="form-control" type="text" placeholder="" name=""
                                         [(ngModel)]="insurances.insurance2.phoneNumb"
-                                        [ngModelOptions]="{standalone: true}" />
+                                        formControlName="insurance2PhoneNumb" />
                                 </div>
                             </div>
                         </div>
@@ -263,7 +263,7 @@
 
                                     <input class="form-control" type="text" placeholder="" name=""
                                         [(ngModel)]="insurances.insurance2.subscriber2.firstName"
-                                        [ngModelOptions]="{standalone: true}" />
+                                        formControlName="subscriber2FirstName" />
                                 </div>
                             </div>
                             <div class="twenty">
@@ -271,7 +271,7 @@
                                     <label class="label-input-gap">Subscriber’s Last Name</label>
                                     <input class="form-control" type="text" placeholder="" name=""
                                         [(ngModel)]="insurances.insurance2.subscriber2.lastName"
-                                        [ngModelOptions]="{standalone: true}" />
+                                        formControlName="subscriber2LastName" />
                                 </div>
                             </div>
                             <div class="twenty">
@@ -287,7 +287,7 @@
                                     <label class="label-input-gap">DOB</label>
                                     <input class="form-control" type="text" placeholder="" name=""
                                         [(ngModel)]="insurances.insurance2.subscriber2.DOB"
-                                        [ngModelOptions]="{standalone: true}" />
+                                        formControlName="subscriber2DOB" />
                                 </div>
                             </div>
                             <div class="twenty">
@@ -295,7 +295,7 @@
                                     <label class="required">SSN/ID</label>
                                     <input class="form-control" type="text" placeholder="" name=""
                                         [(ngModel)]="insurances.insurance2.subscriber2.SSNID"
-                                        [ngModelOptions]="{standalone: true}" />
+                                        formControlName="subscriber2SSNID" />
                                 </div>
                             </div>
                         </div>
@@ -322,7 +322,7 @@
                                     <label class="label-input-gap">Name of Insurance</label>
                                     <input class="form-control" type="text" placeholder="" name=""
                                         [(ngModel)]="insurances.insurance3.insuranName"
-                                        [ngModelOptions]="{standalone: true}" />
+                                        formControlName="insurance3InsuranName" />
                                 </div>
                             </div>
                             <div class="col-4">
@@ -330,7 +330,7 @@
                                     <label class="label-input-gap">Phone</label>
                                     <input class="form-control" type="text" placeholder="" name=""
                                         [(ngModel)]="insurances.insurance3.phoneNumb"
-                                        [ngModelOptions]="{standalone: true}" />
+                                        formControlName="insurance3PhoneNumb" />
                                 </div>
                             </div>
                         </div>
@@ -384,7 +384,7 @@
 
                                     <input class="form-control" type="text" placeholder="" name=""
                                         [(ngModel)]="insurances.insurance3.subscriber3.firstName"
-                                        [ngModelOptions]="{standalone: true}" />
+                                        formControlName="subscriber3FirstName" />
                                 </div>
                             </div>
                             <div class="twenty">
@@ -392,7 +392,7 @@
                                     <label class="label-input-gap">Subscriber’s Last Name</label>
                                     <input class="form-control" type="text" placeholder="" name=""
                                         [(ngModel)]="insurances.insurance3.subscriber3.lastName"
-                                        [ngModelOptions]="{standalone: true}" />
+                                        formControlName="subscriber3LastName" />
                                 </div>
                             </div>
                             <div class="twenty">
@@ -408,7 +408,7 @@
                                     <label class="label-input-gap">DOB</label>
                                     <input class="form-control" type="text" placeholder="" name=""
                                         [(ngModel)]="insurances.insurance3.subscriber3.DOB"
-                                        [ngModelOptions]="{standalone: true}" />
+                                        formControlName="subscriber3DOB" />
                                 </div>
                             </div>
                             <div class="twenty">
@@ -416,7 +416,7 @@
                                     <label class="required">SSN/ID</label>
                                     <input class="form-control" type="text" placeholder="" name=""
                                         [(ngModel)]="insurances.insurance3.subscriber3.SSNID"
-                                        [ngModelOptions]="{standalone: true}" />
+                                        formControlName="subscriber3SSNID" />
                                 </div>
                             </div>
                         </div>

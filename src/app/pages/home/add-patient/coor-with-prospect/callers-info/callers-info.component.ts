@@ -53,19 +53,35 @@ export class CallersInfoComponent implements OnInit {
     private http: HttpClient) { }
 
   async ngOnInit() {
+    this.initForm(this.formData);
+    this.addPatientServ.setFalseAllNotPristineCWP();
+    this.Form.statusChanges.subscribe(
+      result => {
+        console.log(result)
+        if (!this.Form.pristine) {
+          console.log("hiiiiii", event);
+          console.log("status", this.Form.pristine);
+
+          this.addPatientServ.setCallerInfoNotPristineCWP(true);
+        }
+      }
+    );
     this.callersInfoArray = await this.addPatientServ.getCallerInfoCWP();
     if (this.callersInfoArray != null) {
       this.callersInfo.firstName = this.callersInfoArray.firstName;
       this.callersInfo.lastName = this.callersInfoArray.lastName;
       this.callersInfo.phoneNumber = this.callersInfoArray.phoneNumber;
     }
-    this.initForm(this.formData);
     this.getStaticData();
   }
 
   initForm(data?: any) {
     data = data || {};
     this.Form = this.fb.group({
+      phoneNumber: [data?.phoneNumber || '',],
+      type: [data?.type || '',],
+      firstName: [data?.firstName || ''],
+      lastName: [data?.lastName || ''],
     });
   }
 
@@ -135,6 +151,7 @@ export class CallersInfoComponent implements OnInit {
 
   continueToPatient() {
     this.addPatientServ.setCallerInfoCWP(this.callersInfo);
+    this.addPatientServ.setCallerInfoNotPristineCWP(false);
     let visitedArray: any = JSON.parse(localStorage.getItem("visitedArray") || '[]');
     visitedArray.push("Caller’s Info");
     localStorage.setItem("visitedArray", JSON.stringify(visitedArray));

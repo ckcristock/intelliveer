@@ -79,6 +79,8 @@ export class LegalGuardianFormComponent implements OnInit {
   @Input() patientPage!: number;
   showButtonSaveCancel: boolean = false;
   openTextAreaVar: boolean = false;
+  selectedCountry2: any = "USA";
+
 
   constructor(private router: Router, private fb: FormBuilder,
     private http: HttpClient,
@@ -102,11 +104,26 @@ export class LegalGuardianFormComponent implements OnInit {
   }
 
   async ngOnInit() {
+    console.log("selectedCountry2", this.selectedCountry2);
+    this.addPatientServ.setFalseAllNotPristineCWP();
+    this.addPatientServ.getLegalGuardFromCompone(this.getLegalGuard.bind(this));
     this.getDataLegaGuarCaller();
     this.initForm(this.formData);
     this.getStaticData();
-    this.getCountries();
+    await this.getCountries();
     this.getUSA();
+    console.log("countries", this.countries);
+    this.Form.statusChanges.subscribe(
+      result => {
+        console.log(result)
+        if (!this.Form.pristine) {
+          console.log("hiiiiii", event);
+          console.log("status", this.Form.pristine);
+
+          this.addPatientServ.setLegalGuardianNotPristineCWP(true);
+        }
+      }
+    );
   }
 
   ngOnChanges() {
@@ -168,8 +185,13 @@ export class LegalGuardianFormComponent implements OnInit {
     }
   }
 
+  getLegalGuard() {
+    return [this.legalGuardian, this.patientPage];
+  }
+
   continueToDentist() {
     if (this.tab == "coordWithProspect") {
+      this.addPatientServ.setLegalGuardianNotPristineCWP(false);
       this.addPatientServ.setLegalGuardCWP(this.legalGuardian, this.patientPage);
       let visitedArray: any = JSON.parse(localStorage.getItem("visitedArray") || '[]');
       visitedArray.push("Legal Guardian");
@@ -191,7 +213,7 @@ export class LegalGuardianFormComponent implements OnInit {
       lName: [data?.lName || '', Validators.required],
       lgName: [data?.lgName || '', Validators.required],
       state: [data?.state || ''],
-      city: [data?.state || ''],
+      city: [data?.city || ''],
     });
   }
 
@@ -228,7 +250,7 @@ export class LegalGuardianFormComponent implements OnInit {
   }
 
 
-  getCountries() {
+  async getCountries() {
     this.geoService.getCountries().subscribe({
       next: (res) => {
         this.countries = res;
@@ -237,7 +259,7 @@ export class LegalGuardianFormComponent implements OnInit {
   }
 
   getStates(countryIso3: any) {
-    console.log("country:", countryIso3.value);
+    console.log("country:", countryIso3);
 
     if (this.countries) {
       const country = this.countries.filter(
@@ -285,6 +307,10 @@ export class LegalGuardianFormComponent implements OnInit {
           (c: any) => c.iso3 === 'USA'
         );
         if (country && country.length == 1) {
+          console.log("country", country);
+          this.selectedCountry2 = country[0].iso3;
+          console.log("selectedCountry2", this.selectedCountry2);
+
           this.geoService.getStates(country[0]['id']).subscribe({
             next: (res: any) => {
               this.states = res.sort((a: any, b: any) => (a.name > b.name) ? 1 : -1);

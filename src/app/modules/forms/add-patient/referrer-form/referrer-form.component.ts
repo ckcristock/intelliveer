@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { addPatientCordinateMenuItems, addPatientQuickMenuItems } from '@pages/home/add-patient/menu';
@@ -13,6 +14,7 @@ export class ReferrerFormComponent implements OnInit {
 
   @ViewChild('radioReferrer1') radioReferrer1!: ElementRef;
   @ViewChild('radioReferrer2') radioReferrer2!: ElementRef;
+  @Input() formData: any | undefined = undefined;
 
   radioReferrer: number = 1;
 
@@ -36,14 +38,29 @@ export class ReferrerFormComponent implements OnInit {
   menuItemsOfCordinate: IMenuItem[] = addPatientCordinateMenuItems;
   menuItemsOfQuickAdd: IMenuItem[] = addPatientQuickMenuItems;
   @Input() tab: string = "";
+  Form!: FormGroup;
   showButtonSaveCancel: boolean = false;
   openTextAreaVar: boolean = false;
 
   constructor(private router: Router,
-    private addPatientServ: AddPatientService,) { }
+    private addPatientServ: AddPatientService,
+    private fb: FormBuilder,) { }
 
-    async ngOnInit() {
+  async ngOnInit() {
+    this.initForm(this.formData);
     if (this.tab == 'coordWithProspect') {
+      this.addPatientServ.setFalseAllNotPristineCWP();
+      this.Form.statusChanges.subscribe(
+        result => {
+          console.log(result)
+          if (!this.Form.pristine) {
+            console.log("hiiiiii", event);
+            console.log("status", this.Form.pristine);
+
+            this.addPatientServ.setReferrerNotPristineCWP(true);
+          }
+        }
+      );
       this.dentist = await this.addPatientServ.getDentistCWP();
     } else if (this.tab == 'quickAdd') {
       this.dentist = await this.addPatientServ.getDentistQuiAdd();
@@ -88,6 +105,7 @@ export class ReferrerFormComponent implements OnInit {
 
   continueToInsurance() {
     if (this.tab == "coordWithProspect") {
+      this.addPatientServ.setReferrerNotPristineCWP(false);
       this.addPatientServ.setReferrerCWP(this.referrer);
       let visitedArray: any = JSON.parse(localStorage.getItem("visitedArray") || '[]');
       visitedArray.push("Referrer");
@@ -101,6 +119,21 @@ export class ReferrerFormComponent implements OnInit {
       localStorage.setItem("visitedArrayQuick", JSON.stringify(visitedArrayQuick));
       this.router.navigate([this.menuItemsOfQuickAdd[4].url]);
     }
+  }
+
+  initForm(data?: any) {
+    data = data || {};
+    this.Form = this.fb.group({
+      thanksfor: [data?.thanksfor || '',],
+      companyName: [data?.companyName || '',],
+      firstName: [data?.firstName || ''],
+      lastName: [data?.lastName || ''],
+      phoneNumber: [data?.phoneNumber || ''],
+    });
+  }
+
+  save(data: any) {
+    console.log(data);
   }
 
   sameAsDentistFunct(value: boolean) {

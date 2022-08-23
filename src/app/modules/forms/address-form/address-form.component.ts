@@ -15,6 +15,7 @@ export class AddressFormComponent implements OnInit {
 	cities: any;
 	@Input() parentGroup!: FormGroup;
 	@Input() formGroupName!: string;
+	@Input() referrer!: string;
 	selectedCountry!: any;
 	selectedState!: any;
 	selectedCity!: any;
@@ -39,6 +40,10 @@ export class AddressFormComponent implements OnInit {
 	}
 
 	async ngOnInit() {
+		console.log("thiiiis.formGroupName", this.formGroupName);
+		console.log("thiiiis.pareeentgropu", this.parentGroup);
+
+		
 	}
 
 	isRequiredField(field: string) {
@@ -145,6 +150,8 @@ export class AddressFormComponent implements OnInit {
 					return x.name == this.userLocaInfo.country.name;
 				})
 				this.selectedCountry = country[0].iso3;
+				console.log("this.selectedCountry", this.selectedCountry);
+				
 
 				// get state
 				await this.getStates(this.selectedCountry);

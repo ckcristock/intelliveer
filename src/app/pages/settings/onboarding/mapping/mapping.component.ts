@@ -25,7 +25,7 @@ export class MappingComponent implements OnInit, OnDestroy {
 	businessGroupDropdownSupscription: Subscription;
 	selectedBusinessGroup: SelectedBusinessGroup | undefined;
 	saveButtonEnable: boolean = true;
-	bgId:any;
+	bgId: any;
 	constructor(
 		private mappingService: MappingService,
 		private businessGroupDropdownService: BusinessGroupDropdownService,
@@ -49,7 +49,7 @@ export class MappingComponent implements OnInit, OnDestroy {
 				});
 	}
 
-	ngOnInit(): void {}
+	ngOnInit(): void { }
 	ngOnDestroy(): void {
 		this.businessGroupDropdownSupscription.unsubscribe();
 	}
@@ -76,30 +76,30 @@ export class MappingComponent implements OnInit, OnDestroy {
 				});
 		}
 	}
-	getMappingSuperUser(){
+	getMappingSuperUser() {
 		this.mappingService
-				.getMapping(this.bgId)
-				.subscribe({
-					next: (res: any) => {
-						if (res) {
-							this.locations.map((r: any) => {
-								let c = res.relation.filter(
-									(i: any) => i.locId == r._id
-								);
+			.getMapping(this.bgId)
+			.subscribe({
+				next: (res: any) => {
+					if (res) {
+						this.locations.map((r: any) => {
+							let c = res.relation.filter(
+								(i: any) => i.locId == r._id
+							);
 
-								if (c && c.length == 1) {
-									r['legalEntities'] =
-										c[0].legalEntities || [];
-									r['practices'] = c[0].practices || [];
-								}
-							});
-						}
+							if (c && c.length == 1) {
+								r['legalEntities'] =
+									c[0].legalEntities || [];
+								r['practices'] = c[0].practices || [];
+							}
+						});
 					}
-				});
+				}
+			});
 	}
 	getLocations() {
-		if(!this.bgId){
-		this.bgId = this.selectedBusinessGroup?.bgId
+		if (!this.bgId) {
+			this.bgId = this.selectedBusinessGroup?.bgId
 		}
 		if (this.selectedBusinessGroup) {
 			this.locationService
@@ -108,12 +108,12 @@ export class MappingComponent implements OnInit, OnDestroy {
 					next: (res) => {
 						this.locations = res;
 					},
-					error: () => {}
+					error: () => { }
 				});
 		}
 	}
 	getLegalEntities() {
-		if(!this.bgId){
+		if (!this.bgId) {
 			this.bgId = this.selectedBusinessGroup?.bgId
 		}
 		if (this.selectedBusinessGroup) {
@@ -123,12 +123,12 @@ export class MappingComponent implements OnInit, OnDestroy {
 					next: (res) => {
 						this.legalEntities = res;
 					},
-					error: () => {}
+					error: () => { }
 				});
 		}
 	}
 	getPractices() {
-		if(!this.bgId){
+		if (!this.bgId) {
 			this.bgId = this.selectedBusinessGroup?.bgId
 		}
 		if (this.selectedBusinessGroup) {
@@ -138,7 +138,7 @@ export class MappingComponent implements OnInit, OnDestroy {
 					next: (res) => {
 						this.practices = res;
 					},
-					error: () => {}
+					error: () => { }
 				});
 		}
 	}
@@ -173,25 +173,36 @@ export class MappingComponent implements OnInit, OnDestroy {
 		}
 	}
 	handleCancel() {
-		// this.alertService
-		// 	.conformAlert('Are you sure?', 'You want to exit')
-		// 	.then((result) => {
-		// 		if (result.value) {
-		// 			this.routeLocation.back();
-		// 		}
-		// 	});
+		this.alertService
+			.conformAlert('Please confirm', 'Do you want to discard the changes?')
+			.then((result) => {
+				if (result.value) {
+					this.businessGroupDropdownSupscription =
+						this.businessGroupDropdownService
+							.businessGroup()
+							.subscribe((bg) => {
+								if (bg) {
+									this.selectedBusinessGroup = bg;
+									this.getUserOrdID();
+									this.getLocations();
+									this.getLegalEntities();
+									this.getPractices();
+								}
+							});
+				}
+			});
 	}
 	selectionValueChange() {
 		this.saveButtonEnable = false;
 	}
-	getUserOrdID(){
-		let bgOrdID:any = localStorage.getItem('selected_business_group');
-		if(bgOrdID == null){
-		  this.bgId = 'intelliveer';
-		  this.getMappingSuperUser();
-		}else{
-		  this.bgId = '';
-		  this.getMapping();
+	getUserOrdID() {
+		let bgOrdID: any = localStorage.getItem('selected_business_group');
+		if (bgOrdID == null) {
+			this.bgId = 'intelliveer';
+			this.getMappingSuperUser();
+		} else {
+			this.bgId = '';
+			this.getMapping();
 		}
-	  }
+	}
 }

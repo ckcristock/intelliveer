@@ -1,4 +1,4 @@
-<form autocomplete="off">
+<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
     <div class="mainformsection">
         <div class="two-items">
             <h6 class="heading" style="font-weight: bolder;">Dentist</h6>
@@ -29,7 +29,8 @@
                             type="text"
                             placeholder="Type Name"
                             name=""
-                            [(ngModel)]="dentist.namesGenrDents" [ngModelOptions]="{standalone: true}"
+                            formControlName="namesGenrDents"
+                            [(ngModel)]="dentist.namesGenrDents"
                         />
                         <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
                     </div>
@@ -47,7 +48,8 @@
                         type="text"
                         placeholder=""
                         name=""
-                        [(ngModel)]="dentist.officeName" [ngModelOptions]="{standalone: true}"
+                        formControlName="officeName"
+                        [(ngModel)]="dentist.officeName"
                     />
                 </div>
             </div>
@@ -61,7 +63,8 @@
                         type="text"
                         placeholder=""
                         name=""
-                        [(ngModel)]="dentist.firstName" [ngModelOptions]="{standalone: true}"
+                        formControlName="firstName"
+                        [(ngModel)]="dentist.firstName"
                     />
                 </div>
             </div>
@@ -73,7 +76,8 @@
                         type="text"
                         placeholder=""
                         name=""
-                        [(ngModel)]="dentist.lastName" [ngModelOptions]="{standalone: true}"
+                        formControlName="lastName"
+                        [(ngModel)]="dentist.lastName"
                     />
                 </div>
             </div>
@@ -87,7 +91,8 @@
                         type="text"
                         placeholder=""
                         name=""
-                        [(ngModel)]="dentist.officePhoneNum" [ngModelOptions]="{standalone: true}"
+                        formControlName="officePhoneNum"
+                        [(ngModel)]="dentist.officePhoneNum"
                     />
                 </div>
             </div>
