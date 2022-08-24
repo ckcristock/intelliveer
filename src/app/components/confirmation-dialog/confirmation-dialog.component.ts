@@ -33,22 +33,37 @@ export class ConfirmationDialogComponent implements OnInit {
 							if (result.isConfirmed) {
 								console.log("result", result);
 								this.close();
-							} else if (result.isDismissed && result.dismiss == "cancel") {
+							} else if (result.isDismissed && (result.dismiss == "cancel")) {
 								// For Add Patient Module
-								// this.addPatientServ["setLegalGuardCWPFromPopup"]();
-								this.addPatientServ["setConditions"]();
-								this.addPatientServ.callFuntion("test");
-								let allConditions = this.addPatientServ.getAllConditions();
-								// for (let i = 0; i < allConditions.length; i++) {
-								// 	if (allConditions[i].condition) {
-								// 		let functionString = allConditions[i].function.toString();
-								// 		this.addPatientServ[functionString]();
-								// 	}
-								// }
+								let conditions = this.addPatientServ.getConditions();
+								for (let i = 0; i < conditions.length; i++) {
+									if (conditions[i].condition) {
+										switch (conditions[i].section) {
+											case 'callersinfo':
+												this.addPatientServ.setCallersInfoCWPFromPopup()
+												break;
+											case 'patient':
+												this.addPatientServ.setPatientCWPFromPopup()
+												break;
+											case 'legalguardian':
+												this.addPatientServ.setLegalGuardCWPFromPopup();
+												break;
+											case 'dentist':
+												this.addPatientServ.setDentistCWPFromPopup();
+												break;
+											case 'referrer':
+												this.addPatientServ.setReferrerCWPFromPopup();
+												break;
+											case 'insurance':
+												this.addPatientServ.setInsuranceCWPFromPopup();
+												break;
+										}
+									}
+								}
 								console.log("result.isDenied", result.isDenied);
 								this.close();
 								// End Add Patient Module
-							} else if (result.isDismissed && result.dismiss == "close") {
+							} else if (result.isDismissed && (result.dismiss == "close")) {
 								this.cancel();
 							}
 						});

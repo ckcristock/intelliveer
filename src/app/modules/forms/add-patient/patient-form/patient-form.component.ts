@@ -77,61 +77,66 @@ export class PatientFormComponent implements OnInit {
 				});
 	}
 
-  async ngOnInit() {
-    this.initForm(this.formData);
-    if (this.tab == 'coordWithProspect') {
-    this.addPatientServ.setFalseAllNotPristineCWP();
-      this.patientArray = await this.addPatientServ.getPatientCWP();
-      this.callersInfo = await this.addPatientServ.getCallerInfoCWP();
-      if (this.patientArray != null) {
-        this.patient.firstName = this.patientArray.firstName;
-        this.patient.lastName = this.patientArray.lastName;
-        this.patient.dateBirth = this.patientArray.dateBirth;
-      }
-      if (this.callersInfo.callerSelfPatient == true) {
-        this.patient.firstName = this.callersInfo.firstName;
-        this.patient.lastName = this.callersInfo.lastName;
-        this.patient.dateBirth = this.patientArray.DOB;
-      }
-      this.Form?.statusChanges.subscribe(
-        result => {
-          console.log(result)
-          if (!this.Form.pristine) {
-            console.log("hiiiiii", event);
-            console.log("status", this.Form.pristine);
-  
-            this.addPatientServ.setPatientNotPristineCWP(true);
-            
-          }
-        }
-      );
-    } else if (this.tab == 'quickAdd') {
-      this.patientArray = await this.addPatientServ.getPatientQuiAdd();
-      if (this.patientArray != null) {
-        this.patient.firstName = this.patientArray.firstName;
-        this.patient.lastName = this.patientArray.lastName;
-        this.patient.dateBirth = this.patientArray.dateBirth;
-      }
-    }
-  }
+	async ngOnInit() {
+		this.initForm(this.formData);
+		if (this.tab == 'coordWithProspect') {
+			this.addPatientServ.setFalseAllNotPristineCWP();
+			this.addPatientServ.getPatientFromCompone(this.getPatient.bind(this));
+			this.patientArray = await this.addPatientServ.getPatientCWP();
+			this.callersInfo = await this.addPatientServ.getCallerInfoCWP();
+			if (this.patientArray != null) {
+				this.patient.firstName = this.patientArray.firstName;
+				this.patient.lastName = this.patientArray.lastName;
+				this.patient.dateBirth = this.patientArray.dateBirth;
+			}
+			if (this.callersInfo.callerSelfPatient == true) {
+				this.patient.firstName = this.callersInfo.firstName;
+				this.patient.lastName = this.callersInfo.lastName;
+				this.patient.dateBirth = this.patientArray.DOB;
+			}
+			this.Form?.statusChanges.subscribe(
+				result => {
+					console.log(result)
+					if (!this.Form.pristine) {
+						console.log("hiiiiii", event);
+						console.log("status", this.Form.pristine);
 
-  continueToLegalGuar() {
-    if (this.tab == "coordWithProspect") {
-      this.addPatientServ.setPatientNotPristineCWP(false);
-      this.addPatientServ.setPatientCWP(this.patient);
-      let visitedArray: any = JSON.parse(localStorage.getItem("visitedArray") || '[]');
-      visitedArray.push("Patient");
-      localStorage.setItem("visitedArray", JSON.stringify(visitedArray));
-      this.router.navigate([this.menuItemsOfCordinate[2].url]);
+						this.addPatientServ.setPatientNotPristineCWP(true);
 
-    } else if (this.tab == "quickAdd") {
-      this.addPatientServ.setPatientQuiAdd(this.patient);
-      let visitedArrayQuick: any = JSON.parse(localStorage.getItem("visitedArrayQuick") || '[]');
-      visitedArrayQuick.push("Patient");
-      localStorage.setItem("visitedArrayQuick", JSON.stringify(visitedArrayQuick));
-      this.router.navigate([this.menuItemsOfQuickAdd[1].url]);
-    }
-  }
+					}
+				}
+			);
+		} else if (this.tab == 'quickAdd') {
+			this.patientArray = await this.addPatientServ.getPatientQuiAdd();
+			if (this.patientArray != null) {
+				this.patient.firstName = this.patientArray.firstName;
+				this.patient.lastName = this.patientArray.lastName;
+				this.patient.dateBirth = this.patientArray.dateBirth;
+			}
+		}
+	}
+
+	getPatient() {
+		return [this.patient];
+	}
+
+	continueToLegalGuar() {
+		if (this.tab == "coordWithProspect") {
+			this.addPatientServ.setPatientNotPristineCWP(false);
+			this.addPatientServ.setPatientCWP(this.patient);
+			let visitedArray: any = JSON.parse(localStorage.getItem("visitedArray") || '[]');
+			visitedArray.push("Patient");
+			localStorage.setItem("visitedArray", JSON.stringify(visitedArray));
+			this.router.navigate([this.menuItemsOfCordinate[2].url]);
+
+		} else if (this.tab == "quickAdd") {
+			this.addPatientServ.setPatientQuiAdd(this.patient);
+			let visitedArrayQuick: any = JSON.parse(localStorage.getItem("visitedArrayQuick") || '[]');
+			visitedArrayQuick.push("Patient");
+			localStorage.setItem("visitedArrayQuick", JSON.stringify(visitedArrayQuick));
+			this.router.navigate([this.menuItemsOfQuickAdd[1].url]);
+		}
+	}
 
 	initForm(data?: any) {
 		data = data || {};

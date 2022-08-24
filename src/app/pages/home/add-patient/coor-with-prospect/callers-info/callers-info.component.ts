@@ -55,6 +55,7 @@ export class CallersInfoComponent implements OnInit {
   async ngOnInit() {
     this.initForm(this.formData);
     this.addPatientServ.setFalseAllNotPristineCWP();
+    this.addPatientServ.getCallersInfoFromCompone(this.getCallersInfo.bind(this));
     this.Form.statusChanges.subscribe(
       result => {
         console.log(result)
@@ -147,6 +148,10 @@ export class CallersInfoComponent implements OnInit {
         }
       }
     }, 20);
+  }
+
+  getCallersInfo() {
+    return [this.callersInfo];
   }
 
   continueToPatient() {

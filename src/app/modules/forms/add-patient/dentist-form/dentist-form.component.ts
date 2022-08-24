@@ -45,6 +45,7 @@ export class DentistFormComponent implements OnInit {
   async ngOnInit() {
     this.initForm(this.formData);
     this.addPatientServ.setFalseAllNotPristineCWP();
+    this.addPatientServ.getDentistFromCompone(this.getDentist.bind(this));
     if (this.tab == 'coordWithProspect') {
       this.dentistArray = await this.addPatientServ.getDentistCWP();
       this.Form.statusChanges.subscribe(
@@ -83,6 +84,10 @@ export class DentistFormComponent implements OnInit {
 
   save(data: any) {
     console.log(data);
+  }
+
+  getDentist() {
+    return [this.dentist];
   }
 
   continueToReferrer() {

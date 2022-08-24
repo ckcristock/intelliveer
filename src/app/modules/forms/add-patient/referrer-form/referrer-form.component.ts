@@ -50,6 +50,7 @@ export class ReferrerFormComponent implements OnInit {
     this.initForm(this.formData);
     if (this.tab == 'coordWithProspect') {
       this.addPatientServ.setFalseAllNotPristineCWP();
+      this.addPatientServ.getReferrerFromCompone(this.getReferrer.bind(this));
       this.Form.statusChanges.subscribe(
         result => {
           console.log(result)
@@ -101,6 +102,10 @@ export class ReferrerFormComponent implements OnInit {
         this.sameAsDentistFunct(false);
       }
     }
+  }
+
+  getReferrer() {
+    return [this.referrer];
   }
 
   continueToInsurance() {

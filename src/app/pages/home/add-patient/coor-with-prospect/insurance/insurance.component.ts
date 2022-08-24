@@ -99,6 +99,7 @@ export class InsuranceComponent implements OnInit {
   async ngOnInit() {
     this.initForm(this.formData);
     this.addPatientServ.setFalseAllNotPristineCWP();
+    this.addPatientServ.getInsuranceFromCompone(this.getInsurances.bind(this));
     this.Form.statusChanges.subscribe(
       result => {
         console.log(result)
@@ -278,6 +279,9 @@ export class InsuranceComponent implements OnInit {
     }, 20);
   }
 
+  getInsurances() {
+    return [this.insurances];
+  }
 
   continueToFamilyMemb() {
     this.AddPatientService.setInsuranceP1CWP(this.insurances);
@@ -287,7 +291,7 @@ export class InsuranceComponent implements OnInit {
     localStorage.setItem("visitedArray", JSON.stringify(visitedArray));
     this.router.navigate([this.menuItems[6].url]);
   }
-  
+
   initForm(data?: any) {
     data = data || {};
     this.Form = this.fb.group({
@@ -315,7 +319,7 @@ export class InsuranceComponent implements OnInit {
   save(data: any) {
     console.log(data);
   }
-  
+
   onNavChange(changeEvent: NgbNavChangeEvent) {
     if (changeEvent.nextId === 1) {
       this.active = 1;
