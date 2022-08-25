@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { RoleGuardGuard } from '@guards/role-based/role-guard.guard';
 import { UserManagementComponent } from './user-management.component';
 
 const routes: Routes = [
@@ -15,6 +16,11 @@ const routes: Routes = [
      
       {
         path: 'manage-user',
+        canActivate: [RoleGuardGuard],
+        data:{
+					isEnabled: true,
+					value: "CAN_RETRIEVE_USER",
+				  },
         loadChildren: () =>
           import(
             '@pages/settings/user-management/manage-user/manage-user.module').then(
@@ -23,6 +29,11 @@ const routes: Routes = [
       },
       {
         path: 'manage-user/add-user',
+        canActivate: [RoleGuardGuard],
+        data:{
+					isEnabled: true,
+					value: "CAN_CREATE_USER",
+				  },
         loadChildren: () =>
           import(
             '@pages/settings/user-management/manage-user/add-user/add-user.module').then(

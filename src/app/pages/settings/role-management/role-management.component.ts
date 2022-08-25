@@ -10,11 +10,11 @@ import { GlobalRoutesService } from '@services/global-routes/global-routes.servi
 export class RoleManagementComponent implements OnInit {
 
   urlSettings!: string;
-  menuItems:any [] = [
-    {title: "Manage Role Templates", url: '/dashboard/settings/role-management/manage-role-template'},
-    {title: "Manage Role", url: '/dashboard/settings/role-management/manage-role'},
-  ];
-
+  // menuItems:any [] = [
+  //   {title: "Manage Role Templates", url: '/dashboard/settings/role-management/manage-role-template'},
+  //   {title: "Manage Role", url: '/dashboard/settings/role-management/manage-role'},
+  // ];
+  menuItems:any;
 
   constructor(private routes: GlobalRoutesService,
     private authService: AuthService
@@ -23,9 +23,14 @@ export class RoleManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let user = this.authService.getLoggedInUser();
+    let user:any = localStorage.getItem('permissionSet');
+    user = JSON.parse(user)
+    this.menuItems = this.routes.getSettingsRoleManageRoutes();
     if(!user?.__ISSU__){
-      delete this.menuItems[0].title
+      if(this.menuItems[0].title == "Manage Role Templates"){
+        delete this.menuItems[0].title
+      }
+      
     }
   }
 

@@ -8,11 +8,13 @@ import {
 	NgbTooltipModule,
 } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SearchStringPipePipe } from 'src/app/pipes/stringSearch/search-string-pipe.pipe';
 
 @NgModule({
 	declarations: [OnboardingComponent, ],
 	imports: [CommonModule, OnboardingRoutingModule,
 		NgbAccordionModule, NgbTooltipModule,
 		FormsModule, ReactiveFormsModule],
+		providers: [ SearchStringPipePipe ]
 })
 export class OnboardingModule {}

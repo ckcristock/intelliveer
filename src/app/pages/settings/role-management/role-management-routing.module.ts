@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { RoleGuardGuard } from '@guards/role-based/role-guard.guard';
 import { RoleManagementComponent } from './role-management.component';
 
 const routes: Routes = [
@@ -14,6 +15,11 @@ const routes: Routes = [
       },
       {
         path: 'manage-role-template',
+        canActivate: [RoleGuardGuard],
+				data:{
+					isEnabled: true,
+					value: "CAN_RETRIEVE_ROLE_TEMPLATE",
+				  },
         loadChildren: () =>
           import('@pages/settings/role-management/role-templates/role-templates.module').then(
             (m) => m.RoleTemplatesModule
@@ -21,6 +27,11 @@ const routes: Routes = [
       },
       {
         path: 'manage-role-template/add',
+        canActivate: [RoleGuardGuard],
+				data:{
+					isEnabled: true,
+					value: "CAN_CREATE_ROLE_TEMPLATE",
+				  },
         loadChildren: () =>
           import('@pages/settings/role-management/role-templates/add-role-template/add-role-template.module').then(
             (m) => m.AddRoleTemplateModule
@@ -28,6 +39,11 @@ const routes: Routes = [
       },
       {
         path: 'manage-role-template/edit',
+        canActivate: [RoleGuardGuard],
+				data:{
+					isEnabled: true,
+					value: "CAN_EDIT_ROLE_TEMPLATE",
+				  },
         loadChildren: () =>
           import('@pages/settings/role-management/role-templates/add-role-template/add-role-template.module').then(
             (m) => m.AddRoleTemplateModule

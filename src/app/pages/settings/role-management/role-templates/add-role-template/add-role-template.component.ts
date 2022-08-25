@@ -397,4 +397,40 @@ export class AddRoleTemplateComponent implements OnInit {
       data.controls.allowOverride.value = false
     }
   }
+  changeAdmin(){
+    this.roleTemplateForm.value.permissions[0].sections.map((permission: any) => {
+      permission.permissions.map((perm:any)=>{
+        if(permission.section == "templateBasedRestrictedRoles"){
+          perm.enabled = true;
+          perm.locked = true;
+        }else if(permission.section == "templateBasedUnRestrictedRoles"){
+          perm.enabled = true;
+          perm.locked = true;
+        }
+      })
+    })
+    this.roleTemplateForm.patchValue(this.roleTemplateForm.value)
+    console.log(this.roleTemplateForm.value)
+  }
+  changeNonAdmin(){
+    this.roleTemplateForm.value.permissions[0].sections.map((permission: any) => {
+      permission.permissions.map((perm:any)=>{
+        if(permission.section == "templateBasedRestrictedRoles"){
+          perm.enabled = false;
+          perm.locked = false;
+        }else if(permission.section == "templateBasedUnRestrictedRoles"){
+          if(perm.name == "CAN_RETRIEVE_TEMPLATE_BASED_UNRESTRICTED_ROLE"){
+            perm.enabled = true
+          }else{
+            perm.enabled = false;
+            perm.locked = false;
+          }
+          
+        }
+      })
+    })
+    this.roleTemplateForm.patchValue(this.roleTemplateForm.value)
+    console.log(this.roleTemplateForm.value)
+  }
+  
 }

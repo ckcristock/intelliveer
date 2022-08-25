@@ -1,10 +1,10 @@
-<app-nav-bar-pills
+<!-- <app-nav-bar-pills
 	[cancelBtn]="true"
 	[saveBtn]="true"
 	[disableSaveBtn]="Form.invalid"
 	(onCancel)="cancel()"
 	(onSave)="save(Form.value)"
-></app-nav-bar-pills>
+></app-nav-bar-pills> -->
 
 <form
 	autocomplete="off"
@@ -12,6 +12,21 @@
 	#f="ngForm"
 	(submit)="save(f.value)"
 >
+<div class="row sticky" style="width: 101%;">
+	<div class="col-11">
+		<div class="col pills menuheight">
+			<p>&nbsp;</p>
+		</div>
+	</div>
+	<div class="col-1 d-flex justify-content-center align-items-center mb-3 gap-2">
+		<button [disabled]="Form?.invalid" (click)="save(Form.value)" class="save"> <img src="/assets/icons/save.svg"
+				style="width: 37px; height: 37px; cursor: pointer;" alt="" *ngIf="isSaveButton"/></button>
+
+		<img src="/assets/icons/Edit.svg"
+			style="width: 37px; height: 37px; cursor: pointer;" alt="" (click)="checkPermission()"/>
+	</div>
+</div>
+<!-- content -->
 	<!-- content -->
 	<div class="section" id="main">
 		<div class="row formrow">

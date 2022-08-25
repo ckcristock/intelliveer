@@ -82,6 +82,7 @@ export class SettingsComponent implements OnInit {
         console.log(res)
         this.selectedBusinessGroup = (this.orgID) ? this.orgID : res.bgId;
         this.disableBGDropdown = res.disabled;
+        console.log(this.selectedBusinessGroup)
       }
       
     });
@@ -114,20 +115,7 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     
     //getting principal routes
-    this.menuItems[0].url = this.globalRoutes.getSettingsOnboardingUrl();
-    this.menuItems[1].url = this.globalRoutes.getSettingsRoleManageUrl();
-    this.menuItems[2].url = this.globalRoutes.getSettingsUserManageUrl();
-    this.menuItems[4].url = this.globalRoutes.getSettingsPreferencesUrl();
-    this.onboardingChilds = this.globalRoutes.getSettingsOnboardingRoutes();
-    this.roleManagementchilds = this.globalRoutes.getSettingsRoleManageRoutes();
-    this.userManagementchilds = this.globalRoutes.getSettingsUserManageRoutes();
-    let user = this.authService.getLoggedInUser();
-    if(!user?.__ISSU__){
-     this.menuItems[1].url = "/dashboard/settings/role-management/manage-role"
-    }
-    this.menuItems[0].childs=this.onboardingChilds;
-    this.menuItems[1].childs=this.roleManagementchilds;
-    this.menuItems[2].childs=this.userManagementchilds;
+    this.checkActiveRoutes();
    
   }
   getUserOrdID(){
@@ -153,7 +141,31 @@ export class SettingsComponent implements OnInit {
   
   }
   
-
+  /** Get Active Routes */
+  checkActiveRoutes(){
+    let onBoardingMenu = this.globalRoutes.getSettingsOnboardingRoutes();
+    for (let index = 0; index < onBoardingMenu.length; index++) {
+      if(onBoardingMenu[index].isEnabled){
+        this.menuItems[0].url = onBoardingMenu[index].url;
+        break;
+      }
+    }
+    //this.menuItems[0].url = this.globalRoutes.getSettingsOnboardingUrl();
+    this.menuItems[1].url = this.globalRoutes.getSettingsRoleManageUrl();
+    this.menuItems[2].url = this.globalRoutes.getSettingsUserManageUrl();
+    this.menuItems[4].url = this.globalRoutes.getSettingsPreferencesUrl();
+    this.onboardingChilds = this.globalRoutes.getSettingsOnboardingRoutes();
+    this.roleManagementchilds = this.globalRoutes.getSettingsRoleManageRoutes();
+    this.userManagementchilds = this.globalRoutes.getSettingsUserManageRoutes();
+    let user = this.authService.getLoggedInUser();
+    if(!user?.__ISSU__){
+     this.menuItems[1].url = "/dashboard/settings/role-management/manage-role"
+    }
+    this.menuItems[0].childs=this.onboardingChilds;
+    this.menuItems[1].childs=this.roleManagementchilds;
+    this.menuItems[2].childs=this.userManagementchilds;
+    console.log(this.menuItems,onBoardingMenu)
+  }
   setBusinessGroup(e: any) {
     this.businessGroupDropdownService.setSelectedBusinessGroup(
       e.target.value
