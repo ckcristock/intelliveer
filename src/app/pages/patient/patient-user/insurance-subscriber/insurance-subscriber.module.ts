@@ -4,6 +4,7 @@ import { InsuranceSubscriberComponent } from './insurance-subscriber.component';
 import { InsuranceSubscriberRoutingModule } from './insurance-subscriber-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
 
 
 
@@ -16,6 +17,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     InsuranceSubscriberRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    NavBarPillsModule,
     NgbModule //required for dropdown
   ]
 })

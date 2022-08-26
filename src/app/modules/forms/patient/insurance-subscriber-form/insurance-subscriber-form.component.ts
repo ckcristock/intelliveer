@@ -66,17 +66,8 @@ export class InsuranceSubscriberFormComponent implements OnInit {
 
     this.relationship = await this.patientUserServ.getInsuSubscToPati();
     this.Form.controls['relationship'].setValue(this.relationship);
-    // this.Form.controls['title'].setValue(this.insuranSubsc[0].title);
-    this.Form.controls['firstName'].setValue(this.insuranSubsc[0].firstName);
-    this.Form.controls['middleName'].setValue(this.insuranSubsc[0].middleName);
-    this.Form.controls['lastName'].setValue(this.insuranSubsc[0].lastName);
-    this.Form.controls['DOB'].setValue(this.insuranSubsc[0].DOB);
-    this.Form.controls['gender'].setValue(this.insuranSubsc[0].gender);
-    this.Form.controls['pronoun'].setValue(this.insuranSubsc[0].prefePronoun);
-    this.Form.controls['language'].setValue(this.insuranSubsc[0].language);
-    this.Form.controls['maried'].setValue(this.insuranSubsc[0].maritalStatus);
-    this.Form.controls['pPhoneType'].setValue(this.insuranSubsc[0].pPhoneType);
-    this.Form.controls['pPhoneNumber'].setValue(this.insuranSubsc[0].pPhoneNumber);
+
+    this.setUserDataToForm();
   }
 
   initForm(data?: any) {
@@ -91,26 +82,83 @@ export class InsuranceSubscriberFormComponent implements OnInit {
       gender: [data?.gender || ''],
       pronoun: [data?.pronoun || ''],
       language: [data?.language || ''],
-      maried: [data?.maried || ''],
+      martialStatus: [data?.martialStatus || ''],
+      lastUsedName: [data?.lastUsedName || ''],
       emailId: ['', ],
-      pPhoneType: [data?.pPhoneType || '', Validators.required],
-      pPhoneNumber: [data?.pPhoneNumber || '', [Validators.required, Validators.pattern("^[0-9]*$")]],
-      sPhoneType: [data?.sPhoneType || ''],
-      sPhoneNumber: [data?.sPhoneNumber || ''],
-      CommPrimary: [data?.CommPrimary || '',],
-      CommSecondary: [data?.CommSecondary || ''],
-      phone: [data?.phone || ''],
+      primaryPhoneType: [data?.primaryPhoneType || '', Validators.required],
+      primaryPhoneNumber: [data?.primaryPhoneNumber || '', [Validators.required, Validators.pattern("^[0-9]*$")]],
+      secondaryPhoneType: [data?.secondaryPhoneType || ''],
+      secondaryPhoneNumber: [data?.secondaryPhoneNumber || ''],
+      primaryPreferredCommunicationMethod: [data?.primaryPreferredCommunicationMethod || '',],
+      secondaryPreferredCommunicationMethod: [data?.secondaryPreferredCommunicationMethod || ''],
+      preferredTimingForCall: [data?.preferredTimingForCall || ''],
       workStatus: [data?.workStatus || ''],
       occupation: [data?.occupation || ''],
       employer: [data?.employer || ''],
-      ssn: [data?.ssn || ''],
-      rating: [data?.rating || '', Validators.pattern("^[0-9]*$")],
+      SSN: [data?.SSN || ''],
+      creditRating: [data?.creditRating || '', Validators.pattern("^[0-9]*$")],
       note: [data?.note || ''],
       address: this.addressFormService.getAddressForm(
         data?.address || {}
       )
     });
   }
+
+  setUserDataToForm() {
+		this.Form.controls['title'].setValue(this.formData.profile.title);
+		this.Form.controls['firstName'].setValue(
+			this.formData.profile.firstName
+		);
+		this.Form.controls['middleName'].setValue(
+			this.formData.profile.middleName
+		);
+		this.Form.controls['lastName'].setValue(this.formData.profile.lastName);
+		this.Form.controls['DOB'].setValue(this.formData.profile.DOB);
+		this.Form.controls['gender'].setValue(this.formData.profile.gender);
+		this.Form.controls['pronoun'].setValue(
+			this.formData.profile.preferredPronoun
+		);
+		this.Form.controls['language'].setValue(this.formData.profile.language);
+		this.Form.controls['martialStatus'].setValue(
+			this.formData.profile.maritalStatus
+		);
+		this.Form.controls['emailId'].setValue(this.formData.contact.email);
+		this.Form.controls['primaryPhoneType'].setValue(
+			this.formData.contact.primaryPhone.type
+		);
+		this.Form.controls['primaryPhoneNumber'].setValue(
+			this.formData.contact.primaryPhone.number
+		);
+		this.Form.controls['secondaryPhoneType'].setValue(
+			this.formData.contact.secondaryPhone.type
+		);
+		this.Form.controls['secondaryPhoneNumber'].setValue(
+			this.formData.contact.secondaryPhone.number
+		);
+		this.Form.controls['primaryPreferredCommunicationMethod'].setValue(
+			this.formData.contact.primaryPreferredCommunicationMethod
+		);
+		this.Form.controls['secondaryPreferredCommunicationMethod'].setValue(
+			this.formData.contact.secondaryPreferredCommunicationMethod
+		);
+		this.Form.controls['preferredTimingForCall'].setValue(
+			this.formData.contact.preferredTimingForCall
+		);
+		this.Form.controls['workStatus'].setValue(
+			this.formData.financials.workStatus
+		);
+		this.Form.controls['occupation'].setValue(
+			this.formData.financials.occupation
+		);
+		this.Form.controls['employer'].setValue(
+			this.formData.financials.employer
+		);
+		this.Form.controls['creditRating'].setValue(
+			this.formData.financials.creditRating
+		);
+		this.Form.controls['SSN'].setValue(this.formData.financials.SSN);
+		this.Form.controls['note'].setValue(this.formData.notes);
+	}
 
   firstNameValid() {
     return this.Form.get('firstName')?.valid;
@@ -128,24 +176,24 @@ export class InsuranceSubscriberFormComponent implements OnInit {
     return this.Form.get('DOB')?.value.length > 0;
   }
 
-  pPhoneTypeValid() {
-    return this.Form.get('pPhoneType')?.valid;
+  primaryPhoneTypeValid() {
+    return this.Form.get('primaryPhoneType')?.valid;
   }
 
-  pPhoneNumberValid() {
-    return this.Form.get('pPhoneNumber')?.valid;
+  primaryPhoneNumberValid() {
+    return this.Form.get('primaryPhoneNumber')?.valid;
   }
 
   commPrimaryValid() {
-    return this.Form.get('CommPrimary')?.value.length > 0;
+    return this.Form.get('primaryPreferredCommunicationMethod')?.value.length > 0;
   }
 
   emailValid() {
     return this.Form.get('emailId')?.value.length > 0;
   }
 
-  ratingValid(){
-    return this.Form.get('rating')?.value.length > 0 && this.Form.get('rating')?.valid;
+  creditRatingValid(){
+    return this.Form.get('creditRating')?.value.length > 0 && this.Form.get('creditRating')?.valid;
   }
 
   async getStaticData() {
@@ -164,13 +212,7 @@ export class InsuranceSubscriberFormComponent implements OnInit {
 
   save(data: any) {
     this.onSubmit.emit(data);
-    this.patientUserServ.setInsuSubsc(data);
-    this.patientUserServ.setPatientFamiMemb(data.relationship, data);
     this.Form.markAsPristine();
-    this.alertService.success(
-      'Success',
-      'Insurance Subscriber has been updated successfully'
-    );
   }
   cancel() {
     this.onCancel.emit();
