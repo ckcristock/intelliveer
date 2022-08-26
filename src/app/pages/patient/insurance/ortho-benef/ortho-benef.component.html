@@ -1,7 +1,7 @@
 <div class="row" *ngIf="Form">
 	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
 		[disableSaveBtn]="Form.invalid" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills>
-	<form [formGroup]="Form"  #f="ngForm" (submit)="save(f.value)">
+	<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
 		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section" id="eligibility">
 				<div class="mainformsection">
@@ -28,16 +28,18 @@
 							<div class="col-3">
 								<label class="label-input-gap">Calendar Year / Fiscal Year</label>
 								<ng-select placeholder="Select" [items]="years" bindLabel="name" bindValue="name"
-									name="calendarFiscal" [(ngModel)]="selectedYear" [ngModelOptions]="{standalone: true}">
+									name="calendarFiscal" [(ngModel)]="selectedYear" formControlName="calendarFiscal">
 								</ng-select>
 							</div>
 							<div class="col-3" *ngIf="selectedYear == years[1].name">
 								<label class="label-input-gap">Begin Date</label>
-								<input class="form-control" type="text" placeholder="" name="" />
+								<input class="form-control" type="text" placeholder="" name=""
+									formControlName="beginDate" />
 							</div>
 							<div class="col-3" *ngIf="selectedYear == years[1].name">
 								<label class="label-input-gap">End Date</label>
-								<input class="form-control" type="text" placeholder="" name="" />
+								<input class="form-control" type="text" placeholder="" name=""
+									formControlName="endDateEligi" />
 							</div>
 						</div>
 					</div>
@@ -45,23 +47,26 @@
 						<div class="row">
 							<div class="col-3">
 								<label class="label-input-gap">Month to Month Eligibility?</label>
-								<select class="form-select">
+								<select class="form-select" formControlName="monthtoMonEligi">
 									<option disabled>Select Website</option>
 									<option>Select</option>
 								</select>
 							</div>
 							<div class="col-3">
 								<label class="label-input-gap">Age limit for subscriber</label>
-								<input class="form-control" type="text" placeholder="" name="" />
+								<input class="form-control" type="text" placeholder="" name=""
+									formControlName="ageLimitSubsc" />
 							</div>
 							<div class="col-3">
 								<label class="label-input-gap">Age limit for dependant (Child)</label>
-								<input class="form-control" type="text" placeholder="" name="" />
+								<input class="form-control" type="text" placeholder="" name=""
+									formControlName="ageLimitDepenChild" />
 							</div>
 							<div class="col-3">
 								<label class="label-input-gap">Age limit for dependant
 									(Student)</label>
-								<input class="form-control" type="text" placeholder="" name="" />
+								<input class="form-control" type="text" placeholder="" name=""
+									formControlName="ageLimitDepenStud" />
 							</div>
 						</div>
 					</div>
@@ -75,7 +80,7 @@
 							<div class="col-3">
 								<div class="">
 									<label class="label-input-gap">Type of Coordination of benefits</label>
-									<select class="form-select">
+									<select class="form-select" formControlName="coordBenef">
 										<option disabled>Select Website</option>
 										<option>Select</option>
 									</select>
@@ -84,7 +89,7 @@
 							<div class="col-3">
 								<div class="">
 									<label class="label-input-gap">Assignment of Benefits</label>
-									<select class="form-select">
+									<select class="form-select" formControlName="assignBenef">
 										<option disabled>Select Website</option>
 										<option>Select</option>
 									</select>
@@ -94,7 +99,7 @@
 								<div class="">
 									<label class="label-input-gap">Are the fees based on contract or
 										UCR?</label>
-									<select class="form-select">
+									<select class="form-select" formControlName="feesUCR">
 										<option disabled>Select Website</option>
 										<option>Select</option>
 									</select>
@@ -103,7 +108,7 @@
 							<div class="col-3">
 								<div class="">
 									<label class="label-input-gap">If contract, which fee schedule?</label>
-									<select class="form-select">
+									<select class="form-select" formControlName="feeSched">
 										<option disabled>Select Website</option>
 										<option>Select</option>
 									</select>
@@ -121,26 +126,30 @@
 							<div class="col-3">
 								<div class="">
 									<label class="label-input-gap">Deductible (Family)</label>
-									<input class="form-control" type="text" placeholder="" name="" />
+									<input class="form-control" type="text" placeholder="" name=""
+										formControlName="deducFam" />
 								</div>
 							</div>
 							<div class="col-3">
 								<div class="">
 									<label class="label-input-gap">Deductible remaining (Family)</label>
-									<input class="form-control" type="text" placeholder="" name="" />
+									<input class="form-control" type="text" placeholder="" name=""
+										formControlName="deducRemaiFam" />
 								</div>
 							</div>
 							<div class="col-3">
 								<div class="">
 									<label class="label-input-gap">Deductible (Individual)</label>
-									<input class="form-control" type="text" placeholder="" name="" />
+									<input class="form-control" type="text" placeholder="" name=""
+										formControlName="deducIndiv" />
 								</div>
 							</div>
 							<div class="col-3">
 								<div class="">
 									<label class="label-input-gap">Deductible remaining
 										(Individual)</label>
-									<input class="form-control" type="text" placeholder="" name="" />
+									<input class="form-control" type="text" placeholder="" name=""
+										formControlName="deducRemaiIndiv" />
 								</div>
 							</div>
 						</div>
@@ -150,7 +159,8 @@
 							<div class="col-3">
 								<div class="">
 									<label class="label-input-gap">Percentage Covered for Ortho:</label>
-									<input class="form-control" type="text" placeholder="" name="" />
+									<input class="form-control" type="text" placeholder="" name=""
+										formControlName="percenCoveOrtho" />
 								</div>
 							</div>
 							<div class="col-3">
@@ -171,7 +181,7 @@
 							<div class="col-3">
 								<div class="">
 									<label class="label-input-gap">When does it end?</label>
-									<select class="form-select">
+									<select class="form-select" formControlName="whenEnd">
 										<option disabled>Select Website</option>
 										<option>Select</option>
 									</select>
@@ -180,7 +190,8 @@
 							<div class="col-3">
 								<div class="">
 									<label class="label-input-gap">End Date</label>
-									<input class="form-control" type="text" placeholder="" name="" />
+									<input class="form-control" type="text" placeholder="" name=""
+										formControlName="endDateDeduct" />
 								</div>
 							</div>
 						</div>
@@ -195,7 +206,7 @@
 							<div class="col-4">
 								<label class="label-input-gap">Orthodontic Maximum Type:
 									Lifetime/Annual</label>
-								<ng-select placeholder="Select">
+								<ng-select placeholder="Select" formControlName="maxTypeAnnual">
 									<ng-option>Select Website</ng-option>
 								</ng-select>
 							</div>
@@ -203,14 +214,16 @@
 								<div class="">
 									<label class="label-input-gap">Orthodontic Maximum Amount (In
 										Network)</label>
-									<input class="form-control" type="text" placeholder="" name="" />
+									<input class="form-control" type="text" placeholder="" name=""
+										formControlName="maxAmounInNet" />
 								</div>
 							</div>
 							<div class="col-4">
 								<div class="">
 									<label class="label-input-gap">Orthodontic Maximum Amount (Out
 										Network)</label>
-									<input class="form-control" type="text" placeholder="" name="" />
+									<input class="form-control" type="text" placeholder="" name=""
+										formControlName="maxAmounOutNet" />
 								</div>
 							</div>
 						</div>
@@ -220,7 +233,7 @@
 							<div class="col-3">
 								<div class="">
 									<label class="label-input-gap">Any benefits used?</label>
-									<select class="form-select">
+									<select class="form-select" formControlName="benefUsed">
 										<option disabled>Select Website</option>
 										<option>Select</option>
 									</select>
@@ -229,7 +242,8 @@
 							<div class="col-3">
 								<div class="">
 									<label class="label-input-gap">Remaining benefits</label>
-									<input class="form-control" type="text" placeholder="" name="" />
+									<input class="form-control" type="text" placeholder="" name=""
+										formControlName="remaninBenef" />
 								</div>
 							</div>
 							<div class="col-3">
@@ -441,15 +455,17 @@
 						<div class="">
 							<p class="label-input-gap">Do we need to submit:</p>
 							<div class="more-two-radios" style="width: 300px;">
-									<div class="rowinputs">
-										<input class="form-check-input" type="radio" name="wesubmit" id="wesubmit1" autocomplete="off" checked />
-										<label class="form-check-label" for="wesubmit1">Periodic Claims</label>
-									</div>
+								<div class="rowinputs">
+									<input class="form-check-input" type="radio" name="wesubmit" id="wesubmit1"
+										autocomplete="off" checked />
+									<label class="form-check-label" for="wesubmit1">Periodic Claims</label>
+								</div>
 
-									<div class="rowinputs">
-										<input class="form-check-input" type="radio" name="wesubmit" id="wesubmit2" autocomplete="off" />
-										<label class="form-check-label" for="wesubmit2">Recertification Forms?</label>
-									</div>
+								<div class="rowinputs">
+									<input class="form-check-input" type="radio" name="wesubmit" id="wesubmit2"
+										autocomplete="off" />
+									<label class="form-check-label" for="wesubmit2">Recertification Forms?</label>
+								</div>
 							</div>
 						</div>
 					</div>

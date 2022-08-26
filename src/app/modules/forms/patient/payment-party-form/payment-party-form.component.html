@@ -1,6 +1,7 @@
 <div class="row formrow" *ngIf="Form">
 	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
-		[disableSaveBtn]="Form.invalid || Form.pristine" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills>
+		[disableSaveBtn]="Form.invalid || Form.pristine" (onCancel)="cancel()" (onSave)="save(Form.value)">
+	</app-nav-bar-pills>
 	<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
 		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section" id="overview">
@@ -35,18 +36,19 @@
 				<div class="row formrow">
 					<div class="col-3">
 						<label class="label-input-gap">Relationship with Patient</label>
-						<select class="form-select input-upper" formControlName="relationship">
-							<option [value]="relationship">
-								{{relationship}}</option>
-						</select>
+						<ng-select class="input-upper" formControlName="relationship">
+							<ng-option [value]="relationship">
+								{{relationship}}
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col-3">
 						<label class="label-input-gap">Title</label>
-						<select class="form-select input-upper" formControlName="title">
-							<option [value]="title.value" *ngFor="let title of famiMembTitle.title">
+						<ng-select class="input-upper" formControlName="title" placeholder="Select">
+							<ng-option [value]="title.value" *ngFor="let title of famiMembTitle.title">
 								{{ title.label }}
-							</option>
-						</select>
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">First Name</label>
@@ -73,32 +75,35 @@
 					</div>
 					<div class="col-3">
 						<label class="label-input-gap">Gender</label>
-						<select class="form-select input-upper" formControlName="gender">
-							<option value="M">Male</option>
-							<option value="F">Female</option>
-						</select>
+						<ng-select class="input-upper" formControlName="gender" placeholder="Select">
+							<ng-option [value]="gender.value" *ngFor="let gender of genders">
+								{{ gender.label }}
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Preferred Pronoun</label>
-						<select class="form-select input-upper" formControlName="pronoun">
-							<option [value]="pronoun.pronoun" *ngFor="let pronoun of pronouns">
+						<ng-select class="input-upper" formControlName="pronoun" placeholder="Select">
+							<ng-option [value]="pronoun.pronoun" *ngFor="let pronoun of pronouns">
 								{{ pronoun.pronoun }}
-							</option>
-						</select>
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Language</label>
-						<select class="form-select input-upper" formControlName="language">
-							<option value="English">English</option>
-							<option value="Hindi">Hindi</option>
-						</select>
+						<ng-select class="input-upper" formControlName="language" placeholder="Select">
+							<ng-option [value]="language.value" *ngFor="let language of languages">
+								{{ language.label }}
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Marital Status</label>
-						<select class="form-select input-upper" formControlName="maried">
-							<option value="M">Maried</option>
-							<option value="S">Single</option>
-						</select>
+						<ng-select class="input-upper" formControlName="maried" placeholder="Select">
+							<ng-option [value]="maritalStatus.value" *ngFor="let maritalStatus of maritalStatuses">
+								{{ maritalStatus.label }}
+							</ng-option>
+						</ng-select>
 					</div>
 				</div>
 				<div class="row formrow">
@@ -132,12 +137,12 @@
 
 					<div class="col">
 						<label class="label-input-gap">Primary Phone Type</label>
-						<select class="form-select required-field input-upper" formControlName="pPhoneType"
+						<ng-select class="input-upper required-field input-upper" placeholder="Select" formControlName="pPhoneType"
 							[class.valid-mandatory-field]="pPhoneTypeValid()">
-							<option [value]="phone.value" *ngFor="let phone of famiMembTitle.phone">
+							<ng-option [value]="phone.value" *ngFor="let phone of famiMembTitle.phone">
 								{{ phone.label }}
-							</option>
-						</select>
+							</ng-option>
+						</ng-select>
 					</div>
 
 					<div class="col">
@@ -150,9 +155,11 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Secondary Phone Type</label>
-						<select class="form-select input-upper" formControlName="sPhoneType">
-							<option>Select</option>
-						</select>
+						<ng-select class="input-upper" placeholder="Select">
+							<ng-option>
+								Select
+							</ng-option>
+						</ng-select>
 					</div>
 
 					<div class="col">
@@ -163,18 +170,23 @@
 
 					<div class="col">
 						<label class="label-input-gap">Preferred Communication Method - Primary</label>
-						<select class="form-select red-bottom-line input-upper" formControlName="CommPrimary"
-							[class.valid-required-field]="commPrimaryValid()">
-							<option>Select</option>
-						</select>
+						<ng-select class="input-upper red-bottom-line input-upper" formControlName="CommPrimary"
+							placeholder="Select" [class.valid-required-field]="commPrimaryValid()"
+							(clear)="clearCommPrimary()">
+							<ng-option value="s">
+								Select
+							</ng-option>
+						</ng-select>
 					</div>
 				</div>
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Preferred Communication Method - Secondary</label>
-						<select class="form-select input-upper" formControlName="CommSecondary">
-							<option>Select</option>
-						</select>
+						<ng-select class="input-upper input-upper" formControlName="CommSecondary" placeholder="Select">
+							<ng-option value="s">
+								Select
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Preferred Timings for Call</label>
@@ -191,9 +203,11 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Work Status</label>
-						<select class="form-select input-upper" formControlName="workStatus">
-							<option>Select</option>
-						</select>
+						<ng-select class="input-upper" formControlName="workStatus"  placeholder="Select">
+							<ng-option>
+								Select
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Occupation</label>
@@ -212,9 +226,11 @@
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Credit Rating</label>
-						<select class="form-select input-upper" formControlName="rating">
-							<option>Select</option>
-						</select>
+						<ng-select class="input-upper" formControlName="rating" [placeholder]="'Select'">
+							<ng-option>
+								Select
+							</ng-option>
+						</ng-select>
 					</div>
 				</div>
 			</div>

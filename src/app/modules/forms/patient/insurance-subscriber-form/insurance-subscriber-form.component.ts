@@ -45,6 +45,18 @@ export class InsuranceSubscriberFormComponent implements OnInit {
     { pronoun: 'He' },
     { pronoun: 'She' },
   ];
+  genders: any[] = [
+    { label: 'Male', value:'M' },
+    { label: 'Female', value:'F' },
+  ];
+  languages: any[] = [
+    { label: 'English', value:'english' },
+    { label: 'Hindi', value:'hindi' },
+  ];
+  maritalStatuses: any[] = [
+    { label: 'Maried', value:'M' },
+    { label: 'Single', value:'S' },
+  ];
 
   constructor(
     private http: HttpClient,
@@ -83,12 +95,12 @@ export class InsuranceSubscriberFormComponent implements OnInit {
     data = data || {};
     this.Form = this.fb.group({
       relationship: [data?.relation || ''],
-      title: [data?.title || ''],
+      title: [data?.title || null],
       firstName: [data?.firstName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
       middleName: [data?.middleName || ''],
       lastName: [data?.lastName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
       DOB: [data?.DOB || '',],
-      gender: [data?.gender || ''],
+      gender: [data?.gender || null],
       pronoun: [data?.pronoun || ''],
       language: [data?.language || ''],
       maried: [data?.maried || ''],

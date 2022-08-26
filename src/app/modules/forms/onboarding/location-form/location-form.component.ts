@@ -7,6 +7,7 @@ import { AlertService } from '@services/alert/alert.service';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 import { ContactDetailsFormService } from '@services/forms/contact-details-form/contact-details-form.service';
 import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
+import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 
 @Component({
 	selector: 'app-location-form',
@@ -38,10 +39,22 @@ export class LocationFormComponent implements OnInit {
 		private contactPersonFormService: ContactPersonFormService,
 		private contactDetailsFormService: ContactDetailsFormService,
 		private alertService: AlertService,
+		private onboardingServ: OnboardingService
 	) {}
 
 	ngOnInit(): void {
 		this.initForm(this.formData);
+		this.onboardingServ.setFalseAllNotPristine();
+		this.Form?.statusChanges.subscribe(
+			result => {
+				console.log(result)
+				if (!this.Form?.pristine) {
+					console.log("XXXXXXXXXXXXXXX", this.Form?.pristine);
+					console.log("status", this.Form?.pristine);
+					this.onboardingServ.setlocationNotPristine(true);
+				}
+			}
+		);
 	}
 	initForm(data?: any) {
 		data = data || {};
@@ -88,6 +101,7 @@ export class LocationFormComponent implements OnInit {
 			'Success',
 			'Location has been updated successfully'
 		);
+		this.onboardingServ.setlocationNotPristine(false);
 	}
 	cancel() {
 		this.onCancel.emit();

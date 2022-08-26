@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
+import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
 
 @Component({
 	selector: 'app-policy-info',
@@ -19,23 +20,41 @@ export class PolicyInfoComponent implements OnInit {
 
 	letters = [{ "letter": "A", "status": "PRIMARY" },];
 
-	constructor(private fb: FormBuilder) { }
+	constructor(
+		private fb: FormBuilder,
+		private insuranceServ: InsuranceService,) { }
 
 	ngOnInit(): void {
 		this.initForm(this.formData);
+		this.insuranceServ.setFalseAllNotPristine();
+		this.Form?.statusChanges.subscribe(
+			result => {
+				console.log(result)
+				if (!this.Form?.pristine) {
+					console.log("hiiiiii", event);
+					console.log("status", this.Form?.pristine);
+					this.insuranceServ.setPolicyInfoNotPristine(true);
+				}
+			}
+		);
 	}
 
 	initForm(data?: any) {
 		data = data || {};
 		this.Form = this.fb.group({
-			check1: [data?.check1 || '', Validators.required],
-			check2: [data?.check2 || '', Validators.required],
+			planName: [data?.planName || '', ],
+			groupNumber: [data?.groupNumber || '', ],
+			subscriName: [data?.subscriName || '', ],
+			policyNumber: [data?.policyNumber || '', ],
+			policyEffectDate: [data?.policyEffectDate || '', ],
+			policyTermiDate: [data?.policyTermiDate || '', ],
 		});
 	}
 
 
 	save(data: any) {
 		// this.onSubmit.emit(data);
+		this.insuranceServ.setPolicyInfoNotPristine(false);
 	}
 	cancel() {
 		// this.onCancel.emit();

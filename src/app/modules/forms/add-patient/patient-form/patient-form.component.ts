@@ -143,8 +143,8 @@ export class PatientFormComponent implements OnInit {
 		if (this.tab == 'coordWithProspect') {
 			this.Form = this.fb.group({
 				practice: [data?.practice || ''],
-				fName: [data?.fName || '', Validators.required],
-				lName: [data?.lName || '', Validators.required],
+				firstName: [data?.firstName || '', Validators.required],
+				lastName: [data?.lastName || '', Validators.required],
 				DOB: [data?.DOB || '', Validators.required],
 				gender: [data?.gender || ''],
 				location: [data?.location || ''],
@@ -153,12 +153,24 @@ export class PatientFormComponent implements OnInit {
 		} else if (this.tab == 'quickAdd') {
 			this.Form = this.fb.group({
 				practice: [data?.practice || ''],
-				fName: [data?.fName || '', Validators.required],
-				lName: [data?.lName || '', Validators.required],
+				firstName: [data?.firstName || '', Validators.required],
+				lastName: [data?.lastName || '', Validators.required],
 				DOB: [data?.DOB || ''],
 				gender: [data?.gender || '']
 			});
 		}
+	}
+
+	firstNameValid() {
+		return this.Form.get('firstName')?.valid;
+	}
+
+	lastNameValid() {
+		return this.Form.get('lastName')?.valid;
+	}
+
+	DOBValid() {
+		return this.Form.get('DOB')?.valid;
 	}
 
 	save(data: any) {
@@ -166,9 +178,9 @@ export class PatientFormComponent implements OnInit {
 			practiceId: data.value.practice,
 			profile: {
 				title: '',
-				firstName: data.value.fName,
+				firstName: data.value.firstName,
 				middleName: '',
-				lastName: data.value.lName,
+				lastName: data.value.lastName,
 				DOB: data.value.DOB,
 				gender: data.value.gender,
 				preferredPronoun: '',

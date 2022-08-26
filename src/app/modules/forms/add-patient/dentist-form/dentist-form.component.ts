@@ -76,10 +76,18 @@ export class DentistFormComponent implements OnInit {
     this.Form = this.fb.group({
       namesGenrDents: [data?.namesGenrDents || '',],
       officeName: [data?.officeName || '',],
-      firstName: [data?.firstName || ''],
-      lastName: [data?.lastName || ''],
+      firstName: [data?.firstName || '', Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')],
+      lastName: [data?.lastName || '', Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')],
       officePhoneNum: [data?.officePhoneNum || ''],
     });
+  }
+
+  firstNameValid() {
+    return (this.Form.get('firstName')?.valid && this.Form.get('firstName')?.value != 0);
+  }
+
+  lastNameValid() {
+    return (this.Form.get('lastName')?.valid && this.Form.get('lastName')?.value != 0);
   }
 
   save(data: any) {

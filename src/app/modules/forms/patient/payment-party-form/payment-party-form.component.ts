@@ -44,6 +44,18 @@ export class PaymentPartyFormComponent implements OnInit {
     { pronoun: 'He' },
     { pronoun: 'She' },
   ];
+  genders: any[] = [
+    { label: 'Male', value:'M' },
+    { label: 'Female', value:'F' },
+  ];
+  languages: any[] = [
+    { label: 'English', value:'english' },
+    { label: 'Hindi', value:'hindi' },
+  ];
+  maritalStatuses: any[] = [
+    { label: 'Maried', value:'M' },
+    { label: 'Single', value:'S' },
+  ];
 
   constructor(
     private http: HttpClient,
@@ -82,28 +94,28 @@ export class PaymentPartyFormComponent implements OnInit {
     data = data || {};
     this.Form = this.fb.group({
       relationship: [data?.relation || ''],
-      title: [data?.title || ''],
+      title: [data?.title || null],
       firstName: [data?.firstName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
       middleName: [data?.middleName || ''],
       lastName: [data?.lastName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
       DOB: [data?.DOB || ''],
-      gender: [data?.gender || ''],
-      pronoun: [data?.pronoun || ''],
-      language: [data?.language || ''],
-      maried: [data?.maried || ''],
+      gender: [data?.gender || null],
+      pronoun: [data?.pronoun || null],
+      language: [data?.language || null],
+      maried: [data?.maried || null],
       emailId: ['', Validators.minLength(2)],
-      pPhoneType: [data?.pPhoneType || '', Validators.required],
+      pPhoneType: [data?.pPhoneType || null, Validators.required],
       pPhoneNumber: [data?.pPhoneNumber || '', [Validators.required, Validators.pattern("^[0-9]*$")]],
       sPhoneType: [data?.sPhoneType || ''],
       sPhoneNumber: [data?.sPhoneNumber || ''],
-      CommPrimary: [data?.CommPrimary || ''],
-      CommSecondary: [data?.CommSecondary || ''],
+      CommPrimary: [data?.CommPrimary || null],
+      CommSecondary: [data?.CommSecondary || null],
       phone: [data?.phone || ''],
-      workStatus: [data?.workStatus || ''],
+      workStatus: [data?.workStatus || null],
       occupation: [data?.occupation || ''],
       employer: [data?.employer || ''],
       ssn: [data?.ssn || ''],
-      rating: [data?.rating || ''],
+      rating: [data?.rating || null],
       note: [data?.note || ''],
       address: this.addressFormService.getAddressForm(
         data?.address || {}
@@ -138,11 +150,15 @@ export class PaymentPartyFormComponent implements OnInit {
   }
 
   commPrimaryValid() {
-    return this.Form.get('CommPrimary')?.value.length > 0;
+    return this.Form.get('CommPrimary')?.value != null;
   }
 
   emailValid() {
     return this.Form.get('emailId')?.value.length > 0;
+  }
+
+  clearCommPrimary(){
+    this.Form.controls['CommPrimary'].setValue("");
   }
 
   async getStaticData() {

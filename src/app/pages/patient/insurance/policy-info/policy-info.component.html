@@ -1,196 +1,147 @@
 <div class="row" *ngIf="Form">
-	<app-nav-bar-pills
-		[menuItems]="menuItems"
-		[activeClass]="currentSelection"
-		[cancelBtn]="true"
-		[saveBtn]="true"
-		[disableSaveBtn]="Form.invalid"
-		(onCancel)="cancel()"
-		(onSave)="save(Form.value)"
-	></app-nav-bar-pills>
+	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
+		[disableSaveBtn]="Form.invalid" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills>
 	<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
-		<div class="col-12"	id="main" scrollSpy	(sectionChange)="onSectionChange($event)">
+		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section-active" id="overview">
 				<div class="row">
-						<div *ngFor="let letter of letters" >
-							<div class="row">
-								<div class="principal">
-									<div class="colm" style="margin-left: 52px">
-										<div class="letterandtext">
-											<div class="letter">
-												<p>{{ letter.letter }}</p>
-												<div id="orange">
-													<span>{{ letter.status }}</span>
-												</div>
+					<div *ngFor="let letter of letters">
+						<div class="row">
+							<div class="principal">
+								<div class="colm" style="margin-left: 52px">
+									<div class="letterandtext">
+										<div class="letter">
+											<p>{{ letter.letter }}</p>
+											<div id="orange">
+												<span>{{ letter.status }}</span>
 											</div>
-											<div class="columsp">
-												<span class="special">Ins. Company Name</span>
-												<div class="horizont">
-													<div class="colums">
-														<span>Phone No.:</span>
-														<span>Plan Type:</span>
-														<span>Group No.:</span>
-													</div>
-													<div class="colums">
-														<span>1234567890</span>
-														<span>PPO</span>
-														<span>GG595</span>
-													</div>
+										</div>
+										<div class="columsp">
+											<span class="special">Ins. Company Name</span>
+											<div class="horizont">
+												<div class="colums">
+													<span>Phone No.:</span>
+													<span>Plan Type:</span>
+													<span>Group No.:</span>
+												</div>
+												<div class="colums">
+													<span>1234567890</span>
+													<span>PPO</span>
+													<span>GG595</span>
 												</div>
 											</div>
 										</div>
 									</div>
-									<div class="colm" style="margin-left: 79px">
-										<div
-											class="horizont"
-											style="width: 203px; justify-content: space-between"
-										>
-											<div class="colums">
-												<span>Subscriber Name:</span>
-												<span>Subscriber ID/SSN:</span>
-												<span>Subscriber DOB:</span>
-												<span>Relationship:</span>
-											</div>
-											<div class="colums">
-												<span>Kim Doe</span>
-												<span>256465</span>
-												<span>May, 10, 1992</span>
-												<span>Father</span>
-											</div>
+								</div>
+								<div class="colm" style="margin-left: 79px">
+									<div class="horizont" style="width: 203px; justify-content: space-between">
+										<div class="colums">
+											<span>Subscriber Name:</span>
+											<span>Subscriber ID/SSN:</span>
+											<span>Subscriber DOB:</span>
+											<span>Relationship:</span>
 										</div>
-									</div>
-									<div class="colm" style="margin-left: 71px">
-										<div class="colums" style="width: 102px">
-											<span
-												><span class="special">Olivia Doe</span>
-												(P1001</span
-											>
+										<div class="colums">
+											<span>Kim Doe</span>
 											<span>256465</span>
 											<span>May, 10, 1992</span>
 											<span>Father</span>
 										</div>
 									</div>
-									<div class="colm" style="margin-left: -45px">
-										<div
-											class="horizont"
-											style="width: 186px; justify-content: space-between"
-										>
-											<div class="colums">
-												<span>LE TIN:</span>
-												<span>NPI I & NPI II:</span>
-												<span>Dental Licence No.:</span>
-												<span>Creation Date: </span>
-											</div>
-											<div class="colums">
-												<span>&nbsp;</span>
-												<span>&nbsp;</span>
-												<span>22585</span>
-												<span>Feb 15, 2022</span>
-											</div>
+								</div>
+								<div class="colm" style="margin-left: 71px">
+									<div class="colums" style="width: 102px">
+										<span><span class="special">Olivia Doe</span>
+											(P1001</span>
+										<span>256465</span>
+										<span>May, 10, 1992</span>
+										<span>Father</span>
+									</div>
+								</div>
+								<div class="colm" style="margin-left: -45px">
+									<div class="horizont" style="width: 186px; justify-content: space-between">
+										<div class="colums">
+											<span>LE TIN:</span>
+											<span>NPI I & NPI II:</span>
+											<span>Dental Licence No.:</span>
+											<span>Creation Date: </span>
+										</div>
+										<div class="colums">
+											<span>&nbsp;</span>
+											<span>&nbsp;</span>
+											<span>22585</span>
+											<span>Feb 15, 2022</span>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
+					</div>
 				</div>
 			</div>
 			<div class="section" id="profile">
-					<div class="mainformsection">
-						<h6 class="heading">Profile</h6>
+				<div class="mainformsection">
+					<h6 class="heading">Profile</h6>
 
-						<div class="formrow">
-							<div class="row">
-								<div class="col-4">
-									<div class="mainformset">
-										<label class="label-input-gap">Plan name</label>
-										<select
-											class="form-select"
-											
-										>
-											<option disabled>Select Website</option>
-											<option>Select</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-4">
-									<div class="mainformset">
-										<label class="label-input-gap">Group Number</label>
-										<select
-											class="form-select"
-											
-										>
-											<option disabled>Select Website</option>
-											<option>Select</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-4">
-									<div class="mainformset">
-										<label class="label-input-gap"
-											>Subscriber's Name</label
-										>
-										<select
-											class="form-select"
-											
-										>
-											<option disabled>Select Website</option>
-											<option>Select</option>
-										</select>
-									</div>
+					<div class="formrow">
+						<div class="row">
+							<div class="col-4">
+								<div class="mainformset">
+									<label class="label-input-gap">Plan name</label>
+									<select class="form-select" formControlName="planName">
+										<option disabled>Select Website</option>
+										<option>Select</option>
+									</select>
 								</div>
 							</div>
-						</div>
-
-						<div class="formrow">
-							<div class="row">
-								<div class="col-4">
-									<div class="mainformset">
-										<label
-											class="label-input-gap"
-											data-toggle="tooltip"
-											title="Preferred Name"
-											>Policy Number</label
-										>
-										<input
-											class="form-control"
-											type="text"
-											placeholder=""
-											name="id"
-											
-										/>
-									</div>
+							<div class="col-4">
+								<div class="mainformset">
+									<label class="label-input-gap">Group Number</label>
+									<select class="form-select" formControlName="groupNumber">
+										<option disabled>Select Website</option>
+										<option>Select</option>
+									</select>
 								</div>
-								<div class="col-4">
-									<div class="mainformset">
-										<label class="label-input-gap"
-											>Policy Effective Date</label
-										>
-										<input
-											class="form-control"
-											type="date"
-											placeholder=""
-											name="DOB"
-											
-										/>
-									</div>
-								</div>
-								<div class="col-4">
-									<div class="mainformset">
-										<label class="label-input-gap"
-											>Policy Termination Date</label
-										>
-										<input
-											class="form-control"
-											type="date"
-											placeholder=""
-											name="DOB"
-											
-										/>
-									</div>
+							</div>
+							<div class="col-4">
+								<div class="mainformset">
+									<label class="label-input-gap">Subscriber's Name</label>
+									<select class="form-select" formControlName="subscriName">
+										<option disabled>Select Website</option>
+										<option>Select</option>
+									</select>
 								</div>
 							</div>
 						</div>
 					</div>
+
+					<div class="formrow">
+						<div class="row">
+							<div class="col-4">
+								<div class="mainformset">
+									<label class="label-input-gap" data-toggle="tooltip" title="Preferred Name">Policy
+										Number</label>
+									<input class="form-control" type="text" placeholder="" name="id"
+										formControlName="policyNumber" />
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="mainformset">
+									<label class="label-input-gap">Policy Effective Date</label>
+									<input class="form-control" type="date" placeholder="" name=""
+										formControlName="policyEffectDate" />
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="mainformset">
+									<label class="label-input-gap">Policy Termination Date</label>
+									<input class="form-control" type="date" placeholder="" name="" 
+									formControlName="policyTermiDate"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</form>

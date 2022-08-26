@@ -8,6 +8,7 @@ import { AddressFormService } from '@services/forms/address-form/address-form.se
 import { ContactDetailsFormService } from '@services/forms/contact-details-form/contact-details-form.service';
 import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
 import { GeoService } from '@services/global-data/public/geo/geo.service';
+import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 
 @Component({
 	selector: 'app-legal-entity-form',
@@ -40,12 +41,24 @@ export class LegalEntityFormComponent implements OnInit {
 		private contactDetailsFormService: ContactDetailsFormService,
 		private geoService: GeoService,
 		private alertService: AlertService,
+		private onboardingServ: OnboardingService
 	) {
 		this.getCountries();
 	}
 
 	ngOnInit(): void {
 		this.initForm(this.formData);
+		this.onboardingServ.setFalseAllNotPristine();
+		this.Form?.statusChanges.subscribe(
+			result => {
+				console.log(result)
+				if (!this.Form?.pristine) {
+					console.log("XXXXXXXXXXXXXXX", this.Form?.pristine);
+					console.log("status", this.Form?.pristine);
+					this.onboardingServ.setlegalEntityBenfNotPristine(true);
+				}
+			}
+		);
 	}
 	save(data: any) {
 		this.onSubmit.emit(data);
@@ -54,6 +67,7 @@ export class LegalEntityFormComponent implements OnInit {
 			'Success',
 			'Legal Entity has been updated successfully'
 		);
+		this.onboardingServ.setlegalEntityBenfNotPristine(false);
 	}
 	cancel() {
 		this.onCancel.emit();

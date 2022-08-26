@@ -17,13 +17,13 @@
             <div class="col-12">
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                     <div class="form-check form-check-inline">
-                        <input #radioReferrer1 class="form-check-input" type="radio" name="btnradio1" id="btnradio1" checked
-                            (click)="setRadioStatus(1,'referrer')" />
+                        <input #radioReferrer1 class="form-check-input" type="radio" name="btnradio1" id="btnradio1"
+                            checked (click)="setRadioStatus(1,'referrer')" />
                         <label class="form-check-label" for="btnradio1">Same as dentist</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input #radioReferrer2 class="form-check-input" type="radio" name="btnradio1" id="btnradio2"
-                            (click)="setRadioStatus(2,'referrer')"  />
+                            (click)="setRadioStatus(2,'referrer')" />
                         <label class="form-check-label" for="btnradio2">Add a new one</label>
                     </div>
                 </div>
@@ -35,8 +35,8 @@
                     <label class="label-input-gap">Who may we thank for referring you to our
                         office?</label>
                     <div class="input-button">
-                        <input class="form-control" type="text" placeholder="Type Name" name="" 
-                        [(ngModel)]="referrer.thanksfor" formControlName="thanksfor"/>
+                        <input class="form-control" type="text" placeholder="Type Name" name=""
+                            [(ngModel)]="referrer.thanksfor" formControlName="thanksfor" />
                         <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
                     </div>
                 </div>
@@ -46,29 +46,31 @@
             <div class="col-3">
                 <div class="mainformset">
                     <label class="label-input-gap">Company Name</label>
-                    <input class="form-control" type="text" placeholder="" name="" 
-                    [(ngModel)]="referrer.companyName" formControlName="companyName"/>
+                    <input class="form-control" type="text" placeholder="" name="" [(ngModel)]="referrer.companyName"
+                        formControlName="companyName" />
                 </div>
             </div>
             <div class="col-3">
                 <div class="mainformset">
                     <label class="label-input-gap">First Name</label>
-                    <input class="form-control red-bottom-line" type="text" placeholder="" name="" 
-                    [(ngModel)]="referrer.firstName" formControlName="firstName"/>
+                    <input class="form-control red-bottom-line" type="text" placeholder="" name=""
+                        [(ngModel)]="referrer.firstName" formControlName="firstName"
+                        [class.valid-required-field]="firstNameValid()" />
                 </div>
             </div>
             <div class="col-3">
                 <div class="mainformset">
                     <label class="label-input-gap">Last Name</label>
-                    <input class="form-control red-bottom-line" type="text" placeholder="" name="" 
-                    [(ngModel)]="referrer.lastName" formControlName="lastName"/>
+                    <input class="form-control red-bottom-line" type="text" placeholder="" name=""
+                        [(ngModel)]="referrer.lastName" formControlName="lastName"
+                        [class.valid-required-field]="lastNameValid()" />
                 </div>
             </div>
             <div class="col-3">
                 <div class="mainformset">
                     <label class="label-input-gap">Phone Number</label>
-                    <input class="form-control" type="text" placeholder="" name="" 
-                    [(ngModel)]="referrer.phoneNumber" formControlName="phoneNumber"/>
+                    <input class="form-control" type="text" placeholder="" name="" [(ngModel)]="referrer.phoneNumber"
+                        formControlName="phoneNumber" />
                 </div>
             </div>
         </div>
