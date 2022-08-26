@@ -1,47 +1,22 @@
 <div class="row formrow" *ngIf="Form">
-	<app-nav-bar-pills
-		[menuItems]="menuItems"
-		[activeClass]="currentSelection"
-		[cancelBtn]="true"
-		[saveBtn]="true"
-		[disableSaveBtn]="Form.invalid"
-		(onCancel)="cancel()"
-		(onSave)="save(Form.value)"
-	></app-nav-bar-pills>
-	<form
-		autocomplete="off"
-		[formGroup]="Form"
-		#f="ngForm"
-		(submit)="save(f.value)"
-	>
-		<div
-			class="col-12"
-			id="main"
-			scrollSpy
-			(sectionChange)="onSectionChange($event)"
-		>
+	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
+		[disableSaveBtn]="Form.invalid" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills>
+	<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
+		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section" id="overview">
 				<div class="row formrow">
 					<div class="col-2"></div>
 					<div class="principal">
-						<app-image-uploader
-							[imageUrl]="formData?.logo || ''"
-							(onUpload)="handleUploadedImage($event)"
-						>
+						<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
 						</app-image-uploader>
 						<div class="colm" style="margin-left: 10px">
 							<div class="letterandtext">
 								<div class="columsp">
-									<span class="special"
-										>Olivia Doe
-										<span
-											style="
+									<span class="special">Olivia Doe
+										<span style="
 												color: black;
 												font-weight: normal;
-											"
-											>(P1001)</span
-										></span
-									>
+											">(P1001)</span></span>
 									<div class="horizont">
 										<div class="colums">
 											<span>Female</span>
@@ -53,13 +28,10 @@
 							</div>
 						</div>
 						<div class="colm" style="margin-left: -35px">
-							<div
-								class="horizont"
-								style="
+							<div class="horizont" style="
 									width: 103px;
 									justify-content: space-between;
-								"
-							>
+								">
 								<div class="colums">
 									<span>Phase:</span>
 									<span>Status:</span>
@@ -75,13 +47,10 @@
 							</div>
 						</div>
 						<div class="colm" style="margin-left: -45px">
-							<div
-								class="horizont"
-								style="
+							<div class="horizont" style="
 									width: 293px;
 									justify-content: space-between;
-								"
-							>
+								">
 								<div class="colums">
 									<span>Language:</span>
 									<span>Provider:</span>
@@ -92,21 +61,16 @@
 									<span>English</span>
 									<span>Provider Name</span>
 									<span>Practice Name</span>
-									<span
-										>330 2nd Street Huntington Beach, CA
-										92646</span
-									>
+									<span>330 2nd Street Huntington Beach, CA
+										92646</span>
 								</div>
 							</div>
 						</div>
 						<div class="colm" style="margin-left: 125px">
-							<div
-								class="horizont"
-								style="
+							<div class="horizont" style="
 									width: 206px;
 									justify-content: space-between;
-								"
-							>
+								">
 								<div class="colums">
 									<span>Chart Number:</span>
 									<span>Creation Date:</span>
@@ -130,101 +94,74 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Title</label>
-						<select class="form-select" formControlName="title" [(ngModel)]="patientObj!.profile!.title">
-							<option
-								[value]="title.value"
-								*ngFor="let title of globalData.title"
-							>
+						<ng-select class="input-upper" formControlName="title" placeholder="Select"
+							[(ngModel)]="patientObj!.profile!.title">
+							<ng-option [value]="title.value" *ngFor="let title of globalData.title">
 								{{ title.label }}
-							</option>
-						</select>
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">First Name</label>
-						<input
-							class="form-control required-field"
-							type="text"
-							placeholder=""
-							name="firstName"
-							formControlName="firstName"
-							[(ngModel)]="patientObj!.profile!.firstName"
-							[class.valid-mandatory-field]="firstNameValid()"
-						/>
+						<input class="form-control required-field" type="text" placeholder="" name="firstName"
+							formControlName="firstName" [(ngModel)]="patientObj!.profile!.firstName"
+							[class.valid-mandatory-field]="firstNameValid()" />
 					</div>
 
 					<div class="col">
 						<label class="label-input-gap">Middle Name</label>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="middleName"
-							[(ngModel)]="patientObj!.profile!.middleName"
-						/>
+						<input class="form-control" type="text" placeholder="" name="name" formControlName="middleName"
+							[(ngModel)]="patientObj!.profile!.middleName" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Last Name</label>
-						<input
-							class="form-control required-field"
-							type="text"
-							placeholder=""
-							name="lastName"
-							formControlName="lastName"
-							[(ngModel)]="patientObj!.profile!.lastName"
-							[class.valid-mandatory-field]="lastNameValid()"
-						/>
+						<input class="form-control required-field" type="text" placeholder="" name="lastName"
+							formControlName="lastName" [(ngModel)]="patientObj!.profile!.lastName"
+							[class.valid-mandatory-field]="lastNameValid()" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Date of Birth</label>
-						<input
-							class="form-control required-field"
-							type="date"
-							placeholder=""
-							name="DOB"
-							formControlName="DOB"
-							[(ngModel)]="patientObj!.profile!.DOB"
-							[class.valid-mandatory-field]="DOBValid()"
-						/>
+						<input class="form-control required-field" type="date" placeholder="" name="DOB"
+							formControlName="DOB" [(ngModel)]="patientObj!.profile!.DOB"
+							[class.valid-mandatory-field]="DOBValid()" />
 					</div>
 				</div>
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Gender</label>
-						<select
-							class="form-select required-field input-upper"
-							formControlName="gender"
-							[class.valid-mandatory-field]="genderValid()"
-							[(ngModel)]="patientObj!.profile!.gender"
-						>
-							<option value="male">Male</option>
-							<option value="female">Female</option>
-						</select>
+						<ng-select class="input-upper" formControlName="gender" placeholder="Select"
+							[(ngModel)]="patientObj!.profile!.gender" [class.valid-mandatory-field]="genderValid()">
+							<ng-option [value]="gender.value" *ngFor="let gender of genders">
+								{{ gender.label }}
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Preferred Pronoun</label>
-						<select class="form-select" formControlName="pronoun" [(ngModel)]="patientObj!.profile!.preferredPronoun">
-							<option
-								[value]="pronoun.pronoun"
-								*ngFor="let pronoun of pronouns"
-							>
+						<ng-select class="input-upper" formControlName="pronoun" placeholder="Select"
+							[(ngModel)]="patientObj!.profile!.preferredPronoun">
+							<ng-option [value]="pronoun.pronoun" *ngFor="let pronoun of pronouns">
 								{{ pronoun.pronoun }}
-							</option>
-						</select>
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Language</label>
-						<select class="form-select" formControlName="language" [(ngModel)]="patientObj!.profile!.language">
-							<option value="english">English</option>
-							<option value="hindi">Hindi</option>
-						</select>
+						<ng-select class="input-upper" formControlName="language" placeholder="Select"
+							[(ngModel)]="patientObj!.profile!.language">
+							<ng-option [value]="language.value" *ngFor="let language of languages">
+								{{ language.label }}
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Marital Status</label>
-						<select class="form-select" formControlName="maried" [(ngModel)]="patientObj!.profile!.martialStatus">
-							<option value="maried">Maried</option>
-							<option value="single">Single</option>
-						</select>
+						<ng-select class="input-upper" formControlName="maried" placeholder="Select"
+							[(ngModel)]="patientObj!.profile!.martialStatus">
+							<ng-option [value]="maritalStatus.value" *ngFor="let maritalStatus of maritalStatuses">
+								{{ maritalStatus.label }}
+							</ng-option>
+						</ng-select>
 					</div>
 				</div>
 			</div>
@@ -234,63 +171,31 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Preferred Name</label>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="id"
-							[(ngModel)]="patientObj!.information!.preferredName"
-							formControlName="preferredName"
-						/>
+						<input class="form-control" type="text" placeholder="" name="id"
+							[(ngModel)]="patientObj!.information!.preferredName" formControlName="preferredName" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Pronounciation</label>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="name"
-							[(ngModel)]="patientObj!.information!.pronounciation"
-							formControlName="pronounciation"
-						/>
+						<input class="form-control" type="text" placeholder="" name="name"
+							[(ngModel)]="patientObj!.information!.pronounciation" formControlName="pronounciation" />
 					</div>
 
 					<div class="col">
 						<label class="label-input-gap">School</label>
-						<input
-							class="form-control"
-							type="text"
-							placeholder=""
-							name="name"
-							[(ngModel)]="patientObj!.information!.school"
-							formControlName="school"
-						/>
+						<input class="form-control" type="text" placeholder="" name="name"
+							[(ngModel)]="patientObj!.information!.school" formControlName="school" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Interests</label>
-						<ng-select
-							class=""
-							formControlName="interest"
-							[(ngModel)]="patientObj!.information!.interests"
-						>
-							<ng-option
-								*ngFor="let interest of interestsLst"
-								[value]="interest"
-								>{{ interest }}
+						<ng-select class="" formControlName="interest" [(ngModel)]="patientObj!.information!.interests">
+							<ng-option *ngFor="let interest of interestsLst" [value]="interest">{{ interest }}
 							</ng-option>
 						</ng-select>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Tags</label>
-						<ng-select
-							class=""
-							formControlName="tags"
-							[(ngModel)]="patientObj!.information!.tags"
-						>
-							<ng-option
-								*ngFor="let tags of tagsLst"
-								[value]="tags"
-								>{{ tags }}
+						<ng-select class="" formControlName="tags" [(ngModel)]="patientObj!.information!.tags">
+							<ng-option *ngFor="let tags of tagsLst" [value]="tags">{{ tags }}
 							</ng-option>
 						</ng-select>
 					</div>
@@ -298,24 +203,12 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">ID Type</label>
-						<input
-							class="form-control"
-							formControlName="idType"
-							type="text"
-							placeholder=""
-							name="name"
-						/>
+						<input class="form-control" formControlName="idType" type="text" placeholder="" name="name" />
 					</div>
 
 					<div class="col">
 						<label class="label-input-gap">ID Number</label>
-						<input
-							class="form-control"
-							formControlName="idNumber"
-							type="text"
-							placeholder=""
-							name="name"
-						/>
+						<input class="form-control" formControlName="idNumber" type="text" placeholder="" name="name" />
 					</div>
 
 					<div class="col"></div>
@@ -325,24 +218,12 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">ID Type</label>
-						<input
-							class="form-control"
-							formControlName="idType"
-							type="text"
-							placeholder=""
-							name="name"
-						/>
+						<input class="form-control" formControlName="idType" type="text" placeholder="" name="name" />
 					</div>
 
 					<div class="col">
 						<label class="label-input-gap">ID Number</label>
-						<input
-							class="form-control"
-							formControlName="idNumber"
-							type="text"
-							placeholder=""
-							name="name"
-						/>
+						<input class="form-control" formControlName="idNumber" type="text" placeholder="" name="name" />
 					</div>
 
 					<div class="col"></div>
@@ -356,88 +237,75 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Location</label>
-						<select
-							class="form-select red-bottom-line"
-							[class.valid-required-field]="locationValid()"
-							formControlName="location"
-							[(ngModel)]="patientObj!.preferences!.location"
-						>
-							<option [value]="item._id" *ngFor="let item of locationList">{{item.name}}</option>
-						</select>
+						<ng-select class="input-upper red-bottom-line" [class.valid-required-field]="locationValid()"
+							formControlName="location" placeholder="Select"
+							[(ngModel)]="patientObj!.preferences!.location">
+							<ng-option [value]="item._id" *ngFor="let item of locationList">
+								{{item.name}}
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Billing Provider</label>
-						<select
-							class="form-select red-bottom-line"
-							[class.valid-required-field]="billingValid()"
-							formControlName="billing"
-							[(ngModel)]="patientObj!.preferences!.billingProvider"
-						>
-							<option>Select</option>
-						</select>
+						<ng-select class="input-upper red-bottom-line" [class.valid-required-field]="billingValid()"
+							formControlName="billing" placeholder="Select"
+							[(ngModel)]="patientObj!.preferences!.billingProvider">
+							<ng-option value="s">
+								Select
+							</ng-option>
+						</ng-select>
 					</div>
 
 					<div class="col">
 						<label class="label-input-gap">Treating Provider</label>
-						<select
-							class="form-select red-bottom-line"
-							[class.valid-required-field]="treatingValid()"
-							formControlName="provider"
-							[(ngModel)]="patientObj!.preferences!.treatingProvider"
-						>
-							<option>Select</option>
-						</select>
+						<ng-select class="input-upper red-bottom-line" [class.valid-required-field]="treatingValid()"
+							formControlName="provider" placeholder="Select"
+							[(ngModel)]="patientObj!.preferences!.treatingProvider">
+							<ng-option value="s">
+								Select
+							</ng-option>
+						</ng-select>
 					</div>
 				</div>
 				<div class="row formrow">
 					<div class="col">
-						<label class="label-input-gap"
-							>New Patient Coordinator</label
-						>
-						<select
-							class="form-select"
-							formControlName="patientCoordinator"
-							[(ngModel)]="patientObj!.preferences!.newPatientCoordinator"
-						>
-							<option>Select</option>
-						</select>
+						<label class="label-input-gap">New Patient Coordinator</label>
+						<ng-select class="input-upper" formControlName="patientCoordinator" placeholder="Select"
+							[(ngModel)]="patientObj!.preferences!.newPatientCoordinator">
+							<ng-option value="s">
+								Select
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col">
-						<label class="label-input-gap"
-							>Treatment Coordinator</label
-						>
-						<select
-							class="form-select"
-							formControlName="treatmentCoordinator"
-							[(ngModel)]="patientObj!.preferences!.treatmentCoordinator"
-						>
-							<option>Select</option>
-						</select>
+						<label class="label-input-gap">Treatment Coordinator</label>
+						<ng-select class="input-upper" formControlName="treatmentCoordinator" placeholder="Select"
+							[(ngModel)]="patientObj!.preferences!.treatmentCoordinator">
+							<ng-option value="s">
+								Select
+							</ng-option>
+						</ng-select>
 					</div>
 
 					<div class="col">
-						<label class="label-input-gap"
-							>Chair Side Assistant</label
-						>
-						<select
-							class="form-select"
-							formControlName="CSAssistant"
-							[(ngModel)]="patientObj!.preferences!.chairSideAssistant"
-						>
-							<option>Select</option>
-						</select>
+						<label class="label-input-gap">Chair Side Assistant</label>
+						<ng-select class="input-upper" formControlName="CSAssistant" placeholder="Select"
+							[(ngModel)]="patientObj!.preferences!.chairSideAssistant">
+							<ng-option value="s">
+								Select
+							</ng-option>
+						</ng-select>
 					</div>
 				</div>
 				<div class="row formrow">
 					<div class="col-4">
 						<label class="label-input-gap">Practice</label>
-						<select
-							class="form-select"
-							formControlName="practice"
-							[(ngModel)]="patientObj!.practiceId"
-						>
-							<option [value]="item._id" *ngFor="let item of practiceList">{{item.name}}</option>
-						</select>
+						<ng-select class="input-upper" formControlName="practice" placeholder="Select"
+							[(ngModel)]="patientObj!.practiceId">
+							<ng-option [value]="item._id" *ngFor="let item of practiceList">
+								{{item.name}}
+							</ng-option>
+						</ng-select>
 					</div>
 				</div>
 			</div>
@@ -447,14 +315,13 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Contact Person</label>
-						<select
-							class="form-select red-bottom-line"
-							[class.valid-required-field]="contPersValid()"
-							formControlName="cPerson"
-							[(ngModel)]="patientObj!.emergencyContact!.contactPerson"
-						>
-							<option>Select</option>
-						</select>
+						<ng-select class="input-upper red-bottom-line" [class.valid-required-field]="contPersValid()"
+							formControlName="cPerson" placeholder="Select"
+							[(ngModel)]="patientObj!.emergencyContact!.contactPerson">
+							<ng-option value="s">
+								Select
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col"></div>
 					<div class="col"></div>
@@ -464,27 +331,15 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Name</label>
-						<input
-							class="form-control red-bottom-line"
-							type="text"
-							placeholder=""
-							name="id"
-							formControlName="name"
-							[(ngModel)]="patientObj!.emergencyContact!.name"
-							[class.valid-required-field]="emerNameValid()"
-						/>
+						<input class="form-control red-bottom-line" type="text" placeholder="" name="id"
+							formControlName="name" [(ngModel)]="patientObj!.emergencyContact!.name"
+							[class.valid-required-field]="emerNameValid()" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Emergency Contact</label>
-						<input
-							class="form-control red-bottom-line"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="eContact"
-							[(ngModel)]="patientObj!.emergencyContact!.emergencyContact"
-							[class.valid-required-field]="eContactValid()"
-						/>
+						<input class="form-control red-bottom-line" type="text" placeholder="" name="name"
+							formControlName="eContact" [(ngModel)]="patientObj!.emergencyContact!.emergencyContact"
+							[class.valid-required-field]="eContactValid()" />
 					</div>
 					<div class="col"></div>
 					<div class="col"></div>
@@ -496,14 +351,8 @@
 				<h6 class="heading">Notes</h6>
 				<div class="row formrow">
 					<div class="col-6">
-						<textarea
-							class="form-control"
-							name="note"
-							id=""
-							cols="70"
-							rows="5"
-							formControlName="note"
-						></textarea>
+						<textarea class="form-control" name="note" id="" cols="70" rows="5"
+							formControlName="note"></textarea>
 					</div>
 				</div>
 			</div>

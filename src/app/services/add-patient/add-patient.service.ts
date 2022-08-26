@@ -10,17 +10,17 @@ export class AddPatientService {
 
   // Forms Pristine Add Patient Coordinate with Prospect
 
-  callerInfoPristiCWP: boolean = false;
-  patientPristiCWP: boolean = false;
-  legalGuardPristiCWP: boolean = false;
-  dentistPristiCWP: boolean = false;
-  referrerPristiCWP: boolean = false;
-  insurancePristiCWP: boolean = false;
-  patient2PristiCWP: boolean = false;
-  patient3PristiCWP: boolean = false;
-  patient4PristiCWP: boolean = false;
-  appointmPristiCWP: boolean = false;
-  conclusionPristiCWP: boolean = false;
+  callerInfoNotPristiCWP: boolean = false;
+  patientNotPristiCWP: boolean = false;
+  legalGuardNotPristiCWP: boolean = false;
+  dentistNotPristiCWP: boolean = false;
+  referrerNotPristiCWP: boolean = false;
+  insuranceNotPristiCWP: boolean = false;
+  patient2NotPristiCWP: boolean = false;
+  patient3NotPristiCWP: boolean = false;
+  patient4NotPristiCWP: boolean = false;
+  appointmNotPristiCWP: boolean = false;
+  conclusionNotPristiCWP: boolean = false;
 
   private patientsSavedUnsaved: any[] = [
     {
@@ -424,91 +424,91 @@ export class AddPatientService {
   // Forms Pristine Add Patient Coordinate with Prospect
 
   setCallerInfoNotPristineCWP(value: boolean) {
-    this.callerInfoPristiCWP = value;
+    this.callerInfoNotPristiCWP = value;
   }
 
   getCallerInfoNotPristineCWP() {
-    return this.callerInfoPristiCWP;
+    return this.callerInfoNotPristiCWP;
   }
 
   setPatientNotPristineCWP(value: boolean) {
-    this.patientPristiCWP = value;
+    this.patientNotPristiCWP = value;
   }
 
   getPatientNotPristineCWP() {
-    return this.patientPristiCWP;
+    return this.patientNotPristiCWP;
   }
 
   setLegalGuardianNotPristineCWP(value: boolean) {
-    this.legalGuardPristiCWP = value;
+    this.legalGuardNotPristiCWP = value;
   }
 
   getLegalGuardianNotPristineCWP() {
-    return this.legalGuardPristiCWP;
+    return this.legalGuardNotPristiCWP;
   }
 
   setDentistNotPristineCWP(value: boolean) {
-    this.dentistPristiCWP = value;
+    this.dentistNotPristiCWP = value;
   }
 
   getDentistNotPristineCWP() {
-    return this.dentistPristiCWP;
+    return this.dentistNotPristiCWP;
   }
 
   setReferrerNotPristineCWP(value: boolean) {
-    this.referrerPristiCWP = value;
+    this.referrerNotPristiCWP = value;
   }
 
   getReferrerNotPristineCWP() {
-    return this.referrerPristiCWP;
+    return this.referrerNotPristiCWP;
   }
 
   setInsuranceNotPristineCWP(value: boolean) {
-    this.insurancePristiCWP = value;
+    this.insuranceNotPristiCWP = value;
   }
 
   getInsuranceNotPristineCWP() {
-    return this.insurancePristiCWP;
+    return this.insuranceNotPristiCWP;
   }
 
   setPatient2NotPristineCWP(value: boolean) {
-    this.patient2PristiCWP = value;
+    this.patient2NotPristiCWP = value;
   }
 
   getPatient2NotPristineCWP() {
-    return this.patient2PristiCWP;
+    return this.patient2NotPristiCWP;
   }
 
   setPatient3NotPristineCWP(value: boolean) {
-    this.patient3PristiCWP = value;
+    this.patient3NotPristiCWP = value;
   }
 
   getPatient3NotPristineCWP() {
-    return this.patient3PristiCWP;
+    return this.patient3NotPristiCWP;
   }
 
   setPatient4NotPristineCWP(value: boolean) {
-    this.patient4PristiCWP = value;
+    this.patient4NotPristiCWP = value;
   }
 
   getPatient4NotPristineCWP() {
-    return this.patient4PristiCWP;
+    return this.patient4NotPristiCWP;
   }
 
   setAppointmNotPristineCWP(value: boolean) {
-    this.appointmPristiCWP = value;
+    this.appointmNotPristiCWP = value;
   }
 
   getAppointmNotPristineCWP() {
-    return this.appointmPristiCWP;
+    return this.appointmNotPristiCWP;
   }
 
   setConclusionNotPristineCWP(value: boolean) {
-    this.conclusionPristiCWP = value;
+    this.conclusionNotPristiCWP = value;
   }
 
   getConclusionNotPristineCWP() {
-    return this.conclusionPristiCWP;
+    return this.conclusionNotPristiCWP;
   }
 
   setFalseAllNotPristineCWP() {

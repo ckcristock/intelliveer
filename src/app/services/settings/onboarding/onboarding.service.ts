@@ -7,44 +7,44 @@ export class OnboardingService {
 
   constructor() { }
 
-  businessGroupPristi: boolean = false;
-  legalEntityPristi: boolean = false;
-  locationPristi: boolean = false;
-  practicePristi: boolean = false;
+  businessGroupNotPristi: boolean = false;
+  legalEntityNotPristi: boolean = false;
+  locationNotPristi: boolean = false;
+  practiceNotPristi: boolean = false;
 
   //Conditions for canDeactive Popup
   conditions:any [] = [];
 
   setbusinessGroupNotPristine(value: boolean){
-    this.businessGroupPristi = value;
+    this.businessGroupNotPristi = value;
   }
 
   getbusinessGroupNotPristine(){
-    return this.businessGroupPristi;
+    return this.businessGroupNotPristi;
   }
 
   setlegalEntityBenfNotPristine(value: boolean){
-    this.legalEntityPristi = value;
+    this.legalEntityNotPristi = value;
   }
 
   getlegalEntityBenfNotPristine(){
-    return this.legalEntityPristi;
+    return this.legalEntityNotPristi;
   }
 
   setlocationNotPristine(value: boolean){
-    this.locationPristi = value;
+    this.locationNotPristi = value;
   }
 
   getlocationNotPristine(){
-    return this.locationPristi;
+    return this.locationNotPristi;
   }
 
   setpracticeNotPristine(value: boolean){
-    this.practicePristi = value;
+    this.practiceNotPristi = value;
   }
 
   getpracticeNotPristine(){
-    return this.practicePristi;
+    return this.practiceNotPristi;
   }
 
   setFalseAllNotPristine() {

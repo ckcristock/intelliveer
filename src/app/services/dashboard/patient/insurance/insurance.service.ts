@@ -7,44 +7,44 @@ export class InsuranceService {
 
   constructor() { }
 
-  policyInfoPristi: boolean = false;
-  orthodonticPristi: boolean = false;
-  dentalBenfPristi: boolean = false;
-  billingPristi: boolean = false;
+  policyInfoNotPristi: boolean = false;
+  orthodonticNotPristi: boolean = false;
+  dentalBenfNotPristi: boolean = false;
+  billingNotPristi: boolean = false;
 
   //Conditions for canDeactive Popup
   conditions:any [] = [];
 
   setPolicyInfoNotPristine(value: boolean){
-    this.policyInfoPristi = value;
+    this.policyInfoNotPristi = value;
   }
 
   getPolicyInfoNotPristine(){
-    return this.policyInfoPristi;
+    return this.policyInfoNotPristi;
   }
 
   setOrthodonticBenfNotPristine(value: boolean){
-    this.orthodonticPristi = value;
+    this.orthodonticNotPristi = value;
   }
 
   getOrthodonticBenfNotPristine(){
-    return this.orthodonticPristi;
+    return this.orthodonticNotPristi;
   }
 
   setDentalBenfNotPristine(value: boolean){
-    this.dentalBenfPristi = value;
+    this.dentalBenfNotPristi = value;
   }
 
   getDentalBenfNotPristine(){
-    return this.dentalBenfPristi;
+    return this.dentalBenfNotPristi;
   }
 
   setBillingNotPristine(value: boolean){
-    this.billingPristi = value;
+    this.billingNotPristi = value;
   }
 
   getBillingNotPristine(){
-    return this.billingPristi;
+    return this.billingNotPristi;
   }
 
   setFalseAllNotPristine() {

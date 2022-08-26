@@ -9,6 +9,7 @@ import {
 import { AddPatientService } from '@services/add-patient/add-patient.service';
 import { CanDeactiveGuardService } from '@services/can-deactive-guard/can-deactive-guard.service';
 import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
 import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 import { map, Observable, first, take, of } from 'rxjs';
 
@@ -26,7 +27,8 @@ export class CanDeactivateGuard
 	constructor(private canDeactivateRouteService: CanDeactiveGuardService,
 		private addPatientServ: AddPatientService,
 		private insuranceServ: InsuranceService,
-		private onboardingServ: OnboardingService
+		private onboardingServ: OnboardingService,
+		private patientUserServ: PatientUserService
 		) { }
 
 	ngOnInit(): void {
@@ -58,9 +60,11 @@ export class CanDeactivateGuard
 		this.addPatientServ.setConditions();
 		this.insuranceServ.setConditions();
 		this.onboardingServ.setConditions();
+		this.patientUserServ.setConditions();
 		this.conditions = this.addPatientServ.getConditions();
 		this.conditions.push(...this.insuranceServ.getConditions());
 		this.conditions.push(...this.onboardingServ.getConditions());
+		this.conditions.push(...this.patientUserServ.getConditions());
 
 		console.log("this.conditions", this.conditions);
 

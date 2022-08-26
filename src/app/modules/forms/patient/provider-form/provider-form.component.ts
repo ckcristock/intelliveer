@@ -5,6 +5,7 @@ import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 import { CONFIG } from '@config/index';
 import { AlertService } from '@services/alert/alert.service';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
 
 @Component({
   selector: 'app-provider-form',
@@ -64,6 +65,7 @@ export class ProviderFormComponent implements OnInit {
     private fb: FormBuilder,
     private addressFormService: AddressFormService,
     private alertService: AlertService,
+    private patientUserServ: PatientUserService,
   ) {
     this.idForm = this.fb.group({
       // name: '',
@@ -75,6 +77,17 @@ export class ProviderFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm(this.formData);
+		this.patientUserServ.setFalseAllNotPristine();
+		this.Form?.statusChanges.subscribe(
+			result => {
+				console.log(result)
+				if (!this.Form?.pristine) {
+					console.log("hiiiiii", event);
+					console.log("status", this.Form?.pristine);
+					this.patientUserServ.setExterProvNotPristine(true);
+				}
+			}
+		);
   }
 
   initForm(data?: any) {
@@ -148,6 +161,7 @@ export class ProviderFormComponent implements OnInit {
       'Success',
       'Insurance Subscriber has been updated successfully'
     );
+    this.patientUserServ.setExterProvNotPristine(false);
   }
   cancel() {
     this.onCancel.emit();

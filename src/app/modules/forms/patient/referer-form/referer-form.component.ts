@@ -5,6 +5,7 @@ import { AddressFormService } from '@services/forms/address-form/address-form.se
 import { CONFIG } from '@config/index';
 import { HttpClient } from '@angular/common/http';
 import { AlertService } from '@services/alert/alert.service';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
 
 @Component({
   selector: 'app-referer-form',
@@ -65,6 +66,7 @@ export class RefererFormComponent implements OnInit {
     private fb: FormBuilder,
     private addressFormService: AddressFormService,
     private alertService: AlertService,
+    private patientUserServ: PatientUserService,
   ) {
     this.idForm = this.fb.group({
       // name: '',
@@ -75,6 +77,17 @@ export class RefererFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm(this.formData);
+		this.patientUserServ.setFalseAllNotPristine();
+		this.Form?.statusChanges.subscribe(
+			result => {
+				console.log(result)
+				if (!this.Form?.pristine) {
+					console.log("hiiiiii", event);
+					console.log("status", this.Form?.pristine);
+					this.patientUserServ.setReferrerNotPristine(true);
+				}
+			}
+		);
   }
 
   initForm(data?: any) {
@@ -155,6 +168,7 @@ export class RefererFormComponent implements OnInit {
       'Success',
       'Referrer has been updated successfully'
     );
+    this.patientUserServ.setReferrerNotPristine(false);
   }
   cancel() {
     this.onCancel.emit();

@@ -74,6 +74,17 @@ export class InsuranceSubscriberFormComponent implements OnInit {
 
   async ngOnInit() {
     this.initForm(this.formData);
+		this.patientUserServ.setFalseAllNotPristine();
+		this.Form?.statusChanges.subscribe(
+			result => {
+				console.log(result)
+				if (!this.Form?.pristine) {
+					console.log("hiiiiii", event);
+					console.log("status", this.Form?.pristine);
+					this.patientUserServ.setinsuranSubscNotPristine(true);
+				}
+			}
+		);
     this.insuranSubsc.push(await this.patientUserServ.getInsuSubscFamiMemb());
 
     this.relationship = await this.patientUserServ.getInsuSubscToPati();
@@ -183,6 +194,7 @@ export class InsuranceSubscriberFormComponent implements OnInit {
       'Success',
       'Insurance Subscriber has been updated successfully'
     );
+    this.patientUserServ.setinsuranSubscNotPristine(false);
   }
   cancel() {
     this.onCancel.emit();

@@ -49,6 +49,17 @@ export class FamilyMemberFormComponent implements OnInit {
 
   async ngOnInit() {
     this.initForm(this.formData);
+		this.patientUserServ.setFalseAllNotPristine();
+		this.Form?.statusChanges.subscribe(
+			result => {
+				console.log(result)
+				if (!this.Form?.pristine) {
+					console.log("hiiiiii", event);
+					console.log("status", this.Form?.pristine);
+					this.patientUserServ.setFamilyMembNotPristine(true);
+				}
+			}
+		);
     this.familyMember.push(await this.patientUserServ.getFamylMembFamylMemb());
 
     this.relationship = await this.patientUserServ.getFamylMembToPati();
@@ -117,6 +128,7 @@ export class FamilyMemberFormComponent implements OnInit {
       'Success',
       'Family Members has been updated successfully'
     );
+    this.patientUserServ.setFamilyMembNotPristine(false);
   }
   cancel() {
     this.onCancel.emit();

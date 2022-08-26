@@ -149,5 +149,101 @@ export class PatientUserService {
     return JSON.parse(localStorage.getItem('FamyMemb')!);
   }
 
+  /////////////////////////////////////////////////////////
+
+  // For canDeactive Popup
+
+  patientNotPristi: boolean = false;
+  legalGuardNotPristi: boolean = false;
+  paymentPartyNotPristi: boolean = false;
+  insuranSubscNotPristi: boolean = false;
+  exterProvNotPristi: boolean = false;
+  referrerNotPristi: boolean = false;
+  familyMembNotPristi: boolean = false;
+
+  //Conditions for canDeactive Popup
+  conditions:any [] = [];
+
+  setpatientNotPristine(value: boolean){
+    this.patientNotPristi = value;
+  }
+
+  getpatientNotPristine(){
+    return this.patientNotPristi;
+  }
+
+  setlegalGuardNotPristine(value: boolean){
+    this.legalGuardNotPristi = value;
+  }
+
+  getlegalGuardNotPristine(){
+    return this.legalGuardNotPristi;
+  }
+
+  setpaymentPartyNotPristine(value: boolean){
+    this.paymentPartyNotPristi = value;
+  }
+
+  getpaymentPartyNotPristine(){
+    return this.paymentPartyNotPristi;
+  }
+
+  setinsuranSubscNotPristine(value: boolean){
+    this.insuranSubscNotPristi = value;
+  }
+
+  getinsuranSubscNotPristine(){
+    return this.insuranSubscNotPristi;
+  }
+
+  setExterProvNotPristine(value: boolean){
+    this.exterProvNotPristi = value;
+  }
+
+  getExterProvNotPristine(){
+    return this.exterProvNotPristi;
+  }
+
+  setReferrerNotPristine(value: boolean){
+    this.referrerNotPristi = value;
+  }
+
+  getReferrerNotPristine(){
+    return this.referrerNotPristi;
+  }
+
+  setFamilyMembNotPristine(value: boolean){
+    this.familyMembNotPristi = value;
+  }
+
+  getFamilyMembNotPristine(){
+    return this.familyMembNotPristi;
+  }
+
+  setFalseAllNotPristine() {
+    this.setpatientNotPristine(false);
+    this.setlegalGuardNotPristine(false);
+    this.setpaymentPartyNotPristine(false);
+    this.setinsuranSubscNotPristine(false);
+    this.setExterProvNotPristine(false);
+    this.setReferrerNotPristine(false);
+    this.setFamilyMembNotPristine(false);
+  }
+
+  setConditions(){
+    this.conditions = [];
+		this.conditions.push({ section: "patient", condition: this.getpatientNotPristine() });
+		this.conditions.push({ section: "legalGuard", condition: this.getlegalGuardNotPristine() });
+		this.conditions.push({ section: "referrer", condition: this.getReferrerNotPristine() });
+		this.conditions.push({ section: "insuranSubsc", condition: this.getinsuranSubscNotPristine() });
+		this.conditions.push({ section: "exterprov", condition: this.getExterProvNotPristine() });
+		this.conditions.push({ section: "paymentParty", condition: this.getpaymentPartyNotPristine() });
+		this.conditions.push({ section: "familyMemb", condition: this.getFamilyMembNotPristine() });
+  }
+
+  getConditions(){
+    return this.conditions;
+  }
+
 
 }

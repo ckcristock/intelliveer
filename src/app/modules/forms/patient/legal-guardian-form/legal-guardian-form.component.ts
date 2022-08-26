@@ -62,6 +62,17 @@ export class LegalGuardianFormComponent implements OnInit {
 
   async ngOnInit() {
     this.initForm(this.formData);
+		this.patientUserServ.setFalseAllNotPristine();
+    this.Form?.statusChanges.subscribe(
+			result => {
+				console.log(result)
+				if (!this.Form?.pristine) {
+					console.log("hiiiiii", event);
+					console.log("status", this.Form?.pristine);
+					this.patientUserServ.setlegalGuardNotPristine(true);
+				}
+			}
+		);
     this.Form.get('emailId')?.markAsDirty();
     this.legalGuard.push(await this.patientUserServ.getLegalGuardFamiMemb());
 
@@ -78,6 +89,7 @@ export class LegalGuardianFormComponent implements OnInit {
     this.Form.controls['maried'].setValue(this.legalGuard[0].maritalStatus);
     this.Form.controls['pPhoneType'].setValue(this.legalGuard[0].pPhoneType);
     this.Form.controls['pPhoneNumber'].setValue(this.legalGuard[0].pPhoneNumber);
+    
   }
 
   initForm(data?: any) {
@@ -165,6 +177,7 @@ export class LegalGuardianFormComponent implements OnInit {
       'Success',
       'Legal Guardian has been updated successfully'
     );
+		this.patientUserServ.setlegalGuardNotPristine(false);
   }
   cancel() {
     this.onCancel.emit();

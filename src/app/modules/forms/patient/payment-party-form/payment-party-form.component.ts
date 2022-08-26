@@ -73,6 +73,17 @@ export class PaymentPartyFormComponent implements OnInit {
 
   async ngOnInit() {
     this.initForm(this.formData);
+		this.patientUserServ.setFalseAllNotPristine();
+		this.Form?.statusChanges.subscribe(
+			result => {
+				console.log(result)
+				if (!this.Form?.pristine) {
+					console.log("hiiiiii", event);
+					console.log("status", this.Form?.pristine);
+					this.patientUserServ.setpaymentPartyNotPristine(true);
+				}
+			}
+		);
     this.paymentParty.push(await this.patientUserServ.getPaymPartyFamiMemb());
 
     this.relationship = await this.patientUserServ.getPaymPartyToPati();
@@ -182,6 +193,7 @@ export class PaymentPartyFormComponent implements OnInit {
       'Success',
       'Payment Party has been updated successfully'
     );
+		this.patientUserServ.setpaymentPartyNotPristine(false);
   }
   cancel() {
     this.onCancel.emit();

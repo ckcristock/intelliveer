@@ -13,6 +13,7 @@ import { UserService } from '@services/user/user.service';
 import { PatientDetailService } from '@services/patient/family/patient-detail.service';
 import { AlertService } from '@services/alert/alert.service';
 import { Patient } from '@services/patient/family/patient';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
 
 @Component({
 	selector: 'app-patient-detail',
@@ -63,9 +64,24 @@ export class PatientDetailComponent implements OnInit {
 	globalData: any = {
 		title: ''
 	};
-	pronouns: any[] = [{ pronoun: 'He' }, { pronoun: 'She' }];
 	bgId: any;
 	patientObj: Patient | undefined;
+	pronouns: any[] = [
+		{ pronoun: 'He' },
+		{ pronoun: 'She' },
+	  ];
+	  genders: any[] = [
+		{ label: 'Male', value:'M' },
+		{ label: 'Female', value:'F' },
+	  ];
+	  languages: any[] = [
+		{ label: 'English', value:'english' },
+		{ label: 'Hindi', value:'hindi' },
+	  ];
+	  maritalStatuses: any[] = [
+		{ label: 'Maried', value:'M' },
+		{ label: 'Single', value:'S' },
+	  ];
 
 	constructor(
 		private fb: FormBuilder,
@@ -75,7 +91,8 @@ export class PatientDetailComponent implements OnInit {
 		private businessGroupDropdownService: BusinessGroupDropdownService,
 		private authService: AuthService,
 		private patientDetailService: PatientDetailService,
-		private alertService: AlertService
+		private alertService: AlertService,
+		private patientUserServ: PatientUserService,
 	) {
 		this.idForm = this.fb.group({
 			// name: '',
@@ -94,17 +111,28 @@ export class PatientDetailComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.addId();
-		this.initForm(this.formData);
 		this.getStaticData();
 		this.userObj = JSON.parse(
 			localStorage.getItem('selectedPatient') || ''
+		);
+		this.initForm(this.formData);
+		this.patientUserServ.setFalseAllNotPristine();
+		this.Form?.statusChanges.subscribe(
+			result => {
+				console.log(result)
+				if (!this.Form?.pristine) {
+					console.log("hiiiiii", event);
+					console.log("status", this.Form?.pristine);
+					this.patientUserServ.setpatientNotPristine(true);
+				}
+			}
 		);
 	}
 
 	initForm(data?: any) {
 		data = data || {};
 		this.Form = this.fb.group({
-			title: [data?.title || ''],
+			title: [data?.title || null],
 			firstName: [
 				data?.firstName || '',
 				[
@@ -121,10 +149,10 @@ export class PatientDetailComponent implements OnInit {
 				]
 			],
 			DOB: [data?.DOB || '', Validators.required],
-			gender: [data?.gender || '', Validators.required],
-			pronoun: [data?.pronoun || ''],
-			language: [data?.language || ''],
-			maried: [data?.maried || ''],
+			gender: [data?.gender || null, Validators.required],
+			pronoun: [data?.pronoun || null],
+			language: [data?.language || null],
+			maried: [data?.maried || null],
 			preferredName: [data?.preferredName || ''],
 			pronounciation: [data?.pronounciation || ''],
 			school: [data?.school || ''],
@@ -166,23 +194,23 @@ export class PatientDetailComponent implements OnInit {
 	}
 
 	genderValid() {
-		return this.Form.get('gender')?.value.length > 0;
+		return this.Form.get('gender')?.value != null;
 	}
 
 	locationValid() {
-		return this.Form.get('location')?.value.length > 0;
+		return this.Form.get('location')?.value != null;
 	}
 
 	billingValid() {
-		return this.Form.get('practice')?.value.length > 0;
+		return this.Form.get('practice')?.value != null;
 	}
 
 	treatingValid() {
-		return this.Form.get('provider')?.value.length > 0;
+		return this.Form.get('provider')?.value != null;
 	}
 
 	contPersValid() {
-		return this.Form.get('cPerson')?.value.length > 0;
+		return this.Form.get('cPerson')?.value != null;
 	}
 
 	emerNameValid() {
@@ -271,6 +299,7 @@ export class PatientDetailComponent implements OnInit {
 				console.log(error);
 			}
 		);
+		this.patientUserServ.setpatientNotPristine(false);
 	}
 	cancel() {
 		this.onCancel.emit();
@@ -333,6 +362,8 @@ export class PatientDetailComponent implements OnInit {
 		this.userService.getLocationList(bgId).subscribe(
 			(list: any) => {
 				this.locationList = list;
+				console.log("this.locationList", this.locationList);
+				
 			},
 			(error) => {
 				console.log(error);
@@ -360,6 +391,8 @@ export class PatientDetailComponent implements OnInit {
 			.subscribe((data: any) => {
 				console.log(data);
 				this.patientObj = data;
+				console.log("this.patientObj", this.patientObj);
+				
 			});
 	}
 }
