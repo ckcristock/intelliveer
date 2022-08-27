@@ -5,9 +5,11 @@
       <p>Settings</p>
     </div>
     <ul class="ul" style="margin-top: 27px;">
-      <li class="pointer" *ngFor="let item of menuItems" routerLinkActive="active" [routerLink]="item.url">
-        {{ item.title }}
-      </li>
+      <div *ngFor="let item of onBoardingMenu">
+        <li class="pointer" *ngIf="item.isEnabled"  routerLinkActive="active" [routerLink]="item.url">
+          {{ item.title }}
+        </li>
+      </div>
     </ul>
   </div>
   <div class="col-10 component-view">

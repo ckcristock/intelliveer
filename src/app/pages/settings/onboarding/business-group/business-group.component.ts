@@ -10,9 +10,11 @@ import { NgbDayTemplateData } from '@ng-bootstrap/ng-bootstrap/datepicker/datepi
 import { AlertService } from '@services/alert/alert.service';
 import { AuthService } from '@services/auth/auth.service';
 import { BusinessGroupDropdownService } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 import { BusinessGroupService } from '@services/onboarding/business-group/business-group.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Subscription } from 'rxjs';
+import { SearchStringPipePipe } from 'src/app/pipes/stringSearch/search-string-pipe.pipe';
 
 @Component({
 	selector: 'app-business-group',
@@ -30,7 +32,9 @@ export class BusinessGroupComponent
 	searchText: any;
 	searchCount: number = 0;
 	dataBackup: any;
-
+    bussinessEdit:any;
+	bussinessAdd:any;
+	bussinessDelete:any;
 	constructor(
 		private router: Router,
 		private businessGroupDropdownService: BusinessGroupDropdownService,
@@ -38,13 +42,16 @@ export class BusinessGroupComponent
 		private alertService: AlertService,
 		private cookieService: CookieService,
 		private cdRef: ChangeDetectorRef,
-		private authService: AuthService
+		private authService: AuthService,
+		private searchString: SearchStringPipePipe,
+		private globalRoutes: GlobalRoutesService
 	) { }
 	ngOnDestroy(): void {
 		this.businessGroupDropdownService.disable(false);
 	}
 	ngOnInit() {
 		this.getOrgBgId();
+		this.checkPermission()
 	}
 	ngAfterViewInit() {
 		setTimeout(() => {
@@ -94,14 +101,15 @@ export class BusinessGroupComponent
 	}
 
 	getOrgBgId() {
-		let user = this.authService.getLoggedInUser();
+		let user:any =	localStorage.getItem('permissionSet');
+        user = JSON.parse(user);
 		let orgId = this.authService.getOrgId();
 		if (user) {
 			if (user?.__ISSU__) {
 				this.fetchBgList()
 				this.isSuperUser = true;
-			} else if (user.bg[0]?._id) {
-				this.fetchBgListByBGId(user.bg[0]?._id, 'intelliveer')
+			} else if (user.bgs[0]?._id) {
+				this.fetchBgListByBGId(user.bgs[0]?._id, 'intelliveer')
 			} else {
 				this.fetchBgListByBGId(orgId, orgId)
 			}
@@ -122,5 +130,12 @@ export class BusinessGroupComponent
 				;
 		});
 		this.data = dataFiltered;
+	}
+	checkPermission(){
+		let bussinessGroup = this.globalRoutes.getSettingsOnboardingRoutes();
+		let getBusinessGroup = this.searchString.transform('title',bussinessGroup,'Business Group');
+		this.bussinessAdd = this.searchString.transform('title',getBusinessGroup[0].child,'Add');
+		this.bussinessEdit = this.searchString.transform('title',getBusinessGroup[0].child,'Edit');
+		this.bussinessDelete = this.searchString.transform('title',getBusinessGroup[0].child,'Delete');
 	}
 }

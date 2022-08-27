@@ -1,7 +1,7 @@
 <div *ngIf="!data" class="section" style="height: 90%;">
 	<div style="text-align: center; padding-top: 7%;">
 		<h5><b>You haven’t added yet</b></h5>
-		<p>Click here, <img src="assets/icons/add.svg" width="36" height="36" (click)="addPractice()" /> to add
+		<p>Click here, <img src="assets/icons/add.svg" width="36" height="36" (click)="addPractice()"  *ngIf="practiceAdd[0].isEnabled"/> to add
 			Practice</p>
 	</div>
 </div>
@@ -18,7 +18,7 @@
 						[(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" (keyup)="search()" />
 				</div>
 			</div>
-			<div class="d-flex gap-2">
+			<div class="d-flex gap-2" *ngIf="practiceAdd[0].isEnabled">
 				<button class="add_btn" routerLink="/dashboard/settings/onboarding/practice/add">
 					<img src="/assets/icons/add.svg" alt="" />
 				</button>
@@ -61,10 +61,11 @@
 								<div ngbDropdownMenu>
 									<button ngbDropdownItem routerLink="/dashboard/settings/onboarding/practice/edit/{{
 											d._id
-										}}">
+										}}"
+										*ngIf="practiceEdit[0].isEnabled">
 										Edit
 									</button>
-									<button ngbDropdownItem (click)="delete(d._id)">
+									<button ngbDropdownItem (click)="delete(d._id)" *ngIf="practiceDelete[0].isEnabled">
 										Delete
 									</button>
 								</div>

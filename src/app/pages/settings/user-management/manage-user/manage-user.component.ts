@@ -9,6 +9,7 @@ import {
 import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 import { UserService } from '@services/user/user.service';
 import { filter } from 'rxjs';
+import { SearchStringPipePipe } from 'src/app/pipes/stringSearch/search-string-pipe.pipe';
 
 @Component({
 	selector: 'app-manage-user',
@@ -30,13 +31,16 @@ export class ManageUserComponent implements OnInit {
 	loginStatusButtonName: any = "Deactivate";
 	selectedBusinessGroup: SelectedBusinessGroup | undefined;
     orgId:any;
+	manageUserAdd:any;
+	manageUserActiveDeactive:any;
 	constructor(
 		private router: Router,
 		private globalRoutes: GlobalRoutesService,
 		private alertService: AlertService,
 		private userService: UserService,
 		private authService: AuthService,
-		private businessGroupDropdownService: BusinessGroupDropdownService
+		private businessGroupDropdownService: BusinessGroupDropdownService,
+		private searchString: SearchStringPipePipe,
 	) {
 		this.businessGroupDropdownSupscription =
 			this.businessGroupDropdownService
@@ -91,6 +95,7 @@ export class ManageUserComponent implements OnInit {
 			// 		console.log('usersss', this.users);
 			// 	});
 			// });
+			this.checkPermission()
 		}
 
 	ngOnDestroy(): void {
@@ -112,7 +117,7 @@ export class ManageUserComponent implements OnInit {
 		let orgId = this.authService.getOrgId();
 		this.orgId = bgOrdID;
 			let user = this.authService.getLoggedInUser();
-			console.log(user)
+			console.log(user,bgOrdID)
 			if (user?.__ISSU__) {
 				if(bgOrdID == 'intelliveer' || bgOrdID == null){
 					this.getList('intelliveer');
@@ -196,5 +201,12 @@ export class ManageUserComponent implements OnInit {
 	  })
 	   }
     }
+	checkPermission(){
+		let manageUser = this.globalRoutes.getSettingsUserManageRoutes();
+		console.log(manageUser)
+		let getmanageUser = this.searchString.transform('title',manageUser,"Manage User");
+		this.manageUserAdd = this.searchString.transform('title',getmanageUser[0].child,'Create User');
+		this.manageUserActiveDeactive = this.searchString.transform('title',getmanageUser[0].child,'Activate and Deactivate');
+	}
 
 }

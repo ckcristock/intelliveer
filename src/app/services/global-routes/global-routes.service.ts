@@ -172,37 +172,96 @@ export class GlobalRoutesService {
     {
       title: "Business Group",
       url: `${this.urlOnboarding}/business-group`,
+      isEnabled: true,
+      value: "CAN_RETRIEVE_BUSINESS_GROUP",
       child: [{
         title: "Add",
-        url: `${this.urlOnboarding}/business-group/add`
-      },]
+        url: `${this.urlOnboarding}/business-group/add`,
+        isEnabled: true,
+        value: "CAN_CREATE_BUSINESS_GROUP",
+      },{
+        title: "Edit",
+        isEnabled: true,
+        value: "CAN_EDIT_BUSINESS_GROUP",
+      },{
+        title: "Delete",
+        isEnabled: true,
+        value: "CAN_DELETE_BUSINESS_GROUP",
+      }]
     },
     {
       title: "Legal Entity",
       url: `${this.urlOnboarding}/legal-entity`,
+      isEnabled: true,
+      value: "CAN_RETRIEVE_LEGAL_ENTITY",
       child: [{
         title: "Add",
-        url: `${this.urlOnboarding}/legal-entity/add`
-      },]
+        url: `${this.urlOnboarding}/legal-entity/add`,
+        isEnabled: true,
+        value: "CAN_CREATE_LEGAL_ENTITY",
+      },{
+        title: "Edit",
+        isEnabled: true,
+        value: "CAN_EDIT_LEGAL_ENTITY",
+      },{
+        title: "Delete",
+        isEnabled: true,
+        value: "CAN_DELETE_LEGAL_ENTITY",
+      }]
     },
     {
       title: "Location",
       url: `${this.urlOnboarding}/location`,
+      isEnabled: true,
+      value: "CAN_RETRIEVE_LOCATION",
       child: [{
         title: "Add",
+        isEnabled: true,
+        value: "CAN_CREATE_LOCATION",
         url: `${this.urlOnboarding}/location/add`
-      },]
+
+      },{
+        title: "Edit",
+        isEnabled: true,
+        value: "CAN_EDIT_LOCATION",
+        url: `${this.urlOnboarding}/location/add`
+
+      },{
+        title: "Delete",
+        isEnabled: true,
+        value: "CAN_DELETE_LOCATION",
+        url: `${this.urlOnboarding}/location/add`
+
+      }]
     },
     {
       title: "Practice",
       url: `${this.urlOnboarding}/practice`,
+      isEnabled: true,
+      value: "CAN_RETRIEVE_PRACTICE",
       child: [{
         title: "Add",
+        isEnabled: true,
+        value: "CAN_CREATE_PRACTICE",
         url: `${this.urlOnboarding}/practice/add`
-      },]
+      },{
+        title: "Edit",
+        isEnabled: true,
+        value: "CAN_EDIT_PRACTICE",
+        url: `${this.urlOnboarding}/location/add`
+
+      },{
+        title: "Delete",
+        isEnabled: true,
+        value: "CAN_DELETE_PRACTICE",
+        url: `${this.urlOnboarding}/location/add`
+
+      }]
     },
     {
       title: "Mapping",
+      isEnabled: true,
+      value: "CAN_CREATE_BUSINESS_GROUP",
       url: `${this.urlOnboarding}/mapping`,
       child: []
     },
@@ -212,23 +271,31 @@ export class GlobalRoutesService {
     {
       title: "Manage Role Templates",
       url: `${this.urlRoleManage}/manage-role-template`,
+      isEnabled: true,
+      value: "CAN_RETRIEVE_ROLE_TEMPLATE",
       child: [{
         title: "Add",
-        url: `${this.urlRoleManage}/manage-role-template/add`
+        url: `${this.urlRoleManage}/manage-role-template/add`,
+        isEnabled: true,
+        value: "CAN_CREATE_ROLE_TEMPLATE",
       },{
         title: "edit",
-        url: `${this.urlRoleManage}/manage-role-template/edit`
+        url: `${this.urlRoleManage}/manage-role-template/edit`,
+        isEnabled: true,
+        value: "CAN_EDIT_ROLE_TEMPLATE",
       },]
     },
     {
       title: "Manage Role",
       url: `${this.urlRoleManage}/manage-role`,
+      isEnabled: true,
+      value: "",
       child: [{
         title: "Add",
-        url: `${this.urlRoleManage}/manage-role/add`
+        url: `${this.urlRoleManage}/manage-role/add`,
       },{
         title: "Edit",
-        url: `${this.urlRoleManage}/manage-role/edit`
+        url: `${this.urlRoleManage}/manage-role/edit`,
       }]
     },
   ];
@@ -237,33 +304,53 @@ export class GlobalRoutesService {
     {
       title: "Manage User",
       url: `${this.urlUserManage}/manage-user`,
+      isEnabled: true,
+      value: "CAN_RETRIEVE_USER",
       child: [{
         title: "Create User",
-        url: `${this.urlUserManage}/manage-user/add-user`
-      },]
+        url: `${this.urlUserManage}/manage-user/add-user`,
+        isEnabled: true,
+        value: "CAN_CREATE_USER",
+      },{
+        title: "Activate and Deactivate",
+        isEnabled: true,
+        value: "CAN_ENABLE_OR_DISABLE_USER_LOGIN",
+      }]
     },
     {
       title: "Edit User",
       url: `${this.urlUserManage}/user-policy`,
+      isEnabled: true,
+      value: "",
       child: [
       {
         title: "Role Assignment",
-        url: `${this.urlUserManage}/edit-user/assign-role`
+        url: `${this.urlUserManage}/edit-user/assign-role`,
+        isEnabled: true,
+        value: "CAN_UPDATE_USER_ROLE",
       },
       {
         title: "User Policy",
-        url: `${this.urlUserManage}/edit-user/user-policy`
+        url: `${this.urlUserManage}/edit-user/user-policy`,
+        isEnabled: true,
+        value: "",
       },
       {
         title: "Personal Information",
-        url: `${this.urlUserManage}/edit-user/personal-info`
+        url: `${this.urlUserManage}/edit-user/personal-info`,
+        isEnabled: true,
+        value: "CAN_UPDATE_USER_PROFILE",
       },
       {
         title: "Provider",
-        url: `${this.urlUserManage}/edit-user/user-provider`
+        url: `${this.urlUserManage}/edit-user/user-provider`,
+        isEnabled: true,
+        value: "",
       },{
         title: "Document",
-        url: `${this.urlUserManage}/edit-user/user-document`
+        url: `${this.urlUserManage}/edit-user/user-document`,
+        isEnabled: true,
+        value: "",
       },]
     },
   ];

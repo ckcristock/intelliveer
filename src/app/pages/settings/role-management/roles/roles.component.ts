@@ -35,8 +35,8 @@ export class RolesComponent implements OnInit {
       .businessGroup()
       .subscribe((bg) => {
         if (bg) {
-          console.log(bg)
           this.selectedBusinessGroup = bg;
+          console.log(this.selectedBusinessGroup)
           this.getOrgBgId();
         }
       });
@@ -47,17 +47,15 @@ export class RolesComponent implements OnInit {
     this.roleService.getRoleList().subscribe((list: any) =>
     {
       this.roleList = list;
-      debugger
     })
   }
 
   getRoleListByBgId(bgId:any)
   {
-    this.checkPermissionRRTOrURRT();
     console.log(bgId)
+    this.checkPermissionRRTOrURRT();
     this.roleService.getRoleListByID(bgId).subscribe((list: any) =>
     {
-      console.log('list',list);
       if(this.roleRRT && !this.roleURRT){
         this.roleList = list;
       }else if(this.roleRRT && this.roleURRT){
@@ -69,7 +67,6 @@ export class RolesComponent implements OnInit {
           this.roleList = list2
         })
       }
-      console.log(this.roleList)
     })
   }
   getRoleListByBgAdminId(bgId:any)
@@ -80,7 +77,6 @@ export class RolesComponent implements OnInit {
         this.roleService.getRoleListByIDUnRestricted(bgId).subscribe((list2:any)=>{
           this.roleList = [...list,...list2];
         })
-      console.log(this.roleList)
     })
   }
 
@@ -129,12 +125,12 @@ export class RolesComponent implements OnInit {
 		let user:any =	localStorage.getItem('permissionSet');
     user = JSON.parse(user);
     this.user = user; 
-    console.log(user)
+    console.log(user,bgOrdID)
 		if (user?.__ISSU__) {
       if(bgOrdID == 'intelliveer' || bgOrdID == null){
         this.getRoleList();
       }else{
-        this.getRoleListByBgId(bgOrdID)
+        this.getRoleListByBgAdminId(bgOrdID)
       }
       }else if(user?.isBGAdmin){
         this.getRoleListByBgAdminId(bgOrdID)
@@ -147,7 +143,7 @@ export class RolesComponent implements OnInit {
     }
 
 	}
-  delteRoleUser(roleId:any){
+  delteRoleUser(roleId:any){true
     let user = this.authService.getLoggedInUser();
     if (user?.__ISSU__) {
       this.deleteRole(roleId)
@@ -159,23 +155,21 @@ export class RolesComponent implements OnInit {
 		let user:any =	localStorage.getItem('permissionSet');
     user = JSON.parse(user);
     this.user = user;
-    console.log(user.roles[0])
     user?.roles[0]?.permissions[0]?.sections.forEach((element:any) => {
-      console.log(element)
       if(element.section == 'templateBasedRestrictedRoles'){
         element.permissions.forEach((RRT:any) => {
           switch (RRT.name) {
             case 'CAN_CREATE_TEMPLATE_BASED_RESTRICTED_ROLE':
-              this.roleURRTAdd = RRT.enabled;
+              this.roleRRTAdd = RRT.enabled;
               break;
             case 'CAN_RETRIEVE_TEMPLATE_BASED_RESTRICTED_ROLE':
-              this.roleURRT = RRT.enabled;
+              this.roleRRT = RRT.enabled;
               break;
             case 'CAN_EDIT_TEMPLATE_BASED_RESTRICTED_ROLE':
-              this.roleURRTEdit = RRT.enabled;
+              this.roleRRTEdit = RRT.enabled;
               break;
             case 'CAN_DELETE_TEMPLATE_BASED_RESTRICTED_ROLE':
-              this.roleURRTDelete = RRT.enabled;
+              this.roleRRTDelete = RRT.enabled;
               break;
            
           }
@@ -184,22 +178,21 @@ export class RolesComponent implements OnInit {
         element.permissions.forEach((URRT:any) => {
           switch (URRT.name) {
             case 'CAN_CREATE_TEMPLATE_BASED_UNRESTRICTED_ROLE':
-              this.roleRRTAdd = URRT.enabled;
+              this.roleURRTAdd = URRT.enabled;
               break;
             case 'CAN_RETRIEVE_TEMPLATE_BASED_UNRESTRICTED_ROLE':
-              this.roleRRT = URRT.enabled;
+              this.roleURRT = URRT.enabled;
               break;
             case 'CAN_EDIT_TEMPLATE_BASED_UNRESTRICTED_ROLE':
-              this.roleRRTEdit = URRT.enabled;
+              this.roleURRTEdit = URRT.enabled;
               break;
             case 'CAN_DELETE_TEMPLATE_BASED_UNRESTRICTED_ROLE':
-              this.roleRRTDelete = URRT.enabled;
+              this.roleURRTDelete = URRT.enabled;
               break;
            
           }
         });
       }
-      console.log(this.roleRRT,this.roleRRTAdd,this.roleRRTDelete,this.roleRRTEdit)
     });
 	}
 

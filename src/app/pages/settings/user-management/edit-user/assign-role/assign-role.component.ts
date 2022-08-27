@@ -113,6 +113,7 @@ export class AssignRoleComponent implements OnInit {
 		let bgOrdID: any = localStorage.getItem('selected_business_group');
 		let user:any =	localStorage.getItem('permissionSet');
         user = JSON.parse(user);
+		console.log(user)
 		if (user?.__ISSU__) {
 			if (bgOrdID == 'intelliveer' || bgOrdID == null) {
 				this.getUserCurrentRoleList('intelliveer');
@@ -124,12 +125,12 @@ export class AssignRoleComponent implements OnInit {
 				this.logInType = this.selectedBusinessGroup?.bgId;
 			}
 		}else if(user?.isBGAdmin){
-			this.getUserCurrentRoleList(this.selectedBusinessGroup?.bgId);
+			//this.getUserCurrentRoleList(this.selectedBusinessGroup?.bgId);
 			this.getRoleListByBgAdminId(user?.bgs[0]?._id);
 			this.logInType = this.selectedBusinessGroup?.bgId;
 		} 
 		else {
-			this.getUserCurrentRoleList(this.selectedBusinessGroup?.bgId);
+			//this.getUserCurrentRoleList(this.selectedBusinessGroup?.bgId);
 			this.getRoleListByBgId(this.selectedBusinessGroup?.bgId);
 			this.logInType = this.selectedBusinessGroup?.bgId;
 		}
@@ -153,6 +154,7 @@ export class AssignRoleComponent implements OnInit {
 											name: roledata.name
 										};
 										this.userCurrentRoleList.push(roleObj);
+										this.userCurrentRoleList = this.getUniqueListBy(this.userCurrentRoleList,'name')
 										this.userAssignRoleIdsList.push(
 											roledata._id
 										);
@@ -169,7 +171,9 @@ export class AssignRoleComponent implements OnInit {
 			}
 		);
 	}
-
+getUniqueListBy(arr:any, key:any) {
+    return [...new Map(arr.map((item:any) => [item[key], item])).values()]
+  }
 	cancleUserCurrentRole(Obj: any, index: number) {
 		if(this.userCurrentRoleList.length != 1)
 		{
@@ -234,7 +238,7 @@ export class AssignRoleComponent implements OnInit {
 			  this.tempRoleList = list2
 		  })
 		}
-		console.log(this.tempRoleList)
+		this.getUserCurrentRoleList(bgId);
 	  })
 	}
 	getRoleListByBgAdminId(bgId:any)
@@ -246,7 +250,7 @@ export class AssignRoleComponent implements OnInit {
 			  this.tempRoleList = [...list,...list2];
 			  console.log(this.tempRoleList)
 		  })
-		  
+		  this.getUserCurrentRoleList(bgId);  
 	  })
 	}
 	getRoleFilterLst(array1: any, array2: any)

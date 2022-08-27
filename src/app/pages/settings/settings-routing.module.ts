@@ -1,11 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { RoleGuardGuard } from '@guards/role-based/role-guard.guard';
 import { SettingsComponent } from './settings.component';
 
 const routes: Routes = [
   {
     path: '',
     component: SettingsComponent,
+    canActivate: [RoleGuardGuard],
+    data:{
+      isEnabled: true, 
+      value: "",
+      },
     children: [
       {
         path: '',

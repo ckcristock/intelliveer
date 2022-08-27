@@ -15,7 +15,7 @@
 		<div *ngIf="usersList.length == 0" class="section" style="height: 90%">
 			<div style="text-align: center; padding-top: 7%">
 				<h5><b>You haven’t added yet</b></h5>
-				<p>
+				<p *ngIf="manageUserAdd[0].isEnabled">
 					Click here,
 					<img src="assets/icons/add.svg" width="36" height="36"
 						routerLink="/dashboard/settings/user-management/manage-user/add-user" />
@@ -38,7 +38,7 @@
 				</div>
 
 				<!-- plus icon -->
-				<div class="d-flex">
+				<div class="d-flex" *ngIf="manageUserAdd[0].isEnabled">
 					<button class="add_btn" routerLink="/dashboard/settings/user-management/manage-user/add-user">
 						<img src="/assets/icons/add.svg" alt="" />
 					</button>
@@ -65,28 +65,36 @@
 									<input type="checkbox" value="{{ i }}" />
 								</td>
 								<td>
+									<a (click)="gotoPersonalInfo(user)" style="cursor: pointer;">
 									{{ user['profile'].firstName }}
 									{{ user['profile'].lastName }}
+									</a>
 								</td>
 								<td *ngIf="user['profile'].email == null">
 									No email
 								</td>
 								<td *ngIf="user['profile'].email != null">
-									{{ user['profile'].email }}
+									<a (click)="gotoPersonalInfo(user)" style="cursor: pointer;">
+										{{ user['profile'].email }}
+									</a>
 								</td>
 								<td *ngIf="user['roles'].length == 0">
 									No roles
 								</td>
 								<td *ngIf="user['roles'].length > 1">
-									{{ user['roles'][0].name }}
-									<span class="redcircle" triggers="mouseenter:mouseleave" #p1="ngbPopover"
-										(mouseover)="
-											usersPopUp(user['roles'], i)
-										" [ngbPopover]="popContentArray[i]">
-										+2</span>
+									<a (click)="gotoPersonalInfo(user)" style="cursor: pointer;">
+										{{ user['roles'][0].name }}
+										<span class="redcircle" triggers="mouseenter:mouseleave" #p1="ngbPopover"
+											(mouseover)="
+												usersPopUp(user['roles'], i)
+											" [ngbPopover]="popContentArray[i]">
+											+2</span>
+									</a>
 								</td>
 								<td *ngIf="user['roles'].length == 1">
+									<a (click)="gotoPersonalInfo(user)" style="cursor: pointer;">
 									{{ user['roles'][0].name }}
+									</a>
 								</td>
 								<td *ngIf="user.loginStatus.loginIsEnabled">Active
 									<!-- <div class="form-check form-switch form-switch-lg">
@@ -105,14 +113,14 @@
 												Resend activation email
 											</button>
 											<div class="dropdown-divider"></div>
-											<button (click)="gotoPersonalInfo(user)" ngbDropdownItem>
+											<!-- <button (click)="gotoPersonalInfo(user)" ngbDropdownItem>
 												Edit
-											</button>
+											</button> -->
 											<div class="dropdown-divider"></div>
-											<button (click)="updateUserLoginStatus(user.loginStatus.loginIsEnabled,user._id)" ngbDropdownItem *ngIf="!user.loginStatus.loginIsEnabled">
+											<button (click)="updateUserLoginStatus(user.loginStatus.loginIsEnabled,user._id)" ngbDropdownItem *ngIf="!user.loginStatus.loginIsEnabled && manageUserActiveDeactive[0].isEnabled ">
 												Reactivate
 											</button>
-											<button (click)="updateUserLoginStatus(user.loginStatus.loginIsEnabled,user._id)" ngbDropdownItem *ngIf="user.loginStatus.loginIsEnabled">
+											<button (click)="updateUserLoginStatus(user.loginStatus.loginIsEnabled,user._id)" ngbDropdownItem *ngIf="user.loginStatus.loginIsEnabled && manageUserActiveDeactive[0].isEnabled ">
 												Deactivate
 											</button>
 										</div>

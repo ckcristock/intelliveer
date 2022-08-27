@@ -31,6 +31,9 @@ export class EditRoleComponent implements OnInit {
   selectedBusinessGroup: SelectedBusinessGroup | any;
   editRoleID: any;
   orgID:any;
+  isSaveButton: boolean = false;
+  editRRT: any;
+  editURRT: any;
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -68,6 +71,7 @@ export class EditRoleComponent implements OnInit {
   {
     this.roleService.getRoleById(this.editRoleID).subscribe((data: any) => {
       this.roleObj = data;
+      console.log(data)
       this.Form.patchValue(data);
     }, error => {
       console.log(error)
@@ -76,6 +80,7 @@ export class EditRoleComponent implements OnInit {
   /** Get role data from role id and BG id */
   getRoleByBgId(id: string,bgId:any)
   {
+    console.log(id,bgId)
     this.roleService.getRoleByIdBgId(id,bgId).subscribe((data: any) => {
       this.roleObj = data;
       console.log(this.roleObj)
@@ -299,8 +304,11 @@ export class EditRoleComponent implements OnInit {
    /** Show data According To Type and BG */
    getOrgBgId(){
     let bgOrdID:any = localStorage.getItem('selected_business_group');
-		let user = this.authService.getLoggedInUser();
+		let user:any =	localStorage.getItem('permissionSet');
+    let orgId = this.authService.getOrgId();
+    user = JSON.parse(user);
     this.orgID = bgOrdID;
+    console.log(user)
 		if (user?.__ISSU__) {
       if(bgOrdID == 'intelliveer' || bgOrdID == null){
         this.getRoleById();
@@ -308,6 +316,9 @@ export class EditRoleComponent implements OnInit {
         this.getRoleByBgId(this.editRoleID,bgOrdID)
       }
       }else{
+        if(bgOrdID == 'intelliveer' || bgOrdID == null){
+          bgOrdID = orgId
+        }
       this.getRoleByBgId(this.editRoleID,bgOrdID)
     }
 	}
@@ -325,6 +336,39 @@ export class EditRoleComponent implements OnInit {
 		}else{
 			this.saveRoleFromTemplateBYBgId(data)
 		}
+	}
+  checkPermission(){
+		let user:any =	localStorage.getItem('permissionSet');
+    user = JSON.parse(user);
+    console.log(user)
+    if(user.__ISSU__){
+      this.isSaveButton = true
+    }else if (user.isBGAdmin){
+      this.isSaveButton = true
+    }else{
+      user?.roles[0]?.permissions[0]?.sections.forEach((element:any) => {
+        if(element.section == 'templateBasedRestrictedRoles'){
+          element.permissions.forEach((RRT:any) => {
+            switch (RRT.name) {
+              case "CAN_CREATE_TEMPLATE_BASED_RESTRICTED_ROLE":
+                this.isSaveButton = RRT.enabled;
+                break;
+             
+            }
+          });
+        }else  if(element.section == 'templateBasedUnRestrictedRoles'){
+          element.permissions.forEach((URRT:any) => {
+            switch (URRT.name) {
+              case "CAN_CREATE_TEMPLATE_BASED_UNRESTRICTED_ROLE":
+                this.isSaveButton = URRT.enabled;
+                break;
+              
+            }
+          });
+        }
+      });
+    }
+   
 	}
 
 }
