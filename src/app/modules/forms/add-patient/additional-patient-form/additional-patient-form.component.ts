@@ -2,7 +2,10 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AddPatientService } from "@services/add-patient/add-patient.service";
+import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
 import { GlobalRoutesService } from "@services/global-routes/global-routes.service";
+import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 
 @Component({
   selector: 'app-additional-patient-form',
@@ -183,12 +186,18 @@ export class AdditionalPatientFormComponent implements OnInit {
   constructor(
     private router: Router,
     private routes: GlobalRoutesService,
+    private patientUserServ: PatientUserService,
     private addPatientServ: AddPatientService,
+    private insuranceServ: InsuranceService,
+    private onboardingServ: OnboardingService,
     private fb: FormBuilder,) { }
 
   async ngOnInit() {
     this.initForm(this.formData);
+		this.patientUserServ.setFalseAllNotPristine();
     this.addPatientServ.setFalseAllNotPristineCWP();
+		this.insuranceServ.setFalseAllNotPristine();
+		this.onboardingServ.setFalseAllNotPristine();
     this.Form.statusChanges.subscribe(
       result => {
         console.log(result)

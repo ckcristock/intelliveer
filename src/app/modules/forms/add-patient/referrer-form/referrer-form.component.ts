@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { addPatientCordinateMenuItems, addPatientQuickMenuItems } from '@pages/home/add-patient/menu';
 import { AddPatientService } from '@services/add-patient/add-patient.service';
+import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
+import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 
 @Component({
   selector: 'app-referrer-form',
@@ -43,13 +46,19 @@ export class ReferrerFormComponent implements OnInit {
   openTextAreaVar: boolean = false;
 
   constructor(private router: Router,
+    private patientUserServ: PatientUserService,
     private addPatientServ: AddPatientService,
+    private insuranceServ: InsuranceService,
+    private onboardingServ: OnboardingService,
     private fb: FormBuilder,) { }
 
   async ngOnInit() {
     this.initForm(this.formData);
     if (this.tab == 'coordWithProspect') {
+      this.patientUserServ.setFalseAllNotPristine();
       this.addPatientServ.setFalseAllNotPristineCWP();
+      this.insuranceServ.setFalseAllNotPristine();
+      this.onboardingServ.setFalseAllNotPristine();
       this.addPatientServ.getReferrerFromCompone(this.getReferrer.bind(this));
       this.Form.statusChanges.subscribe(
         result => {

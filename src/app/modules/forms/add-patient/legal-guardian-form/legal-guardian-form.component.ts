@@ -6,7 +6,10 @@ import { CONFIG } from '@config/index';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { addPatientCordinateMenuItems, addPatientQuickMenuItems } from '@pages/home/add-patient/menu';
 import { AddPatientService } from '@services/add-patient/add-patient.service';
+import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
 import { GeoService } from '@services/global-data/public/geo/geo.service';
+import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 import { delay, filter, map } from 'rxjs';
 
 
@@ -85,7 +88,10 @@ export class LegalGuardianFormComponent implements OnInit {
   constructor(private router: Router, private fb: FormBuilder,
     private http: HttpClient,
     private geoService: GeoService,
-    private addPatientServ: AddPatientService,) {
+    private patientUserServ: PatientUserService,
+    private addPatientServ: AddPatientService,
+    private insuranceServ: InsuranceService,
+    private onboardingServ: OnboardingService,) {
     this.geoService
       .getCountries()
       .pipe(delay(100))
@@ -105,7 +111,10 @@ export class LegalGuardianFormComponent implements OnInit {
 
   async ngOnInit() {
     console.log("selectedCountry2", this.selectedCountry2);
+		this.patientUserServ.setFalseAllNotPristine();
     this.addPatientServ.setFalseAllNotPristineCWP();
+		this.insuranceServ.setFalseAllNotPristine();
+		this.onboardingServ.setFalseAllNotPristine();
     this.addPatientServ.getLegalGuardFromCompone(this.getLegalGuard.bind(this));
     this.getDataLegaGuarCaller();
     this.initForm(this.formData);
