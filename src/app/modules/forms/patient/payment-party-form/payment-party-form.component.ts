@@ -214,6 +214,10 @@ export class PaymentPartyFormComponent implements OnInit {
 		this.Form.controls['CommPrimary'].setValue("");
 	}
 
+	pPhoneTypeValid() {
+		return this.Form.get('pPhoneType')?.valid;
+	}
+
 	async getStaticData() {
 		this.http
 			.get(`${CONFIG.backend.host}/auth/global-data/static-types`)
