@@ -14,6 +14,9 @@ import { PatientDetailService } from '@services/patient/family/patient-detail.se
 import { AlertService } from '@services/alert/alert.service';
 import { Patient } from '@services/patient/family/patient';
 import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
+import { AddPatientService } from '@services/add-patient/add-patient.service';
+import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
+import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 
 @Component({
 	selector: 'app-patient-detail',
@@ -69,19 +72,19 @@ export class PatientDetailComponent implements OnInit {
 	pronouns: any[] = [
 		{ pronoun: 'He' },
 		{ pronoun: 'She' },
-	  ];
-	  genders: any[] = [
-		{ label: 'Male', value:'M' },
-		{ label: 'Female', value:'F' },
-	  ];
-	  languages: any[] = [
-		{ label: 'English', value:'english' },
-		{ label: 'Hindi', value:'hindi' },
-	  ];
-	  maritalStatuses: any[] = [
-		{ label: 'Maried', value:'M' },
-		{ label: 'Single', value:'S' },
-	  ];
+	];
+	genders: any[] = [
+		{ label: 'Male', value: 'M' },
+		{ label: 'Female', value: 'F' },
+	];
+	languages: any[] = [
+		{ label: 'English', value: 'english' },
+		{ label: 'Hindi', value: 'hindi' },
+	];
+	maritalStatuses: any[] = [
+		{ label: 'Maried', value: 'M' },
+		{ label: 'Single', value: 'S' },
+	];
 
 	constructor(
 		private fb: FormBuilder,
@@ -93,6 +96,9 @@ export class PatientDetailComponent implements OnInit {
 		private patientDetailService: PatientDetailService,
 		private alertService: AlertService,
 		private patientUserServ: PatientUserService,
+		private addPatientServ: AddPatientService,
+		private insuranceServ: InsuranceService,
+		private onboardingServ: OnboardingService,
 	) {
 		this.idForm = this.fb.group({
 			// name: '',
@@ -117,6 +123,9 @@ export class PatientDetailComponent implements OnInit {
 		);
 		this.initForm(this.formData);
 		this.patientUserServ.setFalseAllNotPristine();
+		this.addPatientServ.setFalseAllNotPristineCWP();
+		this.insuranceServ.setFalseAllNotPristine();
+		this.onboardingServ.setFalseAllNotPristine();
 		this.Form?.statusChanges.subscribe(
 			result => {
 				console.log(result)
@@ -316,8 +325,8 @@ export class PatientDetailComponent implements OnInit {
 					this.globalData = data;
 					console.log('this.globalData', this.globalData);
 				},
-				error: () => {},
-				complete: () => {}
+				error: () => { },
+				complete: () => { }
 			});
 	}
 	getOrgBgId() {
@@ -363,7 +372,7 @@ export class PatientDetailComponent implements OnInit {
 			(list: any) => {
 				this.locationList = list;
 				console.log("this.locationList", this.locationList);
-				
+
 			},
 			(error) => {
 				console.log(error);
@@ -392,7 +401,7 @@ export class PatientDetailComponent implements OnInit {
 				console.log(data);
 				this.patientObj = data;
 				console.log("this.patientObj", this.patientObj);
-				
+
 			});
 	}
 }

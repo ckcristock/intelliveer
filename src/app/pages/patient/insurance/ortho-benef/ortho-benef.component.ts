@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
+import { AddPatientService } from '@services/add-patient/add-patient.service';
 import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
+import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 
 @Component({
 	selector: 'app-ortho-benef',
@@ -28,11 +31,17 @@ export class OrthoBenefComponent implements OnInit {
 	selectedYear: any;
 
 	constructor(private fb: FormBuilder,
-		private insuranceServ: InsuranceService,) { }
+		private patientUserServ: PatientUserService,
+		private addPatientServ: AddPatientService,
+		private insuranceServ: InsuranceService,
+		private onboardingServ: OnboardingService,) { }
 
 	ngOnInit(): void {
 		this.initForm(this.formData);
+		this.patientUserServ.setFalseAllNotPristine();
+		this.addPatientServ.setFalseAllNotPristineCWP();
 		this.insuranceServ.setFalseAllNotPristine();
+		this.onboardingServ.setFalseAllNotPristine();
 		this.Form?.statusChanges.subscribe(
 			result => {
 				console.log(result)

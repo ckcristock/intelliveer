@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
+import { AddPatientService } from '@services/add-patient/add-patient.service';
 import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
+import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 
 @Component({
 	selector: 'app-dental-benef',
@@ -32,11 +35,17 @@ export class DentalBenefComponent implements OnInit {
 	deductive: any = 1;
 
 	constructor(private fb: FormBuilder,
-		private insuranceServ: InsuranceService,) { }
+		private patientUserServ: PatientUserService,
+		private addPatientServ: AddPatientService,
+		private insuranceServ: InsuranceService,
+		private onboardingServ: OnboardingService,) { }
 
 	ngOnInit(): void {
 		this.initForm(this.formData);
+		this.patientUserServ.setFalseAllNotPristine();
+		this.addPatientServ.setFalseAllNotPristineCWP();
 		this.insuranceServ.setFalseAllNotPristine();
+		this.onboardingServ.setFalseAllNotPristine();
 		this.Form?.statusChanges.subscribe(
 			result => {
 				console.log(result)
@@ -52,13 +61,13 @@ export class DentalBenefComponent implements OnInit {
 	initForm(data?: any) {
 		data = data || {};
 		this.Form = this.fb.group({
-			calendarFiscal: [data?.calendarFiscal || '', ],
-			beginDateEligi: [data?.beginDateEligi || '', ],
-			endDateEligi: [data?.endDateEligi || '', ],
-			ageLimitSubsc: [data?.ageLimitSubsc || '', ],
-			ageLimitDependants: [data?.ageLimitDependants || '', ],
-			ageLimitDepenChild: [data?.ageLimitDepenChild || '', ],
-			ageLimitStudent: [data?.ageLimitStudent || '', ],
+			calendarFiscal: [data?.calendarFiscal || '',],
+			beginDateEligi: [data?.beginDateEligi || '',],
+			endDateEligi: [data?.endDateEligi || '',],
+			ageLimitSubsc: [data?.ageLimitSubsc || '',],
+			ageLimitDependants: [data?.ageLimitDependants || '',],
+			ageLimitDepenChild: [data?.ageLimitDepenChild || '',],
+			ageLimitStudent: [data?.ageLimitStudent || '',],
 
 			coordBenef: [data?.coordBenef || '',],
 			assignBenef: [data?.assignBenef || '',],
@@ -69,72 +78,72 @@ export class DentalBenefComponent implements OnInit {
 			deducRemaiFam: [data?.deducRemaiFam || '',],
 			deducIndiv: [data?.deducIndiv || '',],
 			deducRemaiIndiv: [data?.deducRemaiIndiv || '',],
-			deducWaivedPrevent: [data?.deducWaivedPrevent || '', ],
+			deducWaivedPrevent: [data?.deducWaivedPrevent || '',],
 
-			preventDiagPercent: [data?.preventDiagPercent || '', ],
-			basicPercent: [data?.basicPercent || '', ],
-			majorPercent: [data?.majorPercent || '', ],
-			preventDiag: [data?.preventDiag || '', ],
-			basic: [data?.basic || '', ],
-			major: [data?.major || '', ],
+			preventDiagPercent: [data?.preventDiagPercent || '',],
+			basicPercent: [data?.basicPercent || '',],
+			majorPercent: [data?.majorPercent || '',],
+			preventDiag: [data?.preventDiag || '',],
+			basic: [data?.basic || '',],
+			major: [data?.major || '',],
 
-			dentalAnnualMax: [data?.dentalAnnualMax || '', ],
-			remaining: [data?.remaining || '', ],
-			restorative: [data?.restorative || '', ],
-			endo: [data?.endo || '', ],
-			perio: [data?.perio || '', ],
-			oralSurgery: [data?.oralSurgery || '', ],
-			basicIncluCheckbox: [data?.basicIncluCheckbox || '', ],
-			basicIncluOther: [data?.basicIncluOther || '', ],
-			crowns: [data?.crowns || '', ],
-			bridges: [data?.bridges || '', ],
-			dentures: [data?.dentures || '', ],
-			partials: [data?.oralSurgery || '', ],
-			implants: [data?.implants || '', ],
-			majorIncluCheckbox: [data?.majorIncluCheckbox || '', ],
-			majorIncluOther: [data?.majorIncluOther || '', ],
+			dentalAnnualMax: [data?.dentalAnnualMax || '',],
+			remaining: [data?.remaining || '',],
+			restorative: [data?.restorative || '',],
+			endo: [data?.endo || '',],
+			perio: [data?.perio || '',],
+			oralSurgery: [data?.oralSurgery || '',],
+			basicIncluCheckbox: [data?.basicIncluCheckbox || '',],
+			basicIncluOther: [data?.basicIncluOther || '',],
+			crowns: [data?.crowns || '',],
+			bridges: [data?.bridges || '',],
+			dentures: [data?.dentures || '',],
+			partials: [data?.oralSurgery || '',],
+			implants: [data?.implants || '',],
+			majorIncluCheckbox: [data?.majorIncluCheckbox || '',],
+			majorIncluOther: [data?.majorIncluOther || '',],
 
-			timeFrameExams: [data?.timeFrameExams || '', ],
-			exceptiExams: [data?.exceptiExams || '', ],
-			timeFrameProphy: [data?.timeFrameProphy || '', ],
-			exceptiProphy: [data?.exceptiProphy || '', ],
+			timeFrameExams: [data?.timeFrameExams || '',],
+			exceptiExams: [data?.exceptiExams || '',],
+			timeFrameProphy: [data?.timeFrameProphy || '',],
+			exceptiProphy: [data?.exceptiProphy || '',],
 
-			timeFramePerio: [data?.timeFramePerio || '', ],
-			exceptiPerio: [data?.exceptiPerio || '', ],
-			paidatPerio: [data?.paidatPerio || '', ],
+			timeFramePerio: [data?.timeFramePerio || '',],
+			exceptiPerio: [data?.exceptiPerio || '',],
+			paidatPerio: [data?.paidatPerio || '',],
 
-			timeFrameFMX: [data?.timeFrameFMX || '', ],
-			exceptiFMX: [data?.exceptiFMX || '', ],
-			timeFramePano: [data?.timeFramePano || '', ],
-			exceptiPano: [data?.exceptiPano || '', ],
-			
-			timeFrameBWX: [data?.timeFrameBWX || '', ],
-			exceptiBWX: [data?.exceptiBWX || '', ],
-			
-			timeFrameScalRoot: [data?.timeFrameScalRoot || '', ],
-			exceptiScalRoot: [data?.exceptiScalRoot || '', ],
+			timeFrameFMX: [data?.timeFrameFMX || '',],
+			exceptiFMX: [data?.exceptiFMX || '',],
+			timeFramePano: [data?.timeFramePano || '',],
+			exceptiPano: [data?.exceptiPano || '',],
 
-			timeFrameResto: [data?.timeFrameResto || '', ],
-			exceptiResto: [data?.exceptiResto || '', ],
-			timeFrameCrowns: [data?.timeFrameCrowns || '', ],
-			exceptiCrowns: [data?.exceptiCrowns || '', ],
+			timeFrameBWX: [data?.timeFrameBWX || '',],
+			exceptiBWX: [data?.exceptiBWX || '',],
 
-			timeFrameBridges: [data?.timeFrameBridges || '', ],
-			exceptiBridges: [data?.exceptiBridges || '', ],
-			timeFrameDentures: [data?.timeFrameDentures || '', ],
-			exceptiDentures: [data?.exceptiDentures || '', ],
+			timeFrameScalRoot: [data?.timeFrameScalRoot || '',],
+			exceptiScalRoot: [data?.exceptiScalRoot || '',],
 
-			timeFramePartials: [data?.timeFramePartials || '', ],
-			exceptiPartials: [data?.exceptiPartials || '', ],
+			timeFrameResto: [data?.timeFrameResto || '',],
+			exceptiResto: [data?.exceptiResto || '',],
+			timeFrameCrowns: [data?.timeFrameCrowns || '',],
+			exceptiCrowns: [data?.exceptiCrowns || '',],
 
-			historyFMX: [data?.historyFMX || '', ],
-			historyPano: [data?.historyPano || '', ],
-			historyProphy: [data?.historyProphy || '', ],
-			historyBWX: [data?.historyBWX || '', ],
+			timeFrameBridges: [data?.timeFrameBridges || '',],
+			exceptiBridges: [data?.exceptiBridges || '',],
+			timeFrameDentures: [data?.timeFrameDentures || '',],
+			exceptiDentures: [data?.exceptiDentures || '',],
 
-			fluorideAgeOf: [data?.fluorideAgeOf || '', ],
-			sealants: [data?.sealants || '', ],
-			paidAtGenerProv: [data?.paidAtGenerProv || '', ],
+			timeFramePartials: [data?.timeFramePartials || '',],
+			exceptiPartials: [data?.exceptiPartials || '',],
+
+			historyFMX: [data?.historyFMX || '',],
+			historyPano: [data?.historyPano || '',],
+			historyProphy: [data?.historyProphy || '',],
+			historyBWX: [data?.historyBWX || '',],
+
+			fluorideAgeOf: [data?.fluorideAgeOf || '',],
+			sealants: [data?.sealants || '',],
+			paidAtGenerProv: [data?.paidAtGenerProv || '',],
 		});
 	}
 
