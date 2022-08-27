@@ -4,8 +4,10 @@ import {
 	BusinessGroupDropdownService,
 	SelectedBusinessGroup,
 } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 import { PracticeService } from '@services/onboarding/practice/practice.service';
 import { Subscription } from 'rxjs';
+import { SearchStringPipePipe } from 'src/app/pipes/stringSearch/search-string-pipe.pipe';
 @Component({
 	selector: 'app-practice',
 	templateUrl: './practice.component.html',
@@ -19,11 +21,15 @@ export class PracticeComponent implements OnInit {
 	searchText: any;
 	searchCount: number = 0;
 	dataBackup: any;
-
+	practiceEdit:any;
+	practiceAdd:any;
+	practiceDelete:any;
 	constructor(
 		private businessGroupDropdownService: BusinessGroupDropdownService,
 		private practiceService: PracticeService,
 		private router: Router,
+		private searchString: SearchStringPipePipe,
+		private globalRoutes: GlobalRoutesService
 	) {
 		this.businessGroupDropdownSupscription =
 			this.businessGroupDropdownService
@@ -36,7 +42,9 @@ export class PracticeComponent implements OnInit {
 				});
 	}
 
-	ngOnInit(): void { }
+	ngOnInit(): void {
+		this.checkPermission();
+	 }
 	ngOnDestroy(): void {
 		this.businessGroupDropdownSupscription.unsubscribe();
 	}
@@ -107,5 +115,12 @@ export class PracticeComponent implements OnInit {
 				;
 		});
 		this.data = dataFiltered;
+	}
+	checkPermission(){
+		let practice = this.globalRoutes.getSettingsOnboardingRoutes();
+		let getpractice = this.searchString.transform('title',practice,"Practice");
+		this.practiceAdd = this.searchString.transform('title',getpractice[0].child,'Add');
+		this.practiceEdit = this.searchString.transform('title',getpractice[0].child,'Edit');
+		this.practiceDelete = this.searchString.transform('title',getpractice[0].child,'Delete');
 	}
 }

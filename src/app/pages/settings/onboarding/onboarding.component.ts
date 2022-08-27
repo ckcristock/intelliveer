@@ -39,7 +39,7 @@ export class OnboardingComponent implements OnInit, OnDestroy {
 	businessGroups: any;
 	disableBGDropdown: boolean = false;
 	moduleName: string = '';
-
+    onBoardingMenu:any;
 	constructor(
 		public router: Router,
 		private businessGroupDropdownService: BusinessGroupDropdownService,
@@ -47,6 +47,8 @@ export class OnboardingComponent implements OnInit, OnDestroy {
 		private routes: GlobalRoutesService,
 	) {
 		this.urlSettings = this.routes.getSettingsUrl();
+        this.onBoardingMenu = this.routes.getSettingsOnboardingRoutes();
+		console.log(this.onBoardingMenu)
 		this.menuBarService.compactSideMenu(this.compactSidebar);
 		this.businessGroupDropdownSupscription =
 			this.businessGroupDropdownService

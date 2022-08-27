@@ -4,8 +4,10 @@ import {
   BusinessGroupDropdownService,
   SelectedBusinessGroup,
 } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 import { LegalEntityService } from '@services/onboarding/legal-entity/legal-entity.service';
 import { Subscription } from 'rxjs';
+import { SearchStringPipePipe } from 'src/app/pipes/stringSearch/search-string-pipe.pipe';
 
 @Component({
   selector: 'app-legal-entity',
@@ -20,11 +22,16 @@ export class LegalEntityComponent implements OnInit, OnDestroy {
 	searchText: any;
 	searchCount: number = 0;
 	dataBackup: any;
+  legalEdit:any;
+	legalAdd:any;
+	legalDelete:any;
   
   constructor(
     private router: Router,
     private businessGroupDropdownService: BusinessGroupDropdownService,
-    private legalEntityService: LegalEntityService
+    private legalEntityService: LegalEntityService,
+    private searchString: SearchStringPipePipe,
+		private globalRoutes: GlobalRoutesService
   ) {
     this.businessGroupDropdownSupscription = this.businessGroupDropdownService
       .businessGroup()
@@ -35,7 +42,9 @@ export class LegalEntityComponent implements OnInit, OnDestroy {
         }
       });
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.checkPermission();
+  }
   ngOnDestroy(): void {
     this.businessGroupDropdownSupscription.unsubscribe();
   }
@@ -104,5 +113,12 @@ export class LegalEntityComponent implements OnInit, OnDestroy {
 				;
 		});
 		this.data = dataFiltered;
+	}
+  checkPermission(){
+		let legalEntity = this.globalRoutes.getSettingsOnboardingRoutes();
+		let getLegalEntity = this.searchString.transform('title',legalEntity,"Legal Entity");
+		this.legalAdd = this.searchString.transform('title',getLegalEntity[0].child,'Add');
+		this.legalEdit = this.searchString.transform('title',getLegalEntity[0].child,'Edit');
+		this.legalDelete = this.searchString.transform('title',getLegalEntity[0].child,'Delete');
 	}
 }

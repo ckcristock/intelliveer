@@ -4,8 +4,10 @@ import {
   BusinessGroupDropdownService,
   SelectedBusinessGroup,
 } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 import { LocationService } from '@services/onboarding/location/location.service';
 import { Subscription } from 'rxjs';
+import { SearchStringPipePipe } from 'src/app/pipes/stringSearch/search-string-pipe.pipe';
 
 @Component({
   selector: 'app-location',
@@ -20,11 +22,16 @@ export class LocationComponent implements OnInit, OnDestroy {
   searchText: any;
   searchCount: number = 0;
   dataBackup: any;
+  locationEdit:any;
+	locationAdd:any;
+	locationDelete:any;
 
   constructor(
     private businessGroupDropdownService: BusinessGroupDropdownService,
     private locationService: LocationService,
     private router: Router,
+    private searchString: SearchStringPipePipe,
+		private globalRoutes: GlobalRoutesService
   ) {
     this.businessGroupDropdownSupscription = this.businessGroupDropdownService
       .businessGroup()
@@ -36,7 +43,9 @@ export class LocationComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.checkPermission()
+   }
   ngOnDestroy(): void {
     this.businessGroupDropdownSupscription.unsubscribe();
   }
@@ -108,4 +117,12 @@ export class LocationComponent implements OnInit, OnDestroy {
     });
     this.data = dataFiltered;
   }
+  checkPermission(){
+		let location = this.globalRoutes.getSettingsOnboardingRoutes();
+		let getlocation = this.searchString.transform('title',location,"Location");
+		this.locationAdd = this.searchString.transform('title',getlocation[0].child,'Add');
+		this.locationEdit = this.searchString.transform('title',getlocation[0].child,'Edit');
+		this.locationDelete = this.searchString.transform('title',getlocation[0].child,'Delete');
+    console.log(this.locationAdd,this.locationEdit,this.locationDelete)
+	}
 }

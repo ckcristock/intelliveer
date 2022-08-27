@@ -95,6 +95,7 @@ export class BusinessGroupDropdownService {
 	}
 	permissionSetOFUsers(){
 	 let orgId = this.authService.getOrgId();
+	 console.log(orgId)
      this.businessGroupService.getPermissionByUserRole(orgId).subscribe({
 		next: (data: any) => {
 			console.log(data)
@@ -107,7 +108,7 @@ export class BusinessGroupDropdownService {
 		  this.setSelectedBusinessGroup(
 			orgId
 		  );
-		  this.getOrgBgId()
+		this.getOrgBgId()
 		},
 		error: () => {},
 		complete: () => {}

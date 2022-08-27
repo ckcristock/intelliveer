@@ -1,7 +1,7 @@
 <div *ngIf="!data" class="section" style="height: 90%;">
     <div style="text-align: center; padding-top: 7%;">
         <h5><b>You haven’t added yet</b></h5>
-        <p>Click here, <img src="assets/icons/add.svg" width="36" height="36" (click)="addLegalEntity()" /> to add
+        <p>Click here, <img src="assets/icons/add.svg" width="36" height="36" (click)="addLegalEntity()" *ngIf="legalAdd[0].isEnabled"/> to add
             Legal Entity</p>
     </div>
 </div>
@@ -21,7 +21,7 @@
 					(keyup)="search()" />
 				</div>
 			</div>
-			<div class="d-flex gap-2">
+			<div class="d-flex gap-2" *ngIf="legalAdd[0].isEnabled">
 				<button
 					class="add_btn"
 					routerLink="/dashboard/settings/onboarding/legal-entity/add"
@@ -77,10 +77,11 @@
 										routerLink="/dashboard/settings/onboarding/legal-entity/edit/{{
 											d._id
 										}}"
+										*ngIf="legalEdit[0].isEnabled"
 									>
 										Edit
 									</button>
-									<button ngbDropdownItem (click)="delete(d._id)">
+									<button ngbDropdownItem (click)="delete(d._id)" *ngIf="legalDelete[0].isEnabled">
 										Delete
 									</button>
 								</div>
