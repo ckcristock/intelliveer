@@ -6,6 +6,9 @@ import { AddressFormService } from '@services/forms/address-form/address-form.se
 import { CONFIG } from '@config/index';
 import { HttpClient } from '@angular/common/http';
 import { AlertService } from '@services/alert/alert.service';
+import { AddPatientService } from '@services/add-patient/add-patient.service';
+import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
+import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 
 @Component({
   selector: 'app-insurance-subscriber-form',
@@ -45,12 +48,28 @@ export class InsuranceSubscriberFormComponent implements OnInit {
     { pronoun: 'He' },
     { pronoun: 'She' },
   ];
+  genders: any[] = [
+    { label: 'Male', value:'M' },
+    { label: 'Female', value:'F' },
+  ];
+  languages: any[] = [
+    { label: 'English', value:'english' },
+    { label: 'Hindi', value:'hindi' },
+  ];
+  maritalStatuses: any[] = [
+    { label: 'Maried', value:'M' },
+    { label: 'Single', value:'S' },
+  ];
 
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
     private addressFormService: AddressFormService,
     private patientUserServ: PatientUserService,
+    private addPatientServ: AddPatientService,
+    private insuranceServ: InsuranceService,
+    private onboardingServ: OnboardingService,
+
     private alertService: AlertService,
   ) {
     this.idForm = this.fb.group({
@@ -62,6 +81,20 @@ export class InsuranceSubscriberFormComponent implements OnInit {
 
   async ngOnInit() {
     this.initForm(this.formData);
+		this.patientUserServ.setFalseAllNotPristine();
+    this.addPatientServ.setFalseAllNotPristineCWP();
+		this.insuranceServ.setFalseAllNotPristine();
+		this.onboardingServ.setFalseAllNotPristine();
+		this.Form?.statusChanges.subscribe(
+			result => {
+				console.log(result)
+				if (!this.Form?.pristine) {
+					console.log("hiiiiii", event);
+					console.log("status", this.Form?.pristine);
+					this.patientUserServ.setinsuranSubscNotPristine(true);
+				}
+			}
+		);
     this.insuranSubsc.push(await this.patientUserServ.getInsuSubscFamiMemb());
 
     this.relationship = await this.patientUserServ.getInsuSubscToPati();
@@ -74,12 +107,12 @@ export class InsuranceSubscriberFormComponent implements OnInit {
     data = data || {};
     this.Form = this.fb.group({
       relationship: [data?.relation || ''],
-      title: [data?.title || ''],
+      title: [data?.title || null],
       firstName: [data?.firstName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
       middleName: [data?.middleName || ''],
       lastName: [data?.lastName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
       DOB: [data?.DOB || '',],
-      gender: [data?.gender || ''],
+      gender: [data?.gender || null],
       pronoun: [data?.pronoun || ''],
       language: [data?.language || ''],
       martialStatus: [data?.martialStatus || ''],
@@ -213,6 +246,11 @@ export class InsuranceSubscriberFormComponent implements OnInit {
   save(data: any) {
     this.onSubmit.emit(data);
     this.Form.markAsPristine();
+    this.alertService.success(
+      'Success',
+      'Insurance Subscriber has been updated successfully'
+    );
+    this.patientUserServ.setinsuranSubscNotPristine(false);
   }
   cancel() {
     this.onCancel.emit();

@@ -3,35 +3,23 @@
         <div class="two-items">
             <h6 class="heading" style="font-weight: bolder;">Dentist</h6>
             <a class="heading a-link" *ngIf="showButtonSaveCancel==false" (click)="openTextarea()">Add Script</a>
-            <div class="two-little-button" *ngIf="showButtonSaveCancel==true" >
+            <div class="two-little-button" *ngIf="showButtonSaveCancel==true">
                 <a class="heading a-link" (click)="closeSaveCancelFunc()">Save Script</a>
                 <a class="heading a-link" (click)="closeSaveCancelFunc()">Cancel</a>
             </div>
         </div>
         <div class="row formrow" style="margin-top: 11px; margin-bottom: 18px;">
-            <textarea *ngIf="openTextAreaVar==true"
-                        class="form-control"
-                        placeholder="Leave a comment here"
-                        id="floatingTextarea2"
-                        style="height: 98px; padding: 5px 10px 8px 6px; font-size: 12px; line-height : 20px; border: 2px solid #7a7a7c; font-style: oblique; resize: none;"
-                    ></textarea
-                    >
+            <textarea *ngIf="openTextAreaVar==true" class="form-control" placeholder="Leave a comment here"
+                id="floatingTextarea2"
+                style="height: 98px; padding: 5px 10px 8px 6px; font-size: 12px; line-height : 20px; border: 2px solid #7a7a7c; font-style: oblique; resize: none;"></textarea>
         </div>
         <div class="row formrow" style="margin-top: -15px;">
             <div class="col-6">
                 <div class="mainformset">
-                    <label class="label-input-gap"
-                        >Who is Pt. Name’s General Dentist?</label
-                    >
+                    <label class="label-input-gap">Who is Pt. Name’s General Dentist?</label>
                     <div class="input-button">
-                        <input
-                            class="form-control"
-                            type="text"
-                            placeholder="Type Name"
-                            name=""
-                            formControlName="namesGenrDents"
-                            [(ngModel)]="dentist.namesGenrDents"
-                        />
+                        <input class="form-control" type="text" placeholder="Type Name" name=""
+                            formControlName="namesGenrDents" [(ngModel)]="dentist.namesGenrDents" />
                         <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
                     </div>
                 </div>
@@ -40,67 +28,40 @@
         <div class="row formrow" style="margin-top: 5px;">
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="label-input-gap"
-                        >Dentist’s Office Name</label
-                    >
-                    <input
-                        class="form-control"
-                        type="text"
-                        placeholder=""
-                        name=""
-                        formControlName="officeName"
-                        [(ngModel)]="dentist.officeName"
-                    />
+                    <label class="label-input-gap">Dentist’s Office Name</label>
+                    <input class="form-control" type="text" placeholder="" name="" formControlName="officeName"
+                        [(ngModel)]="dentist.officeName" />
                 </div>
             </div>
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="label-input-gap"
-                        >Dentist’s First Name</label
-                    >
-                    <input
-                        class="form-control red-bottom-line"
-                        type="text"
-                        placeholder=""
-                        name=""
-                        formControlName="firstName"
-                        [(ngModel)]="dentist.firstName"
-                    />
+                    <label class="label-input-gap">Dentist’s First Name</label>
+                    <input class="form-control red-bottom-line" type="text" placeholder="" name=""
+                        formControlName="firstName" [(ngModel)]="dentist.firstName"
+                        [class.valid-required-field]="firstNameValid()" />
                 </div>
             </div>
             <div class="col-3">
                 <div class="mainformset">
                     <label class="label-input-gap">Last Name</label>
-                    <input
-                        class="form-control red-bottom-line"
-                        type="text"
-                        placeholder=""
-                        name=""
-                        formControlName="lastName"
-                        [(ngModel)]="dentist.lastName"
-                    />
+                    <input class="form-control red-bottom-line" type="text" placeholder="" name=""
+                        formControlName="lastName" [(ngModel)]="dentist.lastName"
+                        [class.valid-required-field]="lastNameValid()" />
                 </div>
             </div>
             <div class="col-3">
                 <div class="mainformset">
-                    <label class="label-input-gap"
-                        >Office Phone Number</label
-                    >
-                    <input
-                        class="form-control"
-                        type="text"
-                        placeholder=""
-                        name=""
-                        formControlName="officePhoneNum"
-                        [(ngModel)]="dentist.officePhoneNum"
-                    />
+                    <label class="label-input-gap">Office Phone Number</label>
+                    <input class="form-control" type="text" placeholder="" name="" formControlName="officePhoneNum"
+                        [(ngModel)]="dentist.officePhoneNum" />
                 </div>
             </div>
         </div>
         <div class="row formrow two-final-buttons">
             <div class="two-items">
-                <button  class="btn btn-light btn-light-custom"  >Exit</button>
-                <button type="button" class="btn btn-dark btn-dark-custom"  (click)="continueToReferrer()" >Save and continue</button>
+                <button class="btn btn-light btn-light-custom">Exit</button>
+                <button type="button" class="btn btn-dark btn-dark-custom" (click)="continueToReferrer()">Save and
+                    continue</button>
             </div>
         </div>
     </div>

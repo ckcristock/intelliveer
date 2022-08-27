@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { addPatientCordinateMenuItems, addPatientQuickMenuItems } from '@pages/home/add-patient/menu';
 import { AddPatientService } from '@services/add-patient/add-patient.service';
+import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
+import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 
 @Component({
   selector: 'app-referrer-form',
@@ -43,13 +46,20 @@ export class ReferrerFormComponent implements OnInit {
   openTextAreaVar: boolean = false;
 
   constructor(private router: Router,
+    private patientUserServ: PatientUserService,
     private addPatientServ: AddPatientService,
+    private insuranceServ: InsuranceService,
+    private onboardingServ: OnboardingService,
     private fb: FormBuilder,) { }
 
   async ngOnInit() {
     this.initForm(this.formData);
     if (this.tab == 'coordWithProspect') {
+      this.patientUserServ.setFalseAllNotPristine();
       this.addPatientServ.setFalseAllNotPristineCWP();
+      this.insuranceServ.setFalseAllNotPristine();
+      this.onboardingServ.setFalseAllNotPristine();
+      this.addPatientServ.getReferrerFromCompone(this.getReferrer.bind(this));
       this.Form.statusChanges.subscribe(
         result => {
           console.log(result)
@@ -103,6 +113,10 @@ export class ReferrerFormComponent implements OnInit {
     }
   }
 
+  getReferrer() {
+    return [this.referrer];
+  }
+
   continueToInsurance() {
     if (this.tab == "coordWithProspect") {
       this.addPatientServ.setReferrerNotPristineCWP(false);
@@ -126,10 +140,18 @@ export class ReferrerFormComponent implements OnInit {
     this.Form = this.fb.group({
       thanksfor: [data?.thanksfor || '',],
       companyName: [data?.companyName || '',],
-      firstName: [data?.firstName || ''],
-      lastName: [data?.lastName || ''],
+      firstName: [data?.firstName || '', [Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
+      lastName: [data?.lastName || '', [Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
       phoneNumber: [data?.phoneNumber || ''],
     });
+  }
+
+  firstNameValid() {
+    return this.Form.get('firstName')?.valid && this.Form.get('firstName')?.value != 0;
+  }
+
+  lastNameValid() {
+    return this.Form.get('lastName')?.valid && this.Form.get('lastName')?.value != 0;
   }
 
   save(data: any) {

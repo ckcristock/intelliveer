@@ -1,6 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
+import { AddPatientService } from '@services/add-patient/add-patient.service';
+import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
+import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 
 @Component({
 	selector: 'app-dental-benef',
@@ -30,22 +34,122 @@ export class DentalBenefComponent implements OnInit {
 	sepaMaximum: any = 1;
 	deductive: any = 1;
 
-	constructor(private fb: FormBuilder) { }
+	constructor(private fb: FormBuilder,
+		private patientUserServ: PatientUserService,
+		private addPatientServ: AddPatientService,
+		private insuranceServ: InsuranceService,
+		private onboardingServ: OnboardingService,) { }
 
 	ngOnInit(): void {
 		this.initForm(this.formData);
+		this.patientUserServ.setFalseAllNotPristine();
+		this.addPatientServ.setFalseAllNotPristineCWP();
+		this.insuranceServ.setFalseAllNotPristine();
+		this.onboardingServ.setFalseAllNotPristine();
+		this.Form?.statusChanges.subscribe(
+			result => {
+				console.log(result)
+				if (!this.Form?.pristine) {
+					console.log("hiiiiii", event);
+					console.log("status", this.Form?.pristine);
+					this.insuranceServ.setDentalBenfNotPristine(true);
+				}
+			}
+		);
 	}
 
 	initForm(data?: any) {
 		data = data || {};
 		this.Form = this.fb.group({
-			check1: [data?.check1 || '', Validators.required],
-			check2: [data?.check2 || '', Validators.required],
+			calendarFiscal: [data?.calendarFiscal || '',],
+			beginDateEligi: [data?.beginDateEligi || '',],
+			endDateEligi: [data?.endDateEligi || '',],
+			ageLimitSubsc: [data?.ageLimitSubsc || '',],
+			ageLimitDependants: [data?.ageLimitDependants || '',],
+			ageLimitDepenChild: [data?.ageLimitDepenChild || '',],
+			ageLimitStudent: [data?.ageLimitStudent || '',],
+
+			coordBenef: [data?.coordBenef || '',],
+			assignBenef: [data?.assignBenef || '',],
+			feesUCR: [data?.feesUCR || '',],
+			feeSched: [data?.feeSched || '',],
+
+			deducFam: [data?.deducFam || '',],
+			deducRemaiFam: [data?.deducRemaiFam || '',],
+			deducIndiv: [data?.deducIndiv || '',],
+			deducRemaiIndiv: [data?.deducRemaiIndiv || '',],
+			deducWaivedPrevent: [data?.deducWaivedPrevent || '',],
+
+			preventDiagPercent: [data?.preventDiagPercent || '',],
+			basicPercent: [data?.basicPercent || '',],
+			majorPercent: [data?.majorPercent || '',],
+			preventDiag: [data?.preventDiag || '',],
+			basic: [data?.basic || '',],
+			major: [data?.major || '',],
+
+			dentalAnnualMax: [data?.dentalAnnualMax || '',],
+			remaining: [data?.remaining || '',],
+			restorative: [data?.restorative || '',],
+			endo: [data?.endo || '',],
+			perio: [data?.perio || '',],
+			oralSurgery: [data?.oralSurgery || '',],
+			basicIncluCheckbox: [data?.basicIncluCheckbox || '',],
+			basicIncluOther: [data?.basicIncluOther || '',],
+			crowns: [data?.crowns || '',],
+			bridges: [data?.bridges || '',],
+			dentures: [data?.dentures || '',],
+			partials: [data?.oralSurgery || '',],
+			implants: [data?.implants || '',],
+			majorIncluCheckbox: [data?.majorIncluCheckbox || '',],
+			majorIncluOther: [data?.majorIncluOther || '',],
+
+			timeFrameExams: [data?.timeFrameExams || '',],
+			exceptiExams: [data?.exceptiExams || '',],
+			timeFrameProphy: [data?.timeFrameProphy || '',],
+			exceptiProphy: [data?.exceptiProphy || '',],
+
+			timeFramePerio: [data?.timeFramePerio || '',],
+			exceptiPerio: [data?.exceptiPerio || '',],
+			paidatPerio: [data?.paidatPerio || '',],
+
+			timeFrameFMX: [data?.timeFrameFMX || '',],
+			exceptiFMX: [data?.exceptiFMX || '',],
+			timeFramePano: [data?.timeFramePano || '',],
+			exceptiPano: [data?.exceptiPano || '',],
+
+			timeFrameBWX: [data?.timeFrameBWX || '',],
+			exceptiBWX: [data?.exceptiBWX || '',],
+
+			timeFrameScalRoot: [data?.timeFrameScalRoot || '',],
+			exceptiScalRoot: [data?.exceptiScalRoot || '',],
+
+			timeFrameResto: [data?.timeFrameResto || '',],
+			exceptiResto: [data?.exceptiResto || '',],
+			timeFrameCrowns: [data?.timeFrameCrowns || '',],
+			exceptiCrowns: [data?.exceptiCrowns || '',],
+
+			timeFrameBridges: [data?.timeFrameBridges || '',],
+			exceptiBridges: [data?.exceptiBridges || '',],
+			timeFrameDentures: [data?.timeFrameDentures || '',],
+			exceptiDentures: [data?.exceptiDentures || '',],
+
+			timeFramePartials: [data?.timeFramePartials || '',],
+			exceptiPartials: [data?.exceptiPartials || '',],
+
+			historyFMX: [data?.historyFMX || '',],
+			historyPano: [data?.historyPano || '',],
+			historyProphy: [data?.historyProphy || '',],
+			historyBWX: [data?.historyBWX || '',],
+
+			fluorideAgeOf: [data?.fluorideAgeOf || '',],
+			sealants: [data?.sealants || '',],
+			paidAtGenerProv: [data?.paidAtGenerProv || '',],
 		});
 	}
 
 	save(data: any) {
 		// this.onSubmit.emit(data);
+		this.insuranceServ.setDentalBenfNotPristine(false);
 	}
 	cancel() {
 		// this.onCancel.emit();

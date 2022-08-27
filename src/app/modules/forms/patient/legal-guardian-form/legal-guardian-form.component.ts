@@ -6,6 +6,9 @@ import { PatientUserService } from '@services/dashboard/patient/patient-user/pat
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 import { CONFIG } from '@config/index';
 import { AlertService } from '@services/alert/alert.service';
+import { AddPatientService } from '@services/add-patient/add-patient.service';
+import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
+import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
 
 @Component({
   selector: 'app-legal-guardian-form',
@@ -51,6 +54,9 @@ export class LegalGuardianFormComponent implements OnInit {
     private fb: FormBuilder,
     private addressFormService: AddressFormService,
     private patientUserServ: PatientUserService,
+    private addPatientServ: AddPatientService,
+    private insuranceServ: InsuranceService,
+    private onboardingServ: OnboardingService,
     private alertService: AlertService,
   ) {
     this.idForm = this.fb.group({
@@ -62,6 +68,20 @@ export class LegalGuardianFormComponent implements OnInit {
 
   async ngOnInit() {
     this.initForm(this.formData);
+		this.patientUserServ.setFalseAllNotPristine();
+    this.addPatientServ.setFalseAllNotPristineCWP();
+		this.insuranceServ.setFalseAllNotPristine();
+		this.onboardingServ.setFalseAllNotPristine();
+    this.Form?.statusChanges.subscribe(
+			result => {
+				console.log(result)
+				if (!this.Form?.pristine) {
+					console.log("hiiiiii", event);
+					console.log("status", this.Form?.pristine);
+					this.patientUserServ.setlegalGuardNotPristine(true);
+				}
+			}
+		);
     this.Form.get('emailId')?.markAsDirty();
     this.legalGuard.push(await this.patientUserServ.getLegalGuardFamiMemb());
 
@@ -78,6 +98,7 @@ export class LegalGuardianFormComponent implements OnInit {
     this.Form.controls['maried'].setValue(this.legalGuard[0].maritalStatus);
     this.Form.controls['pPhoneType'].setValue(this.legalGuard[0].pPhoneType);
     this.Form.controls['pPhoneNumber'].setValue(this.legalGuard[0].pPhoneNumber);
+    
   }
 
   initForm(data?: any) {
@@ -165,6 +186,7 @@ export class LegalGuardianFormComponent implements OnInit {
       'Success',
       'Legal Guardian has been updated successfully'
     );
+		this.patientUserServ.setlegalGuardNotPristine(false);
   }
   cancel() {
     this.onCancel.emit();

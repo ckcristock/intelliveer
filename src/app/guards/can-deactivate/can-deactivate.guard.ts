@@ -8,6 +8,9 @@ import {
 } from '@angular/router';
 import { AddPatientService } from '@services/add-patient/add-patient.service';
 import { CanDeactiveGuardService } from '@services/can-deactive-guard/can-deactive-guard.service';
+import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
+import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 import { map, Observable, first, take, of } from 'rxjs';
 
 export interface CanComponentDeactivate {
@@ -22,7 +25,11 @@ export class CanDeactivateGuard
 {
 	conditions: any[] = [];
 	constructor(private canDeactivateRouteService: CanDeactiveGuardService,
-		private addPatientServ: AddPatientService,) { }
+		private addPatientServ: AddPatientService,
+		private insuranceServ: InsuranceService,
+		private onboardingServ: OnboardingService,
+		private patientUserServ: PatientUserService
+		) { }
 
 	ngOnInit(): void {
 	}
@@ -49,12 +56,15 @@ export class CanDeactivateGuard
 		| UrlTree {
 
 		this.conditions = [];
-		// For Add Patient Module
+		
 		this.addPatientServ.setConditions();
+		this.insuranceServ.setConditions();
+		this.onboardingServ.setConditions();
+		this.patientUserServ.setConditions();
 		this.conditions = this.addPatientServ.getConditions();
-		this.addPatientServ.setAllConditions(this.conditions);
-		// this.conditions.push(...this.addPatientServ.getConditions());
-		// End Add Patient Module
+		this.conditions.push(...this.insuranceServ.getConditions());
+		this.conditions.push(...this.onboardingServ.getConditions());
+		this.conditions.push(...this.patientUserServ.getConditions());
 
 		console.log("this.conditions", this.conditions);
 

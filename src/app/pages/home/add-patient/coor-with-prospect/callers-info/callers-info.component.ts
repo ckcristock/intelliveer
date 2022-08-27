@@ -6,6 +6,9 @@ import { addPatientCordinateMenuItems } from '@pages/home/add-patient/menu';
 import { AddPatientService } from '@services/add-patient/add-patient.service';
 import { CONFIG } from '@config/index';
 import { HttpClient } from '@angular/common/http';
+import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
+import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 
 @Component({
   selector: 'app-callers-info',
@@ -48,13 +51,20 @@ export class CallersInfoComponent implements OnInit {
   showButtonSaveCancel: boolean = false;
 
   constructor(private router: Router,
+    private patientUserServ: PatientUserService,
     private addPatientServ: AddPatientService,
+    private insuranceServ: InsuranceService,
+    private onboardingServ: OnboardingService,
     private fb: FormBuilder,
     private http: HttpClient) { }
 
   async ngOnInit() {
     this.initForm(this.formData);
+		this.patientUserServ.setFalseAllNotPristine();
     this.addPatientServ.setFalseAllNotPristineCWP();
+		this.insuranceServ.setFalseAllNotPristine();
+		this.onboardingServ.setFalseAllNotPristine();
+    this.addPatientServ.getCallersInfoFromCompone(this.getCallersInfo.bind(this));
     this.Form.statusChanges.subscribe(
       result => {
         console.log(result)
@@ -147,6 +157,10 @@ export class CallersInfoComponent implements OnInit {
         }
       }
     }, 20);
+  }
+
+  getCallersInfo() {
+    return [this.callersInfo];
   }
 
   continueToPatient() {

@@ -6,6 +6,9 @@ import { addPatientCordinateMenuItems } from '@pages/home/add-patient/menu';
 import { NgbNavChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { AddPatientService } from '@services/add-patient/add-patient.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
+import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 
 @Component({
   selector: 'app-insurance',
@@ -94,11 +97,18 @@ export class InsuranceComponent implements OnInit {
   constructor(private router: Router,
     private AddPatientService: AddPatientService,
     private fb: FormBuilder,
-    private addPatientServ: AddPatientService,) { }
+    private patientUserServ: PatientUserService,
+    private addPatientServ: AddPatientService,
+    private insuranceServ: InsuranceService,
+    private onboardingServ: OnboardingService,) { }
 
   async ngOnInit() {
     this.initForm(this.formData);
+		this.patientUserServ.setFalseAllNotPristine();
     this.addPatientServ.setFalseAllNotPristineCWP();
+		this.insuranceServ.setFalseAllNotPristine();
+		this.onboardingServ.setFalseAllNotPristine();
+    this.addPatientServ.getInsuranceFromCompone(this.getInsurances.bind(this));
     this.Form.statusChanges.subscribe(
       result => {
         console.log(result)
@@ -278,6 +288,9 @@ export class InsuranceComponent implements OnInit {
     }, 20);
   }
 
+  getInsurances() {
+    return [this.insurances];
+  }
 
   continueToFamilyMemb() {
     this.AddPatientService.setInsuranceP1CWP(this.insurances);
@@ -287,7 +300,7 @@ export class InsuranceComponent implements OnInit {
     localStorage.setItem("visitedArray", JSON.stringify(visitedArray));
     this.router.navigate([this.menuItems[6].url]);
   }
-  
+
   initForm(data?: any) {
     data = data || {};
     this.Form = this.fb.group({
@@ -315,7 +328,7 @@ export class InsuranceComponent implements OnInit {
   save(data: any) {
     console.log(data);
   }
-  
+
   onNavChange(changeEvent: NgbNavChangeEvent) {
     if (changeEvent.nextId === 1) {
       this.active = 1;

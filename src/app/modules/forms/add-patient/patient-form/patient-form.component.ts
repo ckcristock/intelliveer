@@ -13,8 +13,11 @@ import {
 	BusinessGroupDropdownService,
 	SelectedBusinessGroup
 } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
 import { Patient } from '@services/patient/family/patient';
 import { PatientDetailService } from '@services/patient/family/patient-detail.service';
+import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 
 @Component({
 	selector: 'app-patient-form',
@@ -60,7 +63,10 @@ export class PatientFormComponent implements OnInit {
 	constructor(
 		private router: Router,
 		private fb: FormBuilder,
+		private patientUserServ: PatientUserService,
 		private addPatientServ: AddPatientService,
+		private insuranceServ: InsuranceService,
+		private onboardingServ: OnboardingService,
 		private patientDetailService: PatientDetailService,
 		private authService: AuthService,
 		private businessGroupDropdownService: BusinessGroupDropdownService,
@@ -77,69 +83,77 @@ export class PatientFormComponent implements OnInit {
 				});
 	}
 
-  async ngOnInit() {
-    this.initForm(this.formData);
-    if (this.tab == 'coordWithProspect') {
-    this.addPatientServ.setFalseAllNotPristineCWP();
-      this.patientArray = await this.addPatientServ.getPatientCWP();
-      this.callersInfo = await this.addPatientServ.getCallerInfoCWP();
-      if (this.patientArray != null) {
-        this.patient.firstName = this.patientArray.firstName;
-        this.patient.lastName = this.patientArray.lastName;
-        this.patient.dateBirth = this.patientArray.dateBirth;
-      }
-      if (this.callersInfo.callerSelfPatient == true) {
-        this.patient.firstName = this.callersInfo.firstName;
-        this.patient.lastName = this.callersInfo.lastName;
-        this.patient.dateBirth = this.patientArray.DOB;
-      }
-      this.Form?.statusChanges.subscribe(
-        result => {
-          console.log(result)
-          if (!this.Form.pristine) {
-            console.log("hiiiiii", event);
-            console.log("status", this.Form.pristine);
-  
-            this.addPatientServ.setPatientNotPristineCWP(true);
-            
-          }
-        }
-      );
-    } else if (this.tab == 'quickAdd') {
-      this.patientArray = await this.addPatientServ.getPatientQuiAdd();
-      if (this.patientArray != null) {
-        this.patient.firstName = this.patientArray.firstName;
-        this.patient.lastName = this.patientArray.lastName;
-        this.patient.dateBirth = this.patientArray.dateBirth;
-      }
-    }
-  }
+	async ngOnInit() {
+		this.initForm(this.formData);
+		if (this.tab == 'coordWithProspect') {
+			this.patientUserServ.setFalseAllNotPristine();
+			this.addPatientServ.setFalseAllNotPristineCWP();
+			this.insuranceServ.setFalseAllNotPristine();
+			this.onboardingServ.setFalseAllNotPristine();
+			this.addPatientServ.getPatientFromCompone(this.getPatient.bind(this));
+			this.patientArray = await this.addPatientServ.getPatientCWP();
+			this.callersInfo = await this.addPatientServ.getCallerInfoCWP();
+			if (this.patientArray != null) {
+				this.patient.firstName = this.patientArray.firstName;
+				this.patient.lastName = this.patientArray.lastName;
+				this.patient.dateBirth = this.patientArray.dateBirth;
+			}
+			if (this.callersInfo.callerSelfPatient == true) {
+				this.patient.firstName = this.callersInfo.firstName;
+				this.patient.lastName = this.callersInfo.lastName;
+				this.patient.dateBirth = this.patientArray.DOB;
+			}
+			this.Form?.statusChanges.subscribe(
+				result => {
+					console.log(result)
+					if (!this.Form.pristine) {
+						console.log("hiiiiii", event);
+						console.log("status", this.Form.pristine);
 
-  continueToLegalGuar() {
-    if (this.tab == "coordWithProspect") {
-      this.addPatientServ.setPatientNotPristineCWP(false);
-      this.addPatientServ.setPatientCWP(this.patient);
-      let visitedArray: any = JSON.parse(localStorage.getItem("visitedArray") || '[]');
-      visitedArray.push("Patient");
-      localStorage.setItem("visitedArray", JSON.stringify(visitedArray));
-      this.router.navigate([this.menuItemsOfCordinate[2].url]);
+						this.addPatientServ.setPatientNotPristineCWP(true);
 
-    } else if (this.tab == "quickAdd") {
-      this.addPatientServ.setPatientQuiAdd(this.patient);
-      let visitedArrayQuick: any = JSON.parse(localStorage.getItem("visitedArrayQuick") || '[]');
-      visitedArrayQuick.push("Patient");
-      localStorage.setItem("visitedArrayQuick", JSON.stringify(visitedArrayQuick));
-      this.router.navigate([this.menuItemsOfQuickAdd[1].url]);
-    }
-  }
+					}
+				}
+			);
+		} else if (this.tab == 'quickAdd') {
+			this.patientArray = await this.addPatientServ.getPatientQuiAdd();
+			if (this.patientArray != null) {
+				this.patient.firstName = this.patientArray.firstName;
+				this.patient.lastName = this.patientArray.lastName;
+				this.patient.dateBirth = this.patientArray.dateBirth;
+			}
+		}
+	}
+
+	getPatient() {
+		return [this.patient];
+	}
+
+	continueToLegalGuar() {
+		if (this.tab == "coordWithProspect") {
+			this.addPatientServ.setPatientNotPristineCWP(false);
+			this.addPatientServ.setPatientCWP(this.patient);
+			let visitedArray: any = JSON.parse(localStorage.getItem("visitedArray") || '[]');
+			visitedArray.push("Patient");
+			localStorage.setItem("visitedArray", JSON.stringify(visitedArray));
+			this.router.navigate([this.menuItemsOfCordinate[2].url]);
+
+		} else if (this.tab == "quickAdd") {
+			this.addPatientServ.setPatientQuiAdd(this.patient);
+			let visitedArrayQuick: any = JSON.parse(localStorage.getItem("visitedArrayQuick") || '[]');
+			visitedArrayQuick.push("Patient");
+			localStorage.setItem("visitedArrayQuick", JSON.stringify(visitedArrayQuick));
+			this.router.navigate([this.menuItemsOfQuickAdd[1].url]);
+		}
+	}
 
 	initForm(data?: any) {
 		data = data || {};
 		if (this.tab == 'coordWithProspect') {
 			this.Form = this.fb.group({
 				practice: [data?.practice || ''],
-				fName: [data?.fName || '', Validators.required],
-				lName: [data?.lName || '', Validators.required],
+				firstName: [data?.firstName || '', Validators.required],
+				lastName: [data?.lastName || '', Validators.required],
 				DOB: [data?.DOB || '', Validators.required],
 				gender: [data?.gender || ''],
 				location: [data?.location || ''],
@@ -148,12 +162,24 @@ export class PatientFormComponent implements OnInit {
 		} else if (this.tab == 'quickAdd') {
 			this.Form = this.fb.group({
 				practice: [data?.practice || ''],
-				fName: [data?.fName || '', Validators.required],
-				lName: [data?.lName || '', Validators.required],
+				firstName: [data?.firstName || '', Validators.required],
+				lastName: [data?.lastName || '', Validators.required],
 				DOB: [data?.DOB || ''],
 				gender: [data?.gender || '']
 			});
 		}
+	}
+
+	firstNameValid() {
+		return this.Form.get('firstName')?.valid;
+	}
+
+	lastNameValid() {
+		return this.Form.get('lastName')?.valid;
+	}
+
+	DOBValid() {
+		return this.Form.get('DOB')?.valid;
 	}
 
 	save(data: any) {
@@ -161,9 +187,9 @@ export class PatientFormComponent implements OnInit {
 			practiceId: data.value.practice,
 			profile: {
 				title: '',
-				firstName: data.value.fName,
+				firstName: data.value.firstName,
 				middleName: '',
-				lastName: data.value.lName,
+				lastName: data.value.lastName,
 				DOB: data.value.DOB,
 				gender: data.value.gender,
 				preferredPronoun: '',

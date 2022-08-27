@@ -3,6 +3,7 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddPatientService } from '@services/add-patient/add-patient.service';
 import { AlertService } from '@services/alert/alert.service';
 import { CanDeactiveGuardService } from '@services/can-deactive-guard/can-deactive-guard.service';
+import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -19,7 +20,8 @@ export class ConfirmationDialogComponent implements OnInit {
 		private modalService: NgbModal,
 		private canDeactivateRouteService: CanDeactiveGuardService,
 		private alertService: AlertService,
-		private addPatientServ: AddPatientService
+		private addPatientServ: AddPatientService,
+		private insuranceServ: InsuranceService,
 	) {
 		config.backdrop = 'static';
 		config.keyboard = false;
@@ -33,22 +35,53 @@ export class ConfirmationDialogComponent implements OnInit {
 							if (result.isConfirmed) {
 								console.log("result", result);
 								this.close();
-							} else if (result.isDismissed && result.dismiss == "cancel") {
+							} else if (result.isDismissed && (result.dismiss == "cancel")) {
 								// For Add Patient Module
-								// this.addPatientServ["setLegalGuardCWPFromPopup"]();
-								this.addPatientServ["setConditions"]();
-								this.addPatientServ.callFuntion("test");
-								let allConditions = this.addPatientServ.getAllConditions();
-								// for (let i = 0; i < allConditions.length; i++) {
-								// 	if (allConditions[i].condition) {
-								// 		let functionString = allConditions[i].function.toString();
-								// 		this.addPatientServ[functionString]();
-								// 	}
-								// }
+								let conditions = this.addPatientServ.getConditions();
+								conditions.push(...this.insuranceServ.getConditions());
+								for (let i = 0; i < conditions.length; i++) {
+									if (conditions[i].condition) {
+										switch (conditions[i].section) {
+											// For Add Patient Module
+											case 'callersinfo':
+												this.addPatientServ.setCallersInfoCWPFromPopup()
+												break;
+											case 'patient':
+												this.addPatientServ.setPatientCWPFromPopup()
+												break;
+											case 'legalguardian':
+												this.addPatientServ.setLegalGuardCWPFromPopup();
+												break;
+											case 'dentist':
+												this.addPatientServ.setDentistCWPFromPopup();
+												break;
+											case 'referrer':
+												this.addPatientServ.setReferrerCWPFromPopup();
+												break;
+											case 'insurance':
+												this.addPatientServ.setInsuranceCWPFromPopup();
+												break;
+
+											//For Insurance Module
+											// case 'policy':
+											// 	this.insuranceServ.setLegalGuardCWPFromPopup();
+											// 	break;
+											// case 'orthodontic':
+											// 	this.insuranceServ.setDentistCWPFromPopup();
+											// 	break;
+											// case 'dentalbenefits':
+											// 	this.insuranceServ.setReferrerCWPFromPopup();
+											// 	break;
+											// case 'billing':
+											// 	this.insuranceServ.setInsuranceCWPFromPopup();
+											// 	break;
+										}
+									}
+								}
 								console.log("result.isDenied", result.isDenied);
 								this.close();
 								// End Add Patient Module
-							} else if (result.isDismissed && result.dismiss == "close") {
+							} else if (result.isDismissed && (result.dismiss == "close")) {
 								this.cancel();
 							}
 						});

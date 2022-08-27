@@ -6,6 +6,9 @@ import { PatientUserService } from '@services/dashboard/patient/patient-user/pat
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 import { CONFIG } from '@config/index';
 import { AlertService } from '@services/alert/alert.service';
+import { AddPatientService } from '@services/add-patient/add-patient.service';
+import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
+import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 
 @Component({
 	selector: 'app-payment-party-form',
@@ -39,11 +42,28 @@ export class PaymentPartyFormComponent implements OnInit {
 	paymentParty: any[] = [];
 	famiMembTitle!: any;
 	pronouns: any[] = [{ pronoun: 'He' }, { pronoun: 'She' }];
+	genders: any[] = [
+		{ label: 'Male', value: 'M' },
+		{ label: 'Female', value: 'F' },
+	];
+	languages: any[] = [
+		{ label: 'English', value: 'english' },
+		{ label: 'Hindi', value: 'hindi' },
+	];
+	maritalStatuses: any[] = [
+		{ label: 'Maried', value: 'M' },
+		{ label: 'Single', value: 'S' },
+	];
 
 	constructor(
 		private http: HttpClient,
 		private fb: FormBuilder,
-		private addressFormService: AddressFormService
+		private addressFormService: AddressFormService,
+		private patientUserServ: PatientUserService,
+		private addPatientServ: AddPatientService,
+		private insuranceServ: InsuranceService,
+		private onboardingServ: OnboardingService,
+		private alertService: AlertService,
 	) {
 		this.idForm = this.fb.group({
 			// name: '',
@@ -53,9 +73,22 @@ export class PaymentPartyFormComponent implements OnInit {
 	}
 
 	async ngOnInit() {
-		console.log(this.formData);
 		this.initForm(this.formData);
-		JSON.parse(localStorage.getItem('PaymPartyToPati')!);
+		this.patientUserServ.setFalseAllNotPristine();
+		this.addPatientServ.setFalseAllNotPristineCWP();
+		this.insuranceServ.setFalseAllNotPristine();
+		this.onboardingServ.setFalseAllNotPristine();
+		this.Form?.statusChanges.subscribe(
+			result => {
+				console.log(result)
+				if (!this.Form?.pristine) {
+					console.log("hiiiiii", event);
+					console.log("status", this.Form?.pristine);
+					this.patientUserServ.setpaymentPartyNotPristine(true);
+				}
+			}
+		);
+		this.paymentParty.push(await this.patientUserServ.getPaymPartyFamiMemb());
 
 		this.relationship = JSON.parse(
 			localStorage.getItem('PaymPartyToPati')!
@@ -68,52 +101,32 @@ export class PaymentPartyFormComponent implements OnInit {
 		data = data || {};
 		this.Form = this.fb.group({
 			relationship: [data?.relation || ''],
-			title: [data?.title || ''],
-			firstName: [
-				data?.firstName || '',
-				[
-					Validators.required,
-					Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')
-				]
-			],
+			title: [data?.title || null],
+			firstName: [data?.firstName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
 			middleName: [data?.middleName || ''],
-			lastName: [
-				data?.lastName || '',
-				[
-					Validators.required,
-					Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')
-				]
-			],
+			lastName: [data?.lastName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
 			DOB: [data?.DOB || ''],
-			gender: [data?.gender || ''],
-			pronoun: [data?.pronoun || ''],
-			language: [data?.language || ''],
-			martialStatus: [data?.martialStatus || ''],
+			gender: [data?.gender || null],
+			pronoun: [data?.pronoun || null],
+			language: [data?.language || null],
+			maried: [data?.maried || null],
 			emailId: ['', Validators.minLength(2)],
-			primaryPhoneType: [
-				data?.primaryPhoneType || '',
-				Validators.required
-			],
-			primaryPhoneNumber: [
-				data?.primaryPhoneNumber || '',
-				[Validators.required, Validators.pattern('^[0-9]*$')]
-			],
-			secondaryPhoneType: [data?.secondaryPhoneType || ''],
-			secondaryPhoneNumber: [data?.secondaryPhoneNumber || ''],
-			primaryPreferredCommunicationMethod: [
-				data?.primaryPreferredCommunicationMethod || ''
-			],
-			secondaryPreferredCommunicationMethod: [
-				data?.secondaryPreferredCommunicationMethod || ''
-			],
-			preferredTimingForCall: [data?.preferredTimingForCall || ''],
-			workStatus: [data?.workStatus || ''],
+			pPhoneType: [data?.pPhoneType || null, Validators.required],
+			pPhoneNumber: [data?.pPhoneNumber || '', [Validators.required, Validators.pattern("^[0-9]*$")]],
+			sPhoneType: [data?.sPhoneType || ''],
+			sPhoneNumber: [data?.sPhoneNumber || ''],
+			CommPrimary: [data?.CommPrimary || null],
+			CommSecondary: [data?.CommSecondary || null],
+			phone: [data?.phone || ''],
+			workStatus: [data?.workStatus || null],
 			occupation: [data?.occupation || ''],
 			employer: [data?.employer || ''],
-			SSN: [data?.SSN || ''],
-			creditRating: [data?.creditRating || ''],
+			ssn: [data?.ssn || ''],
+			rating: [data?.rating || null],
 			note: [data?.note || ''],
-			address: this.addressFormService.getAddressForm(data?.address || {})
+			address: this.addressFormService.getAddressForm(
+				data?.address || {}
+			)
 		});
 	}
 
@@ -173,6 +186,7 @@ export class PaymentPartyFormComponent implements OnInit {
 		this.Form.controls['note'].setValue(this.formData.notes);
 	}
 
+
 	firstNameValid() {
 		return this.Form.get('firstName')?.valid;
 	}
@@ -198,14 +212,19 @@ export class PaymentPartyFormComponent implements OnInit {
 	}
 
 	commPrimaryValid() {
-		return (
-			this.Form.get('primaryPreferredCommunicationMethod')?.value.length >
-			0
-		);
+		return this.Form.get('CommPrimary')?.value != null;
 	}
 
 	emailValid() {
 		return this.Form.get('emailId')?.value.length > 0;
+	}
+
+	clearCommPrimary() {
+		this.Form.controls['CommPrimary'].setValue("");
+	}
+
+	pPhoneTypeValid() {
+		return this.Form.get('pPhoneType')?.valid;
 	}
 
 	async getStaticData() {
@@ -215,14 +234,21 @@ export class PaymentPartyFormComponent implements OnInit {
 				next: async (data) => {
 					this.famiMembTitle = data;
 				},
-				error: () => {},
-				complete: () => {}
+				error: () => { },
+				complete: () => { }
 			});
 	}
 
 	save(data: any) {
 		this.onSubmit.emit(data);
+		this.patientUserServ.setPaymParty(data);
+		this.patientUserServ.setPatientFamiMemb(data.relationship, data);
 		this.Form.markAsPristine();
+		this.alertService.success(
+			'Success',
+			'Payment Party has been updated successfully'
+		);
+		this.patientUserServ.setpaymentPartyNotPristine(false);
 	}
 	cancel() {
 		this.onCancel.emit();
@@ -232,6 +258,7 @@ export class PaymentPartyFormComponent implements OnInit {
 		this.currentSelection = sectionId;
 	}
 
+
 	handleUploadedImage(e: { url: string }) {
 		if (e && this.idForm) {
 			this.idForm.controls['logo'].setValue(e.url);
@@ -239,21 +266,23 @@ export class PaymentPartyFormComponent implements OnInit {
 	}
 
 	onFileSelected(event: any) {
-		console.log(event);
+		console.log(event)
 		this.filePath = event.target.value;
 		const file: File = event.target.files[0];
 		var reader = new FileReader();
 		reader.readAsDataURL(event.target.files[0]);
 		reader.onload = (_event) => {
 			this.filePath = reader.result;
-		};
+		}
 		if (file) {
 			this.fileName = file.name;
 		}
 	}
 
 	cancleImage() {
-		this.filePath = '';
-		this.fileName = '';
+		this.filePath = "";
+		this.fileName = "";
 	}
+
+
 }

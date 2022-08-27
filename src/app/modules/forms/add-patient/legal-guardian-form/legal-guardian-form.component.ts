@@ -6,7 +6,10 @@ import { CONFIG } from '@config/index';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { addPatientCordinateMenuItems, addPatientQuickMenuItems } from '@pages/home/add-patient/menu';
 import { AddPatientService } from '@services/add-patient/add-patient.service';
+import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
 import { GeoService } from '@services/global-data/public/geo/geo.service';
+import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 import { delay, filter, map } from 'rxjs';
 
 
@@ -85,7 +88,10 @@ export class LegalGuardianFormComponent implements OnInit {
   constructor(private router: Router, private fb: FormBuilder,
     private http: HttpClient,
     private geoService: GeoService,
-    private addPatientServ: AddPatientService,) {
+    private patientUserServ: PatientUserService,
+    private addPatientServ: AddPatientService,
+    private insuranceServ: InsuranceService,
+    private onboardingServ: OnboardingService,) {
     this.geoService
       .getCountries()
       .pipe(delay(100))
@@ -105,10 +111,15 @@ export class LegalGuardianFormComponent implements OnInit {
 
   async ngOnInit() {
     console.log("selectedCountry2", this.selectedCountry2);
+		this.patientUserServ.setFalseAllNotPristine();
     this.addPatientServ.setFalseAllNotPristineCWP();
+		this.insuranceServ.setFalseAllNotPristine();
+		this.onboardingServ.setFalseAllNotPristine();
     this.addPatientServ.getLegalGuardFromCompone(this.getLegalGuard.bind(this));
     this.getDataLegaGuarCaller();
     this.initForm(this.formData);
+    this.Form.controls['state'].setValue(null);
+    this.Form.controls['city'].setValue(null);
     this.getStaticData();
     await this.getCountries();
     this.getUSA();
@@ -210,11 +221,42 @@ export class LegalGuardianFormComponent implements OnInit {
   initForm(data?: any) {
     data = data || {};
     this.Form = this.fb.group({
-      lName: [data?.lName || '', Validators.required],
-      lgName: [data?.lgName || '', Validators.required],
+      firstName: [data?.firstName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
+      lastName: [data?.lastName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
+      address1: [data?.address1 || ''],
+      country: [data?.country || ''],
       state: [data?.state || ''],
       city: [data?.city || ''],
+      zipCode: [data?.zipCode || '', Validators.pattern("^[0-9]*$")],
     });
+  }
+
+  firstNameValid() {
+    return this.Form.get('firstName')?.valid;
+  }
+
+  lastNameValid() {
+    return this.Form.get('lastName')?.valid;
+  }
+
+  address1Valid() {
+    return this.Form.get('address1')?.value.length > 0;
+  }
+
+  countryValid() {
+    return this.Form.get('country')?.value != null;
+  }
+
+  stateValid() {
+    return this.Form.get('state')?.value != null;
+  }
+
+  cityValid() {
+    return this.Form.get('city')?.value != null;
+  }
+
+  zipCodeValid() {
+    return this.Form.get('zipCode')?.valid && this.Form.get('zipCode')?.value > 0;
   }
 
   save(data: any) {
@@ -263,7 +305,7 @@ export class LegalGuardianFormComponent implements OnInit {
 
     if (this.countries) {
       const country = this.countries.filter(
-        (c: any) => c.iso3 === countryIso3.value
+        (c: any) => c.iso3 === countryIso3
       );
       if (country && country.length == 1) {
         this.geoService.getStates(country[0]['id']).subscribe({
@@ -325,11 +367,15 @@ export class LegalGuardianFormComponent implements OnInit {
     this.Form.patchValue({
       state: '',
     });
+		this.states = [];
+    this.Form.controls['state'].setValue(null);
   }
   resetCity() {
     this.Form.patchValue({
       city: '',
     });
+		this.cities = [];
+    this.Form.controls['city'].setValue(null);
   }
 
   changeSelect(lgIndex: number, value: boolean) {

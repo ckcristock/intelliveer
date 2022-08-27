@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { addPatientCordinateMenuItems, addPatientQuickMenuItems } from '@pages/home/add-patient/menu';
 import { AddPatientService } from '@services/add-patient/add-patient.service';
+import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
+import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
+import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 @Component({
   selector: 'app-dentist-form',
   templateUrl: './dentist-form.component.html',
@@ -38,13 +41,20 @@ export class DentistFormComponent implements OnInit {
   openTextAreaVar: boolean = false;
 
   constructor(private router: Router,
+    private patientUserServ: PatientUserService,
     private addPatientServ: AddPatientService,
+    private insuranceServ: InsuranceService,
+    private onboardingServ: OnboardingService,
     private fb: FormBuilder,
     private http: HttpClient) { }
 
   async ngOnInit() {
     this.initForm(this.formData);
+		this.patientUserServ.setFalseAllNotPristine();
     this.addPatientServ.setFalseAllNotPristineCWP();
+		this.insuranceServ.setFalseAllNotPristine();
+		this.onboardingServ.setFalseAllNotPristine();
+    this.addPatientServ.getDentistFromCompone(this.getDentist.bind(this));
     if (this.tab == 'coordWithProspect') {
       this.dentistArray = await this.addPatientServ.getDentistCWP();
       this.Form.statusChanges.subscribe(
@@ -75,14 +85,26 @@ export class DentistFormComponent implements OnInit {
     this.Form = this.fb.group({
       namesGenrDents: [data?.namesGenrDents || '',],
       officeName: [data?.officeName || '',],
-      firstName: [data?.firstName || ''],
-      lastName: [data?.lastName || ''],
+      firstName: [data?.firstName || '', Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')],
+      lastName: [data?.lastName || '', Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')],
       officePhoneNum: [data?.officePhoneNum || ''],
     });
   }
 
+  firstNameValid() {
+    return (this.Form.get('firstName')?.valid && this.Form.get('firstName')?.value != 0);
+  }
+
+  lastNameValid() {
+    return (this.Form.get('lastName')?.valid && this.Form.get('lastName')?.value != 0);
+  }
+
   save(data: any) {
     console.log(data);
+  }
+
+  getDentist() {
+    return [this.dentist];
   }
 
   continueToReferrer() {

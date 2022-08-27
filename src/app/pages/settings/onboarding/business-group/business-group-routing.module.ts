@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CanDeactivateGuard } from '@guards/can-deactivate/can-deactivate.guard';
 import { BusinessGroupComponent } from './business-group.component';
 
 const routes: Routes = [
