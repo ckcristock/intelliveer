@@ -32,6 +32,11 @@
 						<label class="required">Registration Number</label>
 						<input type="text" class="form-control" formControlName="registrationNumber" />
 					</div>
+					<div class="col">
+						<label class="required">Time Zone</label>
+						<ng-moment-timezone-picker [formControlName]="'locationTimeZone'">
+                        </ng-moment-timezone-picker>
+					</div>
 				</div>
 			</div>
 			<!-- Physical Address -->

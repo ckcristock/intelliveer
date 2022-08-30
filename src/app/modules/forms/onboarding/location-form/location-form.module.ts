@@ -9,6 +9,7 @@ import { ContactPersonFormModule } from '@modules/forms/contact-person-form/cont
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ScrollspyModule } from "@modules/scrollspy/scrollspy.module";
 import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
+import { MomentTimezonePickerModule } from 'moment-timezone-picker';
 
 @NgModule({
   declarations: [LocationFormComponent],
@@ -22,7 +23,8 @@ import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
 		NgSelectModule,
 		ImageUploaderModule,
 		NavBarPillsModule,
-		ScrollspyModule
+		ScrollspyModule,
+    MomentTimezonePickerModule
   ],
   exports: [LocationFormComponent],
 })

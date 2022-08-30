@@ -4,6 +4,7 @@ import { LegalGuardianRoutingModule } from './legal-guardian-routing.module';
 import { LegalGuardianComponent } from './legal-guardian.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
 
 
 
@@ -14,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     LegalGuardianRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    NavBarPillsModule,
     NgbModule //required for dropdown
   ]
 })

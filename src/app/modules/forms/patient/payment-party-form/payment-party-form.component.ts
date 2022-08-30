@@ -33,6 +33,7 @@ export class PaymentPartyFormComponent implements OnInit {
 		{ title: 'Financials', id: 'financials' },
 		{ title: 'Notes', id: 'notes' }
 	];
+	relationshipArray: any[] = ['Father', 'Mother', 'Sister', 'Brother'];
 
 	idForm: FormGroup;
 	selectTab: string = 'overview';
@@ -109,20 +110,20 @@ export class PaymentPartyFormComponent implements OnInit {
 			gender: [data?.gender || null],
 			pronoun: [data?.pronoun || null],
 			language: [data?.language || null],
-			maried: [data?.maried || null],
+			martialStatus: [data?.martialStatus || null],
 			emailId: ['', Validators.minLength(2)],
-			pPhoneType: [data?.pPhoneType || null, Validators.required],
-			pPhoneNumber: [data?.pPhoneNumber || '', [Validators.required, Validators.pattern("^[0-9]*$")]],
-			sPhoneType: [data?.sPhoneType || ''],
-			sPhoneNumber: [data?.sPhoneNumber || ''],
-			CommPrimary: [data?.CommPrimary || null],
-			CommSecondary: [data?.CommSecondary || null],
-			phone: [data?.phone || ''],
+			primaryPhoneType: [data?.primaryPhoneType || null, Validators.required],
+			primaryPhoneNumber: [data?.primaryPhoneNumber || '', [Validators.required, Validators.pattern("^[0-9]*$")]],
+			secondaryPhoneType: [data?.secondaryPhoneType || ''],
+			secondaryPhoneNumber: [data?.secondaryPhoneNumber || ''],
+			primaryPreferredCommunicationMethod: [data?.primaryPreferredCommunicationMethod || null],
+			secondaryPreferredCommunicationMethod: [data?.secondaryPreferredCommunicationMethod || null],
+			preferredTimingForCall: [data?.preferredTimingForCall || ''],
 			workStatus: [data?.workStatus || null],
 			occupation: [data?.occupation || ''],
 			employer: [data?.employer || ''],
-			ssn: [data?.ssn || ''],
-			rating: [data?.rating || null],
+			SSN: [data?.SSN || ''],
+			creditRating: [data?.creditRating || null],
 			note: [data?.note || ''],
 			address: this.addressFormService.getAddressForm(
 				data?.address || {}
@@ -212,19 +213,15 @@ export class PaymentPartyFormComponent implements OnInit {
 	}
 
 	commPrimaryValid() {
-		return this.Form.get('CommPrimary')?.value != null;
+		return this.Form.get('primaryPreferredCommunicationMethod')?.value != null;
 	}
 
 	emailValid() {
 		return this.Form.get('emailId')?.value.length > 0;
 	}
 
-	clearCommPrimary() {
-		this.Form.controls['CommPrimary'].setValue("");
-	}
-
-	pPhoneTypeValid() {
-		return this.Form.get('pPhoneType')?.valid;
+	clearprimaryPreferredCommunicationMethod() {
+		this.Form.controls['primaryPreferredCommunicationMethod'].setValue("");
 	}
 
 	async getStaticData() {
@@ -244,10 +241,6 @@ export class PaymentPartyFormComponent implements OnInit {
 		this.patientUserServ.setPaymParty(data);
 		this.patientUserServ.setPatientFamiMemb(data.relationship, data);
 		this.Form.markAsPristine();
-		this.alertService.success(
-			'Success',
-			'Payment Party has been updated successfully'
-		);
 		this.patientUserServ.setpaymentPartyNotPristine(false);
 	}
 	cancel() {

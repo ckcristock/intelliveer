@@ -38,14 +38,14 @@
 					<div class="col-3">
 						<label class="label-input-gap">Relationship with Patient</label>
 						<select class="form-select input-upper" formControlName="relationship">
-							<option [value]="relationship">
+							<option [value]="relationship" *ngFor="let relationship of relationshipArray">
 								{{relationship}}</option>
 						</select>
 					</div>
 					<div class="col-3">
 						<label class="label-input-gap">Title</label>
 						<select class="form-select input-upper" formControlName="title">
-							<option [value]="title.value" *ngFor="let title of famiMembTitle.title">
+							<option [value]="title.value" *ngFor="let title of famiMembTitle?.title">
 								{{ title.label }}
 							</option>
 						</select>
@@ -97,7 +97,7 @@
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Marital Status</label>
-						<select class="form-select input-upper" formControlName="maried">
+						<select class="form-select input-upper" formControlName="martialStatus" name="martialStatus">
 							<option value="M">Maried</option>
 							<option value="S">Single</option>
 						</select>
@@ -123,8 +123,8 @@
 					<div class="col">
 						<label class="label-input-gap">Primary Phone Type</label>
 						<select class="form-select required-field input-upper"
-							[class.valid-mandatory-field]="pPhoneTypeValid()" formControlName="pPhoneType">
-							<option [value]="phone.value" *ngFor="let phone of famiMembTitle.phone">
+							[class.valid-mandatory-field]="primaryPhoneTypeValid()" formControlName="primaryPhoneType">
+							<option [value]="phone.value" *ngFor="let phone of famiMembTitle?.phone">
 								{{ phone.label }}
 							</option>
 						</select>
@@ -133,15 +133,15 @@
 					<div class="col">
 						<label class="label-input-gap">Primary Phone Number</label>
 						<input class="form-control required-field input-upper"
-							[class.valid-mandatory-field]="pPhoneNumberValid()" type="text" placeholder="" name="name"
-							formControlName="pPhoneNumber" />
+							[class.valid-mandatory-field]="primaryPhoneNumberValid()" type="text" placeholder="" name="name"
+							formControlName="primaryPhoneNumber" />
 					</div>
 				</div>
 
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Secondary Phone Type</label>
-						<select class="form-select input-upper" formControlName="sPhoneType">
+						<select class="form-select input-upper" formControlName="secondaryPhoneType">
 							<option>Select</option>
 						</select>
 					</div>
@@ -149,13 +149,13 @@
 					<div class="col">
 						<label class="label-input-gap">Secondary Phone Number</label>
 						<input class="form-control input-upper" type="text" placeholder="" name="name"
-							formControlName="sPhoneNumber" />
+							formControlName="secondaryPhoneNumber" />
 					</div>
 
 					<div class="col">
 						<label class="label-input-gap">Preferred Communication Method - Primary</label>
 						<select class="form-select red-bottom-line input-upper"
-							[class.valid-required-field]="commPrimaryValid()" formControlName="CommPrimary">
+							[class.valid-required-field]="commPrimaryValid()" formControlName="primaryPreferredCommunicationMethod">
 							<option>Select</option>
 						</select>
 					</div>
@@ -163,14 +163,14 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Preferred Communication Method - Secondary</label>
-						<select class="form-select input-upper" formControlName="CommSecondary">
+						<select class="form-select input-upper" formControlName="secondaryPreferredCommunicationMethod">
 							<option>Select</option>
 						</select>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Preferred Timings for Call</label>
 						<input class="form-control input-upper" type="number" placeholder="" name="phone"
-							formControlName="phone" />
+							formControlName="preferredTimingForCall" />
 					</div>
 					<div class="col"></div>
 				</div>
@@ -197,11 +197,11 @@
 					</div>
 					<div class="col">
 						<label class="label-input-gap">SSN</label>
-						<input class="form-control input-upper" type="text" placeholder="" name="name" formControlName="ssn" />
+						<input class="form-control input-upper" type="text" placeholder="" name="name" formControlName="SSN" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Credit Rating</label>
-						<select class="form-select input-upper" formControlName="rating">
+						<select class="form-select input-upper" formControlName="creditRating">
 							<option>Select</option>
 						</select>
 					</div>
