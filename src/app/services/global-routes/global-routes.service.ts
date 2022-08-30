@@ -181,6 +181,7 @@ export class GlobalRoutesService {
         value: "CAN_CREATE_BUSINESS_GROUP",
       },{
         title: "Edit",
+        url: `${this.urlOnboarding}/business-group/edit`,
         isEnabled: true,
         value: "CAN_EDIT_BUSINESS_GROUP",
       },{

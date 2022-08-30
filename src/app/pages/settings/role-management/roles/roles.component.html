@@ -3,22 +3,12 @@
 		<h5><b>You haven’t added yet</b></h5>
 		<p *ngIf="user?.isBGAdmin || user?.__ISSU__">
 			Click here,
-			<img
-				src="assets/icons/add.svg"
-				width="36"
-				height="36"
-				(click)="addRole()"
-			/>
+			<img src="assets/icons/add.svg" width="36" height="36" (click)="addRole()" />
 			to add Role
 		</p>
 		<p *ngIf="!user?.isBGAdmin && (roleRRTAdd || roleURRTAdd)">
 			Click here,
-			<img
-				src="assets/icons/add.svg"
-				width="36"
-				height="36"
-				(click)="addRole()"
-			/>
+			<img src="assets/icons/add.svg" width="36" height="36" (click)="addRole()" />
 			to add Role
 		</p>
 	</div>
@@ -28,33 +18,20 @@
 		<div class="d-flex justify-content-between call-to-actions">
 			<div class="col-4">
 				<div class="input-group search_box">
-					<span
-						class="input-group-text border-0 bg-transparent"
-						id="basic-addon1"
-					>
+					<span class="input-group-text border-0 bg-transparent" id="basic-addon1">
 						<i class="bi bi-search"></i>
 					</span>
-					<input
-						type="text"
-						class="form-control border-0"
-						placeholder="Search"
-						aria-describedby="basic-addon1"
-					/>
+					<input type="text" class="form-control border-0" placeholder="Search"
+						aria-describedby="basic-addon1" />
 				</div>
 			</div>
 			<div class="d-flex gap-2">
-				<button
-				    *ngIf="user?.isBGAdmin || user?.__ISSU__"
-					class="add_btn"
-					routerLink="/dashboard/settings/role-management/manage-role/add"
-				>
+				<button *ngIf="user?.isBGAdmin || user?.__ISSU__" class="add_btn"
+					routerLink="/dashboard/settings/role-management/manage-role/add">
 					<img src="/assets/icons/add.svg" alt="" />
 				</button>
-				<button
-				    *ngIf="!user?.isBGAdmin && (roleRRTAdd || roleURRTAdd)"
-					class="add_btn"
-					routerLink="/dashboard/settings/role-management/manage-role/add"
-				>
+				<button *ngIf="!user?.isBGAdmin && (roleRRTAdd || roleURRTAdd)" class="add_btn"
+					routerLink="/dashboard/settings/role-management/manage-role/add">
 					<img src="/assets/icons/add.svg" alt="" />
 				</button>
 			</div>
@@ -66,8 +43,8 @@
 			<table class="table" *ngIf="user?.isBGAdmin || user?.__ISSU__">
 				<thead>
 					<tr>
-						<th scope="col"><input type="checkbox" /></th>
-						<th scope="col">Roles</th>
+						<!-- <th scope="col"><input type="checkbox" /></th> -->
+						<th scope="col">Role</th>
 						<th scope="col">Description</th>
 						<th scope="col">Template</th>
 						<th scope="col">Actions</th>
@@ -75,32 +52,21 @@
 				</thead>
 				<tbody *ngIf="roleList">
 					<tr *ngFor="let role of roleList; let i = index">
-						<td>
+						<!-- <td>
 							<input type="checkbox" value="{{ role?._id }}" />
-						</td>
-						<td><a routerLink="/dashboard/settings/role-management/manage-role/edit/{{
-							role?._id
-						}}">{{ role?.name }}</a></td>
-						<td><a routerLink="/dashboard/settings/role-management/manage-role/edit/{{
-							role?._id
-						}}">{{ role?.description }}</a></td>
-						<td *ngIf="role?.roleTemplate.length == 1"><a routerLink="/dashboard/settings/role-management/manage-role/edit/{{
-							role?._id
-						}}">{{ role?.roleTemplate[0].name }}</a></td>
-						<td *ngIf="(role?.roleTemplateName == undefined && role?.roleTemplate == undefined) || role?.roleTemplate?.length == 0">Without Role Template</td>
-						<td *ngIf="role?.roleTemplate"><a routerLink="/dashboard/settings/role-management/manage-role/edit/{{
-							role?._id
-						}}">{{ role?.roleTemplate.name }}</a></td>
+						</td> -->
+						<td><span class="pointer" (click)="editRole(role?._id)">{{ role?.name }}</span></td>
+						<td><span class="pointer" (click)="editRole(role?._id)">{{ role?.description }}</span></td>
+						<td *ngIf="role?.roleTemplate.length == 1"><span class="pointer"
+								(click)="editRole(role?._id)">{{ role?.roleTemplate[0].name }}</span></td>
+						<td
+							*ngIf="(role?.roleTemplateName == undefined && role?.roleTemplate == undefined) || role?.roleTemplate?.length == 0">
+							Without Role Template</td>
+						<td *ngIf="role?.roleTemplate"><span class="pointer" (click)="editRole(role?._id)">{{
+								role?.roleTemplate.name }}</span></td>
 						<td>
-							<div
-								ngbDropdown
-								container="body"
-								placement="bottom-end"
-							>
-								<button
-									class="btn btn-light btn-sm more_btn"
-									ngbDropdownToggle
-								>
+							<div ngbDropdown container="body" placement="bottom-end">
+								<button class="btn btn-light btn-sm more_btn" ngbDropdownToggle>
 									<i class="bi bi-three-dots-vertical"></i>
 								</button>
 								<div ngbDropdownMenu>
@@ -116,14 +82,25 @@
 									>
 										Edit
 									</button> -->
-									<button
-										ngbDropdownItem
-										(click)="delteRoleUser(role?._id)"
-									>
+									<button ngbDropdownItem (click)="delteRoleUser(role?._id)">
 										Delete
 									</button>
 								</div>
 							</div>
+							<!-- <div ngbDropdown container="body" placement="bottom-end">
+								<button class="btn btn-light btn-sm more_btn" ngbDropdownToggle>
+									<i class="bi bi-three-dots-vertical"></i>
+								</button>
+								<div ngbDropdownMenu>
+									<button ngbDropdownItem>
+										Export as a pdf
+									</button>
+									<div class="dropdown-divider"></div>
+									<button ngbDropdownItem (click)="delteRoleUser(role?._id)">
+										Delete
+									</button>
+								</div>
+							</div> -->
 						</td>
 					</tr>
 				</tbody>
@@ -152,20 +129,15 @@
 						<td *ngIf="role?.roleTemplateName"><a routerLink="/dashboard/settings/role-management/manage-role/edit/{{
 							role?._id
 						}}">{{ role?.roleTemplateName }}</a></td>
-						<td *ngIf="(role?.roleTemplateName == undefined && role?.roleTemplate == undefined) || role?.roleTemplate?.length == 0">Without Role Template</td>
+						<td
+							*ngIf="(role?.roleTemplateName == undefined && role?.roleTemplate == undefined) || role?.roleTemplate?.length == 0">
+							Without Role Template</td>
 						<td *ngIf="role?.roleTemplate"><a routerLink="/dashboard/settings/role-management/manage-role/edit/{{
 							role?._id
 						}}">{{ role?.roleTemplate.name }}</a></td>
 						<td>
-							<div
-								ngbDropdown
-								container="body"
-								placement="bottom-end"
-							>
-								<button
-									class="btn btn-light btn-sm more_btn"
-									ngbDropdownToggle
-								>
+							<div ngbDropdown container="body" placement="bottom-end">
+								<button class="btn btn-light btn-sm more_btn" ngbDropdownToggle>
 									<i class="bi bi-three-dots-vertical"></i>
 								</button>
 								<div ngbDropdownMenu>
@@ -182,11 +154,8 @@
 									>
 										Edit
 									</button> -->
-									<button
-									    *ngIf="roleRRTDelete || roleURRTDelete"
-										ngbDropdownItem
-										(click)="delteRoleUser(role?._id)"
-									>
+									<button *ngIf="roleRRTDelete || roleURRTDelete" ngbDropdownItem
+										(click)="delteRoleUser(role?._id)">
 										Delete
 									</button>
 								</div>

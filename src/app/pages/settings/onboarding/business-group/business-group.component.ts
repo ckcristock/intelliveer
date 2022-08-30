@@ -138,4 +138,8 @@ export class BusinessGroupComponent
 		this.bussinessEdit = this.searchString.transform('title',getBusinessGroup[0].child,'Edit');
 		this.bussinessDelete = this.searchString.transform('title',getBusinessGroup[0].child,'Delete');
 	}
+
+	editBussinessGroup(ID:any){
+		this.router.navigate([`${this.globalRoutes.getSettingsOnboardingRoutes()[0].child[1].url}/${ID}`]);
+	}
 }

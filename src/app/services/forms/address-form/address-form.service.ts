@@ -24,10 +24,8 @@ export class AddressFormService {
 		return this.fb.group({
 			addressLine1: [
 				data?.addressLine1 || '',
-				// (!required.addressLine1 && [Validators.required, Validators.pattern('^[0-9]*$')])||
 				(required.addressLine1 && [Validators.required, Validators.pattern('^[0-9]*$')])||
-				(required === {} && [Validators.required, Validators.pattern('^[0-9]*$')])
-				// required.addressLine1 && [Validators.required, Validators.pattern('^[0-9]*$')]
+				(required.addressLine1 == null && [Validators.required, Validators.pattern('^[0-9]*$')])
 
 			],
 			addressLine2: [

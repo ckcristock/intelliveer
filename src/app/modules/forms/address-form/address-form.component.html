@@ -5,11 +5,8 @@
 				<div class="col">
 					<label class="label-input-gap">Address Line 1</label>
 					<input type="text" class="form-control input-upper" formControlName="addressLine1"
-						placeholder="Street address, P.O box" [ngClass]="{
-							'mandatory-field':
-								isRequiredField('addressLine1') === true, 'red-bottom-line': referrer != 'referrer',
-								'valid-required-field': isRequiredField('addressLine1') === 'addressLine1'
-						}" /> {{isRequiredField('addressLine1')}}
+						placeholder="Street address, P.O box" (input)="isNotRequiredField('addressLine1', 'number')"
+						[ngClass]="[isNotRequiredField('addressLine1', 'number') ? 'valid-mandatory-field' : 'red-bottom-line' ]" />
 				</div>
 				<div class="col">
 					<label class="label-input-gap">Address Line 2</label>
@@ -38,8 +35,8 @@
 				<div class="col">
 					<label class="label-input-gap">State</label>
 					<!-- <input type="text" class="form-control input-upper" formControlName="state" /> -->
-					<ng-select [(ngModel)]="selectedState" class="input-upper" formControlName="state" (change)="getCities($event)" (open)="stateOptionIsOpened()"
-						(clear)="resetCity()" [ngClass]="{
+					<ng-select [(ngModel)]="selectedState" class="input-upper" formControlName="state"
+						(change)="getCities($event)" (open)="stateOptionIsOpened()" (clear)="resetCity()" [ngClass]="{
 							'mandatory-field':
 								isRequiredField('state') === true, 'red-bottom-line': referrer != 'referrer',
 								'valid-required-field': isRequiredField('state') == 11
@@ -50,7 +47,8 @@
 				<div class="col">
 					<label class="label-input-gap">City</label>
 					<!-- <input type="text" class="form-control input-upper" formControlName="city" /> -->
-					<ng-select [(ngModel)]="selectedCity" class=" input-upper" formControlName="city" (open)="cityOptionIsOpened()" [ngClass]="{
+					<ng-select [(ngModel)]="selectedCity" class=" input-upper" formControlName="city"
+						(open)="cityOptionIsOpened()" [ngClass]="{
 							'mandatory-field':
 								isRequiredField('city') === true, 'red-bottom-line': referrer != 'referrer',
 								'valid-required-field': isRequiredField('city') == 11
