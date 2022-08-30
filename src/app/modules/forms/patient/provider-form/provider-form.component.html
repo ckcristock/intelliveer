@@ -25,15 +25,15 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Title</label>
-						<select class="form-select input-upper" formControlName="title">
-							<option [value]="title.value" *ngFor="let title of famiMembTitle.title">
+						<ng-select class="input-upper" formControlName="title" placeholder="Select">
+							<ng-option [value]="title.value" *ngFor="let title of famiMembTitle.title">
 								{{ title.label }}
-							</option>
-						</select>
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">First Name</label>
-						<input class="form-control value-must input-upper" type="text" placeholder="" name="firstName"
+						<input class="form-control mandatory-field input-upper" type="text" placeholder="" name="firstName"
 							formControlName="firstName" [class.valid-mandatory-field]="firstNameValid()"/>
 					</div>
 		
@@ -44,7 +44,7 @@
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Last Name</label>
-						<input class="form-control value-must input-upper" type="text" placeholder="" name="lastName"
+						<input class="form-control mandatory-field input-upper" type="text" placeholder="" name="lastName"
 							formControlName="lastName" [class.valid-mandatory-field]="lastNameValid()"/>
 					</div>
 					<div class="col">
@@ -61,7 +61,7 @@
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Dental/Medical School</label>
-						<input class="form-control value-must input-upper" type="text" placeholder="" name="name" 
+						<input class="form-control mandatory-field input-upper" type="text" placeholder="" name="name" 
 						formControlName="DMSchool" 
 						[class.valid-mandatory-field]="DMSchoolValid()"/>
 					</div>
@@ -128,9 +128,11 @@
 		
 					<div class="col">
 						<label class="label-input-gap">Preferred Mail Method</label>
-						<select class="form-select input-upper" formControlName="preferredMailMethod">
-							<option>Select</option>
-						</select>
+						<ng-select class="input-upper" formControlName="preferredMailMethod" placeholder="Select">
+							<ng-option>
+								Select
+							</ng-option>
+						</ng-select>
 					</div>
 		
 					<div class="col">

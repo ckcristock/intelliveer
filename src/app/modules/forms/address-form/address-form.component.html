@@ -6,17 +6,18 @@
 					<label class="label-input-gap">Address Line 1</label>
 					<input type="text" class="form-control input-upper" formControlName="addressLine1"
 						placeholder="Street address, P.O box" [ngClass]="{
-							'value-must':
-								isRequiredField('addressLine1') === true, 'red-bottom-line': referrer != 'referrer'
-						}" />
+							'mandatory-field':
+								isRequiredField('addressLine1') === true, 'red-bottom-line': referrer != 'referrer',
+								'valid-required-field': isRequiredField('addressLine1') === 'addressLine1'
+						}" /> {{isRequiredField('addressLine1')}}
 				</div>
 				<div class="col">
 					<label class="label-input-gap">Address Line 2</label>
 					<input type="text" class="form-control input-upper" formControlName="addressLine2"
 						placeholder="Apartment, Suite, Unit, Building, Floor, etc." [ngClass]="{
-							'value-must':
+							'mandatory-field':
 								isRequiredField('addressLine2') === true
-						}" />
+						}" />{{isRequiredField('addressLine2')}}
 				</div>
 			</div>
 			<div class="row formrow">
@@ -26,8 +27,9 @@
 					<ng-select class="input-upper" formControlName="country" [(ngModel)]="selectedCountry"
 						(change)="getStates($event)" (clear)="resetState(); resetCity()" [searchFn]="customSearchFn"
 						[ngClass]="{
-							'value-must':
-								isRequiredField('country') === true, 'red-bottom-line': referrer != 'referrer'
+							'mandatory-field':
+								isRequiredField('country') === true, 'red-bottom-line': referrer != 'referrer',
+								'valid-required-field': isRequiredField('country') == 'country'
 						}">
 						<ng-option *ngFor="let country of countries" [value]="country.iso3">{{ country.name }}
 						</ng-option>
@@ -38,8 +40,9 @@
 					<!-- <input type="text" class="form-control input-upper" formControlName="state" /> -->
 					<ng-select [(ngModel)]="selectedState" class="input-upper" formControlName="state" (change)="getCities($event)" (open)="stateOptionIsOpened()"
 						(clear)="resetCity()" [ngClass]="{
-							'value-must':
-								isRequiredField('state') === true, 'red-bottom-line': referrer != 'referrer'
+							'mandatory-field':
+								isRequiredField('state') === true, 'red-bottom-line': referrer != 'referrer',
+								'valid-required-field': isRequiredField('state') == 11
 						}">
 						<ng-option *ngFor="let state of states" [value]="state.state_code">{{ state.name }}</ng-option>
 					</ng-select>
@@ -48,8 +51,9 @@
 					<label class="label-input-gap">City</label>
 					<!-- <input type="text" class="form-control input-upper" formControlName="city" /> -->
 					<ng-select [(ngModel)]="selectedCity" class=" input-upper" formControlName="city" (open)="cityOptionIsOpened()" [ngClass]="{
-							'value-must':
-								isRequiredField('city') === true, 'red-bottom-line': referrer != 'referrer'
+							'mandatory-field':
+								isRequiredField('city') === true, 'red-bottom-line': referrer != 'referrer',
+								'valid-required-field': isRequiredField('city') == 11
 						}">
 						<ng-option *ngFor="let city of cities" [value]="city.name">{{ city.name }}</ng-option>
 					</ng-select>
@@ -57,8 +61,9 @@
 				<div class="col">
 					<label class="label-input-gap">Zip Code</label>
 					<input type="text" class="form-control input-upper" formControlName="zipCode" [ngClass]="{
-							'value-must':
-								isRequiredField('zipCode') === true, 'red-bottom-line': referrer != 'referrer'
+							'mandatory-field':
+								isRequiredField('zipCode') === true, 'red-bottom-line': referrer != 'referrer',
+								'valid-required-field': isRequiredField('zipCode') == 11
 						}" />
 				</div>
 			</div>

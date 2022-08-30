@@ -109,14 +109,14 @@ export class PaymentPartyFormComponent implements OnInit {
 			gender: [data?.gender || null],
 			pronoun: [data?.pronoun || null],
 			language: [data?.language || null],
-			maried: [data?.maried || null],
+			maritalStatus: [data?.maritalStatus || null],
 			emailId: ['', Validators.minLength(2)],
-			pPhoneType: [data?.pPhoneType || null, Validators.required],
+			primaryPhoneType: [data?.primaryPhoneType || null, Validators.required],
 			pPhoneNumber: [data?.pPhoneNumber || '', [Validators.required, Validators.pattern("^[0-9]*$")]],
-			sPhoneType: [data?.sPhoneType || ''],
+			secondaryPhoneType: [data?.secondaryPhoneType || ''],
 			sPhoneNumber: [data?.sPhoneNumber || ''],
-			CommPrimary: [data?.CommPrimary || null],
-			CommSecondary: [data?.CommSecondary || null],
+			primaryPreferredCommunicationMethod: [data?.primaryPreferredCommunicationMethod || null],
+			secondaryPreferredCommunicationMethod: [data?.secondaryPreferredCommunicationMethod || null],
 			phone: [data?.phone || ''],
 			workStatus: [data?.workStatus || null],
 			occupation: [data?.occupation || ''],
@@ -145,7 +145,7 @@ export class PaymentPartyFormComponent implements OnInit {
 			this.formData.profile.preferredPronoun
 		);
 		this.Form.controls['language'].setValue(this.formData.profile.language);
-		this.Form.controls['martialStatus'].setValue(
+		this.Form.controls['maritalStatus'].setValue(
 			this.formData.profile.maritalStatus
 		);
 		this.Form.controls['emailId'].setValue(this.formData.contact.email);
@@ -212,7 +212,7 @@ export class PaymentPartyFormComponent implements OnInit {
 	}
 
 	commPrimaryValid() {
-		return this.Form.get('CommPrimary')?.value != null;
+		return this.Form.get('primaryPreferredCommunicationMethod')?.value != null;
 	}
 
 	emailValid() {
@@ -220,11 +220,7 @@ export class PaymentPartyFormComponent implements OnInit {
 	}
 
 	clearCommPrimary() {
-		this.Form.controls['CommPrimary'].setValue("");
-	}
-
-	pPhoneTypeValid() {
-		return this.Form.get('pPhoneType')?.valid;
+		this.Form.controls['primaryPreferredCommunicationMethod'].setValue("");
 	}
 
 	async getStaticData() {

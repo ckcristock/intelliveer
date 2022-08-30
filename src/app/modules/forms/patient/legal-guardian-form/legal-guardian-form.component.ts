@@ -46,6 +46,18 @@ export class LegalGuardianFormComponent implements OnInit {
     { pronoun: 'He' },
     { pronoun: 'She' },
   ];
+	genders: any[] = [
+		{ label: 'Male', value: 'M' },
+		{ label: 'Female', value: 'F' },
+	];
+	languages: any[] = [
+		{ label: 'English', value: 'english' },
+		{ label: 'Hindi', value: 'hindi' },
+	];
+	maritalStatuses: any[] = [
+		{ label: 'Maried', value: 'M' },
+		{ label: 'Single', value: 'S' },
+	];
   disableSaveBtn: boolean = false;
   firstName!: string;
 
@@ -82,7 +94,7 @@ export class LegalGuardianFormComponent implements OnInit {
 				}
 			}
 		);
-    this.Form.get('emailId')?.markAsDirty();
+    // this.Form.get('emailId')?.markAsDirty();
     this.legalGuard.push(await this.patientUserServ.getLegalGuardFamiMemb());
 
     this.relationship = await this.patientUserServ.getLegalGuardToPati();
@@ -95,8 +107,8 @@ export class LegalGuardianFormComponent implements OnInit {
     this.Form.controls['gender'].setValue(this.legalGuard[0].gender);
     this.Form.controls['pronoun'].setValue(this.legalGuard[0].prefePronoun);
     this.Form.controls['language'].setValue(this.legalGuard[0].language);
-    this.Form.controls['maried'].setValue(this.legalGuard[0].maritalStatus);
-    this.Form.controls['pPhoneType'].setValue(this.legalGuard[0].pPhoneType);
+    this.Form.controls['maritalStatus'].setValue(this.legalGuard[0].maritalStatus);
+    this.Form.controls['primaryPhoneType'].setValue(this.legalGuard[0].primaryPhoneType);
     this.Form.controls['pPhoneNumber'].setValue(this.legalGuard[0].pPhoneNumber);
     
   }
@@ -113,14 +125,14 @@ export class LegalGuardianFormComponent implements OnInit {
       gender: [data?.gender || ''],
       pronoun: [data?.pronoun || ''],
       language: [data?.language || ''],
-      maried: [data?.maried || ''],
+      maritalStatus: [data?.maritalStatus || ''],
       emailId: ['',],
-      pPhoneType: [data?.pPhoneType || '', Validators.required],
+      primaryPhoneType: [data?.primaryPhoneType || '', Validators.required],
       pPhoneNumber: [data?.pPhoneNumber || '', [Validators.required, Validators.pattern("^[0-9]*$")]],
-      sPhoneType: [data?.sPhoneType || ''],
+      secondaryPhoneType: [data?.secondaryPhoneType || ''],
       sPhoneNumber: [data?.sPhoneNumber || ''],
-      CommPrimary: [data?.CommPrimary || '',],
-      CommSecondary: [data?.CommSecondary || ''],
+      primaryPreferredCommunicationMethod: [data?.primaryPreferredCommunicationMethod || '',],
+      secondaryPreferredCommunicationMethod: [data?.secondaryPreferredCommunicationMethod || ''],
       phone: [data?.phone || ''],
       workStatus: [data?.workStatus || ''],
       occupation: [data?.occupation || ''],
@@ -150,8 +162,12 @@ export class LegalGuardianFormComponent implements OnInit {
     return this.Form.get('DOB')?.value.length > 0;
   }
 
-  pPhoneTypeValid() {
-    return this.Form.get('pPhoneType')?.valid;
+  clearCommPrimary() {
+		this.Form.controls['primaryPreferredCommunicationMethod'].setValue("");
+	}
+
+  primaryPhoneTypeValid() {
+    return this.Form.get('primaryPhoneType')?.valid;
   }
 
   pPhoneNumberValid() {
@@ -159,7 +175,7 @@ export class LegalGuardianFormComponent implements OnInit {
   }
 
   commPrimaryValid() {
-    return this.Form.get('CommPrimary')?.value.length > 0;
+    return this.Form.get('primaryPreferredCommunicationMethod')?.value.length > 0;
   }
 
   emailValid() {

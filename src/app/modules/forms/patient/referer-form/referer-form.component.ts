@@ -109,9 +109,9 @@ export class RefererFormComponent implements OnInit {
       lastName: [data?.lastName || '', [Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
       greeting: [data?.greeting || ''],
       emailId: [data?.emailId || ''],
-      pPhoneType: [data?.pPhoneType || '', ],
+      primaryPhoneType: [data?.primaryPhoneType || '', ],
       pPhoneNumber: [data?.pPhoneNumber || '', [Validators.pattern("^[0-9]*$")]],
-      sPhoneType: [data?.sPhoneType || ''],
+      secondaryPhoneType: [data?.secondaryPhoneType || ''],
       sPhoneNumber: [data?.sPhoneNumber || ''],
       preferredMailMethod: [data?.preferredMailMethod || ''],
       website: [data?.website || ''],
@@ -138,8 +138,8 @@ export class RefererFormComponent implements OnInit {
     return this.Form.get('DOB')?.value.length > 0;
   }
 
-  pPhoneTypeValid() {
-    return this.Form.get('pPhoneType')?.valid;
+  primaryPhoneTypeValid() {
+    return this.Form.get('primaryPhoneType')?.valid;
   }
 
   pPhoneNumberValid() {
@@ -147,7 +147,7 @@ export class RefererFormComponent implements OnInit {
   }
 
   commPrimaryValid() {
-    return this.Form.get('CommPrimary')?.value.length > 0;
+    return this.Form.get('primaryPreferredCommunicationMethod')?.value.length > 0;
   }
 
   emailValid() {

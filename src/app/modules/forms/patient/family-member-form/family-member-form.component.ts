@@ -30,6 +30,10 @@ export class FamilyMemberFormComponent implements OnInit {
     { title: 'Overview', id: 'overview' },
     { title: 'Profile', id: 'profile' },
   ];
+	genders: any[] = [
+		{ label: 'Male', value: 'M' },
+		{ label: 'Female', value: 'F' },
+	];
 
   relationship!: string;
   idForm: FormGroup;

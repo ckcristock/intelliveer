@@ -52,21 +52,21 @@
 			<div class="col">
 				<div class="mainformset">
 					<label class="label-input-gap">What is First Name of the Patient?</label>
-					<input class="form-control value-must" type="text" placeholder="" name="" formControlName="firstName"
+					<input class="form-control mandatory-field" type="text" placeholder="" name="" formControlName="firstName"
 						[(ngModel)]="patient.firstName" [class.valid-mandatory-field]="firstNameValid()"/>
 				</div>
 			</div>
 			<div class="col">
 				<div class="mainformset">
 					<label class="label-input-gap">Last Name</label>
-					<input class="form-control value-must" type="text" placeholder="" name="" formControlName="lastName"
+					<input class="form-control mandatory-field" type="text" placeholder="" name="" formControlName="lastName"
 						[(ngModel)]="patient.lastName" [class.valid-mandatory-field]="lastNameValid()"/>
 				</div>
 			</div>
 			<div class="col">
 				<div class="mainformset">
 					<label class="label-input-gap">Date of Birth</label>
-					<input class="form-control" [ngClass]="{ 'value-must': tab == 'coordWithProspect' }" type="date"
+					<input class="form-control" [ngClass]="{ 'mandatory-field': tab == 'coordWithProspect' }" type="date"
 						placeholder="" name="" formControlName="DOB" [(ngModel)]="patient.dateBirth" 
 						[class.valid-mandatory-field]="DOBValid()"/>
 				</div>

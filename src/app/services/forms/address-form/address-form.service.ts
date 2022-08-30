@@ -14,15 +14,21 @@ type AcceptedFields = {
 	providedIn: 'root'
 })
 export class AddressFormService {
-	constructor(private fb: FormBuilder) {}
+	constructor(private fb: FormBuilder) { }
 
 	getAddressForm(data?: any, required?: AcceptedFields): FormGroup {
 		data = data || {};
 		required = required || {};
+		console.log("requireeeeeeeeeeeeeed", required);
+
 		return this.fb.group({
 			addressLine1: [
 				data?.addressLine1 || '',
-				required.addressLine1 && Validators.required
+				// (!required.addressLine1 && [Validators.required, Validators.pattern('^[0-9]*$')])||
+				(required.addressLine1 && [Validators.required, Validators.pattern('^[0-9]*$')])||
+				(required === {} && [Validators.required, Validators.pattern('^[0-9]*$')])
+				// required.addressLine1 && [Validators.required, Validators.pattern('^[0-9]*$')]
+
 			],
 			addressLine2: [
 				data?.addressLine2 || '',

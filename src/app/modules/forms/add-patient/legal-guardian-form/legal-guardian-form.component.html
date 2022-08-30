@@ -104,16 +104,16 @@
                 <div class="mainformset">
                     <label class=" label-input-gap">What is First Name of the Legal
                         Guardian?</label>
-                    <input class="form-control value-must" type="text" placeholder="" name=""
+                    <input class="form-control mandatory-field" type="text" placeholder="" name=""
                         formControlName="firstName" [(ngModel)]="legalGuardian.firstName"
-                        [class.valid-mandatory-field]="firstNameValid()" />
+                        />
                 </div>
             </div>
             <div class="col-4">
                 <div class="mainformset">
                     <label class=" label-input-gap">Last Name</label>
-                    <input class="form-control value-must" type="text" placeholder="" name="" formControlName="lastName"
-                        [(ngModel)]="legalGuardian.lastName" [class.valid-mandatory-field]="lastNameValid()" />
+                    <input class="form-control  mandatory-field" type="text" placeholder="" name="" formControlName="lastName"
+                        [(ngModel)]="legalGuardian.lastName" />
                 </div>
             </div>
         </div>

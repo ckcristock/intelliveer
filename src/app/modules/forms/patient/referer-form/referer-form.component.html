@@ -1,6 +1,7 @@
 <div class="row formrow" *ngIf="Form">
 	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
-		[disableSaveBtn]="Form.invalid || Form.pristine" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills>
+		[disableSaveBtn]="Form.invalid || Form.pristine" (onCancel)="cancel()" (onSave)="save(Form.value)">
+	</app-nav-bar-pills>
 	<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
 		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section" id="overview">
@@ -36,16 +37,16 @@
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Title</label>
-						<select class="form-select input-upper" formControlName="title">
-							<option [value]="title.value" *ngFor="let title of famiMembTitle.title">
+						<ng-select class="input-upper" formControlName="title" placeholder="Select">
+							<ng-option [value]="title.value" *ngFor="let title of famiMembTitle.title">
 								{{ title.label }}
-							</option>
-						</select>
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">First Name</label>
 						<input class="form-control input-upper" type="text" placeholder="" name="firstName"
-							formControlName="firstName"  />
+							formControlName="firstName" />
 					</div>
 
 					<div class="col">
@@ -56,13 +57,14 @@
 					<div class="col">
 						<label class="label-input-gap">Last Name</label>
 						<input class="form-control input-upper" type="text" placeholder="" name="lastName"
-							formControlName="lastName"  />
+							formControlName="lastName" />
 					</div>
 				</div>
 				<div class="row formrow">
 					<div class="col-3">
 						<label class="label-input-gap">Greeting</label>
-						<input class="form-control input-upper" type="text" placeholder="" name="name" formControlName="greeting" />
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
+							formControlName="greeting" />
 					</div>
 				</div>
 
@@ -71,7 +73,8 @@
 
 			<div class="section" id="address">
 				<h6 class="heading">Address</h6>
-				<app-address-form [parentGroup]="Form" [formGroupName]="'address'" [referrer]="'referrer'"></app-address-form>
+				<app-address-form [parentGroup]="Form" [formGroupName]="'address'" [referrer]="'referrer'">
+				</app-address-form>
 			</div>
 
 			<div class="section" id="contact">
@@ -79,23 +82,24 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Email</label>
-						<input class="form-control input-upper" type="text" placeholder="" name="id" formControlName="emailId" />
+						<input class="form-control input-upper" type="text" placeholder="" name="id"
+							formControlName="emailId" />
 					</div>
 
 					<div class="col">
 						<label class="label-input-gap">Primary Phone Type</label>
-						<select class="form-select input-upper" 
-						 formControlName="pPhoneType">
-							<option [value]="phone.value" *ngFor="let phone of famiMembTitle.phone">
+						<ng-select class="input-upper input-upper" placeholder="Select"
+							formControlName="primaryPhoneType">
+							<ng-option [value]="phone.value" *ngFor="let phone of famiMembTitle.phone">
 								{{ phone.label }}
-							</option>
-						</select>
+							</ng-option>
+						</ng-select>
 					</div>
 
 					<div class="col">
 						<label class="label-input-gap">Primary Phone Number</label>
 						<input class="form-control input-upper" type="text" placeholder="" name="name"
-							formControlName="pPhoneNumber"  />
+							formControlName="pPhoneNumber" />
 					</div>
 				</div>
 
@@ -103,9 +107,11 @@
 					<div class="col">
 						<label class="label-input-gap">
 							Secondary Phone Type</label>
-						<select class="form-select input-upper" formControlName="sPhoneType">
-							<option>Select</option>
-						</select>
+						<ng-select class="input-upper" formControlName="secondaryPhoneType" placeholder="Select">
+							<ng-option>
+								Select
+							</ng-option>
+						</ng-select>
 					</div>
 
 					<div class="col">
@@ -116,17 +122,19 @@
 
 					<div class="col">
 						<label class="label-input-gap">Preferred Mail Method</label>
-						<select class="form-select input-upper" formControlName="preferredMailMethod">
-							<option>Select</option>
-						</select>
+						<ng-select class="input-upper" formControlName="preferredMailMethod" placeholder="Select">
+							<ng-option>
+								Select
+							</ng-option>
+						</ng-select>
 					</div>
 
 					<div class="col">
 						<label class="label-input-gap">Website</label>
 						<div class="website">
 							<span class="" style="height: 36px;">https://</span>
-							<input type="text" class="form-control input-upper" name="website" placeholder="www.example.com"
-								formControlName="website" />
+							<input type="text" class="form-control input-upper" name="website"
+								placeholder="www.example.com" formControlName="website" />
 						</div>
 					</div>
 				</div>
