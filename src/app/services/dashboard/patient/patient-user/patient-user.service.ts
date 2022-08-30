@@ -45,7 +45,7 @@ export class PatientUserService {
       let familyMember = this.familyMembers.filter((familyMemb) => {
         return familyMemb.role == JSON.parse(localStorage.getItem('LegalGuardToPati')!);
       })
-      return familyMember[0]['info'];
+      // return familyMember[0]['info'];
     }
   }
 
@@ -76,7 +76,7 @@ export class PatientUserService {
       let familyMember = this.familyMembers.filter((familyMemb) => {
         return familyMemb.role == JSON.parse(localStorage.getItem('PaymPartyToPati')!);
       })
-      return familyMember[0]['info'];
+      // return familyMember[0]['info'];
     }
   }
 

@@ -1,208 +1,290 @@
-<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)" style=" margin-top:0px;">
-    <div class="mainformsection">
-        <div *ngIf="tab!='addPatient'" class="row formrow">
-            <div class="two-items">
-                <h6 class="heading" style="font-weight: bolder;">Legal Guardian</h6>
-                <a class="heading a-link" *ngIf="showButtonSaveCancel==false" (click)="openTextarea()">Add Script</a>
-                <div class="two-little-button" *ngIf="showButtonSaveCancel==true">
-                    <a class="heading a-link" (click)="closeSaveCancelFunc()">Save Script</a>
-                    <a class="heading a-link" (click)="closeSaveCancelFunc()">Cancel</a>
-                </div>
-            </div>
+<form
+	[formGroup]="Form"
+	#f="ngForm"
+	(submit)="save(f)"
+	style="margin-top: 0px"
+>
+	<div class="mainformsection">
+		<div *ngIf="tab != 'addPatient'" class="row formrow">
+			<div class="two-items">
+				<h6 class="heading" style="font-weight: bolder">
+					Legal Guardian
+				</h6>
+				<a
+					class="heading a-link"
+					*ngIf="showButtonSaveCancel == false"
+					(click)="openTextarea()"
+					>Add Script</a
+				>
+				<div
+					class="two-little-button"
+					*ngIf="showButtonSaveCancel == true"
+				>
+					<a class="heading a-link" (click)="closeSaveCancelFunc()"
+						>Save Script</a
+					>
+					<a class="heading a-link" (click)="closeSaveCancelFunc()"
+						>Cancel</a
+					>
+				</div>
+			</div>
+		</div>
+		<div
+			class="row formrow"
+			style="margin-top: 11px"
+			*ngIf="openTextAreaVar == true"
+		>
+			<textarea
+				class="form-control"
+				placeholder="Leave a comment here"
+				id="floatingTextarea2"
+				style="
+					height: 98px;
+					padding: 5px 10px 8px 6px;
+					font-size: 12px;
+					line-height: 20px;
+					border: 2px solid #7a7a7c;
+					font-style: oblique;
+					resize: none;
+				"
+			></textarea>
+		</div>
 
-        </div>
-        <div class="row formrow" style="margin-top: 11px;" *ngIf="openTextAreaVar==true">
-            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                style="height: 98px; padding: 5px 10px 8px 6px; font-size: 12px; line-height : 20px; border: 2px solid #7a7a7c; font-style: oblique; resize: none;"></textarea>
-        </div>
+		<!-- legal Guardian radios-->
+		<div class="row" *ngIf="tab == 'addPatient'">
+			<div class="mainformset">
+				<h6 class="heading subti-radio-b">Legal Guardian</h6>
+				<div
+					class="btn-group radios"
+					role="group"
+					aria-label="Basic radio toggle button group"
+					style="margin-bottom: 0px"
+				>
+					<div class="subscriber-divs">
+						<input
+							#legalGuardRadio1
+							class="form-check-input"
+							type="radio"
+							name="lgGuardianRadio"
+							id="lgGuardianRadio1"
+							(change)="radioLGuargFunct(1)"
+							checked
+						/>
+						<label class="subscriber-labels" for="lgGuardianRadio1"
+							>Use existing one</label
+						>
+					</div>
+					<div class="subscriber-divs">
+						<input
+							#legalGuardRadio2
+							class="form-check-input"
+							type="radio"
+							name="lgGuardianRadio"
+							id="lgGuardianRadio2"
+							(change)="radioLGuargFunct(2)"
+						/>
+						<label class="subscriber-labels" for="lgGuardianRadio2"
+							>Same as patient 1</label
+						>
+					</div>
+					<div class="subscriber-divs">
+						<input
+							#legalGuardRadio3
+							class="form-check-input"
+							type="radio"
+							name="lgGuardianRadio"
+							id="lgGuardianRadio3"
+							(change)="radioLGuargFunct(3)"
+						/>
+						<label class="subscriber-labels" for="lgGuardianRadio3"
+							>Add a new one</label
+						>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br />
 
-        <!-- legal Guardian radios-->
-        <div class="row" *ngIf="tab == 'addPatient'">
-            <div class="mainformset">
-                <h6 class="heading subti-radio-b">Legal Guardian</h6>
-                <div class="btn-group radios" role="group" aria-label="Basic radio toggle button group"
-                    style="margin-bottom: 0px;">
+		<!-- legal Guardians -->
+		<div class="row formrow" *ngIf="tab == 'addPatient' && radioLG == 1">
+			<div class="col-4">
+				<div
+					class="row formrow"
+					*ngFor="let legalGuardian of legalGuardians; let i = index"
+				>
+					<div
+						class="col-6"
+						[ngClass]="{ deactivated: !legalGuardian.activated }"
+					>
+						{{ legalGuardian.firstName }}
+						{{ legalGuardian.lastName }}
+					</div>
+					<div
+						class="col-3 selected"
+						*ngIf="legalGuardian.selected"
+						(click)="changeSelect(i, legalGuardian.selected)"
+					>
+						Selected
+					</div>
+					<div
+						class="col-3"
+						[ngClass]="{ deactivated: !legalGuardian.activated }"
+						*ngIf="!legalGuardian.selected"
+						(click)="changeSelect(i, legalGuardian.selected)"
+					>
+						Select
+					</div>
+					<div
+						class="col-3 deac-reactive"
+						*ngIf="legalGuardian.activated"
+						(click)="active(i, legalGuardian.activated)"
+					>
+						Deactivate
+					</div>
+					<div
+						class="col-3 deac-reactive"
+						*ngIf="!legalGuardian.activated"
+						(click)="active(i, legalGuardian.activated)"
+					>
+						Reactivate
+					</div>
+				</div>
+			</div>
+		</div>
 
-                    <div class="subscriber-divs">
-                        <input #legalGuardRadio1 class="form-check-input" type="radio" name="lgGuardianRadio"
-                            id="lgGuardianRadio1" (change)="radioLGuargFunct(1)" checked />
-                        <label class="subscriber-labels" for="lgGuardianRadio1">Use existing one</label>
-                    </div>
-                    <div class="subscriber-divs">
-                        <input #legalGuardRadio2 class="form-check-input" type="radio" name="lgGuardianRadio"
-                            id="lgGuardianRadio2" (change)="radioLGuargFunct(2)" />
-                        <label class="subscriber-labels" for="lgGuardianRadio2">Same as patient 1</label>
-                    </div>
-                    <div class="subscriber-divs">
-                        <input #legalGuardRadio3 class="form-check-input" type="radio" name="lgGuardianRadio"
-                            id="lgGuardianRadio3" (change)="radioLGuargFunct(3)" />
-                        <label class="subscriber-labels" for="lgGuardianRadio3">Add a new one</label>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <br />
-
-        <!-- legal Guardians -->
-        <div class="row formrow" *ngIf="tab == 'addPatient' && radioLG == 1">
-            <div class="col-4">
-                <div class="row formrow" *ngFor="let legalGuardian of legalGuardians; let i = index">
-                    <div class="col-6" [ngClass]="{'deactivated':!legalGuardian.activated}">
-                        {{ legalGuardian.firstName }} {{ legalGuardian.lastName }}
-                    </div>
-                    <div class="col-3 selected" *ngIf="legalGuardian.selected"
-                        (click)="changeSelect(i, legalGuardian.selected)">
-                        Selected
-                    </div>
-                    <div class="col-3" [ngClass]="{'deactivated':!legalGuardian.activated}"
-                        *ngIf="!legalGuardian.selected" (click)="changeSelect(i, legalGuardian.selected)">
-                        Select
-                    </div>
-                    <div class="col-3 deac-reactive" *ngIf="legalGuardian.activated"
-                        (click)="active(i, legalGuardian.activated)">
-                        Deactivate
-                    </div>
-                    <div class="col-3 deac-reactive" *ngIf="!legalGuardian.activated"
-                        (click)="active(i, legalGuardian.activated)">
-                        Reactivate
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- search -->
-        <div class="row formrow">
-            <!-- legal Guardian textbox and button -->
-            <div class="col-6">
-                <div class="mainformset">
-                    <label class="label-input-gap input-button-label">Please search first If not found, create a
-                        new one</label>
-                    <div class="input-button">
-                        <div class="input-group" style="background-color: white;">
-                            <span class="input-group-text border-0 bg-transparent" id="basic-addon1">
-                                <i class="bi bi-search"></i>
-                            </span>
-                            <input type="text" class="form-control border-0" placeholder="Search"
-                                aria-describedby="basic-addon1" style="height: 100%;" />
-                        </div>
-                        <button type="button" class="btn btn-dark" style="height: 35px;">Select</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row formrow">
-            <div class="col-4">
-                <div class="mainformset">
-                    <label class="label-input-gap">Relationship to patient?</label>
-                    <ng-select placeholder="Select">
-                        <ng-option>Select</ng-option>
-                    </ng-select>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="mainformset">
-                    <label class=" label-input-gap">What is First Name of the Legal
-                        Guardian?</label>
-                    <input class="form-control value-must" type="text" placeholder="" name=""
-                        formControlName="firstName" [(ngModel)]="legalGuardian.firstName"
-                        [class.valid-mandatory-field]="firstNameValid()" />
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="mainformset">
-                    <label class=" label-input-gap">Last Name</label>
-                    <input class="form-control value-must" type="text" placeholder="" name="" formControlName="lastName"
-                        [(ngModel)]="legalGuardian.lastName" [class.valid-mandatory-field]="lastNameValid()" />
-                </div>
-            </div>
-        </div>
-        <div class="row formrow">
-            <div class="col-6">
-                <div class="mainformset">
-                    <label class=" label-input-gap">Address Line 1</label>
-                    <input class="form-control red-bottom-line" type="text" placeholder="Street address, P.O.box"
-                        name="" formControlName="address1" [class.valid-required-field]="address1Valid()" />
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="mainformset">
-                    <label class=" label-input-gap">Address Line 2</label>
-                    <input class="form-control" type="text" placeholder="Apartment, Suite, Unit, Building, Floor, etc."
-                        name="" />
-                </div>
-            </div>
-        </div>
-        <div class="row formrow">
-            <div class="col-3">
-                <div class="mainformset">
-                    <label class=" label-input-gap">Country</label>
-                    <ng-select class="input-upper red-bottom-line" formControlName="country"
-                        [(ngModel)]="selectedCountry2" (change)="getStates($event)" (clear)="resetState(); resetCity()"
-                        [class.valid-required-field]="countryValid()">
-                        <ng-option *ngFor="let country of countries" [value]="country.iso3">{{ country.name }}
-                        </ng-option>
-                    </ng-select>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="mainformset">
-                    <label class=" label-input-gap">State</label>
-                    <ng-select formControlName="state" (change)="getCities($event)" class="red-bottom-line"
-                        [class.valid-required-field]="stateValid()">
-                        <ng-option *ngFor="let state of states" [value]="state.state_code">{{ state.name }}
-                        </ng-option>
-                    </ng-select>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="mainformset">
-                    <label class="label-input-gap">City</label>
-                    <ng-select formControlName="city" class="red-bottom-line"
-                        [class.valid-required-field]="cityValid()">
-                        <ng-option *ngFor="let city of cities" [value]="city.name">{{ city.name }}
-                        </ng-option>
-                    </ng-select>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="mainformset">
-                    <label class="label-input-gap">Zip Code</label>
-                    <input class="form-control red-bottom-line" type="text" placeholder="" name=""
-                        [class.valid-required-field]="zipCodeValid()" formControlName="zipCode" />
-                </div>
-            </div>
-        </div>
-        <div class="row formrow">
-            <div class="col-3">
-                <div class="mainformset">
-                    <label class=" label-input-gap">Primary Phone Number</label>
-                    <input class="form-control" type="text" placeholder="" name="" />
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="mainformset">
-                    <label class="label-input-gap">Type</label>
-                    <select class="form-select">
-                        <option [value]="type.value" *ngFor="let type of phoneTypes.phone">
-                            {{ type.label }}
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="mainformset">
-                    <label class=" label-input-gap">Email</label>
-                    <input class="form-control" type="text" placeholder="" name="" />
-                </div>
-            </div>
-        </div>
-        <div *ngIf="tab!='addPatient'" class="row formrow two-final-buttons">
-            <div class="two-items">
-                <button class="btn btn-light btn-light-custom">Exit</button>
-                <button type="button" class="btn btn-dark btn-dark-custom" (click)="continueToDentist()"
-                    [disabled]="Form?.invalid">Save and continue</button>
-            </div>
-        </div>
-    </div>
+		<!-- search -->
+		<div class="row formrow">
+			<!-- legal Guardian textbox and button -->
+			<div class="col-6">
+				<div class="mainformset">
+					<label class="label-input-gap input-button-label"
+						>Please search first If not found, create a new
+						one</label
+					>
+					<div class="input-button">
+						<div
+							class="input-group"
+							style="background-color: white"
+						>
+							<span
+								class="input-group-text border-0 bg-transparent"
+								id="basic-addon1"
+							>
+								<i class="bi bi-search"></i>
+							</span>
+							<input
+								type="text"
+								class="form-control border-0"
+								placeholder="Search"
+								aria-describedby="basic-addon1"
+								style="height: 100%"
+							/>
+						</div>
+						<button
+							type="button"
+							class="btn btn-dark"
+							style="height: 35px"
+						>
+							Select
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row formrow">
+			<div class="col-4">
+				<div class="mainformset">
+					<label class="label-input-gap"
+						>Relationship to patient?</label
+					>
+					<ng-select placeholder="Select">
+						<ng-option [value]="relation" *ngFor="let relation of relationShipArray">{{ relation }}</ng-option>
+					</ng-select>
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="mainformset">
+					<label class="label-input-gap"
+						>What is First Name of the Legal Guardian?</label
+					>
+					<input
+						class="form-control value-must"
+						type="text"
+						placeholder=""
+						name=""
+						formControlName="firstName"
+						[(ngModel)]="legalGuardian.firstName"
+						[class.valid-mandatory-field]="firstNameValid()"
+					/>
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="mainformset">
+					<label class="label-input-gap">Last Name</label>
+					<input
+						class="form-control value-must"
+						type="text"
+						placeholder=""
+						name=""
+						formControlName="lastName"
+						[(ngModel)]="legalGuardian.lastName"
+						[class.valid-mandatory-field]="lastNameValid()"
+					/>
+				</div>
+			</div>
+		</div>
+        <app-address-form [parentGroup]="Form" [formGroupName]="'address'"></app-address-form>
+		<div class="row formrow">
+			<div class="col-3">
+				<div class="mainformset">
+					<label class="label-input-gap">Primary Phone Number</label>
+					<input
+						class="form-control"
+						type="text"
+						placeholder=""
+						name=""
+                        formControlName="phoneNumber"
+					/>
+				</div>
+			</div>
+			<div class="col-3">
+				<div class="mainformset">
+					<label class="label-input-gap">Type</label>
+					<select class="form-select" formControlName="phoneType">
+						<option
+							[value]="type.value"
+							*ngFor="let type of phoneTypes.phone"
+						>
+							{{ type.label }}
+						</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-3">
+				<div class="mainformset">
+					<label class="label-input-gap">Email</label>
+					<input
+						class="form-control"
+						type="text"
+						placeholder=""
+						name=""
+                        formControlName="email"
+					/>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="tab != 'addPatient'" class="row formrow two-final-buttons">
+			<div class="two-items">
+				<button class="btn btn-light btn-light-custom">Exit</button>
+				<button
+					type="button"
+					class="btn btn-dark btn-dark-custom"
+					(click)="save(f)"
+					[disabled]="Form!.invalid"
+				>
+					Save and continue
+				</button>
+			</div>
+		</div>
+	</div>
 </form>

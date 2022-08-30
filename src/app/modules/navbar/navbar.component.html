@@ -126,7 +126,7 @@
 				class="d-flex justify-content-center align-items-center gap-3"
 				*ngIf="selectedPatient"
 			>
-				<div ngbDropdown class="d-inline-block drpdown">
+				<div ngbDropdown class="d-inline-block dropdown">
 					<div (click)="onSelectPatient('showSelectedPatientUserCard', selectedPatient)">
 						<img src="{{ selectedPatient.profileUrl }}" alt="" ngbDropdownToggle />
 						<span
@@ -171,7 +171,7 @@
 			</div>
 			<div class="d-flex justify-content-center align-items-center" *ngIf="selectUserLst?.length != 0">
 				<div *ngFor="let selectUser of selectUserLst | slice:1:4">
-					<div ngbDropdown class="d-inline-block drpdown">
+					<div ngbDropdown class="d-inline-block dropdown">
 						<img src="{{ selectUser.profileUrl }}" alt="" ngbDropdownToggle (click)="onSelectPatient('showUserCard', selectUser)" />
 						<div class="pinOverlay" *ngIf="selectUser.isPin"> <img src="assets/icons/pin_fill.svg" alt="" width="10" height="10" /></div>
 						<div ngbDropdownMenu style="width: 28rem;" *ngIf="showUserCard">
@@ -227,7 +227,7 @@
 		<div>
 			<i class="bi bi-bell-fill"></i>
 		</div>
-		<div ngbDropdown class="d-inline-block drpdown">
+		<div ngbDropdown class="d-inline-block dropdown">
 			<button
 				class="btn btn-link transparent-btn"
 				id="dropdownBasic1"
