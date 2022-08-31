@@ -43,42 +43,54 @@ export class LegalGuardianFormComponent implements OnInit {
 	relationship!: any;
 
 
-  idForm: FormGroup;
-  fileName: string = "";
-  filePath: any;
-  legalGuard: any[] = [];
-  famiMembTitle!: any;
-  pronouns: any[] = [
-    { pronoun: 'He' },
-    { pronoun: 'She' },
-  ];
-  disableSaveBtn: boolean = false;
-  firstName!: string;
+	idForm: FormGroup;
+	fileName: string = "";
+	filePath: any;
+	legalGuard: any[] = [];
+	famiMembTitle!: any;
+	pronouns: any[] = [
+		{ pronoun: 'He' },
+		{ pronoun: 'She' },
+	];
+	genders: any[] = [
+		{ label: 'Male', value: 'M' },
+		{ label: 'Female', value: 'F' },
+	];
+	languages: any[] = [
+		{ label: 'English', value: 'english' },
+		{ label: 'Hindi', value: 'hindi' },
+	];
+	maritalStatuses: any[] = [
+		{ label: 'Maried', value: 'M' },
+		{ label: 'Single', value: 'S' },
+	];
+	disableSaveBtn: boolean = false;
+	firstName!: string;
 
-  constructor(
-    private http: HttpClient,
-    private fb: FormBuilder,
-    private addressFormService: AddressFormService,
-    private patientUserServ: PatientUserService,
-    private addPatientServ: AddPatientService,
-    private insuranceServ: InsuranceService,
-    private onboardingServ: OnboardingService,
-    private alertService: AlertService,
-  ) {
-    this.idForm = this.fb.group({
-      // name: '',
-      info: this.fb.array([]),
-    });
-    this.getStaticData();
-  }
+	constructor(
+		private http: HttpClient,
+		private fb: FormBuilder,
+		private addressFormService: AddressFormService,
+		private patientUserServ: PatientUserService,
+		private addPatientServ: AddPatientService,
+		private insuranceServ: InsuranceService,
+		private onboardingServ: OnboardingService,
+		private alertService: AlertService,
+	) {
+		this.idForm = this.fb.group({
+			// name: '',
+			info: this.fb.array([]),
+		});
+		this.getStaticData();
+	}
 
-  async ngOnInit() {
-    this.initForm(this.formData);
+	async ngOnInit() {
+		this.initForm(this.formData);
 		this.patientUserServ.setFalseAllNotPristine();
 		this.addPatientServ.setFalseAllNotPristineCWP();
 		this.insuranceServ.setFalseAllNotPristine();
 		this.onboardingServ.setFalseAllNotPristine();
-    this.Form?.statusChanges.subscribe(
+		this.Form?.statusChanges.subscribe(
 			result => {
 				console.log(result)
 				if (!this.Form?.pristine) {
@@ -88,64 +100,63 @@ export class LegalGuardianFormComponent implements OnInit {
 				}
 			}
 		);
-     // this.Form.get('emailId')?.markAsDirty();
-	 this.legalGuard.push(await this.patientUserServ.getLegalGuardFamiMemb());
+		// this.Form.get('emailId')?.markAsDirty();
+		this.legalGuard.push(await this.patientUserServ.getLegalGuardFamiMemb());
 
-	 if(this.formData)
-	 {
-		 this.setUserDataToForm();
-	 }
-    
-  }
+		if (this.formData) {
+			this.setUserDataToForm();
+		}
 
-  initForm(data?: any) {
-	data = data || {};
-	this.Form = this.fb.group({
-		relationship: [data?.relation || ''],
-		title: [data?.title || ''],
-		firstName: [
-			data?.firstName || '',
-			[
-				Validators.required,
-				Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')
-			]
-		],
-		middleName: [data?.middleName || ''],
-		lastName: [
-			data?.lastName || '',
-			[
-				Validators.required,
-				Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')
-			]
-		],
-		DOB: [data?.DOB || ''],
-		gender: [data?.gender || ''],
-		pronoun: [data?.pronoun || ''],
-		language: [data?.language || ''],
-		martialStatus: [data?.martialStatus || ''],
-		emailId: [''],
-		primaryPhoneType: [data?.primaryPhoneType || '', Validators.required],
-		primaryPhoneNumber: [
-			data?.primaryPhoneNumber || '',
-			[Validators.required, Validators.pattern('^[0-9]*$')]
-		],
-		secondaryPhoneType: [data?.secondaryPhoneType || ''],
-		secondaryPhoneNumber: [data?.secondaryPhoneNumber || ''],
-		primaryPreferredCommunicationMethod: [data?.primaryPreferredCommunicationMethod || ''],
-		secondaryPreferredCommunicationMethod: [data?.secondaryPreferredCommunicationMethod || ''],
-		preferredTimingForCall: [data?.preferredTimingForCall || ''],
-		workStatus: [data?.workStatus || ''],
-		occupation: [data?.occupation || ''],
-		employer: [data?.employer || ''],
-		SSN: [data?.SSN || ''],
-		creditRating: [data?.creditRating || ''],
-		note: [data?.note || ''],
-		address: this.addressFormService.getAddressForm(data?.address || {})
-	});
-}
+	}
 
-  setUserDataToForm() {
-	console.log(this.formData)
+	initForm(data?: any) {
+		data = data || {};
+		this.Form = this.fb.group({
+			relationship: [data?.relation || ''],
+			title: [data?.title || ''],
+			firstName: [
+				data?.firstName || '',
+				[
+					Validators.required,
+					Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')
+				]
+			],
+			middleName: [data?.middleName || ''],
+			lastName: [
+				data?.lastName || '',
+				[
+					Validators.required,
+					Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')
+				]
+			],
+			DOB: [data?.DOB || ''],
+			gender: [data?.gender || ''],
+			pronoun: [data?.pronoun || ''],
+			language: [data?.language || ''],
+			maritalStatus: [data?.maritalStatus || ''],
+			emailId: [''],
+			primaryPhoneType: [data?.primaryPhoneType || '', Validators.required],
+			primaryPhoneNumber: [
+				data?.primaryPhoneNumber || '',
+				[Validators.required, Validators.pattern('^[0-9]*$')]
+			],
+			secondaryPhoneType: [data?.secondaryPhoneType || ''],
+			secondaryPhoneNumber: [data?.secondaryPhoneNumber || ''],
+			primaryPreferredCommunicationMethod: [data?.primaryPreferredCommunicationMethod || ''],
+			secondaryPreferredCommunicationMethod: [data?.secondaryPreferredCommunicationMethod || ''],
+			preferredTimingForCall: [data?.preferredTimingForCall || ''],
+			workStatus: [data?.workStatus || ''],
+			occupation: [data?.occupation || ''],
+			employer: [data?.employer || ''],
+			SSN: [data?.SSN || ''],
+			creditRating: [data?.creditRating || ''],
+			note: [data?.note || ''],
+			address: this.addressFormService.getAddressForm(data?.address || {})
+		});
+	}
+
+	setUserDataToForm() {
+		console.log(this.formData)
 		this.Form.controls['title'].setValue(this.formData.profile.title);
 		this.Form.controls['firstName'].setValue(
 			this.formData.profile.firstName
@@ -160,8 +171,8 @@ export class LegalGuardianFormComponent implements OnInit {
 			this.formData.profile.preferredPronoun
 		);
 		this.Form.controls['language'].setValue(this.formData.profile.language);
-		this.Form.controls['martialStatus'].setValue(
-			this.formData.profile.martialStatus
+		this.Form.controls['maritalStatus'].setValue(
+			this.formData.profile.maritalStatus
 		);
 		this.Form.controls['emailId'].setValue(this.formData.contact.email);
 		this.Form.controls['primaryPhoneType'].setValue(
@@ -188,17 +199,17 @@ export class LegalGuardianFormComponent implements OnInit {
 		this.Form.controls['note'].setValue(this.formData.notes);
 	}
 
-  firstNameValid() {
-    return this.Form.get('firstName')?.valid;
-  }
+	firstNameValid() {
+		return this.Form.get('firstName')?.valid;
+	}
 
 	middleNameValid() {
 		return this.Form.get('middleName')?.valid;
 	}
 
-  lastNameValid() {
-    return this.Form.get('lastName')?.valid;
-  }
+	lastNameValid() {
+		return this.Form.get('lastName')?.valid;
+	}
 
 	DOBValid() {
 		return this.Form.get('DOB')?.value.length > 0;

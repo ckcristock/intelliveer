@@ -110,7 +110,7 @@ export class PaymentPartyFormComponent implements OnInit {
 			gender: [data?.gender || null],
 			pronoun: [data?.pronoun || null],
 			language: [data?.language || null],
-			martialStatus: [data?.martialStatus || null],
+			maritalStatus: [data?.maritalStatus || null],
 			emailId: ['', Validators.minLength(2)],
 			primaryPhoneType: [data?.primaryPhoneType || null, Validators.required],
 			primaryPhoneNumber: [data?.primaryPhoneNumber || '', [Validators.required, Validators.pattern("^[0-9]*$")]],
