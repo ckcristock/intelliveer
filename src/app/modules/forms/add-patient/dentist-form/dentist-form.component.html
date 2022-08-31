@@ -52,15 +52,15 @@
             <div class="col-3">
                 <div class="mainformset">
                     <label class="label-input-gap">Office Phone Number</label>
-                    <input class="form-control" type="text" placeholder="" name="" formControlName="officePhoneNum"
-                        [(ngModel)]="dentist.officePhoneNum" />
+                    <input class="form-control" type="text" placeholder="" name="" formControlName="officePhoneNumber"
+                        [(ngModel)]="dentist.officePhoneNumber.number" />
                 </div>
             </div>
         </div>
         <div class="row formrow two-final-buttons">
             <div class="two-items">
                 <button class="btn btn-light btn-light-custom">Exit</button>
-                <button type="button" class="btn btn-dark btn-dark-custom" (click)="continueToReferrer()">Save and
+                <button type="button" class="btn btn-dark btn-dark-custom" (click)="save(f.value)">Save and
                     continue</button>
             </div>
         </div>

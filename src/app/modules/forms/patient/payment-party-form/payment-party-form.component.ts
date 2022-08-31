@@ -33,6 +33,7 @@ export class PaymentPartyFormComponent implements OnInit {
 		{ title: 'Financials', id: 'financials' },
 		{ title: 'Notes', id: 'notes' }
 	];
+	relationshipArray: any[] = ['Father', 'Mother', 'Sister', 'Brother'];
 
 	idForm: FormGroup;
 	selectTab: string = 'overview';
@@ -109,20 +110,20 @@ export class PaymentPartyFormComponent implements OnInit {
 			gender: [data?.gender || null],
 			pronoun: [data?.pronoun || null],
 			language: [data?.language || null],
-			maritalStatus: [data?.maritalStatus || null],
+			martialStatus: [data?.martialStatus || null],
 			emailId: ['', Validators.minLength(2)],
 			primaryPhoneType: [data?.primaryPhoneType || null, Validators.required],
-			pPhoneNumber: [data?.pPhoneNumber || '', [Validators.required, Validators.pattern("^[0-9]*$")]],
+			primaryPhoneNumber: [data?.primaryPhoneNumber || '', [Validators.required, Validators.pattern("^[0-9]*$")]],
 			secondaryPhoneType: [data?.secondaryPhoneType || ''],
-			sPhoneNumber: [data?.sPhoneNumber || ''],
+			secondaryPhoneNumber: [data?.secondaryPhoneNumber || ''],
 			primaryPreferredCommunicationMethod: [data?.primaryPreferredCommunicationMethod || null],
 			secondaryPreferredCommunicationMethod: [data?.secondaryPreferredCommunicationMethod || null],
-			phone: [data?.phone || ''],
+			preferredTimingForCall: [data?.preferredTimingForCall || ''],
 			workStatus: [data?.workStatus || null],
 			occupation: [data?.occupation || ''],
 			employer: [data?.employer || ''],
-			ssn: [data?.ssn || ''],
-			rating: [data?.rating || null],
+			SSN: [data?.SSN || ''],
+			creditRating: [data?.creditRating || null],
 			note: [data?.note || ''],
 			address: this.addressFormService.getAddressForm(
 				data?.address || {}
@@ -219,7 +220,7 @@ export class PaymentPartyFormComponent implements OnInit {
 		return this.Form.get('emailId')?.value.length > 0;
 	}
 
-	clearCommPrimary() {
+	clearprimaryPreferredCommunicationMethod() {
 		this.Form.controls['primaryPreferredCommunicationMethod'].setValue("");
 	}
 
@@ -240,10 +241,6 @@ export class PaymentPartyFormComponent implements OnInit {
 		this.patientUserServ.setPaymParty(data);
 		this.patientUserServ.setPatientFamiMemb(data.relationship, data);
 		this.Form.markAsPristine();
-		this.alertService.success(
-			'Success',
-			'Payment Party has been updated successfully'
-		);
 		this.patientUserServ.setpaymentPartyNotPristine(false);
 	}
 	cancel() {

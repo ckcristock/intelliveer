@@ -73,6 +73,7 @@ export class LocationFormComponent implements OnInit {
 			abbreviation: [data?.abbreviation || ''],
 			logo: [data?.logo || 'null'],
 			registrationNumber: [data?.registrationNumber || ''],
+			locationTimeZone: [data?.locationTimeZone || ''],
 			physicalAddress: this.addressFormService.getAddressForm(
 				data?.physicalAddress || {},
 				{

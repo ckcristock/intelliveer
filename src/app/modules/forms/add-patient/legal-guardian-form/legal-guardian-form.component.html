@@ -117,73 +117,18 @@
                 </div>
             </div>
         </div>
-        <div class="row formrow">
-            <div class="col-6">
-                <div class="mainformset">
-                    <label class=" label-input-gap">Address Line 1</label>
-                    <input class="form-control red-bottom-line" type="text" placeholder="Street address, P.O.box"
-                        name="" formControlName="address1" [class.valid-required-field]="address1Valid()" />
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="mainformset">
-                    <label class=" label-input-gap">Address Line 2</label>
-                    <input class="form-control" type="text" placeholder="Apartment, Suite, Unit, Building, Floor, etc."
-                        name="" />
-                </div>
-            </div>
-        </div>
-        <div class="row formrow">
-            <div class="col-3">
-                <div class="mainformset">
-                    <label class=" label-input-gap">Country</label>
-                    <ng-select class="input-upper red-bottom-line" formControlName="country"
-                        [(ngModel)]="selectedCountry2" (change)="getStates($event)" (clear)="resetState(); resetCity()"
-                        [class.valid-required-field]="countryValid()">
-                        <ng-option *ngFor="let country of countries" [value]="country.iso3">{{ country.name }}
-                        </ng-option>
-                    </ng-select>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="mainformset">
-                    <label class=" label-input-gap">State</label>
-                    <ng-select formControlName="state" (change)="getCities($event)" class="red-bottom-line"
-                        [class.valid-required-field]="stateValid()">
-                        <ng-option *ngFor="let state of states" [value]="state.state_code">{{ state.name }}
-                        </ng-option>
-                    </ng-select>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="mainformset">
-                    <label class="label-input-gap">City</label>
-                    <ng-select formControlName="city" class="red-bottom-line"
-                        [class.valid-required-field]="cityValid()">
-                        <ng-option *ngFor="let city of cities" [value]="city.name">{{ city.name }}
-                        </ng-option>
-                    </ng-select>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="mainformset">
-                    <label class="label-input-gap">Zip Code</label>
-                    <input class="form-control red-bottom-line" type="text" placeholder="" name=""
-                        [class.valid-required-field]="zipCodeValid()" formControlName="zipCode" />
-                </div>
-            </div>
-        </div>
+        <app-address-form [parentGroup]="Form" [formGroupName]="'address'"></app-address-form>
         <div class="row formrow">
             <div class="col-3">
                 <div class="mainformset">
                     <label class=" label-input-gap">Primary Phone Number</label>
-                    <input class="form-control" type="text" placeholder="" name="" />
+                    <input class="form-control" type="text" placeholder="" name="" formControlName="phoneNumber" />
                 </div>
             </div>
             <div class="col-3">
                 <div class="mainformset">
                     <label class="label-input-gap">Type</label>
-                    <select class="form-select">
+                    <select class="form-select" formControlName="phoneType">
                         <option [value]="type.value" *ngFor="let type of phoneTypes.phone">
                             {{ type.label }}
                         </option>
@@ -193,7 +138,7 @@
             <div class="col-3">
                 <div class="mainformset">
                     <label class=" label-input-gap">Email</label>
-                    <input class="form-control" type="text" placeholder="" name="" />
+                    <input class="form-control" type="text" placeholder="" name="" formControlName="email"/>
                 </div>
             </div>
         </div>

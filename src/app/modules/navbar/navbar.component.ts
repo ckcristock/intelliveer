@@ -9,12 +9,13 @@ import { CONFIG } from '@config/index';
 import { AuthService } from '@services/auth/auth.service';
 import { environment } from '@environment/environment';
 import { CookieService } from 'ngx-cookie-service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router, RoutesRecognized } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { patientUserHeaderIconMenuItems } from '@pages/patient/menu';
 import { Location } from '@angular/common';
 import { PatientDetailService } from '@services/patient/family/patient-detail.service';
 import { BusinessGroupDropdownService, SelectedBusinessGroup } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { filter, pairwise } from 'rxjs';
 
 @Component({
 	selector: 'top-navbar',
@@ -287,6 +288,7 @@ export class NavbarComponent implements OnInit {
 				.toLowerCase()
 				.startsWith($event.target.value.toLowerCase());
 		});
+		this.selectedPatient.lastVisitPage = this.router.url;
 	}
 
 	selectUserMenuItem(selectUser: any, displayUI?: string) {
@@ -342,8 +344,15 @@ export class NavbarComponent implements OnInit {
 					this.showUserCard = true;
 				}
 			} else if (this.clickCount === 2) {
-				this.selectUserMenuItem(selectUser)
-				this.router.navigate(['/dashboard/patient/patient-user/patient-detail'])
+				this.selectUserMenuItem(selectUser);
+				if(selectUser.lastVisitPage)
+				{
+					this.router.navigate([selectUser.lastVisitPage])
+				}
+				else
+				{
+					this.router.navigate(['/dashboard/patient/camera']);
+				}
 			}
 			this.clickCount = 0;
 		}, 250);

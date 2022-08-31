@@ -11,15 +11,31 @@ export class Patient
         gender: string,
         preferredPronoun: string,
         language: string,
-        maritalStatus: string
-    } | undefined;
+        martialStatus: string
+    }  = {
+        title: '',
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        DOB: '',
+        gender: '',
+        preferredPronoun: '',
+        language: '',
+        martialStatus: ''
+    };
     information: {
         preferredName: string,
         pronounciation: string,
         school: string,
         interests: string,
         tags: string
-    } | undefined;
+    } = {
+        preferredName: '',
+        pronounciation: '',
+        school: '',
+        interests: '',
+        tags: ''
+    };
     preferences: {
         location: string,
         billingProvider: string,
@@ -27,11 +43,22 @@ export class Patient
         newPatientCoordinator: string,
         chairSideAssistant: string,
         treatmentCoordinator: string
-    } | undefined;
+    } = {
+        location: '',
+        billingProvider: '',
+        treatingProvider: '',
+        newPatientCoordinator: '',
+        chairSideAssistant: '',
+        treatmentCoordinator: ''
+    };
     emergencyContact: {
         name: string,
         contactPerson: string,
         emergencyContact: string
-    } | undefined;
+    } = {
+        name: '',
+        contactPerson: '',
+        emergencyContact: ''
+    };
     notes: string | undefined;
 }

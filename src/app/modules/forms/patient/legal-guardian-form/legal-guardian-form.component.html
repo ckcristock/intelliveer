@@ -137,8 +137,8 @@
 					<div class="col">
 						<label class="label-input-gap">Primary Phone Number</label>
 						<input class="form-control required-field input-upper"
-							[class.valid-mandatory-field]="pPhoneNumberValid()" type="text" placeholder="" name="name"
-							formControlName="pPhoneNumber" />
+							[class.valid-mandatory-field]="primaryPhoneNumberValid()" type="text" placeholder="" name="name"
+							formControlName="primaryPhoneNumber" />
 					</div>
 				</div>
 
@@ -155,7 +155,7 @@
 					<div class="col">
 						<label class="label-input-gap">Secondary Phone Number</label>
 						<input class="form-control input-upper" type="text" placeholder="" name="name"
-							formControlName="sPhoneNumber" />
+							formControlName="secondaryPhoneNumber" />
 					</div>
 
 					<div class="col">
@@ -181,7 +181,7 @@
 					<div class="col">
 						<label class="label-input-gap">Preferred Timings for Call</label>
 						<input class="form-control input-upper" type="number" placeholder="" name="phone"
-							formControlName="phone" />
+							formControlName="preferredTimingForCall" />
 					</div>
 					<div class="col"></div>
 				</div>
@@ -208,11 +208,11 @@
 					</div>
 					<div class="col">
 						<label class="label-input-gap">SSN</label>
-						<input class="form-control input-upper" type="text" placeholder="" name="name" formControlName="ssn" />
+						<input class="form-control input-upper" type="text" placeholder="" name="name" formControlName="SSN" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Credit Rating</label>
-						<select class="form-select input-upper" formControlName="rating">
+						<select class="form-select input-upper" formControlName="creditRating">
 							<option>Select</option>
 						</select>
 					</div>

@@ -17,6 +17,7 @@ import { PatientUserService } from '@services/dashboard/patient/patient-user/pat
 import { AddPatientService } from '@services/add-patient/add-patient.service';
 import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
 import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-patient-detail',
@@ -99,6 +100,7 @@ export class PatientDetailComponent implements OnInit {
 		private addPatientServ: AddPatientService,
 		private insuranceServ: InsuranceService,
 		private onboardingServ: OnboardingService,
+	private router: Router
 	) {
 		this.idForm = this.fb.group({
 			// name: '',
@@ -211,7 +213,7 @@ export class PatientDetailComponent implements OnInit {
 	}
 
 	billingValid() {
-		return this.Form.get('practice')?.value != null;
+		return this.Form.get('billing')?.value != null;
 	}
 
 	treatingValid() {
@@ -263,7 +265,7 @@ export class PatientDetailComponent implements OnInit {
 
 	save(data: any) {
 		let saveObj = {
-			practiceId: data.practice,
+			_id: this.userObj.dbId,
 			profile: {
 				title: data.title,
 				firstName: data.firstName,
@@ -297,17 +299,28 @@ export class PatientDetailComponent implements OnInit {
 			},
 			notes: data.note
 		};
-		this.patientDetailService.savePatient(saveObj, this.bgId).subscribe(
-			(result: any) => {
-				this.alertService.success(
-					'Success',
-					'Patient has been save successfully'
-				);
-			},
-			(error) => {
-				console.log(error);
-			}
-		);
+		this.alertService
+			.conformAlert('Are you sure', 'you want to update Patient')
+			.then((value: any) => {
+				if (value.isConfirmed) {
+					this.patientDetailService
+						.updatePatient(saveObj, this.bgId)
+						.subscribe(
+							(result: any) => {
+								this.alertService.success(
+									'Success',
+									'Patient has been updated successfully'
+								);
+								this.router.navigate([
+									'/dashboard/patient/patient-user/patient-detail'
+								]);
+							},
+							(error) => {
+								console.log(error);
+							}
+						);
+				}
+			});
 		this.patientUserServ.setpatientNotPristine(false);
 	}
 	cancel() {
