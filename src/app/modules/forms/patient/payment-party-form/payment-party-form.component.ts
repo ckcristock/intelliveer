@@ -110,7 +110,7 @@ export class PaymentPartyFormComponent implements OnInit {
 			gender: [data?.gender || null],
 			pronoun: [data?.pronoun || null],
 			language: [data?.language || null],
-			martialStatus: [data?.martialStatus || null],
+			maritalStatus: [data?.maritalStatus || null],
 			emailId: ['', Validators.minLength(2)],
 			primaryPhoneType: [data?.primaryPhoneType || null, Validators.required],
 			primaryPhoneNumber: [data?.primaryPhoneNumber || '', [Validators.required, Validators.pattern("^[0-9]*$")]],
@@ -146,7 +146,7 @@ export class PaymentPartyFormComponent implements OnInit {
 			this.formData.profile.preferredPronoun
 		);
 		this.Form.controls['language'].setValue(this.formData.profile.language);
-		this.Form.controls['martialStatus'].setValue(
+		this.Form.controls['maritalStatus'].setValue(
 			this.formData.profile.maritalStatus
 		);
 		this.Form.controls['emailId'].setValue(this.formData.contact.email);

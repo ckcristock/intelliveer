@@ -97,7 +97,7 @@ input.search {
 	min-height: 500px;
 	padding: 2rem;
 	/* max-height: calc(100vh - 150px); */
-    height: 100%;
+	height: 100%;
 }
 
 .active {
@@ -131,6 +131,7 @@ input.search {
 	padding: 1rem;
 	margin-bottom: 1rem;
 	border-radius: 0.5rem;
+
 	.heading {
 		font-weight: bold;
 		margin-bottom: 1.5rem;
@@ -173,7 +174,7 @@ label.required {
 
 .ng-select-no-border .ng-select-container {
 	border: none !important;
-    text-transform: uppercase;
+	text-transform: uppercase;
 
 }
 
@@ -248,7 +249,7 @@ form {
 
 .ng-select .ng-select-container {
 	min-height: 35px;
-    text-transform: uppercase;
+	text-transform: uppercase;
 
 }
 
@@ -257,7 +258,7 @@ form {
 	border-radius: 4px;
 	border: 1px solid transparent;
 	background: transparent;
-    text-transform: uppercase;
+	text-transform: uppercase;
 
 }
 
@@ -335,9 +336,9 @@ select.form-select {
 	//margin-bottom: 0;
 	color: #000;
 	margin-bottom: 0px;
-    text-transform: uppercase;
+	text-transform: uppercase;
 
-	option{
+	option {
 		margin-bottom: 50px !important;
 		padding: 50px !important;
 	}
@@ -350,7 +351,7 @@ input[type='date'].form-control,
 input[type='text'].form-control-inline {
 	line-height: 36px;
 	margin-bottom: 0px !important;
-    text-transform: uppercase;
+	text-transform: uppercase;
 }
 
 input[type='text'].form-control.value-must,
@@ -359,7 +360,7 @@ input[type='text'].form-control-inline.value-must {
 	border: 1px solid #ed1c24;
 	box-shadow: 0 -0.5px 0pt 0.1pt #f7ebeb !important;
 	background: #ffffff;
-    text-transform: uppercase;
+	text-transform: uppercase;
 }
 
 label {
@@ -433,14 +434,14 @@ ng-select {
 	border: 1px solid $input-border-color;
 	border-radius: 4px;
 	background: #fff;
-    text-transform: uppercase;
+	text-transform: uppercase;
 }
 
 .required-ng-select {
 	border: 1px solid red;
 	border-radius: 4px;
 	background: #f7ebeb !important;
-    text-transform: uppercase;
+	text-transform: uppercase;
 
 }
 
@@ -519,7 +520,7 @@ form {
 
 .form-check-input:checked {
 	background-color: #434243;
-    border-color: #212529;
+	border-color: #212529;
 	// background: none !important;
 	// border: 3.5px solid #434243 !important;
 }
@@ -807,9 +808,9 @@ form {
 }
 
 .accordion-button:not(.collapsed) {
-    color: #000 !important;
-    background-color: #fff !important;
-    box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+	color: #000 !important;
+	background-color: #fff !important;
+	box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
 }
 
 // .accordion-button:hover {
@@ -921,52 +922,63 @@ input[type='checkbox'] {
 	border-right: 1px solid #c5bbbb;
 }
 
-.settings-row{
+.settings-row {
 	display: flex;
 	justify-content: flex-start;
 	height: 36px;
 	align-items: center;
 	gap: 10px;
-	p{
+
+	p {
 		padding: 0px;
 		margin: 0px;
 	}
+
 	margin-left: 0px;
 }
 
-.red-bottom-line{
-    border-bottom: 1px solid #e86469 !important;
+.red-bottom-line {
+	border-bottom: 1px solid #e86469 !important;
 }
 
-.deac-reactive{
-    color: red;
+.valid-required-field {
+	border-bottom: 2px solid #05b631 !important;
 }
 
-.selected{
-    color: #2596be;
+.deac-reactive {
+	color: red;
 }
 
-.deactivated{
-    color: #d2d1d0;
+.selected {
+	color: #2596be;
+}
+
+.deactivated {
+	color: #d2d1d0;
 }
 
 .scroll {
 	height: 20rem;
-    overflow-y: auto;
-    overflow-x: hidden;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
-.valid-mandatory-field{
+
+.valid-mandatory-field {
 	border: 2px solid #05b631 !important;
 }
 
-.valid-required-field{
-	border-bottom: 2px solid #05b631 !important;
+.input-upper {
+	text-transform: uppercase;
 }
 
-.input-upper{
-    text-transform: uppercase;
-}
-
-.options2{
+.options2 {
 	padding: 80px !important;
+}
+
+.mandatory-field.ng-invalid {
+	border: 1px solid #ed1c24 !important;
+}
+
+.mandatory-field.ng-valid {
+	border: 1px solid #3da336 !important;
 }

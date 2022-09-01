@@ -275,7 +275,7 @@ export class PatientDetailComponent implements OnInit {
 				gender: data.gender,
 				preferredPronoun: data.pronoun,
 				language: data.language,
-				martialStatus: data.maried
+				maritalStatus: data.maried
 			},
 			information: {
 				preferredName: data.preferredName,

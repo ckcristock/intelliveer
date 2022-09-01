@@ -412,7 +412,7 @@ export class LegalGuardianFormComponent implements OnInit {
 				gender: '',
 				preferredPronoun: '',
 				language: '',
-				martialStatus: ''
+				maritalStatus: ''
 			},
 			address: data.value.address,
 			contact: {

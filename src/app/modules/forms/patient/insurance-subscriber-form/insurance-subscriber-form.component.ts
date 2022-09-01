@@ -115,7 +115,7 @@ export class InsuranceSubscriberFormComponent implements OnInit {
       gender: [data?.gender || null],
       pronoun: [data?.pronoun || ''],
       language: [data?.language || ''],
-      martialStatus: [data?.martialStatus || ''],
+      maritalStatus: [data?.maritalStatus || ''],
       lastUsedName: [data?.lastUsedName || ''],
       emailId: ['', ],
       primaryPhoneType: [data?.primaryPhoneType || '', Validators.required],
@@ -152,7 +152,7 @@ export class InsuranceSubscriberFormComponent implements OnInit {
 			this.formData.profile.preferredPronoun
 		);
 		this.Form.controls['language'].setValue(this.formData.profile.language);
-		this.Form.controls['martialStatus'].setValue(
+		this.Form.controls['maritalStatus'].setValue(
 			this.formData.profile.maritalStatus
 		);
 		this.Form.controls['emailId'].setValue(this.formData.contact.email);
@@ -228,6 +228,10 @@ export class InsuranceSubscriberFormComponent implements OnInit {
   creditRatingValid(){
     return this.Form.get('creditRating')?.value.length > 0 && this.Form.get('creditRating')?.valid;
   }
+
+  clearCommPrimary() {
+		this.Form.controls['primaryPreferredCommunicationMethod'].setValue("");
+	}
 
   async getStaticData() {
     this.http

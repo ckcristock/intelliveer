@@ -43,24 +43,72 @@ export class AddressFormComponent implements OnInit {
 		console.log("thiiiis.formGroupName", this.formGroupName);
 		console.log("thiiiis.pareeentgropu", this.parentGroup);
 
-		
+
+	}
+
+	isNotRequiredField(field: string, type?: any) {
+		const form = this.parentGroup.get(this.formGroupName) as FormGroup;
+		const form_field = form.get(field);
+		let validator;
+		if (!form_field?.value) {
+			validator = false;
+		} else {
+			if (type == 'number') {
+				const num = Number(form_field?.value);
+				console.log(num)
+				if (num) {
+					validator = true
+				} else {
+					validator = false;
+				}
+			} else {
+				validator = true;
+			}
+		}
+		return validator;
 	}
 
 	isRequiredField(field: string) {
+
 		const form = this.parentGroup.get(this.formGroupName) as FormGroup;
 		const form_field = form.get(field);
+
+
 		if (!form_field) {
 			return false;
 		}
 		if (!form_field.validator) {
+			// console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+
+			// console.log("2222222222222222222222");
 			return false;
 		}
 		const validator = form_field.validator({} as AbstractControl);
+
 		if (!validator) {
 			return false;
 		}
+
+		if (validator) {
+			if (form.get(field)?.value != 0 && form.get(field)?.valid) {
+
+				console.log("11111111111111111111111", form.get("addressLine2")?.value);
+				switch (field) {
+					// For Add Patient Module
+					case 'addressLine1':
+						return field;
+					case 'addressLine2':
+						return field;
+					case 'country':
+						return field;
+				}
+			}
+		}
+		console.log("validator", validator['required']);
+
 		return validator && validator['required'];
 	}
+
 	async getStates(countryIso3: string) {
 		if (this.countries) {
 			const country = this.countries.filter(
@@ -105,6 +153,11 @@ export class AddressFormComponent implements OnInit {
 			}
 		}
 	}
+
+	emailValid() {
+
+	}
+
 	cityOptionIsOpened() {
 		if (!this.cities) {
 			const selectedState =
@@ -151,7 +204,7 @@ export class AddressFormComponent implements OnInit {
 				})
 				this.selectedCountry = country[0].iso3;
 				console.log("this.selectedCountry", this.selectedCountry);
-				
+
 
 				// get state
 				await this.getStates(this.selectedCountry);

@@ -42,16 +42,30 @@ export class LegalGuardianFormComponent implements OnInit {
 
 	relationship!: any;
 
+
 	idForm: FormGroup;
-	fileName: string = '';
+	fileName: string = "";
 	filePath: any;
 	legalGuard: any[] = [];
 	famiMembTitle!: any;
-	pronouns: any[] = [{ pronoun: 'He' }, { pronoun: 'She' }];
+	pronouns: any[] = [
+		{ pronoun: 'He' },
+		{ pronoun: 'She' },
+	];
+	genders: any[] = [
+		{ label: 'Male', value: 'M' },
+		{ label: 'Female', value: 'F' },
+	];
+	languages: any[] = [
+		{ label: 'English', value: 'english' },
+		{ label: 'Hindi', value: 'hindi' },
+	];
+	maritalStatuses: any[] = [
+		{ label: 'Maried', value: 'M' },
+		{ label: 'Single', value: 'S' },
+	];
 	disableSaveBtn: boolean = false;
 	firstName!: string;
-
-	relationshipArray: any[] = ['Father', 'Mother', 'Sister', 'Brother'];
 
 	constructor(
 		private http: HttpClient,
@@ -61,11 +75,11 @@ export class LegalGuardianFormComponent implements OnInit {
 		private addPatientServ: AddPatientService,
 		private insuranceServ: InsuranceService,
 		private onboardingServ: OnboardingService,
-		private alertService: AlertService
+		private alertService: AlertService,
 	) {
 		this.idForm = this.fb.group({
 			// name: '',
-			info: this.fb.array([])
+			info: this.fb.array([]),
 		});
 		this.getStaticData();
 	}
@@ -76,22 +90,23 @@ export class LegalGuardianFormComponent implements OnInit {
 		this.addPatientServ.setFalseAllNotPristineCWP();
 		this.insuranceServ.setFalseAllNotPristine();
 		this.onboardingServ.setFalseAllNotPristine();
-		this.Form?.statusChanges.subscribe((result) => {
-			if (!this.Form?.pristine) {
-				this.patientUserServ.setlegalGuardNotPristine(true);
+		this.Form?.statusChanges.subscribe(
+			result => {
+				console.log(result)
+				if (!this.Form?.pristine) {
+					console.log("hiiiiii", event);
+					console.log("status", this.Form?.pristine);
+					this.patientUserServ.setlegalGuardNotPristine(true);
+				}
 			}
-		});
-		this.Form.get('emailId')?.markAsDirty();
-		this.legalGuard.push(
-			await this.patientUserServ.getLegalGuardFamiMemb()
 		);
+		// this.Form.get('emailId')?.markAsDirty();
+		this.legalGuard.push(await this.patientUserServ.getLegalGuardFamiMemb());
 
-		this.relationship = await this.patientUserServ.getLegalGuardToPati();
-		this.Form.controls['relationship'].setValue(this.relationship);
-		if(this.formData)
-		{
+		if (this.formData) {
 			this.setUserDataToForm();
 		}
+
 	}
 
 	initForm(data?: any) {
@@ -118,7 +133,7 @@ export class LegalGuardianFormComponent implements OnInit {
 			gender: [data?.gender || ''],
 			pronoun: [data?.pronoun || ''],
 			language: [data?.language || ''],
-			martialStatus: [data?.martialStatus || ''],
+			maritalStatus: [data?.maritalStatus || ''],
 			emailId: [''],
 			primaryPhoneType: [data?.primaryPhoneType || '', Validators.required],
 			primaryPhoneNumber: [
@@ -140,8 +155,8 @@ export class LegalGuardianFormComponent implements OnInit {
 		});
 	}
 
-  setUserDataToForm() {
-	console.log(this.formData)
+	setUserDataToForm() {
+		console.log(this.formData)
 		this.Form.controls['title'].setValue(this.formData.profile.title);
 		this.Form.controls['firstName'].setValue(
 			this.formData.profile.firstName
@@ -156,8 +171,8 @@ export class LegalGuardianFormComponent implements OnInit {
 			this.formData.profile.preferredPronoun
 		);
 		this.Form.controls['language'].setValue(this.formData.profile.language);
-		this.Form.controls['martialStatus'].setValue(
-			this.formData.profile.martialStatus
+		this.Form.controls['maritalStatus'].setValue(
+			this.formData.profile.maritalStatus
 		);
 		this.Form.controls['emailId'].setValue(this.formData.contact.email);
 		this.Form.controls['primaryPhoneType'].setValue(
@@ -184,7 +199,6 @@ export class LegalGuardianFormComponent implements OnInit {
 		this.Form.controls['note'].setValue(this.formData.notes);
 	}
 
-
 	firstNameValid() {
 		return this.Form.get('firstName')?.valid;
 	}
@@ -199,6 +213,10 @@ export class LegalGuardianFormComponent implements OnInit {
 
 	DOBValid() {
 		return this.Form.get('DOB')?.value.length > 0;
+	}
+
+	clearCommPrimary() {
+		this.Form.controls['primaryPreferredCommunicationMethod'].setValue("");
 	}
 
 	primaryPhoneTypeValid() {

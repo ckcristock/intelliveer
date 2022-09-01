@@ -69,7 +69,7 @@ export class EditPaymentPartyComponent implements OnInit {
 				gender: data.gender,
 				preferredPronoun: data.pronoun,
 				language: data.language,
-				martialStatus: data.martialStatus
+				maritalStatus: data.maritalStatus
 			},
 			address: data.address,
 			contact: {

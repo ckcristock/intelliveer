@@ -37,23 +37,24 @@
 				<div class="row formrow">
 					<div class="col-3">
 						<label class="label-input-gap">Relationship with Patient</label>
-						<select class="form-select input-upper" formControlName="relationship">
-							<option [value]="relationship" *ngFor="let relationship of relationshipArray">
-								{{relationship}}</option>
-						</select>
+						<ng-select class="input-upper" formControlName="relationship">
+							<ng-option [value]="relationship">
+								{{relationship}}
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col-3">
 						<label class="label-input-gap">Title</label>
-						<select class="form-select input-upper" formControlName="title">
-							<option [value]="title.value" *ngFor="let title of famiMembTitle?.title">
+						<ng-select class="input-upper" formControlName="title" placeholder="Select">
+							<ng-option [value]="title.value" *ngFor="let title of famiMembTitle.title">
 								{{ title.label }}
-							</option>
-						</select>
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">First Name</label>
-						<input class="form-control value-must input-upper" type="text" placeholder="" name="firstName"
-							formControlName="firstName" [class.valid-mandatory-field]="firstNameValid()" />
+						<input class="form-control input-upper mandatory-field" type="text" placeholder="" name="firstName"
+							formControlName="firstName"/>
 					</div>
 
 					<div class="col-2">
@@ -63,8 +64,8 @@
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Last Name</label>
-						<input class="form-control value-must input-upper" type="text" placeholder="" name="lastName"
-							formControlName="lastName" [class.valid-mandatory-field]="lastNameValid()" />
+						<input class="form-control mandatory-field input-upper" type="text" placeholder="" name="lastName"
+							formControlName="lastName" />
 					</div>
 				</div>
 				<div class="row formrow">
@@ -75,32 +76,35 @@
 					</div>
 					<div class="col-3">
 						<label class="label-input-gap">Gender</label>
-						<select class="form-select input-upper" formControlName="gender">
-							<option value="M">Male</option>
-							<option value="F">Female</option>
-						</select>
+						<ng-select class="input-upper" formControlName="gender" placeholder="Select">
+							<ng-option [value]="gender.value" *ngFor="let gender of genders">
+								{{ gender.label }}
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Preferred Pronoun</label>
-						<select class="form-select input-upper" formControlName="pronoun">
-							<option [value]="pronoun.pronoun" *ngFor="let pronoun of pronouns">
+						<ng-select class="input-upper" formControlName="pronoun" placeholder="Select">
+							<ng-option [value]="pronoun.pronoun" *ngFor="let pronoun of pronouns">
 								{{ pronoun.pronoun }}
-							</option>
-						</select>
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Language</label>
-						<select class="form-select input-upper" formControlName="language">
-							<option value="English">English</option>
-							<option value="Hindi">Hindi</option>
-						</select>
+						<ng-select class="input-upper" formControlName="language" placeholder="Select">
+							<ng-option [value]="language.value" *ngFor="let language of languages">
+								{{ language.label }}
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Marital Status</label>
-						<select class="form-select input-upper" formControlName="martialStatus" name="martialStatus">
-							<option value="M">Maried</option>
-							<option value="S">Single</option>
-						</select>
+						<ng-select class="input-upper" formControlName="maritalStatus" placeholder="Select">
+							<ng-option [value]="maritalStatus.value" *ngFor="let maritalStatus of maritalStatuses">
+								{{ maritalStatus.label }}
+							</ng-option>
+						</ng-select>
 					</div>
 				</div>
 
@@ -122,12 +126,12 @@
 
 					<div class="col">
 						<label class="label-input-gap">Primary Phone Type</label>
-						<select class="form-select required-field input-upper"
-							[class.valid-mandatory-field]="primaryPhoneTypeValid()" formControlName="primaryPhoneType">
-							<option [value]="phone.value" *ngFor="let phone of famiMembTitle?.phone">
+						<ng-select class="input-upper required-field input-upper" placeholder="Select" formControlName="primaryPhoneType"
+							[class.valid-mandatory-field]="primaryPhoneTypeValid()">
+							<ng-option [value]="phone.value" *ngFor="let phone of famiMembTitle.phone">
 								{{ phone.label }}
-							</option>
-						</select>
+							</ng-option>
+						</ng-select>
 					</div>
 
 					<div class="col">
@@ -141,9 +145,11 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Secondary Phone Type</label>
-						<select class="form-select input-upper" formControlName="secondaryPhoneType">
-							<option>Select</option>
-						</select>
+						<ng-select class="input-upper" formControlName="secondaryPhoneType" placeholder="Select">
+							<ng-option>
+								Select
+							</ng-option>
+						</ng-select>
 					</div>
 
 					<div class="col">
@@ -154,18 +160,23 @@
 
 					<div class="col">
 						<label class="label-input-gap">Preferred Communication Method - Primary</label>
-						<select class="form-select red-bottom-line input-upper"
-							[class.valid-required-field]="commPrimaryValid()" formControlName="primaryPreferredCommunicationMethod">
-							<option>Select</option>
-						</select>
+						<ng-select class="input-upper red-bottom-line input-upper" formControlName="primaryPreferredCommunicationMethod"
+							placeholder="Select" [class.valid-required-field]="commPrimaryValid()"
+							(clear)="clearCommPrimary()">
+							<ng-option value="s">
+								Select
+							</ng-option>
+						</ng-select>
 					</div>
 				</div>
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Preferred Communication Method - Secondary</label>
-						<select class="form-select input-upper" formControlName="secondaryPreferredCommunicationMethod">
-							<option>Select</option>
-						</select>
+						<ng-select class="input-upper input-upper" formControlName="secondaryPreferredCommunicationMethod" placeholder="Select">
+							<ng-option value="s">
+								Select
+							</ng-option>
+						</ng-select>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Preferred Timings for Call</label>

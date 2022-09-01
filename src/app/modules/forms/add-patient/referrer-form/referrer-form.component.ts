@@ -147,11 +147,11 @@ export class ReferrerFormComponent implements OnInit {
   }
 
   firstNameValid() {
-    return this.Form.get('firstName')?.valid && this.Form.get('firstName')?.value != 0;
+    return (this.Form.get('firstName')?.valid && this.Form.get('firstName')?.value != null);
   }
 
   lastNameValid() {
-    return this.Form.get('lastName')?.valid && this.Form.get('lastName')?.value != 0;
+    return (this.Form.get('lastName')?.valid && this.Form.get('lastName')?.value != null);
   }
 
   save(data: any) {

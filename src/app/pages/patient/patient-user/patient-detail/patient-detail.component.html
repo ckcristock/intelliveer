@@ -115,9 +115,9 @@
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Last Name</label>
-						<input class="form-control required-field" type="text" placeholder="" name="lastName"
+						<input class="form-control  mandatory-field" type="text" placeholder="" name="lastName"
 							formControlName="lastName" [(ngModel)]="patientObj!.profile!.lastName"
-							[class.valid-mandatory-field]="lastNameValid()" />
+							/>
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Date of Birth</label>
@@ -157,7 +157,7 @@
 					<div class="col">
 						<label class="label-input-gap">Marital Status</label>
 						<ng-select class="input-upper" formControlName="maried" placeholder="Select"
-							[(ngModel)]="patientObj!.profile!.martialStatus">
+							[(ngModel)]="patientObj!.profile!.maritalStatus">
 							<ng-option [value]="maritalStatus.value" *ngFor="let maritalStatus of maritalStatuses">
 								{{ maritalStatus.label }}
 							</ng-option>

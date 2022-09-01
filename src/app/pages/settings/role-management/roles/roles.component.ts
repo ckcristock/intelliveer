@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AlertService } from '@services/alert/alert.service';
 import { AuthService } from '@services/auth/auth.service';
 import { BusinessGroupDropdownService, SelectedBusinessGroup } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 import { RoleService } from '@services/role/role.service';
 import { Subscription } from 'rxjs';
 
@@ -28,7 +29,8 @@ export class RolesComponent implements OnInit {
     private roleService: RoleService,
     private authService: AuthService,
     private businessGroupDropdownService: BusinessGroupDropdownService,
-    private alertService: AlertService) { }
+    private alertService: AlertService,
+    private globalRoutes: GlobalRoutesService) { }
 
   ngOnInit(): void {
     this.businessGroupDropdownSupscription = this.businessGroupDropdownService
@@ -195,5 +197,10 @@ export class RolesComponent implements OnInit {
       }
     });
 	}
+
+  editRole(ID:any)
+  {
+    this.router.navigate([`${this.globalRoutes.getSettingsRoleManageRoutes()[1].child[1].url}/${ID}`]);
+  }
 
 }

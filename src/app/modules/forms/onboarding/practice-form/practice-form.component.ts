@@ -75,7 +75,7 @@ export class PracticeFormComponent implements OnInit {
 			result => {
 				console.log(result)
 				if (!this.Form?.pristine) {
-					console.log("XXXXXXXXXXXXXXX", this.Form?.pristine);
+					console.log("this.Form?.pristine", this.Form?.pristine);
 					console.log("status", this.Form?.pristine);
 					this.onboardingServ.setpracticeNotPristine(true);
 				}

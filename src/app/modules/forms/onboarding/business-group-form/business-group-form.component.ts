@@ -75,7 +75,7 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 			result => {
 				console.log(result)
 				if (!this.BGForm?.pristine) {
-					console.log("XXXXXXXXXXXXXXX", this.BGForm?.pristine);
+					console.log("this.BGForm?.pristine", this.BGForm?.pristine);
 					console.log("status", this.BGForm?.pristine);
 					this.onboardingServ.setbusinessGroupNotPristine(true);
 				}
@@ -96,7 +96,7 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 			currency: [data?.currency || '', Validators.required],
 			password: ['', Validators.required],
 			physicalAddress: this.addressFormService.getAddressForm(
-				data?.physicalAddress || {}
+				data?.physicalAddress || {}, 
 			),
 			mailingAddress: this.addressFormService.getAddressForm(
 				data?.mailingAddress || {}

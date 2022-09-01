@@ -7,10 +7,7 @@
 			<div class="section" id="overview">
 				<div class="row formrow">
 					<div class="col-2">
-						<app-image-uploader
-							[imageUrl]="formData?.logo || ''"
-							(onUpload)="handleUploadedImage($event)"
-						>
+						<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
 						</app-image-uploader>
 					</div>
 					<div class="col-3">
@@ -55,49 +52,26 @@
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">First Name</label>
-						<input
-							class="form-control value-must input-upper"
-							type="text"
-							placeholder=""
-							name="firstName"
-							formControlName="firstName"
-							[class.valid-mandatory-field]="firstNameValid()"
-						/>
+						<input class="form-control mandatory-field input-upper" type="text" placeholder="" name="firstName"
+							formControlName="firstName" [class.valid-mandatory-field]="firstNameValid()" />
 					</div>
 
 					<div class="col-2">
 						<label class="label-input-gap">Middle Name</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="middleName"
-						/>
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
+							formControlName="middleName" />
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Last Name</label>
-						<input
-							class="form-control value-must input-upper"
-							type="text"
-							placeholder=""
-							name="lastName"
-							formControlName="lastName"
-							[class.valid-mandatory-field]="lastNameValid()"
-						/>
+						<input class="form-control  mandatory-field input-upper" type="text" placeholder="" name="lastName"
+							formControlName="lastName" />
 					</div>
 				</div>
 				<div class="row formrow">
 					<div class="col-3">
 						<label class="label-input-gap">Date of Birth</label>
-						<input
-							class="form-control red-bottom-line input-upper"
-							type="date"
-							placeholder=""
-							name="DOB"
-							formControlName="DOB"
-							[class.valid-required-field]="DOBValid()"
-						/>
+						<input class="form-control red-bottom-line input-upper" type="date" placeholder="" name="DOB"
+							formControlName="DOB" [class.valid-required-field]="DOBValid()" />
 					</div>
 					<div class="col-3">
 						<label class="label-input-gap">Gender</label>
@@ -125,7 +99,7 @@
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Marital Status</label>
-						<ng-select class="input-upper" formControlName="martialStatus" placeholder="Select">
+						<ng-select class="input-upper" formControlName="maritalStatus" placeholder="Select">
 							<ng-option [value]="maritalStatus.value" *ngFor="let maritalStatus of maritalStatuses">
 								{{ maritalStatus.label }}
 							</ng-option>
@@ -134,34 +108,16 @@
 				</div>
 				<div class="row formrow">
 					<div class="col-3">
-						<label
-							class="heading"
-							for="inputGroupFile01"
-							style="cursor: pointer"
-							><i
-								class="bi bi-cloud-arrow-up"
-								style="font-size: 15px; cursor: pointer"
-							></i
-							>&nbsp; Upload ID</label
-						>
-						<input
-							class="form-control input-upper"
-							type="file"
-							placeholder=""
-							id="inputGroupFile01"
-							[hidden]="true"
-							(change)="onFileSelected($event)"
-						/>
+						<label class="heading" for="inputGroupFile01" style="cursor: pointer"><i
+								class="bi bi-cloud-arrow-up" style="font-size: 15px; cursor: pointer"></i>&nbsp; Upload
+							ID</label>
+						<input class="form-control input-upper" type="file" placeholder="" id="inputGroupFile01"
+							[hidden]="true" (change)="onFileSelected($event)" />
 						<p *ngIf="fileName">
 							<a href="{{ filePath }}" target="_blank">{{
 								fileName
-							}}</a>
-							<img
-								src="assets/icons/cancel.svg"
-								width="20"
-								height="20"
-								(click)="cancleImage()"
-							/>
+								}}</a>
+							<img src="assets/icons/cancel.svg" width="20" height="20" (click)="cancleImage()" />
 						</p>
 					</div>
 				</div>
@@ -169,10 +125,7 @@
 
 			<div class="section" id="address">
 				<h6 class="heading">Address</h6>
-				<app-address-form
-					[parentGroup]="Form"
-					[formGroupName]="'address'"
-				></app-address-form>
+				<app-address-form [parentGroup]="Form" [formGroupName]="'address'"></app-address-form>
 			</div>
 
 			<div class="section" id="contact">
@@ -180,20 +133,14 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Email</label>
-						<input
-							class="form-control red-bottom-line input-upper"
-							type="text"
-							placeholder=""
-							name="id"
-							formControlName="emailId"
-							[class.valid-required-field]="emailValid()"
-						/>
+						<input class="form-control red-bottom-line input-upper" type="text" placeholder="" name="id"
+							formControlName="emailId" [class.valid-required-field]="emailValid()" />
 					</div>
 
 					<div class="col">
 						<label class="label-input-gap">Primary Phone Type</label>
-						<ng-select class="input-upper required-field input-upper" placeholder="Select" formControlName="primaryPhoneType"
-							[class.valid-mandatory-field]="primaryPhoneTypeValid()">
+						<ng-select class="input-upper required-field input-upper" placeholder="Select"
+							formControlName="primaryPhoneType" [class.valid-mandatory-field]="primaryPhoneTypeValid()">
 							<ng-option [value]="phone.value" *ngFor="let phone of famiMembTitle.phone">
 								{{ phone.label }}
 							</ng-option>
@@ -201,26 +148,18 @@
 					</div>
 
 					<div class="col">
-						<label class="label-input-gap"
-							>Primary Phone Number</label
-						>
-						<input
-							class="form-control value-must input-upper"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="primaryPhoneNumber"
-							[class.valid-mandatory-field]="
+						<label class="label-input-gap">Primary Phone Number</label>
+						<input class="form-control mandatory-field input-upper" type="text" placeholder="" name="name"
+							formControlName="primaryPhoneNumber" [class.valid-mandatory-field]="
 								primaryPhoneNumberValid()
-							"
-						/>
+							" />
 					</div>
 				</div>
 
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Secondary Phone Type</label>
-						<ng-select class="input-upper" placeholder="Select" formControlName="secondaryPhoneType">
+						<ng-select class="input-upper" formControlName="secondaryPhoneType" placeholder="Select">
 							<ng-option>
 								Select
 							</ng-option>
@@ -228,16 +167,9 @@
 					</div>
 
 					<div class="col">
-						<label class="label-input-gap"
-							>Secondary Phone Number</label
-						>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="secondaryPhoneNumber"
-						/>
+						<label class="label-input-gap">Secondary Phone Number</label>
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
+							formControlName="secondaryPhoneNumber" />
 					</div>
 
 					<div class="col">
@@ -261,16 +193,9 @@
 						</ng-select>
 					</div>
 					<div class="col">
-						<label class="label-input-gap"
-							>Preferred Timings for Call</label
-						>
-						<input
-							class="form-control input-upper"
-							type="number"
-							placeholder=""
-							name="preferredTimingForCall"
-							formControlName="preferredTimingForCall"
-						/>
+						<label class="label-input-gap">Preferred Timings for Call</label>
+						<input class="form-control input-upper" type="number" placeholder=""
+							name="preferredTimingForCall" formControlName="preferredTimingForCall" />
 					</div>
 					<div class="col"></div>
 				</div>
@@ -281,7 +206,7 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Work Status</label>
-						<ng-select class="input-upper" formControlName="workStatus"  placeholder="Select">
+						<ng-select class="input-upper" formControlName="workStatus" placeholder="Select">
 							<ng-option>
 								Select
 							</ng-option>
@@ -289,33 +214,18 @@
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Occupation</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="occupation"
-						/>
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
+							formControlName="occupation" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Employer</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="employer"
-						/>
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
+							formControlName="employer" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">SSN</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="SSN"
-						/>
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
+							formControlName="SSN" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Credit Rating</label>
@@ -332,14 +242,8 @@
 				<h6 class="heading">Notes</h6>
 				<div class="row formrow">
 					<div class="col-6">
-						<textarea
-							class="form-control input-upper"
-							name="note"
-							id=""
-							cols="70"
-							rows="5"
-							formControlName="note"
-						></textarea>
+						<textarea class="form-control input-upper" name="note" id="" cols="70" rows="5"
+							formControlName="note"></textarea>
 					</div>
 				</div>
 			</div>

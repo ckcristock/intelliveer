@@ -11,7 +11,7 @@ export class Patient
         gender: string,
         preferredPronoun: string,
         language: string,
-        martialStatus: string
+        maritalStatus: string
     }  = {
         title: '',
         firstName: '',
@@ -21,7 +21,7 @@ export class Patient
         gender: '',
         preferredPronoun: '',
         language: '',
-        martialStatus: ''
+        maritalStatus: ''
     };
     information: {
         preferredName: string,
