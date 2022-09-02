@@ -25,14 +25,21 @@ export class RolesComponent implements OnInit {
   roleURRTAdd:boolean = false;
   roleURRTDelete :boolean = false;
   user:any;
+  menuItems: any;
+  urlSettings!: string;
+
   constructor(private router: Router,
     private roleService: RoleService,
     private authService: AuthService,
     private businessGroupDropdownService: BusinessGroupDropdownService,
     private alertService: AlertService,
-    private globalRoutes: GlobalRoutesService) { }
+    private globalRoutes: GlobalRoutesService,
+    private routes: GlobalRoutesService,
+    ) { }
 
   ngOnInit(): void {
+    this.menuItems = this.routes.getSettingsRoleManageRoutes();
+    this.urlSettings = this.routes.getSettingsUrl();
     this.businessGroupDropdownSupscription = this.businessGroupDropdownService
       .businessGroup()
       .subscribe((bg) => {

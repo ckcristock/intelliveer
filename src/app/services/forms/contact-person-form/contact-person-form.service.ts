@@ -18,7 +18,7 @@ type AcceptedFields = {
 	providedIn: 'root'
 })
 export class ContactPersonFormService {
-	constructor(private fb: FormBuilder) {}
+	constructor(private fb: FormBuilder) { }
 	getContactPersonForm(data?: any, required?: AcceptedFields): FormGroup {
 		data = data || {};
 		required = required || {};
@@ -31,13 +31,13 @@ export class ContactPersonFormService {
 			title: [data?.title || '', required?.title && Validators.required],
 			firstName: [
 				data?.firstName || '',
-				required?.firstName && Validators.required
+				required?.firstName && [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]
 			],
 			lastName: [
 				data?.lastName || '',
-				required?.lastName && Validators.required
+				required?.lastName && [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]
 			],
-			email: [data?.email || '', required?.email && Validators.required],
+			email: [data?.email || '', required?.email && [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
 			phone: this.fb.group({
 				type: [
 					data?.phone?.type || '',
@@ -45,11 +45,11 @@ export class ContactPersonFormService {
 				],
 				countryCode: [
 					data?.phone?.countryCode || '',
-					required?.phone?.countryCode && Validators.required
+					required?.phone?.countryCode && [Validators.required, Validators.pattern("^[0-9]*$")]
 				],
 				number: [
 					data?.phone?.number || '',
-					required?.phone?.number && Validators.required
+					required?.phone?.number && [Validators.required, Validators.pattern("^[0-9]*$")]
 				]
 			})
 		});

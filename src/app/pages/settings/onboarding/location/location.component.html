@@ -1,7 +1,8 @@
 <div *ngIf="!data" class="section" style="height: 90%;">
 	<div style="text-align: center; padding-top: 7%;">
 		<h5><b>You haven’t added yet</b></h5>
-		<p>Click here, <img src="assets/icons/add.svg" width="36" height="36" (click)="addLocation()" *ngIf="locationAdd[0].isEnabled"/> to add
+		<p>Click here, <img src="assets/icons/add.svg" width="36" height="36" (click)="addLocation()"
+				*ngIf="locationAdd[0].isEnabled" /> to add
 			Location</p>
 	</div>
 </div>
@@ -40,19 +41,18 @@
 				</thead>
 				<tbody *ngIf="data">
 					<tr *ngFor="let d of data; let i = index">
-						<td>{{ d?._id }}</td>
-						<td>{{ d?.name }}</td>
-						<td>
-							{{ d?.contactPerson?.firstName }}&nbsp;{{
-							d?.contactPerson?.lastName
-							}}
-						</td>
-						<td>
-							{{ d?.contactPerson?.phone?.number }}
-						</td>
-						<td>
-							{{ d?.createdAt | date: 'mediumDate' }}
-						</td>
+						<td><span class="pointer" (click)="editLocation(d?._id)">{{ d?._id
+								}}</span></td>
+						<td><span class="pointer" (click)="editLocation(d?._id)">{{ d?.name
+								}}</span></td>
+						<td><span class="pointer" (click)="editLocation(d?._id)">{{ d?.contactPerson?.firstName
+								}}&nbsp;{{
+								d?.contactPerson?.lastName
+								}}</span></td>
+						<td><span class="pointer" (click)="editLocation(d?._id)">{{
+								d?.contactPerson?.phone?.number }}</span></td>
+						<td><span class="pointer" (click)="editLocation(d?._id)">{{ d?.createdAt | date:
+								'mediumDate' }}</span></td>
 						<td>
 							<div ngbDropdown container="body" placement="bottom-end">
 								<button class="btn btn-light btn-sm more_btn" ngbDropdownToggle>
@@ -61,8 +61,7 @@
 								<div ngbDropdownMenu>
 									<button ngbDropdownItem routerLink="/dashboard/settings/onboarding/location/edit/{{
 											d._id
-										}}"
-										*ngIf="locationEdit[0].isEnabled">
+										}}" *ngIf="locationEdit[0].isEnabled">
 										Edit
 									</button>
 									<button ngbDropdownItem (click)="delete(d._id)" *ngIf="locationDelete[0].isEnabled">

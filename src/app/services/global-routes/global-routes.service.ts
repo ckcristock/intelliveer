@@ -202,6 +202,7 @@ export class GlobalRoutesService {
         value: "CAN_CREATE_LEGAL_ENTITY",
       },{
         title: "Edit",
+        url: `${this.urlOnboarding}/legal-entity/edit`,
         isEnabled: true,
         value: "CAN_EDIT_LEGAL_ENTITY",
       },{
@@ -225,7 +226,7 @@ export class GlobalRoutesService {
         title: "Edit",
         isEnabled: true,
         value: "CAN_EDIT_LOCATION",
-        url: `${this.urlOnboarding}/location/add`
+        url: `${this.urlOnboarding}/location/edit`
 
       },{
         title: "Delete",
@@ -249,7 +250,7 @@ export class GlobalRoutesService {
         title: "Edit",
         isEnabled: true,
         value: "CAN_EDIT_PRACTICE",
-        url: `${this.urlOnboarding}/location/add`
+        url: `${this.urlOnboarding}/practice/edit`
 
       },{
         title: "Delete",

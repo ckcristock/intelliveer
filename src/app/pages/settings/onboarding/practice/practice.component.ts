@@ -123,4 +123,8 @@ export class PracticeComponent implements OnInit {
 		this.practiceEdit = this.searchString.transform('title',getpractice[0].child,'Edit');
 		this.practiceDelete = this.searchString.transform('title',getpractice[0].child,'Delete');
 	}
+
+	editPractice(ID:any){
+		this.router.navigate([`${this.globalRoutes.getSettingsOnboardingRoutes()[3].child[1].url}/${ID}`]);
+	}
 }

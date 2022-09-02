@@ -7,6 +7,7 @@ import { RoleService } from '@services/role/role.service';
 import { RoleTemplate } from '../add-role/add-role.component';
 import { AuthService } from '@services/auth/auth.service';
 import { Subscription } from 'rxjs';
+import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 @Component({
   selector: 'app-edit-role',
   templateUrl: './edit-role.component.html',
@@ -34,6 +35,9 @@ export class EditRoleComponent implements OnInit {
   isSaveButton: boolean = false;
   editRRT: any;
   editURRT: any;
+  roleName: any;
+  manageRoleUrl!: string;
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -41,7 +45,8 @@ export class EditRoleComponent implements OnInit {
     private businessGroupDropdownService: BusinessGroupDropdownService,
     private alertService: AlertService,
     private authService: AuthService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private routes: GlobalRoutesService,
     ) { }
 
   ngOnInit(): void {
@@ -55,6 +60,7 @@ export class EditRoleComponent implements OnInit {
     this.getPracticeList();
     this.getPermissionList();
     this.getBgId();
+    this.manageRoleUrl = this.routes.getSettingsRoleManageRoutes()[1].url;
   }
   getBgId(){
     this.businessGroupDropdownSupscription = this.businessGroupDropdownService
@@ -71,7 +77,8 @@ export class EditRoleComponent implements OnInit {
   {
     this.roleService.getRoleById(this.editRoleID).subscribe((data: any) => {
       this.roleObj = data;
-      console.log(data)
+      console.log("YYYYYYYYYYYYYYYYYYYYYYYYYYY",data)
+      this.roleName = data.name;
       this.Form.patchValue(data);
     }, error => {
       console.log(error)

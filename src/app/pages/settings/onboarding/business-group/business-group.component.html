@@ -39,7 +39,7 @@
 							}}</span></td>
 					<td><span class="pointer" (click)="editBussinessGroup(d?._id)">{{ d?.contactPerson?.firstName }}&nbsp;{{
 						d?.contactPerson?.lastName
-						}}}</span></td>
+						}}</span></td>
 					<td><span class="pointer" (click)="editBussinessGroup(d?._id)">{{ d?.contactPerson?.phone?.number }}</span></td>
 					<td><span class="pointer" (click)="editBussinessGroup(d?._id)">{{ d?.createdAt | date: 'mediumDate' }}</span></td>
 					
@@ -59,11 +59,11 @@
 									Manage Practice
 								</button>
 								<div class="dropdown-divider"></div>
-								<button ngbDropdownItem routerLink="/dashboard/settings/onboarding/business-group/edit/{{
+								<!-- <button ngbDropdownItem routerLink="/dashboard/settings/onboarding/business-group/edit/{{
 										d._id
 									}}" *ngIf="bussinessEdit[0].isEnabled">
 									Edit
-								</button>
+								</button> -->
 								<button ngbDropdownItem (click)="deleteBG(d._id)" *ngIf="isSuperUser">
 									Delete
 								</button>

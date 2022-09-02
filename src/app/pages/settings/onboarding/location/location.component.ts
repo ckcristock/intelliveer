@@ -125,4 +125,8 @@ export class LocationComponent implements OnInit, OnDestroy {
 		this.locationDelete = this.searchString.transform('title',getlocation[0].child,'Delete');
     console.log(this.locationAdd,this.locationEdit,this.locationDelete)
 	}
+
+  editLocation(ID:any){
+		this.router.navigate([`${this.globalRoutes.getSettingsOnboardingRoutes()[2].child[1].url}/${ID}`]);
+	}
 }

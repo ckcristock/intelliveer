@@ -3,11 +3,23 @@
 	<!-- Nav -->
 	<div class="d-flex justify-content-end align-items-end global-bg-dropdown formrow">
 		<div class="col" *ngIf="onPage" style="margin-top: 18px;">
-			<span >Settings</span>
+			<span>Settings</span>
 		</div>
+		<!-- For Role Management -->
 		<div class="col" *ngIf="!onPage">
-			<span>Settings/ {{ currentRoute }} / {{ selectedBusinessGroup }}</span>
+			<span class="pointer" [routerLink]="urlSettings">Settings </span> <span> / </span> <span class="pointer"
+				[routerLink]="urlRoleManagement">{{ currentRoute }}
+			</span> <span> / </span> <span class="pointer" [routerLink]="urlRoleManagement"
+				*ngIf="currentRouteChild1==='Manage Role Templates'">{{ currentRouteChild1 }}
+			</span> <span class="pointer" [routerLink]="urlManageRole"
+				*ngIf="currentRouteChild1==='Manage Role'">{{ currentRouteChild1 }}
+			</span> 
+			<!-- <span *ngIf="currentRouteChild2 != ''">/ {{
+				currentRouteChild2 }}</span>  -->
+				<!-- <span *ngIf="currentRouteChild3 != ''">/ {{
+					currentRouteChild3 }}</span> -->
 		</div>
+		<!-- End For Role Management -->
 		<div class="col-3" *ngIf="!onPage">
 			<div *ngIf="!isSuperUser">
 				<div *ngFor="let bg of businessGroups">
@@ -23,8 +35,8 @@
 			</select>
 		</div>
 	</div>
-	<hr  style="margin-bottom: 25px;"/>
-	
+	<hr style="margin-bottom: 25px;" />
+
 	<!-- squares -->
 	<div class="row" *ngIf="onPage">
 		<div class="col component-view">

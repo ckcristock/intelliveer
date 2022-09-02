@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { AlertService } from '@services/alert/alert.service';
 import { AuthService } from '@services/auth/auth.service';
 import { BusinessGroupDropdownService } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 import { BusinessGroupService } from '@services/onboarding/business-group/business-group.service';
 import { RoleService } from '@services/role/role.service';
 
@@ -28,9 +29,9 @@ export class RoleTemplate {
 	styleUrls: ['./add-role.component.scss']
 })
 export class AddRoleComponent implements OnInit {
-	@ViewChild('legelEntity') refLegelEntity :ElementRef | any;
-	@ViewChild('location') refLocation :ElementRef | any;
-	@ViewChild('practice') refPractice :ElementRef | any;
+	@ViewChild('legelEntity') refLegelEntity: ElementRef | any;
+	@ViewChild('location') refLocation: ElementRef | any;
+	@ViewChild('practice') refPractice: ElementRef | any;
 	Form!: FormGroup;
 	roleNestedForm!: FormGroup;
 	roleModuleNestedForm!: FormGroup;
@@ -46,9 +47,12 @@ export class AddRoleComponent implements OnInit {
 	permissionsList: any[] = [];
 	bgName: any;
 	roleType: any;
-    orgId: any;
+	orgId: any;
 	addRoleTitle: string = "Create Role";
 	roleTemplatePlaceholder: string = "Role template name";
+	urlManageRole!: string;
+
+
 	constructor(
 		private router: Router,
 		private roleService: RoleService,
@@ -57,6 +61,7 @@ export class AddRoleComponent implements OnInit {
 		private authService: AuthService,
 		private businessGroupDropdownService: BusinessGroupDropdownService,
 		private businessGroupService: BusinessGroupService,
+		private routes: GlobalRoutesService,
 	) {
 	}
 
@@ -73,13 +78,14 @@ export class AddRoleComponent implements OnInit {
 		this.businessGroupDropdownService
 			.getBusinessGroups()
 			.subscribe((list) => {
-				if(list.length)
-				{
+				if (list.length) {
 					this.bgName = list[0]._id;
 					console.log(list);
 				}
 			});
-			this.getSelectedBusinessGroupId();
+		this.getSelectedBusinessGroupId();
+		this.urlManageRole = this.routes.getSettingsRoleManageRoutes()[1].url;
+
 	}
 	initForm(data?: any) {
 		data = data || {};
@@ -92,38 +98,38 @@ export class AddRoleComponent implements OnInit {
 	}
 
 	/** First Array form value*/
-	get moduleNested(){
+	get moduleNested() {
 		return (<FormArray>this.Form.get("permissions")).controls;
-	  }
+	}
 	/** Get Second Array form value*/
-	sectionNested(i:any){
-	 return (<FormArray>this.moduleNested[i].get("sections")).controls;
+	sectionNested(i: any) {
+		return (<FormArray>this.moduleNested[i].get("sections")).controls;
 	}
 
 	/** Get Third Array form value*/
-	permissionNested(i:any,j:any){
+	permissionNested(i: any, j: any) {
 		let sectionForm = (<FormArray>this.moduleNested[i].get("sections")).controls
 		return (<FormArray>sectionForm[j].get("permissions")).controls
 	}
 	/** This array for permission */
-	moduleArray() : FormArray {
+	moduleArray(): FormArray {
 		return (<FormArray>this.Form.get("permissions"));
 	}
 	newModule(): FormGroup {
 		return this.roleModuleNestedForm = this.fb.group({
 			module: new FormControl(),
-			sections:this.fb.array([]),
+			sections: this.fb.array([]),
 		})
 	}
 	/** This array for permission Sections */
-	sectionsArray() : FormArray {
+	sectionsArray(): FormArray {
 		return (<FormArray>this.roleModuleNestedForm.get("sections"));
 	}
 
 	newSections(): FormGroup {
 		return this.roleNestedForm = this.fb.group({
 			section: new FormControl(),
-			permissions:this.fb.array([]),
+			permissions: this.fb.array([]),
 		})
 	}
 	permissionArray(): FormArray {
@@ -178,12 +184,12 @@ export class AddRoleComponent implements OnInit {
 
 	save(data: any) {
 		if (this.displayCreateRoleYesNoOption) {
-			if(this.createRoleTemplete == 'yes') {
+			if (this.createRoleTemplete == 'yes') {
 				this.addRoleWithTemplate(data);
-			}else if(this.createRoleTemplete == 'no') {
+			} else if (this.createRoleTemplete == 'no') {
 				this.saveRoleFromScratch(data);
 			}
-		}else{
+		} else {
 			this.addRoleWithTemplate(data);
 		}
 		// else
@@ -236,7 +242,7 @@ export class AddRoleComponent implements OnInit {
 	}
 
 	saveRoleFromTemplate(data: any) {
-		console.log(data,this.bgName);
+		console.log(data, this.bgName);
 		let roleObj = {
 			name: data.name,
 			description: data.description,
@@ -270,7 +276,7 @@ export class AddRoleComponent implements OnInit {
 			});
 	}
 	saveRoleFromTemplateBYBgId(data: any) {
-		console.log(data,this.bgName);
+		console.log(data, this.bgName);
 		let roleObj = {
 			name: data.name,
 			description: data.description,
@@ -323,7 +329,7 @@ export class AddRoleComponent implements OnInit {
 	}
 
 	selectRoleTemplateChange(Obj: any) {
-		let roleManage = {...Obj};
+		let roleManage = { ...Obj };
 		this.roleType = Obj.type
 		this.roleTemplate = roleManage;
 		this.permissionsList = Obj.permissions;
@@ -366,8 +372,8 @@ export class AddRoleComponent implements OnInit {
 						});
 						this.sectionsArray().push(sectionFormGroup);
 					}
-					formGroup.patchValue({module:list[i].name})
-                    this.moduleArray().push(formGroup)
+					formGroup.patchValue({ module: list[i].name })
+					this.moduleArray().push(formGroup)
 				}
 				this.permissionsList = list;
 			},
@@ -377,26 +383,21 @@ export class AddRoleComponent implements OnInit {
 		);
 	}
 
-	getRoleListSpecific()
-	{
-		this.roleService.getSpecificRoleTemplateList(this.orgId).subscribe((specificList: any) =>
-			{
-				this.roleService.getPublicRoleTemplateList().subscribe((list: any) =>
-					{
-						this.roleTemplateList =  specificList.concat(list);
-					}, error =>
-					{
-						console.log(error)
-					})
-			}, error =>
-			{
+	getRoleListSpecific() {
+		this.roleService.getSpecificRoleTemplateList(this.orgId).subscribe((specificList: any) => {
+			this.roleService.getPublicRoleTemplateList().subscribe((list: any) => {
+				this.roleTemplateList = specificList.concat(list);
+			}, error => {
 				console.log(error)
 			})
-			
+		}, error => {
+			console.log(error)
+		})
+
 	}
 
 	/** Get Selected Org Id */
-	getSelectedBusinessGroupId(){
+	getSelectedBusinessGroupId() {
 		// this.businessGroupDropdownService.businessGroup().subscribe((res) => {
 		// 	this.orgId = res?.bgId;
 		// 	this.bgName = this.orgId;
@@ -424,43 +425,43 @@ export class AddRoleComponent implements OnInit {
 		// 	}
 		//   });
 		this.orgId = this.authService.getOrgId();
-			this.bgName = this.orgId;
-			let bgOrdID:any = localStorage.getItem('selected_business_group');
-			console.log(bgOrdID,this.orgId)
-			let user = this.authService.getLoggedInUser();
-		    if(user?.__ISSU__){
-				if(this.orgId != "intelliveer" && bgOrdID != null){
-					this.addRoleTitle = "Create Role from Role Template";
-					this.roleTemplatePlaceholder = "Select role template";
-					this.displayCreateRoleYesNoOption = false;
-					this.getRoleListSpecific();
-				}else{
-					this.addRoleTitle = "Create Role";
-					this.roleTemplatePlaceholder = "Role template name";
-					this.displayCreateRoleYesNoOption = true;
-					this.getRoleList();
-					console.log('roles')
-				}
-			}else{
+		this.bgName = this.orgId;
+		let bgOrdID: any = localStorage.getItem('selected_business_group');
+		console.log(bgOrdID, this.orgId)
+		let user = this.authService.getLoggedInUser();
+		if (user?.__ISSU__) {
+			if (this.orgId != "intelliveer" && bgOrdID != null) {
 				this.addRoleTitle = "Create Role from Role Template";
 				this.roleTemplatePlaceholder = "Select role template";
 				this.displayCreateRoleYesNoOption = false;
 				this.getRoleListSpecific();
+			} else {
+				this.addRoleTitle = "Create Role";
+				this.roleTemplatePlaceholder = "Role template name";
+				this.displayCreateRoleYesNoOption = true;
+				this.getRoleList();
+				console.log('roles')
 			}
+		} else {
+			this.addRoleTitle = "Create Role from Role Template";
+			this.roleTemplatePlaceholder = "Select role template";
+			this.displayCreateRoleYesNoOption = false;
+			this.getRoleListSpecific();
+		}
 	}
 	/** Update Role with Template  */
-	addRoleWithTemplate(data:any){
-		let user:any =	localStorage.getItem('permissionSet');
+	addRoleWithTemplate(data: any) {
+		let user: any = localStorage.getItem('permissionSet');
 		user = JSON.parse(user);
-		let bgOrdID:any = localStorage.getItem('selected_business_group');
-		if(user?.__ISSU__){
-			if(this.orgId != "intelliveer" && bgOrdID != null){
-			  this.saveRoleFromTemplateBYBgId(data);
-			}else{
-			  //this.bgName = "intelliveer"
-			  this.saveRoleFromTemplate(data);
+		let bgOrdID: any = localStorage.getItem('selected_business_group');
+		if (user?.__ISSU__) {
+			if (this.orgId != "intelliveer" && bgOrdID != null) {
+				this.saveRoleFromTemplateBYBgId(data);
+			} else {
+				//this.bgName = "intelliveer"
+				this.saveRoleFromTemplate(data);
 			}
-		}else{
+		} else {
 			this.saveRoleFromTemplateBYBgId(data)
 		}
 	}

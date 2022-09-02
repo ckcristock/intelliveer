@@ -121,4 +121,9 @@ export class LegalEntityComponent implements OnInit, OnDestroy {
 		this.legalEdit = this.searchString.transform('title',getLegalEntity[0].child,'Edit');
 		this.legalDelete = this.searchString.transform('title',getLegalEntity[0].child,'Delete');
 	}
+
+  editLegalEntity(ID:any){
+		this.router.navigate([`${this.globalRoutes.getSettingsOnboardingRoutes()[1].child[1].url}/${ID}`]);
+	}
+  
 }

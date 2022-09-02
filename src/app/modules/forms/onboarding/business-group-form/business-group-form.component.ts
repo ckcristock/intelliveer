@@ -78,6 +78,8 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 					console.log("this.BGForm?.pristine", this.BGForm?.pristine);
 					console.log("status", this.BGForm?.pristine);
 					this.onboardingServ.setbusinessGroupNotPristine(true);
+					console.log("foooooorm", this.BGForm);
+					
 				}
 			}
 		);
