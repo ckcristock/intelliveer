@@ -35,12 +35,18 @@
 				<h6 class="heading">Profile</h6>
 				<div class="row formrow">
 					<div class="col-3">
-						<label class="label-input-gap">Relationship with Patient</label>
-						<ng-select class="input-upper" formControlName="relationship">
-							<ng-option [value]="relationship">
-								{{relationship}}
-							</ng-option>
-						</ng-select>
+						<label class="label-input-gap"
+							>Relationship with Patient</label
+						>
+						<select
+							class="form-select input-upper"
+							formControlName="relationship"
+						>
+						    <option>Select</option>
+							<option [value]="relationship">
+								{{ relationship }}
+							</option>
+						</select>
 					</div>
 					<div class="col-3">
 						<label class="label-input-gap">Title</label>

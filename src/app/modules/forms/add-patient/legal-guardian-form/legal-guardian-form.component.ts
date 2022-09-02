@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CONFIG } from '@config/index';
+import { NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IMenuItem } from '@pages/dashboard/menu';
 import {
 	addPatientCordinateMenuItems,
@@ -26,7 +27,6 @@ import { AddressFormService } from '@services/forms/address-form/address-form.se
 import { GeoService } from '@services/global-data/public/geo/geo.service';
 import { LegalGuardianService } from '@services/patient/family/legal-guardian/legal-guardian.service';
 import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
-import { delay, filter, map } from 'rxjs';
 
 @Component({
 	selector: 'app-legal-guardian-form',
@@ -82,7 +82,8 @@ export class LegalGuardianFormComponent implements OnInit {
 		typePhone: '',
 		email: ''
 	};
-
+    legalGuardianData:any;
+	legalGuardianID:any;
 	radioLG: number = 1;
 
 	menuItemsOfCordinate: IMenuItem[] = addPatientCordinateMenuItems;
@@ -102,7 +103,10 @@ export class LegalGuardianFormComponent implements OnInit {
 	selectedBusinessGroup: SelectedBusinessGroup | undefined;
 	bgId: any;
 	relationShipArray: any[] = ['Father', 'Mother', 'Sister', 'Brother'];
-
+    model!:NgbDateStruct
+	alertText:any;
+	confirmButtonText:any
+	cancelButtonText:any
 	constructor(
 		private router: Router,
 		private fb: FormBuilder,
@@ -116,7 +120,8 @@ export class LegalGuardianFormComponent implements OnInit {
 		private legalGuardianService: LegalGuardianService,
 		private authService: AuthService,
 		private businessGroupDropdownService: BusinessGroupDropdownService,
-		private alertService: AlertService
+		private alertService: AlertService,
+		private modalService: NgbModal,
 	) {
 		this.businessGroupDropdownSupscription =
 			this.businessGroupDropdownService
@@ -125,6 +130,11 @@ export class LegalGuardianFormComponent implements OnInit {
 					if (bg) {
 						this.selectedBusinessGroup = bg;
 						this.getOrgBgId();
+						setTimeout(() => {
+							if(this.legalGuardianID){
+								this.getLegalGuardianWithID();
+							}
+						}, 1000)
 					}
 				});
 	}
@@ -135,18 +145,57 @@ export class LegalGuardianFormComponent implements OnInit {
 		this.addPatientServ.setFalseAllNotPristineCWP();
 		this.insuranceServ.setFalseAllNotPristine();
 		this.onboardingServ.setFalseAllNotPristine();
-		this.addPatientServ.getLegalGuardFromCompone(
-			this.getLegalGuard.bind(this)
-		);
+		// this.addPatientServ.getLegalGuardFromCompone(
+		// 	this.getLegalGuard.bind(this)
+		// );
 		this.getDataLegaGuarCaller();
 		this.initForm(this.formData);
-		this.Form.controls['state'].setValue(null);
-		this.Form.controls['city'].setValue(null);
+		this.Form.controls['state']?.setValue(null);
+		this.Form.controls['city']?.setValue(null);
 		this.getStaticData();
 		await this.getCountries();
 		this.Form.statusChanges.subscribe((result) => {
+			console.log(result)
 			if (!this.Form.pristine) {
 				this.addPatientServ.setLegalGuardianNotPristineCWP(true);
+				if(this.Form.invalid){
+					this.addPatientServ.setLegalMandatoryFields(true)
+				}else{
+					this.addPatientServ.setLegalMandatoryFields(false)
+				}
+				let saveObj:any = {
+					profile: {
+						title: '',
+						firstName: this.Form.value.firstName,
+						middleName: '',
+						lastName: this.Form.value.lastName,
+						DOB: '',
+						gender: '',
+						preferredPronoun: '',
+						language: '',
+						martialStatus: ''
+					},
+					address: this.Form.value.address,
+					contact: {
+						email: this.Form.value.email,
+						primaryPhone: {
+							type: this.Form.value.phoneType,
+							countryCode: '',
+							number: this.Form.value.phoneNumber
+						},
+						secondaryPhone: {
+							type: '',
+							countryCode: '',
+							number: ''
+						},
+						primaryPreferredCommunicationMethod: '',
+						secondaryPreferredCommunicationMethod: '',
+						preferredTimingForCall: ''
+					},
+					notes: ''
+				};
+				let setOBJ:any = [saveObj,this.patientPage]
+				this.addPatientServ.getLegalGuardFromCompone(setOBJ);
 			}
 		});
 	}
@@ -167,7 +216,7 @@ export class LegalGuardianFormComponent implements OnInit {
 		);
 		setTimeout(() => {
 			this.checkRadiosStatus();
-		}, 20);
+		}, 20);	
 	}
 
 	async checkRadiosStatus() {
@@ -191,15 +240,11 @@ export class LegalGuardianFormComponent implements OnInit {
 
 	async getDataLegaGuarCaller() {
 		if (this.tab == 'coordWithProspect') {
-			this.legalGuardianArray =
+			this.legalGuardianData =
 				await this.addPatientServ.getLegalGuardCWP(this.patientPage);
 			this.callersInfo = await this.addPatientServ.getCallerInfoCWP();
+			this.legalGuardianID = this.legalGuardianData?._id;
 			console.log('caller', this.callersInfo);
-			if (this.legalGuardianArray != null) {
-				this.legalGuardian.firstName =
-					this.legalGuardianArray.firstName;
-				this.legalGuardian.lastName = this.legalGuardianArray.lastName;
-			}
 			if (this.callersInfo.callerLegarGuar == true) {
 				this.legalGuardian.firstName = this.callersInfo.firstName;
 				this.legalGuardian.lastName = this.callersInfo.lastName;
@@ -219,11 +264,11 @@ export class LegalGuardianFormComponent implements OnInit {
 		return [this.legalGuardian, this.patientPage];
 	}
 
-	continueToDentist() {
+	continueToDentist(result:any) {
 		if (this.tab == 'coordWithProspect') {
 			this.addPatientServ.setLegalGuardianNotPristineCWP(false);
 			this.addPatientServ.setLegalGuardCWP(
-				this.legalGuardian,
+				result,
 				this.patientPage
 			);
 			let visitedArray: any = JSON.parse(
@@ -263,7 +308,11 @@ export class LegalGuardianFormComponent implements OnInit {
 					Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')
 				]
 			],
-			address: this.addressFormService.getAddressForm(data?.address || {})
+			address: this.addressFormService.getAddressForm(data?.address || {}),
+			phoneType:[data?.phoneType ||''],
+			email:[data?.email ||''],
+			phoneNumber:[data?.phoneNumber ||'']
+
 		});
 	}
 
@@ -402,7 +451,7 @@ export class LegalGuardianFormComponent implements OnInit {
 
 	save(data: any) {
 		console.log(data.value);
-		let saveObj = {
+		let saveObj:any = {
 			profile: {
 				title: '',
 				firstName: data.value.firstName,
@@ -433,7 +482,26 @@ export class LegalGuardianFormComponent implements OnInit {
 			},
 			notes: ''
 		};
-		this.legalGuardianService
+		this.addPatientServ.getLegalGuardCWP(this.patientPage).then(res=>{
+         console.log(res);
+		 if(res._id){
+			saveObj._id = res._id;
+            this.legalGuardianService
+			.updateLegalGuardian(saveObj, this.bgId)
+			.subscribe(
+				(result: any) => {
+					this.alertService.success(
+						'Success',
+						'Legal Guardian has been updated successfully'
+					);
+					this.continueToDentist(saveObj);
+				},
+				(error) => {
+					console.log(error);
+				}
+			);
+		 }else{
+			this.legalGuardianService
 			.saveLegalGuardian(saveObj, this.bgId)
 			.subscribe(
 				(result: any) => {
@@ -441,12 +509,14 @@ export class LegalGuardianFormComponent implements OnInit {
 						'Success',
 						'Legal Guardian has been saved successfully'
 					);
-					this.continueToDentist();
+					this.continueToDentist(result);
 				},
 				(error) => {
 					console.log(error);
 				}
 			);
+		 }
+		})
 	}
 
 	getOrgBgId() {
@@ -461,5 +531,92 @@ export class LegalGuardianFormComponent implements OnInit {
 		} else {
 			this.bgId = this.selectedBusinessGroup?.bgId;
 		}
+	}
+	// openModel(content: any) {
+	// 	let firstName = this.Form.value.firstName;
+	// 	if(firstName == undefined){
+	// 	  firstName = '';
+	// 	}
+	// 	let lastName = this.Form.value.lastName;
+	// 	if(lastName == undefined){
+	// 	  lastName = ''
+	// 	}
+
+	// 	console.log(firstName,lastName,this.Form)
+	// 	if(firstName != '' || lastName != '' || this.Form.value.phoneType != '' || this.Form.value.phoneNumber != '' || this.Form.value.address.addressLine1 != '' || this.Form.value.address.addressLine2 != '' || this.Form.value.address.zipCode != '' || this.Form.value.email != '' ){
+	// 	  this.modalService.open(content, { centered: true });
+	// 	}else
+	// 	{
+	// 	  this.addPatientServ.setLegalGuardianNotPristineCWP(false);
+	// 	  this.router.navigate(['/dashboard/home']);
+	// 	}
+	// }
+	openModel(content: any) {
+		let firstName = this.Form.value.firstName;
+		if(firstName == undefined){
+		  firstName = '';
+		}
+		let lastName = this.Form.value.lastName;
+		if(lastName == undefined){
+		  lastName = ''
+		}
+
+		console.log(firstName,lastName,this.Form)
+		if(firstName != '' || lastName != '' || this.Form.value.phoneType != '' || this.Form.value.phoneNumber != '' || this.Form.value.address.addressLine1 != '' || this.Form.value.address.addressLine2 != '' || this.Form.value.address.zipCode != '' || this.Form.value.email != '' ){
+			if(this.Form.valid){
+				this.alertText = "Would you like to discard or save it?"
+				this.confirmButtonText = "Save";
+				this.cancelButtonText = "Discard"
+			}else if(this.Form.invalid){
+				this.alertText = "Mandatory fields are required to save."
+				this.confirmButtonText = false;
+				this.cancelButtonText = "Discard"
+			}
+			this.alertService.conformAlertNavigate('Please confirm', this.alertText,this.cancelButtonText,this.confirmButtonText).then((result: any) => {
+				console.log("result", result);
+
+				if (result.isConfirmed) {
+					this.discardPatient()
+				} else if (result.isDismissed && (result.dismiss == "cancel")) {
+					this.savePatientForm()
+				}
+			})
+		}else
+		{
+		  this.addPatientServ.setLegalGuardianNotPristineCWP(false);
+		  this.router.navigate(['/dashboard/home']);
+		}
+	}
+	discardPatient(){
+		this.modalService.dismissAll();
+		this.addPatientServ.setLegalGuardianNotPristineCWP(false);
+		this.router.navigate(['/dashboard/home']);
+	}
+	savePatientForm(){
+		this.modalService.dismissAll();
+		this.save(this.Form)
+	}
+	getLegalGuardianWithID(){
+		console.log(this.bgId,this.legalGuardianID)
+       this.legalGuardianService.getSingleLegalGuardianData(this.bgId,this.legalGuardianID).subscribe(
+		(result: any) => {
+			console.log(result);
+			this.legalGuardianArray = {
+				firstName: result.profile.firstName,lastName: result.profile.lastName,
+				email: result.contact.email,phoneType: result.contact.primaryPhone.type,phoneNumber: result.contact.primaryPhone.number,
+				address: {addressLine1:result.address.addressLine1,addressLine2:result.address.addressLine2,
+				city:result.address.city,state:result.address.state,country:result.address.country,zipCode:result.address.zipCode}
+			};
+			this.Form.patchValue(this.legalGuardianArray)
+		   // this.initForm(this.legalGuardianArray)
+			this.addPatientServ.setLegalGuardCWP(
+				result,
+				this.patientPage
+			);
+		},
+		(error:any) => {
+			console.log(error);
+		}
+	);
 	}
 }

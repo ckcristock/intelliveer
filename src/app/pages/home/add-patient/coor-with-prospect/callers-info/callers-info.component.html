@@ -138,7 +138,7 @@ to be accompanied by a legal guardian. Do you have any questions for me?</textar
             </div>
             <div class="row formrow two-final-buttons">
                 <div class="two-items">
-                    <button class="btn btn-light btn-light-custom">Exit</button>
+                    <button class="btn btn-light btn-light-custom" (click)="openModel(content)">Exit</button>
                     <button type="button" class="btn btn-dark btn-dark-custom" (click)="continueToPatient()">Save and
                         continue</button>
                 </div>
@@ -146,3 +146,25 @@ to be accompanied by a legal guardian. Do you have any questions for me?</textar
         </div>
     </div>
 </form>
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title"></h4>
+		<button
+			type="button"
+			class="btn-close"
+			aria-label="Close"
+			(click)="modal.dismiss('Cross click')"
+		></button>
+	</div>
+	<div class="modal-body text-center">
+		<p style=" font-size: 20px; padding: 0px 20px;">Your data will be discarded .You can take note of the details.</p>
+	</div>
+	<div class="modal-footer text-center">
+		<button
+			type="button"
+			class="btn btn-dark"
+			(click)="discardCallerInfo()">
+			Discard
+		</button>
+	</div>
+</ng-template>

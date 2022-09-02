@@ -1,4 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { AlertService } from '@services/alert/alert.service';
+import { AuthService } from '@services/auth/auth.service';
+import { DentistService } from '@services/patient/dentist/dentist.service';
+import { LegalGuardianService } from '@services/patient/family/legal-guardian/legal-guardian.service';
+import { PatientDetailService } from '@services/patient/family/patient-detail.service';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
@@ -6,12 +12,24 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 })
 export class AddPatientService {
 
-  constructor() { }
+  constructor(private authService: AuthService,
+    private alertService: AlertService,
+    private patientDetailService: PatientDetailService,
+    private legalGuardianService: LegalGuardianService,
+    public router: Router,
+    private dentistService: DentistService,) {
+      this.getOrgBgId();
+     }
 
   // Forms Pristine Add Patient Coordinate with Prospect
 
   callerInfoNotPristiCWP: boolean = false;
   patientNotPristiCWP: boolean = false;
+  patentMandatoryFields: boolean = false;
+  legalMandatoryFields: boolean = false;
+  dentistMandatoryFields: boolean = false;
+  referrerMandatoryFields: boolean = false;
+  insuranceMandatoryFields: boolean = false;
   legalGuardNotPristiCWP: boolean = false;
   dentistNotPristiCWP: boolean = false;
   referrerNotPristiCWP: boolean = false;
@@ -21,7 +39,7 @@ export class AddPatientService {
   patient4NotPristiCWP: boolean = false;
   appointmNotPristiCWP: boolean = false;
   conclusionNotPristiCWP: boolean = false;
-
+  orgID:any;
   private patientsSavedUnsaved: any[] = [
     {
       name: 'Patient 2',
@@ -222,9 +240,9 @@ export class AddPatientService {
 
   // For CanDeactive Popup
   callersInfoFunctionCWP!: () => any;
-  patientFunctionCWP!: () => any;
-  legalGuardFunctionCWP!: () => any;
-  dentistFunctionCWP!: () => any;
+  patientFunctionCWP: any;
+  legalGuardFunctionCWP: any;
+  dentistFunctionCWP: any;
   referrerFunctionCWP!: () => any;
   insuranceFunctionCWP!: () => any;
   patient2FunctionCWP!: () => any;
@@ -281,15 +299,36 @@ export class AddPatientService {
   }
 
   setPatientCWP(patient: any) {
+    this.setPatientNotPristineCWP(false);
+    let objData:any = localStorage.getItem('sendRedirectObj');
+    objData = JSON.parse(objData);
+    console.log(objData)
     localStorage.setItem("patientCoorWithProsp", JSON.stringify(patient));
+    if(objData !=null){
+      this.router.navigate([objData?.url]);
+    }
   }
 
   setLegalGuardCWP(LG: any, index: number) {
+    this.setLegalGuardianNotPristineCWP(false);
     localStorage.setItem(`legalGuard${index}CoorWithProsp`, JSON.stringify(LG));
+    let objData:any = localStorage.getItem('sendRedirectObj');
+    objData = JSON.parse(objData);
+    console.log(objData)
+    if(objData !=null){
+      this.router.navigate([objData?.url]);
+    }
   }
 
   setDentistCWP(dentist: any) {
+    this.setDentistNotPristineCWP(false);
     localStorage.setItem("dentistCoorWithProsp", JSON.stringify(dentist));
+    let objData:any = localStorage.getItem('sendRedirectObj');
+    objData = JSON.parse(objData);
+    console.log(objData)
+    if(objData !=null){
+      this.router.navigate([objData?.url]);
+    }
   }
 
   setReferrerCWP(referrer: any) {
@@ -426,7 +465,6 @@ export class AddPatientService {
   setCallerInfoNotPristineCWP(value: boolean) {
     this.callerInfoNotPristiCWP = value;
   }
-
   getCallerInfoNotPristineCWP() {
     return this.callerInfoNotPristiCWP;
   }
@@ -434,11 +472,12 @@ export class AddPatientService {
   setPatientNotPristineCWP(value: boolean) {
     this.patientNotPristiCWP = value;
   }
-
   getPatientNotPristineCWP() {
     return this.patientNotPristiCWP;
   }
-
+  setPatentMandatoryFields(value: boolean){
+    this.patentMandatoryFields = value;
+  }
   setLegalGuardianNotPristineCWP(value: boolean) {
     this.legalGuardNotPristiCWP = value;
   }
@@ -446,7 +485,9 @@ export class AddPatientService {
   getLegalGuardianNotPristineCWP() {
     return this.legalGuardNotPristiCWP;
   }
-
+  setLegalMandatoryFields(value: boolean){
+    this.legalMandatoryFields = value;
+  }
   setDentistNotPristineCWP(value: boolean) {
     this.dentistNotPristiCWP = value;
   }
@@ -454,7 +495,9 @@ export class AddPatientService {
   getDentistNotPristineCWP() {
     return this.dentistNotPristiCWP;
   }
-
+  setDentistMandatoryFields(value: boolean){
+    this.dentistMandatoryFields = value;
+  }
   setReferrerNotPristineCWP(value: boolean) {
     this.referrerNotPristiCWP = value;
   }
@@ -462,7 +505,9 @@ export class AddPatientService {
   getReferrerNotPristineCWP() {
     return this.referrerNotPristiCWP;
   }
-
+  setReferrerMandatoryFields(value: boolean){
+    this.referrerMandatoryFields = value;
+  }
   setInsuranceNotPristineCWP(value: boolean) {
     this.insuranceNotPristiCWP = value;
   }
@@ -470,7 +515,9 @@ export class AddPatientService {
   getInsuranceNotPristineCWP() {
     return this.insuranceNotPristiCWP;
   }
-
+  setInsuranceMandatoryFields(value: boolean){
+    this.insuranceMandatoryFields = value;
+  }
   setPatient2NotPristineCWP(value: boolean) {
     this.patient2NotPristiCWP = value;
   }
@@ -532,11 +579,11 @@ export class AddPatientService {
   setConditions(){
     this.conditions = [];
 		this.conditions.push({ section: "callersinfo", condition: this.getCallerInfoNotPristineCWP() });
-		this.conditions.push({ section: "patient", condition: this.getPatientNotPristineCWP() });
-		this.conditions.push({ section: "legalguardian", condition: this.getLegalGuardianNotPristineCWP() });
-		this.conditions.push({ section: "dentist", condition: this.getDentistNotPristineCWP() });
-		this.conditions.push({ section: "referrer", condition: this.getReferrerNotPristineCWP() });
-		this.conditions.push({ section: "insurance", condition: this.getInsuranceNotPristineCWP() });
+		this.conditions.push({ section: "patient", condition: this.getPatientNotPristineCWP(),mandatory:this.patentMandatoryFields});
+		this.conditions.push({ section: "legalguardian", condition: this.getLegalGuardianNotPristineCWP(),mandatory:this.legalMandatoryFields });
+		this.conditions.push({ section: "dentist", condition: this.getDentistNotPristineCWP(),mandatory:this.dentistMandatoryFields });
+		this.conditions.push({ section: "referrer", condition: this.getReferrerNotPristineCWP(),mandatory:this.referrerMandatoryFields });
+		this.conditions.push({ section: "insurance", condition: this.getInsuranceNotPristineCWP(),mandatory:this.insuranceMandatoryFields });
 		this.conditions.push({ section: "patient2", condition: this.getPatient2NotPristineCWP() });
 		this.conditions.push({ section: "patient3", condition: this.getPatient3NotPristineCWP() });
 		this.conditions.push({ section: "patient4", condition: this.getPatient4NotPristineCWP() });
@@ -592,24 +639,120 @@ export class AddPatientService {
   }
 
   setPatientCWPFromPopup(){
-    console.log("patientData", this.patientFunctionCWP());
-    let patient:any [] = this.patientFunctionCWP();
+    console.log("patientData", this.patientFunctionCWP);
+    let patient:any  = this.patientFunctionCWP;
     console.log("patientData", patient);
-    this.setPatientCWP(patient[0]);
+    this.getPatientCWP().then((res)=>{
+      if(res._id){
+        patient._id = res._id
+        this.patientDetailService.updatePatient(patient, this.orgID).subscribe(
+          (result: any) => {
+            console.log(result);
+            this.setPatientCWP(patient);
+            this.alertService.success(
+              'Success',
+              'Patient has been updated successfully'
+            );
+          },
+          (error) => {
+            console.log(error);
+          })
+      }else{
+        this.patientDetailService.savePatient(this.patientFunctionCWP, this.orgID).subscribe(
+          (result: any) => {
+            console.log(result);
+            this.setPatientCWP(result);
+            this.alertService.success(
+              'Success',
+              'Patient has been save successfully'
+            );
+          },
+          (error) => {
+            console.log(error);
+          })
+      }
+    })
+    //this.setPatientCWP(patient[0]);
   }
 
   setLegalGuardCWPFromPopup(){
-    console.log("legalGuardData", this.legalGuardFunctionCWP());
-    let legalGuard:any [] = this.legalGuardFunctionCWP();
+    console.log("legalGuardData", this.legalGuardFunctionCWP);
+    let legalGuard:any [] = this.legalGuardFunctionCWP;
     console.log("legalGuardDataArray", legalGuard);
-    this.setLegalGuardCWP(legalGuard[0], legalGuard[1]);
+    this.getLegalGuardCWP(legalGuard[1]).then(res=>{
+      if(res._id){
+        legalGuard[0]._id = res._id
+        this.legalGuardianService
+        .updateLegalGuardian(legalGuard[0], this.orgID)
+        .subscribe(
+          (result: any) => {
+            console.log(result)
+            this.alertService.success(
+              'Success',
+              'Legal Guardian has been updated successfully'
+            );
+            this.setLegalGuardCWP(legalGuard[0], legalGuard[1]);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }else{
+        this.legalGuardianService
+			.saveLegalGuardian(legalGuard[0], this.orgID)
+			.subscribe(
+				(result: any) => {
+          console.log(result)
+          this.alertService.success(
+						'Success',
+						'Legal Guardian has been saved successfully'
+					);
+					this.setLegalGuardCWP(result, legalGuard[1]);
+				},
+				(error) => {
+					console.log(error);
+				}
+			);
+      }
+    })
   }
 
   setDentistCWPFromPopup(){
-    console.log("dentist Data", this.dentistFunctionCWP());
-    let dentist:any [] = this.dentistFunctionCWP();
-    console.log("dentist Data", dentist);
-    this.setDentistCWP(dentist[0]);
+    console.log("dentist Data", this.dentistFunctionCWP);
+    let dentist:any  = this.dentistFunctionCWP;
+    this.getDentistCWP().then(res=>{
+      if(res._id){
+        dentist._id = res._id
+        this.dentistService.update(dentist, this.orgID).subscribe(
+          (result: any) => {
+            console.log(result);
+            this.alertService.success(
+              'Success',
+              'Dentist has been updated successfully'
+            );
+            this.setDentistCWP(dentist);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }else{
+        this.dentistService.save(dentist, this.orgID).subscribe(
+          (result: any) => {
+            console.log(result);
+            this.alertService.success(
+              'Success',
+              'Dentist has been save successfully'
+            );
+            this.setDentistCWP(result);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
+    })
+   // this.setDentistCWP(dentist[0]);
   }
 
   setReferrerCWPFromPopup(){
@@ -625,5 +768,22 @@ export class AddPatientService {
     console.log("insurance Data", insurance);
     this.setInsuranceP1CWP(insurance[0]);
   }
-
+  getOrgBgId(){
+    let bgOrdID:any = localStorage.getItem('selected_business_group');
+    let user:any =	localStorage.getItem('permissionSet');
+    let orgId = this.authService.getOrgId();
+    user = JSON.parse(user)
+    console.log(bgOrdID)
+    if(bgOrdID){
+      this.orgID = bgOrdID
+    }else{
+     if(user?.__ISSU__){
+      this.orgID = 'intelliveer'
+     }else if(user?.isBGAdmin){
+      this.orgID = 'intelliveer'
+     }else{
+      this.orgID = orgId
+     }
+    }
+   }
 }

@@ -14,7 +14,7 @@ import { PatientFormComponent } from './patient-form.component';
     NgbModule,
     NgSelectModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
 	exports: [PatientFormComponent]
 })

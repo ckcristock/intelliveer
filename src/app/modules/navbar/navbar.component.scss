@@ -124,6 +124,7 @@ $search-input-width: 300px;
 	}
 	span {
 		color: #fff;
+		padding-left: 5px;
 	}
 }
 
@@ -152,4 +153,20 @@ $search-input-width: 300px;
 		height: 1.8rem;
 		border: none;
 	}
+}
+.selectedOrg {
+    border-left: 1px solid #c1c3c5;
+    background: #fff;
+    border-right: 1px solid #c1c3c5;
+	select {
+		border: none !important;
+		background-color: #fff;
+	}
+	.form-select:focus {
+		box-shadow: none;
+	}
+}
+.search .search-results {
+    max-height: 399px;
+    overflow-y: auto;
 }

@@ -3,12 +3,13 @@ import { Router } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { addPatientCordinateMenuItems } from '@pages/home/add-patient/menu';
 
-import { NgbNavChangeEvent } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbModal, NgbNavChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { AddPatientService } from '@services/add-patient/add-patient.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
 import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
 import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
+import { AlertService } from '@services/alert/alert.service';
 
 @Component({
   selector: 'app-insurance',
@@ -36,7 +37,7 @@ export class InsuranceComponent implements OnInit {
   @ViewChild('subscri3Radio1') subscri3Radio1!: ElementRef;
   @ViewChild('subscri3Radio2') subscri3Radio2!: ElementRef;
   @ViewChild('subscri3Radio3') subscri3Radio3!: ElementRef;
-
+  model!:NgbDateStruct
   insurances = {
     insurance1: {
       insuranName: "",
@@ -91,6 +92,9 @@ export class InsuranceComponent implements OnInit {
   openTextAreaVar: boolean = false;
   subscriberRadio: number = 1
   Form!: FormGroup;
+  alertText:any;
+	confirmButtonText:any
+	cancelButtonText:any
   @Input() formData: any | undefined = undefined;
 
 
@@ -100,6 +104,8 @@ export class InsuranceComponent implements OnInit {
     private patientUserServ: PatientUserService,
     private addPatientServ: AddPatientService,
     private insuranceServ: InsuranceService,
+    private modalService: NgbModal,
+    private alertService: AlertService,
     private onboardingServ: OnboardingService,) { }
 
   async ngOnInit() {
@@ -117,6 +123,11 @@ export class InsuranceComponent implements OnInit {
           console.log("status", this.Form.pristine);
 
           this.addPatientServ.setInsuranceNotPristineCWP(true);
+          if(this.Form.invalid){
+            this.addPatientServ.setInsuranceMandatoryFields(true)
+          }else{
+            this.addPatientServ.setInsuranceMandatoryFields(false)
+          }
         }
       }
     );
@@ -450,6 +461,59 @@ export class InsuranceComponent implements OnInit {
 
 
   }
-
+  // openModel(content: any) {
+  //   if(this.Form.value.insurance1InsuranName != '' || this.Form.value.insurance1PhoneNumb != '' || this.Form.value.insurance2InsuranName != '' || 
+  //   this.Form.value.insurance2PhoneNumb  != '' || this.Form.value.insurance3InsuranName  != ''|| this.Form.value.insurance3PhoneNumb  != ''
+  //   || this.Form.value.subscriber1DOB  != ''|| this.Form.value.subscriber1FirstName  != ''|| this.Form.value.subscriber1LastName  != ''
+  //   || this.Form.value.subscriber1SSNID  != ''|| this.Form.value.subscriber2DOB  != ''|| this.Form.value.subscriber2FirstName  != ''
+  //   || this.Form.value.subscriber2LastName  != ''|| this.Form.value.subscriber2SSNID  != ''|| this.Form.value.subscriber3DOB  != ''
+  //   || this.Form.value.subscriber3FirstName  != ''|| this.Form.value.subscriber3LastName  != ''|| this.Form.value.subscriber3SSNID  != '' ){
+	// 		this.modalService.open(content, { centered: true });
+	// 	  }else
+	// 	  {
+  //     this.addPatientServ.setInsuranceNotPristineCWP(false);
+	// 		this.router.navigate(['/dashboard/home']);
+	// 	  }
+	// }
+  openModel(content: any) {
+    if(this.Form.value.insurance1InsuranName != '' || this.Form.value.insurance1PhoneNumb != '' || this.Form.value.insurance2InsuranName != '' || 
+    this.Form.value.insurance2PhoneNumb  != '' || this.Form.value.insurance3InsuranName  != ''|| this.Form.value.insurance3PhoneNumb  != ''
+    || this.Form.value.subscriber1DOB  != ''|| this.Form.value.subscriber1FirstName  != ''|| this.Form.value.subscriber1LastName  != ''
+    || this.Form.value.subscriber1SSNID  != ''|| this.Form.value.subscriber2DOB  != ''|| this.Form.value.subscriber2FirstName  != ''
+    || this.Form.value.subscriber2LastName  != ''|| this.Form.value.subscriber2SSNID  != ''|| this.Form.value.subscriber3DOB  != ''
+    || this.Form.value.subscriber3FirstName  != ''|| this.Form.value.subscriber3LastName  != ''|| this.Form.value.subscriber3SSNID  != '' ){
+			if(this.Form.valid){
+        this.alertText = "Would you like to discard or save it?"
+        this.confirmButtonText = "Save";
+        this.cancelButtonText = "Discard"
+      }else if(this.Form.invalid){
+        this.alertText = "Mandatory fields are required to save."
+        this.confirmButtonText = false;
+        this.cancelButtonText = "Discard"
+      }
+      this.alertService.conformAlertNavigate('Please confirm', this.alertText,this.cancelButtonText,this.confirmButtonText).then((result: any) => {
+        console.log("result", result);
+        if (result.isConfirmed) {
+          this.discardPatient()
+        } else if (result.isDismissed && (result.dismiss == "cancel")) {
+          this.savePatientForm()
+        }
+      })
+    }else
+    {
+      this.addPatientServ.setInsuranceNotPristineCWP(false);
+      this.router.navigate(['/dashboard/home']);
+    }
+	}
+	discardPatient(){
+		this.modalService.dismissAll();
+    this.addPatientServ.setCallerInfoNotPristineCWP(false)
+		this.router.navigate(['/dashboard/home']);
+	}
+	savePatientForm(){
+		this.modalService.dismissAll();
+		this.save(this.Form)
+	}
+  
 
 }

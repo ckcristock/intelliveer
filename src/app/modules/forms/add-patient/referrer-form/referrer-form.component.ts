@@ -1,9 +1,11 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { addPatientCordinateMenuItems, addPatientQuickMenuItems } from '@pages/home/add-patient/menu';
 import { AddPatientService } from '@services/add-patient/add-patient.service';
+import { AlertService } from '@services/alert/alert.service';
 import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
 import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
 import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
@@ -18,7 +20,7 @@ export class ReferrerFormComponent implements OnInit {
   @ViewChild('radioReferrer1') radioReferrer1!: ElementRef;
   @ViewChild('radioReferrer2') radioReferrer2!: ElementRef;
   @Input() formData: any | undefined = undefined;
-
+  model!:NgbDateStruct
   radioReferrer: number = 1;
 
   dentist = {
@@ -44,12 +46,16 @@ export class ReferrerFormComponent implements OnInit {
   Form!: FormGroup;
   showButtonSaveCancel: boolean = false;
   openTextAreaVar: boolean = false;
-
+  alertText:any;
+	confirmButtonText:any
+	cancelButtonText:any
   constructor(private router: Router,
     private patientUserServ: PatientUserService,
     private addPatientServ: AddPatientService,
     private insuranceServ: InsuranceService,
     private onboardingServ: OnboardingService,
+    private modalService: NgbModal,
+    private alertService: AlertService,
     private fb: FormBuilder,) { }
 
   async ngOnInit() {
@@ -68,6 +74,11 @@ export class ReferrerFormComponent implements OnInit {
             console.log("status", this.Form.pristine);
 
             this.addPatientServ.setReferrerNotPristineCWP(true);
+            if(this.Form.invalid){
+							this.addPatientServ.setReferrerMandatoryFields(true)
+						}else{
+							this.addPatientServ.setReferrerMandatoryFields(false)
+						}
           }
         }
       );
@@ -182,6 +193,65 @@ export class ReferrerFormComponent implements OnInit {
     this.openTextAreaVar = true;
     this.showButtonSaveCancel = true;
   }
+  // openModel(content: any) {
+  //   let firstName = this.Form.value.firstName;
+	// 	if(firstName == undefined){
+	// 		firstName = '';
+	// 	}
+	// 	let lastName = this.Form.value.lastName;
+	// 	if(lastName == undefined){
+	// 		lastName = ''
+	// 	}
+	// 	if(firstName != '' || lastName != '' || this.Form.value.companyName != '' || this.Form.value.phoneNumber  != '' || this.Form.value.thanksfor  != '' ){
+	// 		this.modalService.open(content, { centered: true });
+	// 	  }else
+	// 	  {
+  //     this.addPatientServ.setReferrerNotPristineCWP(false);
+	// 		this.router.navigate(['/dashboard/home']);
+	// 	  }
+	// }
+  openModel(content: any) {
+    let firstName = this.Form.value.firstName;
+		if(firstName == undefined){
+			firstName = '';
+		}
+		let lastName = this.Form.value.lastName;
+		if(lastName == undefined){
+			lastName = ''
+		}
+		if(firstName != '' || lastName != '' || this.Form.value.companyName != '' || this.Form.value.phoneNumber  != '' || this.Form.value.thanksfor  != '' ){
+			if(this.Form.valid){
+				this.alertText = "Would you like to discard or save it?"
+				this.confirmButtonText = "Save";
+				this.cancelButtonText = "Discard"
+			}else if(this.Form.invalid){
+				this.alertText = "Mandatory fields are required to save."
+				this.confirmButtonText = false;
+				this.cancelButtonText = "Discard"
+			}
+			this.alertService.conformAlertNavigate('Please confirm', this.alertText,this.cancelButtonText,this.confirmButtonText).then((result: any) => {
+				console.log("result", result);
 
+				if (result.isConfirmed) {
+					this.discardPatient()
+				} else if (result.isDismissed && (result.dismiss == "cancel")) {
+					this.savePatientForm()
+				}
+			})
+		  }else
+		  {
+      this.addPatientServ.setReferrerNotPristineCWP(false);
+			this.router.navigate(['/dashboard/home']);
+		  }
+	}
+	discardPatient(){
+		this.modalService.dismissAll();
+    this.addPatientServ.setReferrerNotPristineCWP(false);
+		this.router.navigate(['/dashboard/home']);
+	}
+	savePatientForm(){
+		this.modalService.dismissAll();
+		this.save(this.Form)
+	}
 
 }

@@ -39,7 +39,7 @@ export class FamilyMembersComponent implements OnInit {
 		
 		this.addPatientServ.getPatientsSavedUnsaved().subscribe((resp: any[])=>{
 				
-				if(resp[0].saved===true){
+				if(resp[0]?.saved===true){
 					this.disableYesNo = "disabled";
 				} else {this.disableYesNo=null};
 

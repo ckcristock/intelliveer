@@ -56,7 +56,7 @@ export const patientUserHeaderIconMenuItems = [
 		url: '/+',
 		class:'',
 		icon: '/assets/icons/paper.svg',
-		shortTitle: 'Ledger'
+		shortTitle: 'Financials'
 	},
 	{
 		title: 'Insurances',
@@ -97,14 +97,14 @@ export const patientUserHeaderIconMenuItems = [
 		url: '/+',
 		class:'',
 		icon: '/assets/icons/user_card.svg',
-		shortTitle: 'Tx Card'
+		shortTitle: 'Tx Plan'
 	},
 	{
 		title: 'Treatment Card',
 		url: '/+',
 		class:'',
 		icon: '/assets/icons/calendar.svg',
-		shortTitle: 'Tooth Chart'
+		shortTitle: 'TX Card'
 	},
 	{
 		title: 'Other',

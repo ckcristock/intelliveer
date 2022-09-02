@@ -13,7 +13,8 @@ import { OnboardingService } from '@services/settings/onboarding/onboarding.serv
   styleUrls: ['./additional-patient-form.component.scss']
 })
 export class AdditionalPatientFormComponent implements OnInit {
-
+ 
+  isShowSections: boolean = false;
   counter: number = 0;
   @ViewChild('dentistRadio1') dentistRadio1!: ElementRef;
   @ViewChild('dentistRadio2') dentistRadio2!: ElementRef;
@@ -1250,5 +1251,8 @@ export class AdditionalPatientFormComponent implements OnInit {
     }
 
 
+  }
+  hideShowSections(){
+   this.isShowSections = true;
   }
 }

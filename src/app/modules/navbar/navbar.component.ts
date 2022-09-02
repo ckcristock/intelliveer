@@ -28,6 +28,7 @@ export class NavbarComponent implements OnInit {
 	selectedPatient: any;
 	username: any;
 	searchWord: string = '';
+	userListForSearch:any;
 	userLst: any = [
 		{
 			user: 'Smith John',
@@ -97,8 +98,10 @@ export class NavbarComponent implements OnInit {
 	showSelectedPatientUserCard: boolean = false;
 	clickCount: number = 0;
 	businessGroupDropdownSupscription: any;
-	selectedBusinessGroup: SelectedBusinessGroup | undefined;
-
+	selectedBusinessGroup: any;
+	businessGroups: any;
+    disableBGDropdown: boolean = false;
+    orgID:any;
 	constructor(
 		private authService: AuthService,
 		private cookieService: CookieService,
@@ -114,14 +117,23 @@ export class NavbarComponent implements OnInit {
 			}
 		});
 		this.businessGroupDropdownSupscription =
-			this.businessGroupDropdownService
-				.businessGroup()
-				.subscribe((bg) => {
-					if (bg) {
-						this.selectedBusinessGroup = bg;
-						this.getOrgBgId();
-					}
-				});
+      this.businessGroupDropdownService
+        .getBusinessGroups()
+        .subscribe((res) => {
+          if (res && res.length > 0) {
+            this.businessGroups = res;
+           // this.selectedBusinessGroup = res[0]._id;
+			this.getOrgBgId();
+          }
+        });
+		this.businessGroupDropdownService.businessGroup().subscribe((res) => {
+			if (res) {
+				console.log(res)
+				this.selectedBusinessGroup = res.bgId;
+				this.disableBGDropdown = res.disabled;
+				console.log(this.selectedBusinessGroup)
+			}
+			});
 	}
 
 	ngOnInit(): void {
@@ -278,19 +290,19 @@ export class NavbarComponent implements OnInit {
 			this.username = null;
 		}
 	}
-
-	fetchSearch($event: any): void {
-		if ($event.target.value === '') {
+    fetchSearch($event: any): void {
+		console.log($event.target.value)
+		if ($event.target.value == '') {
 			this.userSearchLst = this.userLst;
+		}else{
+			this.userSearchLst = this.userListForSearch.filter((searchResultObj: any) => {
+				return searchResultObj.user
+					.toLowerCase()
+					.startsWith($event.target.value.toLowerCase());
+			});
 		}
-		this.userSearchLst = this.userLst.filter((searchResultObj: any) => {
-			return searchResultObj.user
-				.toLowerCase()
-				.startsWith($event.target.value.toLowerCase());
-		});
 		this.selectedPatient.lastVisitPage = this.router.url;
 	}
-
 	selectUserMenuItem(selectUser: any, displayUI?: string) {
 		let index = this.selectUserLst.findIndex(
 			(obj) => obj.id == selectUser.id
@@ -360,23 +372,34 @@ export class NavbarComponent implements OnInit {
 
 	getOrgBgId() {
 		let bgOrdID: any = localStorage.getItem('selected_business_group');
-		console.log(bgOrdID);
-		let user = this.authService.getLoggedInUser();
+		let user:any = localStorage.getItem('permissionSet');
+		let orgId = this.authService.getOrgId();
+		user = JSON.parse(user);
+		console.log(bgOrdID,orgId)
 		if (user?.__ISSU__) {
 			if (bgOrdID == 'intelliveer' || bgOrdID == null) {
 				this.getPatientList('intelliveer');
+				this.getPatientListForSearch('intelliveer')
+				this.orgID = 'intelliveer'
 			} else {
 				this.getPatientList(this.selectedBusinessGroup?.bgId);
+				this.getPatientListForSearch(this.selectedBusinessGroup?.bgId)
+				this.orgID = bgOrdID
 			}
 		} else {
 			this.getPatientList(this.selectedBusinessGroup?.bgId);
+			this.getPatientListForSearch(this.selectedBusinessGroup?.bgId)
+			this.orgID = orgId
 		}
 	}
 
 	getPatientList(bgId: any)
 	{
+		let limit = 10;
+		let skip = 0;
+		let data = {limit: limit,skip: skip}
 		let userList: any[] = [];
-		this.patientService.getPatientList(bgId).subscribe((patientList: any) =>
+		this.patientService.getPatientList(bgId,data).subscribe((patientList: any) =>
 		{
 			for (let i = 0; i < patientList.length; i++) 
 			{
@@ -395,5 +418,34 @@ export class NavbarComponent implements OnInit {
 			this.userLst = userList;
 		})
 	}
-
+	getPatientListForSearch(bgId: any)
+	{
+		let limit = 100;
+		let skip = 0;
+		let data = {limit: limit,skip: skip}
+		let userList: any[] = [];
+		this.patientService.getPatientList(bgId,data).subscribe((patientList: any) =>
+		{
+			for (let i = 0; i < patientList.length; i++) 
+			{
+				const index = i + 1;
+				userList.push({
+					user: patientList[i].profile.firstName + ' ' + patientList[i].profile.lastName,
+					dob: patientList[i].profile.DOB,
+					active: true,
+					id: "P00"+ index,
+					sex: patientList[i].profile.gender,
+					isPin: false,
+					profileUrl: 'assets/images/doctor2.jpg',
+					dbId: patientList[i]._id
+				});
+			}
+			this.userListForSearch = userList;
+		})
+	}
+	setBusinessGroup(e: any) {
+		this.businessGroupDropdownService.setSelectedBusinessGroup(
+		  e.target.value
+		);
+	}
 }

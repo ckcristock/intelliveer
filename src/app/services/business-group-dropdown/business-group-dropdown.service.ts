@@ -20,6 +20,7 @@ export class BusinessGroupDropdownService {
 	private selectedBusinessGroup = new BehaviorSubject<
 		SelectedBusinessGroup | undefined
 	>(undefined);
+	user:any;
 	constructor(private businessGroupService: BusinessGroupService,
 		private cookieService: CookieService,
 		private authService: AuthService
@@ -57,14 +58,22 @@ export class BusinessGroupDropdownService {
 		}
 	}
 	private _getBusinessGroups() {
+		let orgId = this.authService.getOrgId();
 		this.businessGroupService.getBusinessGroups().subscribe({
 			next: (data: any) => {
 				console.log(data);
 				if (data && data.length > 0) {
+				if(this.user?.__ISSU__){
+				  this.selectedBG = {
+					bgId: orgId,
+					disabled: this.disabled
+				}
+				}else{
 					this.selectedBG = {
-						bgId: data[0]?._id,
-						disabled: this.disabled
-					};
+							bgId: data[0]?._id,
+							disabled: this.disabled
+						};
+				}
 					this.selectedBusinessGroup.next(this.selectedBG);
 					this.businessGroups.next(data);
 				}
@@ -118,6 +127,7 @@ export class BusinessGroupDropdownService {
 	 let user:any =	localStorage.getItem('permissionSet');
 	 let orgId = this.authService.getOrgId();
 	 user = JSON.parse(user);
+	 this.user = user;
 	 console.log(user)
 	 if (user) {
 		if(user?.__ISSU__){

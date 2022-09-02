@@ -6,6 +6,15 @@
 		<div class="logo">
 			<img src="/assets/images/logo.png" alt="" />
 		</div>
+		<div class="selectedOrg">
+			<select class="form-select" [(ngModel)]="selectedBusinessGroup" (change)="setBusinessGroup($event)"
+				[disabled]="disableBGDropdown">
+				<option value="intelliveer" [disabled]="disableBGDropdown">**INTELLIVEER**</option>
+				<option *ngFor="let bg of businessGroups" [value]="bg._id" [disabled]="disableBGDropdown">
+					{{ bg.name }}
+				</option>
+			</select>
+		</div>
 		<div class="search" #searchDivRef>
 			<div class="search-results" *ngIf="searchFocus">
 				<ul>
@@ -130,7 +139,7 @@
 					<div (click)="onSelectPatient('showSelectedPatientUserCard', selectedPatient)">
 						<img src="{{ selectedPatient.profileUrl }}" alt="" ngbDropdownToggle />
 						<span
-							>{{ selectedPatient.user }} ({{ selectedPatient.id }})</span
+							> {{ selectedPatient.user }} ({{ selectedPatient.id }})</span
 						>
 					</div>					
 					<div ngbDropdownMenu style="width: 28rem;" *ngIf="showSelectedPatientUserCard">
