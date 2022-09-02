@@ -17,6 +17,52 @@ export class ContactPersonFormComponent implements OnInit {
 	ngOnInit(): void {
 		this.getStaticData();
 	}
+
+	isNotRequiredField(field: any, type?: any) {
+		const form = this.parentGroup.get(this.formGroupName) as FormGroup;
+		const form_field = form.get(field);
+		let validator;
+		if (!form_field?.value) {
+			validator = false;
+		} else {
+			if (type == 'number') {
+				const num =  Number(form_field?.value);
+				console.log("nuuuuuuuuuuum",num)
+				if (num) {
+					validator = true
+					form_field?.valid;
+				} else {
+					validator = false;
+					form_field?.invalid;
+				}
+			} else if (type == 'string') {
+				const num = isNaN(form_field?.value); // Validate if it's string
+				console.log("Striiing",num)
+				if (num) {
+					validator = true;
+					form_field?.valid;
+				} else {
+					validator = false;
+					form_field?.invalid;
+				}
+			} else if (type == 'email') {
+				const num = (form_field?.value).includes('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'); // Validate if it's string
+				console.log("Striiing",num)
+				if (num) {
+					validator = true;
+					form_field?.valid;
+				} else {
+					validator = false;
+					form_field?.invalid;
+				}
+			} 
+			else {
+				validator = true;
+			}
+		}
+		return validator;
+	}
+	
 	isRequiredField(field: string) {
 		const form = this.parentGroup.get(this.formGroupName) as FormGroup;
 		const form_field = form.get(field);

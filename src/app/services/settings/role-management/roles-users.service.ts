@@ -10,118 +10,140 @@ import { AuthService } from '@services/auth/auth.service';
 export class RolesUsersService {
 
   private roleTemplatesCounter: number = 0;
-  private roleTemplates: any [] = [];
-  private roleTemplates$: BehaviorSubject<any []> = new BehaviorSubject<any>([]);
+  private roleTemplates: any[] = [];
+  private roleTemplates$: BehaviorSubject<any[]> = new BehaviorSubject<any>([]);
 
   private rolesCounter: number = 0;
-  private roles: any [] = [];
-  private roles$: BehaviorSubject<any []> = new BehaviorSubject<any>([]);
-  
+  private roles: any[] = [];
+  private roles$: BehaviorSubject<any[]> = new BehaviorSubject<any>([]);
+
+  // private roleTemplateName!:string;
+  // private roleName!:string;
+
+
   constructor(
     private http: HttpClient,
     private authService: AuthService
   ) { }
 
-  pushRoleTemplate(roleTemplate: any){
+  pushRoleTemplate(roleTemplate: any) {
     this.roleTemplatesCounter++;
-    roleTemplate.id=this.roleTemplatesCounter;
+    roleTemplate.id = this.roleTemplatesCounter;
     this.roleTemplates.push(roleTemplate);
     this.roleTemplates$.next(this.roleTemplates);
     console.log(this.roleTemplates);
-    
+
   }
 
-  getRoleTemplates(): Observable<any[]>{
+  getRoleTemplates(): Observable<any[]> {
     return this.roleTemplates$;
   }
-/** Get Role Template Permissions Meta */
-  getRoleTemplateMeta(){
-    return this.http.get(`${CONFIG.backend.host}/role/role-template/permissions/meta`,{
+  /** Get Role Template Permissions Meta */
+  getRoleTemplateMeta() {
+    return this.http.get(`${CONFIG.backend.host}/role/role-template/permissions/meta`, {
       headers: {
         'X-ORG-ID': this.authService.getOrgId()
       }
     });
   }
- 
+
   /** Create Role Template */
-  createRoleTemplate(data:any){
+  createRoleTemplate(data: any) {
     return this.http.post(`${CONFIG.backend.host}/role/role-template`,
-    data
-    ,{
-      headers: {
-        'X-ORG-ID': this.authService.getOrgId()
-      }
-    });
+      data
+      , {
+        headers: {
+          'X-ORG-ID': this.authService.getOrgId()
+        }
+      });
   }
 
   /** List Role Template */
-  listRoleTemplate(){
-    return this.http.get(`${CONFIG.backend.host}/role/role-template`,{
+  listRoleTemplate() {
+    return this.http.get(`${CONFIG.backend.host}/role/role-template`, {
       headers: {
         'X-ORG-ID': this.authService.getOrgId()
       }
     });
   }
-  listRoleTemplateListByBGId(type:any,bgId:any){
-    return this.http.get(`${CONFIG.backend.host}/role/role-template/`+type+`?bg=`+bgId,{
+  listRoleTemplateListByBGId(type: any, bgId: any) {
+    return this.http.get(`${CONFIG.backend.host}/role/role-template/` + type + `?bg=` + bgId, {
       headers: {
         'X-ORG-ID': this.authService.getOrgId()
       }
     });
   }
   /** get single Role Template */
-  singleRoleTemplate(ID:any){
-    return this.http.get(`${CONFIG.backend.host}/role/role-template/${ID}`,{
+  singleRoleTemplate(ID: any) {
+    return this.http.get(`${CONFIG.backend.host}/role/role-template/${ID}`, {
       headers: {
         'X-ORG-ID': this.authService.getOrgId()
       }
     });
   }
 
-   /** update Role Template */
-   updateRoleTemplate(data:any,ID:any){
+  /** update Role Template */
+  updateRoleTemplate(data: any, ID: any) {
     return this.http.put(`${CONFIG.backend.host}/role/role-template/${ID}`,
-    data
-    ,{
-      headers: {
-        'X-ORG-ID': this.authService.getOrgId()
-      }
-    });
+      data
+      , {
+        headers: {
+          'X-ORG-ID': this.authService.getOrgId()
+        }
+      });
   }
 
   /** Delete Role Template */
-  deleteRoleTemplateById(ID:any){
-    return this.http.delete(`${CONFIG.backend.host}/role/role-template/${ID}`,{
+  deleteRoleTemplateById(ID: any) {
+    return this.http.delete(`${CONFIG.backend.host}/role/role-template/${ID}`, {
       headers: {
         'X-ORG-ID': this.authService.getOrgId()
       }
     });
   }
-  deleteRoleTemplate(id: number){
-    let roleTemplateDeleted = this.roleTemplates.filter((x)=>{
-      return x.id!=id;
+  deleteRoleTemplate(id: number) {
+    let roleTemplateDeleted = this.roleTemplates.filter((x) => {
+      return x.id != id;
     })
-    this.roleTemplates=roleTemplateDeleted;
+    this.roleTemplates = roleTemplateDeleted;
     this.roleTemplates$.next(this.roleTemplates);
   }
 
-  pushRole(role: any){
+  pushRole(role: any) {
     this.rolesCounter++;
-    role.id=this.rolesCounter;
+    role.id = this.rolesCounter;
     this.roles.push(role);
     this.roles$.next(this.roles);
   }
 
-  getRoles(): Observable<any[]>{
+  getRoles(): Observable<any[]> {
     return this.roles$;
   }
 
-  deleteRole(id: number){
-    let roleDeleted = this.roles.filter((x)=>{
-      return x.id!=id;
+  deleteRole(id: number) {
+    let roleDeleted = this.roles.filter((x) => {
+      return x.id != id;
     })
-    this.roles=roleDeleted;
+    this.roles = roleDeleted;
     this.roles$.next(this.roles);
+  }
+
+  // For Role Management
+
+  setRoleTemplateName(name: string) {
+    localStorage.setItem(`roleTemplateName`, JSON.stringify(name));
+  }
+
+  async getRoleTemplateName() {
+    return localStorage.getItem(`roleTemplateName` || '');
+  }
+
+  setRoleName(name: string) {
+    localStorage.setItem(`roleName`, JSON.stringify(name));
+  }
+
+  getRoleName() {
+    return localStorage.getItem(`roleName` || '');
   }
 
 }

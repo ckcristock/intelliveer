@@ -70,14 +70,17 @@
 				</div>
 				<div class="col">
 					<label class="required">Website</label>
-					<div class="input-group">
-						<label class="input-group-text" for="inputGroupFile01">https://</label>
-						<input type="text" class="form-control" formControlName="website" [ngClass]="{
+					<div class="website">
+						<span class="" style="height: 36px;">https://</span>
+						<input type="text" class="form-control input-upper" name="website" placeholder=""
+							formControlName="website" 
+							[ngClass]="{
 								'required-field':
 									isRequiredField('website') === true
-							}" />
+							}"/>
 					</div>
 				</div>
+
 				<div class="col">
 					<label class="required">Fax</label>
 					<input type="text" class="form-control" formControlName="fax" [ngClass]="{

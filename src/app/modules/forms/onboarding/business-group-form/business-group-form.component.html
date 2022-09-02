@@ -35,10 +35,10 @@
 					</div>
 					<div class="col-3">
 						<label class="required">Currency</label>
-						<select class="form-select required-field" [class.valid-mandatory-field]="currencyValid()"
-							formControlName="currency">
-							<option value="usd">USD</option>
-						</select>
+						<ng-select formControlName="currency" class="required-field"
+							[class.valid-mandatory-field]="currencyValid()">
+							<ng-option >USD</ng-option>
+						</ng-select>
 					</div>
 				</div>
 			</div>

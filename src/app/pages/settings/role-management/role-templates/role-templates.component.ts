@@ -21,13 +21,17 @@ export class RoleTemplatesComponent implements OnInit {
   businessGroupDropdownSupscription: Subscription;
   selectedBusinessGroup: SelectedBusinessGroup | any;
   isSuperUser:boolean = false;
+  menuItems: any;
+  urlSettings!: string;
+
   constructor(private router: Router,
     private rolesUserServ: RolesUsersService,
     private alertService: AlertService,
     private _ngZone: NgZone,
     private authService: AuthService,
     private businessGroupDropdownService: BusinessGroupDropdownService,
-    private globalRoutes: GlobalRoutesService) { 
+    private globalRoutes: GlobalRoutesService,
+    private routes: GlobalRoutesService,) { 
       this.businessGroupDropdownSupscription = this.businessGroupDropdownService
       .businessGroup()
       .subscribe((bg) => {
@@ -40,6 +44,8 @@ export class RoleTemplatesComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.menuItems = this.routes.getSettingsRoleManageRoutes();
+    this.urlSettings = this.routes.getSettingsUrl();
     this.addRoute = this.globalRoutes.getSettingsRoleManageRoutes()[0].child[0].url;
   }
 

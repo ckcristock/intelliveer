@@ -1,4 +1,4 @@
-<div class="row">
+<!-- <div class="row">
   <div class="col-2">
     <div class="settings-row">
       <i class="bi bi-arrow-left-circle" style="font-size: 2rem; cursor: pointer;" [routerLink]="urlSettings"></i>
@@ -6,8 +6,13 @@
     </div>
     <ul class="ul" style="margin-top: 27px;">
       <div *ngFor="let item of menuItems">
-        <li class="pointer" *ngIf="item.isEnabled"  routerLinkActive="active" [routerLink]="item.url">
+        <li class="pointer" *ngIf="item.isEnabled && currentRoute.length==0"  routerLinkActive="active" [routerLink]="item.url">
           {{ item.title }}
+        </li>
+      </div>
+      <div *ngIf="currentRoute.length!=0"  >
+        <li class="pointer" routerLinkActive="active" >
+          {{ currentRoute }}
         </li>
       </div>
     </ul>
@@ -15,4 +20,5 @@
   <div class="col-10 component-view">
     <router-outlet></router-outlet>
   </div>
-</div>
+</div> -->
+<router-outlet></router-outlet>

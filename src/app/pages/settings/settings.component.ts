@@ -56,7 +56,16 @@ export class SettingsComponent implements OnInit {
   disableBGDropdown: boolean = false;
   moduleName: string = '';
   currentRoute: string = "Onboarding";
-  orgID:any;
+  currentRouteChild1: string = "";
+  currentRouteChild2: string = "";
+  currentRouteChild3: string = "";
+  urlSettings!: string;
+  urlRoleManagement!: string;
+  urlManageRole!: string;
+
+
+
+  orgID: any;
   constructor(
     public router: Router,
     private businessGroupDropdownService: BusinessGroupDropdownService,
@@ -64,6 +73,7 @@ export class SettingsComponent implements OnInit {
     private globalRoutes: GlobalRoutesService,
     private cookieService: CookieService,
     private authService: AuthService,
+    private routes: GlobalRoutesService,
   ) {
     this.getUserOrdID();
     this.menuBarService.compactSideMenu(this.compactSidebar);
@@ -76,7 +86,7 @@ export class SettingsComponent implements OnInit {
             this.selectedBusinessGroup = (this.orgID) ? this.orgID : res[0]._id;
           }
         });
-       
+
     this.businessGroupDropdownService.businessGroup().subscribe((res) => {
       if (res) {
         console.log(res)
@@ -84,7 +94,7 @@ export class SettingsComponent implements OnInit {
         this.disableBGDropdown = res.disabled;
         console.log(this.selectedBusinessGroup)
       }
-      
+
     });
     this.menuStatsSubscription =
       this.menuBarService.compactSideMenuStatus.subscribe(
@@ -96,10 +106,36 @@ export class SettingsComponent implements OnInit {
     router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
+
       if (event.url.includes("onboarding")) {
         this.currentRoute = "Onboarding";
+        this.currentRouteChild1 = "";
+        this.currentRouteChild2 = "";
       } else if (event.url.includes("role")) {
         this.currentRoute = "Role Management";
+        this.currentRouteChild1 = "Manage Role Templates";
+        this.currentRouteChild2 = "";
+        if (event.url.includes("manage-role-template")) {
+          this.currentRouteChild1 = "Manage Role Templates";
+          this.currentRouteChild2 = "";
+          this.currentRouteChild3 = "";
+          this.urlRoleManagement = this.routes.getSettingsRoleManageUrl();
+          if (event.url.includes("edit?_id")) {
+            this.currentRouteChild2 = "Edit Role Template";
+          } else if (event.url.includes("add")) {
+            this.currentRouteChild3 = "Add Role Template";
+          }
+        } else if (event.url.includes("manage-role")) {
+          this.currentRouteChild1 = "Manage Role";
+          this.currentRouteChild2 = "";
+          this.currentRouteChild3 = "";
+          this.urlManageRole = this.routes.getSettingsRoleManageRoutes()[1].url;
+          if (event.url.includes("edit")) {
+            this.currentRouteChild2 = "Edit Role";
+          } else if (event.url.includes("add")) {
+            this.currentRouteChild3 = "Add Role";
+          }
+        }
       } else if (event.url.includes("user")) {
         this.currentRoute = "User Management";
       }
@@ -113,39 +149,40 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
     //getting principal routes
     this.checkActiveRoutes();
-   
+    this.urlSettings = this.routes.getSettingsUrl();
+
   }
-  getUserOrdID(){
-    let bgOrdID:any = localStorage.getItem('selected_business_group');
-    let user:any =	localStorage.getItem('permissionSet');
+  getUserOrdID() {
+    let bgOrdID: any = localStorage.getItem('selected_business_group');
+    let user: any = localStorage.getItem('permissionSet');
     let orgId = this.authService.getOrgId();
     user = JSON.parse(user)
     console.log(bgOrdID)
-    if(bgOrdID){
+    if (bgOrdID) {
       this.orgID = bgOrdID
-    }else{
-     if(user?.__ISSU__){
-      this.orgID = 'intelliveer'
-     }else{
-      this.orgID = orgId
-     }
+    } else {
+      if (user?.__ISSU__) {
+        this.orgID = 'intelliveer'
+      } else {
+        this.orgID = orgId
+      }
     }
-    if(user?.__ISSU__){
+    if (user?.__ISSU__) {
       this.isSuperUser = user?.__ISSU__;
-    }else if(user?.isBGAdmin){
-      
+    } else if (user?.isBGAdmin) {
+
     }
-  
+
   }
-  
+
   /** Get Active Routes */
-  checkActiveRoutes(){
+  checkActiveRoutes() {
     let onBoardingMenu = this.globalRoutes.getSettingsOnboardingRoutes();
     for (let index = 0; index < onBoardingMenu.length; index++) {
-      if(onBoardingMenu[index].isEnabled){
+      if (onBoardingMenu[index].isEnabled) {
         this.menuItems[0].url = onBoardingMenu[index].url;
         break;
       }
@@ -158,13 +195,13 @@ export class SettingsComponent implements OnInit {
     this.roleManagementchilds = this.globalRoutes.getSettingsRoleManageRoutes();
     this.userManagementchilds = this.globalRoutes.getSettingsUserManageRoutes();
     let user = this.authService.getLoggedInUser();
-    if(!user?.__ISSU__){
-     this.menuItems[1].url = "/dashboard/settings/role-management/manage-role"
+    if (!user?.__ISSU__) {
+      this.menuItems[1].url = "/dashboard/settings/role-management/manage-role"
     }
-    this.menuItems[0].childs=this.onboardingChilds;
-    this.menuItems[1].childs=this.roleManagementchilds;
-    this.menuItems[2].childs=this.userManagementchilds;
-    console.log(this.menuItems,onBoardingMenu)
+    this.menuItems[0].childs = this.onboardingChilds;
+    this.menuItems[1].childs = this.roleManagementchilds;
+    this.menuItems[2].childs = this.userManagementchilds;
+    console.log(this.menuItems, onBoardingMenu)
   }
   setBusinessGroup(e: any) {
     this.businessGroupDropdownService.setSelectedBusinessGroup(

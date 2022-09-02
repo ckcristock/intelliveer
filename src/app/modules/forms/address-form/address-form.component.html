@@ -5,8 +5,8 @@
 				<div class="col">
 					<label class="label-input-gap">Address Line 1</label>
 					<input type="text" class="form-control input-upper" formControlName="addressLine1"
-						placeholder="Street address, P.O box" (input)="isNotRequiredField('addressLine1', 'number')"
-						[ngClass]="[isNotRequiredField('addressLine1', 'number') ? 'valid-mandatory-field' : 'red-bottom-line' ]" />
+						placeholder="Street address, P.O box" (input)="isNotRequiredField('addressLine1', 'string')"
+						[ngClass]="[isNotRequiredField('addressLine1', 'string') ? 'valid-mandatory-field' : 'red-bottom-line' ]" />
 				</div>
 				<div class="col">
 					<label class="label-input-gap">Address Line 2</label>
@@ -14,7 +14,7 @@
 						placeholder="Apartment, Suite, Unit, Building, Floor, etc." [ngClass]="{
 							'mandatory-field':
 								isRequiredField('addressLine2') === true
-						}" />{{isRequiredField('addressLine2')}}
+						}" />
 				</div>
 			</div>
 			<div class="row formrow">
@@ -23,11 +23,8 @@
 					<!-- <input type="text" class="form-control input-upper" formControlName="country" /> -->
 					<ng-select class="input-upper" formControlName="country" [(ngModel)]="selectedCountry"
 						(change)="getStates($event)" (clear)="resetState(); resetCity()" [searchFn]="customSearchFn"
-						[ngClass]="{
-							'mandatory-field':
-								isRequiredField('country') === true, 'red-bottom-line': referrer != 'referrer',
-								'valid-required-field': isRequiredField('country') == 'country'
-						}">
+						(input)="isNotRequiredField('country', 'string')"
+						[ngClass]="[isNotRequiredField('country', 'string') ? 'valid-mandatory-field' : 'red-bottom-line' ]">
 						<ng-option *ngFor="let country of countries" [value]="country.iso3">{{ country.name }}
 						</ng-option>
 					</ng-select>
@@ -36,11 +33,9 @@
 					<label class="label-input-gap">State</label>
 					<!-- <input type="text" class="form-control input-upper" formControlName="state" /> -->
 					<ng-select [(ngModel)]="selectedState" class="input-upper" formControlName="state"
-						(change)="getCities($event)" (open)="stateOptionIsOpened()" (clear)="resetCity()" [ngClass]="{
-							'mandatory-field':
-								isRequiredField('state') === true, 'red-bottom-line': referrer != 'referrer',
-								'valid-required-field': isRequiredField('state') == 11
-						}">
+						(change)="getCities($event)" (open)="stateOptionIsOpened()" (clear)="resetCity()" 
+						(input)="isNotRequiredField('state', 'string')"
+						[ngClass]="[isNotRequiredField('state', 'string') ? 'valid-mandatory-field' : 'red-bottom-line' ]">
 						<ng-option *ngFor="let state of states" [value]="state.state_code">{{ state.name }}</ng-option>
 					</ng-select>
 				</div>
@@ -48,21 +43,17 @@
 					<label class="label-input-gap">City</label>
 					<!-- <input type="text" class="form-control input-upper" formControlName="city" /> -->
 					<ng-select [(ngModel)]="selectedCity" class=" input-upper" formControlName="city"
-						(open)="cityOptionIsOpened()" [ngClass]="{
-							'mandatory-field':
-								isRequiredField('city') === true, 'red-bottom-line': referrer != 'referrer',
-								'valid-required-field': isRequiredField('city') == 11
-						}">
+						(open)="cityOptionIsOpened()" 
+						(input)="isNotRequiredField('city', 'string')"
+						[ngClass]="[isNotRequiredField('city', 'string') ? 'valid-mandatory-field' : 'red-bottom-line' ]">
 						<ng-option *ngFor="let city of cities" [value]="city.name">{{ city.name }}</ng-option>
 					</ng-select>
 				</div>
 				<div class="col">
 					<label class="label-input-gap">Zip Code</label>
-					<input type="text" class="form-control input-upper" formControlName="zipCode" [ngClass]="{
-							'mandatory-field':
-								isRequiredField('zipCode') === true, 'red-bottom-line': referrer != 'referrer',
-								'valid-required-field': isRequiredField('zipCode') == 11
-						}" />
+					<input type="text" class="form-control input-upper" formControlName="zipCode"
+					(input)="isNotRequiredField('zipCode', 'number')"
+						[ngClass]="[isNotRequiredField('zipCode', 'number') ? 'valid-mandatory-field' : 'red-bottom-line' ]" />
 				</div>
 			</div>
 		</div>
