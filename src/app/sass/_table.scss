@@ -10,3 +10,15 @@ tr {
 	background-color: transparent;
 	border: none;
 }
+table.table {
+	table-layout: fixed;
+}
+table.table td {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-align: start;
+}
+
+table.table th:nth-child(1) {
+	width: min-content;
+}
