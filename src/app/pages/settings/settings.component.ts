@@ -50,7 +50,7 @@ export class SettingsComponent implements OnInit {
   ];
 
   compactSidebar: boolean = true;
-  businessGroupDropdownSupscription: Subscription;
+//  businessGroupDropdownSupscription: Subscription;
   menuStatsSubscription: Subscription;
   businessGroups: any;
   disableBGDropdown: boolean = false;
@@ -77,25 +77,25 @@ export class SettingsComponent implements OnInit {
   ) {
     this.getUserOrdID();
     this.menuBarService.compactSideMenu(this.compactSidebar);
-    this.businessGroupDropdownSupscription =
-      this.businessGroupDropdownService
-        .getBusinessGroups()
-        .subscribe((res) => {
-          if (res && res.length > 0) {
-            this.businessGroups = res;
-            this.selectedBusinessGroup = (this.orgID) ? this.orgID : res[0]._id;
-          }
-        });
-
-    this.businessGroupDropdownService.businessGroup().subscribe((res) => {
-      if (res) {
-        console.log(res)
-        this.selectedBusinessGroup = (this.orgID) ? this.orgID : res.bgId;
-        this.disableBGDropdown = res.disabled;
-        console.log(this.selectedBusinessGroup)
-      }
-
-    });
+    // this.businessGroupDropdownSupscription =
+    //   this.businessGroupDropdownService
+    //     .getBusinessGroups()
+    //     .subscribe((res) => {
+    //       if (res && res.length > 0) {
+    //         this.businessGroups = res;
+    //         this.selectedBusinessGroup = (this.orgID) ? this.orgID : res[0]._id;
+    //       }
+    //     });
+       
+    // this.businessGroupDropdownService.businessGroup().subscribe((res) => {
+    //   if (res) {
+    //     console.log(res)
+    //     this.selectedBusinessGroup = (this.orgID) ? this.orgID : res.bgId;
+    //     this.disableBGDropdown = res.disabled;
+    //     console.log(this.selectedBusinessGroup)
+    //   }
+      
+    // });
     this.menuStatsSubscription =
       this.menuBarService.compactSideMenuStatus.subscribe(
         (val: boolean) => {
@@ -182,8 +182,16 @@ export class SettingsComponent implements OnInit {
   checkActiveRoutes() {
     let onBoardingMenu = this.globalRoutes.getSettingsOnboardingRoutes();
     for (let index = 0; index < onBoardingMenu.length; index++) {
-      if (onBoardingMenu[index].isEnabled) {
-        this.menuItems[0].url = onBoardingMenu[index].url;
+      if(onBoardingMenu[index].isEnabled){
+        if(onBoardingMenu[index].title == 'Business Group'){
+          if(onBoardingMenu[index].child.isEnabled){
+            this.menuItems[0].url = onBoardingMenu[index].url+'/edit/'+this.orgID;
+          }else{
+            this.menuItems[0].url = onBoardingMenu[index].url;
+          }
+        }else{
+          this.menuItems[0].url = onBoardingMenu[index].url;
+        }
         break;
       }
     }
@@ -203,9 +211,9 @@ export class SettingsComponent implements OnInit {
     this.menuItems[2].childs = this.userManagementchilds;
     console.log(this.menuItems, onBoardingMenu)
   }
-  setBusinessGroup(e: any) {
-    this.businessGroupDropdownService.setSelectedBusinessGroup(
-      e.target.value
-    );
-  }
+  // setBusinessGroup(e: any) {
+  //   this.businessGroupDropdownService.setSelectedBusinessGroup(
+  //     e.target.value
+  //   );
+  // }
 }

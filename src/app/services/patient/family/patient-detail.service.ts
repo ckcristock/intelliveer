@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CONFIG } from '@config/index';
 import { AuthService } from '@services/auth/auth.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root'
@@ -9,7 +10,7 @@ import { AuthService } from '@services/auth/auth.service';
 export class PatientDetailService {
 	constructor(private http: HttpClient, public authService: AuthService) {}
 
-	savePatient(Obj: any, bgId: any) {
+	savePatient(Obj: any, bgId: any): Observable<any>{
 		return this.http.post(`${CONFIG.backend.host}/bg/patient`, Obj, {
 			headers: {
 				'X-ORG-ID': bgId
@@ -49,25 +50,22 @@ export class PatientDetailService {
 		});
 	}
 
-	getPatientList(bgId: string) {
-		return this.http.get(
-			`${CONFIG.backend.host}/bg/patient?skip=0&limit=10`,
-			{
-				headers: {
-					'X-ORG-ID': bgId
-				}
-			}
-		);
-	}
-
-	getSinglePatientData(bgId: any, userId: any) {
-		return this.http.get(`${CONFIG.backend.host}/bg/patient/` + userId, {
+	getPatientList(bgId: string,data:any)
+	{
+		return this.http.get(`${CONFIG.backend.host}/bg/patient?skip=${data.skip}&limit=${data.limit}`, {
 			headers: {
 				'X-ORG-ID': bgId
 			}
 		});
 	}
-
+	getSinglePatientData(bgId: any, userId: any)
+	{
+		return this.http.get(`${CONFIG.backend.host}/bg/patient/`+ userId, {
+			headers: {
+			  'X-ORG-ID': bgId
+			}
+		  });
+	}
 	updatePatient(Obj: any, bgId: any) {
 		return this.http.put(`${CONFIG.backend.host}/bg/patient/`, Obj, {
 			headers: {

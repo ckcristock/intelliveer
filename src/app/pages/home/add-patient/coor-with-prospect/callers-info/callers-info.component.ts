@@ -9,6 +9,8 @@ import { HttpClient } from '@angular/common/http';
 import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
 import { PatientUserService } from '@services/dashboard/patient/patient-user/patient-user.service';
 import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
+import { ModalDismissReasons, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AlertService } from '@services/alert/alert.service';
 
 @Component({
   selector: 'app-callers-info',
@@ -49,13 +51,18 @@ export class CallersInfoComponent implements OnInit {
   @Input() formData: any | undefined = undefined;
   menuItems: IMenuItem[] = addPatientCordinateMenuItems;
   showButtonSaveCancel: boolean = false;
-
+  model!:NgbDateStruct
+  alertText:any;
+	confirmButtonText:any
+	cancelButtonText:any
   constructor(private router: Router,
+    private modalService: NgbModal,
     private patientUserServ: PatientUserService,
     private addPatientServ: AddPatientService,
     private insuranceServ: InsuranceService,
     private onboardingServ: OnboardingService,
     private fb: FormBuilder,
+    private alertService: AlertService,
     private http: HttpClient) { }
 
   async ngOnInit() {
@@ -210,7 +217,61 @@ export class CallersInfoComponent implements OnInit {
         complete: () => { }
       });
   }
-
-
+  // openModel(content: any) {
+  //   let firstName = this.Form.value.firstName;
+  //   if(firstName == undefined){
+  //     firstName = '';
+  //   }
+  //   let lastName = this.Form.value.lastName;
+  //   if(lastName == undefined){
+  //     lastName = ''
+  //   }
+  //   let phoneNumber = this.Form.value.phoneNumber;
+  //   if(phoneNumber == undefined){
+  //     phoneNumber = ''
+  //   }
+  //   console.log(firstName,lastName,phoneNumber,this.Form.value.type)
+  //   if(firstName != '' || lastName != '' || this.Form.value.type != '' || phoneNumber != '' ){
+  //     this.modalService.open(content, { centered: true });
+  //   }else
+  //   {
+  //     this.addPatientServ.setCallerInfoNotPristineCWP(false)
+  //     this.router.navigate(['/dashboard/home']);
+  //   }
+	// }
+  openModel(content: any) {
+    let firstName = this.Form.value.firstName;
+    if(firstName == undefined){
+      firstName = '';
+    }
+    let lastName = this.Form.value.lastName;
+    if(lastName == undefined){
+      lastName = ''
+    }
+    let phoneNumber = this.Form.value.phoneNumber;
+    if(phoneNumber == undefined){
+      phoneNumber = ''
+    }
+    console.log(firstName,lastName,phoneNumber,this.Form.value.type)
+    if(firstName != '' || lastName != '' || this.Form.value.type != '' || phoneNumber != '' ){
+        this.alertText = "Your data will be discarded .You can take note of the details."
+        this.confirmButtonText = false;
+        this.cancelButtonText = "Discard"
+      this.alertService.conformAlertNavigate('Please confirm', this.alertText,this.cancelButtonText,this.confirmButtonText).then((result: any) => {
+        if (result.isConfirmed) {
+          this.discardCallerInfo()
+        }
+      })
+    }else
+    {
+      this.addPatientServ.setCallerInfoNotPristineCWP(false)
+      this.router.navigate(['/dashboard/home']);
+    }
+	}
+  discardCallerInfo(){
+    this.modalService.dismissAll();
+    this.addPatientServ.setCallerInfoNotPristineCWP(false)
+    this.router.navigate(['/dashboard/home']);
+  }
 
 }

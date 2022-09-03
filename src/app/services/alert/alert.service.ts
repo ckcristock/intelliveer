@@ -25,9 +25,25 @@ export class AlertService {
 			icon: 'warning',
 			showCancelButton: true,
       allowOutsideClick: false,
-			confirmButtonText: 'Discard my changes.',
+			confirmButtonText: 'Save my changes.',
+      confirmButtonColor: '#414042',
+			cancelButtonText: 'Discard my changes.',
+      cancelButtonColor: '#ff4500',
+      backdrop: true,
+      showCloseButton: true,
+		})
+  }
+  conformAlertNavigate(title: string, text: string,confirmButtonText?:any,cancelButtonText?:any)
+  {
+    return Swal.fire({
+			title: title,
+			text: text,
+			icon: 'warning',
+			showCancelButton: cancelButtonText ? true : false,
+      allowOutsideClick: false,
+			confirmButtonText: confirmButtonText,
       confirmButtonColor: '#ff4500',
-			cancelButtonText: 'Save my changes.',
+			cancelButtonText: cancelButtonText,
       cancelButtonColor: '#414042',
       backdrop: true,
       showCloseButton: true,

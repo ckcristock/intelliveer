@@ -118,36 +118,91 @@
             </div>
         </div>
         <app-address-form [parentGroup]="Form" [formGroupName]="'address'"></app-address-form>
-        <div class="row formrow">
-            <div class="col-3">
-                <div class="mainformset">
-                    <label class=" label-input-gap">Primary Phone Number</label>
-                    <input class="form-control" type="text" placeholder="" name="" formControlName="phoneNumber" />
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="mainformset">
-                    <label class="label-input-gap">Type</label>
-                    <select class="form-select" formControlName="phoneType">
-                        <option [value]="type.value" *ngFor="let type of phoneTypes.phone">
-                            {{ type.label }}
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="mainformset">
-                    <label class=" label-input-gap">Email</label>
-                    <input class="form-control" type="text" placeholder="" name="" formControlName="email"/>
-                </div>
-            </div>
-        </div>
-        <div *ngIf="tab!='addPatient'" class="row formrow two-final-buttons">
-            <div class="two-items">
-                <button class="btn btn-light btn-light-custom">Exit</button>
-                <button type="button" class="btn btn-dark btn-dark-custom" (click)="continueToDentist()"
-                    [disabled]="Form?.invalid">Save and continue</button>
-            </div>
-        </div>
-    </div>
+		<div class="row formrow">
+			<div class="col-3">
+				<div class="mainformset">
+					<label class="label-input-gap">Primary Phone Number</label>
+					<input
+						class="form-control"
+						type="text"
+						placeholder=""
+						name=""
+                        formControlName="phoneNumber"
+					/>
+				</div>
+			</div>
+			<div class="col-3">
+				<div class="mainformset">
+					<label class="label-input-gap">Type</label>
+					<select class="form-select" formControlName="phoneType">
+						<option
+							[value]="type.value"
+							*ngFor="let type of phoneTypes.phone"
+						>
+							{{ type.label }}
+						</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-3">
+				<div class="mainformset">
+					<label class="label-input-gap">Email</label>
+					<input
+						class="form-control"
+						type="text"
+						placeholder=""
+						name=""
+                        formControlName="email"
+					/>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="tab != 'addPatient'" class="row formrow two-final-buttons">
+			<div class="two-items">
+				<a class="btn btn-light btn-light-custom" (click)="openModel(content)">Exit</a>
+				<button
+					type="button"
+					class="btn btn-dark btn-dark-custom"
+					(click)="save(f)"
+					[disabled]="Form!.invalid"
+				>
+					Save and continue
+				</button>
+			</div>
+		</div>
+	</div>
 </form>
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title"></h4>
+		<button
+			type="button"
+			class="btn-close"
+			aria-label="Close"
+			(click)="modal.dismiss('Cross click')"
+		></button>
+	</div>
+	<div class="modal-body text-center">
+		<p *ngIf="Form?.valid" style=" font-size: 20px; padding: 0px 20px;">
+			Would you like to discard or save it?
+	    </p>
+		<p *ngIf="Form?.invalid" style=" font-size: 20px; padding: 0px 20px;">
+			Mandatory fields are required to save.
+	    </p>
+	</div>
+	<div class="modal-footer text-center">
+		<button
+			type="button"
+			class="btn btn-dark "
+			[disabled]="Form?.invalid"
+			(click)="savePatientForm()">
+			Save
+		</button>
+		<button
+			type="button"
+			class="btn btn-dark"
+			(click)="discardPatient()">
+			Discard
+		</button>
+	</div>
+</ng-template>

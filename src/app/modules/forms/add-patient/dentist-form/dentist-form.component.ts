@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IMenuItem } from '@pages/dashboard/menu';
 import {
 	addPatientCordinateMenuItems,
@@ -32,7 +33,7 @@ export class DentistFormComponent implements OnInit {
 		officePhoneNumber: {number:''}
 	};
 
-	dentistArray = {
+	dentistArray:any = {
 		namesGenrDents: '',
 		officeName: '',
 		firstName: '',
@@ -41,6 +42,8 @@ export class DentistFormComponent implements OnInit {
 	};
 
 	Form!: FormGroup;
+    dentistData: any;
+	dentistID:any;
 
 	menuItemsOfCordinate: IMenuItem[] = addPatientCordinateMenuItems;
 	menuItemsOfQuickAdd: IMenuItem[] = addPatientQuickMenuItems;
@@ -51,7 +54,10 @@ export class DentistFormComponent implements OnInit {
 	businessGroupDropdownSupscription: any;
 	selectedBusinessGroup: SelectedBusinessGroup | undefined;
 	bgId: any;
-
+    model!:NgbDateStruct
+	alertText:any;
+	confirmButtonText:any
+	cancelButtonText:any
 	constructor(
 		private router: Router,
 		private patientUserServ: PatientUserService,
@@ -62,7 +68,8 @@ export class DentistFormComponent implements OnInit {
 		private dentistService: DentistService,
 		private authService: AuthService,
 		private businessGroupDropdownService: BusinessGroupDropdownService,
-		private alertService: AlertService
+		private alertService: AlertService,
+		private modalService: NgbModal,
 	) {
 		this.businessGroupDropdownSupscription =
 			this.businessGroupDropdownService
@@ -81,12 +88,37 @@ export class DentistFormComponent implements OnInit {
 		this.addPatientService.setFalseAllNotPristineCWP();
 		this.insuranceServ.setFalseAllNotPristine();
 		this.onboardingServ.setFalseAllNotPristine();
-		this.addPatientService.getDentistFromCompone(this.getDentist.bind(this));
+		//this.addPatientService.getDentistFromCompone(this.getDentist.bind(this));
 		if (this.tab == 'coordWithProspect') {
-			this.dentistArray = await this.addPatientService.getDentistCWP();
+			this.dentistData = await this.addPatientService.getDentistCWP();
+			this.dentistID = this.dentistData?._id;
 			this.Form.statusChanges.subscribe((result) => {
 				if (!this.Form.pristine) {
 					this.addPatientService.setDentistNotPristineCWP(true);
+					if(this.Form.invalid){
+						this.addPatientService.setDentistMandatoryFields(true)
+					}else{
+						this.addPatientService.setDentistMandatoryFields(false)
+					}
+					let saveObj:any = {
+						firstName: this.Form.value.firstName,
+						lastName: this.Form.value.lastName,
+						officeName: this.Form.value.officeName,
+						officeAddress: {
+							addressLine1: '',
+							addressLine2: '',
+							city: '',
+							state: '',
+							country: '',
+							zipCode: ''
+						},
+						officePhoneNumber: {
+							type: '',
+							countryCode: '',
+							number: this.Form.value.officePhoneNumber
+						}
+					};
+					this.addPatientService.getDentistFromCompone(saveObj);
 				}
 			});
 		} else if (this.tab == 'quickAdd') {
@@ -100,6 +132,11 @@ export class DentistFormComponent implements OnInit {
 			this.dentist.officePhoneNumber.number =
 				this.dentistArray.officePhoneNumber;
 		}
+		setTimeout(() => {
+			if(this.dentistID){
+				this.getDentistWithID();
+			}
+		}, 1000)
 	}
 
 	initForm(data?: any) {
@@ -207,9 +244,9 @@ export class DentistFormComponent implements OnInit {
 				console.log(result);
 				this.alertService.success(
 					'Success',
-					'Dentist has been save successfully'
+					'Dentist has been updated successfully'
 				);
-				this.continueToReferrer(result);
+				this.continueToReferrer(saveObj);
 			},
 			(error) => {
 				console.log(error);
@@ -271,5 +308,105 @@ export class DentistFormComponent implements OnInit {
 		} else {
 			this.bgId = this.selectedBusinessGroup?.bgId;
 		}
+	}
+	// openModel(content: any) {
+	// 	let firstName = this.Form.value.firstName;
+	// 	if(firstName == undefined){
+	// 		firstName = '';
+	// 	}
+	// 	let lastName = this.Form.value.lastName;
+	// 	if(lastName == undefined){
+	// 		lastName = ''
+	// 	}
+	// 	let namesGenrDents = this.Form.value.namesGenrDents;
+	// 	if(namesGenrDents == undefined){
+	// 		namesGenrDents = ''
+	// 	}
+	// 	let officeName = this.Form.value.officeName;
+	// 	if(officeName == undefined){
+	// 		officeName = ''
+	// 	}
+	// 	let officePhoneNumber = this.Form.value.officePhoneNumber;
+	// 	if(officePhoneNumber == undefined){
+	// 		officePhoneNumber = ''
+	// 	}
+	// 	if(firstName != '' || lastName != '' || namesGenrDents != '' || officeName != '' || officePhoneNumber != '' ){
+	// 		this.modalService.open(content, { centered: true });
+	// 	  }else
+	// 	  {
+	// 		this.addPatientService.setDentistNotPristineCWP(false);
+	// 		this.router.navigate(['/dashboard/home']);
+	// 	  }
+	// }
+	openModel(content: any) {
+		let firstName = this.Form.value.firstName;
+		if(firstName == undefined){
+			firstName = '';
+		}
+		let lastName = this.Form.value.lastName;
+		if(lastName == undefined){
+			lastName = ''
+		}
+		let namesGenrDents = this.Form.value.namesGenrDents;
+		if(namesGenrDents == undefined){
+			namesGenrDents = ''
+		}
+		let officeName = this.Form.value.officeName;
+		if(officeName == undefined){
+			officeName = ''
+		}
+		let officePhoneNumber = this.Form.value.officePhoneNumber;
+		if(officePhoneNumber == undefined){
+			officePhoneNumber = ''
+		}
+		if(firstName != '' || lastName != '' || namesGenrDents != '' || officeName != '' || officePhoneNumber != '' ){
+			if(this.Form.valid){
+				this.alertText = "Would you like to discard or save it?"
+				this.confirmButtonText = "Save";
+				this.cancelButtonText = "Discard"
+			}else if(this.Form.invalid){
+				this.alertText = "Mandatory fields are required to save."
+				this.confirmButtonText = false;
+				this.cancelButtonText = "Discard"
+			}
+			this.alertService.conformAlertNavigate('Please confirm', this.alertText,this.cancelButtonText,this.confirmButtonText).then((result: any) => {
+				console.log("result", result);
+
+				if (result.isConfirmed) {
+					this.discardPatient()
+				} else if (result.isDismissed && (result.dismiss == "cancel")) {
+					this.savePatientForm()
+				}
+			})
+		  }else
+		  {
+			this.addPatientService.setDentistNotPristineCWP(false);
+			this.router.navigate(['/dashboard/home']);
+		  }
+	}
+	discardPatient(){
+		this.modalService.dismissAll();
+		this.addPatientService.setDentistNotPristineCWP(false);
+		this.router.navigate(['/dashboard/home']);
+	}
+	savePatientForm(){
+		this.modalService.dismissAll();
+		this.save(this.Form.value)
+	}
+	getDentistWithID(){
+		console.log(this.bgId,this.dentistID)
+       this.dentistService.getSingleData(this.bgId,this.dentistID).subscribe(
+		(result: any) => {
+			console.log(result);
+			this.dentistArray = {
+				firstName: result.firstName,lastName: result.lastName,officeName: result.officeName,officePhoneNumber: result.officePhoneNumber.number
+			};
+		    this.Form.patchValue(this.dentistArray);
+			this.addPatientService.setDentistCWP(result);
+		},
+		(error:any) => {
+			console.log(error);
+		}
+	);
 	}
 }

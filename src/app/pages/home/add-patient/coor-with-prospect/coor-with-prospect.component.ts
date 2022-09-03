@@ -87,8 +87,25 @@ export class CoorWithProspectComponent implements OnInit {
 
   
   goToSpecificMenu(Obj:any){
-    // console.log(Obj);
-    this.router.navigate([Obj.url]);
+    console.log(Obj);
+    let collerInfo:any = localStorage.getItem("callerCoorWithProsp")
+    let patientInfo:any = localStorage.getItem("patientCoorWithProsp") 
+    patientInfo = JSON.parse(patientInfo)
+    localStorage.setItem('sendRedirectObj',JSON.stringify(Obj));
+    if(collerInfo && patientInfo){
+      this.router.navigate([Obj.url]);
+    }else if(!collerInfo && patientInfo){
+      this.router.navigate([Obj.url]);
+    }else if(!collerInfo && !patientInfo){
+      if(Obj.title == 'Caller’s Info' || Obj.title == 'Patient'){
+        this.router.navigate([Obj.url]);
+      }
+    }else{
+      if(Obj.title == 'Caller’s Info' || Obj.title == 'Patient'){
+        this.router.navigate([Obj.url]);
+      }
+    }
+   // this.router.navigate([Obj.url]);
   }
 
   setSelectTab(numb: number){
