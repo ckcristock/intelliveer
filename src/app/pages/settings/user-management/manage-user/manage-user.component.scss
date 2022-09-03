@@ -3,23 +3,27 @@
 @import 'table';
 
 ul {
-    font-size: 13px;
-    font-weight: bold;
+	font-size: 13px;
+	font-weight: bold;
 
-    li {
-        line-height: 3.2;
-    }
+	li {
+		line-height: 3.2;
+	}
 }
 
 .redcircle {
-    padding: 2px;
-    border-radius: 50%;
-    font-size: 10px;
-    color: white;
-    background-color: #ec6e4d;
+	padding: 2px;
+	border-radius: 50%;
+	font-size: 10px;
+	color: white;
+	background-color: #ec6e4d;
 }
 .form-switch.form-switch-lg .form-check-input {
-    height: 1.8rem;
-    width: calc(3rem + 0.75rem);
-    border-radius: 4rem;
-  }
+	height: 1.8rem;
+	width: calc(3rem + 0.75rem);
+	border-radius: 4rem;
+}
+
+table.table th:nth-child(1) {
+	width: 4%;
+}
