@@ -157,6 +157,7 @@ export class UserPolicyComponent implements OnInit {
 	}
 
 	saveUesrPolicyList() {
+		let permissionEnableArray : any[] = [];
 		this.Form.value.permissions.map((module: any) => {
 			module.sections.map((section: any) => {
 				section.permissions.map((permission: any) => {
@@ -165,6 +166,22 @@ export class UserPolicyComponent implements OnInit {
 				});
 			});
 		});
+		
+		for (let i = 0; i < this.Form.value.permissions.length; i++) {
+			const module = this.Form.value.permissions[i];
+			for (let j = 0; j < module.sections.length; j++) {
+				const section = module.sections[j];
+				for (let j = 0; j < section.permissions.length; j++) {
+					const permission = section.permissions[j];
+					if(permission.enabled == true){
+						permissionEnableArray.push(permission);
+					}
+				}
+				section.permissions = permissionEnableArray;
+				permissionEnableArray = []
+			}
+		}
+		console.log(this.Form.value)
 		this.userService
 			.saveUserPolicyList(
 				this.bgUserLogin,

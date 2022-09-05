@@ -138,6 +138,13 @@
 										>Without Role Template</span
 									>
 								</td>
+								<td *ngIf="role?.roleTemplate?.name">
+									<span
+										class="pointer"
+										(click)="editRole(role?._id)"
+										>{{ role?.roleTemplate.name }}</span
+									>
+								</td>
 								<td>
 									<div
 										ngbDropdown
