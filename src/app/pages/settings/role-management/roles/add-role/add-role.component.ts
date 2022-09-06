@@ -428,8 +428,11 @@ export class AddRoleComponent implements OnInit {
 		this.bgName = this.orgId;
 		let bgOrdID: any = localStorage.getItem('selected_business_group');
 		console.log(bgOrdID, this.orgId)
-		let user = this.authService.getLoggedInUser();
+		let user:any =	localStorage.getItem('permissionSet');
+		user = JSON.parse(user);
+		console.log(user)
 		if (user?.__ISSU__) {
+			this.orgId = bgOrdID;
 			if (this.orgId != "intelliveer" && bgOrdID != null) {
 				this.addRoleTitle = "Create Role from Role Template";
 				this.roleTemplatePlaceholder = "Select role template";
@@ -442,7 +445,17 @@ export class AddRoleComponent implements OnInit {
 				this.getRoleList();
 				console.log('roles')
 			}
-		} else {
+		}
+		else if(user?.isBGAdmin){
+			this.orgId = bgOrdID;
+			this.bgName = bgOrdID;
+			this.addRoleTitle = "Create Role from Role Template";
+			this.roleTemplatePlaceholder = "Select role template";
+			this.displayCreateRoleYesNoOption = false;
+			this.getRoleListSpecific();
+		}
+		 else {
+			this.bgName = this.orgId;
 			this.addRoleTitle = "Create Role from Role Template";
 			this.roleTemplatePlaceholder = "Select role template";
 			this.displayCreateRoleYesNoOption = false;
@@ -454,6 +467,7 @@ export class AddRoleComponent implements OnInit {
 		let user: any = localStorage.getItem('permissionSet');
 		user = JSON.parse(user);
 		let bgOrdID: any = localStorage.getItem('selected_business_group');
+		this.bgName = bgOrdID;
 		if (user?.__ISSU__) {
 			if (this.orgId != "intelliveer" && bgOrdID != null) {
 				this.saveRoleFromTemplateBYBgId(data);
@@ -461,7 +475,13 @@ export class AddRoleComponent implements OnInit {
 				//this.bgName = "intelliveer"
 				this.saveRoleFromTemplate(data);
 			}
-		} else {
+		}
+		else if(user?.isBGAdmin){
+			this.bgName = bgOrdID;
+			this.saveRoleFromTemplateBYBgId(data);
+		}
+		 else {
+			this.bgName = this.orgId;
 			this.saveRoleFromTemplateBYBgId(data)
 		}
 	}
