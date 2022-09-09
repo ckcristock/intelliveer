@@ -85,7 +85,7 @@
 			<div class="two-items">
 				<a class="btn btn-light btn-light-custom" (click)="openModel(content)">Exit</a>
 				<button type="button" class="btn btn-dark btn-dark-custom" (click)="save(Form)"
-					[disabled]="Form?.invalid">
+					[disabled]="Form!.invalid">
 					Save and continue
 				</button>
 			</div>
@@ -114,7 +114,7 @@
 		<button
 			type="button"
 			class="btn btn-dark "
-			[disabled]="Form?.invalid"
+			[disabled]="Form!.invalid"
 			(click)="savePatientForm()">
 			Save
 		</button>
