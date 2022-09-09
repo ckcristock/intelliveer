@@ -42,6 +42,9 @@
 					<button class="add_btn" routerLink="/dashboard/settings/user-management/manage-user/add-user">
 						<img src="/assets/icons/add.svg" alt="" />
 					</button>
+					<!-- <button class="add_btn" (click)="sendEmail()">
+						<img src="/assets/icons/email.png" alt="" />
+					</button> -->
 				</div>
 			</div>
 
@@ -62,7 +65,7 @@
 						<tbody *ngIf="usersList?.length != 0">
 							<tr *ngFor="let user of usersList; let i = index">
 								<td>
-									<input type="checkbox" value="{{ i }}" />
+									<input type="checkbox" value="{{ i }}" (click)="userData($event,user)"/>
 								</td>
 								<td>
 									<a (click)="gotoPersonalInfo(user)" style="cursor: pointer;">

@@ -21,17 +21,15 @@ interface MenuItems {
 	templateUrl: './dashboard.component.html',
 	styleUrls: ['./dashboard.component.scss'],
 	animations: [
-		trigger('fadeInOut', [
+		trigger('fadeSlideInOut', [
 			transition(':enter', [
-				// :enter is alias to 'void => *'
-				style({ opacity: 0 }),
-				animate(500, style({ opacity: 1 })),
+			  style({ opacity: 0, transform: 'translateX(-100%)' }), //apply default styles before animation starts
+			  animate(
+				'750ms ease-in-out',
+				style({ opacity: 1, transform: 'translateX(0)',width: '200px'})
+			  )
 			]),
-			transition(':leave', [
-				// :leave is alias to '* => void'
-				animate(500, style({ opacity: 0 })),
-			]),
-		]),
+		  ]),
 	],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
@@ -44,6 +42,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	disableBGDropdown: boolean = false;
 	moduleName: string = '';
 	compactRightSidebar: boolean = false;
+	display: boolean = false;
 	constructor(
 		public router: Router,
 		private businessGroupDropdownService: BusinessGroupDropdownService,
@@ -79,8 +78,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {}
 	toggleMenuBar() {
-		this.compactSidebar = !this.compactSidebar;
-		this.menuBarService.compactSideMenu(this.compactSidebar);
+		let that = this
+		let compareSidebar = this.compactSidebar
+		compareSidebar = !compareSidebar;
+		that.menuBarService.compactSideMenu(compareSidebar);
+		setTimeout(function(){ 
+			that.compactSidebar = compareSidebar
+		}, 700);
 	}
 	toggleRightMenuBar(){
 		this.compactRightSidebar = !this.compactRightSidebar;

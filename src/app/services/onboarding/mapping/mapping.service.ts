@@ -27,7 +27,14 @@ export class MappingService {
 			}
 		});
 	}
-	updateMapping(bgId: string, data: any) {
+	updateMapping(bgId: string, data: any,ID:any) {
+		return this.http.put(`${CONFIG.backend.host}/bg/mapping/${ID}`, data, {
+			headers: {
+				'X-ORG-ID': bgId
+			}
+		});
+	}
+	saveMapping(bgId: string, data: any) {
 		return this.http.post(`${CONFIG.backend.host}/bg/mapping`, data, {
 			headers: {
 				'X-ORG-ID': bgId

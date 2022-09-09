@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ErrorHandlerService } from '@services/error-handler/error-handler.service';
 import { Subscription } from 'rxjs';
-
+import { CONFIG } from '@config/index';
 @Component({
   selector: 'app-error-handler',
   templateUrl: './error-handler.component.html',
@@ -11,11 +12,16 @@ export class ErrorHandlerComponent implements OnInit, OnDestroy {
   error: object = {};
   showErrors: boolean = false;
   errorHandlerSubscription: Subscription;
-  constructor(private errService: ErrorHandlerService) {
+  constructor(private errService: ErrorHandlerService,private router: Router) {
     this.errorHandlerSubscription = this.errService.errors.subscribe(
       (error) => {
-        this.error = error;
-        this.showErrors = true;
+        if(error?.statusCode == 403 && error?.error == "Forbidden"){
+          localStorage.clear()
+          window.location.href = CONFIG.auth.host + `/login`;
+        }else{
+          this.error = error;
+          this.showErrors = true;
+        }
       }
     );
   }

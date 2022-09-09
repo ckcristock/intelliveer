@@ -140,7 +140,7 @@ export class PatientFormComponent implements OnInit {
 								gender: this.Form.value?.gender,
 								preferredPronoun: '',
 								language: '',
-								martialStatus: ''
+								maritalStatus: ''
 							},
 							information: {
 								preferredName: '',

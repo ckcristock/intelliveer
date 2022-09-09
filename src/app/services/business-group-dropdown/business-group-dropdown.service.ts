@@ -74,7 +74,7 @@ export class BusinessGroupDropdownService {
 							disabled: this.disabled
 						};
 				}
-					this.selectedBusinessGroup.next(this.selectedBG);
+					//this.selectedBusinessGroup.next(this.selectedBG);
 					this.businessGroups.next(data);
 				}
 			},
@@ -94,7 +94,7 @@ export class BusinessGroupDropdownService {
 						bgId: data[0]?._id,
 						disabled: true
 					};
-					this.selectedBusinessGroup.next(this.selectedBG);
+					//this.selectedBusinessGroup.next(this.selectedBG);
 					this.businessGroups.next(data);
 				}
 			},
@@ -136,7 +136,7 @@ export class BusinessGroupDropdownService {
 		   this._getBusinessGroup(user?.bgs[0]?._id,'intelliveer');
 		}else{
 			this.getCommonOrgId = orgId;
-		    this._getBusinessGroup(orgId,orgId);
+		   this._getBusinessGroup(orgId,orgId);
 		}
 	}
 	

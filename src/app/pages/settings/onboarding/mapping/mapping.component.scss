@@ -41,3 +41,35 @@ ng-select {
     user-select: none;
     margin-top: 6px !important;
 }
+table.table tr td {
+    overflow: inherit;
+}
+.not-mapped span {
+    border-radius: 50%;
+    background-color: #ff4500;
+	color: #fff;
+    padding: 2px 5px 3px;
+    font-size: 9px;
+}
+.not-mapped span.practice {
+    margin-left: 44px;
+}
+.not-mapped span.location {
+    margin-left: 46px;
+}
+.not-mapped span.legal {
+    margin-left: 16px;
+}
+.not-mapped ul li {
+    display: inline-block;
+    list-style: none;
+    padding-right: 5px;
+}
+.not-mapped ul li:last-child i {display: none;}
+.not-mapped ul {
+    padding: 0px;
+}
+.custom-ng-select input{
+    margin: 0px;
+    vertical-align: bottom;
+}
