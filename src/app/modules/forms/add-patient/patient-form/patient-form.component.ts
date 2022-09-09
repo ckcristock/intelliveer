@@ -228,6 +228,10 @@ export class PatientFormComponent implements OnInit {
 		}
 	}
 
+	practiceValid() {
+		return this.Form.get('practice')?.valid;
+	}
+
 	firstNameValid() {
 		return this.Form.get('firstName')?.valid;
 	}

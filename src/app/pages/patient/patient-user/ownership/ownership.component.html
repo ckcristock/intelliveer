@@ -1,0 +1,46 @@
+<div>
+    <app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
+		[disableSaveBtn]="Form.invalid" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills>
+    <form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
+        <div class="section" id="overview">
+            <div class="row">
+                <div class="col-12">
+                    <div class="letter">
+						<p>A</p>
+					</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" id="ownership">
+            <h6 class="heading">Ownership</h6>
+            <div class="row">
+                <div class="col">
+                    <div class="mainformset">
+                        <label class="label-input-gap">Practice</label>
+                        <ng-select placeholder="Select" formControlName="practice" (change)="onSelectPractice($event)">
+                            <ng-option [value]="item._id" *ngFor="let item of practiceList">{{item.name}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mainformset">
+                        <label class="label-input-gap">Location</label>
+                        <ng-select placeholder="Select" formControlName="location" (change)="onSelectLocation($event)" class="mandatory-field">
+                            <ng-option [value]="item._id" *ngFor="let item of locationList" [class.valid-mandatory-field]="locationValid()">{{item.name}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mainformset">
+                        <label class="label-input-gap">Legal Entity</label>
+                        <ng-select placeholder="Select" formControlName="legalEntity"
+                            (change)="onSelectLegalEntity($event)">
+                            <ng-option [value]="item._id" *ngFor="let item of legalEntityList">{{item.name}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

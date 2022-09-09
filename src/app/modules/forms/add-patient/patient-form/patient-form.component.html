@@ -25,8 +25,8 @@
 			<div class="col">
 				<div class="mainformset">
 					<label class="label-input-gap">Practice</label>
-					<ng-select placeholder="Select" formControlName="practice" (change)="onSelectPractice($event)">
-						<ng-option [value]="item._id" *ngFor="let item of practiceList">{{item.name}}</ng-option>
+					<ng-select placeholder="Select" formControlName="practice" (change)="onSelectPractice($event)" class="mandatory-field">
+						<ng-option [value]="item._id" *ngFor="let item of practiceList" [class.valid-mandatory-field]="practiceValid()">{{item.name}}</ng-option>
 					</ng-select>
 				</div>
 			</div>
@@ -85,7 +85,7 @@
 			<div class="two-items">
 				<a class="btn btn-light btn-light-custom" (click)="openModel(content)">Exit</a>
 				<button type="button" class="btn btn-dark btn-dark-custom" (click)="save(Form)"
-					[disabled]="Form?.invalid">
+					[disabled]="Form!.invalid">
 					Save and continue
 				</button>
 			</div>
@@ -114,7 +114,7 @@
 		<button
 			type="button"
 			class="btn btn-dark "
-			[disabled]="Form?.invalid"
+			[disabled]="Form!.invalid"
 			(click)="savePatientForm()">
 			Save
 		</button>

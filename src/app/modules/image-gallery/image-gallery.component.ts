@@ -23,6 +23,15 @@ export class ImageGalleryComponent implements OnInit {
 	@Input('height') public height: any = 0;
 	position: string | undefined;
 	right: number = 0;
+	left: number = 26;
+	showMagnification: boolean = false;
+	showImage: boolean = true;
+	imageBackgroundPosition: string | undefined;
+	imageBackgroundSize: any;
+	mouseMoveContinue: boolean = false;
+	applyZoomOnImage: boolean = false;
+	zoomValue: number = 0;
+	showMagnifying: boolean = false;
 
 	constructor() {}
 
@@ -39,24 +48,127 @@ export class ImageGalleryComponent implements OnInit {
 	onResizeEnd(event: ResizeEvent): void {
 		this.position = 'absolute';
 		this.right = 44;
-		console.log(event);
 		let minWidth: number = 150;
-		let maxWidth: number = 595;
-		if (event.rectangle.width && event.rectangle.height) {
-			if (event.rectangle.width < maxWidth) {
-				if (minWidth < event.rectangle.width) {
-					this.width = event.rectangle.width;
+		let maxWidth: number = 719;
+		let minHeight: any = 118;
+		let maxHeight: number = 544;
+		if (event.edges.left && event.edges.bottom) {
+			if (event.rectangle.width && event.rectangle.height) {
+				if (event.rectangle.width < maxWidth) {
+					if (minWidth < event.rectangle.width) {
+						this.width = event.rectangle.width;
+					} else {
+						this.width = minWidth;
+					}
 				} else {
-					this.width = minWidth;
+					this.width = maxWidth;
 				}
-			} else {
-				this.width = maxWidth;
+				if (event.rectangle.height < maxHeight) {
+					if (minHeight < event.rectangle.height) {
+						this.height = event.rectangle.height;
+					} else {
+						this.height = minHeight;
+					}
+				} else {
+					this.height = maxHeight;
+				}
+			}
+		}
+		else if (event.edges.bottom) {
+			if(event.rectangle.width && event.rectangle.height)
+			{
+				if(event.rectangle.height < maxHeight)
+				{
+					this.height = this.height + event.edges.bottom;
+				}
+				else
+				{
+					this.height = maxHeight;
+				}
+			}
+		}
+		else if (event.edges.left) {
+			if(event.rectangle.width && event.rectangle.height)
+			{
+				if(event.rectangle.width < maxWidth)
+				{
+					this.width = event.rectangle.width;
+				}
+				else
+				{
+					this.width = maxWidth;
+				}
 			}
 		}
 	}
 
 	setImageDefault() {
-		this.width = 400;
-		this.height = 'min-content';
+		this.width = 478;
+		this.height = 371;
+		this.applyZoomOnImage = false;
+		this.mouseMoveContinue = false;
+	}
+
+	imageZoomInClick()
+	{
+		this.applyZoomOnImage = true;
+	}
+
+	imageZoomOutClick()
+	{
+		this.applyZoomOnImage = false;
+		this.mouseMoveContinue = false;
+	}
+
+	onmousemove(event: any)
+	{
+		console.log(event);
+		let ratio = this.height / this.width,
+        percentage = ratio * 100 + "%";
+		let rect = event.target.getBoundingClientRect();
+        let  xPos = event.clientX - rect.left;
+        let  yPos = event.clientY - rect.top;
+		let xPercent = xPos / (this.width / 100) + "%";
+        let  yPercent = yPos / ((this.width * ratio) / 100) + "%";
+		this.mouseMoveContinue = true;
+		// this.width = xPercent;
+		// this.height = yPercent;
+		// console.log(this.width);
+		// console.log(this.height)
+		this.imageBackgroundPosition = xPercent + " " + yPercent;
+		this.imageBackgroundSize = this.width - 50;
+		// {
+		// 	backgroundPosition: xPercent + " " + yPercent,
+		// 	backgroundSize: img.naturalWidth + "px"
+		//   }
+	}
+	calculateZoomValue($event: any)
+	{
+		this.zoomValue = parseInt($event.target.value);
+		this.applyZoomOnImage = true;
+		if(this.zoomValue == 0)
+		{
+			this.applyZoomOnImage = false;
+			this.mouseMoveContinue = false;
+		}
+	}
+
+	zoomInImage()
+	{
+		this.applyZoomOnImage = true;
+		if(this.zoomValue < 5)
+		{
+			this.zoomValue = this.zoomValue + 1;
+		}		
+	}
+
+	zoomOutImage()
+	{
+		this.applyZoomOnImage = false;
+		this.mouseMoveContinue = false;
+		if(this.zoomValue > 0)
+		{
+			this.zoomValue = this.zoomValue - 1;
+		}
 	}
 }

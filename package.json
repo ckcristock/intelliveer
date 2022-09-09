@@ -30,6 +30,7 @@
     "crypto-random-string": "^5.0.0",
     "moment-timezone-picker": "^5.0.1",
     "ngx-cookie-service": "^13.1.2",
+    "ngx-pinch-zoom": "^2.6.2",
     "ngx-toastr": "^14.2.3",
     "rxjs": "~7.5.0",
     "sweetalert2": "^11.4.14",

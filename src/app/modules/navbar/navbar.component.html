@@ -7,10 +7,20 @@
 			<img src="/assets/images/logo.png" alt="" />
 		</div>
 		<div class="selectedOrg">
-			<select class="form-select" [(ngModel)]="selectedBusinessGroup" (change)="setBusinessGroup($event)"
-				[disabled]="disableBGDropdown">
-				<option value="intelliveer" [disabled]="disableBGDropdown">**INTELLIVEER**</option>
-				<option *ngFor="let bg of businessGroups" [value]="bg._id" [disabled]="disableBGDropdown">
+			<select
+				class="form-select"
+				[(ngModel)]="selectedBusinessGroup"
+				(change)="setBusinessGroup($event)"
+				[disabled]="disableBGDropdown"
+			>
+				<option value="intelliveer" [disabled]="disableBGDropdown">
+					**INTELLIVEER**
+				</option>
+				<option
+					*ngFor="let bg of businessGroups"
+					[value]="bg._id"
+					[disabled]="disableBGDropdown"
+				>
 					{{ bg.name }}
 				</option>
 			</select>
@@ -19,7 +29,10 @@
 			<div class="search-results" *ngIf="searchFocus">
 				<ul>
 					<li *ngFor="let result of userSearchLst">
-						<button	class="d-flex justify-content-between" (click)="handleSearchResultsClick(result)">
+						<button
+							class="d-flex justify-content-between"
+							(click)="handleSearchResultsClick(result)"
+						>
 							<span> {{ result.user }} ({{ result.dob }}) </span>
 							<span *ngIf="!result.active" class="inactive">
 								Inactive
@@ -29,9 +42,11 @@
 				</ul>
 				<div class="d-flex gap-3 ps-4 align-items-center">
 					<div class="btn-group me-3">
-						<button type="button" class="btn btn-dark"
-						[routerLink]="'/dashboard/home/add-patient'"
-						(click)="searchFocus = false"
+						<button
+							type="button"
+							class="btn btn-dark"
+							[routerLink]="'/dashboard/home/add-patient'"
+							(click)="searchFocus = false"
 						>
 							Add Patient
 						</button>
@@ -45,8 +60,7 @@
 								type="button"
 								class="btn btn-dark dropdown-toggle-split"
 								ngbDropdownToggle
-							>
-							</button>
+							></button>
 						</div>
 					</div>
 					<div>
@@ -70,7 +84,8 @@
 					aria-describedby="basic-addon1"
 					(focus)="searchFocus = true"
 					[(ngModel)]="searchWord"
-					(click)="fetchSearch($event)" (keyup)="fetchSearch($event)"
+					(click)="fetchSearch($event)"
+					(keyup)="fetchSearch($event)"
 				/>
 			</div>
 			<div ngbDropdown class="d-inline-block search-dropdown">
@@ -128,46 +143,109 @@
 			</div>
 		</div>
 		<div
-			class="selected-patient d-flex justify-content-between align-items-center gap-5 ms-3"
+			class="selected-patient d-flex justify-content-between align-items-center gap-5 me-3"
+			style="background-color: white"
 			*ngIf="showSelectedPatient"
 		>
 			<div
-				class="d-flex justify-content-center align-items-center gap-3"
+				class="d-flex justify-content-center align-items-center gap-3 me-3"
 				*ngIf="selectedPatient"
 			>
 				<div ngbDropdown class="d-inline-block dropdown">
-					<div (click)="onSelectPatient('showSelectedPatientUserCard', selectedPatient)">
-						<img src="{{ selectedPatient.profileUrl }}" alt="" ngbDropdownToggle />
-						<span
-							> {{ selectedPatient.user }} ({{ selectedPatient.id }})</span
+					<div
+						(click)="
+							onSelectPatient(
+								'showSelectedPatientUserCard',
+								selectedPatient
+							)
+						"
+					>
+						<img
+							src="{{ selectedPatient.profileUrl }}"
+							alt=""
+							ngbDropdownToggle
+						/>
+						<span style="color: black; font-weight: bold">
+							{{ selectedPatient.user | titlecase }} ({{
+								selectedPatient.id
+							}})</span
 						>
-					</div>					
-					<div ngbDropdownMenu style="width: 28rem;" *ngIf="showSelectedPatientUserCard">
+					</div>
+					<div
+						ngbDropdownMenu
+						style="width: 28rem"
+						*ngIf="showSelectedPatientUserCard"
+					>
 						<div class="container">
 							<div class="section">
 								<div class="row">
 									<div class="col-12" [align]="'center'">
-										<img src="{{ selectedPatient.profileUrl }}" alt="" style="width: 86px; height: 80px;" />
-										<p><b>{{ selectedPatient.user }}</b> ({{ selectedPatient.id }})</p>
-										<p> "{{ selectedPatient.user }}" (Pronunciation) <img src="assets/icons/speaker_circle.svg" alt="" /> </p>
-										<p>{{ selectedPatient.sex }}  | Preferred Pronoun</p>
+										<img
+											src="{{
+												selectedPatient.profileUrl
+											}}"
+											alt=""
+											style="width: 86px; height: 80px"
+										/>
+										<p>
+											<b>{{ selectedPatient.user }}</b>
+											({{ selectedPatient.id }})
+										</p>
+										<p>
+											"{{ selectedPatient.user }}"
+											(Pronunciation)
+											<img
+												src="assets/icons/speaker_circle.svg"
+												alt=""
+											/>
+										</p>
+										<p>
+											{{ selectedPatient.sex }} |
+											Preferred Pronoun
+										</p>
 										<p>{{ selectedPatient.dob | date }}</p>
 										<p>(844) 569-8628</p>
 									</div>
 								</div>
-								<div class="row" (click)="selectUserMenuItem(selectedPatient, 'showSelectedPatientUserCard')">
-									<div class="col" *ngFor="let item of menuItems">
-										<div [align]="'center'" class="gap-5 mb-3" style="background-color: white; border-radius: 5px;">
+								<div
+									class="row"
+									(click)="
+										selectUserMenuItem(
+											selectedPatient,
+											'showSelectedPatientUserCard'
+										)
+									"
+								>
+									<div
+										class="col"
+										*ngFor="let item of menuItems"
+									>
+										<div
+											[align]="'center'"
+											class="gap-5 mb-3"
+											style="
+												background-color: white;
+												border-radius: 5px;
+											"
+										>
 											<img
-												src="{{item.icon}}"
+												src="{{ item.icon }}"
 												alt=""
 												routerLinkActive="active"
 												[routerLink]="item.url"
 												*ngIf="item.shortTitle"
 											/>
 										</div>
-										<div [align]="'center'" class="gap-5 mb-3">
-											<span class="title" style="color: black;" *ngIf="item.shortTitle">{{ item.shortTitle }}</span>
+										<div
+											[align]="'center'"
+											class="gap-5 mb-3"
+										>
+											<span
+												class="title"
+												style="color: black"
+												*ngIf="item.shortTitle"
+												>{{ item.shortTitle }}</span
+											>
 										</div>
 									</div>
 								</div>
@@ -175,44 +253,130 @@
 						</div>
 					</div>
 				</div>
-
-
 			</div>
-			<div class="d-flex justify-content-center align-items-center" *ngIf="selectUserLst?.length != 0">
-				<div *ngFor="let selectUser of selectUserLst | slice:1:4">
+		</div>
+		<div
+			class="selected-patient d-flex justify-content-between align-items-center gap-5"
+			*ngIf="showSelectedPatient"
+		>
+			<div
+				class="d-flex justify-content-center align-items-center"
+				*ngIf="selectUserLst?.length != 0"
+			>
+				<div *ngFor="let selectUser of selectUserLst | slice: 1:4">
 					<div ngbDropdown class="d-inline-block dropdown">
-						<img src="{{ selectUser.profileUrl }}" alt="" ngbDropdownToggle (click)="onSelectPatient('showUserCard', selectUser)" />
-						<div class="pinOverlay" *ngIf="selectUser.isPin"> <img src="assets/icons/pin_fill.svg" alt="" width="10" height="10" /></div>
-						<div ngbDropdownMenu style="width: 28rem;" *ngIf="showUserCard">
+						<img
+							src="{{ selectUser.profileUrl }}"
+							alt=""
+							ngbDropdownToggle
+							(click)="
+								onSelectPatient('showUserCard', selectUser)
+							"
+						/>
+						<div class="pinOverlay" *ngIf="selectUser.isPin">
+							<img
+								src="assets/icons/pin_fill.svg"
+								alt=""
+								width="10"
+								height="10"
+							/>
+						</div>
+						<div
+							ngbDropdownMenu
+							style="width: 28rem"
+							*ngIf="showUserCard"
+						>
 							<div class="container">
 								<div class="section">
 									<div class="row">
 										<div class="col-12" [align]="'end'">
-											<i class="bi bi-pin-angle" (click)="pinUser(selectUser)" *ngIf="!selectUser.isPin" style="font-size: large;"></i>
-											<i class="bi bi-pin-angle-fill" (click)="unPinUser(selectUser)" *ngIf="selectUser.isPin" style="font-size: large; color: #e5833e;"></i>
+											<i
+												class="bi bi-pin-angle"
+												(click)="pinUser(selectUser)"
+												*ngIf="!selectUser.isPin"
+												style="font-size: large"
+											></i>
+											<i
+												class="bi bi-pin-angle-fill"
+												(click)="unPinUser(selectUser)"
+												*ngIf="selectUser.isPin"
+												style="
+													font-size: large;
+													color: #e5833e;
+												"
+											></i>
 										</div>
 										<div class="col-12" [align]="'center'">
-											<img src="{{ selectUser.profileUrl }}" alt="" style="width: 86px; height: 80px;" />
-											<p><b>{{ selectUser.user }}</b> ({{ selectUser.id }})</p>
-											<p> "{{ selectUser.user }}" (Pronunciation) <img src="assets/icons/speaker_circle.svg" alt="" /> </p>
-											<p>{{ selectUser.sex }}  | Preferred Pronoun</p>
+											<img
+												src="{{
+													selectUser.profileUrl
+												}}"
+												alt=""
+												style="
+													width: 86px;
+													height: 80px;
+												"
+											/>
+											<p>
+												<b>{{ selectUser.user }}</b> ({{
+													selectUser.id
+												}})
+											</p>
+											<p>
+												"{{ selectUser.user }}"
+												(Pronunciation)
+												<img
+													src="assets/icons/speaker_circle.svg"
+													alt=""
+												/>
+											</p>
+											<p>
+												{{ selectUser.sex }} | Preferred
+												Pronoun
+											</p>
 											<p>{{ selectUser.dob | date }}</p>
 											<p>(844) 569-8628</p>
 										</div>
 									</div>
-									<div class="row" (click)="selectUserMenuItem(selectUser, 'showUserCard')">
-										<div class="col" *ngFor="let item of menuItems">
-											<div [align]="'center'" class="gap-5 mb-3" style="background-color: white; border-radius: 5px;">
+									<div
+										class="row"
+										(click)="
+											selectUserMenuItem(
+												selectUser,
+												'showUserCard'
+											)
+										"
+									>
+										<div
+											class="col"
+											*ngFor="let item of menuItems"
+										>
+											<div
+												[align]="'center'"
+												class="gap-5 mb-3"
+												style="
+													background-color: white;
+													border-radius: 5px;
+												"
+											>
 												<img
-													src="{{item.icon}}"
+													src="{{ item.icon }}"
 													alt=""
 													routerLinkActive="active"
 													[routerLink]="item.url"
 													*ngIf="item.shortTitle"
 												/>
 											</div>
-											<div [align]="'center'" class="gap-5 mb-3">
-												<span class="title" style="color: black;" *ngIf="item.shortTitle">{{ item.shortTitle }}</span>
+											<div
+												[align]="'center'"
+												class="gap-5 mb-3"
+											>
+												<span
+													class="title"
+													style="color: black"
+													*ngIf="item.shortTitle"
+													>{{ item.shortTitle }}</span
+												>
 											</div>
 										</div>
 									</div>
@@ -231,7 +395,10 @@
 		<img src="assets/icons/full_screen.svg" width="20" height="20" />
 		<img src="assets/icons/lock.svg" width="20" height="20" />
 		<div>
-			<span class="fw-bold">{{username?.profile?.firstName}} {{username?.profile?.lastName}}</span>
+			<span class="fw-bold"
+				>{{ username?.profile?.firstName }}
+				{{ username?.profile?.lastName }}</span
+			>
 		</div>
 		<div>
 			<i class="bi bi-bell-fill"></i>
