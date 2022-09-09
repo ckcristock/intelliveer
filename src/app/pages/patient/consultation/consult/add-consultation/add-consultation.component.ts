@@ -11,13 +11,20 @@ import { patientConsultationOptionsMenuItems, patientDiagnosisMenuItems, patient
   animations: [
 	trigger('fadeSlideInOut', [
 		transition(':enter', [
-			style({ opacity: 0, transform: 'translateX(10px)' }),
-			animate('700ms', style({ opacity: 1, transform: 'translateX(0)' })),
+		  style({ opacity: 0, transform: 'translateX(-100%)' }), //apply default styles before animation starts
+		  animate(
+			'750ms ease-in-out',
+			style({ opacity: 1, transform: 'translateX(0)' })
+		  )
 		]),
-		// transition(':leave', [
-		// 	animate('100ms', style({ opacity: 0, transform: 'translateY(0px)' })),
-		// ]),
-	])
+		transition(':leave', [
+		  style({ opacity: 1, transform: 'translateX(0)' }), //apply default styles before animation starts
+		  animate(
+			'600ms ease-in-out',
+			style({ opacity: 0, transform: 'translateX(-100%)' })
+		  )
+		]),
+	  ]),
   ]
 })
 export class AddConsultationComponent implements OnInit {
@@ -27,22 +34,25 @@ export class AddConsultationComponent implements OnInit {
 	progressbarTitle: any;
 	sessionArrayName: any;
 	max_width: string = '200px';
-
+    display:boolean = false
   constructor(public router: Router) { }
 
   ngOnInit(): void {
   }
 
-  selectMenuItem(Obj: any) {
-		if (Obj.url == '/dashboard/patient/consultation/consultation/add/diagnosis') {
-			this.showProgressBar = true;
+  selectMenuItem(Obj?: any) {
+		if (Obj?.url == '/dashboard/patient/consultation/consultation/add/diagnosis') {
+			let that = this;
+			this.display = true;
 			this.max_width = '200px';
 			this.router.navigate([Obj.url]);
 			this.sessionArrayName = 'diagnosisVisitedArray';
 			this.progressbarTitle = Obj.title;
 			this.progressbarMmenuItems = patientDiagnosisMenuItems;
-		} else if (Obj.url == '/dashboard/patient/consultation/consultation/add/treatment') {
+			setTimeout(function(){ that.showProgressBar = true}, 700);
+		} else if (Obj?.url == '/dashboard/patient/consultation/consultation/add/treatment') {
 			this.showProgressBar = true;
+			this.display = false
 			this.max_width = '250px';
 			this.router.navigate([Obj.url]);
 			this.sessionArrayName = 'treatmentVisitedArray';
@@ -50,6 +60,7 @@ export class AddConsultationComponent implements OnInit {
 			this.progressbarMmenuItems = patientTreatmentMenuItems;
 		} else {
 			this.showProgressBar = false;
+			this.display = false
 			this.max_width = '200px';
 		}
 	}

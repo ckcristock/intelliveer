@@ -1,71 +1,106 @@
 <div class="container">
-	<!-- <div class="row mb-3">
-		<span class="text-uppercase fw-bold">Manage Mapping</span>
-	</div> -->
 	<div class="row">
-		<div class="col">
-			<table class="table table-bordered table-stripe mapping-table">
-				<thead>
-					<tr class="mapping">
-						<th>Legal Entities</th>
-						<th style="width: 150px">Location</th>
-						<th>Practices</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr *ngFor="let le of locations">
-						<td>
-							<ng-select
-								class="ng-select-no-border"
-								[multiple]="true"
-								[(ngModel)]="le.legalEntities"
-								(change)="selectionValueChange()"
-							>
-								<ng-option
-									*ngFor="let le of legalEntities"
-									[value]="le._id"
-									>{{ le.name }} [{{ le._id }}]</ng-option
-								>
-							</ng-select>
-						</td>
-						<td style="padding: 8px">
-							<div class="d-flex">
-								<span class="fw-bold">
-									{{ le.name }}
-								</span>
-								<span class="ms-1"> [{{ le._id }}] </span>
+		<form autocomplete="off" [formGroup]="mappingForm">
+			<div class="section not-mapped">
+				<h5>Not mapped</h5>
+				<div class="row">
+					<div class="col-2">
+						<h6>Practices <span class="practice" *ngIf="notMappedPractice.length > 0">{{notMappedPractice.length}}</span></h6>
+					</div>
+					<div class="col-10">
+						<ul><li *ngFor="let pr of notMappedPractice">{{pr.name}}<i>,</i></li></ul>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-2">
+						<h6>Location <span class="location" *ngIf="notMappedLocation.length > 0">{{notMappedLocation.length}}</span></h6>
+					</div>
+					<div class="col-10">
+						<ul><li *ngFor="let lo of notMappedLocation">{{lo.name}}<i>,</i></li></ul>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-2">
+						<h6>Legal Entities <span class="legal" *ngIf="notMappedLegalEntity.length > 0">{{notMappedLegalEntity.length}}</span></h6>
+					</div>
+					<div class="col-10">
+						<ul><li *ngFor="let le of notMappedLegalEntity">{{le.name}}<i>,</i></li></ul>
+					</div>
+				</div>
+			</div>
+            <div class="section" id="main" formArrayName="relation">
+              <div class="row">
+				<div class="col">
+					<h6>Practices</h6>
+				</div>
+				<div class="col">
+					<h6>Location</h6>
+				</div>
+				<div class="col">
+					<h6>Legal Entities</h6>
+				</div>
+			  </div>
+			  <hr>
+			  <div class="row my-3" *ngFor="let pr of f; let i=index"
+			  [formGroupName]="i">
+				<div class="col">
+					<input type="hidden" class="form-control" value=""  formControlName="practiceId" readonly>
+					<input type="text" class="form-control" value="{{practices[i].name}} [{{practices[i]._id}}]" readonly>
+				</div>
+				<div class="col custom-ng-select">
+					<ng-select
+						[items]="locations"
+						[multiple]="true"
+						bindLabel="name"
+						[selectableGroup]="true"
+						[closeOnSelect]="false"
+						bindValue="_id"
+						formControlName="locations"
+						>
+					    <ng-template ng-multi-label-tmp let-items="items" let-clear="clear"  let-index="index">
+							<div class="ng-value" *ngFor="let item of items; let i = index;">
+								<span class="ng-value-label" *ngIf="i < 1">{{item.name}}</span>
+								<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true" *ngIf="i < 1">×</span>
 							</div>
-						</td>
-						<td>
-							<ng-select
-								class="ng-select-no-border"
-								[multiple]="true"
-								[(ngModel)]="le.practices"
-								(change)="selectionValueChange()"
-							>
-								<ng-option
-									*ngFor="let pr of practices"
-									[value]="pr._id"
-									>{{ pr.name }} [{{ pr._id }}]</ng-option
-								>
-							</ng-select>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col gap-2 d-flex mt-3">
-			<button class="btn btn-dark fw-bold" [disabled]="saveButtonEnable" (click)="saveMapping()">
-				Save Mapping
-			</button>
-			<button
-				class="btn btn-outline-secondary fw-bold"
-				(click)="handleCancel()"
-			>
-				Cancel
-			</button>
-		</div>
+							<div class="ng-value" *ngIf="items.length > 1">
+								<span class="ng-value-label">{{items.length - 1}} more...</span>
+							</div>
+						</ng-template>
+						<ng-template ng-option-tmp let-item="item" let-item$="item$" let-clear="clear" let-index="index">
+							<input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" [ngModelOptions]="{standalone: true}"/> {{item.name}}
+						</ng-template>
+					</ng-select>
+				</div>
+				<div class="col">
+					<ng-select
+						class="ng-select-no-border"
+						(change)="selectionValueChange()"
+						formControlName="legalEntityId"
+						placeholder="Select Legal Entities"
+						[searchable]="true"
+					>
+						<ng-option
+							*ngFor="let le of legalEntities"
+							[value]="le._id"
+							>{{ le.name }} [{{ le._id }}]</ng-option
+						>
+					</ng-select>
+				</div>
+			  </div>
+			  <div class="row">
+				<div class="col gap-2 d-flex mt-3">
+					<button class="btn btn-dark fw-bold" [disabled]="saveButtonEnable" (click)="saveMapping()">
+						Save Mapping
+					</button>
+					<button
+						class="btn btn-outline-secondary fw-bold"
+						(click)="handleCancel()"
+					>
+						Cancel
+					</button>
+				</div>
+			</div>
+            </div>
+        </form>
 	</div>
 </div>

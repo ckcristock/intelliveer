@@ -33,6 +33,7 @@ export class ManageUserComponent implements OnInit {
     orgId:any;
 	manageUserAdd:any;
 	manageUserActiveDeactive:any;
+	userDataForEmail:any[] = [];
 	constructor(
 		private router: Router,
 		private globalRoutes: GlobalRoutesService,
@@ -208,5 +209,23 @@ export class ManageUserComponent implements OnInit {
 		this.manageUserAdd = this.searchString.transform('title',getmanageUser[0].child,'Create User');
 		this.manageUserActiveDeactive = this.searchString.transform('title',getmanageUser[0].child,'Activate and Deactivate');
 	}
+	userData(event:any,item:any){
+	  if(event.target.checked){
+		this.userDataForEmail.push(item);
+	  }else{
+		const permOBJ = this.userDataForEmail.find((res: any,index:number) => {
+			if(res?._id == item?._id){
+				this.userDataForEmail.splice(index,1);
+			}
+		});
+	  }
+	}
+	sendEmail(){
+		this.alertService.conformAlert('Are you sure?', 'You want to send email')
+		.then((result: any) => {
+			if(result.value){
+			}
+		})
 
+	}
 }
