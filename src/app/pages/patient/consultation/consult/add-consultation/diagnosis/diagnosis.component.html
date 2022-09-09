@@ -161,10 +161,10 @@
 						</div>
 					</div>
 					<app-image-gallery
-						[galleryImagesList]="galleryImagesList"
+						[galleryImagesList]="selectedGalleryImage"
 						(closeImageGallery)="showImageGallery = false"
-						[width]="400"
-						[height]="'min-content'"
+						[width]="478"
+						[height]="371"
 						*ngIf="showImageGallery"
 					></app-image-gallery>
 				</div>
@@ -209,7 +209,7 @@
 							class="gallery"
 							width="60"
 							height="60"
-							(click)="showImageGallery = true"
+							(click)="displaySelectImage(imageGallery)"
 						/>
 					</div>
 				</div>

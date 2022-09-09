@@ -11,6 +11,7 @@ import { ConsultationDiagnosisiProblemListService } from '@services/consultation
 })
 export class DiagnosisComponent implements OnInit {
 	galleryImagesList: any[] = [];
+	selectedGalleryImage: any[] = [];
 	showImageGallery: boolean = false;
 	optionForToothDisplay: any;
 	problemLst: any[] = problemListOfDiagnosis;
@@ -64,11 +65,13 @@ export class DiagnosisComponent implements OnInit {
 		this.galleryImagesList = [
 			{
 				imageTitle: 'Image 1',
-				imageUrl: '/assets/images/diagnosis/Anterior_Occlusion.JPG'
+				imageUrl: '/assets/images/diagnosis/Anterior_Occlusion.JPG',
+				imageThumbanail: '/assets/images/diagnosis/Anterior_Occlusion_thumbnail.jpg'
 			},
 			{
 				imageTitle: 'Image 2',
-				imageUrl: '/assets/images/diagnosis/Anterior_Open.JPG'
+				imageUrl: '/assets/images/diagnosis/Anterior_Open.JPG',
+				imageThumbanail: '/assets/images/diagnosis/Anterior_Open_thumbnail.jpg'
 			},
 			{
 				imageTitle: 'Image 3',
@@ -115,6 +118,13 @@ export class DiagnosisComponent implements OnInit {
 				imageUrl: '/assets/images/diagnosis/Upper_Occlusal.JPG'
 			}
 		];
+	}
+
+	displaySelectImage(Obj: any)
+	{
+		this.showImageGallery = true;
+		this.selectedGalleryImage = [];
+		this.selectedGalleryImage.push(Obj);
 	}
 
 	onSelectOption($event: any) {

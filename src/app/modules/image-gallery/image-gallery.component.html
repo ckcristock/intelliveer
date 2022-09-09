@@ -1,31 +1,143 @@
-<div class="transparent-box" [style.position]="position" [style.right.rem]="right" [style.width.px]="width" [style.height.px]="height" >
-    <div class="container">
-        <div class="modal-body">
-            <div (resizeEnd)="onResizeEnd($event)" [style.width.px]="width" [style.height.px]="height" class="rectangle"
-                mwlResizable [resizeEdges]="{left: true}" [allowNegativeResizes]="true" [enableGhostResize]="true">
-                <div class="overlay">
-                    <i class="bi bi-arrow-bar-left"></i>
-                    <i class="bi bi-arrow-bar-right"></i>
-                </div>
-                <ngb-carousel #ngcarousel [showNavigationArrows]="true">
-                    <ng-template ngbSlide *ngFor="let image of galleryImagesList;">
-                        <div class="picsum-img-wrapper">
-                            <img src="{{image.imageUrl}}" alt="{{image.title}}">
-                        </div>
-                        <div class="carousel-caption">
-                            <h3>{{image.title}}</h3>
-                        </div>
-                    </ng-template>
-                </ngb-carousel>
-            </div>
-        </div>
-        <div class="row" style="font-size: x-small; color: white;">
-            <div class="col-1" [align]="'center'" (click)="hideImageGallery()">
-                <i class="bi bi-x-lg"></i>
-            </div>
-            <div class="col" [align]="'start'" (click)="setImageDefault()">
-                <i class="bi bi-reply"></i>&nbsp;View Default
-            </div>
-        </div>
-    </div>
+<div
+	class="transparent-box"
+	[style.position]="position"
+	[style.right.rem]="right"
+	[style.width.px]="width"
+	[style.height.px]="height"
+	mwlResizable
+	[resizeEdges]="{ left: true, bottom: true }"
+	[allowNegativeResizes]="true"
+	[enableGhostResize]="true"
+	(resizeEnd)="onResizeEnd($event)"
+>
+	<div class="container">
+		<div class="row" style="font-size: x-small; color: white">
+			<div class="col-1" [align]="'center'" (click)="hideImageGallery()">
+				<i class="bi bi-x-lg"></i>
+			</div>
+			<div class="col-3" [align]="'start'" (click)="setImageDefault()">
+				<i class="bi bi-reply"></i>&nbsp;View Default
+			</div>
+			<div class="col" [align]="'start'" (click)="showMagnifying = !showMagnifying">
+				<i class="bi bi-zoom-in"></i>
+			</div>
+		</div>
+		<div class="modal-body">
+			<div
+				[style.width.px]="width"
+				[style.height.px]="height - 16"
+				class="rectangle"
+			>
+				<div class="overlay">
+					<i class="bi bi-arrow-bar-left"></i>
+					<i class="bi bi-arrow-bar-right"></i>
+				</div>
+				<ngb-carousel #ngcarousel [showNavigationArrows]="true">
+					<ng-template
+						ngbSlide
+						*ngFor="let image of galleryImagesList"
+					>
+						<div class="picsum-img-wrapper">
+							<pinch-zoom
+								[limit-zoom]="100"
+								[minScale]="1"
+								[auto-zoom-out]="true"
+								[double-tap]="true"
+								[disableZoomControl]="'disable'"
+							>
+								<img
+									[src]="!mouseMoveContinue ? image.imageUrl : ''"
+									alt="{{ image.title }}"
+									class="image-contain"
+									[style.width.px]="
+										applyZoomOnImage || mouseMoveContinue
+											? width - 38
+											: width
+									"
+									[style.height.px]="height - 32"
+									[style.margin-left.px]="
+										applyZoomOnImage ? left : 0
+									"
+									(mousemove)="
+										applyZoomOnImage ? onmousemove($event) : ''
+									"
+									[ngStyle]="{
+										'background-position': mouseMoveContinue
+											? imageBackgroundPosition
+											: 'center',
+										'background-size': mouseMoveContinue
+											? imageBackgroundSize
+											: 'cover',
+										background: mouseMoveContinue
+											? 'url(' + image.imageUrl + ')'
+											: '',
+										'webkitTransform': 'scale('+(zoomValue + 1)+')',
+										'transform': 'scale('+(zoomValue + 1)+')'
+									}"
+								/>
+								
+							</pinch-zoom>
+							<!-- <img
+								[src]="!mouseMoveContinue ? image.imageUrl : ''"
+								alt="{{ image.title }}"
+								class="image-contain"
+								[style.width.px]="
+									applyZoomOnImage || mouseMoveContinue
+										? width - 38
+										: width
+								"
+								[style.height.px]="height - 32"
+								[style.margin-left.px]="
+									applyZoomOnImage ? left : 0
+								"
+								[ngClass]="
+									applyZoomOnImage
+										? 'zoomInImage'
+										: 'zoomOutImage'
+								"
+								(click)="imageZoomOutClick()"
+								(dblclick)="imageZoomInClick()"
+								(mousemove)="
+									applyZoomOnImage ? onmousemove($event) : ''
+								"
+								[ngStyle]="{
+									'background-position': mouseMoveContinue
+										? imageBackgroundPosition
+										: 'center',
+									'background-size': mouseMoveContinue
+										? imageBackgroundSize
+										: 'cover',
+									background: mouseMoveContinue
+										? 'url(' + image.imageUrl + ')'
+										: ''
+								}"
+							/> -->
+						</div>
+						<div class="carousel-caption">
+							<h3>{{ image.title }}</h3>
+						</div>
+					</ng-template>
+				</ngb-carousel>
+			</div>
+		</div>
+		<div class="model-footer" *ngIf="showMagnifying">
+			<div class="range">
+				<!-- <div class="sliderValue">
+					<span [style.left.%]="(zoomValue)" [ngClass]="0 < zoomValue && zoomValue < 5 ? 'show': ''">{{zoomValue}}</span>
+				</div> -->
+				<div class="field">
+					<div class="value left" (click)="zoomOutImage()"><i class="bi bi-dash"></i></div>
+					<input
+						type="range"
+						min="0"
+						max="5"
+						value="{{zoomValue}}"
+						steps="0.1"
+						(input)="calculateZoomValue($event)"
+					/>
+					<div class="value right" (click)="zoomInImage()"><i class="bi bi-plus-lg"></i></div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
