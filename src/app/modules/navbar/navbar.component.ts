@@ -1,21 +1,14 @@
-import {
-	Component,
-	ElementRef,
-	OnInit,
-	Renderer2,
-	ViewChild
-} from '@angular/core';
+import {Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { CONFIG } from '@config/index';
 import { AuthService } from '@services/auth/auth.service';
 import { environment } from '@environment/environment';
 import { CookieService } from 'ngx-cookie-service';
-import { NavigationEnd, Router, RoutesRecognized } from '@angular/router';
+import { Router } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
 import { patientUserHeaderIconMenuItems } from '@pages/patient/menu';
 import { Location } from '@angular/common';
 import { PatientDetailService } from '@services/patient/family/patient-detail.service';
-import { BusinessGroupDropdownService, SelectedBusinessGroup } from '@services/business-group-dropdown/business-group-dropdown.service';
-import { filter, pairwise } from 'rxjs';
+import { BusinessGroupDropdownService} from '@services/business-group-dropdown/business-group-dropdown.service';
 
 @Component({
 	selector: 'top-navbar',
@@ -28,66 +21,8 @@ export class NavbarComponent implements OnInit {
 	selectedPatient: any;
 	username: any;
 	searchWord: string = '';
-	userListForSearch:any;
-	userLst: any = [
-		{
-			user: 'Smith John',
-			dob: '12/30/1984',
-			active: true,
-			id: 'P001',
-			sex: 'Female',
-			isPin: false,
-			profileUrl: 'assets/images/doctor.jpg'
-		},
-		{
-			user: 'Smith Doe',
-			dob: '08/23/1988',
-			active: true,
-			id: 'P002',
-			sex: 'Female',
-			isPin: false,
-			profileUrl: 'assets/images/doctor2.jpg'
-		},
-		{
-			user: 'Smith Walker',
-			dob: '12/06/1994',
-			active: true,
-			id: 'P003',
-			sex: 'Male',
-			isPin: false,
-			profileUrl:
-				'https://imedica.brainstormforce.com/wp-content/uploads/2015/02/doc1.jpg'
-		},
-		{
-			user: 'Oil Diva',
-			dob: '03/15/1994',
-			active: true,
-			id: 'P004',
-			sex: 'Female',
-			isPin: false,
-			profileUrl:
-				'https://www.parkinsonsdiseasespecialist.com/wp-content/uploads/2020/08/shivam-profile-pic.jpg'
-		},
-		{
-			user: 'Pie Energy',
-			dob: '01/30/1994',
-			active: true,
-			id: 'P005',
-			sex: 'Female',
-			isPin: false,
-			profileUrl:
-				'https://th.bing.com/th/id/OIP.90CUUa066hZfeG-UXb3mtgHaKA?pid=ImgDet&w=758&h=1024&rs=1'
-		},
-		{
-			user: 'Lemon Serenade',
-			dob: '01/08/1994',
-			active: false,
-			id: 'P006',
-			sex: 'Female',
-			isPin: false,
-			profileUrl: 'assets/images/doctor2.jpg'
-		}
-	];
+	userListForSearch: any;
+	userLst: any[] = [];
 	@ViewChild('searchDivRef') searchDivRef!: ElementRef;
 	userSearchLst: any[] = [];
 	selectUserLst: any[] = [];
@@ -100,8 +35,8 @@ export class NavbarComponent implements OnInit {
 	businessGroupDropdownSupscription: any;
 	selectedBusinessGroup: any;
 	businessGroups: any;
-    disableBGDropdown: boolean = false;
-    orgID:any;
+	disableBGDropdown: boolean = false;
+	orgID: any;
 	constructor(
 		private authService: AuthService,
 		private cookieService: CookieService,
@@ -117,23 +52,22 @@ export class NavbarComponent implements OnInit {
 			}
 		});
 		this.businessGroupDropdownSupscription =
-      this.businessGroupDropdownService
-        .getBusinessGroups()
-        .subscribe((res) => {
-          if (res && res.length > 0) {
-            this.businessGroups = res;
-           // this.selectedBusinessGroup = res[0]._id;
-			this.getOrgBgId();
-          }
-        });
+			this.businessGroupDropdownService
+				.getBusinessGroups()
+				.subscribe((res) => {
+					if (res && res.length > 0) {
+						this.businessGroups = res;
+						// this.selectedBusinessGroup = res[0]._id;
+						this.getOrgBgId();
+					}
+				});
 		this.businessGroupDropdownService.businessGroup().subscribe((res) => {
 			if (res) {
-				console.log(res)
 				this.selectedBusinessGroup = res.bgId;
 				this.disableBGDropdown = res.disabled;
-				console.log(this.selectedBusinessGroup)
+				console.log(this.selectedBusinessGroup);
 			}
-			});
+		});
 	}
 
 	ngOnInit(): void {
@@ -144,15 +78,17 @@ export class NavbarComponent implements OnInit {
 				this.menuItems.push(this.allMenuItems[i]);
 			}
 		}
-		this.selectedPatient = JSON.parse(
-			localStorage.getItem('selectedPatient') || ''
-		);
-		if (this.selectedPatient) {
-			this.selectUserLst.push(this.selectedPatient);
-			this.showSelectedPatient = true;
-		} else {
-			this.selectUserLst = [];
-			this.showSelectedPatient = false;
+		if (localStorage.getItem('selectedPatient')) {
+			this.selectedPatient = JSON.parse(
+				localStorage.getItem('selectedPatient') || ''
+			);
+			if (this.selectedPatient) {
+				this.selectUserLst.push(this.selectedPatient);
+				this.showSelectedPatient = true;
+			} else {
+				this.selectUserLst = [];
+				this.showSelectedPatient = false;
+			}
 		}
 	}
 	logOut() {
@@ -290,18 +226,20 @@ export class NavbarComponent implements OnInit {
 			this.username = null;
 		}
 	}
-    fetchSearch($event: any): void {
-		console.log($event.target.value)
+	fetchSearch($event: any): void {
+		console.log($event.target.value);
 		if ($event.target.value == '') {
 			this.userSearchLst = this.userLst;
-		}else{
-			this.userSearchLst = this.userListForSearch.filter((searchResultObj: any) => {
-				return searchResultObj.user
-					.toLowerCase()
-					.startsWith($event.target.value.toLowerCase());
-			});
+		} else {
+			this.userSearchLst = this.userListForSearch.filter(
+				(searchResultObj: any) => {
+					return searchResultObj.user
+						.toLowerCase()
+						.startsWith($event.target.value.toLowerCase());
+				}
+			);
+			this.selectedPatient.lastVisitPage = this.router.url;
 		}
-		this.selectedPatient.lastVisitPage = this.router.url;
 	}
 	selectUserMenuItem(selectUser: any, displayUI?: string) {
 		let index = this.selectUserLst.findIndex(
@@ -357,12 +295,9 @@ export class NavbarComponent implements OnInit {
 				}
 			} else if (this.clickCount === 2) {
 				this.selectUserMenuItem(selectUser);
-				if(selectUser.lastVisitPage)
-				{
-					this.router.navigate([selectUser.lastVisitPage])
-				}
-				else
-				{
+				if (selectUser.lastVisitPage) {
+					this.router.navigate([selectUser.lastVisitPage]);
+				} else {
 					this.router.navigate(['/dashboard/patient/camera']);
 				}
 			}
@@ -372,80 +307,83 @@ export class NavbarComponent implements OnInit {
 
 	getOrgBgId() {
 		let bgOrdID: any = localStorage.getItem('selected_business_group');
-		let user:any = localStorage.getItem('permissionSet');
+		let user: any = localStorage.getItem('permissionSet');
 		let orgId = this.authService.getOrgId();
 		user = JSON.parse(user);
-		console.log(bgOrdID,orgId)
 		if (user?.__ISSU__) {
 			if (bgOrdID == 'intelliveer' || bgOrdID == null) {
 				this.getPatientList('intelliveer');
-				this.getPatientListForSearch('intelliveer')
-				this.orgID = 'intelliveer'
+				this.getPatientListForSearch('intelliveer');
+				this.orgID = 'intelliveer';
 			} else {
-				this.getPatientList(this.selectedBusinessGroup?.bgId);
-				this.getPatientListForSearch(this.selectedBusinessGroup?.bgId)
-				this.orgID = bgOrdID
+				this.getPatientList(this.selectedBusinessGroup);
+				this.getPatientListForSearch(this.selectedBusinessGroup);
+				this.orgID = bgOrdID;
 			}
 		} else {
-			this.getPatientList(this.selectedBusinessGroup?.bgId);
-			this.getPatientListForSearch(this.selectedBusinessGroup?.bgId)
-			this.orgID = orgId
+			this.getPatientList(this.selectedBusinessGroup);
+			this.getPatientListForSearch(this.selectedBusinessGroup);
+			this.orgID = orgId;
 		}
 	}
 
-	getPatientList(bgId: any)
-	{
+	getPatientList(bgId: any) {
 		let limit = 10;
 		let skip = 0;
-		let data = {limit: limit,skip: skip}
+		let data = { limit: limit, skip: skip };
 		let userList: any[] = [];
-		this.patientService.getPatientList(bgId,data).subscribe((patientList: any) =>
-		{
-			for (let i = 0; i < patientList.length; i++) 
-			{
-				const index = i + 1;
-				userList.push({
-					user: patientList[i].profile.firstName + ' ' + patientList[i].profile.lastName,
-					dob: patientList[i].profile.DOB,
-					active: true,
-					id: "P00"+ index,
-					sex: patientList[i].profile.gender,
-					isPin: false,
-					profileUrl: 'assets/images/doctor2.jpg',
-					dbId: patientList[i]._id
-				});
-			}
-			this.userLst = userList;
-		})
+		this.patientService
+			.getPatientList(bgId, data)
+			.subscribe((patientList: any) => {
+				for (let i = 0; i < patientList.length; i++) {
+					const index = i + 1;
+					userList.push({
+						user:
+							patientList[i].profile.firstName +
+							' ' +
+							patientList[i].profile.lastName,
+						dob: patientList[i].profile.DOB,
+						active: true,
+						id: 'P00' + index,
+						sex: patientList[i].profile.gender,
+						isPin: false,
+						profileUrl: 'assets/images/doctor2.jpg',
+						dbId: patientList[i]._id
+					});
+				}
+				this.userLst = userList;
+			});
 	}
-	getPatientListForSearch(bgId: any)
-	{
+	getPatientListForSearch(bgId: any) {
 		let limit = 100;
 		let skip = 0;
-		let data = {limit: limit,skip: skip}
+		let data = { limit: limit, skip: skip };
 		let userList: any[] = [];
-		this.patientService.getPatientList(bgId,data).subscribe((patientList: any) =>
-		{
-			for (let i = 0; i < patientList.length; i++) 
-			{
-				const index = i + 1;
-				userList.push({
-					user: patientList[i].profile.firstName + ' ' + patientList[i].profile.lastName,
-					dob: patientList[i].profile.DOB,
-					active: true,
-					id: "P00"+ index,
-					sex: patientList[i].profile.gender,
-					isPin: false,
-					profileUrl: 'assets/images/doctor2.jpg',
-					dbId: patientList[i]._id
-				});
-			}
-			this.userListForSearch = userList;
-		})
+		this.patientService
+			.getPatientList(bgId, data)
+			.subscribe((patientList: any) => {
+				for (let i = 0; i < patientList.length; i++) {
+					const index = i + 1;
+					userList.push({
+						user:
+							patientList[i].profile.firstName +
+							' ' +
+							patientList[i].profile.lastName,
+						dob: patientList[i].profile.DOB,
+						active: true,
+						id: 'P00' + index,
+						sex: patientList[i].profile.gender,
+						isPin: false,
+						profileUrl: 'assets/images/doctor2.jpg',
+						dbId: patientList[i]._id
+					});
+				}
+				this.userListForSearch = userList;
+			});
 	}
 	setBusinessGroup(e: any) {
 		this.businessGroupDropdownService.setSelectedBusinessGroup(
-		  e.target.value
+			e.target.value
 		);
 	}
 }

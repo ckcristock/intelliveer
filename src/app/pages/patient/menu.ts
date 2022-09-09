@@ -33,6 +33,11 @@ export const patientUserMenuItems = [
 		title: 'Family Members',
 		url: '/dashboard/patient/patient-user/family_members',
 		icon: 'bi bi-house-door',
+	},
+	{
+		title: 'Ownership',
+		url: '/dashboard/patient/patient-user/ownership',
+		icon: 'bi bi-house-door',
 	}
 ];
 

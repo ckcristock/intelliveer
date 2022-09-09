@@ -158,6 +158,13 @@ const routes: Routes = [
 					import(
 						'@pages/patient/patient-user/insurance-subscriber/edit-insurance-subscriber/edit-insurance-subscriber.module'
 					).then((m) => m.EditInsuranceSubscriberModule),
+			},
+      {
+				path: 'ownership',
+				loadChildren: () =>
+					import(
+						'@pages/patient/patient-user/ownership/ownership.module'
+					).then((m) => m.OwnershipModule),
 			}
     ],
   },

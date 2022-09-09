@@ -25,8 +25,8 @@
 			<div class="col">
 				<div class="mainformset">
 					<label class="label-input-gap">Practice</label>
-					<ng-select placeholder="Select" formControlName="practice" (change)="onSelectPractice($event)">
-						<ng-option [value]="item._id" *ngFor="let item of practiceList">{{item.name}}</ng-option>
+					<ng-select placeholder="Select" formControlName="practice" (change)="onSelectPractice($event)" class="mandatory-field">
+						<ng-option [value]="item._id" *ngFor="let item of practiceList" [class.valid-mandatory-field]="practiceValid()">{{item.name}}</ng-option>
 					</ng-select>
 				</div>
 			</div>
