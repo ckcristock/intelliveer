@@ -173,7 +173,7 @@ export class LegalGuardianFormComponent implements OnInit {
 						gender: '',
 						preferredPronoun: '',
 						language: '',
-						martialStatus: ''
+						maritalStatus: ''
 					},
 					address: this.Form.value.address,
 					contact: {
@@ -485,6 +485,7 @@ export class LegalGuardianFormComponent implements OnInit {
 		this.addPatientServ.getLegalGuardCWP(this.patientPage).then(res=>{
          console.log(res);
 		 if(res._id){
+			console.log('data',res);
 			saveObj._id = res._id;
             this.legalGuardianService
 			.updateLegalGuardian(saveObj, this.bgId)
