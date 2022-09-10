@@ -56,7 +56,8 @@ export class CanDeactivateGuard
 		| UrlTree {
 
 		this.conditions = [];
-		
+		const urlObj:any = nextState?.url;
+		localStorage.setItem('sendRedirectObj',urlObj)
 		this.addPatientServ.setConditions();
 		this.insuranceServ.setConditions();
 		this.onboardingServ.setConditions();

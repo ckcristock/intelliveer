@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { CONFIG } from '@config/index';
 import { AlertService } from '@services/alert/alert.service';
 import { AuthService } from '@services/auth/auth.service';
 import { DentistService } from '@services/patient/dentist/dentist.service';
@@ -301,11 +302,12 @@ export class AddPatientService {
   setPatientCWP(patient: any) {
     this.setPatientNotPristineCWP(false);
     let objData:any = localStorage.getItem('sendRedirectObj');
-    objData = JSON.parse(objData);
+   // objData = JSON.parse(objData);
     console.log(objData)
     localStorage.setItem("patientCoorWithProsp", JSON.stringify(patient));
     if(objData !=null){
-      this.router.navigate([objData?.url]);
+      localStorage.removeItem('sendRedirectObj')
+      this.router.navigate([objData]);
     }
   }
 
@@ -313,10 +315,11 @@ export class AddPatientService {
     this.setLegalGuardianNotPristineCWP(false);
     localStorage.setItem(`legalGuard${index}CoorWithProsp`, JSON.stringify(LG));
     let objData:any = localStorage.getItem('sendRedirectObj');
-    objData = JSON.parse(objData);
+    //objData = JSON.parse(objData);
     console.log(objData)
     if(objData !=null){
-      this.router.navigate([objData?.url]);
+      localStorage.removeItem('sendRedirectObj')
+      this.router.navigate([objData]);
     }
   }
 
@@ -324,10 +327,10 @@ export class AddPatientService {
     this.setDentistNotPristineCWP(false);
     localStorage.setItem("dentistCoorWithProsp", JSON.stringify(dentist));
     let objData:any = localStorage.getItem('sendRedirectObj');
-    objData = JSON.parse(objData);
     console.log(objData)
     if(objData !=null){
-      this.router.navigate([objData?.url]);
+      localStorage.removeItem('sendRedirectObj')
+      this.router.navigate([objData]);
     }
   }
 
