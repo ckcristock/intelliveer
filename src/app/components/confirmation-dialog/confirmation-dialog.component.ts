@@ -21,6 +21,9 @@ export class ConfirmationDialogComponent implements OnInit {
 	cancelButtonText:any;
 	discardType: any;
 	isMandatory: boolean = false;
+	isPatient: boolean = false;
+	callersinfo:boolean = false;
+	patientWithinPage:boolean = false;
 	constructor(
 		config: NgbModalConfig,
 		private modalService: NgbModal,
@@ -35,9 +38,20 @@ export class ConfirmationDialogComponent implements OnInit {
 		this.canDeactivateRouteSubscription =
 			this.canDeactivateRouteService.modalStatus$.subscribe((state) => {
 				if (state) {
+					let patientData:any = localStorage.getItem('patientCoorWithProsp');
+					patientData = JSON.parse(patientData);
+					if(patientData){
+						this.isPatient = true;
+					}else{
+						this.isPatient = false;
+					}
 					this.getAlertValues();
-					if(this.isMandatory){
+					if(this.isMandatory && this.isPatient){
                       this.saveDataIsFieldsAreNotMandatory()
+					}else if(this.callersinfo || this.patientWithinPage){
+						this.saveDataIsFieldsAreNotMandatory();
+						this.callersinfo = false;
+						this.patientWithinPage = false;
 					}else{
                       this.alertPopup()
 					}
@@ -53,35 +67,8 @@ export class ConfirmationDialogComponent implements OnInit {
 		this.canDeactivateRouteService.setChoice(false);
 	}
 	close(data?:any) {
-		console.log(data)
 		this.modalService.dismissAll();
-		if(data == 'callersinfo'){
-		 this.canDeactivateRouteService.closeDialog();
-		 this.addPatientServ.setCallerInfoNotPristineCWP(false)
-		 this.router.navigate(['/dashboard/home']);
-		}else if(data == 'patient'){
-		 this.canDeactivateRouteService.closeDialog();
-		 this.addPatientServ.setPatientNotPristineCWP(false)
-		 this.router.navigate(['/dashboard/home']);
-		}else if(data == 'legalguardian'){
-		 this.canDeactivateRouteService.closeDialog();
-		 this.addPatientServ.setLegalGuardianNotPristineCWP(false)
-		 this.router.navigate(['/dashboard/home']);
-		}else if(data == 'dentist'){
-		 this.canDeactivateRouteService.closeDialog();
-		 this.addPatientServ.setDentistNotPristineCWP(false)
-		 this.router.navigate(['/dashboard/home']);
-		}else if(data == 'referrer'){
-		 this.canDeactivateRouteService.closeDialog();
-		 this.addPatientServ.setReferrerNotPristineCWP(false)
-		 this.router.navigate(['/dashboard/home']);
-		}else if(data == 'insurance'){
-		 this.canDeactivateRouteService.closeDialog();
-		 this.addPatientServ.setInsuranceNotPristineCWP(false)
-		 this.router.navigate(['/dashboard/home']);
-		}else{
-		  this.canDeactivateRouteService.setChoice(true);
-		}
+		this.canDeactivateRouteService.setChoice(true);
 	}
 	getAlertValues(){
 		let conditions = this.addPatientServ.getConditions();
@@ -91,13 +78,23 @@ export class ConfirmationDialogComponent implements OnInit {
 				switch (conditions[i].section) {
 					// For Add Patient Module
 					case 'callersinfo':
-						this.alertText = "Your data will be discarded .You can take note of the details.";
-						this.confirmButtonText = "Discard"
-						this.cancelButtonText = false;
-						this.discardType = 'callersinfo'
-						console.log(conditions[i])
+						let addPatientWithInPage = localStorage.getItem('addPatientWithInPage');
+						if(addPatientWithInPage){
+							this.alertText = "";
+							this.confirmButtonText = "Discard"
+							this.cancelButtonText = false;
+							this.discardType = 'callersinfo'
+							this.callersinfo = true;
+						}else{
+							this.alertText = "Your data will be discarded .You can take note of the details.";
+							this.confirmButtonText = "Discard"
+							this.cancelButtonText = false;
+							this.discardType = 'callersinfo'
+							this.callersinfo = false
+						}
 						break;
 					case 'patient':
+						let patientWithInPage = localStorage.getItem('addPatientWithInPage');
 						if(conditions[i].mandatory){
 							this.isMandatory = false;
 							this.alertText = "Mandatory fields are required to save.";
@@ -108,9 +105,13 @@ export class ConfirmationDialogComponent implements OnInit {
 							this.confirmButtonText = "Discard"
 							this.cancelButtonText = "Save";
 							this.isMandatory = true;
+							if(patientWithInPage){
+								this.patientWithinPage = true;
+							}else{
+								this.patientWithinPage = false;
+							}
 						}
 						this.discardType = 'patient'
-						console.log(conditions[i])
 						break;
 					case 'legalguardian':
 						if(conditions[i].mandatory){
@@ -172,16 +173,14 @@ export class ConfirmationDialogComponent implements OnInit {
 					this.confirmButtonText = "Yes, go ahead."
 					this.cancelButtonText = "No, let me think"
 				}
+				localStorage.removeItem('addPatientWithInPage');
 			}
 		}
 	}
 	alertPopup(){
 		this.alertService.conformAlertNavigate('Please confirm', this.alertText,this.confirmButtonText,this.cancelButtonText)
 			.then((result: any) => {
-				console.log("result", result);
-
 				if (result.isConfirmed) {
-					console.log("result", result);
 					this.close(this.discardType);
 				} else if (result.isDismissed && (result.dismiss == "cancel")) {
 					// For Add Patient Module
@@ -209,24 +208,9 @@ export class ConfirmationDialogComponent implements OnInit {
 								case 'insurance':
 									this.addPatientServ.setInsuranceCWPFromPopup();
 									break;
-
-								//For Insurance Module
-								// case 'policy':
-								// 	this.insuranceServ.setLegalGuardCWPFromPopup();
-								// 	break;
-								// case 'orthodontic':
-								// 	this.insuranceServ.setDentistCWPFromPopup();
-								// 	break;
-								// case 'dentalbenefits':
-								// 	this.insuranceServ.setReferrerCWPFromPopup();
-								// 	break;
-								// case 'billing':
-								// 	this.insuranceServ.setInsuranceCWPFromPopup();
-								// 	break;
 							}
 						}
 					}
-					console.log("result.isDenied", result.isDenied);
 					this.close();
 					// End Add Patient Module
 				} else if (result.isDismissed && (result.dismiss == "close")) {
@@ -259,20 +243,6 @@ export class ConfirmationDialogComponent implements OnInit {
 					case 'insurance':
 						this.addPatientServ.setInsuranceCWPFromPopup();
 						break;
-
-					//For Insurance Module
-					// case 'policy':
-					// 	this.insuranceServ.setLegalGuardCWPFromPopup();
-					// 	break;
-					// case 'orthodontic':
-					// 	this.insuranceServ.setDentistCWPFromPopup();
-					// 	break;
-					// case 'dentalbenefits':
-					// 	this.insuranceServ.setReferrerCWPFromPopup();
-					// 	break;
-					// case 'billing':
-					// 	this.insuranceServ.setInsuranceCWPFromPopup();
-					// 	break;
 				}
 			}
 		}

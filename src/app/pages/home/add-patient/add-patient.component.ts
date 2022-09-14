@@ -19,7 +19,9 @@ export class AddPatientComponent implements OnInit {
         this.selectTab = 'coordWithProspect';
       } else if (event.url.includes("quick-add")) {
         this.selectTab = 'quickadd';
-      } 
+      }else{
+        this.selectTab = 'coordWithProspect'
+      }
     });
    }
 

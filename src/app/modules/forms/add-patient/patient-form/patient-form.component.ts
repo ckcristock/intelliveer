@@ -87,42 +87,32 @@ export class PatientFormComponent implements OnInit {
 					if (bg) {
 						this.selectedBusinessGroup = bg;
 						this.getOrgBgId();
+						setTimeout(() => {
+							if(this.patientID){
+								this.getPatentDataWithID();
+							}
+						  }, 500)
 					}
 				});
 	}
 
 	async ngOnInit() {
 		this.initForm(this.formData);
-		if (this.tab == 'coordWithProspect') {
 			this.patientUserServ.setFalseAllNotPristine();
 			this.addPatientServ.setFalseAllNotPristineCWP();
 			this.insuranceServ.setFalseAllNotPristine();
 			this.onboardingServ.setFalseAllNotPristine();
-			//this.addPatientServ.getPatientFromCompone(this.getPatient.bind(this));
 			this.patientData = await this.addPatientServ.getPatientCWP();
 			this.callersInfo = await this.addPatientServ.getCallerInfoCWP();
 			this.patientID = this.patientData?._id;
-			 console.log(this.patientData,this.patientID)
-			// if (this.patientArray != null) {
-			// 	this.patient.firstName = this.patientArray.firstName;
-			// 	this.patient.lastName = this.patientArray.lastName;
-			// 	this.patient.dateBirth = this.patientArray.dateBirth;
-			// }
 			if (this.callersInfo.callerSelfPatient == true) {
 				this.patient.firstName = this.callersInfo.firstName;
 				this.patient.lastName = this.callersInfo.lastName;
 				this.patient.dateBirth = this.patientArray.DOB;
 			}
-			this.Form.get('firstName')?.valueChanges.subscribe(res=>{
-				console.log(res)
-			})
 			this.Form?.statusChanges.subscribe(
 				result => {
-					console.log(result)
 					if (!this.Form.pristine) {
-						console.log("hiiiiii", event);
-						console.log("status", this.Form.pristine);
-
 						this.addPatientServ.setPatientNotPristineCWP(true);
                         if(this.Form.invalid){
 							this.addPatientServ.setPatentMandatoryFields(true)
@@ -168,22 +158,8 @@ export class PatientFormComponent implements OnInit {
 					}
 				}
 			);
-		} else if (this.tab == 'quickAdd') {
-			this.patientArray = await this.addPatientServ.getPatientQuiAdd();
-			if (this.patientArray != null) {
-				this.patient.firstName = this.patientArray.firstName;
-				this.patient.lastName = this.patientArray.lastName;
-				this.patient.dateBirth = this.patientArray.dateBirth;
-			}
-		}
-		setTimeout(() => {
-			if(this.patientID){
-				this.getPatentDataWithID();
-			}
-		  }, 500)
 	}
 	getPatient() {
-		console.log(this.patient)
 		return [this.patient];
 	}
 
@@ -195,9 +171,9 @@ export class PatientFormComponent implements OnInit {
 			visitedArray.push("Patient");
 			localStorage.setItem("visitedArray", JSON.stringify(visitedArray));
 			this.router.navigate([this.menuItemsOfCordinate[2].url]);
-
-		} else if (this.tab == "quickAdd") {
-			this.addPatientServ.setPatientQuiAdd(this.patient);
+		}else if (this.tab == "quickAdd") {
+			//this.addPatientServ.setPatientQuiAdd(this.patient);
+			this.addPatientServ.setPatientCWP(result);
 			let visitedArrayQuick: any = JSON.parse(localStorage.getItem("visitedArrayQuick") || '[]');
 			visitedArrayQuick.push("Patient");
 			localStorage.setItem("visitedArrayQuick", JSON.stringify(visitedArrayQuick));
@@ -207,25 +183,15 @@ export class PatientFormComponent implements OnInit {
 
 	initForm(data?: any) {
 		data = data || {};
-		if (this.tab == 'coordWithProspect') {
-			this.Form = this.fb.group({
-				practice: [data?.practice || '', Validators.required],
-				firstName: [data?.firstName || '', Validators.required],
-				lastName: [data?.lastName || '', Validators.required],
-				DOB: [data?.DOB || '', Validators.required],
-				gender: [data?.gender || ''],
-				location: [data?.location || '', Validators.required],
-				legalEntity: [data?.legalEntity || '']
-			});
-		} else if (this.tab == 'quickAdd') {
-			this.Form = this.fb.group({
-				practice: [data?.practice || ''],
-				firstName: [data?.firstName || '', Validators.required],
-				lastName: [data?.lastName || '', Validators.required],
-				DOB: [data?.DOB || ''],
-				gender: [data?.gender || '']
-			});
-		}
+		this.Form = this.fb.group({
+			practice: [data?.practice || '', Validators.required],
+			firstName: [data?.firstName || '', Validators.required],
+			lastName: [data?.lastName || '', Validators.required],
+			DOB: [data?.DOB || '', Validators.required],
+			gender: [data?.gender || ''],
+			location: [data?.location || ''],
+			legalEntity: [data?.legalEntity || '']
+		});
 	}
 
 	practiceValid() {
@@ -281,12 +247,10 @@ export class PatientFormComponent implements OnInit {
 			notes: ''
 		};
 		this.addPatientServ.getPatientCWP().then((res)=>{
-			console.log(res)
 			if(res._id){
 				saveObj._id = res._id
 				this.patientDetailService.updatePatient(saveObj, this.bgId).subscribe(
 					(result: any) => {
-						console.log(result);
 						this.alertService.success(
 							'Success',
 							'Patient has been updated successfully'
@@ -300,7 +264,6 @@ export class PatientFormComponent implements OnInit {
 			}else{
 				this.patientDetailService.savePatient(saveObj, this.bgId).subscribe(
 					(result: any) => {
-						console.log(result);
 						this.alertService.success(
 							'Success',
 							'Patient has been save successfully'
@@ -372,7 +335,6 @@ export class PatientFormComponent implements OnInit {
 			.getPracticesList(bgId)
 			.subscribe((list: any) => {
 				this.practiceList = list;
-				console.log(list);
 			});
 	}
 
@@ -381,7 +343,6 @@ export class PatientFormComponent implements OnInit {
 			.getLocationsList(bgId)
 			.subscribe((list: any) => {
 				this.locationList = list;
-				console.log(list);
 			});
 	}
 
@@ -390,46 +351,8 @@ export class PatientFormComponent implements OnInit {
 			.getLegalEntitesList(bgId)
 			.subscribe((list: any) => {
 				this.legalEntityList = list;
-				console.log(list);
 			});
 	}
-
-	onSelectGender($event: any) {
-		console.log($event);
-	}
-
-	onSelectPractice($event: any) {
-		console.log($event);
-	}
-
-	onSelectLocation($event: any) {
-		console.log($event);
-	}
-
-	onSelectLegalEntity($event: any) {
-		console.log($event);
-	}
-	// openModel(content: any) {
-	// 	let firstName = this.Form.value.firstName;
-	// 	if(firstName == undefined){
-	// 		firstName = '';
-	// 	}
-	// 	let lastName = this.Form.value.lastName;
-	// 	if(lastName == undefined){
-	// 		lastName = ''
-	// 	}
-    //     let dateOFBirth = this.Form.value.DOB;
-	// 	if(dateOFBirth == undefined){
-	// 		dateOFBirth = ''
-	// 	}
-	// 	if(firstName != '' || lastName != '' || this.Form.value.gender != '' || this.Form.value.legalEntity != ''  || this.Form.value.practice != ''  || this.Form.value.location != '' || dateOFBirth != '' ){
-	// 	this.modalService.open(content, { centered: true });
-	// 	}else
-	// 	{
-	// 	this.addPatientServ.setPatientNotPristineCWP(false);
-	// 	this.router.navigate(['/dashboard/home']);
-	// 	}
-	// }
 	openModel(content: any) {
 		let firstName = this.Form.value.firstName;
 		if(firstName == undefined){
@@ -454,8 +377,6 @@ export class PatientFormComponent implements OnInit {
 				this.cancelButtonText = "Discard"
 			}
 			this.alertService.conformAlertNavigate('Please confirm', this.alertText,this.cancelButtonText,this.confirmButtonText).then((result: any) => {
-				console.log("result", result);
-
 				if (result.isConfirmed) {
 					this.discardPatient()
 				} else if (result.isDismissed && (result.dismiss == "cancel")) {
@@ -478,10 +399,8 @@ export class PatientFormComponent implements OnInit {
 		this.save(this.Form)
 	}
     getPatentDataWithID(){
-		console.log(this.bgId,this.patientID)
        this.patientDetailService.getSinglePatientData(this.bgId,this.patientID).subscribe(
 		(result: any) => {
-			console.log(result);
 			this.patientArray = { practice: result.practiceId,firstName: result.profile.firstName,lastName: result.profile.lastName,
 				gender: result.profile.gender,DOB: result.profile.DOB,location: result.preferences.location}
 		    // this.initForm(this.patientArray)

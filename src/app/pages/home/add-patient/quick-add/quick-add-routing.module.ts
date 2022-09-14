@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { QuickAddComponent } from './quick-add.component';
+import { CanDeactivateGuard } from '@guards/can-deactivate/can-deactivate.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: QuickAddComponent,
+	canDeactivate: [CanDeactivateGuard],
     children: [
       {
 				path: '',

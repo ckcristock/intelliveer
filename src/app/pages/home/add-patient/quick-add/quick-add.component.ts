@@ -24,18 +24,23 @@ export class QuickAddComponent implements OnInit {
   constructor(public router: Router) { }
 
   ngOnInit(): void {
-    this.sessionArrayQuickAdd = JSON.parse(localStorage.getItem("visitedArrayQuick") || '[]');  
+    this.sessionArrayQuickAdd = JSON.parse(localStorage.getItem("visitedArray") || '[]');
     setInterval(() =>
     {
-      this.sessionArrayQuickAdd = JSON.parse(localStorage.getItem("visitedArrayQuick") || '[]');  
+      this.sessionArrayQuickAdd = JSON.parse(localStorage.getItem("visitedArray") || '[]');
     }, 1000)  
     
   }
 
   
   goToSpecificMenu(Obj:any){
-    // console.log(Obj);
-    this.router.navigate([Obj.url]);
+    console.log(Obj);
+   // this.router.navigate([Obj.url]);
+   let patientInfo:any = localStorage.getItem("patientCoorWithProsp")
+    patientInfo = JSON.parse(patientInfo)
+    if(patientInfo){
+      this.router.navigate([Obj.url]);
+    }
   }
 
   setSelectTab(numb: number){

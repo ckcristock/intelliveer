@@ -7,6 +7,7 @@ import {
 	OnInit,
 	Output
 } from '@angular/core';
+import { Router } from '@angular/router';
 
 export type MenuItem = {
 	title: string;
@@ -27,6 +28,7 @@ export class NavBarPillsComponent implements OnInit, AfterContentInit {
 	@Input() cancelBtn: boolean = false;
 	@Input() disableCancelBtn: boolean = false;
 	@Input() addBtn: boolean = false;
+	@Input() editButton: any;
 	@Input() disableAddBtn: boolean = false;
 
 	@Output() public onCancel = new EventEmitter<string>();
@@ -34,7 +36,7 @@ export class NavBarPillsComponent implements OnInit, AfterContentInit {
 	@Output() public onAdd = new EventEmitter<string>();
 
 	@Input() menuItems: MenuItem[] = [];
-	constructor() {}
+	constructor(public router: Router,) {}
 
 	ngOnInit(): void {}
 	ngAfterContentInit(): void {
@@ -62,5 +64,8 @@ export class NavBarPillsComponent implements OnInit, AfterContentInit {
 	}
 	handleAddCancelClicked() {
 		this.onAdd.emit();
+	}
+	editButtonURL(URL:any){
+		this.router.navigate([URL]);
 	}
 }

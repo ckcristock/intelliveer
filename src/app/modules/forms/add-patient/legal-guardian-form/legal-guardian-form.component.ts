@@ -140,14 +140,10 @@ export class LegalGuardianFormComponent implements OnInit {
 	}
 
 	async ngOnInit() {
-		console.log('selectedCountry2', this.selectedCountry2);
 		this.patientUserServ.setFalseAllNotPristine();
 		this.addPatientServ.setFalseAllNotPristineCWP();
 		this.insuranceServ.setFalseAllNotPristine();
 		this.onboardingServ.setFalseAllNotPristine();
-		// this.addPatientServ.getLegalGuardFromCompone(
-		// 	this.getLegalGuard.bind(this)
-		// );
 		this.getDataLegaGuarCaller();
 		this.initForm(this.formData);
 		this.Form.controls['state']?.setValue(null);
@@ -155,7 +151,6 @@ export class LegalGuardianFormComponent implements OnInit {
 		this.getStaticData();
 		await this.getCountries();
 		this.Form.statusChanges.subscribe((result) => {
-			console.log(result)
 			if (!this.Form.pristine) {
 				this.addPatientServ.setLegalGuardianNotPristineCWP(true);
 				if(this.Form.invalid){
@@ -244,14 +239,18 @@ export class LegalGuardianFormComponent implements OnInit {
 				await this.addPatientServ.getLegalGuardCWP(this.patientPage);
 			this.callersInfo = await this.addPatientServ.getCallerInfoCWP();
 			this.legalGuardianID = this.legalGuardianData?._id;
-			console.log('caller', this.callersInfo);
+			console.log(this.legalGuardianData)
 			if (this.callersInfo.callerLegarGuar == true) {
 				this.legalGuardian.firstName = this.callersInfo.firstName;
 				this.legalGuardian.lastName = this.callersInfo.lastName;
 			}
 		} else if (this.tab == 'quickAdd') {
-			this.legalGuardianArray =
-				await this.addPatientServ.getLegalGuardQuiAdd();
+			// this.legalGuardianArray =
+			// 	await this.addPatientServ.getLegalGuardQuiAdd();
+			this.legalGuardianData =
+				await this.addPatientServ.getLegalGuardCWP(this.patientPage);
+				this.legalGuardianID = this.legalGuardianData?._id;
+				console.log(this.legalGuardianData)
 			if (this.legalGuardianArray != null) {
 				this.legalGuardian.firstName =
 					this.legalGuardianArray.firstName;
@@ -271,6 +270,7 @@ export class LegalGuardianFormComponent implements OnInit {
 				result,
 				this.patientPage
 			);
+			console.log(this.patientPage)
 			let visitedArray: any = JSON.parse(
 				localStorage.getItem('visitedArray') || '[]'
 			);
@@ -278,7 +278,10 @@ export class LegalGuardianFormComponent implements OnInit {
 			localStorage.setItem('visitedArray', JSON.stringify(visitedArray));
 			this.router.navigate([this.menuItemsOfCordinate[3].url]);
 		} else if (this.tab == 'quickAdd') {
-			this.addPatientServ.setLegalGuardQuiAdd(this.legalGuardian);
+			this.addPatientServ.setLegalGuardCWP(
+				result,
+				this.patientPage
+			);
 			let visitedArrayQuick: any = JSON.parse(
 				localStorage.getItem('visitedArrayQuick') || '[]'
 			);
@@ -533,25 +536,6 @@ export class LegalGuardianFormComponent implements OnInit {
 			this.bgId = this.selectedBusinessGroup?.bgId;
 		}
 	}
-	// openModel(content: any) {
-	// 	let firstName = this.Form.value.firstName;
-	// 	if(firstName == undefined){
-	// 	  firstName = '';
-	// 	}
-	// 	let lastName = this.Form.value.lastName;
-	// 	if(lastName == undefined){
-	// 	  lastName = ''
-	// 	}
-
-	// 	console.log(firstName,lastName,this.Form)
-	// 	if(firstName != '' || lastName != '' || this.Form.value.phoneType != '' || this.Form.value.phoneNumber != '' || this.Form.value.address.addressLine1 != '' || this.Form.value.address.addressLine2 != '' || this.Form.value.address.zipCode != '' || this.Form.value.email != '' ){
-	// 	  this.modalService.open(content, { centered: true });
-	// 	}else
-	// 	{
-	// 	  this.addPatientServ.setLegalGuardianNotPristineCWP(false);
-	// 	  this.router.navigate(['/dashboard/home']);
-	// 	}
-	// }
 	openModel(content: any) {
 		let firstName = this.Form.value.firstName;
 		if(firstName == undefined){
@@ -609,7 +593,6 @@ export class LegalGuardianFormComponent implements OnInit {
 				city:result.address.city,state:result.address.state,country:result.address.country,zipCode:result.address.zipCode}
 			};
 			this.Form.patchValue(this.legalGuardianArray)
-		   // this.initForm(this.legalGuardianArray)
 			this.addPatientServ.setLegalGuardCWP(
 				result,
 				this.patientPage

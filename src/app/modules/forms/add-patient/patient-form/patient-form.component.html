@@ -25,7 +25,7 @@
 			<div class="col">
 				<div class="mainformset">
 					<label class="label-input-gap">Practice</label>
-					<ng-select placeholder="Select" formControlName="practice" (change)="onSelectPractice($event)" class="mandatory-field">
+					<ng-select placeholder="Select" formControlName="practice" class="mandatory-field">
 						<ng-option [value]="item._id" *ngFor="let item of practiceList" [class.valid-mandatory-field]="practiceValid()">{{item.name}}</ng-option>
 					</ng-select>
 				</div>
@@ -33,7 +33,7 @@
 			<div class="col">
 				<div class="mainformset">
 					<label class="label-input-gap">Location</label>
-					<ng-select placeholder="Select" formControlName="location" (change)="onSelectLocation($event)">
+					<ng-select placeholder="Select" formControlName="location">
 						<ng-option [value]="item._id" *ngFor="let item of locationList">{{item.name}}</ng-option>
 					</ng-select>
 				</div>
@@ -41,8 +41,7 @@
 			<div class="col">
 				<div class="mainformset">
 					<label class="label-input-gap">Legal Entity</label>
-					<ng-select placeholder="Select" formControlName="legalEntity"
-						(change)="onSelectLegalEntity($event)">
+					<ng-select placeholder="Select" formControlName="legalEntity">
 						<ng-option [value]="item._id" *ngFor="let item of legalEntityList">{{item.name}}</ng-option>
 					</ng-select>
 				</div>
@@ -74,7 +73,7 @@
 			<div class="col">
 				<div class="mainformset">
 					<label class="required">Gender</label>
-					<ng-select placeholder="Select" formControlName="gender" (change)="onSelectGender($event)">
+					<ng-select placeholder="Select" formControlName="gender">
 						<ng-option [value]="'male'">Male</ng-option>
 						<ng-option [value]="'female'">Female</ng-option>
 					</ng-select>

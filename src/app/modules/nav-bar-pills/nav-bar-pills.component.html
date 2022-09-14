@@ -31,6 +31,19 @@
 			>
 				<img src="/assets/icons/cancel.svg" alt="" />
 			</button>
+			<button
+				class="save"
+				*ngIf="disableSaveBtn && editButton?.isButton"
+			>
+				<img src="/assets/icons/Add-Patient-Wizard-Green.svg" alt="" />
+			</button>
+			<button
+				class="cancel"
+				*ngIf="!disableSaveBtn && editButton?.isButton"
+				(click)="editButtonURL(editButton?.url)"
+			>
+				<img src="/assets/icons/Add-Patient-Wizard-Red.svg" alt="" />
+			</button>
 		</div>
 	</div>
 </div>
