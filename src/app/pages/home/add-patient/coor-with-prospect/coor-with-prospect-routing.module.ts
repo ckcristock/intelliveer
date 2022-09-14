@@ -7,7 +7,6 @@ const routes: Routes = [
   {
     path: '',
     component: CoorWithProspectComponent,
-	canDeactivate: [CanDeactivateGuard],
     children: [
       {
 				path: '',

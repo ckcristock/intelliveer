@@ -296,15 +296,25 @@ export class AddPatientService {
   //Set Forms Patient1 Coordinate With Prospect
 
   setCallerInfoCWP(callersInfo: any) {
+    this.setCallerInfoNotPristineCWP(false)
     localStorage.setItem("callerCoorWithProsp", JSON.stringify(callersInfo));
+    let objData:any = localStorage.getItem('sendRedirectObj');
+    let visitedArray: any = JSON.parse(localStorage.getItem("visitedArray") || '[]');
+    visitedArray.push("Caller’s Info");
+    localStorage.setItem("visitedArray", JSON.stringify(visitedArray));
+    if(objData !=null){
+      localStorage.removeItem('sendRedirectObj')
+      this.router.navigate([objData]);
+    }
   }
 
   setPatientCWP(patient: any) {
     this.setPatientNotPristineCWP(false);
     let objData:any = localStorage.getItem('sendRedirectObj');
-   // objData = JSON.parse(objData);
-    console.log(objData)
     localStorage.setItem("patientCoorWithProsp", JSON.stringify(patient));
+    let visitedArray: any = JSON.parse(localStorage.getItem("visitedArray") || '[]');
+			visitedArray.push("Patient");
+			localStorage.setItem("visitedArray", JSON.stringify(visitedArray));
     if(objData !=null){
       localStorage.removeItem('sendRedirectObj')
       this.router.navigate([objData]);
@@ -315,8 +325,11 @@ export class AddPatientService {
     this.setLegalGuardianNotPristineCWP(false);
     localStorage.setItem(`legalGuard${index}CoorWithProsp`, JSON.stringify(LG));
     let objData:any = localStorage.getItem('sendRedirectObj');
-    //objData = JSON.parse(objData);
-    console.log(objData)
+    let visitedArray: any = JSON.parse(
+      localStorage.getItem('visitedArray') || '[]'
+    );
+    visitedArray.push('Legal Guardian');
+    localStorage.setItem('visitedArray', JSON.stringify(visitedArray));
     if(objData !=null){
       localStorage.removeItem('sendRedirectObj')
       this.router.navigate([objData]);
@@ -327,7 +340,11 @@ export class AddPatientService {
     this.setDentistNotPristineCWP(false);
     localStorage.setItem("dentistCoorWithProsp", JSON.stringify(dentist));
     let objData:any = localStorage.getItem('sendRedirectObj');
-    console.log(objData)
+    let visitedArray: any = JSON.parse(
+      localStorage.getItem('visitedArray') || '[]'
+    );
+    visitedArray.push('Dentist');
+    localStorage.setItem('visitedArray', JSON.stringify(visitedArray));
     if(objData !=null){
       localStorage.removeItem('sendRedirectObj')
       this.router.navigate([objData]);
@@ -374,13 +391,13 @@ export class AddPatientService {
 
   //Set Forms Patient1 Quick Add
 
-  setPatientQuiAdd(patient: any) {
-    localStorage.setItem("patientQuickAdd", JSON.stringify(patient));
-  }
+  // setPatientQuiAdd(patient: any) {
+  //   localStorage.setItem("patientQuickAdd", JSON.stringify(patient));
+  // }
 
-  setLegalGuardQuiAdd(LG: any) {
-    localStorage.setItem(`legalGuardQuickAdd`, JSON.stringify(LG));
-  }
+  // setLegalGuardQuiAdd(LG: any) {
+  //   localStorage.setItem(`legalGuardQuickAdd`, JSON.stringify(LG));
+  // }
 
   setDentistQuiAdd(dentist: any) {
     localStorage.setItem("dentistQuickAdd", JSON.stringify(dentist));
@@ -394,13 +411,13 @@ export class AddPatientService {
 
   //Get Forms Patient1 Quick Add
 
-  async getPatientQuiAdd() {
-    return JSON.parse(localStorage.getItem("patientQuickAdd") || '[]');
-  }
+  // async getPatientQuiAdd() {
+  //   return JSON.parse(localStorage.getItem("patientQuickAdd") || '[]');
+  // }
 
-  async getLegalGuardQuiAdd() {
-    return JSON.parse(localStorage.getItem(`legalGuardQuickAdd`) || '[]');
-  }
+  // async getLegalGuardQuiAdd() {
+  //   return JSON.parse(localStorage.getItem(`legalGuardQuickAdd`) || '[]');
+  // }
 
   async getDentistQuiAdd() {
     return JSON.parse(localStorage.getItem("dentistQuickAdd") || '[]');

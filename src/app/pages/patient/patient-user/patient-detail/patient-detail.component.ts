@@ -31,7 +31,7 @@ export class PatientDetailComponent implements OnInit {
 	@Output() onCancel = new EventEmitter();
 	@Output() onSubmit = new EventEmitter();
 	Form!: FormGroup;
-
+    editButton = {isButton:true,url:"/dashboard/home/add-patient/coor-with-prospect/callers-info"}
 	interestsLst: any[] = [
 		'option 1',
 		'option 2',

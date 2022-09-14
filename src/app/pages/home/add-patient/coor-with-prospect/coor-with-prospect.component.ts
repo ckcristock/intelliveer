@@ -88,7 +88,8 @@ export class CoorWithProspectComponent implements OnInit {
   
   goToSpecificMenu(Obj:any){
     let collerInfo:any = localStorage.getItem("callerCoorWithProsp")
-    let patientInfo:any = localStorage.getItem("patientCoorWithProsp") 
+    let patientInfo:any = localStorage.getItem("patientCoorWithProsp")
+    localStorage.setItem('addPatientWithInPage','true')
     patientInfo = JSON.parse(patientInfo)
     if(collerInfo && patientInfo){
       this.router.navigate([Obj.url]);

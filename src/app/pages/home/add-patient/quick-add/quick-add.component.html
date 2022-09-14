@@ -11,7 +11,7 @@
                             <div class="active-circle"></div>
                         </div>
                         <div>
-                            <div class="title" (click)="goToSpecificMenu(menu)">{{ menu.title }}</div>
+                            <div class="title" routerLinkActive="active" [routerLink]="menu.url" (click)="goToSpecificMenu(menu)">{{ menu.title }}</div>
                         </div>
                     </div>
                     <div class="vertical-line-not-active" *ngIf="menu.url === router.url  && (i < menuItemsOfQuickAdd!.length - 1)"></div>

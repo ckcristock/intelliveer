@@ -89,7 +89,7 @@ export class DentistFormComponent implements OnInit {
 		this.insuranceServ.setFalseAllNotPristine();
 		this.onboardingServ.setFalseAllNotPristine();
 		//this.addPatientService.getDentistFromCompone(this.getDentist.bind(this));
-		if (this.tab == 'coordWithProspect') {
+		// if (this.tab == 'coordWithProspect') {
 			this.dentistData = await this.addPatientService.getDentistCWP();
 			this.dentistID = this.dentistData?._id;
 			this.Form.statusChanges.subscribe((result) => {
@@ -121,9 +121,9 @@ export class DentistFormComponent implements OnInit {
 					this.addPatientService.getDentistFromCompone(saveObj);
 				}
 			});
-		} else if (this.tab == 'quickAdd') {
-			this.dentistArray = await this.addPatientService.getDentistQuiAdd();
-		}
+		// } else if (this.tab == 'quickAdd') {
+		// 	this.dentistArray = await this.addPatientService.getDentistQuiAdd();
+		// }
 		if (this.dentistArray != null) {
 			this.dentist.namesGenrDents = this.dentistArray.namesGenrDents;
 			this.dentist.officeName = this.dentistArray.officeName;
@@ -269,7 +269,8 @@ export class DentistFormComponent implements OnInit {
 			localStorage.setItem('visitedArray', JSON.stringify(visitedArray));
 			this.router.navigate([this.menuItemsOfCordinate[4].url]);
 		} else if (this.tab == 'quickAdd') {
-			this.addPatientService.setDentistQuiAdd(result);
+			// this.addPatientService.setDentistQuiAdd(result);
+			this.addPatientService.setDentistCWP(result);
 			let visitedArrayQuick: any = JSON.parse(
 				localStorage.getItem('visitedArrayQuick') || '[]'
 			);
