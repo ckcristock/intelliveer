@@ -1,0 +1,82 @@
+<div
+	*ngIf="insuranceGruopList?.length == 0"
+	class="section"
+	style="height: 90%"
+>
+	<div style="text-align: center; padding-top: 7%">
+		<div>
+			<h5><b>You haven’t added yet</b></h5>
+			<p>
+				Click here,
+				<img
+					src="assets/icons/add.svg"
+					width="36"
+					height="36"
+                    (click)="onAdd()"
+				/>
+				to add Insurance Group
+			</p>
+		</div>
+	</div>
+</div>
+
+<div *ngIf="insuranceGruopList?.length != 0">
+    <div class="container">
+        <app-nav-bar-pills
+            [menuItems]="menuItems"
+            [activeClass]="''"
+            [cancelBtn]="false"
+            [saveBtn]="false"
+            [addBtn]="true"
+            (onAdd)="onAdd()"
+        ></app-nav-bar-pills>
+    </div>
+    
+    <div class="container mt-4">
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Groups</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Number</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="insuranceGruopList">
+                    <tr *ngFor="let d of insuranceGruopList; let i = index">
+                        <td>
+                            <span class="pointer">Lorem Ipsum</span>
+                        </td>
+                        <td>
+                            <span class="pointer">22 Jan 2021</span>
+                        </td>
+                        <td>
+                            <span class="pointer"
+                                >Gl123</span
+                            >
+                        </td>
+                        <td>
+                            <div
+                                ngbDropdown
+                                container="body"
+                                placement="bottom-end"
+                            >
+                                <button
+                                    class="btn btn-light btn-sm more_btn"
+                                    ngbDropdownToggle
+                                >
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <div ngbDropdownMenu>
+                                    <button ngbDropdownItem>Delete</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+</div>

@@ -1,0 +1,451 @@
+<div class="row" *ngIf="Form">
+	<app-nav-bar-pills
+		[menuItems]="menuItems"
+		[activeClass]="currentSelection"
+		[cancelBtn]="true"
+		[saveBtn]="true"
+		[disableSaveBtn]="Form.invalid || Form.pristine"
+		(onCancel)="cancel()"
+		(onSave)="save(Form.value)"
+	></app-nav-bar-pills>
+	<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
+		<div
+			class="col-12"
+			id="main"
+			scrollSpy
+			(sectionChange)="onSectionChange($event)"
+		>
+			<div class="section" id="overview">
+				<div class="row">
+					<app-image-uploader
+						[imageUrl]="formData?.logo || ''"
+						(onUpload)="handleUploadedImage($event)"
+					>
+					</app-image-uploader>
+				</div>
+			</div>
+			<!-- Profile -->
+			<div class="section" id="profile">
+				<div class="row">
+					<h6 class="heading">Profile</h6>
+				</div>
+				<div class="row mb-3">
+					<div class="col-4">
+						<label class="required">Insurance plan Name</label>
+						<input
+							type="text"
+							class="form-control mandatory-field"
+							formControlName="insurancePlanName"
+							[(ngModel)]="formData?.profile.insurancePlanName"
+						/>
+					</div>
+					<div class="col-4">
+						<label class="required">Plan type</label>
+						<ng-select
+							formControlName="planType"
+							class="red-bottom-line"
+							[(ngModel)]="formData?.profile.planType"
+						>
+							<ng-option>Select</ng-option>
+						</ng-select>
+					</div>
+					<div class="col-4">
+						<label class="required">Electronic ID</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="electronicId"
+							[(ngModel)]="formData?.profile.electronicId"
+						/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4">
+						<label class="required">Fee Schedule (Office)</label>
+						<ng-select
+							formControlName="feeScheduleOffice"
+							class="red-bottom-line"
+							[(ngModel)]="formData?.profile.officeFeeSchedule"
+						>
+							<ng-option>Select</ng-option>
+						</ng-select>
+					</div>
+					<div class="col-4">
+						<label class="required">Fee Schedule (Insurance)</label>
+						<ng-select formControlName="feeScheduleInsurance"[(ngModel)]="formData?.profile.insuranceFeeSchedule">
+							<ng-option>Select</ng-option>
+						</ng-select>
+					</div>
+					<div class="col-4">
+						<label class="required">Fee Schedule (Co-pay)</label>
+						<ng-select formControlName="feeScheduleCoPay" [(ngModel)]="formData?.profile.copayFeeSchedule">
+							<ng-option>Select</ng-option>
+						</ng-select>
+					</div>
+				</div>
+			</div>
+			<!-- Physical Address -->
+			<div class="section" id="claimInformation">
+				<div class="row">
+					<h6 class="heading">Claim Information</h6>
+				</div>
+				<div class="row">
+					<h6>ADDRESS</h6>
+				</div>
+				<app-address-form
+					[parentGroup]="Form"
+					[formGroupName]="'claimInformation'"
+				></app-address-form>
+				<div class="row">
+					<h6>CONTACT</h6>
+				</div>
+				<div class="row mb-3">
+					<div class="col-4">
+						<label class="label-input-gap">Email</label>
+						<input
+							class="form-control input-upper"
+							type="text"
+							placeholder=""
+							name="id"
+							formControlName="emailId"
+							[(ngModel)]="formData?.claimInformation!.contact!.email"
+						/>
+					</div>
+
+					<div class="col-4">
+						<label class="label-input-gap"
+							>Primary Phone Type</label
+						>
+						<ng-select
+							class="input-upper input-upper"
+							placeholder="Select"
+							formControlName="primaryPhoneType"
+							[(ngModel)]="formData?.claimInformation!.contact!.primaryPhone!.type"
+						>
+							<ng-option
+								[value]="phone.value"
+								*ngFor="let phone of famiMembTitle?.phone"
+							>
+								{{ phone.label }}
+							</ng-option>
+						</ng-select>
+					</div>
+
+					<div class="col-4">
+						<label class="label-input-gap"
+							>Primary Phone Number</label
+						>
+						<input
+							class="form-control input-upper"
+							type="text"
+							placeholder=""
+							name="name"
+							formControlName="primaryPhoneNumber"
+							[(ngModel)]="formData?.claimInformation!.contact!.primaryPhone!.number"
+						/>
+					</div>
+				</div>
+
+				<div class="row mb-3">
+					<div class="col-4">
+						<label class="label-input-gap"
+							>Secondary Phone Type</label
+						>
+						<ng-select
+							class="input-upper"
+							formControlName="secondaryPhoneType"
+							placeholder="Select"
+							[(ngModel)]="formData?.claimInformation!.contact!.secondaryPhone!.type"
+						>
+							<ng-option> Select </ng-option>
+						</ng-select>
+					</div>
+
+					<div class="col-4">
+						<label class="label-input-gap"
+							>Secondary Phone Number</label
+						>
+						<input
+							class="form-control input-upper"
+							type="text"
+							placeholder=""
+							name="name"
+							formControlName="secondaryPhoneNumber"
+							[(ngModel)]="formData?.claimInformation!.contact!.secondaryPhone!.number"
+						/>
+					</div>
+
+					<div class="col-4">
+						<label class="label-input-gap"
+							>Preferred Mail Method</label
+						>
+						<ng-select
+							class="input-upper input-upper"
+							formControlName="preferedMailMethodClaim"
+							placeholder="Select"
+							[(ngModel)]="formData?.claimInformation!.contact!.preferedMailMethod"
+						>
+							<ng-option value="s"> Select </ng-option>
+						</ng-select>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-4">
+						<label class="label-input-gap">Website</label>
+						<div class="input-group mb-3" style="border: 0">
+							<span class="input-group-text">https://</span>
+							<input
+								type="text"
+								class="form-control input-upper"
+								name="website"
+								formControlName="websiteClaim"
+								style="border-right: 0px"
+								[(ngModel)]="formData?.claimInformation!.contact!.website"
+							/>
+							<span
+								class="input-group-text"
+								style="background-color: white"
+								><i class="bi bi-box-arrow-up-right"></i
+							></span>
+						</div>
+					</div>
+					<div class="col-4">
+						<label class="label-input-gap">Fax</label>
+						<input
+							class="form-control input-upper"
+							type="number"
+							placeholder=""
+							name="fax"
+							[(ngModel)]="formData?.claimInformation!.contact!.fax"
+							formControlName="faxClaim"
+						/>
+					</div>
+					<div class="col"></div>
+				</div>
+			</div>
+			<div class="section" id="providershipInformation">
+				<div class="row">
+					<h6 class="heading">Providership Information</h6>
+				</div>
+				<div class="row">
+					<h6>ADDRESS</h6>
+				</div>
+				<app-address-form
+					[parentGroup]="Form"
+					[formGroupName]="'physicalAddress'"
+				></app-address-form>
+				<div class="row">
+					<h6>CONTACT</h6>
+				</div>
+				<div class="row mb-3">
+					<div class="col-4">
+						<label class="label-input-gap">Email</label>
+						<input
+							class="form-control input-upper"
+							type="text"
+							placeholder=""
+							name="id"
+							formControlName="emailIdProvider"
+							[(ngModel)]="formData?.providershipInformation!.contact!.email"
+						/>
+					</div>
+
+					<div class="col-4">
+						<label class="label-input-gap"
+							>Primary Phone Type</label
+						>
+						<ng-select
+							class="input-upper input-upper"
+							placeholder="Select"
+							formControlName="primaryPhoneTypeProvider"
+							[(ngModel)]="formData?.providershipInformation!.contact!.primaryPhone!.type"
+						>
+							<ng-option
+								[value]="phone.value"
+								*ngFor="let phone of famiMembTitle?.phone"
+							>
+								{{ phone.label }}
+							</ng-option>
+						</ng-select>
+					</div>
+
+					<div class="col-4">
+						<label class="label-input-gap"
+							>Primary Phone Number</label
+						>
+						<input
+							class="form-control input-upper"
+							type="text"
+							placeholder=""
+							name="name"
+							formControlName="primaryPhoneNumberProvider"
+							[(ngModel)]="formData?.providershipInformation!.contact!.primaryPhone!.number"
+						/>
+					</div>
+				</div>
+
+				<div class="row mb-3">
+					<div class="col-4">
+						<label class="label-input-gap"
+							>Secondary Phone Type</label
+						>
+						<ng-select
+							class="input-upper"
+							formControlName="secondaryPhoneTypeProvider"
+							placeholder="Select"
+							[(ngModel)]="formData?.providershipInformation!.contact!.secondaryPhone!.type"
+						>
+							<ng-option> Select </ng-option>
+						</ng-select>
+					</div>
+
+					<div class="col-4">
+						<label class="label-input-gap"
+							>Secondary Phone Number</label
+						>
+						<input
+							class="form-control input-upper"
+							type="text"
+							placeholder=""
+							name="name"
+							formControlName="secondaryPhoneNumberProvider"
+							[(ngModel)]="formData?.providershipInformation!.contact!.secondaryPhone!.number"
+						/>
+					</div>
+
+					<div class="col-4">
+						<label class="label-input-gap"
+							>Preferred Mail Method</label
+						>
+						<ng-select
+							class="input-upper input-upper"
+							formControlName="preferedMailMethodProvider"
+							placeholder="Select"
+							[(ngModel)]="formData?.providershipInformation!.contact!.preferedMailMethod"
+						>
+							<ng-option value="s"> Select </ng-option>
+						</ng-select>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-4">
+						<label class="label-input-gap">Website</label>
+						<div class="input-group mb-3" style="border: 0">
+							<span class="input-group-text">https://</span>
+							<input
+								type="text"
+								class="form-control input-upper"
+								name="website"
+								formControlName="website"
+								style="border-right: 0px"
+								[(ngModel)]="formData?.providershipInformation!.contact!.website"
+							/>
+							<span
+								class="input-group-text"
+								style="background-color: white"
+								><i class="bi bi-box-arrow-up-right"></i
+							></span>
+						</div>
+					</div>
+					<div class="col-4">
+						<label class="label-input-gap">Fax</label>
+						<input
+							class="form-control input-upper"
+							type="number"
+							placeholder=""
+							name="fax"
+							formControlName="fax"
+							[(ngModel)]="formData?.providershipInformation!.contact!.fax"
+						/>
+					</div>
+					<div class="col"></div>
+				</div>
+				<div class="row">
+					<h6>STATUS</h6>
+				</div>
+				<table>
+					<thead>
+						<th scope="col">Provider</th>
+						<th scope="col">Status</th>
+						<th scope="col">Provider Number</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Jalpan Shah</td>
+							<td>
+								<ng-select><ng-option></ng-option></ng-select>
+							</td>
+							<td>1234456</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="section" id="insurancePortal">
+				<div class="row">
+					<h6 class="heading">Insurance Portal</h6>
+				</div>
+				<div class="row mb-3">
+					<div class="col-4">
+						<label class="label-input-gap">Website</label>
+						<div class="input-group mb-3" style="border: 0">
+							<span class="input-group-text">https://</span>
+							<input
+								type="text"
+								class="form-control input-upper"
+								name="website"
+								formControlName="websiteInsurance"
+								style="border-right: 0px"
+								[(ngModel)]="formData?.insurancePortal!.url"
+							/>
+							<span
+								class="input-group-text"
+								style="background-color: white"
+								><i class="bi bi-box-arrow-up-right"></i
+							></span>
+						</div>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-4">
+						<label class="label-input-gap">Username</label>
+						<input
+							class="form-control input-upper"
+							type="number"
+							placeholder=""
+							name="username"
+							formControlName="username"
+							[(ngModel)]="formData?.insurancePortal!.username"
+						/>
+					</div>
+					<div class="col-4">
+						<label class="label-input-gap">Password</label>
+						<input
+							class="form-control input-upper"
+							type="number"
+							placeholder=""
+							name="password"
+							formControlName="password"
+							[(ngModel)]="formData?.insurancePortal!.password"
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="section" id="notes">
+				<h6 class="heading">Notes</h6>
+				<div class="row formrow">
+					<div class="col-6">
+						<textarea
+							class="form-control input-upper"
+							name="note"
+							id=""
+							cols="70"
+							rows="5"
+							formControlName="note"
+							[(ngModel)]="formData!.notes"
+						></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

@@ -65,7 +65,6 @@ export class AddressFormComponent implements OnInit {
 				}
 			} else if (type == 'string') {
 				const num = isNaN(form_field?.value); // Validate if it's string
-				console.log("Striiing",num)
 				if (num) {
 					validator = true;
 					form_field?.valid;

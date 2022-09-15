@@ -1,0 +1,733 @@
+<div class="row" *ngIf="Form">
+	<app-nav-bar-pills
+		[menuItems]="menuItems"
+		[activeClass]="currentSelection"
+		[cancelBtn]="true"
+		[saveBtn]="true"
+		[disableSaveBtn]="Form.invalid || Form.pristine"
+		(onCancel)="cancel()"
+		(onSave)="save(Form.value)"
+	></app-nav-bar-pills>
+	<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
+		<div
+			class="col-12"
+			id="main"
+			scrollSpy
+			(sectionChange)="onSectionChange($event)"
+		>
+			<div class="section" id="eligibility">
+				<div class="row">
+					<h6 class="heading">Eligibility</h6>
+				</div>
+				<div class="row mb-3">
+					<div class="col-3">
+						<label class="required">Age limit for subscriber</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="name"
+						/>
+					</div>
+					<div class="col-3">
+						<label class="required"
+							>Age limit for dependant (Child)</label
+						>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="name"
+						/>
+					</div>
+					<div class="col-3">
+						<label class="required"
+							>Age limit for dependant (Student)</label
+						>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="name"
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="section" id="cob">
+				<div class="row">
+					<h6 class="heading">COB/Assignment</h6>
+				</div>
+				<div class="row mb-3">
+					<div class="col-3">
+						<label class="required"
+							>Type of Coordination of benefits</label
+						>
+						<ng-select
+							formControlName="planType"
+							class="form-control"
+						>
+							<ng-option>Select</ng-option>
+						</ng-select>
+					</div>
+					<div class="col-3">
+						<label class="required">Assignment of Benefits</label>
+						<ng-select
+							formControlName="planType"
+							class="form-control"
+						>
+							<ng-option>Select</ng-option>
+						</ng-select>
+					</div>
+				</div>
+			</div>
+			<div class="section" id="deductible">
+				<div class="row">
+					<h6 class="heading">Deductible</h6>
+				</div>
+
+				<div class="row mb-3">
+					<div class="col-3">
+						<label class="required">Deductible (Family)</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="name"
+						/>
+					</div>
+					<div class="col-3">
+						<label class="required">Deductible (Individual)</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="name"
+						/>
+					</div>
+					<div class="col-3">
+						<label class="required"
+							>Deductible waived on Preventative?</label
+						>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="name"
+						/>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<h6>PERCENTAGE COVERED</h6>
+					<div class="col-3">
+						<label class="required"
+							>Preventative/Diagnostic (%)</label
+						>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="name"
+						/>
+					</div>
+					<div class="col-3">
+						<label class="required">Basic (%)</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="name"
+						/>
+					</div>
+					<div class="col-3">
+						<label class="required">Major (%)</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="name"
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="section" id="benefits">
+				<div class="row">
+					<h6 class="heading">Dental Benefits</h6>
+				</div>
+				<div class="row mb-3">
+					<div class="col-2">
+						<label class="required">Dental annual maximum</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="name"
+						/>
+					</div>
+					<div class="col-8">
+						<p>Basic includes</p>
+						<div class="form-check form-check-inline">
+							<input
+								class="form-check-input"
+								type="checkbox"
+								id="inlineCheckbox1"
+								value="Restorative"
+							/>
+							<label
+								class="form-check-label"
+								for="inlineCheckbox1"
+								>Restorative</label
+							>
+						</div>
+						<div class="form-check form-check-inline">
+							<input
+								class="form-check-input"
+								type="checkbox"
+								id="inlineCheckbox2"
+								value="Endo"
+							/>
+							<label
+								class="form-check-label"
+								for="inlineCheckbox2"
+								>Endo</label
+							>
+						</div>
+						<div class="form-check form-check-inline">
+							<input
+								class="form-check-input"
+								type="checkbox"
+								id="inlineCheckbox3"
+								value="Perio"
+							/>
+							<label
+								class="form-check-label"
+								for="inlineCheckbox3"
+								>Perio</label
+							>
+						</div>
+						<div class="form-check form-check-inline">
+							<input
+								class="form-check-input"
+								type="checkbox"
+								id="inlineCheckbox4"
+								value="Oral Surgery"
+							/>
+							<label
+								class="form-check-label"
+								for="inlineCheckbox4"
+								>Oral Surgery</label
+							>
+						</div>
+						<div class="form-check form-check-inline">
+							<input
+								class="form-check-input"
+								type="checkbox"
+								id="inlineCheckbox5"
+								value="Other"
+							/>
+							<label
+								class="form-check-label"
+								for="inlineCheckbox5"
+								>Other</label
+							>
+						</div>
+						<div class="form-check form-check-inline">
+							<input
+								type="text"
+								class="form-control"
+								formControlName="name"
+							/>
+						</div>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-10">
+						<p>Basic includes</p>
+						<div class="form-check form-check-inline">
+							<input
+								class="form-check-input"
+								type="checkbox"
+								id="inlineCheckbox1"
+								value="Crowns"
+							/>
+							<label
+								class="form-check-label"
+								for="inlineCheckbox1"
+								>Crowns</label
+							>
+						</div>
+						<div class="form-check form-check-inline">
+							<input
+								class="form-check-input"
+								type="checkbox"
+								id="inlineCheckbox2"
+								value="Bridges"
+							/>
+							<label
+								class="form-check-label"
+								for="inlineCheckbox2"
+								>Bridges</label
+							>
+						</div>
+						<div class="form-check form-check-inline">
+							<input
+								class="form-check-input"
+								type="checkbox"
+								id="inlineCheckbox3"
+								value="Dentures"
+							/>
+							<label
+								class="form-check-label"
+								for="inlineCheckbox3"
+								>Dentures</label
+							>
+						</div>
+						<div class="form-check form-check-inline">
+							<input
+								class="form-check-input"
+								type="checkbox"
+								id="inlineCheckbox4"
+								value="Partials"
+							/>
+							<label
+								class="form-check-label"
+								for="inlineCheckbox4"
+								>Partials</label
+							>
+						</div>
+						<div class="form-check form-check-inline">
+							<input
+								class="form-check-input"
+								type="checkbox"
+								id="inlineCheckbox5"
+								value="Implants"
+							/>
+							<label
+								class="form-check-label"
+								for="inlineCheckbox5"
+								>Implants</label
+							>
+						</div>
+						<div class="form-check form-check-inline">
+							<input
+								class="form-check-input"
+								type="checkbox"
+								id="inlineCheckbox6"
+								value="Other"
+							/>
+							<label
+								class="form-check-label"
+								for="inlineCheckbox6"
+								>Other</label
+							>
+						</div>
+						<div class="form-check form-check-inline">
+							<input
+								type="text"
+								class="form-control"
+								formControlName="name"
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" id="frequencies">
+				<div class="row">
+					<h6 class="heading">Frequencies</h6>
+				</div>
+				<div class="row mb-3">
+					<div class="col-6">
+						<div class="row">
+							<h6>EXAMS</h6>
+						</div>
+						<div class="row">
+							<div class="col-2">
+								<label class="label-input-gap"
+									>Time Frame</label
+								>
+								<ng-select
+									class="input-upper input-upper"
+									placeholder="Select"
+								>
+									<ng-option value="s"> Select </ng-option>
+								</ng-select>
+							</div>
+							<div class="col-3">
+								<label class="label-input-gap"
+									>Exceptions</label
+								>
+								<input
+									class="form-control input-upper"
+									type="text"
+									placeholder=""
+									name="name"
+								/>
+							</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="row">
+							<h6>PROPHYLAXIS</h6>
+						</div>
+						<div class="row">
+							<div class="col-2">
+								<label class="label-input-gap"
+									>Time Frame</label
+								>
+								<ng-select
+									class="input-upper input-upper"
+									placeholder="Select"
+								>
+									<ng-option value="s"> Select </ng-option>
+								</ng-select>
+							</div>
+							<div class="col-3">
+								<label class="label-input-gap"
+									>Exceptions</label
+								>
+								<input
+									class="form-control input-upper"
+									type="text"
+									placeholder=""
+									name="name"
+								/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" id="provision">
+				<h6 class="heading">General Provisions</h6>
+				<div class="row mb-3">
+					<div class="col-3">
+						<p class="label-input-gap">
+							Porcelain on Posterior Crowns?
+						</p>
+						<div class="two-radios">
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp1"
+									name="inlineCrownsOptions"
+									value="yes"
+									checked
+								/>
+								<label class="form-check-label" for="facialapp1"
+									>Yes</label
+								>
+							</div>
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp2"
+									name="inlineCrownsOptions"
+									value="no"
+								/>
+								<label class="form-check-label" for="facialapp2"
+									>No</label
+								>
+							</div>
+						</div>
+					</div>
+					<div class="col-2">
+						<p class="label-input-gap">Gold Coverage (D2790)?</p>
+						<div class="two-radios">
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp1"
+									name="inlineCoverageOptions"
+									value="yes"
+									checked
+								/>
+								<label class="form-check-label" for="facialapp1"
+									>Yes</label
+								>
+							</div>
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp2"
+									name="inlineCoverageOptions"
+									value="no"
+								/>
+								<label class="form-check-label" for="facialapp2"
+									>No</label
+								>
+							</div>
+						</div>
+					</div>
+					<div class="col-2">
+						<p class="label-input-gap">Posterior Composites?</p>
+						<div class="two-radios">
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp1"
+									name="inlineCompositesOptions"
+									value="yes"
+									checked
+								/>
+								<label class="form-check-label" for="facialapp1"
+									>Yes</label
+								>
+							</div>
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp2"
+									name="inlineCompositesOptions"
+									value="no"
+								/>
+								<label class="form-check-label" for="facialapp2"
+									>No</label
+								>
+							</div>
+						</div>
+					</div>
+					<div class="col-3">
+						<label class="required">Fluoride to the age of</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="name"
+						/>
+					</div>
+					<div class="col-2">
+						<label class="required">Sealants</label>
+						<ng-select
+							formControlName="planType"
+							class="form-control"
+						>
+							<ng-option>Select</ng-option>
+						</ng-select>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-6">
+						<p class="label-input-gap">Night guards?</p>
+						<div class="form-check form-check-inline">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="inlineRadioOptions"
+								id="inlineRadio1"
+								value="yes"
+							/>
+							<label class="form-check-label" for="inlineRadio1"
+								>Yes</label
+							>
+						</div>
+						<div class="form-check form-check-inline">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="inlineRadioOptions"
+								id="inlineRadio2"
+								value="no"
+							/>
+							<label class="form-check-label" for="inlineRadio2"
+								>No</label
+							>
+						</div>
+						<div class="form-check form-check-inline">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="inlineRadioOptions"
+								id="inlineRadio3"
+								value="Paid at"
+							/>
+							<label class="form-check-label" for="inlineRadio3"
+								>Paid at
+								<div class="form-check form-check-inline">
+									<input
+										type="text"
+										class="form-control"
+										formControlName="name"
+									/>
+								</div>
+							</label>
+						</div>
+					</div>
+					<div class="col-2">
+						<p class="label-input-gap">Restorations</p>
+						<div class="two-radios">
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp1"
+									name="inlineRestorationsOptions"
+									value="yes"
+									checked
+								/>
+								<label class="form-check-label" for="facialapp1"
+									>Yes</label
+								>
+							</div>
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp2"
+									name="inlineRestorationsOptions"
+									value="no"
+								/>
+								<label class="form-check-label" for="facialapp2"
+									>No</label
+								>
+							</div>
+						</div>
+					</div>
+					<div class="col-2">
+						<p class="label-input-gap">Missing Tooth Clause?</p>
+						<div class="two-radios">
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp1"
+									name="inlineClauseOptions"
+									value="yes"
+									checked
+								/>
+								<label class="form-check-label" for="facialapp1"
+									>Yes</label
+								>
+							</div>
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp2"
+									name="inlineClauseOptions"
+									value="no"
+								/>
+								<label class="form-check-label" for="facialapp2"
+									>No</label
+								>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" id="implant">
+				<h6 class="heading">Implant Benefits</h6>
+				<div class="row mb-3">
+					<div class="col-2">
+						<p class="label-input-gap">
+							Covered benefits?
+						</p>
+						<div class="two-radios">
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp1"
+									name="inlineCoveredOptions"
+									value="yes"
+									checked
+								/>
+								<label class="form-check-label" for="facialapp1"
+									>Yes</label
+								>
+							</div>
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp2"
+									name="inlineCoveredOptions"
+									value="no"
+								/>
+								<label class="form-check-label" for="facialapp2"
+									>No</label
+								>
+							</div>
+						</div>
+					</div>
+					<div class="col-5">
+						<p class="label-input-gap">
+							Separate Maximum?
+						</p>
+						<div class="two-radios">
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp1"
+									name="inlineMaximumOptions"
+									value="yes"
+									checked
+								/>
+								<label class="form-check-label" for="facialapp1"
+									>Yes</label
+								>
+							</div>
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp2"
+									name="inlineMaximumOptions"
+									value="no"
+								/>
+								<label class="form-check-label" for="facialapp2"
+									>No</label
+								>
+							</div>
+							&nbsp;&nbsp;
+							<div class="yes-no-radio">
+								<div (click)="maximumSelect = !maximumSelect">
+									<button type="button" [ngClass]="maximumSelect == false?'btn btn-dark':'btn btn-light'" style="border-radius: 1px; height: 3em;">Year</button>
+								</div>
+								<div (click)="maximumSelect = !maximumSelect">
+									<button type="button" [ngClass]="maximumSelect == true?'btn btn-dark':'btn btn-light'" style="border-radius: 1px; height: 3em;">Lifetime</button>
+								</div>
+								<div><input type="text" class="form-control" style="width: 6em; border-radius: 0px;"></div>
+							</div>
+						</div>
+					</div>
+					<div class="col-5">
+						<p class="label-input-gap">
+							Deductible?
+						</p>
+						<div class="two-radios">
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp1"
+									name="inlineDeductibleOptions"
+									value="yes"
+									checked
+								/>
+								<label class="form-check-label" for="facialapp1"
+									>Yes</label
+								>
+							</div>
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp2"
+									name="inlineDeductibleOptions"
+									value="no"
+								/>
+								<label class="form-check-label" for="facialapp2"
+									>No</label
+								>
+							</div>
+							&nbsp;&nbsp;
+							<div class="yes-no-radio">
+								<div (click)="deductibleSelect = !deductibleSelect">
+									<button type="button" [ngClass]="deductibleSelect == false?'btn btn-dark':'btn btn-light'" style="border-radius: 1px; height: 3em;">Year</button>
+								</div>
+								<div (click)="deductibleSelect = !deductibleSelect">
+									<button type="button" [ngClass]="deductibleSelect == true?'btn btn-dark':'btn btn-light'" style="border-radius: 1px; height: 3em;">Lifetime</button>
+								</div>
+								<div><input type="text" class="form-control" style="width: 6em; border-radius: 0px;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

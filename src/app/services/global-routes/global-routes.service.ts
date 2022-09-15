@@ -13,6 +13,10 @@ export class GlobalRoutesService {
   private urlUserManage: string = "/dashboard/settings/user-management";
   private urlPreferences: string = "/dashboard/settings/patient";
   private urlSettings: string = "/dashboard/settings";
+  private urlPracticeTool: string = "/dashboard/practice-tool";
+  private urlPracticeInsurance: string = "/dashboard/practice-tool/practice";
+  private urlPracticeInsuranceGroup: string = "/dashboard/practice-tool/practice/insurance-group";
+  private urlPracticeInsurancePlan: string = "/dashboard/practice-tool/practice/insurance-plan";
 
   constructor() { }
 
@@ -302,6 +306,102 @@ export class GlobalRoutesService {
     },
   ];
 
+  private routesPracticeToolInsurance: any[] = [
+    {
+      title: "Insurance Plans",
+      url: `${this.urlPracticeInsurance}/insurance-plan`,
+      isEnabled: true,
+      value: "",
+      child: [{
+        title: "Add",
+        url: `${this.urlPracticeInsurance}/insurance-plan/add`,
+        isEnabled: true,
+        value: "",
+      },{
+        title: "edit",
+        url: `${this.urlPracticeInsurance}/insurance-plan/edit`,
+        isEnabled: true,
+        value: "",
+      },]
+    },
+    {
+      title: "Insurance Groups",
+      url: `${this.urlPracticeInsurance}/insurance-group`,
+      isEnabled: true,
+      value: "",
+      child: [{
+        title: "Add",
+        url: `${this.urlPracticeInsurance}/insurance-group/add`,
+      },{
+        title: "Edit",
+        url: `${this.urlPracticeInsurance}/insurance-group/edit`,
+      }]
+    },
+    {
+      title: "Fee Schedules",
+      url: `${this.urlPracticeInsurance}/manage-role`,
+      isEnabled: true,
+      value: "",
+      child: [{
+        title: "Add",
+        url: `${this.urlPracticeInsurance}/manage-role/add`,
+      },{
+        title: "Edit",
+        url: `${this.urlPracticeInsurance}/manage-role/edit`,
+      }]
+    },
+  ];
+
+  private routesPracticeToolInsuranceGroup: any[] = [
+    {
+      title: "Insurance Group Information",
+      url: `${this.urlPracticeInsuranceGroup}/add/insurance-group-information`,
+      isEnabled: true,
+      value: "",
+      child: [{
+        title: "Add",
+        url: `${this.urlPracticeInsurance}/insurance-plan/add`,
+        isEnabled: true,
+        value: "",
+      },{
+        title: "edit",
+        url: `${this.urlPracticeInsurance}/insurance-plan/edit`,
+        isEnabled: true,
+        value: "",
+      },]
+    },
+    {
+      title: "Orthodontic Benefits",
+      url: `${this.urlPracticeInsuranceGroup}/add/orthodontic`,
+      isEnabled: true,
+      value: "",
+      child: [{
+        title: "Add",
+        url: `${this.urlPracticeInsurance}/insurance-plan/add`,
+        isEnabled: true,
+        value: "",
+      },{
+        title: "edit",
+        url: `${this.urlPracticeInsurance}/insurance-plan/edit`,
+        isEnabled: true,
+        value: "",
+      },]
+    },
+    {
+      title: "Dental Benefits",
+      url: `${this.urlPracticeInsuranceGroup}/add/dental`,
+      isEnabled: true,
+      value: "",
+      child: [{
+        title: "Add",
+        url: `${this.urlPracticeInsurance}/insurance-group/add`,
+      },{
+        title: "Edit",
+        url: `${this.urlPracticeInsurance}/insurance-group/edit`,
+      }]
+    }
+  ];
+
   private routesSettingsUserManage: any[] = [
     {
       title: "Manage User",
@@ -374,6 +474,26 @@ export class GlobalRoutesService {
     return this.urlSettings;
   }
 
+  getPracticeToolUrl()
+  {
+    return this.urlPracticeTool;
+  }
+
+  getPracticeInsuranceUrl()
+  {
+    return this.urlPracticeInsurance;
+  }
+
+  getPracticeInsuranceGroupUrl()
+  {
+    return this.urlPracticeInsuranceGroup;
+  }
+
+  getPracticeInsurancePlanUrl()
+  {
+    return this.urlPracticeInsurancePlan;
+  }
+
   getSettingsOnboardingUrl() {
     return this.urlOnboarding;
   }
@@ -414,6 +534,16 @@ export class GlobalRoutesService {
 
   getSettingsUserManageRoutes() {
     return this.routesSettingsUserManage;
+  }
+
+  getPracticeToolInsuranceRoutes()
+  {
+    return this.routesPracticeToolInsurance;
+  }
+
+  getPracticeToolInsuranceGroupRoutes()
+  {
+    return this.routesPracticeToolInsuranceGroup;
   }
 
 }
