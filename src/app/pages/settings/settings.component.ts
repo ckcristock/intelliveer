@@ -194,6 +194,10 @@ export class SettingsComponent implements OnInit {
           ////// User Management
         } else if (event.url.includes("user-management")) {
           this.currentRoute = "User Management";
+          this.currentRouteChild1 = " Management";
+          this.currentRouteChild1 = "Manage User";
+          this.currentRouteChild2 = "";
+          this.currentRouteChild3 = "";
         }
         if (event.url == this.globalRoutes.getSettingsUrl()) {
           this.onSettingsPage = true;

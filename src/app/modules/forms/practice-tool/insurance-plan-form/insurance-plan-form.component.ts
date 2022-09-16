@@ -15,7 +15,7 @@ export class InsurancePlanFormComponent implements OnInit {
 	@Input() formData: any | undefined = undefined;
 	@Output() onCancel = new EventEmitter();
 	@Output() onSubmit = new EventEmitter();
-	Form: FormGroup | undefined;
+  Form: FormGroup = new FormGroup({});
 	countries: any;
 	imageSrc: any;
 	currentSelection: string = '';
@@ -33,7 +33,11 @@ export class InsurancePlanFormComponent implements OnInit {
     private fb: FormBuilder,
 		private addressFormService: AddressFormService,
     private http: HttpClient
-  ) { }
+  ) {
+    if (this.formData) {
+			this.setUserDataToForm();
+		}
+  }
 
   ngOnInit(): void {
     console.log(this.formData)
@@ -79,6 +83,59 @@ export class InsurancePlanFormComponent implements OnInit {
       password: [data.password || ''],
       note: [data?.note || '']
 		});
+	}
+
+  setUserDataToForm() {
+		this.Form.controls['insurancePlanName'].setValue(this.formData.profile.insurancePlanName);
+		this.Form.controls['planType'].setValue(
+			this.formData.profile.planType
+		);
+		this.Form.controls['electronicId'].setValue(
+			this.formData.profile.electronicId
+		);
+		this.Form.controls['feeScheduleOffice'].setValue(this.formData.profile.officeFeeSchedule);
+		this.Form.controls['feeScheduleInsurance'].setValue(this.formData.profile.insuranceFeeSchedule);
+		this.Form.controls['feeScheduleCoPay'].setValue(this.formData.profile.copayFeeSchedule);
+		this.Form.controls['emailId'].setValue(
+			this.formData.claimInformation.contact.email
+		);
+		this.Form.controls['primaryPhoneType'].setValue(this.formData.claimInformation.contact.primaryPhone.type);
+    this.Form.controls['primaryPhoneNumber'].setValue(this.formData.claimInformation.contact.primaryPhone.number);
+    this.Form.controls['secondaryPhoneType'].setValue(this.formData.claimInformation.contact.secondaryPhone.type);
+    this.Form.controls['secondaryPhoneNumber'].setValue(this.formData.claimInformation.contact.secondaryPhone.number);
+
+		this.Form.controls['preferedMailMethodClaim'].setValue(
+			this.formData.claimInformation.contact.preferedMailMethod
+		);
+		this.Form.controls['websiteClaim'].setValue(this.formData.claimInformation.contact.website);
+		this.Form.controls['faxClaim'].setValue(
+			this.formData.claimInformation.contact.fax
+		);
+    this.Form.controls['emailIdProvider'].setValue(
+			this.formData.providershipInformation.contact.email
+		);
+		this.Form.controls['primaryPhoneTypeProvider'].setValue(this.formData.providershipInformation.contact.primaryPhone.type);
+    this.Form.controls['primaryPhoneNumberProvider'].setValue(this.formData.providershipInformation.contact.primaryPhone.number);
+    this.Form.controls['secondaryPhoneTypeProvider'].setValue(this.formData.providershipInformation.contact.secondaryPhone.type);
+    this.Form.controls['secondaryPhoneNumberProvider'].setValue(this.formData.providershipInformation.contact.secondaryPhone.number);
+
+		this.Form.controls['preferedMailMethodProvider'].setValue(
+			this.formData.providershipInformation.contact.preferedMailMethod
+		);
+		this.Form.controls['website'].setValue(this.formData.providershipInformation.contact.website);
+		this.Form.controls['fax'].setValue(
+			this.formData.providershipInformation.contact.fax
+		);
+		this.Form.controls['websiteInsurance'].setValue(
+			this.formData.insurancePortal.url
+		);
+		this.Form.controls['username'].setValue(
+			this.formData.insurancePortal.username
+		);
+		this.Form.controls['password'].setValue(
+			this.formData.insurancePortal.password
+		);
+		this.Form.controls['note'].setValue(this.formData.notes);
 	}
 
   handleUploadedImage(e: { url: string }) {

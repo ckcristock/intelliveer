@@ -95,6 +95,7 @@ export class NavbarComponent implements OnInit {
 	businessGroups: any;
 	disableBGDropdown: boolean = false;
 	orgID: any;
+	isAdmin:boolean = false;
 	constructor(
 		private authService: AuthService,
 		private cookieService: CookieService,
@@ -375,10 +376,12 @@ export class NavbarComponent implements OnInit {
 				this.getPatientListForSearch(this.selectedBusinessGroup?.bgId)
 				this.orgID = bgOrdID
 			}
+			this.isAdmin = false;
 		} else {
-			this.getPatientList(this.selectedBusinessGroup?.bgId);
-			this.getPatientListForSearch(this.selectedBusinessGroup?.bgId)
-			this.orgID = orgId
+			this.getPatientList(this.selectedBusinessGroup);
+			this.getPatientListForSearch(this.selectedBusinessGroup);
+			this.orgID = orgId;
+			this.isAdmin = true;
 		}
 	}
 

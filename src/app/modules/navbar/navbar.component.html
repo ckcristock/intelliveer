@@ -13,7 +13,7 @@
 				(change)="setBusinessGroup($event)"
 				[disabled]="disableBGDropdown"
 			>
-				<option value="intelliveer" [disabled]="disableBGDropdown">
+				<option value="intelliveer" [disabled]="disableBGDropdown" *ngIf="!isAdmin">
 					**INTELLIVEER**
 				</option>
 				<option

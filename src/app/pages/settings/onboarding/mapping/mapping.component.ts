@@ -37,6 +37,7 @@ export class MappingComponent implements OnInit, OnDestroy {
 	urlSettings!: string;
 
 
+    practiceData: any[] = []
 	constructor(
 		private mappingService: MappingService,
 		private businessGroupDropdownService: BusinessGroupDropdownService,
@@ -151,6 +152,7 @@ export class MappingComponent implements OnInit, OnDestroy {
 				.getPractices(this.bgId)
 				.subscribe({
 					next: (res) => {
+						this.practiceData.push(res)
 						this.practices = res;
 						if (this.getMappingData[0]?._id) {
 							this.getPracticeWithID(this.practices)
@@ -163,12 +165,16 @@ export class MappingComponent implements OnInit, OnDestroy {
 		}
 	}
 	saveMapping() {
-		this.mappingForm.value.relation.find((res: any, index: number) => {
-			if (res?.legalEntityId == '' || res?.locations.length == 0 || res?.legalEntityId == null) {
-				this.mappingForm.value.relation.splice(index, 1);
+		let mappingFormData: any [] = []
+		let that = this
+		mappingFormData.push(this.mappingForm.value.relation)
+        this.mappingForm.value.relation.forEach((res: any,index:number) => {
+			if(res?.legalEntityId =='' || res?.locations?.length == 0 || res?.legalEntityId == null){
+				mappingFormData[0].splice(index);
 			}
 		});
-		if (this.getMappingData[0]?._id) {
+		this.mappingForm.value.relation = mappingFormData[0];
+		if(this.getMappingData[0]?._id){
 			if (this.selectedBusinessGroup) {
 				this.mappingService
 					.updateMapping(this.selectedBusinessGroup.bgId, this.mappingForm.value, this.getMappingData[0]?._id)
@@ -178,6 +184,10 @@ export class MappingComponent implements OnInit, OnDestroy {
 								'',
 								'Mapping has been updated successfully'
 							);
+							this.getMapping()
+							setTimeout(function() {
+								that.setPracticeData(that.practiceData[0])
+							},1000);
 						},
 						error: (err) => {
 							console.error(err);
@@ -194,6 +204,10 @@ export class MappingComponent implements OnInit, OnDestroy {
 								'',
 								'Mapping has been added successfully'
 							);
+							this.getMapping()
+							setTimeout(function() {
+								that.setPracticeData(that.practiceData[0])
+							},1000);
 						},
 						error: (err) => {
 							console.error(err);
@@ -203,9 +217,11 @@ export class MappingComponent implements OnInit, OnDestroy {
 		}
 	}
 	handleCancel() {
+		let that = this
 		this.alertService
 			.conformAlert('Please confirm', 'Do you want to discard the changes?')
 			.then((result) => {
+				console.log(result)
 				if (result.value) {
 					this.businessGroupDropdownSupscription =
 						this.businessGroupDropdownService
@@ -219,6 +235,11 @@ export class MappingComponent implements OnInit, OnDestroy {
 									this.getPractices();
 								}
 							});
+				}else{
+					this.getMapping()
+					setTimeout(function() {
+						that.setPracticeData(that.practiceData[0])
+					},1000);
 				}
 			});
 	}
@@ -250,41 +271,61 @@ export class MappingComponent implements OnInit, OnDestroy {
 		});
 		this.getNotmappedData(data)
 	}
-	getNotmappedData(data: any) {
-		{
-			let locationData: any = []
-			this.mappingForm.value.relation.forEach((x: any, i: any) => {
-				if (x.legalEntityId == '' && x.locations.length == 0) {
-					const p = data.find(
-						(y: any) => y._id == x.practiceId
-					);
-					if (p) {
-						this.notMappedPractice.push(p)
-					}
-				} else {
-					x.locations.forEach((location: any) => {
-						locationData.push({ location: location })
-					})
+	getNotmappedData(data:any){{
+		let locationData:any = []
+		this.notMappedLocation = []
+		this.notMappedLegalEntity = []
+		this.notMappedPractice = []
+		this.mappingForm.value.relation.forEach((x:any,i:any) => {
+			if(x.legalEntityId == '' && x.locations.length == 0){
+				const p = data.find(
+					(y: any) => y._id == x.practiceId
+				);
+				if(p){
+				this.notMappedPractice.push(p)
 				}
-			});
-			this.legalEntities.forEach((legal: any, i: any) => {
-				const le = this.mappingForm.value.relation.find((le: any) => le.legalEntityId == legal._id);
-				if (le == undefined) {
-					this.notMappedLegalEntity.push(legal)
-				}
-			});
-			locationData = this.getUniqueListBy(locationData, 'location')
-			this.locations.forEach((location: any, i: any) => {
-				const lo = locationData.find((lo: any) => lo.location == location._id);
-				if (lo == undefined) {
-					this.notMappedLocation.push(location)
-				}
-			});
+			}else{
+				x.locations.forEach((location:any) =>{
+					locationData.push({location: location})
+				})
+			}
+		});
+		this.legalEntities.forEach((legal:any,i:any) => {
+			const le =  this.mappingForm.value.relation.find((le:any)=> le.legalEntityId == legal._id);
+			if(le == undefined){
+				this.notMappedLegalEntity.push(legal)
+			}
+		});
+		locationData = this.getUniqueListBy(locationData,'location')
+		this.locations.forEach((location:any,i:any) => {
+			const lo =  locationData.find((lo:any)=> lo.location == location._id);
+			if(lo == undefined){
+				this.notMappedLocation.push(location)
+			}
+		});
 		}
 	}
-	getUniqueListBy(arr: any, key: any) {
-		return [...new Map(arr.map((item: any) => [item[key], item])).values()]
+	setPracticeData(data:any){
+		this.relationMappingObj().clear()
+		let practiceDataObj = this.getMappingData[0].relation;
+		data.forEach((res:any,index:any) => {
+			const formGroup = this.relationForm()
+			const p = practiceDataObj.find(
+				(x: any) => x.practiceId === res._id
+			);
+			if(p){
+                formGroup.patchValue({practiceId: res._id,legalEntityId: p.legalEntityId, locations: p.locations})
+			}else{
+				formGroup.patchValue({ practiceId: res._id,legalEntityId: '', locations: []})
+			}
+
+			this.relationMappingObj().push(formGroup)
+		});
+		this.getNotmappedData(data)
 	}
+	getUniqueListBy(arr:any, key:any) {
+		return [...new Map(arr.map((item:any) => [item[key], item])).values()]
+	  }
 	getUserOrdID() {
 		let bgOrdID: any = localStorage.getItem('selected_business_group');
 		if (bgOrdID == null) {
