@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { AddressFormService } from '@services/forms/address-form/address-form.service';
 import { GeoService } from '@services/global-data/public/geo/geo.service';
 import { delay } from 'rxjs';
 
@@ -21,11 +22,19 @@ export class AddressFormComponent implements OnInit {
 	selectedCity!: any;
 	ipAddress: any;
 	userLocaInfo: any;
+	formDisabled!: boolean;
+	validatorAddressLine1!: any;
+	validatorCountry!: any;
+	validatorState!: any;
+	validatorCity!: any;
+	validatorZipCode!: any;
 
 
 	constructor(
 		private http: HttpClient,
-		private geoService: GeoService) {
+		private geoService: GeoService,
+		private addressFormService: AddressFormService,
+	) {
 		this.geoService
 			.getCountries()
 			.pipe(delay(100))
@@ -40,13 +49,25 @@ export class AddressFormComponent implements OnInit {
 	}
 
 	async ngOnInit() {
-		console.log("thiiiis.formGroupName", this.formGroupName);
-		console.log("thiiiis.pareeentgropu", this.parentGroup);
-
-
+		this.addressFormService.getDisabledOrEnabled().subscribe((resp: boolean) => {
+			this.formDisabled = resp;
+			if (this.formDisabled == undefined) {
+				this.formDisabled = false;
+			}
+		});
+		this.reviewInputs();
 	}
 
-	isNotRequiredField(field: any, type?: any) {
+	async reviewInputs() {
+		await this.isNotRequiredField("addressLine1", "string");
+		await this.isNotRequiredField("country", "string");
+		await this.isNotRequiredField("state", "string");
+		await this.isNotRequiredField("city", "string");
+		await this.isNotRequiredField("zipCode", "number");
+	}
+
+	async isNotRequiredField(field: any, type?: any) {
+
 		const form = this.parentGroup.get(this.formGroupName) as FormGroup;
 		const form_field = form.get(field);
 		let validator;
@@ -54,7 +75,8 @@ export class AddressFormComponent implements OnInit {
 			validator = false;
 		} else {
 			if (type == 'number') {
-				const num =  Number(form_field?.value);
+
+				const num = Number(form_field?.value);
 				if (num) {
 					validator = true
 					form_field?.valid;
@@ -63,6 +85,7 @@ export class AddressFormComponent implements OnInit {
 					form_field?.invalid;
 				}
 			} else if (type == 'string') {
+
 				const num = isNaN(form_field?.value); // Validate if it's string
 				if (num) {
 					validator = true;
@@ -71,12 +94,29 @@ export class AddressFormComponent implements OnInit {
 					validator = false;
 					form_field?.invalid;
 				}
-			} 
+			}
 			else {
 				validator = true;
 			}
 		}
-		return validator;
+		switch (field) {
+			case 'addressLine1':
+				this.validatorAddressLine1 = validator;
+				break;
+			case 'country':
+				this.validatorCountry = validator;
+				break;
+			case 'state':
+				this.validatorState = validator;
+				break;
+			case 'city':
+				this.validatorCity = validator;
+				break;
+			case 'zipCode':
+				this.validatorZipCode = validator;
+				break;
+			default:
+		}
 	}
 
 	isRequiredField(field: string) {
@@ -89,9 +129,6 @@ export class AddressFormComponent implements OnInit {
 			return false;
 		}
 		if (!form_field.validator) {
-			// console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-
-			// console.log("2222222222222222222222");
 			return false;
 		}
 		const validator = form_field.validator({} as AbstractControl);
@@ -102,8 +139,6 @@ export class AddressFormComponent implements OnInit {
 
 		if (validator) {
 			if (form.get(field)?.value != 0 && form.get(field)?.valid) {
-
-				console.log("11111111111111111111111", form.get("addressLine2")?.value);
 				switch (field) {
 					// For Add Patient Module
 					case 'addressLine1':
@@ -115,12 +150,11 @@ export class AddressFormComponent implements OnInit {
 				}
 			}
 		}
-		console.log("validator", validator['required']);
-
 		return validator && validator['required'];
 	}
 
 	async getStates(countryIso3: string) {
+		this.resetState(); this.resetCity();
 		if (this.countries) {
 			const country = this.countries.filter(
 				(c: any) => c.iso3 === countryIso3
@@ -129,12 +163,14 @@ export class AddressFormComponent implements OnInit {
 				this.geoService.getStates(country[0]['id']).subscribe({
 					next: async (res: any) => {
 						this.states = await res.sort((a: any, b: any) => (a.name > b.name) ? 1 : -1);
+						// this.validatorState = true;
 					},
 				});
 			}
 		}
 	}
 	async getCities(stateCode: string) {
+		this.resetCity();
 		if (this.states) {
 			const state = this.states.filter(
 				(s: any) => s.state_code === stateCode
@@ -148,6 +184,7 @@ export class AddressFormComponent implements OnInit {
 								this.userLocaInfo.city.name.trim().split(/\s+/)[0].normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 						})
 						this.selectedCity = city[0].name;
+						this.validatorCity = true;
 					},
 				});
 			}
@@ -182,15 +219,22 @@ export class AddressFormComponent implements OnInit {
 	}
 	resetState() {
 		this.parentGroup.controls[this.formGroupName].patchValue({
-			state: '',
+			state: null,
 		});
 		this.states = [];
+		this.parentGroup.controls['state']?.setValue(null);
+		this.validatorState = false;
 	}
+
 	resetCity() {
 		this.parentGroup.controls[this.formGroupName].patchValue({
-			city: '',
+			city: null,
 		});
 		this.cities = [];
+		this.parentGroup.controls['city']?.setValue(null);
+		this.validatorCity = false;
+
+
 	}
 	customSearchFn(term: string, item: any) {
 		term = term.toLowerCase();
@@ -209,13 +253,11 @@ export class AddressFormComponent implements OnInit {
 			subscribe(async (value: any) => {
 				this.userLocaInfo = value;
 				// get country
-				console.log("this.userLocaInfo", this.userLocaInfo);
 				let country = this.countries.filter((x: any) => {
 					return x.name == this.userLocaInfo.country.name;
 				})
 				this.selectedCountry = country[0].iso3;
-				console.log("this.selectedCountry", this.selectedCountry);
-
+				this.validatorCountry = true;
 
 				// get state
 				await this.getStates(this.selectedCountry);
@@ -224,7 +266,7 @@ export class AddressFormComponent implements OnInit {
 						return x.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "") == this.userLocaInfo.state.name;
 					})
 					this.selectedState = state[0].state_code;
-
+					this.validatorState = true;
 					// get city
 					this.getCities(this.selectedState);
 				}, 1000);

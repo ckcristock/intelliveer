@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, Form, FormGroup } from '@angular/forms';
 import { CONFIG } from '@config/index';
+import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
 
 @Component({
 	selector: 'app-contact-person-form',
@@ -12,10 +13,36 @@ export class ContactPersonFormComponent implements OnInit {
 	@Input() parentGroup!: FormGroup;
 	@Input() formGroupName!: string;
 	staticData: any;
-	constructor(private http: HttpClient) {}
+	formDisabled!: boolean;
+	validatorFirstName!: any;
+	validatorLastName!: any;
+	validatorEmail!: any;
+	validatorType!: any;
+	validatorCountryCode!: any;
+	validatorNumber!: any;
 
-	ngOnInit(): void {
+	constructor(private http: HttpClient,
+		private contactPersonFormService: ContactPersonFormService,
+	) { }
+
+	async ngOnInit() {
+		this.contactPersonFormService.getDisabledOrEnabled().subscribe((resp: boolean) => {
+			this.formDisabled = resp;
+			if (this.formDisabled == undefined) {
+				this.formDisabled = false;
+			}
+		});
 		this.getStaticData();
+		this.reviewInputs();
+	}
+
+	reviewInputs() {
+		this.isNotRequiredField("firstName", "string");
+		this.isNotRequiredField("lastName", "string");
+		this.isNotRequiredField("email", "email");
+		this.isNotRequiredField("type", "string");
+		this.isNotRequiredField("countryCode", "string");
+		this.isNotRequiredField("number", "string");
 	}
 
 	isNotRequiredField(field: any, type?: any) {
@@ -26,8 +53,7 @@ export class ContactPersonFormComponent implements OnInit {
 			validator = false;
 		} else {
 			if (type == 'number') {
-				const num =  Number(form_field?.value);
-				console.log("nuuuuuuuuuuum",num)
+				const num = Number(form_field?.value);
 				if (num) {
 					validator = true
 					form_field?.valid;
@@ -37,7 +63,6 @@ export class ContactPersonFormComponent implements OnInit {
 				}
 			} else if (type == 'string') {
 				const num = isNaN(form_field?.value); // Validate if it's string
-				console.log("Striiing",num)
 				if (num) {
 					validator = true;
 					form_field?.valid;
@@ -47,7 +72,6 @@ export class ContactPersonFormComponent implements OnInit {
 				}
 			} else if (type == 'email') {
 				const num = (form_field?.value).includes('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'); // Validate if it's string
-				console.log("Striiing",num)
 				if (num) {
 					validator = true;
 					form_field?.valid;
@@ -55,14 +79,34 @@ export class ContactPersonFormComponent implements OnInit {
 					validator = false;
 					form_field?.invalid;
 				}
-			} 
+			}
 			else {
 				validator = true;
 			}
 		}
-		return validator;
+		switch (field) {
+			case 'addressLine1':
+				this.validatorFirstName = validator;
+				break;
+			case 'country':
+				this.validatorLastName = validator;
+				break;
+			case 'state':
+				this.validatorEmail = validator;
+				break;
+			case 'city':
+				this.validatorType = validator;
+				break;
+			case 'zipCode':
+				this.validatorCountryCode = validator;
+				break;
+			case 'number':
+				this.validatorNumber = validator;
+				break;
+			default:
+		}
 	}
-	
+
 	isRequiredField(field: string) {
 		const form = this.parentGroup.get(this.formGroupName) as FormGroup;
 		const form_field = form.get(field);
@@ -85,8 +129,8 @@ export class ContactPersonFormComponent implements OnInit {
 				next: (data) => {
 					this.staticData = data;
 				},
-				error: () => {},
-				complete: () => {}
+				error: () => { },
+				complete: () => { }
 			});
 	}
 }

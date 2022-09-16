@@ -25,6 +25,9 @@ export class LocationComponent implements OnInit, OnDestroy {
   locationEdit:any;
 	locationAdd:any;
 	locationDelete:any;
+	onBoardingMenu: any;
+	urlSettings!: string;
+
 
   constructor(
     private businessGroupDropdownService: BusinessGroupDropdownService,
@@ -33,6 +36,7 @@ export class LocationComponent implements OnInit, OnDestroy {
     private searchString: SearchStringPipePipe,
 		private globalRoutes: GlobalRoutesService
   ) {
+		this.onBoardingMenu = this.globalRoutes.getSettingsOnboardingRoutes();
     this.businessGroupDropdownSupscription = this.businessGroupDropdownService
       .businessGroup()
       .subscribe((bg) => {
@@ -44,7 +48,8 @@ export class LocationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.checkPermission()
+    this.checkPermission();
+		this.urlSettings = this.globalRoutes.getSettingsUrl();
    }
   ngOnDestroy(): void {
     this.businessGroupDropdownSupscription.unsubscribe();

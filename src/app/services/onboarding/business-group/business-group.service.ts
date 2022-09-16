@@ -3,20 +3,25 @@ import { Injectable, Injector } from '@angular/core';
 import { CONFIG } from '@config/index';
 import { AuthService } from '@services/auth/auth.service';
 import { CookieService } from 'ngx-cookie-service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class BusinessGroupService {
 	bgId: any;
-	orgId:any;
+	orgId: any;
+	BusinessGroup: any;
+	private BusinessGroup$: BehaviorSubject<any> = new BehaviorSubject<any>('');
+
+
 	constructor(private http: HttpClient,
-		 private authService: AuthService,
-		 private cookieService: CookieService) {
-			this.getOrgBgId();
-		 }
+		private authService: AuthService,
+		private cookieService: CookieService) {
+		this.getOrgBgId();
+	}
 	getBusinessGroups() {
-		if(this.bgId){
+		if (this.bgId) {
 			return this.http.get(
 				`${CONFIG.backend.host}/bg/business-group/${this.bgId}`,
 				{
@@ -25,7 +30,7 @@ export class BusinessGroupService {
 					}
 				}
 			);
-		}else{
+		} else {
 			return this.http.get(`${CONFIG.backend.host}/bg/business-group`, {
 				headers: {
 					'X-ORG-ID': 'intelliveer'
@@ -33,10 +38,11 @@ export class BusinessGroupService {
 			});
 		}
 	}
-	getBusinessGroup(bgId: string,orgId?:any) {
-		if(!orgId){
+	getBusinessGroup(bgId: string, orgId?: any) {
+		if (!orgId) {
 			orgId = 'intelliveer';
 		}
+
 		return this.http.get(
 			`${CONFIG.backend.host}/bg/business-group/${bgId}`,
 			{
@@ -46,6 +52,16 @@ export class BusinessGroupService {
 			}
 		);
 	}
+
+	setBusinessGroup(data: any) {
+		this.BusinessGroup = data;
+		this.BusinessGroup$.next(this.BusinessGroup);
+	}
+
+	getBusinessGroupSet(): Observable<any>{
+		return this.BusinessGroup$;
+	}
+
 	createBusinessGroup(data: any) {
 		return this.http.post(
 			`${CONFIG.backend.host}/bg/business-group`,
@@ -78,8 +94,8 @@ export class BusinessGroupService {
 			}
 		);
 	}
-    getPermissionByUserRole(orgId?:any){
-		if(!orgId){
+	getPermissionByUserRole(orgId?: any) {
+		if (!orgId) {
 			orgId = 'intelliveer';
 		}
 		return this.http.get(
@@ -91,20 +107,20 @@ export class BusinessGroupService {
 			}
 		);
 	}
-	getOrgBgId(){
-		let user:any =	this.cookieService.get('user');
+	getOrgBgId() {
+		let user: any = this.cookieService.get('user');
 		let orgId = this.authService.getOrgId();
 		user = JSON.parse(user);
 		if (user) {
-		   if(user?.__ISSU__){
-			  this.orgId = 'intelliveer';
-		   }else if(user?._id){
-			  this.orgId = 'intelliveer';
-			  this.bgId = user._id
-		   }else{
-			this.orgId = orgId;
-			this.bgId = orgId;
-		   }
-	   }
-	   }
+			if (user?.__ISSU__) {
+				this.orgId = 'intelliveer';
+			} else if (user?._id) {
+				this.orgId = 'intelliveer';
+				this.bgId = user._id
+			} else {
+				this.orgId = orgId;
+				this.bgId = orgId;
+			}
+		}
+	}
 }

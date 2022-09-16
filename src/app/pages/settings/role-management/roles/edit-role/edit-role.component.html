@@ -24,16 +24,28 @@
 	<div class="col-10 component-view">
 		<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
 			<div class="row sticky" style="width: 101%;">
-				<div class="col-11">
-					<div class="col pills menuheight">
-						<p>&nbsp;</p>
+				<!-- <div class="col-11">
+					   <div class="col pills menuheight">
+						   <p>&nbsp;</p>
+					   </div>
+				   </div>
+				   <div class="col-1 d-flex pills menuheight justify-content-center align-items-center"
+					   style="background-color: transparent;">
+					   <button *ngIf="isSaveButton" [disabled]="Form?.invalid" (click)="save(Form.value)" class="save">
+						   <img src="/assets/icons/save.svg" style="width: 37px; height: 37px; cursor: pointer;"
+							   alt="" /></button>
+   
+					   <img src="/assets/icons/Edit.svg" style="width: 37px; height: 37px; cursor: pointer;" alt=""
+						   (click)="checkPermission()" />
+				   </div> -->
+				<div [ngClass]="{'col-11':!isSaveButton, 'col-12':isSaveButton }">
+					<div class="col">
+						<app-nav-bar-pills [cancelBtn]="isSaveButton" [saveBtn]="isSaveButton"
+							(onSave)="save(Form.value)"></app-nav-bar-pills>
 					</div>
 				</div>
-				<div class="col-1 d-flex justify-content-center align-items-center mb-3 gap-2">
-					<button [disabled]="Form?.invalid" (click)="save(Form.value)" class="save"> <img
-							src="/assets/icons/save.svg" style="width: 37px; height: 37px; cursor: pointer;" alt=""
-							*ngIf="isSaveButton" /></button>
-
+				<div *ngIf="!isSaveButton" class="col-1 d-flex justify-content-center align-items-start"
+					style="background-color: transparent;">
 					<img src="/assets/icons/Edit.svg" style="width: 37px; height: 37px; cursor: pointer;" alt=""
 						(click)="checkPermission()" />
 				</div>
@@ -41,22 +53,22 @@
 			<!-- content -->
 			<!-- content -->
 			<div class="section" id="main">
-                <h6 class="heading">Edit Role</h6>
+				<h6 class="heading">Edit Role</h6>
 				<div class="row formrow">
 					<div class="col-6">
 						<label class="label-input-gap">Name of role</label>
-						<input type="text" class="form-control required-field" [(ngModel)]="roleObj.name"
+						<input type="text" class="form-control mandatory-field" [(ngModel)]="roleObj.name"
 							formControlName="name" />
 					</div>
 					<div class="col-6">
 						<label class="label-input-gap">Description</label>
-						<input type="text" class="form-control required-field" [(ngModel)]="roleObj.description"
+						<input type="text" class="form-control mandatory-field" [(ngModel)]="roleObj.description"
 							formControlName="description" />
 					</div>
 				</div>
 
 				<div class="row formrow">
-					<div class="col-12" style="margin-top: 6px">
+					<div class="col-12" style="margin-top: 6px;">
 						<ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" formArrayName="permissions">
 							<!-- Org. Onboarding -->
 							<ngb-panel cardClass="onboarding" *ngFor="let module of moduleNested; let i = index"
@@ -70,27 +82,24 @@
 								</ng-template>
 								<ng-template ngbPanelContent formArrayName="sections">
 									<ngb-accordion #accOnboarding="ngbAccordion" activeIds="ngb-panel-0" *ngFor="
-									let subPermission of sectionNested(i);
-									let j = index
-								" [formGroupName]="j">
+									   let subPermission of sectionNested(i);
+									   let j = index
+								   " [formGroupName]="j">
 										<!-- Business Group -->
 										<ngb-panel cardClass="businessg">
 											<ng-template ngbPanelTitle>
 												<p>
-													<strong>{{
-														subPermission.value.section
-														}}</strong>
+													<strong>{{ subPermission.value.section }}</strong>
 												</p>
 											</ng-template>
 											<ng-template ngbPanelContent formArrayName="permissions">
 												<div [align]="'end'">
 													<div class="form-check">
 														<input class="form-check-input" type="checkbox" value=""
-															id="flexCheckDefault" style="float: none" (change)="
-														subPermission.value.displayShowAdvanced =
-															!subPermission.value
-																.displayShowAdvanced
-													" />
+															id="flexCheckDefault" style="float: none;" (change)="
+														   subPermission.value.displayShowAdvanced =
+															   !subPermission.value
+																   .displayShowAdvanced" />
 														<label class="form-check-label" for="flexCheckDefault">
 															Show Advanced
 														</label>
@@ -98,10 +107,7 @@
 												</div>
 												<table class="table">
 													<thead>
-														<tr style="
-														background-color: #f1f2f2;
-														height: 30px;
-													">
+														<tr style="background-color: #f1f2f2; height: 30px;">
 															<th></th>
 															<th>Permission</th>
 															<th>Lock</th>
@@ -110,68 +116,48 @@
 													</thead>
 													<tbody>
 														<tr *ngFor="
-														let childPermision of permissionNested(
-															i,
-															j
-														);
-														let k = index
-													" [formGroupName]="k">
+														   let childPermision of permissionNested(
+															   i,
+															   j
+														   );
+														   let k = index
+													   " [formGroupName]="k">
 															<td>
 														<tr>
 															<td>
 																<input type="checkbox" formControlName="enabled"
-																	[attr.disabled]="
-																		childPermision
-																			.value
-																			.locked
-																	" *ngIf="
-																		childPermision
-																			.value
-																			.locked
-																	" />
-																<input type="checkbox" formControlName="enabled" *ngIf="
-																		!childPermision
-																			.value
-																			.locked
-																	" />
+																	[attr.disabled]="childPermision.value.locked"
+																	*ngIf="childPermision.value.locked" />
+																<input type="checkbox" formControlName="enabled"
+																	*ngIf="!childPermision.value.locked" />
 															</td>
 														</tr>
 
-														<tr *ngIf="
-																subPermission
-																	.value
-																	.displayShowAdvanced
-															">
+														<tr *ngIf="subPermission.value.displayShowAdvanced">
 															<td>
 																<ng-select #legelEntity (change)="
-																		refLegelEntity.itemsList._selectionModel[
-																			'_selected'
-																		] = []
-																	" [items]="
-																		legelEntityList
-																	" bindLabel="name" [multiple]="
-																		true
-																	" placeholder="Legal Entity" style="
-																		border: 0px;
-																	" class="ng-selection">
+																		   refLegelEntity.itemsList._selectionModel[
+																			   '_selected'
+																		   ] = []
+																	   " [items]="
+																		   legelEntityList
+																	   " bindLabel="name" [multiple]="
+																		   true
+																	   " placeholder="Legal Entity" style="border: 0px;" class="ng-selection">
 																	<ng-template ng-option-tmp let-item="item"
 																		let-item$="item$" let-index="index">
 																		<input id="item-{{
-																				index
-																			}}" type="checkbox" name="item-{{
-																				index
-																			}}" style="
-																				margin: auto;
-																			" [checked]="
-																				item$.selected
-																			" />
+																				   index
+																			   }}" type="checkbox" name="item-{{
+																				   index
+																			   }}" style="margin: auto;" [checked]="
+																				   item$.selected
+																			   " />
 																		<span id="item-{{
-																				index
-																			}}" style="
-																				padding: 8px;
-																			">{{
-																			item.name
-																			}}</span>
+																				   index
+																			   }}" style="padding: 8px;">
+																			{{ item.name }}
+																		</span>
 																	</ng-template>
 																</ng-select>
 															</td>
@@ -179,47 +165,35 @@
 														</td>
 														<td>
 															<tr>
-																<td>
-																	<input type="hidden" formControlName="name" />{{
-																	childPermision
-																	.value
-																	.name
-																	}}
-																</td>
+																<td><input type="hidden" formControlName="name" />{{
+																	childPermision .value .name }}</td>
 															</tr>
 															<br />
 															<tr *ngIf="
-																subPermission
-																	.value
-																	.displayShowAdvanced
-															">
+																   subPermission
+																	   .value
+																	   .displayShowAdvanced
+															   ">
 																<td>
 																	<ng-select #location (change)="
-																		refLocation.itemsList._selectionModel[
-																			'_selected'
-																		] = []
-																	" [items]="
-																		locationList
-																	" [multiple]="
-																		true
-																	" bindLabel="name" placeholder="Location" style="
-																		border: 0px;
-																	" class="ng-selection">
+																		   refLocation.itemsList._selectionModel[
+																			   '_selected'
+																		   ] = []
+																	   " [items]="
+																		   locationList
+																	   " [multiple]="
+																		   true
+																	   " bindLabel="name" placeholder="Location" style="border: 0px;" class="ng-selection">
 																		<ng-template ng-option-tmp let-item="item"
 																			let-item$="item$" let-index="index">
 																			<input id="item-{{
-																				index
-																			}}" type="checkbox" name="item-{{
-																				index
-																			}}" style="
-																				margin: auto;
-																			" [checked]="
-																				item$.selected
-																			" />
-																			<span style="
-																				padding: 8px;
-																			">{{
-																				item.name
+																				   index
+																			   }}" type="checkbox" name="item-{{
+																				   index
+																			   }}" style="margin: auto;" [checked]="
+																				   item$.selected
+																			   " />
+																			<span style="padding: 8px;">{{ item.name
 																				}}</span>
 																		</ng-template>
 																	</ng-select>
@@ -232,63 +206,54 @@
 																	<img src="assets/icons/locked_green.svg" width="20"
 																		height="20" placement="bottom"
 																		ngbTooltip="Permission can be Override" *ngIf="
-																		childPermision
-																			.value
-																			.locked &&
-																		childPermision
-																			.value
-																			.allowOverride
-																	" />
+																		   childPermision
+																			   .value
+																			   .locked &&
+																		   childPermision
+																			   .value
+																			   .allowOverride
+																	   " />
 																	<img src="assets/icons/locked_red.svg" width="20"
 																		height="20" placement="bottom"
 																		ngbTooltip="Permission can not be Override"
 																		*ngIf="
-																		childPermision
-																			.value
-																			.locked &&
-																		!childPermision
-																			.value
-																			.allowOverride
-																	" />
+																		   childPermision
+																			   .value
+																			   .locked &&
+																		   !childPermision
+																			   .value
+																			   .allowOverride
+																	   " />
 																</td>
 															</tr>
-															<br /><br *ngIf="
-															!childPermision
-																.value
-																.locked
-														" />
+															<br />
+															<br *ngIf="
+															   !childPermision
+																   .value
+																   .locked
+														   " />
 															<tr *ngIf="
-																subPermission
-																	.value
-																	.displayShowAdvanced
-															">
+																   subPermission
+																	   .value
+																	   .displayShowAdvanced
+															   ">
 																<td>
 																	<ng-select #practice (change)="
-																		refPractice.itemsList._selectionModel[
-																			'_selected'
-																		] = []
-																	" [items]="
-																		practiceList
-																	" [multiple]="
-																		true
-																	" bindLabel="name" placeholder="Practice" style="
-																		border: 0px;
-																	" class="ng-selection">
+																		   refPractice.itemsList._selectionModel[
+																			   '_selected'
+																		   ] = []
+																	   " [items]="
+																		   practiceList
+																	   " [multiple]="
+																		   true
+																	   " bindLabel="name" placeholder="Practice" style="border: 0px;" class="ng-selection">
 																		<ng-template ng-option-tmp let-item="item"
 																			let-item$="item$" let-index="index">
-																			<input id="item-{{
-																				index
-																			}}" type="checkbox" name="item-{{
-																				index
-																			}}" style="
-																				margin: auto;
-																			" [checked]="
-																				item$.selected
-																			" />
-																			<span style="
-																				padding: 8px;
-																			">{{
-																				item.name
+																			<input id="item-{{index}}" type="checkbox"
+																				name="item-{{index}}"
+																				style="margin: auto;"
+																				[checked]="item$.selected" />
+																			<span style="padding: 8px;">{{ item.name
 																				}}</span>
 																		</ng-template>
 																	</ng-select>

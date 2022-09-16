@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
 import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 import { UserService } from '@services/user/user.service';
 import { BusinessGroupDropdownService, SelectedBusinessGroup } from '@services/business-group-dropdown/business-group-dropdown.service';
 import { AuthService } from '@services/auth/auth.service';
+import { AddressFormService } from '@services/forms/address-form/address-form.service';
 
 @Component({
 	selector: 'app-personal-info',
@@ -45,17 +46,17 @@ export class PersonalInfoComponent implements OnInit {
 		email: ''
 	};
 
-	userRoles: any [] = [];
+	userRoles: any[] = [];
 
 	undefinedH = {
 		name: 'undefined'
 	};
-  businessGroupDropdownSupscription: any;
-  selectedBusinessGroup: SelectedBusinessGroup | undefined;
-  roleList: any;
-  legelEntityList: any[] = [];
-  locationList: any[] = [];
-  practiceList: any[] = [];
+	businessGroupDropdownSupscription: any;
+	selectedBusinessGroup: SelectedBusinessGroup | undefined;
+	roleList: any;
+	legelEntityList: any[] = [];
+	locationList: any[] = [];
+	practiceList: any[] = [];
 
 
 	constructor(
@@ -64,70 +65,68 @@ export class PersonalInfoComponent implements OnInit {
 		private fb: FormBuilder,
 		private userService: UserService,
 		private authService: AuthService,
-    private businessGroupDropdownService: BusinessGroupDropdownService
-    ) {
+		private addressFormService: AddressFormService,
+		private businessGroupDropdownService: BusinessGroupDropdownService
+	) {
 		this.businessGroupDropdownSupscription =
-		this.businessGroupDropdownService
-			.businessGroup()
-			.subscribe((bg) => {
-				if (bg) {
-					this.selectedBusinessGroup = bg;
-					this.getOrgBgId();
-				}
-			});
-		}
-
-	ngOnInit() {
-		this.initForm(this.formData);		
+			this.businessGroupDropdownService
+				.businessGroup()
+				.subscribe((bg) => {
+					if (bg) {
+						this.selectedBusinessGroup = bg;
+						this.getOrgBgId();
+					}
+				});
 	}
 
-	getUserData(bgId: any)
-	{
+	ngOnInit() {
+		this.initForm(this.formData);
+	}
+
+	getUserData(bgId: any) {
 		let userId = localStorage.getItem('userId')
 		this.userService.getUserData(bgId, userId).subscribe({
 			next: (res: any) => {
 				this.user = res;
-				console.log("this.user", this.user);
-				
-				if(res)
-				{
+				if (res) {
 					for (let i = 0; i < res.roles.length; i++) {
 						this.userService.getUserRoleData(bgId, this.user.roles[i]).subscribe({
 							next: (roledata: any) => {
 								(this.roleList) ? this.roleList = this.roleList + roledata.name + ", " : this.roleList = roledata.name + ", ";
 								this.userRoles.push(roledata);
 							},
-							error: () => {}
+							error: () => { }
 						});
-					}		
-					console.log("this.roleList", this.roleList);
-									  
+					}
 				}
 			},
-			error: () => {}
+			error: () => { }
 		});
 	}
 
-	getOrgBgId(){
-		let bgOrdID:any = localStorage.getItem('selected_business_group');
+	getOrgBgId() {
+		let bgOrdID: any = localStorage.getItem('selected_business_group');
 		console.log(bgOrdID)
-			let user = this.authService.getLoggedInUser();
-			if (user?.__ISSU__) {
-		  if(bgOrdID == 'intelliveer' || bgOrdID == null){
-			this.getUserData('intelliveer');
-		  }else{
+		let user = this.authService.getLoggedInUser();
+		if (user?.__ISSU__) {
+			if (bgOrdID == 'intelliveer' || bgOrdID == null) {
+				this.getUserData('intelliveer');
+			} else {
+				this.getUserData(this.selectedBusinessGroup?.bgId)
+			}
+		} else {
 			this.getUserData(this.selectedBusinessGroup?.bgId)
-		  }
-		  }else{
-		  this.getUserData(this.selectedBusinessGroup?.bgId)
 		}
-		}
+	}
 
 	initForm(data?: any) {
 		data = data || {};
 		this.Form = this.fb.group({
-			email: [data?.check1 || ''],
-			check2: [data?.check2 || '']
+			firstName: [data?.firstName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
+			lastName: [data?.lastName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
+			physicalAddress: this.addressFormService.getAddressForm(
+				data?.physicalAddress || {},
+			),
 		});
 	}
 
@@ -139,17 +138,16 @@ export class PersonalInfoComponent implements OnInit {
 			lastName: this.user.profile.lastName,
 			email: this.user.profile.email
 		};
-    if(this.selectedBusinessGroup)
-    {
-      this.userService
-			.updateUserProfile(this.userProfile, this.user._id, this.selectedBusinessGroup.bgId)
-			.subscribe((resp: any) => {
-				this.router.navigate([
-					this.globalRoutes.getSettingsUserManageRoutes()[0].url
-				]);
-			});
-    }
-		
+		if (this.selectedBusinessGroup) {
+			this.userService
+				.updateUserProfile(this.userProfile, this.user._id, this.selectedBusinessGroup.bgId)
+				.subscribe((resp: any) => {
+					this.router.navigate([
+						this.globalRoutes.getSettingsUserManageRoutes()[0].url
+					]);
+				});
+		}
+
 	}
 	cancel() {
 		this.router.navigate([
@@ -162,5 +160,5 @@ export class PersonalInfoComponent implements OnInit {
 	}
 
 	/** Get onboarding Details */
-	
+
 }

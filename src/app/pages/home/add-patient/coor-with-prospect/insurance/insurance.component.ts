@@ -117,11 +117,7 @@ export class InsuranceComponent implements OnInit {
     this.addPatientServ.getInsuranceFromCompone(this.getInsurances.bind(this));
     this.Form.statusChanges.subscribe(
       result => {
-        console.log(result)
         if (!this.Form.pristine) {
-          console.log("hiiiiii", event);
-          console.log("status", this.Form.pristine);
-
           this.addPatientServ.setInsuranceNotPristineCWP(true);
           if(this.Form.invalid){
             this.addPatientServ.setInsuranceMandatoryFields(true)
@@ -132,7 +128,6 @@ export class InsuranceComponent implements OnInit {
       }
     );
     this.insurancesP1[0] = await this.AddPatientService.getinsurancesP1Cwp();
-    console.log("insuranceP11111", this.insurancesP1);
     if (this.insurancesP1[0].length != 0) {
       this.insurances.insurance1.insuranName = await this.insurancesP1[0].insurance1.insuranName;
       this.insurances.insurance1.phoneNumb = await this.insurancesP1[0].insurance1.phoneNumb;
@@ -389,7 +384,6 @@ export class InsuranceComponent implements OnInit {
         this.insurances.insurance1.subscriber1.DOB = await this.insurancesP1[0].insurance1.subscriber1.DOB;
       } else if (value == 2) {
         let patientLocStor = await this.AddPatientService.getPatientCWP();
-        console.log("patiiiiiient", patientLocStor);
 
         this.insurances.insurance1.subscriber1.firstName = await patientLocStor.firstName;
         this.insurances.insurance1.subscriber1.lastName = await patientLocStor.lastName;
@@ -398,7 +392,6 @@ export class InsuranceComponent implements OnInit {
 
       } else if (value == 3) {
         let LGLocStora = await this.AddPatientService.getLegalGuardCWP(1);
-        console.log("LGLocStora", LGLocStora);
         this.insurances.insurance1.subscriber1.firstName = await LGLocStora.firstName;
         this.insurances.insurance1.subscriber1.lastName = await LGLocStora.lastName;
       }
@@ -415,7 +408,6 @@ export class InsuranceComponent implements OnInit {
         this.insurances.insurance2.subscriber2.DOB = await this.insurancesP1[0].insurance2.subscriber2.DOB;
       } else if (value == 2) {
         let patientLocStor = await this.AddPatientService.getPatientCWP();
-        console.log("patiiiiiient", patientLocStor);
 
         this.insurances.insurance2.subscriber2.firstName = await patientLocStor.firstName;
         this.insurances.insurance2.subscriber2.lastName = await patientLocStor.lastName;
@@ -424,7 +416,6 @@ export class InsuranceComponent implements OnInit {
 
       } else if (value == 3) {
         let LGLocStora = await this.AddPatientService.getLegalGuardCWP(1);
-        console.log("LGLocStora", LGLocStora);
         this.insurances.insurance2.subscriber2.firstName = await LGLocStora.firstName;
         this.insurances.insurance2.subscriber2.lastName = await LGLocStora.lastName;
       }
@@ -441,7 +432,6 @@ export class InsuranceComponent implements OnInit {
         this.insurances.insurance3.subscriber3.DOB = await this.insurancesP1[0].insurance3.subscriber3.DOB;
       } else if (value == 2) {
         let patientLocStor = await this.AddPatientService.getPatientCWP();
-        console.log("patiiiiiient", patientLocStor);
 
         this.insurances.insurance3.subscriber3.firstName = await patientLocStor.firstName;
         this.insurances.insurance3.subscriber3.lastName = await patientLocStor.lastName;
@@ -450,7 +440,6 @@ export class InsuranceComponent implements OnInit {
 
       } else if (value == 3) {
         let LGLocStora = await this.AddPatientService.getLegalGuardCWP(1);
-        console.log("LGLocStora", LGLocStora);
         this.insurances.insurance3.subscriber3.firstName = await LGLocStora.firstName;
         this.insurances.insurance3.subscriber3.lastName = await LGLocStora.lastName;
       }
@@ -492,7 +481,6 @@ export class InsuranceComponent implements OnInit {
         this.cancelButtonText = "Discard"
       }
       this.alertService.conformAlertNavigate('Please confirm', this.alertText,this.cancelButtonText,this.confirmButtonText).then((result: any) => {
-        console.log("result", result);
         if (result.isConfirmed) {
           this.discardPatient()
         } else if (result.isDismissed && (result.dismiss == "cancel")) {

@@ -10,6 +10,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ScrollspyModule } from "@modules/scrollspy/scrollspy.module";
 import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
 import { MomentTimezonePickerModule } from 'moment-timezone-picker';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [LocationFormComponent],
@@ -24,7 +25,8 @@ import { MomentTimezonePickerModule } from 'moment-timezone-picker';
 		ImageUploaderModule,
 		NavBarPillsModule,
 		ScrollspyModule,
-    MomentTimezonePickerModule
+    MomentTimezonePickerModule,
+    RouterModule
   ],
   exports: [LocationFormComponent],
 })

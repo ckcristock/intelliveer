@@ -1,12 +1,12 @@
 <div class="row">
     <div class="col-2">
         <div class="settings-row pointer" [routerLink]="manageRoleTemplateUrl">
-            <i class="bi bi-arrow-left-circle" style="font-size: 2rem; cursor: pointer;" ></i>
+            <i class="bi bi-arrow-left-circle" style="font-size: 2rem; cursor: pointer;"></i>
             <!-- [routerLink]="urlSettings" -->
             <p class="">Manage Role Templates</p>
         </div>
         <ul class="ul" style="margin-top: 27px;">
-            <div >
+            <div>
                 <li class="active">
                     {{ roleTemplateName }}
                 </li>
@@ -16,20 +16,36 @@
     <div class="col-10 component-view">
         <form autocomplete="off" [formGroup]="roleTemplateForm" #f="ngForm">
             <div class="row sticky" style="width: 101%;">
-                <div class="col-11">
+                <!-- <div class="col-11">
                     <div class="col pills menuheight">
                         <p>&nbsp;</p>
                     </div>
                 </div>
-                <div class="col-1 d-flex justify-content-center align-items-center mb-3 gap-2">
-                    <button [disabled]="roleTemplateForm?.invalid" (click)="saveRoleTemplate()" class="save"> <img
-                            src="/assets/icons/save.svg" style="width: 37px; height: 37px; cursor: pointer;"
-                            alt="" /></button>
+                <div class="col-1 d-flex pills menuheight justify-content-center align-items-center"
+                    style="background-color: transparent;">
+                    <button *ngIf="isSaveButton" [disabled]="roleTemplateForm?.invalid" (click)="saveRoleTemplate()"
+                        class="save"> <img src="/assets/icons/save.svg"
+                            style="width: 37px; height: 37px; cursor: pointer;" alt="" /></button>
 
                     <img src="/assets/icons/cancel.svg"
                         [routerLink]="'/dashboard/settings/role-management/manage-role-template'"
-                        style="width: 37px; height: 37px; cursor: pointer;" alt="" />
+                        style="width: 37px; height: 37px; cursor: pointer;" alt="" (click)="checkPermission()"/>
+
+                    <img src="/assets/icons/Edit.svg" style="width: 37px; height: 37px; cursor: pointer;" alt=""
+                        (click)="checkPermission()" />
+                </div> -->
+                <div [ngClass]="{'col-11':!isSaveButton, 'col-12':!inEdit }">
+                    <div class="col">
+                        <app-nav-bar-pills [cancelBtn]="isSaveButton || !inEdit" [saveBtn]="isSaveButton || !inEdit"
+                            (onSave)="saveRoleTemplate()"></app-nav-bar-pills>
+                    </div>
                 </div>
+                <div *ngIf="!isSaveButton && inEdit" class="col-1 d-flex justify-content-center align-items-start"
+                    style="background-color: transparent;">
+                    <img src="/assets/icons/Edit.svg" style="width: 37px; height: 37px; cursor: pointer;" alt=""
+                        (click)="checkPermission()" />
+                </div>
+
             </div>
             <!-- content -->
 
@@ -40,7 +56,7 @@
                 <div class="row formrow">
                     <div class="col-6">
                         <label class="label-input-gap">Name of Role Template</label>
-                        <input type="text" class="form-control required-field" formControlName="name">
+                        <input type="text" class="form-control mandatory-field" formControlName="name">
                     </div>
                     <div class="col-6">
                         <label class="label-input-gap">Description</label>
@@ -50,7 +66,7 @@
                 <div class="row formrow">
                     <div class="col-3">
                         <label class="label-input-gap">Type</label>
-                        <ng-select placeholder="Select" class="required-field" formControlName="type"
+                        <ng-select placeholder="Select" class="mandatory-field" formControlName="type"
                             (change)="roleTypeValue($event)">
                             <ng-option value="public">Public</ng-option>
                             <ng-option value="private"

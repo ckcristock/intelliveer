@@ -15,6 +15,7 @@ import { BusinessGroupService } from '@services/onboarding/business-group/busine
 import { CookieService } from 'ngx-cookie-service';
 import { Subscription } from 'rxjs';
 import { SearchStringPipePipe } from 'src/app/pipes/stringSearch/search-string-pipe.pipe';
+import { onboardingMenuItems } from '../menu';
 
 @Component({
 	selector: 'app-business-group',
@@ -35,6 +36,10 @@ export class BusinessGroupComponent
     bussinessEdit:any;
 	bussinessAdd:any;
 	bussinessDelete:any;
+	onBoardingMenu: any;
+	urlSettings!: string;
+
+
 	constructor(
 		private router: Router,
 		private businessGroupDropdownService: BusinessGroupDropdownService,
@@ -45,13 +50,16 @@ export class BusinessGroupComponent
 		private authService: AuthService,
 		private searchString: SearchStringPipePipe,
 		private globalRoutes: GlobalRoutesService
-	) { }
+	) { 
+		this.onBoardingMenu = this.globalRoutes.getSettingsOnboardingRoutes();
+	}
 	ngOnDestroy(): void {
 		this.businessGroupDropdownService.disable(false);
 	}
 	ngOnInit() {
 		this.getOrgBgId();
-		this.checkPermission()
+		this.checkPermission();
+		this.urlSettings = this.globalRoutes.getSettingsUrl();
 	}
 	ngAfterViewInit() {
 		setTimeout(() => {

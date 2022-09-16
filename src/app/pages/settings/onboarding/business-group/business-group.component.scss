@@ -18,3 +18,18 @@
   .tooltip-class .bs-tooltip-bottom .tooltip-arrow::before {
     border-bottom-color: darkgreen;
   }
+
+  ul {
+    font-size: 13px;
+    font-weight: bold;
+    li {
+      line-height: 3.2;
+    }
+  }
+  .component-view {
+    height: calc(100vh - 200px);
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  
+  

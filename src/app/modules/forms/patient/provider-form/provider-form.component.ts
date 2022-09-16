@@ -89,10 +89,7 @@ export class ProviderFormComponent implements OnInit {
 		this.onboardingServ.setFalseAllNotPristine();
 		this.Form?.statusChanges.subscribe(
 			result => {
-				console.log(result)
 				if (!this.Form?.pristine) {
-					console.log("hiiiiii", event);
-					console.log("status", this.Form?.pristine);
 					this.patientUserServ.setExterProvNotPristine(true);
 				}
 			}
@@ -129,25 +126,13 @@ export class ProviderFormComponent implements OnInit {
     });
   }
 
-  firstNameValid() {
-    return this.Form.get('firstName')?.valid;
-  }
-
-  middleNameValid() {
-    return this.Form.get('middleName')?.valid;
-  }
-
-  lastNameValid() {
-    return this.Form.get('lastName')?.valid;
-  }
-
-  DMSchoolValid(){
-    return this.Form.get('DMSchool')?.valid;
-  }
-
-  pPhoneNumberValid(){
-    return this.Form.get('pPhoneNumber')?.value.length > 0 && this.Form.get('pPhoneNumber')?.valid;
-  }
+  fieldValidation(field: any, notRequiredButPattern?: boolean) {
+		if (notRequiredButPattern) {
+			return (this.Form.get(field)?.valid && this.Form.get(field)?.value != null);
+		} else {
+			return this.Form.get(field)?.value != null
+		}
+	}
 
   async getStaticData() {
     this.http
@@ -155,8 +140,6 @@ export class ProviderFormComponent implements OnInit {
       .subscribe({
         next: async (data) => {
           this.famiMembTitle = data;
-          console.log("this.phoneTypes", this.famiMembTitle);
-
         },
         error: () => { },
         complete: () => { }

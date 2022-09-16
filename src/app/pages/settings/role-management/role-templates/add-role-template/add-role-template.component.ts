@@ -33,6 +33,9 @@ export class AddRoleTemplateComponent implements OnInit {
   getRoleTemplateType: any;
   roleTemplateName: any;
   manageRoleTemplateUrl!: string;
+  isSaveButton: boolean = false;
+  inEdit: boolean = false;
+
 
   constructor(private router: Router,
     private rolesUserServ: RolesUsersService,
@@ -50,12 +53,13 @@ export class AddRoleTemplateComponent implements OnInit {
     this.bussinesGroupList();
     this.manageRoleTemplateUrl = this.routes.getSettingsRoleManageRoutes()[0].url;
     this.roleTemplateName = "Add Role Template";
+
   }
 
   initForm(data?: any) {
     data = data || {};
     this.roleTemplateForm = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
       description: [''],
       businessGroups: [''],
       isRestrictedTemplate: ['', Validators.required],
@@ -87,6 +91,7 @@ export class AddRoleTemplateComponent implements OnInit {
     this.route.queryParams.subscribe((params: any) => {
       if (params._id) {
         this.getRolesID = params._id;
+        this.inEdit = true;
         this.roleTemplateDetail(this.getRolesID);
       }
     })
@@ -200,7 +205,6 @@ export class AddRoleTemplateComponent implements OnInit {
           this.roleTemplateName = res.name
           if (this.roleTemplateName == '') {
           }
-          console.log("XXXXXXXXXXXX", this.roleTemplateName);
           this.rolesUserServ.setRoleTemplateName(res.name);
 
           this.setPermissionWithTemplateId(res);
@@ -443,6 +447,10 @@ export class AddRoleTemplateComponent implements OnInit {
     })
     this.roleTemplateForm.patchValue(this.roleTemplateForm.value)
     console.log(this.roleTemplateForm.value)
+  }
+
+  checkPermission() {
+    this.isSaveButton = true
   }
 
 }

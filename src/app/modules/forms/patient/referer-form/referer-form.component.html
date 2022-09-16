@@ -46,7 +46,8 @@
 					<div class="col">
 						<label class="label-input-gap">First Name</label>
 						<input class="form-control input-upper" type="text" placeholder="" name="firstName"
-							formControlName="firstName" />
+							formControlName="firstName"
+							[class.mandatory-required-field]="fieldValidation('firstName', true)" />
 					</div>
 
 					<div class="col">
@@ -57,7 +58,8 @@
 					<div class="col">
 						<label class="label-input-gap">Last Name</label>
 						<input class="form-control input-upper" type="text" placeholder="" name="lastName"
-							formControlName="lastName" />
+							formControlName="lastName"
+							[class.mandatory-required-field]="fieldValidation('lastName', true)" />
 					</div>
 				</div>
 				<div class="row formrow">
@@ -99,7 +101,8 @@
 					<div class="col">
 						<label class="label-input-gap">Primary Phone Number</label>
 						<input class="form-control input-upper" type="text" placeholder="" name="name"
-							formControlName="pPhoneNumber" />
+							formControlName="pPhoneNumber"
+							[class.mandatory-required-field]="fieldValidation('pPhoneNumber', true)" />
 					</div>
 				</div>
 

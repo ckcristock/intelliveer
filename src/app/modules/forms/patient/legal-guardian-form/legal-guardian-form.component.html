@@ -53,8 +53,8 @@
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">First Name</label>
-						<input class="form-control input-upper mandatory-field" type="text" placeholder="" name="firstName"
-							formControlName="firstName"/>
+						<input class="form-control input-upper mandatory-field" type="text" placeholder=""
+							name="firstName" formControlName="firstName" />
 					</div>
 
 					<div class="col-2">
@@ -64,15 +64,15 @@
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Last Name</label>
-						<input class="form-control mandatory-field input-upper" type="text" placeholder="" name="lastName"
-							formControlName="lastName" />
+						<input class="form-control mandatory-field input-upper" type="text" placeholder=""
+							name="lastName" formControlName="lastName" />
 					</div>
 				</div>
 				<div class="row formrow">
 					<div class="col-3">
 						<label class="label-input-gap">Date of Birth</label>
 						<input class="form-control red-bottom-line input-upper" type="date" placeholder="" name="DOB"
-							formControlName="DOB" [class.valid-required-field]="DOBValid()" />
+							formControlName="DOB" [class.valid-required-field]="fieldValidation('DOB')" />
 					</div>
 					<div class="col-3">
 						<label class="label-input-gap">Gender</label>
@@ -121,13 +121,13 @@
 					<div class="col">
 						<label class="label-input-gap">Email</label>
 						<input class="form-control red-bottom-line input-upper" type="text" placeholder="" name="id"
-							formControlName="emailId" [class.valid-required-field]="emailValid()" />
+							formControlName="emailId" [class.valid-required-field]="fieldValidation('emailId')" />
 					</div>
 
 					<div class="col">
 						<label class="label-input-gap">Primary Phone Type</label>
-						<ng-select class="input-upper required-field input-upper" placeholder="Select" formControlName="primaryPhoneType"
-							[class.valid-mandatory-field]="primaryPhoneTypeValid()">
+						<ng-select class="input-upper mandatory-field input-upper" placeholder="Select"
+							formControlName="primaryPhoneType">
 							<ng-option [value]="phone.value" *ngFor="let phone of famiMembTitle.phone">
 								{{ phone.label }}
 							</ng-option>
@@ -136,8 +136,7 @@
 
 					<div class="col">
 						<label class="label-input-gap">Primary Phone Number</label>
-						<input class="form-control required-field input-upper"
-							[class.valid-mandatory-field]="primaryPhoneNumberValid()" type="text" placeholder="" name="name"
+						<input class="form-control mandatory-field input-upper" type="text" placeholder="" name="name"
 							formControlName="primaryPhoneNumber" />
 					</div>
 				</div>
@@ -160,8 +159,9 @@
 
 					<div class="col">
 						<label class="label-input-gap">Preferred Communication Method - Primary</label>
-						<ng-select class="input-upper red-bottom-line input-upper" formControlName="primaryPreferredCommunicationMethod"
-							placeholder="Select" [class.valid-required-field]="commPrimaryValid()"
+						<ng-select class="input-upper red-bottom-line input-upper"
+							formControlName="primaryPreferredCommunicationMethod" placeholder="Select"
+							[class.valid-required-field]="fieldValidation('primaryPreferredCommunicationMethod')"
 							(clear)="clearCommPrimary()">
 							<ng-option value="s">
 								Select
@@ -172,7 +172,8 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Preferred Communication Method - Secondary</label>
-						<ng-select class="input-upper input-upper" formControlName="secondaryPreferredCommunicationMethod" placeholder="Select">
+						<ng-select class="input-upper input-upper"
+							formControlName="secondaryPreferredCommunicationMethod" placeholder="Select">
 							<ng-option value="s">
 								Select
 							</ng-option>

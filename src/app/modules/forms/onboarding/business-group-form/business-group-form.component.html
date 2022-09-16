@@ -1,113 +1,154 @@
-<div class="row" *ngIf="BGForm">
-	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
-		[disableSaveBtn]="BGForm.invalid || BGForm.pristine" (onCancel)="cancel()" (onSave)="save(BGForm.value)"></app-nav-bar-pills>
-	<form [formGroup]="BGForm" #f="ngForm" (submit)="save(f.value)">
-		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
-			<div class="section" id="overview">
-				<div class="row">
-					<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
-					</app-image-uploader>
-				</div>
-			</div>
-			<!-- Profile -->
-			<div class="section" id="profile">
-				<div class="row">
-					<h6 class="heading">Profile</h6> 
-				</div>
-				<div class="row">
-					<div class="col-3">
-						<label class="required">Business Group Name</label>
-						<input type="text" class="form-control required-field" formControlName="name"
-							[class.valid-mandatory-field]="bgNameValid()" />
-					</div>
+<!-- <app-nav-bar-pills
+	[cancelBtn]="true"
+	[saveBtn]="true"
+	[disableSaveBtn]="Form.invalid"
+	(onCancel)="cancel()"
+	(onSave)="save(Form.value)"
+></app-nav-bar-pills> -->
 
-					<div class="col-3">
-						<label class="required">TIN</label>
-						<input type="text" class="form-control" formControlName="TIN" />
-					</div>
-					<div class="col-3">
-						<label class="required">Country</label>
-						<ng-select formControlName="country" class="required-field"
-							[class.valid-mandatory-field]="countryValid()">
-							<ng-option *ngFor="let country of countries" [value]="country.iso3"
-								aria-selected="country.name==='Afghanistan'">{{ country.name }}</ng-option>
-						</ng-select>
-					</div>
-					<div class="col-3">
-						<label class="required">Currency</label>
-						<ng-select formControlName="currency" class="required-field"
-							[class.valid-mandatory-field]="currencyValid()">
-							<ng-option >USD</ng-option>
-						</ng-select>
-					</div>
-				</div>
-			</div>
-			<!-- Physical Address -->
-			<div class="section" id="physicalAddress">
-				<div class="row">
-					<h6 class="heading">Physical Address</h6>
-				</div>
-				<app-address-form [parentGroup]="BGForm" [formGroupName]="'physicalAddress'"></app-address-form>
-			</div>
-			<!-- Mailing Address -->
-			<div class="section" id="mailingAddress">
-				<div class="row">
-					<h6 class="heading">Mailing Address</h6>
-				</div>
-				<!-- <div class="row">
-					<div class="col-4 mb-3">
-						<button
-							type="button"
-							class="btn btn-sm btn-dark"
-							(click)="setAddress('mailingAddress')"
-						>
-							Same as physical address
-						</button>
-					</div>
-				</div> -->
-				<app-address-form [parentGroup]="BGForm" [formGroupName]="'mailingAddress'"></app-address-form>
-			</div>
-			<!-- Insurance Billing Address -->
-			<div class="section" id="insuranceBillingAddress">
-				<div class="row">
-					<h6 class="heading">Insurance Billing / Payment Address</h6>
-				</div>
-				<!-- <div class="row">
-					<div class="col-4 mb-3">
-						<button
-							type="button"
-							class="btn btn-sm btn-dark"
-							(click)="setAddress('insuranceBillingAddress')"
-						>
-							Same as physical address
-						</button>
-					</div>
-				</div> -->
-				<app-address-form [parentGroup]="BGForm" [formGroupName]="'insuranceBillingAddress'"></app-address-form>
-			</div>
-			<!-- Contact -->
-			<div class="section" id="contactDetails">
-				<div class="row">
-					<h6 class="heading">Contact</h6>
-				</div>
-				<app-contact-details-form [parentGroup]="BGForm" [formGroupName]="'contactDetails'">
-				</app-contact-details-form>
-			</div>
-			<!-- Contact Person-->
-			<div class="section" id="contactPerson">
-				<div class="row">
-					<h6 class="heading">Contact Person Info</h6>
-				</div>
-				<app-contact-person-form [parentGroup]="BGForm" [formGroupName]="'contactPerson'">
-				</app-contact-person-form>
-				<div class="row mt-3" *ngIf="password">
-					<div class="col-4">
-						<label class="required">Password</label>
-						<input type="password" class="form-control required-field" formControlName="password" 
-						[class.valid-mandatory-field]="passwordValid()"/>
-					</div>
-				</div>
-			</div>
+<div class="row">
+	<div class="col-2">
+		<div class="settings-row pointer" [routerLink]="urlOnboarding" >
+			<!-- [routerLink]="urlOnboarding" -->
+			<i class="bi bi-arrow-left-circle" style="font-size: 2rem; cursor: pointer;"></i>
+			<!-- [routerLink]="urlSettings" -->
+			<p class="">Business Group</p>
 		</div>
-	</form>
+		<ul class="ul" style="margin-top: 27px;">
+			<div *ngIf="BGname != ''">
+				<li class="active">
+					{{ BGname }}
+				</li>
+			</div>
+			<div *ngIf="BGname == ''">
+				<li class="active">
+					Add Business Group
+				</li>
+			</div>
+		</ul>
+	</div>
+	<div class="col-10 component-view">
+		<div class="row" *ngIf="BGForm">
+			<div class="row sticky" style="width: 101%;">
+				<div [ngClass]="{'col-11':!isSaveButton, 'col-12':!inEdit }">
+					<div class="col">
+						<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection"
+							[cancelBtn]="isSaveButton || !inEdit" [saveBtn]="isSaveButton || !inEdit"
+							[disableSaveBtn]="BGForm.invalid || BGForm.pristine" (onCancel)="cancel()"
+							(onSave)="save(BGForm.value)"></app-nav-bar-pills>
+					</div>
+					<!-- [disableSaveBtn]="BGForm.invalid || BGForm.pristine" -->
+				</div>
+				<div *ngIf="!isSaveButton && inEdit" class="col-1 d-flex justify-content-center align-items-start"
+					style="background-color: transparent;">
+					<img src="/assets/icons/Edit.svg" style="width: 37px; height: 37px; cursor: pointer;" alt=""
+						(click)="checkPermission()" />
+				</div>
+			</div>
+			<form [formGroup]="BGForm" #f="ngForm" (submit)="save(f.value)">
+				<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
+					<div class="section" id="overview">
+						<div class="row">
+							<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
+							</app-image-uploader>
+						</div>
+					</div>
+					<!-- Profile -->
+					<div class="section" id="profile">
+						<div class="row">
+							<h6 class="heading">Profile</h6>
+						</div>
+						<div class="row">
+							<div class="col-3">
+								<label class="required">Business Group Name</label>
+								<input type="text" class="form-control mandatory-field" formControlName="name" />
+							</div>
+							<div class="col-3">
+								<label class="required">TIN</label>
+								<input type="text" class="form-control" formControlName="TIN" />
+							</div>
+							<div class="col-3">
+								<label class="required">Country</label>
+								<ng-select formControlName="country" class="mandatory-field">
+									<ng-option *ngFor="let country of countries" [value]="country.iso3"
+										aria-selected="country.name==='Afghanistan'">{{ country.name }}</ng-option>
+								</ng-select>
+							</div>
+							<div class="col-3">
+								<label class="required">Currency</label>
+								<ng-select formControlName="currency" class="mandatory-field">
+									<ng-option>USD</ng-option>
+								</ng-select>
+							</div>
+						</div>
+					</div>
+					<!-- Physical Address -->
+					<div class="section" id="physicalAddress">
+						<div class="row">
+							<h6 class="heading">Physical Address</h6>
+						</div>
+						<app-address-form [parentGroup]="BGForm" [formGroupName]="'physicalAddress'"></app-address-form>
+					</div>
+					<!-- Mailing Address -->
+					<div class="section" id="mailingAddress">
+						<div class="row">
+							<h6 class="heading">Mailing Address</h6>
+						</div>
+						<!-- <div class="row">
+							<div class="col-4 mb-3">
+								<button
+									type="button"
+									class="btn btn-sm btn-dark"
+									(click)="setAddress('mailingAddress')"
+								>
+									Same as physical address
+								</button>
+							</div>
+						</div> -->
+						<app-address-form [parentGroup]="BGForm" [formGroupName]="'mailingAddress'"></app-address-form>
+					</div>
+					<!-- Insurance Billing Address -->
+					<div class="section" id="insuranceBillingAddress">
+						<div class="row">
+							<h6 class="heading">Insurance Billing / Payment Address</h6>
+						</div>
+						<!-- <div class="row">
+							<div class="col-4 mb-3">
+								<button
+									type="button"
+									class="btn btn-sm btn-dark"
+									(click)="setAddress('insuranceBillingAddress')"
+								>
+									Same as physical address
+								</button>
+							</div>
+						</div> -->
+						<app-address-form [parentGroup]="BGForm" [formGroupName]="'insuranceBillingAddress'"></app-address-form>
+					</div>
+					<!-- Contact -->
+					<div class="section" id="contactDetails">
+						<div class="row">
+							<h6 class="heading">Contact</h6>
+						</div>
+						<app-contact-details-form [parentGroup]="BGForm" [formGroupName]="'contactDetails'">
+						</app-contact-details-form>
+					</div>
+					<!-- Contact Person-->
+					<div class="section" id="contactPerson">
+						<div class="row">
+							<h6 class="heading">Contact Person Info</h6>
+						</div>
+						<app-contact-person-form [parentGroup]="BGForm" [formGroupName]="'contactPerson'">
+						</app-contact-person-form>
+						<div class="row mt-3" *ngIf="password">
+							<div class="col-4">
+								<label class="required">Password</label>
+								<input type="password" class="form-control mandatory-field" formControlName="password" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>

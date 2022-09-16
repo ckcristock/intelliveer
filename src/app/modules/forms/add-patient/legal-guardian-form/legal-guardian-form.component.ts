@@ -82,8 +82,8 @@ export class LegalGuardianFormComponent implements OnInit {
 		typePhone: '',
 		email: ''
 	};
-    legalGuardianData:any;
-	legalGuardianID:any;
+	legalGuardianData: any;
+	legalGuardianID: any;
 	radioLG: number = 1;
 
 	menuItemsOfCordinate: IMenuItem[] = addPatientCordinateMenuItems;
@@ -103,10 +103,10 @@ export class LegalGuardianFormComponent implements OnInit {
 	selectedBusinessGroup: SelectedBusinessGroup | undefined;
 	bgId: any;
 	relationShipArray: any[] = ['Father', 'Mother', 'Sister', 'Brother'];
-    model!:NgbDateStruct
-	alertText:any;
-	confirmButtonText:any
-	cancelButtonText:any
+	model!: NgbDateStruct
+	alertText: any;
+	confirmButtonText: any
+	cancelButtonText: any
 	constructor(
 		private router: Router,
 		private fb: FormBuilder,
@@ -131,7 +131,7 @@ export class LegalGuardianFormComponent implements OnInit {
 						this.selectedBusinessGroup = bg;
 						this.getOrgBgId();
 						setTimeout(() => {
-							if(this.legalGuardianID){
+							if (this.legalGuardianID) {
 								this.getLegalGuardianWithID();
 							}
 						}, 1000)
@@ -153,12 +153,12 @@ export class LegalGuardianFormComponent implements OnInit {
 		this.Form.statusChanges.subscribe((result) => {
 			if (!this.Form.pristine) {
 				this.addPatientServ.setLegalGuardianNotPristineCWP(true);
-				if(this.Form.invalid){
+				if (this.Form.invalid) {
 					this.addPatientServ.setLegalMandatoryFields(true)
-				}else{
+				} else {
 					this.addPatientServ.setLegalMandatoryFields(false)
 				}
-				let saveObj:any = {
+				let saveObj: any = {
 					profile: {
 						title: '',
 						firstName: this.Form.value.firstName,
@@ -189,7 +189,7 @@ export class LegalGuardianFormComponent implements OnInit {
 					},
 					notes: ''
 				};
-				let setOBJ:any = [saveObj,this.patientPage]
+				let setOBJ: any = [saveObj, this.patientPage]
 				this.addPatientServ.getLegalGuardFromCompone(setOBJ);
 			}
 		});
@@ -207,11 +207,11 @@ export class LegalGuardianFormComponent implements OnInit {
 	async ngAfterViewInit() {
 		this.radioLG = JSON.parse(
 			localStorage.getItem(`legalGuardianPatie${this.patientPage}`) ||
-				'[]'
+			'[]'
 		);
 		setTimeout(() => {
 			this.checkRadiosStatus();
-		}, 20);	
+		}, 20);
 	}
 
 	async checkRadiosStatus() {
@@ -263,7 +263,7 @@ export class LegalGuardianFormComponent implements OnInit {
 		return [this.legalGuardian, this.patientPage];
 	}
 
-	continueToDentist(result:any) {
+	continueToDentist(result: any) {
 		if (this.tab == 'coordWithProspect') {
 			this.addPatientServ.setLegalGuardianNotPristineCWP(false);
 			this.addPatientServ.setLegalGuardCWP(
@@ -312,42 +312,19 @@ export class LegalGuardianFormComponent implements OnInit {
 				]
 			],
 			address: this.addressFormService.getAddressForm(data?.address || {}),
-			phoneType:[data?.phoneType ||''],
-			email:[data?.email ||''],
-			phoneNumber:[data?.phoneNumber ||'']
+			phoneType: [data?.phoneType || ''],
+			email: [data?.email || ''],
+			phoneNumber: [data?.phoneNumber || '']
 
 		});
 	}
 
-	firstNameValid() {
-		return this.Form.get('firstName')?.valid;
-	}
-
-	lastNameValid() {
-		return this.Form.get('lastName')?.valid;
-	}
-
-	address1Valid() {
-		return this.Form.get('address1')?.value.length > 0;
-	}
-
-	countryValid() {
-		return this.Form.get('country')?.value != null;
-	}
-
-	stateValid() {
-		return this.Form.get('state')?.value != null;
-	}
-
-	cityValid() {
-		return this.Form.get('city')?.value != null;
-	}
-
-	zipCodeValid() {
-		return (
-			this.Form.get('zipCode')?.valid &&
-			this.Form.get('zipCode')?.value > 0
-		);
+	fieldValidation(field: any, notRequiredButPattern?: boolean) {
+		if (notRequiredButPattern) {
+			return (this.Form.get(field)?.valid && this.Form.get(field)?.value != null);
+		} else {
+			return this.Form.get(field)?.value != null
+		}
 	}
 
 	showButtonSaveCancelFunc() {
@@ -370,10 +347,9 @@ export class LegalGuardianFormComponent implements OnInit {
 			.subscribe({
 				next: (data) => {
 					this.phoneTypes = data;
-					console.log('this.phoneTypes', this.phoneTypes);
 				},
-				error: () => {},
-				complete: () => {}
+				error: () => { },
+				complete: () => { }
 			});
 	}
 
@@ -454,7 +430,7 @@ export class LegalGuardianFormComponent implements OnInit {
 
 	save(data: any) {
 		console.log(data.value);
-		let saveObj:any = {
+		let saveObj: any = {
 			profile: {
 				title: '',
 				firstName: data.value.firstName,
@@ -485,41 +461,40 @@ export class LegalGuardianFormComponent implements OnInit {
 			},
 			notes: ''
 		};
-		this.addPatientServ.getLegalGuardCWP(this.patientPage).then(res=>{
-         console.log(res);
-		 if(res._id){
-			console.log('data',res);
-			saveObj._id = res._id;
-            this.legalGuardianService
-			.updateLegalGuardian(saveObj, this.bgId)
-			.subscribe(
-				(result: any) => {
-					this.alertService.success(
-						'Success',
-						'Legal Guardian has been updated successfully'
+		this.addPatientServ.getLegalGuardCWP(this.patientPage).then(res => {
+			console.log(res);
+			if (res._id) {
+				saveObj._id = res._id;
+				this.legalGuardianService
+					.updateLegalGuardian(saveObj, this.bgId)
+					.subscribe(
+						(result: any) => {
+							this.alertService.success(
+								'Success',
+								'Legal Guardian has been updated successfully'
+							);
+							this.continueToDentist(saveObj);
+						},
+						(error) => {
+							console.log(error);
+						}
 					);
-					this.continueToDentist(saveObj);
-				},
-				(error) => {
-					console.log(error);
-				}
-			);
-		 }else{
-			this.legalGuardianService
-			.saveLegalGuardian(saveObj, this.bgId)
-			.subscribe(
-				(result: any) => {
-					this.alertService.success(
-						'Success',
-						'Legal Guardian has been saved successfully'
+			} else {
+				this.legalGuardianService
+					.saveLegalGuardian(saveObj, this.bgId)
+					.subscribe(
+						(result: any) => {
+							this.alertService.success(
+								'Success',
+								'Legal Guardian has been saved successfully'
+							);
+							this.continueToDentist(result);
+						},
+						(error) => {
+							console.log(error);
+						}
 					);
-					this.continueToDentist(result);
-				},
-				(error) => {
-					console.log(error);
-				}
-			);
-		 }
+			}
 		})
 	}
 
@@ -538,27 +513,26 @@ export class LegalGuardianFormComponent implements OnInit {
 	}
 	openModel(content: any) {
 		let firstName = this.Form.value.firstName;
-		if(firstName == undefined){
-		  firstName = '';
+		if (firstName == undefined) {
+			firstName = '';
 		}
 		let lastName = this.Form.value.lastName;
-		if(lastName == undefined){
-		  lastName = ''
+		if (lastName == undefined) {
+			lastName = ''
 		}
 
-		console.log(firstName,lastName,this.Form)
-		if(firstName != '' || lastName != '' || this.Form.value.phoneType != '' || this.Form.value.phoneNumber != '' || this.Form.value.address.addressLine1 != '' || this.Form.value.address.addressLine2 != '' || this.Form.value.address.zipCode != '' || this.Form.value.email != '' ){
-			if(this.Form.valid){
+		console.log(firstName, lastName, this.Form)
+		if (firstName != '' || lastName != '' || this.Form.value.phoneType != '' || this.Form.value.phoneNumber != '' || this.Form.value.address.addressLine1 != '' || this.Form.value.address.addressLine2 != '' || this.Form.value.address.zipCode != '' || this.Form.value.email != '') {
+			if (this.Form.valid) {
 				this.alertText = "Would you like to discard or save it?"
 				this.confirmButtonText = "Save";
 				this.cancelButtonText = "Discard"
-			}else if(this.Form.invalid){
+			} else if (this.Form.invalid) {
 				this.alertText = "Mandatory fields are required to save."
 				this.confirmButtonText = false;
 				this.cancelButtonText = "Discard"
 			}
-			this.alertService.conformAlertNavigate('Please confirm', this.alertText,this.cancelButtonText,this.confirmButtonText).then((result: any) => {
-				console.log("result", result);
+			this.alertService.conformAlertNavigate('Please confirm', this.alertText, this.cancelButtonText, this.confirmButtonText).then((result: any) => {
 
 				if (result.isConfirmed) {
 					this.discardPatient()
@@ -566,41 +540,43 @@ export class LegalGuardianFormComponent implements OnInit {
 					this.savePatientForm()
 				}
 			})
-		}else
-		{
-		  this.addPatientServ.setLegalGuardianNotPristineCWP(false);
-		  this.router.navigate(['/dashboard/home']);
+		} else {
+			this.addPatientServ.setLegalGuardianNotPristineCWP(false);
+			this.router.navigate(['/dashboard/home']);
 		}
 	}
-	discardPatient(){
+	discardPatient() {
 		this.modalService.dismissAll();
 		this.addPatientServ.setLegalGuardianNotPristineCWP(false);
 		this.router.navigate(['/dashboard/home']);
 	}
-	savePatientForm(){
+	savePatientForm() {
 		this.modalService.dismissAll();
 		this.save(this.Form)
 	}
-	getLegalGuardianWithID(){
-		console.log(this.bgId,this.legalGuardianID)
-       this.legalGuardianService.getSingleLegalGuardianData(this.bgId,this.legalGuardianID).subscribe(
-		(result: any) => {
-			console.log(result);
-			this.legalGuardianArray = {
-				firstName: result.profile.firstName,lastName: result.profile.lastName,
-				email: result.contact.email,phoneType: result.contact.primaryPhone.type,phoneNumber: result.contact.primaryPhone.number,
-				address: {addressLine1:result.address.addressLine1,addressLine2:result.address.addressLine2,
-				city:result.address.city,state:result.address.state,country:result.address.country,zipCode:result.address.zipCode}
-			};
-			this.Form.patchValue(this.legalGuardianArray)
-			this.addPatientServ.setLegalGuardCWP(
-				result,
-				this.patientPage
-			);
-		},
-		(error:any) => {
-			console.log(error);
-		}
-	);
+	getLegalGuardianWithID() {
+		console.log(this.bgId, this.legalGuardianID)
+		this.legalGuardianService.getSingleLegalGuardianData(this.bgId, this.legalGuardianID).subscribe(
+			(result: any) => {
+				console.log(result);
+				this.legalGuardianArray = {
+					firstName: result.profile.firstName, lastName: result.profile.lastName,
+					email: result.contact.email, phoneType: result.contact.primaryPhone.type, phoneNumber: result.contact.primaryPhone.number,
+					address: {
+						addressLine1: result.address.addressLine1, addressLine2: result.address.addressLine2,
+						city: result.address.city, state: result.address.state, country: result.address.country, zipCode: result.address.zipCode
+					}
+				};
+				this.Form.patchValue(this.legalGuardianArray)
+				// this.initForm(this.legalGuardianArray)
+				this.addPatientServ.setLegalGuardCWP(
+					result,
+					this.patientPage
+				);
+			},
+			(error: any) => {
+				console.log(error);
+			}
+		);
 	}
 }

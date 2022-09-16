@@ -24,6 +24,9 @@ export class PracticeComponent implements OnInit {
 	practiceEdit:any;
 	practiceAdd:any;
 	practiceDelete:any;
+	onBoardingMenu: any;
+	urlSettings!: string;
+
 	constructor(
 		private businessGroupDropdownService: BusinessGroupDropdownService,
 		private practiceService: PracticeService,
@@ -31,6 +34,8 @@ export class PracticeComponent implements OnInit {
 		private searchString: SearchStringPipePipe,
 		private globalRoutes: GlobalRoutesService
 	) {
+		this.onBoardingMenu = this.globalRoutes.getSettingsOnboardingRoutes();
+
 		this.businessGroupDropdownSupscription =
 			this.businessGroupDropdownService
 				.businessGroup()
@@ -44,6 +49,7 @@ export class PracticeComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.checkPermission();
+		this.urlSettings = this.globalRoutes.getSettingsUrl();
 	 }
 	ngOnDestroy(): void {
 		this.businessGroupDropdownSupscription.unsubscribe();

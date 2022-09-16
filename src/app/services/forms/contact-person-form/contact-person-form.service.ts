@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 type AcceptedFields = {
 	designation?: boolean;
@@ -19,6 +20,10 @@ type AcceptedFields = {
 })
 export class ContactPersonFormService {
 	constructor(private fb: FormBuilder) { }
+
+	isDisabled!: boolean;
+	private isDisabled$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isDisabled);
+
 	getContactPersonForm(data?: any, required?: AcceptedFields): FormGroup {
 		data = data || {};
 		required = required || {};
@@ -53,5 +58,14 @@ export class ContactPersonFormService {
 				]
 			})
 		});
+	}
+
+	setDisabledOrEnabled(isDisabled: boolean) {
+		this.isDisabled = isDisabled;
+		this.isDisabled$.next(this.isDisabled);
+	}
+
+	getDisabledOrEnabled(): Observable<boolean> {
+		return this.isDisabled$;
 	}
 }

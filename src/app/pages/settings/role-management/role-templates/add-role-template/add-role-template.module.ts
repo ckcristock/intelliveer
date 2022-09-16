@@ -6,6 +6,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddRoleTemplateComponent } from "./add-role-template.component";
+import { ScrollspyModule } from "@modules/scrollspy/scrollspy.module";
+import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
 
 
 @NgModule({
@@ -17,6 +19,8 @@ import { AddRoleTemplateComponent } from "./add-role-template.component";
     NgSelectModule,
     FormsModule, 
     ReactiveFormsModule,
+    ScrollspyModule,
+    NavBarPillsModule
   ]
 })
 export class AddRoleTemplateModule { }

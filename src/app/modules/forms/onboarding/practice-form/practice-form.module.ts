@@ -9,6 +9,7 @@ import { ContactDetailsFormModule } from '@modules/forms/contact-details-form/co
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ScrollspyModule } from '@modules/scrollspy/scrollspy.module';
 import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
 	declarations: [PracticeFormComponent],
@@ -22,7 +23,8 @@ import { NavBarPillsModule } from '@modules/nav-bar-pills/nav-bar-pills.module';
 		NgSelectModule,
 		ImageUploaderModule,
 		NavBarPillsModule,
-		ScrollspyModule
+		ScrollspyModule,
+		RouterModule
 	],
 	exports: [PracticeFormComponent],
 })

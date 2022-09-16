@@ -16,15 +16,15 @@ export class RolesComponent implements OnInit {
   businessGroupDropdownSupscription: Subscription = new Subscription;
   selectedBusinessGroup: SelectedBusinessGroup | any;
   roleList: any[] = [];
-  roleRRT:boolean = false;
-  roleRRTEdit:boolean = false;
-  roleRRTAdd:boolean = false;
-  roleRRTDelete :boolean = false;
-  roleURRT:boolean = false;
-  roleURRTEdit:boolean = false;
-  roleURRTAdd:boolean = false;
-  roleURRTDelete :boolean = false;
-  user:any;
+  roleRRT: boolean = false;
+  roleRRTEdit: boolean = false;
+  roleRRTAdd: boolean = false;
+  roleRRTDelete: boolean = false;
+  roleURRT: boolean = false;
+  roleURRTEdit: boolean = false;
+  roleURRTAdd: boolean = false;
+  roleURRTDelete: boolean = false;
+  user: any;
   menuItems: any;
   urlSettings!: string;
 
@@ -35,7 +35,7 @@ export class RolesComponent implements OnInit {
     private alertService: AlertService,
     private globalRoutes: GlobalRoutesService,
     private routes: GlobalRoutesService,
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.menuItems = this.routes.getSettingsRoleManageRoutes();
@@ -50,42 +50,36 @@ export class RolesComponent implements OnInit {
         }
       });
   }
-  
-  getRoleList()
-  {
-    this.roleService.getRoleList().subscribe((list: any) =>
-    {
+
+  getRoleList() {
+    this.roleService.getRoleList().subscribe((list: any) => {
       this.roleList = list;
     })
   }
 
-  getRoleListByBgId(bgId:any)
-  {
+  getRoleListByBgId(bgId: any) {
     console.log(bgId)
     this.checkPermissionRRTOrURRT();
-    this.roleService.getRoleListByID(bgId).subscribe((list: any) =>
-    {
-      if(this.roleRRT && !this.roleURRT){
+    this.roleService.getRoleListByID(bgId).subscribe((list: any) => {
+      if (this.roleRRT && !this.roleURRT) {
         this.roleList = list;
-      }else if(this.roleRRT && this.roleURRT){
-        this.roleService.getRoleListByIDUnRestricted(bgId).subscribe((list2:any)=>{
-          this.roleList = [...list,...list2];
+      } else if (this.roleRRT && this.roleURRT) {
+        this.roleService.getRoleListByIDUnRestricted(bgId).subscribe((list2: any) => {
+          this.roleList = [...list, ...list2];
         })
-      }else if(!this.roleRRT && this.roleURRT){
-        this.roleService.getRoleListByIDUnRestricted(bgId).subscribe((list2:any)=>{
+      } else if (!this.roleRRT && this.roleURRT) {
+        this.roleService.getRoleListByIDUnRestricted(bgId).subscribe((list2: any) => {
           this.roleList = list2
         })
       }
     })
   }
-  getRoleListByBgAdminId(bgId:any)
-  {
-    this.roleService.getRoleListByID(bgId).subscribe((list: any) =>
-    {
-      
-        this.roleService.getRoleListByIDUnRestricted(bgId).subscribe((list2:any)=>{
-          this.roleList = [...list,...list2];
-        })
+  getRoleListByBgAdminId(bgId: any) {
+    this.roleService.getRoleListByID(bgId).subscribe((list: any) => {
+
+      this.roleService.getRoleListByIDUnRestricted(bgId).subscribe((list2: any) => {
+        this.roleList = [...list, ...list2];
+      })
     })
   }
 
@@ -93,11 +87,11 @@ export class RolesComponent implements OnInit {
     this.router.navigate(['/dashboard/settings/role-management/manage-role/add']);
     // this.router.navigate([this.globalRoutes.getSettingsRoleManageRoutes()[1].child[0].url]);
   }
-  deleteRoleByBg(roleId: string){
+  deleteRoleByBg(roleId: string) {
     this.alertService.conformAlert('Are you sure?', 'You want to delete a role')
       .then((result: any) => {
         if (result.value) {
-          this.roleService.deleteRole(roleId,this.selectedBusinessGroup?.bgId).subscribe((data: any) => {
+          this.roleService.deleteRole(roleId, this.selectedBusinessGroup?.bgId).subscribe((data: any) => {
             this.alertService.success(
               'Success',
               'Role has been delete successfully'
@@ -110,8 +104,7 @@ export class RolesComponent implements OnInit {
       });
   }
 
-  deleteRole(roleId: string) 
-  {
+  deleteRole(roleId: string) {
     this.alertService.conformAlert('Are you sure?', 'You want to delete a role')
       .then((result: any) => {
         if (result.value) {
@@ -127,46 +120,47 @@ export class RolesComponent implements OnInit {
         }
       });
   }
-   /** Show data According To Type and BG */
-   getOrgBgId(){
-    let bgOrdID:any = localStorage.getItem('selected_business_group');
+  /** Show data According To Type and BG */
+  getOrgBgId() {
+    let bgOrdID: any = localStorage.getItem('selected_business_group');
     let orgId = this.authService.getOrgId();
-		let user:any =	localStorage.getItem('permissionSet');
+    let user: any = localStorage.getItem('permissionSet');
     user = JSON.parse(user);
-    this.user = user; 
-    console.log(user,bgOrdID)
-		if (user?.__ISSU__) {
-      if(bgOrdID == 'intelliveer' || bgOrdID == null){
+    this.user = user;
+    console.log(user, bgOrdID)
+    if (user?.__ISSU__) {
+      if (bgOrdID == 'intelliveer' || bgOrdID == null) {
         this.getRoleList();
-      }else{
+      } else {
         this.getRoleListByBgAdminId(bgOrdID)
       }
-      }else if(user?.isBGAdmin){
-        this.getRoleListByBgAdminId(bgOrdID)
-      }else{
-      if(bgOrdID == 'intelliveer' || bgOrdID == null){
+    } else if (user?.isBGAdmin) {
+      this.getRoleListByBgAdminId(bgOrdID)
+    } else {
+      if (bgOrdID == 'intelliveer' || bgOrdID == null) {
         bgOrdID = orgId
       }
       console.log(bgOrdID)
       this.getRoleListByBgId(bgOrdID)
     }
 
-	}
-  delteRoleUser(roleId:any){true
+  }
+  delteRoleUser(roleId: any) {
+    true
     let user = this.authService.getLoggedInUser();
     if (user?.__ISSU__) {
       this.deleteRole(roleId)
-    }else{
+    } else {
       this.deleteRoleByBg(roleId)
     }
   }
-  checkPermissionRRTOrURRT(){
-		let user:any =	localStorage.getItem('permissionSet');
+  checkPermissionRRTOrURRT() {
+    let user: any = localStorage.getItem('permissionSet');
     user = JSON.parse(user);
     this.user = user;
-    user?.roles[0]?.permissions[0]?.sections.forEach((element:any) => {
-      if(element.section == 'templateBasedRestrictedRoles'){
-        element.permissions.forEach((RRT:any) => {
+    user?.roles[0]?.permissions[0]?.sections.forEach((element: any) => {
+      if (element.section == 'templateBasedRestrictedRoles') {
+        element.permissions.forEach((RRT: any) => {
           switch (RRT.name) {
             case 'CAN_CREATE_TEMPLATE_BASED_RESTRICTED_ROLE':
               this.roleRRTAdd = RRT.enabled;
@@ -180,11 +174,11 @@ export class RolesComponent implements OnInit {
             case 'CAN_DELETE_TEMPLATE_BASED_RESTRICTED_ROLE':
               this.roleRRTDelete = RRT.enabled;
               break;
-           
+
           }
         });
-      }else  if(element.section == 'templateBasedUnRestrictedRoles'){
-        element.permissions.forEach((URRT:any) => {
+      } else if (element.section == 'templateBasedUnRestrictedRoles') {
+        element.permissions.forEach((URRT: any) => {
           switch (URRT.name) {
             case 'CAN_CREATE_TEMPLATE_BASED_UNRESTRICTED_ROLE':
               this.roleURRTAdd = URRT.enabled;
@@ -198,15 +192,14 @@ export class RolesComponent implements OnInit {
             case 'CAN_DELETE_TEMPLATE_BASED_UNRESTRICTED_ROLE':
               this.roleURRTDelete = URRT.enabled;
               break;
-           
+
           }
         });
       }
     });
-	}
+  }
 
-  editRole(ID:any)
-  {
+  editRole(ID: any) {
     this.router.navigate([`${this.globalRoutes.getSettingsRoleManageRoutes()[1].child[1].url}/${ID}`]);
   }
 

@@ -30,10 +30,10 @@ export class DentistFormComponent implements OnInit {
 		officeName: '',
 		firstName: '',
 		lastName: '',
-		officePhoneNumber: {number:''}
+		officePhoneNumber: { number: '' }
 	};
 
-	dentistArray:any = {
+	dentistArray: any = {
 		namesGenrDents: '',
 		officeName: '',
 		firstName: '',
@@ -42,8 +42,8 @@ export class DentistFormComponent implements OnInit {
 	};
 
 	Form!: FormGroup;
-    dentistData: any;
-	dentistID:any;
+	dentistData: any;
+	dentistID: any;
 
 	menuItemsOfCordinate: IMenuItem[] = addPatientCordinateMenuItems;
 	menuItemsOfQuickAdd: IMenuItem[] = addPatientQuickMenuItems;
@@ -54,10 +54,10 @@ export class DentistFormComponent implements OnInit {
 	businessGroupDropdownSupscription: any;
 	selectedBusinessGroup: SelectedBusinessGroup | undefined;
 	bgId: any;
-    model!:NgbDateStruct
-	alertText:any;
-	confirmButtonText:any
-	cancelButtonText:any
+	model!: NgbDateStruct
+	alertText: any;
+	confirmButtonText: any
+	cancelButtonText: any
 	constructor(
 		private router: Router,
 		private patientUserServ: PatientUserService,
@@ -95,12 +95,12 @@ export class DentistFormComponent implements OnInit {
 			this.Form.statusChanges.subscribe((result) => {
 				if (!this.Form.pristine) {
 					this.addPatientService.setDentistNotPristineCWP(true);
-					if(this.Form.invalid){
+					if (this.Form.invalid) {
 						this.addPatientService.setDentistMandatoryFields(true)
-					}else{
+					} else {
 						this.addPatientService.setDentistMandatoryFields(false)
 					}
-					let saveObj:any = {
+					let saveObj: any = {
 						firstName: this.Form.value.firstName,
 						lastName: this.Form.value.lastName,
 						officeName: this.Form.value.officeName,
@@ -133,7 +133,7 @@ export class DentistFormComponent implements OnInit {
 				this.dentistArray.officePhoneNumber;
 		}
 		setTimeout(() => {
-			if(this.dentistID){
+			if (this.dentistID) {
 				this.getDentistWithID();
 			}
 		}, 1000)
@@ -156,34 +156,30 @@ export class DentistFormComponent implements OnInit {
 		});
 	}
 
-  firstNameValid() {
-    return (this.Form.get('firstName')?.valid && this.Form.get('firstName')?.value != null);
-  }
-
-  lastNameValid() {
-    return (this.Form.get('lastName')?.valid && this.Form.get('lastName')?.value != null);
-  }
+	fieldValidation(field: any, notRequiredButPattern?: boolean) {
+		if (notRequiredButPattern) {
+			return (this.Form.get(field)?.valid && this.Form.get(field)?.value != null);
+		} else {
+			return this.Form.get(field)?.value != null;
+		}
+	}
 
 	save(data: any) {
 		console.log(data);
-		this.addPatientService.getDentistCWP().then((findChange: any) =>
-			{
-				console.log(findChange._id)
-				if(findChange._id)
-				{
-					data._id = findChange._id;
-					this.updateFormData(data);
-				}
-				else
-				{
-					this.saveFormData(data);
-				}
-			});
-		
+		this.addPatientService.getDentistCWP().then((findChange: any) => {
+			console.log(findChange._id)
+			if (findChange._id) {
+				data._id = findChange._id;
+				this.updateFormData(data);
+			}
+			else {
+				this.saveFormData(data);
+			}
+		});
+
 	}
 
-	saveFormData(data: any)
-	{
+	saveFormData(data: any) {
 		let saveObj = {
 			firstName: data.firstName,
 			lastName: data.lastName,
@@ -217,8 +213,7 @@ export class DentistFormComponent implements OnInit {
 		);
 	}
 
-	updateFormData(data: any)
-	{
+	updateFormData(data: any) {
 		console.log(data)
 		let saveObj = {
 			_id: data._id,
@@ -341,37 +336,36 @@ export class DentistFormComponent implements OnInit {
 	// }
 	openModel(content: any) {
 		let firstName = this.Form.value.firstName;
-		if(firstName == undefined){
+		if (firstName == undefined) {
 			firstName = '';
 		}
 		let lastName = this.Form.value.lastName;
-		if(lastName == undefined){
+		if (lastName == undefined) {
 			lastName = ''
 		}
 		let namesGenrDents = this.Form.value.namesGenrDents;
-		if(namesGenrDents == undefined){
+		if (namesGenrDents == undefined) {
 			namesGenrDents = ''
 		}
 		let officeName = this.Form.value.officeName;
-		if(officeName == undefined){
+		if (officeName == undefined) {
 			officeName = ''
 		}
 		let officePhoneNumber = this.Form.value.officePhoneNumber;
-		if(officePhoneNumber == undefined){
+		if (officePhoneNumber == undefined) {
 			officePhoneNumber = ''
 		}
-		if(firstName != '' || lastName != '' || namesGenrDents != '' || officeName != '' || officePhoneNumber != '' ){
-			if(this.Form.valid){
+		if (firstName != '' || lastName != '' || namesGenrDents != '' || officeName != '' || officePhoneNumber != '') {
+			if (this.Form.valid) {
 				this.alertText = "Would you like to discard or save it?"
 				this.confirmButtonText = "Save";
 				this.cancelButtonText = "Discard"
-			}else if(this.Form.invalid){
+			} else if (this.Form.invalid) {
 				this.alertText = "Mandatory fields are required to save."
 				this.confirmButtonText = false;
 				this.cancelButtonText = "Discard"
 			}
-			this.alertService.conformAlertNavigate('Please confirm', this.alertText,this.cancelButtonText,this.confirmButtonText).then((result: any) => {
-				console.log("result", result);
+			this.alertService.conformAlertNavigate('Please confirm', this.alertText, this.cancelButtonText, this.confirmButtonText).then((result: any) => {
 
 				if (result.isConfirmed) {
 					this.discardPatient()
@@ -379,35 +373,34 @@ export class DentistFormComponent implements OnInit {
 					this.savePatientForm()
 				}
 			})
-		  }else
-		  {
+		} else {
 			this.addPatientService.setDentistNotPristineCWP(false);
 			this.router.navigate(['/dashboard/home']);
-		  }
+		}
 	}
-	discardPatient(){
+	discardPatient() {
 		this.modalService.dismissAll();
 		this.addPatientService.setDentistNotPristineCWP(false);
 		this.router.navigate(['/dashboard/home']);
 	}
-	savePatientForm(){
+	savePatientForm() {
 		this.modalService.dismissAll();
 		this.save(this.Form.value)
 	}
-	getDentistWithID(){
-		console.log(this.bgId,this.dentistID)
-       this.dentistService.getSingleData(this.bgId,this.dentistID).subscribe(
-		(result: any) => {
-			console.log(result);
-			this.dentistArray = {
-				firstName: result.firstName,lastName: result.lastName,officeName: result.officeName,officePhoneNumber: result.officePhoneNumber.number
-			};
-		    this.Form.patchValue(this.dentistArray);
-			this.addPatientService.setDentistCWP(result);
-		},
-		(error:any) => {
-			console.log(error);
-		}
-	);
+	getDentistWithID() {
+		console.log(this.bgId, this.dentistID)
+		this.dentistService.getSingleData(this.bgId, this.dentistID).subscribe(
+			(result: any) => {
+				console.log(result);
+				this.dentistArray = {
+					firstName: result.firstName, lastName: result.lastName, officeName: result.officeName, officePhoneNumber: result.officePhoneNumber.number
+				};
+				this.Form.patchValue(this.dentistArray);
+				this.addPatientService.setDentistCWP(result);
+			},
+			(error: any) => {
+				console.log(error);
+			}
+		);
 	}
 }

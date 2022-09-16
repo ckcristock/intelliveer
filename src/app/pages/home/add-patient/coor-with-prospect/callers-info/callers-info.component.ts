@@ -74,11 +74,7 @@ export class CallersInfoComponent implements OnInit {
     this.addPatientServ.getCallersInfoFromCompone(this.getCallersInfo.bind(this));
     this.Form.statusChanges.subscribe(
       result => {
-        console.log(result)
         if (!this.Form.pristine) {
-          console.log("hiiiiii", event);
-          console.log("status", this.Form.pristine);
-
           this.addPatientServ.setCallerInfoNotPristineCWP(true);
         }
       }
@@ -196,8 +192,6 @@ export class CallersInfoComponent implements OnInit {
 
   callerLegalG(valuelg: boolean) {
     this.callersInfo.callerLegarGuar = valuelg;
-    console.log("Calleeeeed");
-
   }
 
   callerSelfPatientFunc(value: boolean) {
@@ -210,8 +204,6 @@ export class CallersInfoComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.phoneTypes = data;
-          console.log("typees", this.phoneTypes);
-
         },
         error: () => { },
         complete: () => { }

@@ -25,6 +25,9 @@ export class LegalEntityComponent implements OnInit, OnDestroy {
   legalEdit:any;
 	legalAdd:any;
 	legalDelete:any;
+	onBoardingMenu: any;
+	urlSettings!: string;
+
   
   constructor(
     private router: Router,
@@ -33,6 +36,7 @@ export class LegalEntityComponent implements OnInit, OnDestroy {
     private searchString: SearchStringPipePipe,
 		private globalRoutes: GlobalRoutesService
   ) {
+		this.onBoardingMenu = this.globalRoutes.getSettingsOnboardingRoutes();
     this.businessGroupDropdownSupscription = this.businessGroupDropdownService
       .businessGroup()
       .subscribe((bg) => {
@@ -44,6 +48,7 @@ export class LegalEntityComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.checkPermission();
+		this.urlSettings = this.globalRoutes.getSettingsUrl();
   }
   ngOnDestroy(): void {
     this.businessGroupDropdownSupscription.unsubscribe();

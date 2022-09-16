@@ -81,10 +81,7 @@ export class PaymentPartyFormComponent implements OnInit {
 		this.onboardingServ.setFalseAllNotPristine();
 		this.Form?.statusChanges.subscribe(
 			result => {
-				console.log(result)
 				if (!this.Form?.pristine) {
-					console.log("hiiiiii", event);
-					console.log("status", this.Form?.pristine);
 					this.patientUserServ.setpaymentPartyNotPristine(true);
 				}
 			}
@@ -187,41 +184,16 @@ export class PaymentPartyFormComponent implements OnInit {
 		this.Form.controls['note'].setValue(this.formData.notes);
 	}
 
-
-	firstNameValid() {
-		return this.Form.get('firstName')?.valid;
-	}
-
-	middleNameValid() {
-		return this.Form.get('middleName')?.valid;
-	}
-
-	lastNameValid() {
-		return this.Form.get('lastName')?.valid;
-	}
-
-	DOBValid() {
-		return this.Form.get('DOB')?.value.length > 0;
-	}
-
-	primaryPhoneTypeValid() {
-		return this.Form.get('primaryPhoneType')?.valid;
-	}
-
-	primaryPhoneNumberValid() {
-		return this.Form.get('primaryPhoneNumber')?.valid;
-	}
-
-	commPrimaryValid() {
-		return this.Form.get('primaryPreferredCommunicationMethod')?.value != null;
-	}
-
-	emailValid() {
-		return this.Form.get('emailId')?.value.length > 0;
-	}
-
 	clearprimaryPreferredCommunicationMethod() {
 		this.Form.controls['primaryPreferredCommunicationMethod'].setValue("");
+	}
+
+	fieldValidation(field: any, notRequiredButPattern?: boolean) {
+		if (notRequiredButPattern) {
+			return (this.Form.get(field)?.valid && this.Form.get(field)?.value != null);
+		} else {
+			return this.Form.get(field)?.value != null
+		}
 	}
 
 	async getStaticData() {

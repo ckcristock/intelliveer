@@ -50,8 +50,6 @@ export class DentalBenefComponent implements OnInit {
 			result => {
 				console.log(result)
 				if (!this.Form?.pristine) {
-					console.log("hiiiiii", event);
-					console.log("status", this.Form?.pristine);
 					this.insuranceServ.setDentalBenfNotPristine(true);
 				}
 			}

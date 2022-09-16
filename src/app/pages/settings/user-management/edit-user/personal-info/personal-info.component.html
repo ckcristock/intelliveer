@@ -88,8 +88,9 @@
                             <div class="col">
                                 <div class="mainformset">
                                     <label class="label-input-gap">Log-in email</label>
-                                    <input class="form-control" type="text" placeholder="" name="email" [disabled]="true"
-                                        [(ngModel)]="user?.profile.email" [ngModelOptions]="{standalone: true}" />
+                                    <input class="form-control" type="text" placeholder="" name="email"
+                                        [disabled]="true" [(ngModel)]="user?.profile.email"
+                                        [ngModelOptions]="{standalone: true}" />
                                 </div>
                             </div>
                             <div class="col">
@@ -102,8 +103,9 @@
                             <div class="col">
                                 <div class="mainformset">
                                     <label class="label-input-gap">First Name</label>
-                                    <input class="form-control mandatory-field" type="text" placeholder="" name="firstName"
-                                        [(ngModel)]="user?.profile.firstName" [ngModelOptions]="{standalone: true}" />
+                                    <input class="form-control mandatory-field" type="text" placeholder=""
+                                        name="firstName" [(ngModel)]="user?.profile.firstName"
+                                        formControlName="firstName" />
                                 </div>
                             </div>
                             <div class="col">
@@ -115,8 +117,9 @@
                             <div class="col">
                                 <div class="mainformset">
                                     <label class="label-input-gap">Last Name</label>
-                                    <input class="form-control mandatory-field" type="text" placeholder="" name="lastName"
-                                        [(ngModel)]="user?.profile.lastName" [ngModelOptions]="{standalone: true}" />
+                                    <input class="form-control mandatory-field" type="text" placeholder=""
+                                        name="lastName" [(ngModel)]="user?.profile.lastName"
+                                        formControlName="lastName" />
                                 </div>
                             </div>
                         </div>
@@ -150,47 +153,7 @@
             </div>
             <div class="section" id="address">
                 <h6 class="heading">Address</h6>
-                <div class="row formrow">
-                    <div class="col-6">
-                        <div class="mainformset">
-                            <label class=" label-input-gap">Address Line 1</label>
-                            <input class="form-control" type="text" placeholder="Street address, P.O.box" name="" />
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="mainformset">
-                            <label class=" label-input-gap">Address Line 2</label>
-                            <input class="form-control" type="text"
-                                placeholder="Apartment, Suite, Unit, Building, Floor, etc." name="" />
-                        </div>
-                    </div>
-                </div>
-                <div class="row formrow">
-                    <div class="col-3">
-                        <div class="mainformset">
-                            <label class="label-input-gap">Zip Code</label>
-                            <input class="form-control" type="text" placeholder="" name="" />
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="mainformset">
-                            <label class="label-input-gap">City</label>
-                            <input class="form-control" type="text" placeholder="" name="" />
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="mainformset">
-                            <label class=" label-input-gap">State</label>
-                            <input class="form-control" type="text" placeholder="" name="" />
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="mainformset">
-                            <label class=" label-input-gap">Country</label>
-                            <input class="form-control" type="text" placeholder="" name="" />
-                        </div>
-                    </div>
-                </div>
+                <app-address-form [parentGroup]="Form" [formGroupName]="'physicalAddress'"></app-address-form>
             </div>
             <div class="section" id="contact">
                 <h6 class="heading">Contact</h6>

@@ -32,6 +32,7 @@ export class BusinessGroupDropdownService {
 	businessGroup(): Observable<SelectedBusinessGroup | undefined> {
 		return this.selectedBusinessGroup.asObservable();
 	}
+
 	getBusinessGroups(): Observable<any> {
 		return this.businessGroups.asObservable();
 	}
@@ -61,7 +62,6 @@ export class BusinessGroupDropdownService {
 		let orgId = this.authService.getOrgId();
 		this.businessGroupService.getBusinessGroups().subscribe({
 			next: (data: any) => {
-				console.log(data);
 				if (data && data.length > 0) {
 				if(this.user?.__ISSU__){
 				  this.selectedBG = {
@@ -84,11 +84,9 @@ export class BusinessGroupDropdownService {
 	}
 
 	private _getBusinessGroup(bgId:any,orgId:any) {
-		console.log(bgId,orgId)
 		this.businessGroupService.getBusinessGroup(bgId,orgId).subscribe({
 			next: (data: any) => {
 				data = [data];
-				console.log(data)
 				if (data && data.length > 0) {
 					this.selectedBG = {
 						bgId: data[0]?._id,
@@ -104,10 +102,8 @@ export class BusinessGroupDropdownService {
 	}
 	permissionSetOFUsers(){
 	 let orgId = this.authService.getOrgId();
-	 console.log(orgId)
      this.businessGroupService.getPermissionByUserRole(orgId).subscribe({
 		next: (data: any) => {
-			console.log(data)
 		  localStorage.setItem('permissionSet',JSON.stringify(data));
 		  if(data?.bgs){
 			orgId = data?.bgs[0]?._id;
@@ -128,7 +124,6 @@ export class BusinessGroupDropdownService {
 	 let orgId = this.authService.getOrgId();
 	 user = JSON.parse(user);
 	 this.user = user;
-	 console.log(user)
 	 if (user) {
 		if(user?.__ISSU__){
 		   this._getBusinessGroups();

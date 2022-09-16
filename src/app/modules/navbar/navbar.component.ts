@@ -21,8 +21,66 @@ export class NavbarComponent implements OnInit {
 	selectedPatient: any;
 	username: any;
 	searchWord: string = '';
-	userListForSearch: any;
-	userLst: any[] = [];
+	userListForSearch:any;
+	userLst: any = [
+		{
+			user: 'Smith John',
+			dob: '12/30/1984',
+			active: true,
+			id: 'P001',
+			sex: 'Female',
+			isPin: false,
+			profileUrl: 'assets/images/doctor.jpg'
+		},
+		{
+			user: 'Smith Doe',
+			dob: '08/23/1988',
+			active: true,
+			id: 'P002',
+			sex: 'Female',
+			isPin: false,
+			profileUrl: 'assets/images/doctor2.jpg'
+		},
+		{
+			user: 'Smith Walker',
+			dob: '12/06/1994',
+			active: true,
+			id: 'P003',
+			sex: 'Male',
+			isPin: false,
+			profileUrl:
+				'https://imedica.brainstormforce.com/wp-content/uploads/2015/02/doc1.jpg'
+		},
+		{
+			user: 'Oil Diva',
+			dob: '03/15/1994',
+			active: true,
+			id: 'P004',
+			sex: 'Female',
+			isPin: false,
+			profileUrl:
+				'https://www.parkinsonsdiseasespecialist.com/wp-content/uploads/2020/08/shivam-profile-pic.jpg'
+		},
+		{
+			user: 'Pie Energy',
+			dob: '01/30/1994',
+			active: true,
+			id: 'P005',
+			sex: 'Female',
+			isPin: false,
+			profileUrl:
+				'https://th.bing.com/th/id/OIP.90CUUa066hZfeG-UXb3mtgHaKA?pid=ImgDet&w=758&h=1024&rs=1'
+		},
+		{
+			user: 'Lemon Serenade',
+			dob: '01/08/1994',
+			active: false,
+			id: 'P006',
+			sex: 'Female',
+			isPin: false,
+			profileUrl: 'assets/images/doctor2.jpg'
+		}
+	];
 	@ViewChild('searchDivRef') searchDivRef!: ElementRef;
 	userSearchLst: any[] = [];
 	selectUserLst: any[] = [];
@@ -65,7 +123,6 @@ export class NavbarComponent implements OnInit {
 			if (res) {
 				this.selectedBusinessGroup = res.bgId;
 				this.disableBGDropdown = res.disabled;
-				console.log(this.selectedBusinessGroup);
 			}
 		});
 	}
@@ -219,15 +276,13 @@ export class NavbarComponent implements OnInit {
 	}
 	getUsername() {
 		const user = this.cookieService.get('user');
-		console.log(user);
 		if (user) {
 			this.username = JSON.parse(user);
 		} else {
 			this.username = null;
 		}
 	}
-	fetchSearch($event: any): void {
-		console.log($event.target.value);
+    fetchSearch($event: any): void {
 		if ($event.target.value == '') {
 			this.userSearchLst = this.userLst;
 		} else {
@@ -316,14 +371,14 @@ export class NavbarComponent implements OnInit {
 				this.getPatientListForSearch('intelliveer');
 				this.orgID = 'intelliveer';
 			} else {
-				this.getPatientList(this.selectedBusinessGroup);
-				this.getPatientListForSearch(this.selectedBusinessGroup);
-				this.orgID = bgOrdID;
+				this.getPatientList(this.selectedBusinessGroup?.bgId);
+				this.getPatientListForSearch(this.selectedBusinessGroup?.bgId)
+				this.orgID = bgOrdID
 			}
 		} else {
-			this.getPatientList(this.selectedBusinessGroup);
-			this.getPatientListForSearch(this.selectedBusinessGroup);
-			this.orgID = orgId;
+			this.getPatientList(this.selectedBusinessGroup?.bgId);
+			this.getPatientListForSearch(this.selectedBusinessGroup?.bgId)
+			this.orgID = orgId
 		}
 	}
 
@@ -332,27 +387,24 @@ export class NavbarComponent implements OnInit {
 		let skip = 0;
 		let data = { limit: limit, skip: skip };
 		let userList: any[] = [];
-		this.patientService
-			.getPatientList(bgId, data)
-			.subscribe((patientList: any) => {
-				for (let i = 0; i < patientList.length; i++) {
-					const index = i + 1;
-					userList.push({
-						user:
-							patientList[i].profile.firstName +
-							' ' +
-							patientList[i].profile.lastName,
-						dob: patientList[i].profile.DOB,
-						active: true,
-						id: 'P00' + index,
-						sex: patientList[i].profile.gender,
-						isPin: false,
-						profileUrl: 'assets/images/doctor2.jpg',
-						dbId: patientList[i]._id
-					});
-				}
-				this.userLst = userList;
-			});
+		this.patientService.getPatientList(bgId,data).subscribe((patientList: any) =>
+		{
+			for (let i = 0; i < patientList.length; i++) 
+			{
+				const index = i + 1;
+				userList.push({
+					user: patientList[i].profile.firstName + ' ' + patientList[i].profile.lastName,
+					dob: patientList[i].profile.DOB,
+					active: true,
+					id: "P00"+ index,
+					sex: patientList[i].profile.gender,
+					isPin: false,
+					profileUrl: 'assets/images/doctor2.jpg',
+					dbId: patientList[i]._id
+				});
+			}
+			this.userLst = userList;
+		})
 	}
 	getPatientListForSearch(bgId: any) {
 		let limit = 100;

@@ -1,12 +1,14 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 import { IMenuItem } from '@pages/dashboard/menu';
 import { BusinessGroupDropdownService } from '@services/business-group-dropdown/business-group-dropdown.service';
 import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 import { MenuBarService } from '@services/menu-bar/menu-bar.service';
-import { Subscription } from 'rxjs';
+import { BusinessGroupService } from '@services/onboarding/business-group/business-group.service';
+import { LegalEntityService } from '@services/onboarding/legal-entity/legal-entity.service';
+import { filter, Subscription } from 'rxjs';
 import { onboardingMenuItems } from './menu';
 
 @Component({
@@ -39,16 +41,22 @@ export class OnboardingComponent implements OnInit, OnDestroy {
 	businessGroups: any;
 	disableBGDropdown: boolean = false;
 	moduleName: string = '';
-    onBoardingMenu:any;
+	onBoardingMenu: any;
+	businessGroupEditName!: any;
+	inEdit!: boolean;
+
 	constructor(
 		public router: Router,
 		private businessGroupDropdownService: BusinessGroupDropdownService,
 		private menuBarService: MenuBarService,
 		private routes: GlobalRoutesService,
+		private activeRoute: ActivatedRoute,
+		private businessGroupService: BusinessGroupService,
+		private legalEntityService: LegalEntityService,
+
 	) {
 		this.urlSettings = this.routes.getSettingsUrl();
-        this.onBoardingMenu = this.routes.getSettingsOnboardingRoutes();
-		console.log(this.onBoardingMenu)
+		this.onBoardingMenu = this.routes.getSettingsOnboardingRoutes();
 		this.menuBarService.compactSideMenu(this.compactSidebar);
 		this.businessGroupDropdownSupscription =
 			this.businessGroupDropdownService
@@ -79,7 +87,8 @@ export class OnboardingComponent implements OnInit, OnDestroy {
 	}
 
 
-	ngOnInit(): void { }
+	ngOnInit(): void {
+	}
 
 	setBusinessGroup(e: any) {
 		this.businessGroupDropdownService.setSelectedBusinessGroup(

@@ -6,54 +6,58 @@
 					<label class="label-input-gap">Address Line 1</label>
 					<input type="text" class="form-control input-upper" formControlName="addressLine1"
 						placeholder="Street address, P.O box" (input)="isNotRequiredField('addressLine1', 'string')"
-						[ngClass]="[isNotRequiredField('addressLine1', 'string') ? 'valid-mandatory-field' : 'red-bottom-line' ]" />
+						[ngClass]="{'valid-required-field':validatorAddressLine1 && formDisabled == false, 
+						'red-bottom-line':!validatorAddressLine1 }">
 				</div>
 				<div class="col">
 					<label class="label-input-gap">Address Line 2</label>
 					<input type="text" class="form-control input-upper" formControlName="addressLine2"
 						placeholder="Apartment, Suite, Unit, Building, Floor, etc." [ngClass]="{
-							'mandatory-field':
+							'required-field':
 								isRequiredField('addressLine2') === true
 						}" />
 				</div>
 			</div>
 			<div class="row formrow">
 				<div class="col">
-					<label class="label-input-gap">Country</label>
+					<label class="label-input-gap">Country {{validatorCountry}}</label>
 					<!-- <input type="text" class="form-control input-upper" formControlName="country" /> -->
 					<ng-select class="input-upper" formControlName="country" [(ngModel)]="selectedCountry"
 						(change)="getStates($event)" (clear)="resetState(); resetCity()" [searchFn]="customSearchFn"
-						(input)="isNotRequiredField('country', 'string')"
-						[ngClass]="[isNotRequiredField('country', 'string') ? 'valid-mandatory-field' : 'red-bottom-line' ]">
+						(change)="isNotRequiredField('country', 'string')" 
+						[ngClass]="{'valid-required-field':validatorCountry && formDisabled == false, 
+						'red-bottom-line':!validatorCountry  }">>
 						<ng-option *ngFor="let country of countries" [value]="country.iso3">{{ country.name }}
 						</ng-option>
 					</ng-select>
 				</div>
 				<div class="col">
-					<label class="label-input-gap">State</label>
+					<label class="label-input-gap">State {{validatorState}}</label>
 					<!-- <input type="text" class="form-control input-upper" formControlName="state" /> -->
 					<ng-select [(ngModel)]="selectedState" class="input-upper" formControlName="state"
-						(change)="getCities($event)" (open)="stateOptionIsOpened()" (clear)="resetCity()" 
-						(input)="isNotRequiredField('state', 'string')"
-						[ngClass]="[isNotRequiredField('state', 'string') ? 'valid-mandatory-field' : 'red-bottom-line' ]">
+						(change)="getCities($event)" (open)="stateOptionIsOpened()" (clear)="resetCity()"
+						(change)="isNotRequiredField('state', 'string')" 
+						[ngClass]="{'valid-required-field':validatorState && formDisabled == false, 
+						'red-bottom-line':!validatorState  }">>
 						<ng-option *ngFor="let state of states" [value]="state.state_code">{{ state.name }}</ng-option>
 					</ng-select>
 				</div>
 				<div class="col">
-					<label class="label-input-gap">City</label>
+					<label class="label-input-gap">City {{validatorCity}}</label>
 					<!-- <input type="text" class="form-control input-upper" formControlName="city" /> -->
 					<ng-select [(ngModel)]="selectedCity" class=" input-upper" formControlName="city"
-						(open)="cityOptionIsOpened()" 
-						(input)="isNotRequiredField('city', 'string')"
-						[ngClass]="[isNotRequiredField('city', 'string') ? 'valid-mandatory-field' : 'red-bottom-line' ]">
+						(open)="cityOptionIsOpened()" (change)="isNotRequiredField('city', 'string')"
+						 [ngClass]="{'valid-required-field':validatorCity && formDisabled == false, 
+						'red-bottom-line':!validatorCity  }">>
 						<ng-option *ngFor="let city of cities" [value]="city.name">{{ city.name }}</ng-option>
 					</ng-select>
 				</div>
 				<div class="col">
 					<label class="label-input-gap">Zip Code</label>
 					<input type="text" class="form-control input-upper" formControlName="zipCode"
-					(input)="isNotRequiredField('zipCode', 'number')"
-						[ngClass]="[isNotRequiredField('zipCode', 'number') ? 'valid-mandatory-field' : 'red-bottom-line' ]" />
+						(input)="isNotRequiredField('zipCode', 'number')" 
+						[ngClass]="{'valid-required-field':validatorZipCode && formDisabled == false, 
+						'red-bottom-line':!validatorZipCode  }">
 				</div>
 			</div>
 		</div>

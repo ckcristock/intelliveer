@@ -1,32 +1,13 @@
 <div class="row formrow" *ngIf="Form">
-	<app-nav-bar-pills
-		[menuItems]="menuItems"
-		[activeClass]="currentSelection"
-		[cancelBtn]="true"
-		[saveBtn]="true"
-		[disableSaveBtn]="Form.invalid || Form.pristine"
-		(onCancel)="cancel()"
-		(onSave)="save(Form.value)"
-	></app-nav-bar-pills>
-	<form
-		autocomplete="off"
-		[formGroup]="Form"
-		#f="ngForm"
-		(submit)="save(f.value)"
-	>
-		<div
-			class="col-12"
-			id="main"
-			scrollSpy
-			(sectionChange)="onSectionChange($event)"
-		>
+	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
+		[disableSaveBtn]="Form.invalid || Form.pristine" (onCancel)="cancel()" (onSave)="save(Form.value)">
+	</app-nav-bar-pills>
+	<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
+		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section" id="overview">
 				<div class="row formrow">
 					<div class="col-sm">
-						<app-image-uploader
-							[imageUrl]="formData?.logo || ''"
-							(onUpload)="handleUploadedImage($event)"
-						>
+						<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
 						</app-image-uploader>
 					</div>
 				</div>
@@ -45,97 +26,59 @@
 					</div>
 					<div class="col">
 						<label class="label-input-gap">First Name</label>
-						<input class="form-control mandatory-field input-upper" type="text" placeholder="" name="firstName"
-							formControlName="firstName" [class.valid-mandatory-field]="firstNameValid()"/>
+						<input class="form-control mandatory-field input-upper" type="text" placeholder=""
+							name="firstName" formControlName="firstName" />
 					</div>
 
 					<div class="col">
 						<label class="label-input-gap">Middle Name</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							name="name"
-							fromControlName="middleName"
-						/>
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
+							fromControlName="middleName" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Last Name</label>
-						<input class="form-control mandatory-field input-upper" type="text" placeholder="" name="lastName"
-							formControlName="lastName" [class.valid-mandatory-field]="lastNameValid()"/>
+						<input class="form-control mandatory-field input-upper" type="text" placeholder=""
+							name="lastName" formControlName="lastName" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Practice Name</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="praticeName"
-						/>
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
+							formControlName="praticeName" />
 					</div>
 				</div>
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Degree</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="degree"
-						/>
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
+							formControlName="degree" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Dental/Medical School</label>
-						<input class="form-control mandatory-field input-upper" type="text" placeholder="" name="name" 
-						formControlName="DMSchool" 
-						[class.valid-mandatory-field]="DMSchoolValid()"/>
+						<input class="form-control mandatory-field input-upper" type="text" placeholder="" name="name"
+							formControlName="DMSchool" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Specialty</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="specialty"
-						/>
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
+							formControlName="specialty" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Specialty School</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="specialtySchool"
-						/>
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
+							formControlName="specialtySchool" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Greeting</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlNAme="greeting"
-						/>
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
+							formControlNAme="greeting" />
 					</div>
 				</div>
 				<div class="row formrow">
 					<div class="col">
 						<div class="form-check">
-							<input
-								class="form-check-input input-upper"
-								type="checkbox"
-								value="true"
-								id="mailingCheckbox"
-							/>
-							<label
-								class="form-check-label"
-								for="mailingCheckbox"
-							>
+							<input class="form-check-input input-upper" type="checkbox" value="true"
+								id="mailingCheckbox" />
+							<label class="form-check-label" for="mailingCheckbox">
 								Prefered Provider
 							</label>
 						</div>
@@ -145,10 +88,7 @@
 
 			<div class="section" id="address">
 				<h6 class="heading">Address</h6>
-				<app-address-form
-					[parentGroup]="Form"
-					[formGroupName]="'address'"
-				></app-address-form>
+				<app-address-form [parentGroup]="Form" [formGroupName]="'address'"></app-address-form>
 			</div>
 
 			<div class="section" id="contact">
@@ -156,53 +96,29 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Practice Email</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							name="id"
-							formControlName="emailId"
-						/>
+						<input class="form-control input-upper" type="text" placeholder="" name="id"
+							formControlName="emailId" />
 					</div>
 
 					<div class="col">
 						<label class="label-input-gap">Dentist Email</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							name="id"
-							formControlName="demailId"
-						/>
+						<input class="form-control input-upper" type="text" placeholder="" name="id"
+							formControlName="demailId" />
 					</div>
 
 					<div class="col">
-						<label class="label-input-gap"
-							>Phone Number - Practice</label
-						>
-						<input
-							class="form-control red-bottom-line input-upper"
-							type="text"
-							placeholder=""
-							name="name"
+						<label class="label-input-gap">Phone Number - Practice</label>
+						<input class="form-control red-bottom-line input-upper" type="text" placeholder="" name="name"
 							formControlName="pPhoneNumber"
-							[class.valid-required-field]="pPhoneNumberValid()"
-						/>
+							[class.valid-required-field]="fieldValidation('pPhoneNumber', true)" />
 					</div>
 				</div>
 
 				<div class="row formrow">
 					<div class="col">
-						<label class="label-input-gap"
-							>Phone Number - Mobile</label
-						>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="pPhoneNumber"
-						/>
+						<label class="label-input-gap">Phone Number - Mobile</label>
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
+							formControlName="pPhoneNumber" />
 					</div>
 
 					<div class="col">
@@ -218,13 +134,8 @@
 						<label class="label-input-gap">Website</label>
 						<div class="website">
 							<span class="" style="height: 36px">https://</span>
-							<input
-								type="text"
-								class="form-control input-upper"
-								name="website"
-								placeholder="www.example.com"
-								formControlName="website"
-							/>
+							<input type="text" class="form-control input-upper" name="website"
+								placeholder="www.example.com" formControlName="website" />
 						</div>
 					</div>
 				</div>
@@ -234,14 +145,8 @@
 				<h6 class="heading">Notes</h6>
 				<div class="row formrow">
 					<div class="col-6">
-						<textarea
-							class="form-control input-upper"
-							name="note"
-							id=""
-							cols="70"
-							rows="5"
-							formControlName="note"
-						></textarea>
+						<textarea class="form-control input-upper" name="note" id="" cols="70" rows="5"
+							formControlName="note"></textarea>
 					</div>
 				</div>
 			</div>
