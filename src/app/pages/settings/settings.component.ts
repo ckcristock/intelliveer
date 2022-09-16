@@ -7,6 +7,7 @@ import { filter } from 'rxjs/operators';
 import { GlobalRoutesService } from "@services/global-routes/global-routes.service";
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '@services/auth/auth.service';
+import { BusinessGroupService } from '@services/onboarding/business-group/business-group.service';
 
 @Component({
   selector: 'app-settings',
@@ -15,7 +16,7 @@ import { AuthService } from '@services/auth/auth.service';
 })
 export class SettingsComponent implements OnInit {
 
-  onPage: boolean = false;
+  onSettingsPage: boolean = false;
   selectedBusinessGroup: string | undefined;
   onboardingChilds: any[] = [];
   roleManagementchilds: any[] = [];
@@ -50,7 +51,7 @@ export class SettingsComponent implements OnInit {
   ];
 
   compactSidebar: boolean = true;
-//  businessGroupDropdownSupscription: Subscription;
+  //  businessGroupDropdownSupscription: Subscription;
   menuStatsSubscription: Subscription;
   businessGroups: any;
   disableBGDropdown: boolean = false;
@@ -74,6 +75,8 @@ export class SettingsComponent implements OnInit {
     private cookieService: CookieService,
     private authService: AuthService,
     private routes: GlobalRoutesService,
+    private businessGroupService: BusinessGroupService
+
   ) {
     this.getUserOrdID();
     this.menuBarService.compactSideMenu(this.compactSidebar);
@@ -86,7 +89,7 @@ export class SettingsComponent implements OnInit {
     //         this.selectedBusinessGroup = (this.orgID) ? this.orgID : res[0]._id;
     //       }
     //     });
-       
+
     // this.businessGroupDropdownService.businessGroup().subscribe((res) => {
     //   if (res) {
     //     console.log(res)
@@ -94,7 +97,7 @@ export class SettingsComponent implements OnInit {
     //     this.disableBGDropdown = res.disabled;
     //     console.log(this.selectedBusinessGroup)
     //   }
-      
+
     // });
     this.menuStatsSubscription =
       this.menuBarService.compactSideMenuStatus.subscribe(
@@ -107,45 +110,97 @@ export class SettingsComponent implements OnInit {
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
 
+      //////// Onboarding
       if (event.url.includes("onboarding")) {
+        this.businessGroupService.setBusinessGroup('');
         this.currentRoute = "Onboarding";
-        this.currentRouteChild1 = "";
+        this.currentRouteChild1 = "Business Group";
         this.currentRouteChild2 = "";
-      } else if (event.url.includes("role")) {
-        this.currentRoute = "Role Management";
-        this.currentRouteChild1 = "Manage Role Templates";
-        this.currentRouteChild2 = "";
-        if (event.url.includes("manage-role-template")) {
-          this.currentRouteChild1 = "Manage Role Templates";
+        this.currentRouteChild3 = "";
+        if (event.url.includes("business-group")) {
+          this.currentRouteChild1 = "Business Group";
           this.currentRouteChild2 = "";
           this.currentRouteChild3 = "";
           this.urlRoleManagement = this.routes.getSettingsRoleManageUrl();
-          if (event.url.includes("edit?_id")) {
-            this.currentRouteChild2 = "Edit Role Template";
-          } else if (event.url.includes("add")) {
-            this.currentRouteChild3 = "Add Role Template";
+          if (event.url.includes("business-group/edit")) {
+            this.currentRouteChild2 = "Edit Business Group";
+          } else if (event.url.includes("business-group/add")) {
+            this.currentRouteChild3 = "Add Business Group";
           }
-        } else if (event.url.includes("manage-role")) {
-          this.currentRouteChild1 = "Manage Role";
+        } else if (event.url.includes("legal-entity")) {
+          this.currentRouteChild1 = "Legal Entity";
           this.currentRouteChild2 = "";
           this.currentRouteChild3 = "";
-          this.urlManageRole = this.routes.getSettingsRoleManageRoutes()[1].url;
-          if (event.url.includes("edit")) {
-            this.currentRouteChild2 = "Edit Role";
-          } else if (event.url.includes("add")) {
-            this.currentRouteChild3 = "Add Role";
+          this.urlRoleManagement = this.routes.getSettingsRoleManageUrl();
+          if (event.url.includes("legal-entity/edit")) {
+            this.currentRouteChild2 = "Edit Legal Entity";
+          } else if (event.url.includes("legal-entity/add")) {
+            this.currentRouteChild3 = "Add Legal Entity";
           }
+        } else if (event.url.includes("location")) {
+          this.currentRouteChild1 = "Location";
+          this.currentRouteChild2 = "";
+          this.currentRouteChild3 = "";
+          this.urlRoleManagement = this.routes.getSettingsRoleManageUrl();
+          if (event.url.includes("location/edit")) {
+            this.currentRouteChild2 = "Edit Location";
+          } else if (event.url.includes("location/add")) {
+            this.currentRouteChild3 = "Add Location";
+          }
+        } else if (event.url.includes("practice")) {
+          this.currentRouteChild1 = "Practice";
+          this.currentRouteChild2 = "";
+          this.currentRouteChild3 = "";
+          this.urlRoleManagement = this.routes.getSettingsRoleManageUrl();
+          if (event.url.includes("practice/edit")) {
+            this.currentRouteChild2 = "Edit Practice";
+          } else if (event.url.includes("practice/add")) {
+            this.currentRouteChild3 = "Add Practice";
+          }
+        } else if (event.url.includes("mapping")) {
+          this.currentRouteChild1 = "Mapping";
+          this.currentRouteChild2 = "";
+          this.currentRouteChild3 = "";
+          this.urlRoleManagement = this.routes.getSettingsRoleManageUrl();
         }
-      } else if (event.url.includes("user")) {
-        this.currentRoute = "User Management";
-      }
 
-      if (event.url == this.globalRoutes.getSettingsUrl()) {
-        this.onPage = true;
-      } else {
-        this.onPage = false;
-      }
-    });
+          ////// Role Management
+        } else if (event.url.includes("role-management")) {
+          this.currentRoute = "Role Management";
+          this.currentRouteChild1 = "Manage Role Templates";
+          this.currentRouteChild2 = "";
+          if (event.url.includes("role-management/manage-role-template")) {
+            this.currentRouteChild1 = "Manage Role Templates";
+            this.currentRouteChild2 = "";
+            this.currentRouteChild3 = "";
+            this.urlRoleManagement = this.routes.getSettingsRoleManageUrl();
+            if (event.url.includes("manage-role-template/edit?_id")) {
+              this.currentRouteChild2 = "Edit Role Template";
+            } else if (event.url.includes("add")) {
+              this.currentRouteChild3 = "Add Role Template";
+            }
+          } else if (event.url.includes("role-management/manage-role")) {
+            this.currentRouteChild1 = "Manage Role";
+            this.currentRouteChild2 = "";
+            this.currentRouteChild3 = "";
+            this.urlManageRole = this.routes.getSettingsRoleManageRoutes()[1].url;
+            if (event.url.includes("manage-role/edit")) {
+              this.currentRouteChild2 = "Edit Role";
+            } else if (event.url.includes("manage-role/add")) {
+              this.currentRouteChild3 = "Add Role";
+            }
+          }
+
+          ////// User Management
+        } else if (event.url.includes("user-management")) {
+          this.currentRoute = "User Management";
+        }
+        if (event.url == this.globalRoutes.getSettingsUrl()) {
+          this.onSettingsPage = true;
+        } else {
+          this.onSettingsPage = false;
+        }
+      });
   }
 
   ngOnInit(): void {
@@ -182,14 +237,14 @@ export class SettingsComponent implements OnInit {
   checkActiveRoutes() {
     let onBoardingMenu = this.globalRoutes.getSettingsOnboardingRoutes();
     for (let index = 0; index < onBoardingMenu.length; index++) {
-      if(onBoardingMenu[index].isEnabled){
-        if(onBoardingMenu[index].title == 'Business Group'){
-          if(onBoardingMenu[index].child.isEnabled){
-            this.menuItems[0].url = onBoardingMenu[index].url+'/edit/'+this.orgID;
-          }else{
+      if (onBoardingMenu[index].isEnabled) {
+        if (onBoardingMenu[index].title == 'Business Group') {
+          if (onBoardingMenu[index].child.isEnabled) {
+            this.menuItems[0].url = onBoardingMenu[index].url + '/edit/' + this.orgID;
+          } else {
             this.menuItems[0].url = onBoardingMenu[index].url;
           }
-        }else{
+        } else {
           this.menuItems[0].url = onBoardingMenu[index].url;
         }
         break;

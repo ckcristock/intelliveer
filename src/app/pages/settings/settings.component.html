@@ -2,24 +2,26 @@
 
 	<!-- Nav -->
 	<div class="d-flex justify-content-end align-items-end global-bg-dropdown formrow">
-		<div class="col" *ngIf="onPage" style="margin-top: 18px;">
+		<div class="col" *ngIf="onSettingsPage" style="margin-top: 18px;">
 			<span>Settings</span>
 		</div>
 		<!-- For Role Management -->
-		<div class="col" *ngIf="!onPage">
-			<span class="pointer" [routerLink]="urlSettings">Settings </span> <span> / </span> <span class="pointer"
-				[routerLink]="urlRoleManagement">{{ currentRoute }}
-			</span> <span> / </span> <span class="pointer" [routerLink]="urlRoleManagement"
-				*ngIf="currentRouteChild1==='Manage Role Templates'">{{ currentRouteChild1 }}
-			</span> <span class="pointer" [routerLink]="urlManageRole"
-				*ngIf="currentRouteChild1==='Manage Role'">{{ currentRouteChild1 }}
-			</span> 
-			<!-- <span *ngIf="currentRouteChild2 != ''">/ {{
-				currentRouteChild2 }}</span>  -->
-				<!-- <span *ngIf="currentRouteChild3 != ''">/ {{
-					currentRouteChild3 }}</span> -->
+
+		<div class="col" *ngIf="!onSettingsPage">
+			<span class="pointer" [routerLink]="urlSettings">Settings </span>
+			<span> / </span>
+			<span class="pointer" [routerLink]="urlRoleManagement">{{ currentRoute }}</span> <!-- role Management -->
+			<span> / </span>
+			<span class="pointer" [routerLink]="urlRoleManagement">{{ currentRouteChild1 }}</span>
+			<!-- Management role or Template -->
+			<!-- <span *ngIf="currentRouteChild2 != ''"> / </span>
+			<span *ngIf="currentRouteChild2 != ''" class="pointer" [routerLink]="urlRoleManagement">{{
+				currentRouteChild2 }}</span> For Add
+			<span *ngIf="currentRouteChild3 != ''"> / </span>
+			<span *ngIf="currentRouteChild3 != ''" class="pointer" [routerLink]="urlRoleManagement">{{
+				currentRouteChild3 }}</span> For Edit -->
 		</div>
-		<!-- <div class="col-3" *ngIf="!onPage">
+		<!-- <div class="col-3" *ngIf="!onSettingsPage">
 			<div *ngIf="!isSuperUser">
 				<div *ngFor="let bg of businessGroups">
 					<input type="text" class="form-control" [value]="bg.name" readonly>
@@ -37,7 +39,7 @@
 	<hr style="margin-bottom: 25px;" />
 
 	<!-- squares -->
-	<div class="row" *ngIf="onPage">
+	<div class="row" *ngIf="onSettingsPage">
 		<div class="col component-view">
 			<div class="squares">
 				<div class="square" *ngFor="let menuItem of menuItems; let i = index" [routerLink]="menuItem.url">
@@ -48,7 +50,7 @@
 	</div>
 
 	<!-- content -->
-	<div class="row" *ngIf="!onPage">
+	<div class="row" *ngIf="!onSettingsPage">
 		<div class="col component-view">
 			<router-outlet></router-outlet>
 		</div>

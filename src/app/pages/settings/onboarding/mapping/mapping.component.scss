@@ -1,28 +1,34 @@
 @import 'table';
+
 table.mapping-table {
-	tr.mapping {
-		th {
-			width: 32%;
-			background: #f2f2f2;
-		}
-	}
-	tbody {
-		td {
-			padding: 0;
-		}
-	}
+    tr.mapping {
+        th {
+            width: 32%;
+            background: #f2f2f2;
+        }
+    }
+
+    tbody {
+        td {
+            padding: 0;
+        }
+    }
 }
+
 ng-select {
-	border: 1px solid transparent;
-	border-radius: 4px;
-	background: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: #fff;
 }
+
 ng-select {
-	font-weight: bold !important;
+    font-weight: bold !important;
 }
+
 .ng-select ::ng-deep .ng-arrow {
     display: none !important;
 }
+
 .ng-select ::ng-deep .ng-arrow-wrapper {
     height: 14px;
     width: 14px;
@@ -41,35 +47,65 @@ ng-select {
     user-select: none;
     margin-top: 6px !important;
 }
+
 table.table tr td {
     overflow: inherit;
 }
+
 .not-mapped span {
     border-radius: 50%;
     background-color: #ff4500;
-	color: #fff;
+    color: #fff;
     padding: 2px 5px 3px;
     font-size: 9px;
 }
+
 .not-mapped span.practice {
     margin-left: 44px;
 }
+
 .not-mapped span.location {
     margin-left: 46px;
 }
+
 .not-mapped span.legal {
     margin-left: 16px;
 }
+
 .not-mapped ul li {
     display: inline-block;
     list-style: none;
     padding-right: 5px;
 }
-.not-mapped ul li:last-child i {display: none;}
+
+.not-mapped ul li:last-child i {
+    display: none;
+}
+
 .not-mapped ul {
     padding: 0px;
 }
-.custom-ng-select input{
+
+.custom-ng-select input {
     margin: 0px;
     vertical-align: bottom;
+}
+
+.ul {
+    font-size: 13px;
+    font-weight: bold;
+
+    .li-left {
+        line-height: 3.2;
+    }
+}
+
+.ul-right {
+    font-size: 13px;
+}
+
+.component-view {
+    height: calc(100vh - 200px);
+    overflow-x: hidden;
+    overflow-y: auto;
 }

@@ -92,10 +92,7 @@ export class LegalGuardianFormComponent implements OnInit {
 		this.onboardingServ.setFalseAllNotPristine();
 		this.Form?.statusChanges.subscribe(
 			result => {
-				console.log(result)
 				if (!this.Form?.pristine) {
-					console.log("hiiiiii", event);
-					console.log("status", this.Form?.pristine);
 					this.patientUserServ.setlegalGuardNotPristine(true);
 				}
 			}
@@ -156,7 +153,6 @@ export class LegalGuardianFormComponent implements OnInit {
 	}
 
 	setUserDataToForm() {
-		console.log(this.formData)
 		this.Form.controls['title'].setValue(this.formData.profile.title);
 		this.Form.controls['firstName'].setValue(
 			this.formData.profile.firstName
@@ -199,40 +195,16 @@ export class LegalGuardianFormComponent implements OnInit {
 		this.Form.controls['note'].setValue(this.formData.notes);
 	}
 
-	firstNameValid() {
-		return this.Form.get('firstName')?.valid;
-	}
-
-	middleNameValid() {
-		return this.Form.get('middleName')?.valid;
-	}
-
-	lastNameValid() {
-		return this.Form.get('lastName')?.valid;
-	}
-
-	DOBValid() {
-		return this.Form.get('DOB')?.value.length > 0;
-	}
-
 	clearCommPrimary() {
 		this.Form.controls['primaryPreferredCommunicationMethod'].setValue("");
 	}
 
-	primaryPhoneTypeValid() {
-		return this.Form.get('primaryPhoneType')?.valid;
-	}
-
-	primaryPhoneNumberValid() {
-		return this.Form.get('primaryPhoneNumber')?.valid;
-	}
-
-	commPrimaryValid() {
-		return this.Form.get('primaryPreferredCommunicationMethod')?.value.length > 0;
-	}
-
-	emailValid() {
-		return this.Form.get('emailId')?.value.length > 0;
+	fieldValidation(field: any, notRequiredButPattern?: boolean) {
+		if (notRequiredButPattern) {
+			return (this.Form.get(field)?.valid && this.Form.get(field)?.value != null);
+		} else {
+			return this.Form.get(field)?.value != null
+		}
 	}
 
 	async getStaticData() {
@@ -240,14 +212,11 @@ export class LegalGuardianFormComponent implements OnInit {
 			.get(`${CONFIG.backend.host}/auth/global-data/static-types`)
 			.subscribe(async (data: any) => {
 				this.famiMembTitle = data;
-				console.log('global data', this.famiMembTitle);
 			});
 	}
 
 	save(data: any) {
-		console.log(data)
 		this.onSubmit.emit(data);
-		console.log('data', data);
 		this.patientUserServ.setLegalGuard(data);
 		this.patientUserServ.setPatientFamiMemb(data.relationship, data);
 		this.Form.markAsPristine();

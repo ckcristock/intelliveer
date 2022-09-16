@@ -89,10 +89,7 @@ export class RefererFormComponent implements OnInit {
 		this.onboardingServ.setFalseAllNotPristine();
 		this.Form?.statusChanges.subscribe(
 			result => {
-				console.log(result)
 				if (!this.Form?.pristine) {
-					console.log("hiiiiii", event);
-					console.log("status", this.Form?.pristine);
 					this.patientUserServ.setReferrerNotPristine(true);
 				}
 			}
@@ -122,41 +119,13 @@ export class RefererFormComponent implements OnInit {
     });
   }
 
-  firstNameValid() {
-    return this.Form.get('firstName')?.valid;
-  }
-
-  middleNameValid() {
-    return this.Form.get('middleName')?.valid;
-  }
-
-  lastNameValid() {
-    return this.Form.get('lastName')?.valid;
-  }
-
-  DOBValid() {
-    return this.Form.get('DOB')?.value.length > 0;
-  }
-
-  primaryPhoneTypeValid() {
-    return this.Form.get('primaryPhoneType')?.valid;
-  }
-
-  pPhoneNumberValid() {
-    return this.Form.get('pPhoneNumber')?.valid;
-  }
-
-  commPrimaryValid() {
-    return this.Form.get('primaryPreferredCommunicationMethod')?.value.length > 0;
-  }
-
-  emailValid() {
-    return this.Form.get('emailId')?.value.length > 0;
-  }
-
-  ratingValid(){
-    return this.Form.get('rating')?.value.length > 0 && this.Form.get('rating')?.valid;
-  }
+  fieldValidation(field: any, notRequiredButPattern?: boolean) {
+		if (notRequiredButPattern) {
+			return (this.Form.get(field)?.valid && this.Form.get(field)?.value != null);
+		} else {
+			return this.Form.get(field)?.value != null
+		}
+	}
 
   async getStaticData() {
     this.http

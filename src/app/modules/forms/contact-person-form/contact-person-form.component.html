@@ -11,33 +11,32 @@
 				</div>
 				<div class="col">
 					<label class="required">Contact Person Title</label>
-					<select class="form-select" formControlName="title" [ngClass]="{
-							'value-must': isRequiredField('title') === true
-						}">
-						<option [value]="type.value" *ngFor="let type of staticData.title">
+					<ng-select formControlName="title" [ngClass]="{
+						'value-must': isRequiredField('title') === true}">
+						<ng-option [value]="type.value" *ngFor="let type of staticData.title">
 							{{ type.label }}
-						</option>
-					</select>
+						</ng-option>
+					</ng-select>
 				</div>
 				<div class="col">
 					<label class="required">Contact Person First Name</label>
 					<input type="text" class="form-control" formControlName="firstName"
-						(input)="isNotRequiredField('firstName', 'string')"
-						[ngClass]="[isNotRequiredField('firstName', 'string') ? 'valid-mandatory-field' : 'mandatory-field ng-invalid' ]" />
+						(input)="isNotRequiredField('firstName', 'string')" [ngClass]="{'mandatory-field':validatorFirstName && formDisabled == false, 
+						'mandatory-field ng-invalid':!validatorFirstName }" />
 				</div>
 				<div class="col">
 					<label class="required">Contact Person Last Name</label>
 					<input type="text" class="form-control" formControlName="lastName"
-						(input)="isNotRequiredField('lastName', 'string')"
-						[ngClass]="[isNotRequiredField('lastName', 'string') ? 'valid-mandatory-field' : 'mandatory-field ng-invalid' ]" />
+						(input)="isNotRequiredField('lastName', 'string')" [ngClass]="{'valid-mandatory-field':validatorLastName && formDisabled == false, 
+						'mandatory-field ng-invalid':!validatorLastName }" />
 				</div>
 			</div>
 			<div class="row mb-3">
 				<div class="col-3">
 					<label class="required">Contact Person Email</label>
 					<input type="email" class="form-control" formControlName="email"
-						(input)="isNotRequiredField('email', 'email')"
-						[ngClass]="[isNotRequiredField('email', 'email') ? 'valid-mandatory-field' : 'mandatory-field ng-invalid' ]" />
+						(input)="isNotRequiredField('email', 'email')" [ngClass]="{'valid-mandatory-field':validatorEmail && formDisabled == false, 
+						'mandatory-field ng-invalid':!validatorEmail }" />
 				</div>
 				<!-- [ngClass]="{
 					'value-must': isRequiredField('email') === true
@@ -46,9 +45,8 @@
 					<div class="row">
 						<div class="col-4">
 							<label class="required">Contact Person Phone Type</label>
-							<ng-select class="required-field" formControlName="type"
-								(change)="isNotRequiredField('type', 'string')"
-								[ngClass]="[isNotRequiredField('type', 'string') ? 'valid-mandatory-field' : 'mandatory-field ng-invalid' ]">
+							<ng-select formControlName="type" (change)="isNotRequiredField('type', 'string')" [ngClass]="{'valid-mandatory-field':validatorType && formDisabled == false, 
+						'mandatory-field ng-invalid':!validatorType }">
 								<ng-option [value]="type.value" *ngFor="let type of staticData.phone">
 									{{ type.label }}
 								</ng-option>
@@ -57,14 +55,14 @@
 						<div class="col-4">
 							<label class="required">Country Code</label>
 							<input type="text" class="form-control" formControlName="countryCode"
-								(input)="isNotRequiredField('countryCode', 'string')"
-								[ngClass]="[isNotRequiredField('countryCode', 'string') ? 'valid-mandatory-field' : 'mandatory-field ng-invalid' ]" />
+								(input)="isNotRequiredField('countryCode', 'string')" [ngClass]="{'valid-mandatory-field':validatorCountryCode && formDisabled == false, 
+						'mandatory-field ng-invalid':!validatorCountryCode }" />
 						</div>
 						<div class="col-4">
 							<label class="required">Contact Person Number</label>
 							<input type="text" class="form-control" formControlName="number"
-								(input)="isNotRequiredField('number', 'string')"
-								[ngClass]="[isNotRequiredField('number', 'string') ? 'valid-mandatory-field' : 'mandatory-field ng-invalid' ]" />
+								(input)="isNotRequiredField('number', 'string')" [ngClass]="{'valid-mandatory-field':validatorNumber && formDisabled == false, 
+						'mandatory-field ng-invalid':!validatorNumber }" />
 						</div>
 					</div>
 				</div>

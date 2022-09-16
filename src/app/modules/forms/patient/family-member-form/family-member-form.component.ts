@@ -30,10 +30,10 @@ export class FamilyMemberFormComponent implements OnInit {
     { title: 'Overview', id: 'overview' },
     { title: 'Profile', id: 'profile' },
   ];
-	genders: any[] = [
-		{ label: 'Male', value: 'M' },
-		{ label: 'Female', value: 'F' },
-	];
+  genders: any[] = [
+    { label: 'Male', value: 'M' },
+    { label: 'Female', value: 'F' },
+  ];
 
   relationship!: string;
   idForm: FormGroup;
@@ -65,10 +65,7 @@ export class FamilyMemberFormComponent implements OnInit {
     this.onboardingServ.setFalseAllNotPristine();
     this.Form?.statusChanges.subscribe(
       result => {
-        console.log(result)
         if (!this.Form?.pristine) {
-          console.log("hiiiiii", event);
-          console.log("status", this.Form?.pristine);
           this.patientUserServ.setFamilyMembNotPristine(true);
         }
       }
@@ -102,20 +99,12 @@ export class FamilyMemberFormComponent implements OnInit {
     });
   }
 
-  firstNameValid() {
-    return this.Form.get('firstName')?.valid;
-  }
-
-  middleNameValid() {
-    return this.Form.get('middleName')?.valid;
-  }
-
-  lastNameValid() {
-    return this.Form.get('lastName')?.valid;
-  }
-
-  DOBValid() {
-    return this.Form.get('DOB')?.value.length > 0;
+  fieldValidation(field: any, notRequiredButPattern?: boolean) {
+    if (notRequiredButPattern) {
+      return (this.Form.get(field)?.valid && this.Form.get(field)?.value != null);
+    } else {
+      return this.Form.get(field)?.value != null
+    }
   }
 
   async getStaticData() {
@@ -124,8 +113,6 @@ export class FamilyMemberFormComponent implements OnInit {
       .subscribe({
         next: async (data) => {
           this.famiMembTitle = data;
-          console.log("this.phoneTypes", this.famiMembTitle);
-
         },
         error: () => { },
         complete: () => { }

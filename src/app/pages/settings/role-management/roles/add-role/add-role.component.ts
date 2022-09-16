@@ -91,8 +91,8 @@ export class AddRoleComponent implements OnInit {
 		data = data || {};
 		this.Form = this.fb.group({
 			roletemplate: [data?.roletemplate || 'yes'],
-			name: [data?.fName || '', Validators.required],
-			description: [data?.lName || '', Validators.required],
+			name: [data?.fName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
+			description: [data?.lName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
 			permissions: this.fb.array([])
 		});
 	}

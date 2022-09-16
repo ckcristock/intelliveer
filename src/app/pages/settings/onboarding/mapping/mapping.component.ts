@@ -6,6 +6,7 @@ import {
 	BusinessGroupDropdownService,
 	SelectedBusinessGroup
 } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 import { LegalEntityService } from '@services/onboarding/legal-entity/legal-entity.service';
 import { LocationService } from '@services/onboarding/location/location.service';
 import { MappingService } from '@services/onboarding/mapping/mapping.service';
@@ -19,7 +20,7 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class MappingComponent implements OnInit, OnDestroy {
 	locations: any = [];
-	locationsData: any [] = []
+	locationsData: any[] = []
 	legalEntities: any = [];
 	practices: any = [];
 	businessGroupDropdownSupscription: Subscription;
@@ -32,6 +33,9 @@ export class MappingComponent implements OnInit, OnDestroy {
 	notMappedPractice: any = []
 	notMappedLegalEntity: any = []
 	notMappedLocation: any = []
+	onBoardingMenu: any;
+	urlSettings!: string;
+
 
 	constructor(
 		private mappingService: MappingService,
@@ -42,7 +46,9 @@ export class MappingComponent implements OnInit, OnDestroy {
 		private alertService: AlertService,
 		private routeLocation: Location,
 		private fb: FormBuilder,
+		private globalRoutes: GlobalRoutesService,
 	) {
+		this.onBoardingMenu = this.globalRoutes.getSettingsOnboardingRoutes();
 		this.businessGroupDropdownSupscription =
 			this.businessGroupDropdownService
 				.businessGroup()
@@ -55,30 +61,31 @@ export class MappingComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-		this.initForm()
-	 }
+		this.initForm();
+		this.urlSettings = this.globalRoutes.getSettingsUrl();
+	}
 	ngOnDestroy(): void {
 		this.businessGroupDropdownSupscription.unsubscribe();
 	}
-	initForm(){
+	initForm() {
 		this.mappingForm = this.fb.group({
 			relation: this.fb.array([
 			])
-		  });
+		});
 	}
 	relationForm() {
 		return this.relationMappingForm = this.fb.group({
-		  practiceId: new FormControl(),
-		  legalEntityId: new FormControl(),
-		  locations: [''],
+			practiceId: new FormControl(),
+			legalEntityId: new FormControl(),
+			locations: [''],
 		})
-	  }
-	  relationMappingObj(): FormArray {
+	}
+	relationMappingObj(): FormArray {
 		return (<FormArray>this.mappingForm.get("relation"));
-	  }
-	  get f() {
+	}
+	get f() {
 		return (<FormArray>this.mappingForm.get("relation")).controls;
-	  }
+	}
 	getMapping() {
 		this.getMappingData = []
 		if (this.selectedBusinessGroup) {
@@ -145,9 +152,9 @@ export class MappingComponent implements OnInit, OnDestroy {
 				.subscribe({
 					next: (res) => {
 						this.practices = res;
-						if(this.getMappingData[0]?._id){
+						if (this.getMappingData[0]?._id) {
 							this.getPracticeWithID(this.practices)
-						}else{
+						} else {
 							this.sendPracticesData(this.practices)
 						}
 					},
@@ -156,15 +163,15 @@ export class MappingComponent implements OnInit, OnDestroy {
 		}
 	}
 	saveMapping() {
-        this.mappingForm.value.relation.find((res: any,index:number) => {
-			if(res?.legalEntityId =='' || res?.locations.length == 0 || res?.legalEntityId == null){
-				this.mappingForm.value.relation.splice(index,1);
+		this.mappingForm.value.relation.find((res: any, index: number) => {
+			if (res?.legalEntityId == '' || res?.locations.length == 0 || res?.legalEntityId == null) {
+				this.mappingForm.value.relation.splice(index, 1);
 			}
 		});
-		if(this.getMappingData[0]?._id){
+		if (this.getMappingData[0]?._id) {
 			if (this.selectedBusinessGroup) {
 				this.mappingService
-					.updateMapping(this.selectedBusinessGroup.bgId, this.mappingForm.value,this.getMappingData[0]?._id)
+					.updateMapping(this.selectedBusinessGroup.bgId, this.mappingForm.value, this.getMappingData[0]?._id)
 					.subscribe({
 						next: (res) => {
 							this.alertService.success(
@@ -177,7 +184,7 @@ export class MappingComponent implements OnInit, OnDestroy {
 						}
 					});
 			}
-		}else{
+		} else {
 			if (this.selectedBusinessGroup) {
 				this.mappingService
 					.saveMapping(this.selectedBusinessGroup.bgId, this.mappingForm.value)
@@ -218,65 +225,66 @@ export class MappingComponent implements OnInit, OnDestroy {
 	selectionValueChange() {
 		this.saveButtonEnable = false;
 	}
-	sendPracticesData(data:any){
-	  data.forEach((res:any) => {
-		const formGroup = this.relationForm()
-		formGroup.patchValue({ practiceId: res._id,legalEntityId: '', locations: []})
-		this.relationMappingObj().push(formGroup)
-	  });
-     this.getNotmappedData(data)
+	sendPracticesData(data: any) {
+		data.forEach((res: any) => {
+			const formGroup = this.relationForm()
+			formGroup.patchValue({ practiceId: res._id, legalEntityId: '', locations: [] })
+			this.relationMappingObj().push(formGroup)
+		});
+		this.getNotmappedData(data)
 	}
-	getPracticeWithID(data:any){
+	getPracticeWithID(data: any) {
 		let practiceDataObj = this.getMappingData[0].relation;
-		data.forEach((res:any,index:any) => {
+		data.forEach((res: any, index: any) => {
 			const formGroup = this.relationForm()
 			const p = practiceDataObj.find(
 				(x: any) => x.practiceId === res._id
 			);
-			if(p){
-                formGroup.patchValue({practiceId: res._id,legalEntityId: p.legalEntityId, locations: p.locations})
-			}else{
-				formGroup.patchValue({ practiceId: res._id,legalEntityId: '', locations: []})
+			if (p) {
+				formGroup.patchValue({ practiceId: res._id, legalEntityId: p.legalEntityId, locations: p.locations })
+			} else {
+				formGroup.patchValue({ practiceId: res._id, legalEntityId: '', locations: [] })
 			}
 
 			this.relationMappingObj().push(formGroup)
 		});
 		this.getNotmappedData(data)
 	}
-	getNotmappedData(data:any){{
-		let locationData:any = []
-		this.mappingForm.value.relation.forEach((x:any,i:any) => {
-			if(x.legalEntityId == '' && x.locations.length == 0){
-				const p = data.find(
-					(y: any) => y._id == x.practiceId
-				);
-				if(p){
-				this.notMappedPractice.push(p)
+	getNotmappedData(data: any) {
+		{
+			let locationData: any = []
+			this.mappingForm.value.relation.forEach((x: any, i: any) => {
+				if (x.legalEntityId == '' && x.locations.length == 0) {
+					const p = data.find(
+						(y: any) => y._id == x.practiceId
+					);
+					if (p) {
+						this.notMappedPractice.push(p)
+					}
+				} else {
+					x.locations.forEach((location: any) => {
+						locationData.push({ location: location })
+					})
 				}
-			}else{
-				x.locations.forEach((location:any) =>{
-					locationData.push({location: location})
-				})
-			}
-		});
-		this.legalEntities.forEach((legal:any,i:any) => {
-			const le =  this.mappingForm.value.relation.find((le:any)=> le.legalEntityId == legal._id);
-			if(le == undefined){
-				this.notMappedLegalEntity.push(legal)
-			}
-		});
-		locationData = this.getUniqueListBy(locationData,'location')
-		this.locations.forEach((location:any,i:any) => {
-			const lo =  locationData.find((lo:any)=> lo.location == location._id);
-			if(lo == undefined){
-				this.notMappedLocation.push(location)
-			}
-		});
+			});
+			this.legalEntities.forEach((legal: any, i: any) => {
+				const le = this.mappingForm.value.relation.find((le: any) => le.legalEntityId == legal._id);
+				if (le == undefined) {
+					this.notMappedLegalEntity.push(legal)
+				}
+			});
+			locationData = this.getUniqueListBy(locationData, 'location')
+			this.locations.forEach((location: any, i: any) => {
+				const lo = locationData.find((lo: any) => lo.location == location._id);
+				if (lo == undefined) {
+					this.notMappedLocation.push(location)
+				}
+			});
 		}
 	}
-	getUniqueListBy(arr:any, key:any) {
-		return [...new Map(arr.map((item:any) => [item[key], item])).values()]
-	  }
+	getUniqueListBy(arr: any, key: any) {
+		return [...new Map(arr.map((item: any) => [item[key], item])).values()]
+	}
 	getUserOrdID() {
 		let bgOrdID: any = localStorage.getItem('selected_business_group');
 		if (bgOrdID == null) {

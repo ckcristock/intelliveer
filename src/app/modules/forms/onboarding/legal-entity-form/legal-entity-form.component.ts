@@ -11,7 +11,9 @@ import { AddressFormService } from '@services/forms/address-form/address-form.se
 import { ContactDetailsFormService } from '@services/forms/contact-details-form/contact-details-form.service';
 import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
 import { GeoService } from '@services/global-data/public/geo/geo.service';
+import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
+import { SearchStringPipePipe } from 'src/app/pipes/stringSearch/search-string-pipe.pipe';
 
 @Component({
 	selector: 'app-legal-entity-form',
@@ -36,6 +38,14 @@ export class LegalEntityFormComponent implements OnInit {
 		{ title: 'Contact', id: 'contactDetails' },
 		{ title: 'Contact Person Info', id: 'contactPerson' }
 	];
+	isSaveButton: boolean = false;
+	legalEdit: any;
+	inEdit: boolean = false;
+	FormDisable!: boolean;
+	urlLegalEntity!: string;
+	legalEntityName!: any;
+
+
 	constructor(
 		private fb: FormBuilder,
 		private http: HttpClient,
@@ -48,26 +58,29 @@ export class LegalEntityFormComponent implements OnInit {
 		private addPatientServ: AddPatientService,
 		private insuranceServ: InsuranceService,
 		private onboardingServ: OnboardingService,
+		private searchString: SearchStringPipePipe,
+		private globalRoutes: GlobalRoutesService
 	) {
 		this.getCountries();
 	}
 
 	ngOnInit(): void {
 		this.initForm(this.formData);
+		
+		this.enableAndDisableInputs();
 		this.patientUserServ.setFalseAllNotPristine();
 		this.addPatientServ.setFalseAllNotPristineCWP();
 		this.insuranceServ.setFalseAllNotPristine();
 		this.onboardingServ.setFalseAllNotPristine();
 		this.Form?.statusChanges.subscribe(
 			result => {
-				console.log(result)
 				if (!this.Form?.pristine) {
-					console.log("this.Form?.pristine", this.Form?.pristine);
-					console.log("status", this.Form?.pristine);
 					this.onboardingServ.setlegalEntityBenfNotPristine(true);
 				}
 			}
 		);
+		this.urlLegalEntity = this.globalRoutes.getSettingsOnboardingRoutes()[1].url;
+
 	}
 	save(data: any) {
 		this.onSubmit.emit(data);
@@ -83,6 +96,13 @@ export class LegalEntityFormComponent implements OnInit {
 	}
 	initForm(data?: any) {
 		data = data || {};
+		if (Object.keys(data).length != 0) {
+			this.inEdit = true;
+			this.FormDisable = true;
+		} else if (Object.keys(data).length == 0) {
+			this.inEdit = false;
+			this.FormDisable = false;
+		}
 		this.Form = this.fb.group({
 			logo: [data?.logo || 'null'],
 			name: [data?.name || '', Validators.required],
@@ -110,14 +130,18 @@ export class LegalEntityFormComponent implements OnInit {
 				data?.contactPerson || {}
 			)
 		});
+		
+		this.addressFormService.setDisabledOrEnabled(this.FormDisable);
+		this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
+		this.legalEntityName = this.Form.get('name')?.value;
 	}
 
-	leNameValid() {
-		return this.Form?.get('name')?.valid;
-	}
-
-	tinValid() {
-		return this.Form?.get('TIN')?.valid;
+	fieldValidation(field: any, notRequiredButPattern?: boolean) {
+		if (notRequiredButPattern) {
+			return (this.Form?.get(field)?.valid && this.Form?.get(field)?.value != null);
+		} else {
+			return this.Form?.get(field)?.value != null
+		}
 	}
 
 	setAddress(type: string) {
@@ -138,5 +162,31 @@ export class LegalEntityFormComponent implements OnInit {
 	}
 	onSectionChange(sectionId: string) {
 		this.currentSelection = sectionId;
+	}
+
+	checkPermission() {
+		let legalEntity = this.globalRoutes.getSettingsOnboardingRoutes();
+		let getLegalEntity = this.searchString.transform('title', legalEntity, "Legal Entity");
+		this.legalEdit = this.searchString.transform('title', getLegalEntity[0].child, 'Edit');
+		if (this.legalEdit[0].isEnabled) {
+			this.isSaveButton = true;
+			this.enableAndDisableInputs();
+		} else if (!this.legalEdit.isEnable) {
+			this.isSaveButton = false;
+		}
+	}
+
+	enableAndDisableInputs() {
+		if (this.inEdit) {
+			if (!this.isSaveButton) {
+				this.Form?.disable();
+				this.FormDisable = true;
+			} else if (this.isSaveButton) {
+				this.Form?.enable();
+				this.FormDisable = false;
+			}
+			this.addressFormService.setDisabledOrEnabled(this.FormDisable);
+			this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
+		}
 	}
 }

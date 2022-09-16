@@ -10,7 +10,9 @@ import { PatientUserService } from '@services/dashboard/patient/patient-user/pat
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
 import { ContactDetailsFormService } from '@services/forms/contact-details-form/contact-details-form.service';
 import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
+import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
+import { SearchStringPipePipe } from 'src/app/pipes/stringSearch/search-string-pipe.pipe';
 
 @Component({
 	selector: 'app-location-form',
@@ -35,6 +37,13 @@ export class LocationFormComponent implements OnInit {
 		{ title: 'Contact', id: 'contactDetails' },
 		{ title: 'Contact Person Info', id: 'contactPerson' }
 	];
+	locationEdit: any;
+	isSaveButton: boolean = false;
+	inEdit: boolean = false;
+	FormDisable!: boolean;
+	urlLocation!: any;
+	locationName!: any;
+
 	constructor(
 		private fb: FormBuilder,
 		private http: HttpClient,
@@ -46,27 +55,37 @@ export class LocationFormComponent implements OnInit {
 		private addPatientServ: AddPatientService,
 		private insuranceServ: InsuranceService,
 		private onboardingServ: OnboardingService,
+		private searchString: SearchStringPipePipe,
+		private globalRoutes: GlobalRoutesService
 	) { }
 
 	ngOnInit(): void {
 		this.initForm(this.formData);
+		this.enableAndDisableInputs();
 		this.patientUserServ.setFalseAllNotPristine();
 		this.addPatientServ.setFalseAllNotPristineCWP();
 		this.insuranceServ.setFalseAllNotPristine();
 		this.onboardingServ.setFalseAllNotPristine();
 		this.Form?.statusChanges.subscribe(
 			result => {
-				console.log(result)
 				if (!this.Form?.pristine) {
-					console.log("this.Form?.pristine", this.Form?.pristine);
-					console.log("status", this.Form?.pristine);
 					this.onboardingServ.setlocationNotPristine(true);
 				}
 			}
 		);
+
+		this.urlLocation = this.globalRoutes.getSettingsOnboardingRoutes()[2].url;
+
 	}
 	initForm(data?: any) {
 		data = data || {};
+		if (Object.keys(data).length != 0) {
+			this.inEdit = true;
+			this.FormDisable = true;
+		} else if (Object.keys(data).length == 0) {
+			this.inEdit = false;
+			this.FormDisable = false;
+		}
 		this.Form = this.fb.group({
 			name: [data?.name || '', Validators.required],
 			// description: [data?.description || '', Validators.required],
@@ -98,10 +117,18 @@ export class LocationFormComponent implements OnInit {
 				data?.contactPerson || {}
 			)
 		});
+
+		this.addressFormService.setDisabledOrEnabled(this.FormDisable);
+		this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
+		this.locationName = this.Form.get('name')?.value;
 	}
 
-	firstNameValid() {
-		return this.Form?.get('name')?.valid;
+	fieldValidation(field: any, notRequiredButPattern?: boolean) {
+		if (notRequiredButPattern) {
+			return (this.Form?.get(field)?.valid && this.Form?.get(field)?.value != null);
+		} else {
+			return this.Form?.get(field)?.value != null
+		}
 	}
 
 	save(data: any) {
@@ -127,5 +154,31 @@ export class LocationFormComponent implements OnInit {
 	}
 	onSectionChange(sectionId: string) {
 		this.currentSelection = sectionId;
+	}
+
+	checkPermission() {
+		let location = this.globalRoutes.getSettingsOnboardingRoutes();
+		let getlocation = this.searchString.transform('title', location, "Location");
+		this.locationEdit = this.searchString.transform('title', getlocation[0].child, 'Edit');
+		if (this.locationEdit[0].isEnabled) {
+			this.isSaveButton = true;
+			this.enableAndDisableInputs();
+		} else if (!this.locationEdit.isEnable) {
+			this.isSaveButton = false;
+		}
+	}
+
+	enableAndDisableInputs() {
+		if (this.inEdit) {
+			if (!this.isSaveButton) {
+				this.Form?.disable();
+				this.FormDisable = true;
+			} else if (this.isSaveButton) {
+				this.Form?.enable();
+				this.FormDisable = false;
+			}
+			this.addressFormService.setDisabledOrEnabled(this.FormDisable);
+			this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
+		}
 	}
 }

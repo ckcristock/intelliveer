@@ -1,6 +1,7 @@
 <div class="row formrow" *ngIf="Form">
 	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
-		[disableSaveBtn]="Form.invalid || Form.pristine" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills>
+		[disableSaveBtn]="Form.invalid || Form.pristine" (onCancel)="cancel()" (onSave)="save(Form.value)">
+	</app-nav-bar-pills>
 	<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
 		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section" id="overview">
@@ -25,8 +26,8 @@
 					</div>
 					<div class="col">
 						<label class="label-input-gap">First Name</label>
-						<input class="form-control mandatory-field input-upper" type="text" placeholder="" name="firstName"
-							formControlName="firstName" [class.valid-mandatory-field]="firstNameValid()"/>
+						<input class="form-control mandatory-field input-upper" type="text" placeholder=""
+							name="firstName" formControlName="firstName" />
 					</div>
 
 					<div class="col">
@@ -36,15 +37,15 @@
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Last Name</label>
-						<input class="form-control mandatory-field input-upper" type="text" placeholder="" name="lastName"
-							formControlName="lastName" [class.valid-mandatory-field]="lastNameValid()"/>
+						<input class="form-control mandatory-field input-upper" type="text" placeholder=""
+							name="lastName" formControlName="lastName" />
 					</div>
 				</div>
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Date of Birth</label>
-						<input class="form-control red-bottom-line input-upper" type="date" placeholder="" name="DOB" formControlName="DOB" 
-						[class.valid-required-field]="DOBValid()"/>
+						<input class="form-control red-bottom-line input-upper" type="date" placeholder="" name="DOB"
+							formControlName="DOB" [class.valid-required-field]="fieldValidation('DOB')" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Gender</label>

@@ -203,9 +203,6 @@ export class AdditionalPatientFormComponent implements OnInit {
       result => {
         console.log(result)
         if (!this.Form.pristine) {
-          console.log("hiiiiii", event);
-          console.log("status", this.Form.pristine);
-
           if (this.patientPage == 2) {
             this.addPatientServ.setPatient2NotPristineCWP(true);
           } else if (this.patientPage == 3) {
@@ -252,7 +249,6 @@ export class AdditionalPatientFormComponent implements OnInit {
     } else if (this.radioDentist == 3) {
       this.dentistRadio3.nativeElement.checked = true;
       this.radioDentFuct(this.radioDentist);
-      console.log("it called");
 
     }
 
@@ -521,7 +517,6 @@ export class AdditionalPatientFormComponent implements OnInit {
     this.dentists = await this.addPatientServ.getdentistsCwpApi();
     this.referrers = await this.addPatientServ.getreferrersCwpApi();
     this.insurancesP1 = await this.addPatientServ.getinsurancesP1Cwp();
-    console.log("insuranceP111", this.insurancesP1);
 
     this.insurances1 = await this.addPatientServ.getinsurances1CwpApi();
     this.insurances2 = await this.addPatientServ.getinsurances2CwpApi();
@@ -537,7 +532,6 @@ export class AdditionalPatientFormComponent implements OnInit {
         this.additionalPatient.dentist.lastName = this.dentists[i].lastName;
         this.additionalPatient.dentist.officeName = this.dentists[i].officeName;
         this.additionalPatient.dentist.officePhoneNumb = this.dentists[i].officePhoneNumb;
-        console.log("getDAtaaaaaaaa", this.additionalPatient.dentist);
 
       }
     }
@@ -1122,7 +1116,6 @@ export class AdditionalPatientFormComponent implements OnInit {
   }
 
   async radioInsuran2Funct(value: number) {
-    console.log("radioInsuran2Funct callled");
 
     this.radioInsuran2 = value;
     this.additionalPatient.insurances.insurance2.insuranName = "";
@@ -1169,7 +1162,6 @@ export class AdditionalPatientFormComponent implements OnInit {
     this.radioSubscriber1 = value;
     this.additionalPatient.insurances.insurance1.subscriber1.firstName = "";
     this.additionalPatient.insurances.insurance1.subscriber1.lastName = "";
-    console.log("subscribers1", this.subscribers1);
 
     if (this.radioSubscriber1 == 1) {
       for (let i = 0; i < this.subscribers1.length; i++) {

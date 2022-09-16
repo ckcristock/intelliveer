@@ -49,16 +49,16 @@ export class InsuranceSubscriberFormComponent implements OnInit {
     { pronoun: 'She' },
   ];
   genders: any[] = [
-    { label: 'Male', value:'M' },
-    { label: 'Female', value:'F' },
+    { label: 'Male', value: 'M' },
+    { label: 'Female', value: 'F' },
   ];
   languages: any[] = [
-    { label: 'English', value:'english' },
-    { label: 'Hindi', value:'hindi' },
+    { label: 'English', value: 'english' },
+    { label: 'Hindi', value: 'hindi' },
   ];
   maritalStatuses: any[] = [
-    { label: 'Maried', value:'M' },
-    { label: 'Single', value:'S' },
+    { label: 'Maried', value: 'M' },
+    { label: 'Single', value: 'S' },
   ];
 
   constructor(
@@ -81,20 +81,17 @@ export class InsuranceSubscriberFormComponent implements OnInit {
 
   async ngOnInit() {
     this.initForm(this.formData);
-		this.patientUserServ.setFalseAllNotPristine();
+    this.patientUserServ.setFalseAllNotPristine();
     this.addPatientServ.setFalseAllNotPristineCWP();
-		this.insuranceServ.setFalseAllNotPristine();
-		this.onboardingServ.setFalseAllNotPristine();
-		this.Form?.statusChanges.subscribe(
-			result => {
-				console.log(result)
-				if (!this.Form?.pristine) {
-					console.log("hiiiiii", event);
-					console.log("status", this.Form?.pristine);
-					this.patientUserServ.setinsuranSubscNotPristine(true);
-				}
-			}
-		);
+    this.insuranceServ.setFalseAllNotPristine();
+    this.onboardingServ.setFalseAllNotPristine();
+    this.Form?.statusChanges.subscribe(
+      result => {
+        if (!this.Form?.pristine) {
+          this.patientUserServ.setinsuranSubscNotPristine(true);
+        }
+      }
+    );
     this.insuranSubsc.push(await this.patientUserServ.getInsuSubscFamiMemb());
 
     this.relationship = await this.patientUserServ.getInsuSubscToPati();
@@ -117,7 +114,7 @@ export class InsuranceSubscriberFormComponent implements OnInit {
       language: [data?.language || ''],
       maritalStatus: [data?.maritalStatus || ''],
       lastUsedName: [data?.lastUsedName || ''],
-      emailId: ['', ],
+      emailId: ['',],
       primaryPhoneType: [data?.primaryPhoneType || '', Validators.required],
       primaryPhoneNumber: [data?.primaryPhoneNumber || '', [Validators.required, Validators.pattern("^[0-9]*$")]],
       secondaryPhoneType: [data?.secondaryPhoneType || ''],
@@ -138,100 +135,72 @@ export class InsuranceSubscriberFormComponent implements OnInit {
   }
 
   setUserDataToForm() {
-		this.Form.controls['title'].setValue(this.formData.profile.title);
-		this.Form.controls['firstName'].setValue(
-			this.formData.profile.firstName
-		);
-		this.Form.controls['middleName'].setValue(
-			this.formData.profile.middleName
-		);
-		this.Form.controls['lastName'].setValue(this.formData.profile.lastName);
-		this.Form.controls['DOB'].setValue(this.formData.profile.DOB);
-		this.Form.controls['gender'].setValue(this.formData.profile.gender);
-		this.Form.controls['pronoun'].setValue(
-			this.formData.profile.preferredPronoun
-		);
-		this.Form.controls['language'].setValue(this.formData.profile.language);
-		this.Form.controls['maritalStatus'].setValue(
-			this.formData.profile.maritalStatus
-		);
-		this.Form.controls['emailId'].setValue(this.formData.contact.email);
-		this.Form.controls['primaryPhoneType'].setValue(
-			this.formData.contact.primaryPhone.type
-		);
-		this.Form.controls['primaryPhoneNumber'].setValue(
-			this.formData.contact.primaryPhone.number
-		);
-		this.Form.controls['secondaryPhoneType'].setValue(
-			this.formData.contact.secondaryPhone.type
-		);
-		this.Form.controls['secondaryPhoneNumber'].setValue(
-			this.formData.contact.secondaryPhone.number
-		);
-		this.Form.controls['primaryPreferredCommunicationMethod'].setValue(
-			this.formData.contact.primaryPreferredCommunicationMethod
-		);
-		this.Form.controls['secondaryPreferredCommunicationMethod'].setValue(
-			this.formData.contact.secondaryPreferredCommunicationMethod
-		);
-		this.Form.controls['preferredTimingForCall'].setValue(
-			this.formData.contact.preferredTimingForCall
-		);
-		this.Form.controls['workStatus'].setValue(
-			this.formData.financials.workStatus
-		);
-		this.Form.controls['occupation'].setValue(
-			this.formData.financials.occupation
-		);
-		this.Form.controls['employer'].setValue(
-			this.formData.financials.employer
-		);
-		this.Form.controls['creditRating'].setValue(
-			this.formData.financials.creditRating
-		);
-		this.Form.controls['SSN'].setValue(this.formData.financials.SSN);
-		this.Form.controls['note'].setValue(this.formData.notes);
-	}
-
-  firstNameValid() {
-    return this.Form.get('firstName')?.valid;
-  }
-
-  middleNameValid() {
-    return this.Form.get('middleName')?.valid;
-  }
-
-  lastNameValid() {
-    return this.Form.get('lastName')?.valid;
-  }
-
-  DOBValid() {
-    return this.Form.get('DOB')?.value.length > 0;
-  }
-
-  primaryPhoneTypeValid() {
-    return this.Form.get('primaryPhoneType')?.valid;
-  }
-
-  primaryPhoneNumberValid() {
-    return this.Form.get('primaryPhoneNumber')?.valid;
-  }
-
-  commPrimaryValid() {
-    return this.Form.get('primaryPreferredCommunicationMethod')?.value.length > 0;
-  }
-
-  emailValid() {
-    return this.Form.get('emailId')?.value.length > 0;
-  }
-
-  creditRatingValid(){
-    return this.Form.get('creditRating')?.value.length > 0 && this.Form.get('creditRating')?.valid;
+    this.Form.controls['title'].setValue(this.formData.profile.title);
+    this.Form.controls['firstName'].setValue(
+      this.formData.profile.firstName
+    );
+    this.Form.controls['middleName'].setValue(
+      this.formData.profile.middleName
+    );
+    this.Form.controls['lastName'].setValue(this.formData.profile.lastName);
+    this.Form.controls['DOB'].setValue(this.formData.profile.DOB);
+    this.Form.controls['gender'].setValue(this.formData.profile.gender);
+    this.Form.controls['pronoun'].setValue(
+      this.formData.profile.preferredPronoun
+    );
+    this.Form.controls['language'].setValue(this.formData.profile.language);
+    this.Form.controls['maritalStatus'].setValue(
+      this.formData.profile.maritalStatus
+    );
+    this.Form.controls['emailId'].setValue(this.formData.contact.email);
+    this.Form.controls['primaryPhoneType'].setValue(
+      this.formData.contact.primaryPhone.type
+    );
+    this.Form.controls['primaryPhoneNumber'].setValue(
+      this.formData.contact.primaryPhone.number
+    );
+    this.Form.controls['secondaryPhoneType'].setValue(
+      this.formData.contact.secondaryPhone.type
+    );
+    this.Form.controls['secondaryPhoneNumber'].setValue(
+      this.formData.contact.secondaryPhone.number
+    );
+    this.Form.controls['primaryPreferredCommunicationMethod'].setValue(
+      this.formData.contact.primaryPreferredCommunicationMethod
+    );
+    this.Form.controls['secondaryPreferredCommunicationMethod'].setValue(
+      this.formData.contact.secondaryPreferredCommunicationMethod
+    );
+    this.Form.controls['preferredTimingForCall'].setValue(
+      this.formData.contact.preferredTimingForCall
+    );
+    this.Form.controls['workStatus'].setValue(
+      this.formData.financials.workStatus
+    );
+    this.Form.controls['occupation'].setValue(
+      this.formData.financials.occupation
+    );
+    this.Form.controls['employer'].setValue(
+      this.formData.financials.employer
+    );
+    this.Form.controls['creditRating'].setValue(
+      this.formData.financials.creditRating
+    );
+    this.Form.controls['SSN'].setValue(this.formData.financials.SSN);
+    this.Form.controls['note'].setValue(this.formData.notes);
   }
 
   clearCommPrimary() {
-		this.Form.controls['primaryPreferredCommunicationMethod'].setValue("");
-	}
+    this.Form.controls['primaryPreferredCommunicationMethod'].setValue("");
+  }
+
+  fieldValidation(field: any, notRequiredButPattern?: boolean) {
+    if (notRequiredButPattern) {
+      return (this.Form.get(field)?.valid && this.Form.get(field)?.value != null);
+    } else {
+      return this.Form.get(field)?.value != null
+    }
+  }
 
   async getStaticData() {
     this.http
@@ -239,8 +208,6 @@ export class InsuranceSubscriberFormComponent implements OnInit {
       .subscribe({
         next: async (data) => {
           this.famiMembTitle = data;
-          console.log("this.phoneTypes", this.famiMembTitle);
-
         },
         error: () => { },
         complete: () => { }

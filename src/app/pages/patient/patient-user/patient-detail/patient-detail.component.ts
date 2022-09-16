@@ -100,7 +100,7 @@ export class PatientDetailComponent implements OnInit {
 		private addPatientServ: AddPatientService,
 		private insuranceServ: InsuranceService,
 		private onboardingServ: OnboardingService,
-	private router: Router
+		private router: Router
 	) {
 		this.idForm = this.fb.group({
 			// name: '',
@@ -130,10 +130,7 @@ export class PatientDetailComponent implements OnInit {
 		this.onboardingServ.setFalseAllNotPristine();
 		this.Form?.statusChanges.subscribe(
 			result => {
-				console.log(result)
 				if (!this.Form?.pristine) {
-					console.log("hiiiiii", event);
-					console.log("status", this.Form?.pristine);
 					this.patientUserServ.setpatientNotPristine(true);
 				}
 			}
@@ -188,54 +185,12 @@ export class PatientDetailComponent implements OnInit {
 		});
 	}
 
-	firstNameValid() {
-		return this.Form.get('firstName')?.valid;
-	}
-
-	middleNameValid() {
-		return this.Form.get('middleName')?.valid;
-	}
-
-	lastNameValid() {
-		return this.Form.get('lastName')?.valid;
-	}
-
-	DOBValid() {
-		return this.Form.get('DOB')?.value.length > 0;
-	}
-
-	genderValid() {
-		return this.Form.get('gender')?.value != null;
-	}
-
-	locationValid() {
-		return this.Form.get('location')?.value != null;
-	}
-
-	billingValid() {
-		return this.Form.get('billing')?.value != null;
-	}
-
-	treatingValid() {
-		return this.Form.get('provider')?.value != null;
-	}
-
-	contPersValid() {
-		return this.Form.get('cPerson')?.value != null;
-	}
-
-	emerNameValid() {
-		return (
-			this.Form.get('name')?.value.length > 0 &&
-			this.Form.get('name')?.valid
-		);
-	}
-
-	eContactValid() {
-		return (
-			this.Form.get('eContact')?.value.length > 0 &&
-			this.Form.get('eContact')?.valid
-		);
+	fieldValidation(field: any, notRequiredButPattern?: boolean) {
+		if (notRequiredButPattern) {
+			return (this.Form.get(field)?.valid && this.Form.get(field)?.value != null);
+		} else {
+			return this.Form.get(field)?.value != null
+		}
 	}
 
 	get ids(): FormArray {
@@ -336,7 +291,6 @@ export class PatientDetailComponent implements OnInit {
 			.subscribe({
 				next: (data) => {
 					this.globalData = data;
-					console.log('this.globalData', this.globalData);
 				},
 				error: () => { },
 				complete: () => { }
@@ -384,8 +338,6 @@ export class PatientDetailComponent implements OnInit {
 		this.userService.getLocationList(bgId).subscribe(
 			(list: any) => {
 				this.locationList = list;
-				console.log("this.locationList", this.locationList);
-
 			},
 			(error) => {
 				console.log(error);
@@ -413,8 +365,6 @@ export class PatientDetailComponent implements OnInit {
 			.subscribe((data: any) => {
 				console.log(data);
 				this.patientObj = data;
-				console.log("this.patientObj", this.patientObj);
-
 			});
 	}
 }

@@ -20,7 +20,7 @@ export class ReferrerFormComponent implements OnInit {
   @ViewChild('radioReferrer1') radioReferrer1!: ElementRef;
   @ViewChild('radioReferrer2') radioReferrer2!: ElementRef;
   @Input() formData: any | undefined = undefined;
-  model!:NgbDateStruct
+  model!: NgbDateStruct
   radioReferrer: number = 1;
 
   dentist = {
@@ -46,9 +46,9 @@ export class ReferrerFormComponent implements OnInit {
   Form!: FormGroup;
   showButtonSaveCancel: boolean = false;
   openTextAreaVar: boolean = false;
-  alertText:any;
-	confirmButtonText:any
-	cancelButtonText:any
+  alertText: any;
+  confirmButtonText: any
+  cancelButtonText: any
   constructor(private router: Router,
     private patientUserServ: PatientUserService,
     private addPatientServ: AddPatientService,
@@ -70,15 +70,13 @@ export class ReferrerFormComponent implements OnInit {
         result => {
           console.log(result)
           if (!this.Form.pristine) {
-            console.log("hiiiiii", event);
-            console.log("status", this.Form.pristine);
 
             this.addPatientServ.setReferrerNotPristineCWP(true);
-            if(this.Form.invalid){
-							this.addPatientServ.setReferrerMandatoryFields(true)
-						}else{
-							this.addPatientServ.setReferrerMandatoryFields(false)
-						}
+            if (this.Form.invalid) {
+              this.addPatientServ.setReferrerMandatoryFields(true)
+            } else {
+              this.addPatientServ.setReferrerMandatoryFields(false)
+            }
           }
         }
       );
@@ -157,12 +155,12 @@ export class ReferrerFormComponent implements OnInit {
     });
   }
 
-  firstNameValid() {
-    return (this.Form.get('firstName')?.valid && this.Form.get('firstName')?.value != null);
-  }
-
-  lastNameValid() {
-    return (this.Form.get('lastName')?.valid && this.Form.get('lastName')?.value != null);
+  fieldValidation(field: any, notRequiredButPattern?: boolean) {
+    if (notRequiredButPattern) {
+      return (this.Form.get(field)?.valid && this.Form.get(field)?.value != null);
+    } else {
+      return this.Form.get(field)?.value != null
+    }
   }
 
   save(data: any) {
@@ -195,63 +193,61 @@ export class ReferrerFormComponent implements OnInit {
   }
   // openModel(content: any) {
   //   let firstName = this.Form.value.firstName;
-	// 	if(firstName == undefined){
-	// 		firstName = '';
-	// 	}
-	// 	let lastName = this.Form.value.lastName;
-	// 	if(lastName == undefined){
-	// 		lastName = ''
-	// 	}
-	// 	if(firstName != '' || lastName != '' || this.Form.value.companyName != '' || this.Form.value.phoneNumber  != '' || this.Form.value.thanksfor  != '' ){
-	// 		this.modalService.open(content, { centered: true });
-	// 	  }else
-	// 	  {
+  // 	if(firstName == undefined){
+  // 		firstName = '';
+  // 	}
+  // 	let lastName = this.Form.value.lastName;
+  // 	if(lastName == undefined){
+  // 		lastName = ''
+  // 	}
+  // 	if(firstName != '' || lastName != '' || this.Form.value.companyName != '' || this.Form.value.phoneNumber  != '' || this.Form.value.thanksfor  != '' ){
+  // 		this.modalService.open(content, { centered: true });
+  // 	  }else
+  // 	  {
   //     this.addPatientServ.setReferrerNotPristineCWP(false);
-	// 		this.router.navigate(['/dashboard/home']);
-	// 	  }
-	// }
+  // 		this.router.navigate(['/dashboard/home']);
+  // 	  }
+  // }
   openModel(content: any) {
     let firstName = this.Form.value.firstName;
-		if(firstName == undefined){
-			firstName = '';
-		}
-		let lastName = this.Form.value.lastName;
-		if(lastName == undefined){
-			lastName = ''
-		}
-		if(firstName != '' || lastName != '' || this.Form.value.companyName != '' || this.Form.value.phoneNumber  != '' || this.Form.value.thanksfor  != '' ){
-			if(this.Form.valid){
-				this.alertText = "Would you like to discard or save it?"
-				this.confirmButtonText = "Save";
-				this.cancelButtonText = "Discard"
-			}else if(this.Form.invalid){
-				this.alertText = "Mandatory fields are required to save."
-				this.confirmButtonText = false;
-				this.cancelButtonText = "Discard"
-			}
-			this.alertService.conformAlertNavigate('Please confirm', this.alertText,this.cancelButtonText,this.confirmButtonText).then((result: any) => {
-				console.log("result", result);
+    if (firstName == undefined) {
+      firstName = '';
+    }
+    let lastName = this.Form.value.lastName;
+    if (lastName == undefined) {
+      lastName = ''
+    }
+    if (firstName != '' || lastName != '' || this.Form.value.companyName != '' || this.Form.value.phoneNumber != '' || this.Form.value.thanksfor != '') {
+      if (this.Form.valid) {
+        this.alertText = "Would you like to discard or save it?"
+        this.confirmButtonText = "Save";
+        this.cancelButtonText = "Discard"
+      } else if (this.Form.invalid) {
+        this.alertText = "Mandatory fields are required to save."
+        this.confirmButtonText = false;
+        this.cancelButtonText = "Discard"
+      }
+      this.alertService.conformAlertNavigate('Please confirm', this.alertText, this.cancelButtonText, this.confirmButtonText).then((result: any) => {
 
-				if (result.isConfirmed) {
-					this.discardPatient()
-				} else if (result.isDismissed && (result.dismiss == "cancel")) {
-					this.savePatientForm()
-				}
-			})
-		  }else
-		  {
+        if (result.isConfirmed) {
+          this.discardPatient()
+        } else if (result.isDismissed && (result.dismiss == "cancel")) {
+          this.savePatientForm()
+        }
+      })
+    } else {
       this.addPatientServ.setReferrerNotPristineCWP(false);
-			this.router.navigate(['/dashboard/home']);
-		  }
-	}
-	discardPatient(){
-		this.modalService.dismissAll();
+      this.router.navigate(['/dashboard/home']);
+    }
+  }
+  discardPatient() {
+    this.modalService.dismissAll();
     this.addPatientServ.setReferrerNotPristineCWP(false);
-		this.router.navigate(['/dashboard/home']);
-	}
-	savePatientForm(){
-		this.modalService.dismissAll();
-		this.save(this.Form)
-	}
+    this.router.navigate(['/dashboard/home']);
+  }
+  savePatientForm() {
+    this.modalService.dismissAll();
+    this.save(this.Form)
+  }
 
 }

@@ -17,7 +17,7 @@ export class EditPracticeComponent implements OnInit, OnDestroy {
 	data: any;
 	bgDropdownSubscription: Subscription;
 	selectedBusinessGroup: SelectedBusinessGroup | undefined;
-	bgId:any
+	bgId: any
 	constructor(
 		private router: Router,
 		private activeRoute: ActivatedRoute,
@@ -36,19 +36,22 @@ export class EditPracticeComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-		this.activeRoute.params.subscribe((params) => {
-			if (params['id']) {
-				this.id = params['id'];
-				this.getPractice(params['id']);
-			}
-		});
+		setTimeout(() => {
+			this.activeRoute.params.subscribe((params) => {
+				if (params['id']) {
+					this.id = params['id'];
+					this.getPractice(params['id']);
+				}
+			});
+		}, 500);
 	}
+	
 	ngOnDestroy(): void {
 		this.bgDropdownService.disable(false);
 		this.bgDropdownSubscription.unsubscribe();
 	}
 	getPractice(id: string) {
-		if(!this.bgId){
+		if (!this.bgId) {
 			this.bgId = this.selectedBusinessGroup?.bgId
 		}
 		if (this.selectedBusinessGroup && id) {
@@ -58,12 +61,12 @@ export class EditPracticeComponent implements OnInit, OnDestroy {
 					next: (res) => {
 						this.data = res;
 					},
-					error: () => {}
+					error: () => { }
 				});
 		}
 	}
 	update(data: any) {
-		if(!this.bgId){
+		if (!this.bgId) {
 			this.bgId = this.selectedBusinessGroup?.bgId
 		}
 		if (this.id && this.selectedBusinessGroup) {
@@ -76,19 +79,19 @@ export class EditPracticeComponent implements OnInit, OnDestroy {
 							'/dashboard/settings/onboarding/practice'
 						]);
 					},
-					error: () => {}
+					error: () => { }
 				});
 		}
 	}
 	handleCancel() {
 		this.router.navigate(['/dashboard/settings/onboarding/practice']);
 	}
-	getUserOrdID(){
-		let bgOrdID:any = localStorage.getItem('selected_business_group');
-		if(bgOrdID == null){
-		  this.bgId = 'intelliveer';
-		}else{
-		  this.bgId = null;
+	getUserOrdID() {
+		let bgOrdID: any = localStorage.getItem('selected_business_group');
+		if (bgOrdID == null) {
+			this.bgId = 'intelliveer';
+		} else {
+			this.bgId = null;
 		}
-	  }
+	}
 }

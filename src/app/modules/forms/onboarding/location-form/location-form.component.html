@@ -1,116 +1,165 @@
-<div class="row" *ngIf="Form">
-	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
-		[disableSaveBtn]="Form.invalid || Form.pristine" (onCancel)="cancel()" (onSave)="save(Form.value)">
-	</app-nav-bar-pills>
-	<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
-		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
-			<div class="section" id="overview">
-				<!-- <div class="row">
-				<h6 class="heading">Logo</h6>
-			</div> -->
-				<div class="row">
-					<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
-					</app-image-uploader>
-				</div>
-			</div>
-			<!-- Profile -->
-			<div class="section" id="profile">
-				<div class="row">
-					<h6 class="heading">Profile</h6>
-				</div>
-				<div class="row">
-					<div class="col">
-						<label class="required">Name</label>
-						<input type="text" class="form-control mandatory-field" formControlName="name" 
-						[class.valid-mandatory-field]="firstNameValid()"/>
-					</div>
-					<div class="col">
-						<label class="required">Abbreviation</label>
-						<input type="text" class="form-control" formControlName="abbreviation" />
-					</div>
-					<div class="col">
-						<label class="required">Registration Number</label>
-						<input type="text" class="form-control" formControlName="registrationNumber" />
-					</div>
-					<div class="col">
-						<label class="required">Time Zone</label>
-						<ng-moment-timezone-picker [formControlName]="'locationTimeZone'">
-                        </ng-moment-timezone-picker>
-					</div>
-				</div>
-			</div>
-			<!-- Physical Address -->
-			<div class="section" id="physicalAddress">
-				<div class="row">
-					<h6 class="heading">Physical Address</h6>
-				</div>
-				<app-address-form [parentGroup]="Form" [formGroupName]="'physicalAddress'"></app-address-form>
-			</div>
-			<!-- Mailing Address -->
-			<div class="section" id="mailingAddress">
-				<div class="row">
-					<h6 class="heading">Mailing Address</h6>
-				</div>
-				<!-- <div class="row">
-				<div class="col-4 mb-3">
-					<button
-						type="button"
-						class="btn btn-sm btn-dark"
-						(click)="setAddress('mailingAddress')"
-					>
-						Same as physical address
-					</button>
-				</div>
-			</div> -->
-				<app-address-form [parentGroup]="Form" [formGroupName]="'mailingAddress'"></app-address-form>
-			</div>
-			<!-- Insurance Billing Address -->
-			<div class="section" id="insuranceBillingAddress">
-				<div class="row">
-					<h6 class="heading">Insurance Billing / Payment Address</h6>
-				</div>
-				<!-- <div class="row">
-				<div class="col-4 mb-3">
-					<button
-						type="button"
-						class="btn btn-sm btn-dark"
-						(click)="setAddress('insuranceBillingAddress')"
-					>
-						Same as physical address
-					</button>
-				</div>
-			</div> -->
-				<app-address-form [parentGroup]="Form" [formGroupName]="'insuranceBillingAddress'"></app-address-form>
-			</div>
-			<!-- Contact -->
-			<div class="section" id="contactDetails">
-				<div class="row">
-					<h6 class="heading">Contact</h6>
-				</div>
-				<app-contact-details-form [parentGroup]="Form" [formGroupName]="'contactDetails'">
-				</app-contact-details-form>
-			</div>
-			<!-- Contact Person-->
-			<div class="section" id="contactPerson">
-				<div class="row">
-					<h6 class="heading">Contact Person Info</h6>
-				</div>
-				<app-contact-person-form [parentGroup]="Form" [formGroupName]="'contactPerson'">
-				</app-contact-person-form>
-			</div>
-			<!-- <div class="d-flex border-top pt-3 gap-2">
-			<button
-				class="btn btn-dark"
-				type="submit"
-				[disabled]="Form.invalid"
-			>
-				Save Changes
-			</button>
-	
-			<button class="btn btn-light" type="button" (click)="cancel()">
-				Cancel
-			</button>
-		</div> -->
+<!-- <app-nav-bar-pills
+	[cancelBtn]="true"
+	[saveBtn]="true"
+	[disableSaveBtn]="Form.invalid"
+	(onCancel)="cancel()"
+	(onSave)="save(Form.value)"
+></app-nav-bar-pills> -->
+
+<div class="row">
+	<div class="col-2">
+		<div class="settings-row pointer" [routerLink]="urlLocation">
+			<i class="bi bi-arrow-left-circle" style="font-size: 2rem; cursor: pointer;"></i>
+			<!-- [routerLink]="urlSettings" -->
+			<p class="">Location</p>
 		</div>
-	</form>
+		<ul class="ul" style="margin-top: 27px;">
+			<div *ngIf="locationName != ''">
+				<li class="active">
+					{{ locationName }}
+				</li>
+			</div>
+			<div *ngIf="locationName == ''">
+				<li class="active">
+					Add Location
+				</li>
+			</div>
+		</ul>
+	</div>
+	<div class="col-10 component-view">
+		<div class="row" *ngIf="Form">
+			<!-- <app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
+				[disableSaveBtn]="Form.invalid || Form.pristine" (onCancel)="cancel()" (onSave)="save(Form.value)">
+			</app-nav-bar-pills> -->
+			<div class="row sticky" style="width: 101%;">
+				<div [ngClass]="{'col-11':!isSaveButton, 'col-12':!inEdit }">
+					<div class="col">
+						<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection"
+							[cancelBtn]="isSaveButton || !inEdit" [saveBtn]="isSaveButton || !inEdit"
+							[disableSaveBtn]="Form.invalid || Form.pristine" (onCancel)="cancel()"
+							(onSave)="save(Form.value)">
+						</app-nav-bar-pills>
+					</div>
+					<!-- [disableSaveBtn]="BGForm.invalid || BGForm.pristine" -->
+				</div>
+				<div *ngIf="!isSaveButton && inEdit" class="col-1 d-flex justify-content-center align-items-start"
+					style="background-color: transparent;">
+					<img src="/assets/icons/Edit.svg" style="width: 37px; height: 37px; cursor: pointer;" alt=""
+						(click)="checkPermission()" />
+				</div>
+			</div>
+			<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
+				<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
+					<div class="section" id="overview">
+						<!-- <div class="row">
+						<h6 class="heading">Logo</h6>
+					</div> -->
+						<div class="row">
+							<app-image-uploader [imageUrl]="formData?.logo || ''"
+								(onUpload)="handleUploadedImage($event)">
+							</app-image-uploader>
+						</div>
+					</div>
+					<!-- Profile -->
+					<div class="section" id="profile">
+						<div class="row">
+							<h6 class="heading">Profile</h6>
+						</div>
+						<div class="row">
+							<div class="col">
+								<label class="required">Name</label>
+								<input type="text" class="form-control mandatory-field" formControlName="name" />
+							</div>
+							<div class="col">
+								<label class="required">Abbreviation</label>
+								<input type="text" class="form-control" formControlName="abbreviation" />
+							</div>
+							<div class="col">
+								<label class="required">Registration Number</label>
+								<input type="text" class="form-control" formControlName="registrationNumber" />
+							</div>
+							<div class="col">
+								<label class="required">Time Zone</label>
+								<ng-moment-timezone-picker [disabled]="inEdit && !isSaveButton"
+									[formControlName]="'locationTimeZone'">
+								</ng-moment-timezone-picker>
+							</div>
+						</div>
+					</div>
+					<!-- Physical Address -->
+					<div class="section" id="physicalAddress">
+						<div class="row">
+							<h6 class="heading">Physical Address</h6>
+						</div>
+						<app-address-form [parentGroup]="Form" [formGroupName]="'physicalAddress'"></app-address-form>
+					</div>
+					<!-- Mailing Address -->
+					<div class="section" id="mailingAddress">
+						<div class="row">
+							<h6 class="heading">Mailing Address</h6>
+						</div>
+						<!-- <div class="row">
+						<div class="col-4 mb-3">
+							<button
+								type="button"
+								class="btn btn-sm btn-dark"
+								(click)="setAddress('mailingAddress')"
+							>
+								Same as physical address
+							</button>
+						</div>
+					</div> -->
+						<app-address-form [parentGroup]="Form" [formGroupName]="'mailingAddress'"></app-address-form>
+					</div>
+					<!-- Insurance Billing Address -->
+					<div class="section" id="insuranceBillingAddress">
+						<div class="row">
+							<h6 class="heading">Insurance Billing / Payment Address</h6>
+						</div>
+						<!-- <div class="row">
+						<div class="col-4 mb-3">
+							<button
+								type="button"
+								class="btn btn-sm btn-dark"
+								(click)="setAddress('insuranceBillingAddress')"
+							>
+								Same as physical address
+							</button>
+						</div>
+					</div> -->
+						<app-address-form [parentGroup]="Form" [formGroupName]="'insuranceBillingAddress'">
+						</app-address-form>
+					</div>
+					<!-- Contact -->
+					<div class="section" id="contactDetails">
+						<div class="row">
+							<h6 class="heading">Contact</h6>
+						</div>
+						<app-contact-details-form [parentGroup]="Form" [formGroupName]="'contactDetails'">
+						</app-contact-details-form>
+					</div>
+					<!-- Contact Person-->
+					<div class="section" id="contactPerson">
+						<div class="row">
+							<h6 class="heading">Contact Person Info</h6>
+						</div>
+						<app-contact-person-form [parentGroup]="Form" [formGroupName]="'contactPerson'">
+						</app-contact-person-form>
+					</div>
+					<!-- <div class="d-flex border-top pt-3 gap-2">
+					<button
+						class="btn btn-dark"
+						type="submit"
+						[disabled]="Form.invalid"
+					>
+						Save Changes
+					</button>
+					<button class="btn btn-light" type="button" (click)="cancel()">
+						Cancel
+					</button>
+				</div> -->
+				</div>
+			</form>
+		</div>
+	</div>
 </div>

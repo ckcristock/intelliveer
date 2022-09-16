@@ -14,9 +14,9 @@ import { GlobalRoutesService } from '@services/global-routes/global-routes.servi
   styleUrls: ['./edit-role.component.scss']
 })
 export class EditRoleComponent implements OnInit {
-  @ViewChild('legelEntity') refLegelEntity :ElementRef | any;
-	@ViewChild('location') refLocation :ElementRef | any;
-	@ViewChild('practice') refPractice :ElementRef | any;
+  @ViewChild('legelEntity') refLegelEntity: ElementRef | any;
+  @ViewChild('location') refLocation: ElementRef | any;
+  @ViewChild('practice') refPractice: ElementRef | any;
 
   Form!: FormGroup;
   roleModuleNestedForm!: FormGroup;
@@ -31,7 +31,7 @@ export class EditRoleComponent implements OnInit {
   businessGroupDropdownSupscription: Subscription = new Subscription;
   selectedBusinessGroup: SelectedBusinessGroup | any;
   editRoleID: any;
-  orgID:any;
+  orgID: any;
   isSaveButton: boolean = false;
   editRRT: any;
   editURRT: any;
@@ -47,14 +47,14 @@ export class EditRoleComponent implements OnInit {
     private authService: AuthService,
     public route: ActivatedRoute,
     private routes: GlobalRoutesService,
-    ) { }
+  ) { }
 
   ngOnInit(): void {
-    (this.roleService.authService.getOrgId() === 'intelliveer') 
-      ? this.displayCreateRoleYesNoOption = true 
+    (this.roleService.authService.getOrgId() === 'intelliveer')
+      ? this.displayCreateRoleYesNoOption = true
       : this.displayCreateRoleYesNoOption = false;
     this.initForm(this.formData);
-    this.editRoleID = this.route.snapshot.paramMap.get('id');    
+    this.editRoleID = this.route.snapshot.paramMap.get('id');
     this.getLegelEntityList();
     this.getLocationList();
     this.getPracticeList();
@@ -62,7 +62,7 @@ export class EditRoleComponent implements OnInit {
     this.getBgId();
     this.manageRoleUrl = this.routes.getSettingsRoleManageRoutes()[1].url;
   }
-  getBgId(){
+  getBgId() {
     this.businessGroupDropdownSupscription = this.businessGroupDropdownService
       .businessGroup()
       .subscribe((bg) => {
@@ -73,11 +73,9 @@ export class EditRoleComponent implements OnInit {
         }
       });
   }
-  getRoleById()
-  {
+  getRoleById() {
     this.roleService.getRoleById(this.editRoleID).subscribe((data: any) => {
       this.roleObj = data;
-      console.log("YYYYYYYYYYYYYYYYYYYYYYYYYYY",data)
       this.roleName = data.name;
       this.Form.patchValue(data);
     }, error => {
@@ -85,10 +83,9 @@ export class EditRoleComponent implements OnInit {
     });
   }
   /** Get role data from role id and BG id */
-  getRoleByBgId(id: string,bgId:any)
-  {
-    console.log(id,bgId)
-    this.roleService.getRoleByIdBgId(id,bgId).subscribe((data: any) => {
+  getRoleByBgId(id: string, bgId: any) {
+    console.log(id, bgId)
+    this.roleService.getRoleByIdBgId(id, bgId).subscribe((data: any) => {
       this.roleObj = data;
       console.log(this.roleObj)
       this.Form.patchValue(data);
@@ -100,123 +97,119 @@ export class EditRoleComponent implements OnInit {
   initForm(data?: any) {
     data = data || {};
     this.Form = this.fb.group({
-      name: [data?.fName || '', Validators.required],
-      description: [data?.lName || '', Validators.required],
+      name: [data?.fName || '',  [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
+      description: [data?.lName || '',  [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
       permissions: this.fb.array([])
     });
   }
 
   /** First Array form value*/
-	get moduleNested(){
-		return (<FormArray>this.Form.get("permissions")).controls;
-	  }
-	/** Get Second Array form value*/
-	sectionNested(i:any){
-	 return (<FormArray>this.moduleNested[i].get("sections")).controls;
-	}
+  get moduleNested() {
+    return (<FormArray>this.Form.get("permissions")).controls;
+  }
+  /** Get Second Array form value*/
+  sectionNested(i: any) {
+    return (<FormArray>this.moduleNested[i].get("sections")).controls;
+  }
 
-	/** Get Third Array form value*/
-	permissionNested(i:any,j:any){
-		let sectionForm = (<FormArray>this.moduleNested[i].get("sections")).controls
-		return (<FormArray>sectionForm[j].get("permissions")).controls
-	}
-	/** This array for permission */
-	moduleArray() : FormArray {
-		return (<FormArray>this.Form.get("permissions"));
-	}
-	newModule(): FormGroup {
-		return this.roleModuleNestedForm = this.fb.group({
-			module: new FormControl(),
-			sections:this.fb.array([]),
-		})
-	}
-	/** This array for permission Sections */
-	sectionsArray() : FormArray {
-		return (<FormArray>this.roleModuleNestedForm.get("sections"));
-	}
+  /** Get Third Array form value*/
+  permissionNested(i: any, j: any) {
+    let sectionForm = (<FormArray>this.moduleNested[i].get("sections")).controls
+    return (<FormArray>sectionForm[j].get("permissions")).controls
+  }
+  /** This array for permission */
+  moduleArray(): FormArray {
+    return (<FormArray>this.Form.get("permissions"));
+  }
+  newModule(): FormGroup {
+    return this.roleModuleNestedForm = this.fb.group({
+      module: new FormControl(),
+      sections: this.fb.array([]),
+    })
+  }
+  /** This array for permission Sections */
+  sectionsArray(): FormArray {
+    return (<FormArray>this.roleModuleNestedForm.get("sections"));
+  }
 
-	newSections(): FormGroup {
-		return this.roleNestedForm = this.fb.group({
-			section: new FormControl(),
-			permissions:this.fb.array([]),
-		})
-	}
-	permissionArray(): FormArray {
-		return <FormArray>this.roleNestedForm.get('permissions');
-	}
+  newSections(): FormGroup {
+    return this.roleNestedForm = this.fb.group({
+      section: new FormControl(),
+      permissions: this.fb.array([]),
+    })
+  }
+  permissionArray(): FormArray {
+    return <FormArray>this.roleNestedForm.get('permissions');
+  }
 
-	newPermissions(): FormGroup {
-		return this.fb.group({
-			name: new FormControl(),
-			enabled: new FormControl(false),
-			locked: new FormControl(false),
-			allowOverride: new FormControl(false),
-			attrs: {}
-		});
-	}
+  newPermissions(): FormGroup {
+    return this.fb.group({
+      name: new FormControl(),
+      enabled: new FormControl(false),
+      locked: new FormControl(false),
+      allowOverride: new FormControl(false),
+      attrs: {}
+    });
+  }
 
   getPermissionList() {
-		this.roleService.getPermissionList().subscribe(
-			(list: any) => {
-				for (let i = 0; i < list.length; i++) {
+    this.roleService.getPermissionList().subscribe(
+      (list: any) => {
+        for (let i = 0; i < list.length; i++) {
           const formGroup = this.newModule();
-					const subPermissionList = list[i].permissions;
-					for (let j = 0; j < subPermissionList.length; j++) {
-						const sectionFormGroup = this.newSections();
-						const childPermisssion =
-							subPermissionList[j].permissions;
-						for (let k = 0; k < childPermisssion.length; k++) {
-							const permissionFormGroup = this.newPermissions();
-							permissionFormGroup.patchValue({
-								name: childPermisssion[k].name,
-								enabled: false,
-								locked: false,
-								allowOverride: false,
-								attrs: {}
-							});
-							this.permissionArray().push(permissionFormGroup);
-						}
+          const subPermissionList = list[i].permissions;
+          for (let j = 0; j < subPermissionList.length; j++) {
+            const sectionFormGroup = this.newSections();
+            const childPermisssion =
+              subPermissionList[j].permissions;
+            for (let k = 0; k < childPermisssion.length; k++) {
+              const permissionFormGroup = this.newPermissions();
+              permissionFormGroup.patchValue({
+                name: childPermisssion[k].name,
+                enabled: false,
+                locked: false,
+                allowOverride: false,
+                attrs: {}
+              });
+              this.permissionArray().push(permissionFormGroup);
+            }
             sectionFormGroup.patchValue({
-							section: subPermissionList[j].section,
+              section: subPermissionList[j].section,
               displayShowAdvanced: false,
-						});
-						this.sectionsArray().push(sectionFormGroup);
-					}
-          formGroup.patchValue({module:list[i].name})
+            });
+            this.sectionsArray().push(sectionFormGroup);
+          }
+          formGroup.patchValue({ module: list[i].name })
           this.moduleArray().push(formGroup)
-				}
-				this.permissionsList = list;
-			},
-			(error) => {
-				console.log(error);
-			}
-		);
-	}
+        }
+        this.permissionsList = list;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 
   save(data: any) {
-    this.Form.value.permissions.map((items: any) =>
-    {
+    this.Form.value.permissions.map((items: any) => {
       delete items.roles;
       delete items.displayShowAdvanced
-      items.sections.map((permissionItem: any) =>
-      {
+      items.sections.map((permissionItem: any) => {
         //permissionItem.attrs = {};
         delete permissionItem._id;
-        
+
       })
       delete items._id
     })
-    if(this.roleObj.roleTemplateId)
-    {
+    if (this.roleObj.roleTemplateId) {
       this.addRoleWithTemplate(this.Form.value)
     }
-    else{
+    else {
       this.saveRoleFromScratch(this.Form.value);
     }
   }
 
-  saveRoleFromScratch(data: any)
-  {
+  saveRoleFromScratch(data: any) {
     this.alertService.conformAlert('Are you sure?', 'You want to edit a role')
       .then((result: any) => {
         if (result.value) {
@@ -235,8 +228,7 @@ export class EditRoleComponent implements OnInit {
       });
   }
 
-  saveRoleFromTemplate(data: any)
-  {
+  saveRoleFromTemplate(data: any) {
     this.alertService.conformAlert('Are you sure?', 'You want to edit a role')
       .then((result: any) => {
         if (result.value) {
@@ -254,12 +246,11 @@ export class EditRoleComponent implements OnInit {
         }
       });
   }
-  saveRoleFromTemplateBYBgId(data: any)
-  {
+  saveRoleFromTemplateBYBgId(data: any) {
     this.alertService.conformAlert('Are you sure?', 'You want to edit a role')
       .then((result: any) => {
         if (result.value) {
-          this.roleService.updateRoleFromRoleTemplate(data, this.roleObj._id,this.orgID).subscribe((data: any) => {
+          this.roleService.updateRoleFromRoleTemplate(data, this.roleObj._id, this.orgID).subscribe((data: any) => {
             this.alertService.success(
               'Success',
               'Role has been edit successfully'
@@ -274,12 +265,11 @@ export class EditRoleComponent implements OnInit {
       });
   }
 
-  cancel(){
+  cancel() {
     this.router.navigate(['dashboard/settings/role-management/manage-role'])
   }
 
-  getLegelEntityList()
-  {
+  getLegelEntityList() {
     this.roleService.getLegelEntityList().subscribe((list: any) => {
       console.log(list);
       this.legelEntityList = list;
@@ -288,8 +278,7 @@ export class EditRoleComponent implements OnInit {
     });
   }
 
-  getLocationList()
-  {
+  getLocationList() {
     this.roleService.getLocationList().subscribe((list: any) => {
       console.log(list);
       this.locationList = list;
@@ -298,8 +287,7 @@ export class EditRoleComponent implements OnInit {
     });
   }
 
-  getPracticeList()
-  {
+  getPracticeList() {
     this.roleService.getPracticeList().subscribe((list: any) => {
       console.log(list);
       this.practiceList = list;
@@ -308,74 +296,74 @@ export class EditRoleComponent implements OnInit {
     });
   }
 
-   /** Show data According To Type and BG */
-   getOrgBgId(){
-    let bgOrdID:any = localStorage.getItem('selected_business_group');
-		let user:any =	localStorage.getItem('permissionSet');
+  /** Show data According To Type and BG */
+  getOrgBgId() {
+    let bgOrdID: any = localStorage.getItem('selected_business_group');
+    let user: any = localStorage.getItem('permissionSet');
     let orgId = this.authService.getOrgId();
     user = JSON.parse(user);
     this.orgID = bgOrdID;
     console.log(user)
-		if (user?.__ISSU__) {
-      if(bgOrdID == 'intelliveer' || bgOrdID == null){
+    if (user?.__ISSU__) {
+      if (bgOrdID == 'intelliveer' || bgOrdID == null) {
         this.getRoleById();
-      }else{
-        this.getRoleByBgId(this.editRoleID,bgOrdID)
+      } else {
+        this.getRoleByBgId(this.editRoleID, bgOrdID)
       }
-      }else{
-        if(bgOrdID == 'intelliveer' || bgOrdID == null){
-          bgOrdID = orgId
-        }
-      this.getRoleByBgId(this.editRoleID,bgOrdID)
+    } else {
+      if (bgOrdID == 'intelliveer' || bgOrdID == null) {
+        bgOrdID = orgId
+      }
+      this.getRoleByBgId(this.editRoleID, bgOrdID)
     }
-	}
+  }
   /** Update Role with Template  */
-	addRoleWithTemplate(data:any){
-		let user = this.authService.getLoggedInUser();
-		let bgOrdID:any = localStorage.getItem('selected_business_group');
+  addRoleWithTemplate(data: any) {
+    let user = this.authService.getLoggedInUser();
+    let bgOrdID: any = localStorage.getItem('selected_business_group');
     this.orgID = bgOrdID;
-		if(user?.__ISSU__){
-			if(this.roleObj._id != "intelliveer" && bgOrdID != null){
-			  this.saveRoleFromTemplateBYBgId(data);
-			}else{
-			  this.saveRoleFromTemplate(data);
-			}
-		}else{
-			this.saveRoleFromTemplateBYBgId(data)
-		}
-	}
-  checkPermission(){
-		let user:any =	localStorage.getItem('permissionSet');
+    if (user?.__ISSU__) {
+      if (this.roleObj._id != "intelliveer" && bgOrdID != null) {
+        this.saveRoleFromTemplateBYBgId(data);
+      } else {
+        this.saveRoleFromTemplate(data);
+      }
+    } else {
+      this.saveRoleFromTemplateBYBgId(data)
+    }
+  }
+  checkPermission() {
+    let user: any = localStorage.getItem('permissionSet');
     user = JSON.parse(user);
     console.log(user)
-    if(user.__ISSU__){
+    if (user.__ISSU__) {
       this.isSaveButton = true
-    }else if (user.isBGAdmin){
+    } else if (user.isBGAdmin) {
       this.isSaveButton = true
-    }else{
-      user?.roles[0]?.permissions[0]?.sections.forEach((element:any) => {
-        if(element.section == 'templateBasedRestrictedRoles'){
-          element.permissions.forEach((RRT:any) => {
+    } else {
+      user?.roles[0]?.permissions[0]?.sections.forEach((element: any) => {
+        if (element.section == 'templateBasedRestrictedRoles') {
+          element.permissions.forEach((RRT: any) => {
             switch (RRT.name) {
               case "CAN_CREATE_TEMPLATE_BASED_RESTRICTED_ROLE":
                 this.isSaveButton = RRT.enabled;
                 break;
-             
+
             }
           });
-        }else  if(element.section == 'templateBasedUnRestrictedRoles'){
-          element.permissions.forEach((URRT:any) => {
+        } else if (element.section == 'templateBasedUnRestrictedRoles') {
+          element.permissions.forEach((URRT: any) => {
             switch (URRT.name) {
               case "CAN_CREATE_TEMPLATE_BASED_UNRESTRICTED_ROLE":
                 this.isSaveButton = URRT.enabled;
                 break;
-              
+
             }
           });
         }
       });
     }
-   
-	}
+
+  }
 
 }

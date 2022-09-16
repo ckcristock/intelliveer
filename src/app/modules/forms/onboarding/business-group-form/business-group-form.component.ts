@@ -8,6 +8,7 @@ import {
 	AfterViewInit
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NavigationEnd } from '@angular/router';
 import { CONFIG } from '@config/index';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
 import { AddPatientService } from '@services/add-patient/add-patient.service';
@@ -18,7 +19,11 @@ import { AddressFormService } from '@services/forms/address-form/address-form.se
 import { ContactDetailsFormService } from '@services/forms/contact-details-form/contact-details-form.service';
 import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
 import { GeoService } from '@services/global-data/public/geo/geo.service';
+import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
+import { BusinessGroupService } from '@services/onboarding/business-group/business-group.service';
 import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
+import { filter } from 'rxjs';
+import { SearchStringPipePipe } from 'src/app/pipes/stringSearch/search-string-pipe.pipe';
 
 @Component({
 	selector: 'app-business-group-form',
@@ -47,6 +52,14 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 	userPassword: any;
 	ipAddress: any;
 	userCity: any;
+	isSaveButton: boolean = false;
+	bussinessEdit: any;
+	inEdit: boolean = false;
+	BGFormDisable!: boolean;
+	businessGroupEditName!: string;
+	BGname!: string;
+	urlOnboarding!: any;
+
 
 	constructor(
 		private fb: FormBuilder,
@@ -60,33 +73,43 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 		private addPatientServ: AddPatientService,
 		private insuranceServ: InsuranceService,
 		private onboardingServ: OnboardingService,
+		private searchString: SearchStringPipePipe,
+		private globalRoutes: GlobalRoutesService,
+		private businessGroupService: BusinessGroupService
+
 	) { }
 
 	ngOnInit() {
+		
 		this.getCountries();
 		this.getIPAddress();
 		this.loadIp();
 		this.initBGForm(this.formData);
+		this.enableAndDisableInputs();
 		this.patientUserServ.setFalseAllNotPristine();
 		this.addPatientServ.setFalseAllNotPristineCWP();
 		this.insuranceServ.setFalseAllNotPristine();
 		this.onboardingServ.setFalseAllNotPristine();
 		this.BGForm?.statusChanges.subscribe(
 			result => {
-				console.log(result)
 				if (!this.BGForm?.pristine) {
-					console.log("this.BGForm?.pristine", this.BGForm?.pristine);
-					console.log("status", this.BGForm?.pristine);
 					this.onboardingServ.setbusinessGroupNotPristine(true);
-					console.log("foooooorm", this.BGForm);
-					
 				}
 			}
 		);
+		this.urlOnboarding = this.globalRoutes.getSettingsOnboardingUrl();
 	}
 	ngAfterViewInit(): void { }
 	initBGForm(data?: any) {
 		data = data || {};
+		if (Object.keys(data).length != 0) {
+			this.inEdit = true;
+			this.BGFormDisable = true;
+		} else if (Object.keys(data).length == 0) {
+			this.inEdit = false;
+			this.BGFormDisable = false;
+		}
+
 		this.BGForm = this.fb.group({
 			logo: [data?.logo || 'null'],
 			name: [data?.name || '', Validators.required],
@@ -96,9 +119,9 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 			TIN: [data?.TIN || ''],
 			country: [data?.country || '', Validators.required],
 			currency: [data?.currency || '', Validators.required],
-			password: ['', Validators.required],
+			password: ['', this.password ? [Validators.required] : null],
 			physicalAddress: this.addressFormService.getAddressForm(
-				data?.physicalAddress || {}, 
+				data?.physicalAddress || {},
 			),
 			mailingAddress: this.addressFormService.getAddressForm(
 				data?.mailingAddress || {}
@@ -120,22 +143,20 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 				}
 			)
 		});
+
+		this.addressFormService.setDisabledOrEnabled(this.BGFormDisable);
+		this.contactPersonFormService.setDisabledOrEnabled(this.BGFormDisable);
+		this.BGname = this.BGForm.get('name')?.value;
+		// this.BGForm?.get(field)?.valid
+
 	}
 
-	bgNameValid() {
-		return this.BGForm?.get('name')?.valid;
-	}
-
-	countryValid() {
-		return this.BGForm?.get('country')?.valid;
-	}
-
-	currencyValid() {
-		return this.BGForm?.get('currency')?.valid;
-	}
-
-	passwordValid() {
-		return this.BGForm?.get('password')?.valid;
+	fieldValidation(field: any, notRequiredButPattern?: boolean) {
+		if (notRequiredButPattern) {
+			return (this.BGForm?.get(field)?.valid && this.BGForm?.get(field)?.value != null);
+		} else {
+			return this.BGForm?.get(field)?.value != null
+		}
 	}
 
 	save(data: any) {
@@ -163,8 +184,6 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 		this.geoService.getCountries().subscribe({
 			next: (res) => {
 				this.countries = res;
-				console.log("countries", res);
-
 			}
 		});
 	}
@@ -175,7 +194,6 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 	getIPAddress() {
 		this.http.get("http://api.ipify.org/?format=json").subscribe((res: any) => {
 			this.ipAddress = res;
-			console.log("this.ipAddress", this.ipAddress);
 		});
 	}
 
@@ -188,6 +206,33 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 					this.userCity = value.city;
 				});
 			});
+	}
+
+	checkPermission() {
+		let bussinessGroup = this.globalRoutes.getSettingsOnboardingRoutes();
+		let getBusinessGroup = this.searchString.transform('title', bussinessGroup, 'Business Group');
+		this.bussinessEdit = this.searchString.transform('title', getBusinessGroup[0].child, 'Edit');
+		if (this.bussinessEdit[0].isEnabled) {
+			this.isSaveButton = true;
+			this.enableAndDisableInputs();
+		} else if (!this.bussinessEdit.isEnable) {
+			this.isSaveButton = false;
+		}
+
+	}
+
+	enableAndDisableInputs() {
+		if (this.inEdit) {
+			if (!this.isSaveButton) {
+				this.BGForm?.disable();
+				this.BGFormDisable = true;
+			} else if (this.isSaveButton) {
+				this.BGForm?.enable();
+				this.BGFormDisable = false;
+			}
+			this.addressFormService.setDisabledOrEnabled(this.BGFormDisable);
+			this.contactPersonFormService.setDisabledOrEnabled(this.BGFormDisable);
+		}
 	}
 }
 

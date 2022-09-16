@@ -1,4 +1,4 @@
-import { Component, Input, OnInit,AfterViewInit } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IMenuItem } from '@pages/dashboard/menu';
@@ -45,7 +45,7 @@ export class PatientFormComponent implements OnInit {
 		dateBirth: '',
 		gender: '',
 		location: '',
-        legalEntity:''
+		legalEntity: ''
 	};
 	patientID: any;
 	patientData: any;
@@ -63,10 +63,10 @@ export class PatientFormComponent implements OnInit {
 	selectedBusinessGroup: SelectedBusinessGroup | undefined;
 	public patientObj: Patient | undefined;
 	bgId: any;
-	model!:NgbDateStruct
-	alertText:any;
-	confirmButtonText:any
-	cancelButtonText:any
+	model!: NgbDateStruct
+	alertText: any;
+	confirmButtonText: any
+	cancelButtonText: any
 	constructor(
 		private router: Router,
 		private fb: FormBuilder,
@@ -114,12 +114,12 @@ export class PatientFormComponent implements OnInit {
 				result => {
 					if (!this.Form.pristine) {
 						this.addPatientServ.setPatientNotPristineCWP(true);
-                        if(this.Form.invalid){
+						if (this.Form.invalid) {
 							this.addPatientServ.setPatentMandatoryFields(true)
-						}else{
+						} else {
 							this.addPatientServ.setPatentMandatoryFields(false)
 						}
-						let saveObj:any = {
+						let saveObj: any = {
 							practiceId: this.Form.value?.practice,
 							profile: {
 								title: '',
@@ -163,7 +163,7 @@ export class PatientFormComponent implements OnInit {
 		return [this.patient];
 	}
 
-	continueToLegalGuar(result:any) {
+	continueToLegalGuar(result: any) {
 		if (this.tab == "coordWithProspect") {
 			this.addPatientServ.setPatientNotPristineCWP(false);
 			this.addPatientServ.setPatientCWP(result);
@@ -194,24 +194,16 @@ export class PatientFormComponent implements OnInit {
 		});
 	}
 
-	practiceValid() {
-		return this.Form.get('practice')?.valid;
-	}
-
-	firstNameValid() {
-		return this.Form.get('firstName')?.valid;
-	}
-
-	lastNameValid() {
-		return this.Form.get('lastName')?.valid;
-	}
-
-	DOBValid() {
-		return this.Form.get('DOB')?.valid;
+	fieldValidation(field: any, notRequiredButPattern?: boolean) {
+		if (notRequiredButPattern) {
+			return (this.Form.get(field)?.valid && this.Form.get(field)?.value != null);
+		} else {
+			return this.Form.get(field)?.value != null
+		}
 	}
 
 	save(data: any) {
-		let saveObj:any = {
+		let saveObj: any = {
 			practiceId: data.value?.practice,
 			profile: {
 				title: '',
@@ -261,7 +253,7 @@ export class PatientFormComponent implements OnInit {
 						console.log(error);
 					}
 				);
-			}else{
+			} else {
 				this.patientDetailService.savePatient(saveObj, this.bgId).subscribe(
 					(result: any) => {
 						this.alertService.success(
@@ -355,23 +347,23 @@ export class PatientFormComponent implements OnInit {
 	}
 	openModel(content: any) {
 		let firstName = this.Form.value.firstName;
-		if(firstName == undefined){
+		if (firstName == undefined) {
 			firstName = '';
 		}
 		let lastName = this.Form.value.lastName;
-		if(lastName == undefined){
+		if (lastName == undefined) {
 			lastName = ''
 		}
-        let dateOFBirth = this.Form.value.DOB;
-		if(dateOFBirth == undefined){
+		let dateOFBirth = this.Form.value.DOB;
+		if (dateOFBirth == undefined) {
 			dateOFBirth = ''
 		}
-		if(firstName != '' || lastName != '' || this.Form.value.gender != '' || this.Form.value.legalEntity != ''  || this.Form.value.practice != ''  || this.Form.value.location != '' || dateOFBirth != '' ){
-		    if(this.Form.valid){
+		if (firstName != '' || lastName != '' || this.Form.value.gender != '' || this.Form.value.legalEntity != '' || this.Form.value.practice != '' || this.Form.value.location != '' || dateOFBirth != '') {
+			if (this.Form.valid) {
 				this.alertText = "Would you like to discard or save it?"
 				this.confirmButtonText = "Save";
 				this.cancelButtonText = "Discard"
-			}else if(this.Form.invalid){
+			} else if (this.Form.invalid) {
 				this.alertText = "Mandatory fields are required to save."
 				this.confirmButtonText = false;
 				this.cancelButtonText = "Discard"
@@ -383,18 +375,17 @@ export class PatientFormComponent implements OnInit {
 					this.savePatientForm()
 				}
 			})
-		}else
-		{
-		this.addPatientServ.setPatientNotPristineCWP(false);
-		this.router.navigate(['/dashboard/home']);
+		} else {
+			this.addPatientServ.setPatientNotPristineCWP(false);
+			this.router.navigate(['/dashboard/home']);
 		}
 	}
-	discardPatient(){
+	discardPatient() {
 		this.modalService.dismissAll();
 		this.addPatientServ.setPatientNotPristineCWP(false);
 		this.router.navigate(['/dashboard/home']);
 	}
-	savePatientForm(){
+	savePatientForm() {
 		this.modalService.dismissAll();
 		this.save(this.Form)
 	}

@@ -38,10 +38,7 @@ export class PolicyInfoComponent implements OnInit {
 		this.onboardingServ.setFalseAllNotPristine();
 		this.Form?.statusChanges.subscribe(
 			result => {
-				console.log(result)
 				if (!this.Form?.pristine) {
-					console.log("hiiiiii", event);
-					console.log("status", this.Form?.pristine);
 					this.insuranceServ.setPolicyInfoNotPristine(true);
 				}
 			}

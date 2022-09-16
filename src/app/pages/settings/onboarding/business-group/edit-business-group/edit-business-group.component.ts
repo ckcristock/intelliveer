@@ -42,6 +42,7 @@ export class EditBusinessGroupComponent
 		this.businessGroupService.getBusinessGroup(id).subscribe({
 			next: (data: any) => {
 				this.data = data;
+				this.businessGroupService.setBusinessGroup(this.data);
 			},
 			error: () => {}
 		});
