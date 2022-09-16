@@ -37,8 +37,9 @@
 						<img src="assets/icons/patient_flow.svg" />
 					</li>
 					<li class="icon mb-3" ngbTooltip="{{ 'Practice Tool' }}" routerLinkActive="active"
-						[routerLink]="'NA'" placement="right">
-						<img src="assets/icons/practice_tools.svg" />
+						[routerLink]="'/dashboard/practice-tool'" placement="right">
+						<img src="assets/icons/practice_tools-disable.svg" *ngIf="router.url != '/dashboard/practice-tool'" />
+						<img src="assets/icons/practice_tools-colour.svg" *ngIf="router.url == '/dashboard/practice-tool'" />
 					</li>
 					<li class="icon mb-3" ngbTooltip="{{ 'Practice Management' }}" routerLinkActive="active"
 						[routerLink]="'NA'" placement="right">
@@ -85,9 +86,12 @@
 							Patient Flow
 						</div>
 					</li>
-					<li routerLinkActive="active" [routerLink]="'NA'" placement="right">
+					<li routerLinkActive="active" [routerLink]="'/dashboard/practice-tool'" placement="right">
 						<div class="icon">
-							<img src="assets/icons/practice_tools.svg" width="20" height="15" />
+							<img src="assets/icons/practice_tools-disable.svg" width="20" height="15"
+								*ngIf="router.url != '/dashboard/practice-tool'" />
+							<img src="assets/icons/practice_tools-colour.svg" width="20" height="15"
+								*ngIf="router.url == '/dashboard/practice-tool'" />
 							Practice Tool
 						</div>
 					</li>

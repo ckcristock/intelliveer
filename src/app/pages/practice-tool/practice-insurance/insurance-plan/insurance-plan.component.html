@@ -1,0 +1,87 @@
+<div
+	*ngIf="insuranceList?.length == 0"
+	class="section"
+	style="height: 90%"
+>
+	<div style="text-align: center; padding-top: 7%">
+		<div>
+			<h5><b>You haven’t added yet</b></h5>
+			<p>
+				Click here,
+				<img
+					src="assets/icons/add.svg"
+					width="36"
+					height="36"
+                    (click)="onAdd()"
+				/>
+				to add Insurance Plan
+			</p>
+		</div>
+	</div>
+</div>
+<div *ngIf="insuranceList?.length != 0">
+	
+<div class="container">
+	<app-nav-bar-pills
+		[menuItems]="menuItems"
+		[activeClass]="''"
+		[cancelBtn]="false"
+		[saveBtn]="false"
+		[addBtn]="true"
+		(onAdd)="onAdd()"
+	></app-nav-bar-pills>
+</div>
+
+<div class="container mt-4">
+	<div class="row">
+		<table class="table">
+			<thead>
+				<tr>
+                    <th scope="col">Plans</th>
+					<th scope="col">Date</th>
+					<th scope="col">Plan Type</th>
+					<th scope="col">Electronic ID</th>
+					<th scope="col">Actions</th>
+				</tr>
+			</thead>
+			<tbody *ngIf="insuranceList">
+				<tr *ngFor="let d of insuranceList; let i = index">
+					<td (click)="onEdit(d?._id)">
+						<span class="pointer">{{d?.profile?.insurancePlanName}}</span>
+					</td>
+					<td (click)="onEdit(d?._id)">
+						<span class="pointer">{{d?.createdAt | date: 'mediumDate'}}</span>
+					</td>
+					<td (click)="onEdit(d?._id)">
+						<span class="pointer"
+							>{{d?.profile?.planType}}</span
+						>
+					</td>
+					<td (click)="onEdit(d?._id)">
+						<span class="pointer">{{d?.profile?.electronicId}}</span>
+					</td>
+
+					<td>
+						<div
+							ngbDropdown
+							container="body"
+							placement="bottom-end"
+						>
+							<button
+								class="btn btn-light btn-sm more_btn"
+								ngbDropdownToggle
+							>
+								<i class="bi bi-three-dots-vertical"></i>
+							</button>
+							<div ngbDropdownMenu>
+								<button ngbDropdownItem (click)="onDelete(d?._id)">Delete</button>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+</div>
+

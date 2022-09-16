@@ -1,0 +1,43 @@
+<div class="row" *ngIf="Form">
+	<app-nav-bar-pills
+		[menuItems]="menuItems"
+		[activeClass]="currentSelection"
+		[cancelBtn]="true"
+		[saveBtn]="true"
+		[disableSaveBtn]="Form.invalid || Form.pristine"
+		(onCancel)="cancel()"
+		(onSave)="save(Form.value)"
+	></app-nav-bar-pills>
+	<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
+		<div
+			class="col-12"
+			id="main"
+			scrollSpy
+			(sectionChange)="onSectionChange($event)"
+		>
+			<div class="section" id="eligibility">
+                <div class="row">
+					<h6 class="heading">Insurance Group Information</h6>
+				</div>
+				<div class="row mb-3">
+                    <div class="col-3">
+						<label class="required">Group Number</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="groupNumber"
+						/>
+					</div>
+                    <div class="col-3">
+						<label class="required">Group Name</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="groupName"
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

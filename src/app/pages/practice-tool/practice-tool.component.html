@@ -1,0 +1,28 @@
+<div class="container content">
+
+	<!-- Nav -->
+	<div class="d-flex justify-content-end align-items-end global-bg-dropdown formrow">
+		<div class="col" *ngIf="onPage" style="margin-top: 18px;">
+			<span>Practice Tools</span>
+		</div>
+	</div>
+	<hr style="margin-bottom: 25px;" />
+
+	<!-- squares -->
+	<div class="row" *ngIf="onPage">
+		<div class="col component-view">
+			<div class="squares">
+				<div class="square" *ngFor="let menuItem of menuItems; let i = index" [routerLink]="menuItem.url">
+					<p>{{ menuItem.name }}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- content -->
+	<div class="row" *ngIf="!onPage">
+		<div class="col component-view">
+			<router-outlet></router-outlet>
+		</div>
+	</div>
+</div>

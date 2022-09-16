@@ -34,6 +34,13 @@ const routes: Routes = [
 						(m) => m.HeaderModule
 					),
 			},
+			{
+				path: 'practice-tool',
+				loadChildren: () =>
+					import('@pages/practice-tool/practice-tool.module').then(
+						(m) => m.PracticeToolModule
+					),
+			},
 		]
 	}
 ];

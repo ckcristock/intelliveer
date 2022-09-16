@@ -1,0 +1,392 @@
+<div class="row" *ngIf="Form">
+	<app-nav-bar-pills
+		[menuItems]="menuItems"
+		[activeClass]="currentSelection"
+		[cancelBtn]="true"
+		[saveBtn]="true"
+		[disableSaveBtn]="Form.invalid || Form.pristine"
+		(onCancel)="cancel()"
+		(onSave)="save(Form.value)"
+	></app-nav-bar-pills>
+	<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
+		<div
+			class="col-12"
+			id="main"
+			scrollSpy
+			(sectionChange)="onSectionChange($event)"
+		>
+			<div class="section" id="eligibility">
+                <div class="row">
+					<h6 class="heading">Eligibility</h6>
+				</div>
+				<div class="row mb-3">
+					<div class="col-3">
+						<label class="required">Month to Month Eligibility?</label>
+						<ng-select
+							formControlName="planType"
+							class="form-control"
+						>
+							<ng-option>Select</ng-option>
+						</ng-select>
+					</div>
+                    <div class="col-3">
+						<label class="required">Age limit for subscriber</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="name"
+						/>
+					</div>
+                    <div class="col-3">
+						<label class="required">Age limit for dependant (Child)</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="name"
+						/>
+					</div>
+                    <div class="col-3">
+						<label class="required">Age limit for dependant (Student)</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="name"
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="section" id="cob">
+				<div class="row">
+					<h6 class="heading">COB/Assignment</h6>
+				</div>
+				<div class="row mb-3">
+					<div class="col-3">
+						<label class="required">Type of Coordination of benefits</label>
+						<ng-select
+							formControlName="planType"
+							class="form-control"
+						>
+							<ng-option>Select</ng-option>
+						</ng-select>
+					</div>
+                    <div class="col-3">
+						<label class="required">Assignment of Benefits</label>
+						<ng-select
+							formControlName="planType"
+							class="form-control"
+						>
+							<ng-option>Select</ng-option>
+						</ng-select>
+					</div>
+				</div>
+			</div>
+			<div class="section" id="deductible">
+				<div class="row">
+					<h6 class="heading">Deductible</h6>
+				</div>
+
+				<div class="row mb-3">
+					<div class="col-3">
+						<label class="required">Deductible (Family)</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="name"
+						/>
+					</div>
+                    <div class="col-3">
+						<label class="required">Deductible (Individual)</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="name"
+						/>
+					</div>
+                    <div class="col-3">
+						<label class="required">Percentage Covered for Ortho</label>
+						<div class="input-group mb-3" style="border: 0">
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                            <span class="input-group-text">%</span>
+                        </div>
+					</div>
+				</div>
+			</div>
+			<div class="section" id="benefits">
+				<div class="row">
+					<h6 class="heading">Benefits</h6>
+				</div>
+                <div class="row mb-3">
+                    <div class="col-4">
+						<label class="required">Orthodontic Maximum Type: Lifetime/Annual</label>
+						<ng-select
+							formControlName="planType"
+							class="form-control"
+						>
+							<ng-option>Select</ng-option>
+						</ng-select>
+					</div>
+                    <div class="col-4">
+						<label class="required">Orthodontic Maximum Amount (In Network)</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="name"
+						/>
+					</div>
+                    <div class="col-4">
+						<label class="required">Orthodontic Maximum Amount (Out Network)</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="name"
+						/>
+					</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-3">
+						<p class="label-input-gap">
+							Is work in progress covered?
+						</p>
+						<div class="two-radios">
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp1"
+									name="inlineCoveredOptions"
+									value="yes"
+									checked
+								/>
+								<label class="form-check-label" for="facialapp1"
+									>Yes</label
+								>
+							</div>
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp2"
+									name="inlineCoveredOptions"
+									value="no"
+								/>
+								<label class="form-check-label" for="facialapp2"
+									>No</label
+								>
+							</div>
+						</div>
+					</div>
+                    <div class="col-3">
+						<p class="label-input-gap">
+							Any exclusion for Ortho?
+						</p>
+						<div class="two-radios">
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp1"
+									name="inlineOrthoOptions"
+									value="yes"
+									checked
+								/>
+								<label class="form-check-label" for="facialapp1"
+									>Yes</label
+								>
+							</div>
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp2"
+									name="inlineOrthoOptions"
+									value="no"
+								/>
+								<label class="form-check-label" for="facialapp2"
+									>No</label
+								>
+							</div>
+						</div>
+					</div>
+                </div>
+			</div>
+			<div class="section" id="authorization">
+				<div class="row">
+					<h6 class="heading">Pre-authorization</h6>
+				</div>
+				<div class="row mb-3">
+					<div class="col-4">
+						<p class="label-input-gap">
+							Is preauthorization mandatory?
+						</p>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlinePreauthorizationOptions" id="inlineRadio1" value="yes" checked>
+                            <label class="form-check-label" for="inlineRadio1">Yes</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlinePreauthorizationOptions" id="inlineRadio2" value="no">
+                            <label class="form-check-label" for="inlineRadio2">No</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlinePreauthorizationOptions" id="inlineRadio3" value="recommended">
+                            <label class="form-check-label" for="inlineRadio3">Recommended</label>
+                          </div>
+					</div>
+                    <div class="col-6">
+						<p class="label-input-gap">
+							Does preauthorization need to be submitted on Insurance provided form?
+						</p>
+						<div class="two-radios">
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp1"
+									name="inlineProvidedOptions"
+									value="yes"
+									checked
+								/>
+								<label class="form-check-label" for="facialapp1"
+									>Yes</label
+								>
+							</div>
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp2"
+									name="inlineProvidedOptions"
+									value="no"
+								/>
+								<label class="form-check-label" for="facialapp2"
+									>No</label
+								>
+							</div>
+						</div>
+					</div>
+				</div>
+                <div class="row mb-3">
+                    <div class="col-8">
+                        <p class="label-input-gap">
+							What do we need to be submit along with preauthorization?
+						</p>
+						<div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                            <label class="form-check-label" for="inlineCheckbox1">Study Models</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                            <label class="form-check-label" for="inlineCheckbox2">Photos</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option1">
+                            <label class="form-check-label" for="inlineCheckbox3">Panoramic X-ray</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option2">
+                            <label class="form-check-label" for="inlineCheckbox4">Cephalometric X-ray</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option1">
+                            <label class="form-check-label" for="inlineCheckbox5">Exam Summary</label>
+                          </div>
+                    </div>
+                </div>
+			</div>
+			<div class="section" id="bandp">
+				<h6 class="heading">BIlling & Payments</h6>
+				<div class="row mb-3">
+					<div class="col-5">
+						<p class="label-input-gap">
+							Are benefits paid automatically after initial claim?
+						</p>
+						<div class="two-radios">
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp1"
+									name="inlineBenefitsOptions"
+									value="yes"
+									checked
+								/>
+								<label class="form-check-label" for="facialapp1"
+									>Yes</label
+								>
+							</div>
+							<div class="yes-no-radio">
+								<input
+									class="form-check-input"
+									type="radio"
+									id="facialapp2"
+									name="inlineBenefitsOptions"
+									value="no"
+								/>
+								<label class="form-check-label" for="facialapp2"
+									>No</label
+								>
+							</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<p class="label-input-gap">
+							Initial payment amount/percentage
+						</p>
+						<div class="two-radios">
+							<div class="yes-no-radio">
+								<div (click)="paymentSelect = !paymentSelect">
+									<button type="button" [ngClass]="paymentSelect == false?'btn btn-dark':'btn btn-light'" style="border-radius: 1px; height: 3em; width: 10em;">Percentage (%)</button>
+								</div>
+								<div (click)="paymentSelect = !paymentSelect">
+									<button type="button" [ngClass]="paymentSelect == true?'btn btn-dark':'btn btn-light'" style="border-radius: 1px; height: 3em; width: 10em;">Amount ($)</button>
+								</div>
+								<div><input type="number" class="form-control" style="width: 6em; border-radius: 0px; width: 10em;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+                <div class="row mb-3">
+					<div class="col-8">
+						<p class="label-input-gap">
+							Payment Schedule
+						</p>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlinePaymentOptions" id="inlineRadio1" value="monthly">
+                            <label class="form-check-label" for="inlineRadio1">Monthly</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlinePaymentOptions" id="inlineRadio2" value="quarterly">
+                            <label class="form-check-label" for="inlineRadio2">Quarterly</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlinePaymentOptions" id="inlineRadio3" value="semi-annual">
+                            <label class="form-check-label" for="inlineRadio3">Semi-annual</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlinePaymentOptions" id="inlineRadio4" value="annual" checked>
+                            <label class="form-check-label" for="inlineRadio4">Annual</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlinePaymentOptions" id="inlineRadio5" value="lumpSum">
+                            <label class="form-check-label" for="inlineRadio5">Lump Sum</label>
+                          </div>
+					</div>
+				</div>
+                <div class="row mb-3">
+					<div class="col-8">
+						<p class="label-input-gap">
+							Do we need to submit:
+						</p>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlinePaymentOptions" id="inlineRadio1" value="periodicClaims" checked>
+                            <label class="form-check-label" for="inlineRadio1">Periodic Claims</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlinePaymentOptions" id="inlineRadio2" value="recertificationForms">
+                            <label class="form-check-label" for="inlineRadio2">Recertification Forms?</label>
+                          </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
