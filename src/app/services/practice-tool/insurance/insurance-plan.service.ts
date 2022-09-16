@@ -45,7 +45,7 @@ export class InsurancePlanService {
 
 	update(Obj: any, bgId: any) {
 		return this.http.put(
-			`${CONFIG.backend.host}/bg/insurance-plan/`,
+			`${CONFIG.backend.host}/bg/insurance-plan`,
 			Obj,
 			{
 				headers: {

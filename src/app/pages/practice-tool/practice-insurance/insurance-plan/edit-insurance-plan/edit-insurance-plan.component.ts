@@ -100,7 +100,7 @@ export class EditInsurancePlanComponent implements OnInit {
 	}
 
 	update(data: any) {
-		console.log(data);
+		data._id = this.id;
 		this.alertService
 			.conformAlert('Are you sure', 'you want to update insurance plan')
 			.then((value: any) => {
