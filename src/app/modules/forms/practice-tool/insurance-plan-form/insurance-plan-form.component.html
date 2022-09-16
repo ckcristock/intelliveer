@@ -36,7 +36,6 @@
 							type="text"
 							class="form-control mandatory-field"
 							formControlName="insurancePlanName"
-							[(ngModel)]="formData?.profile.insurancePlanName"
 						/>
 					</div>
 					<div class="col-4">
@@ -44,7 +43,6 @@
 						<ng-select
 							formControlName="planType"
 							class="red-bottom-line"
-							[(ngModel)]="formData?.profile.planType"
 						>
 							<ng-option>Select</ng-option>
 						</ng-select>
@@ -55,7 +53,6 @@
 							type="text"
 							class="form-control"
 							formControlName="electronicId"
-							[(ngModel)]="formData?.profile.electronicId"
 						/>
 					</div>
 				</div>
@@ -65,20 +62,19 @@
 						<ng-select
 							formControlName="feeScheduleOffice"
 							class="red-bottom-line"
-							[(ngModel)]="formData?.profile.officeFeeSchedule"
 						>
 							<ng-option>Select</ng-option>
 						</ng-select>
 					</div>
 					<div class="col-4">
 						<label class="required">Fee Schedule (Insurance)</label>
-						<ng-select formControlName="feeScheduleInsurance"[(ngModel)]="formData?.profile.insuranceFeeSchedule">
+						<ng-select formControlName="feeScheduleInsurance">
 							<ng-option>Select</ng-option>
 						</ng-select>
 					</div>
 					<div class="col-4">
 						<label class="required">Fee Schedule (Co-pay)</label>
-						<ng-select formControlName="feeScheduleCoPay" [(ngModel)]="formData?.profile.copayFeeSchedule">
+						<ng-select formControlName="feeScheduleCoPay" >
 							<ng-option>Select</ng-option>
 						</ng-select>
 					</div>
@@ -108,7 +104,6 @@
 							placeholder=""
 							name="id"
 							formControlName="emailId"
-							[(ngModel)]="formData?.claimInformation!.contact!.email"
 						/>
 					</div>
 
@@ -120,7 +115,6 @@
 							class="input-upper input-upper"
 							placeholder="Select"
 							formControlName="primaryPhoneType"
-							[(ngModel)]="formData?.claimInformation!.contact!.primaryPhone!.type"
 						>
 							<ng-option
 								[value]="phone.value"
@@ -141,7 +135,6 @@
 							placeholder=""
 							name="name"
 							formControlName="primaryPhoneNumber"
-							[(ngModel)]="formData?.claimInformation!.contact!.primaryPhone!.number"
 						/>
 					</div>
 				</div>
@@ -155,7 +148,6 @@
 							class="input-upper"
 							formControlName="secondaryPhoneType"
 							placeholder="Select"
-							[(ngModel)]="formData?.claimInformation!.contact!.secondaryPhone!.type"
 						>
 							<ng-option> Select </ng-option>
 						</ng-select>
@@ -171,7 +163,6 @@
 							placeholder=""
 							name="name"
 							formControlName="secondaryPhoneNumber"
-							[(ngModel)]="formData?.claimInformation!.contact!.secondaryPhone!.number"
 						/>
 					</div>
 
@@ -183,7 +174,6 @@
 							class="input-upper input-upper"
 							formControlName="preferedMailMethodClaim"
 							placeholder="Select"
-							[(ngModel)]="formData?.claimInformation!.contact!.preferedMailMethod"
 						>
 							<ng-option value="s"> Select </ng-option>
 						</ng-select>
@@ -200,7 +190,6 @@
 								name="website"
 								formControlName="websiteClaim"
 								style="border-right: 0px"
-								[(ngModel)]="formData?.claimInformation!.contact!.website"
 							/>
 							<span
 								class="input-group-text"
@@ -216,7 +205,6 @@
 							type="number"
 							placeholder=""
 							name="fax"
-							[(ngModel)]="formData?.claimInformation!.contact!.fax"
 							formControlName="faxClaim"
 						/>
 					</div>
@@ -246,7 +234,6 @@
 							placeholder=""
 							name="id"
 							formControlName="emailIdProvider"
-							[(ngModel)]="formData?.providershipInformation!.contact!.email"
 						/>
 					</div>
 
@@ -258,7 +245,6 @@
 							class="input-upper input-upper"
 							placeholder="Select"
 							formControlName="primaryPhoneTypeProvider"
-							[(ngModel)]="formData?.providershipInformation!.contact!.primaryPhone!.type"
 						>
 							<ng-option
 								[value]="phone.value"
@@ -279,7 +265,6 @@
 							placeholder=""
 							name="name"
 							formControlName="primaryPhoneNumberProvider"
-							[(ngModel)]="formData?.providershipInformation!.contact!.primaryPhone!.number"
 						/>
 					</div>
 				</div>
@@ -293,7 +278,6 @@
 							class="input-upper"
 							formControlName="secondaryPhoneTypeProvider"
 							placeholder="Select"
-							[(ngModel)]="formData?.providershipInformation!.contact!.secondaryPhone!.type"
 						>
 							<ng-option> Select </ng-option>
 						</ng-select>
@@ -309,7 +293,6 @@
 							placeholder=""
 							name="name"
 							formControlName="secondaryPhoneNumberProvider"
-							[(ngModel)]="formData?.providershipInformation!.contact!.secondaryPhone!.number"
 						/>
 					</div>
 
@@ -321,7 +304,6 @@
 							class="input-upper input-upper"
 							formControlName="preferedMailMethodProvider"
 							placeholder="Select"
-							[(ngModel)]="formData?.providershipInformation!.contact!.preferedMailMethod"
 						>
 							<ng-option value="s"> Select </ng-option>
 						</ng-select>
@@ -338,7 +320,6 @@
 								name="website"
 								formControlName="website"
 								style="border-right: 0px"
-								[(ngModel)]="formData?.providershipInformation!.contact!.website"
 							/>
 							<span
 								class="input-group-text"
@@ -355,7 +336,6 @@
 							placeholder=""
 							name="fax"
 							formControlName="fax"
-							[(ngModel)]="formData?.providershipInformation!.contact!.fax"
 						/>
 					</div>
 					<div class="col"></div>
@@ -395,7 +375,6 @@
 								name="website"
 								formControlName="websiteInsurance"
 								style="border-right: 0px"
-								[(ngModel)]="formData?.insurancePortal!.url"
 							/>
 							<span
 								class="input-group-text"
@@ -414,7 +393,6 @@
 							placeholder=""
 							name="username"
 							formControlName="username"
-							[(ngModel)]="formData?.insurancePortal!.username"
 						/>
 					</div>
 					<div class="col-4">
@@ -425,7 +403,6 @@
 							placeholder=""
 							name="password"
 							formControlName="password"
-							[(ngModel)]="formData?.insurancePortal!.password"
 						/>
 					</div>
 				</div>
@@ -441,7 +418,6 @@
 							cols="70"
 							rows="5"
 							formControlName="note"
-							[(ngModel)]="formData!.notes"
 						></textarea>
 					</div>
 				</div>

@@ -54,8 +54,8 @@ to be accompanied by a legal guardian. Do you have any questions for me?</textar
                 <div class="col-3 type-width">
                     <div class="mainformset">
                         <label class="required">Type</label>
-                        <ng-select class="input-upper" formControlName="type" >
-                            <ng-option *ngFor="let type of phoneTypes.phone" [value]="type.value">
+                        <ng-select class="input-upper" formControlName="type" [(ngModel)]="callersInfo.type">
+                            <ng-option *ngFor="let type of phoneTypes.phone" [value]="type.value" >
                                 {{ type.label }}
                             </ng-option>
                         </ng-select>

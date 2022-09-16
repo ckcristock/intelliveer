@@ -34,6 +34,7 @@ export class CallersInfoComponent implements OnInit {
   callersInfo = {
     phoneNumber: "",
     firstName: "",
+    type: "",
     lastName: "",
     callerSelfPatient: true,
     callerLegarGuar: false,
@@ -43,6 +44,7 @@ export class CallersInfoComponent implements OnInit {
     phoneNumber: "",
     firstName: "",
     lastName: "",
+    type: "",
     callerSelfPatient: true,
     callerLegarGuar: false,
   }
@@ -84,6 +86,7 @@ export class CallersInfoComponent implements OnInit {
       this.callersInfo.firstName = this.callersInfoArray.firstName;
       this.callersInfo.lastName = this.callersInfoArray.lastName;
       this.callersInfo.phoneNumber = this.callersInfoArray.phoneNumber;
+      this.callersInfo.type = this.callersInfoArray.type;
     }
     this.getStaticData();
   }
@@ -95,6 +98,8 @@ export class CallersInfoComponent implements OnInit {
       type: [data?.type || '',],
       firstName: [data?.firstName || ''],
       lastName: [data?.lastName || ''],
+      callerSelfPatient: true,
+      callerLegarGuar: false,
     });
   }
 
@@ -167,7 +172,8 @@ export class CallersInfoComponent implements OnInit {
   }
 
   continueToPatient() {
-    this.addPatientServ.setCallerInfoCWP(this.callersInfo);
+    console.log(this.Form.value)
+    this.addPatientServ.setCallerInfoCWP(this.Form.value);
     this.addPatientServ.setCallerInfoNotPristineCWP(false);
     let visitedArray: any = JSON.parse(localStorage.getItem("visitedArray") || '[]');
     visitedArray.push("Caller’s Info");

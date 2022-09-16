@@ -433,13 +433,14 @@ export class AddRoleTemplateComponent implements OnInit {
       permission.permissions.map((perm: any) => {
         if (permission.section == "templateBasedRestrictedRoles") {
           perm.enabled = false;
-          perm.locked = false;
+          perm.locked = true;
         } else if (permission.section == "templateBasedUnRestrictedRoles") {
           if (perm.name == "CAN_RETRIEVE_TEMPLATE_BASED_UNRESTRICTED_ROLE") {
             perm.enabled = true
+            perm.locked = true;
           } else {
             perm.enabled = false;
-            perm.locked = false;
+            perm.locked = true;
           }
 
         }
