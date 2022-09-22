@@ -1,4 +1,3 @@
-$search-input-width: 342px;
 .roundedcorner {
     margin: 5px;
     padding: 5px;
@@ -8,22 +7,27 @@ $search-input-width: 342px;
     border: 2px solid #f9b85f;
 }
 
+.heading-box {
+    padding-left: 2em;
+    padding-top: 1em;
+}
+
 .box {
     border: 2px solid;
-    padding: 28px;
+    // padding: 16px;
     background: white;
     border-radius: 10px;
     border-color: #c3c4c5;
 }
 
 .search {
-    width: $search-input-width;
+    width: 150px;
     background-color: #fff;
     position: relative;
     .search-results {
         position: absolute;
         padding-bottom: 15px;
-        width: $search-input-width;
+        width: 190px;
         background: #f2f2f2;
         top: 42px;
         left: 0;

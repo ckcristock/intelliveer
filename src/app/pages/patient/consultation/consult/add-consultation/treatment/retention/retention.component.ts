@@ -25,6 +25,8 @@ export class RetentionComponent implements OnInit {
   ];
   searchResultLst: any[] = [];
   prerequisitesSearchLst: any[] = [];
+  public row: any;
+  showMenu: boolean = false;
 
   constructor(private router: Router, private treatmentOption: ConsultationDiagnosisiProblemListService) { }
 
@@ -97,6 +99,7 @@ export class RetentionComponent implements OnInit {
     Obj.checked = true;
     this.searchWord = "";
     this.searchFocus = false;
+    this.showMenu = false;
     this.searchResultLst.push(Obj);
     this.treatmentOption.treatmentOptionsArray.Retention = this.searchResultLst;
   }
@@ -122,5 +125,22 @@ export class RetentionComponent implements OnInit {
     this.treatmentOption.treatmentOptionsArray.Retention = this.searchResultLst;
     console.log(this.treatmentOption.treatmentOptionsArray.Retention)
   }
+
+  endMove($event: any) {
+		let children = Array.from($event.target.parentNode.parentNode.children);
+		if (
+			children.indexOf($event.target.parentNode) >
+			children.indexOf(this.row)
+		)
+		{
+			$event.target.parentNode.after(this.row);
+			console.log()
+		}
+		else $event.target.parentNode.before(this.row);
+	}
+
+	move($event: any) {
+		this.row = $event.target;
+	}
 
 }

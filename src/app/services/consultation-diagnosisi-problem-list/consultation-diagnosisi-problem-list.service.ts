@@ -14,14 +14,7 @@ export class ConsultationDiagnosisiProblemListService {
       Treament_Type: any,
       Treament_Time: any,
       Prerequisites: any[],
-      Extractions: [
-        {
-          adultTooth: any[]
-        },
-        {
-          childTooth: any[]
-        }
-      ],
+      Treament_Step: any[],
       Chief_Concerns_1: any,
       Chief_Concerns_2: any,
       Expectations: any,
@@ -32,21 +25,16 @@ export class ConsultationDiagnosisiProblemListService {
       adjunctive: any[],
       Appliance_Sequence: any[],
       Bracket_Variations: any[],
-      Retention: any[]
+      Retention: any[],
+      Consents_and_Agreement: any[],
+      Appointment_Sequence: any[]
     } = {
       Timing: undefined,
       Treament_Phase: undefined,
       Treament_Type: undefined,
       Treament_Time: undefined,
       Prerequisites: [],
-      Extractions: [
-        {
-          adultTooth: []
-        },
-        {
-          childTooth: []
-        }
-      ],
+      Treament_Step: [],
       Chief_Concerns_1: undefined,
       Chief_Concerns_2: undefined,
       Expectations: undefined,
@@ -57,7 +45,9 @@ export class ConsultationDiagnosisiProblemListService {
       risk: [],
       adjunctive: [],
       Bracket_Variations: [],
-      Retention: []
+      Retention: [],
+      Consents_and_Agreement: [],
+      Appointment_Sequence: []
     };
     treatmentOptionObj: any = {};
 

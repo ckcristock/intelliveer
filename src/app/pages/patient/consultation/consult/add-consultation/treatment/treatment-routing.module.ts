@@ -34,11 +34,11 @@ const routes: Routes = [
 					).then((m) => m.ExtractionsModule)
 			},
 			{
-				path: 'treatment-mechanics',
+				path: 'consents-and-agreement',
 				loadChildren: () =>
 					import(
-						'@pages/patient/consultation/consult/add-consultation/treatment/treatment-mechanics/treatment-mechanics.module'
-					).then((m) => m.TreatmentMechanicsModule)
+						'@pages/patient/consultation/consult/add-consultation/treatment/consents-and-agreement/consents-and-agreement.module'
+					).then((m) => m.ConsentsAndAgreementModule)
 			},
 			{
 				path: 'treatment-outcome',
@@ -81,6 +81,13 @@ const routes: Routes = [
 					import(
 						'@pages/patient/consultation/consult/add-consultation/treatment/retention/retention.module'
 					).then((m) => m.RetentionModule)
+			},
+			{
+				path: 'appointment-sequence',
+				loadChildren: () =>
+					import(
+						'@pages/patient/consultation/consult/add-consultation/treatment/appointment-sequence/appointment-sequence.module'
+					).then((m) => m.AppointmentSequenceModule)
 			},
 			{
 				path: 'compare-all',

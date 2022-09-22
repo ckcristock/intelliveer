@@ -53,7 +53,7 @@ export class AddConsultationComponent implements OnInit {
 		} else if (Obj?.url == '/dashboard/patient/consultation/consultation/add/treatment') {
 			this.showProgressBar = true;
 			this.display = false
-			this.max_width = '250px';
+			this.max_width = '251px';
 			this.router.navigate([Obj.url]);
 			this.sessionArrayName = 'treatmentVisitedArray';
 			this.progressbarTitle = Obj.title;

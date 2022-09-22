@@ -36,6 +36,8 @@ export class PrerequisitesComponent implements OnInit {
   ];
   searchResultLst: any[] = [];
   prerequisitesSearchLst: any[] = [];
+  public row: any;
+  showMenu: boolean = false;
 
   constructor(public router: Router, public treatmentOption: ConsultationDiagnosisiProblemListService) { }
 
@@ -66,6 +68,7 @@ export class PrerequisitesComponent implements OnInit {
     Obj.checked = true;
     this.searchWord = "";
     this.searchFocus = false;
+    this.showMenu = false;
     this.searchResultLst.push(Obj);
     this.treatmentOption.treatmentOptionsArray.Prerequisites = this.searchResultLst;
   }
@@ -91,5 +94,22 @@ export class PrerequisitesComponent implements OnInit {
     this.treatmentOption.treatmentOptionsArray.Prerequisites = this.searchResultLst;
     console.log(this.treatmentOption.treatmentOptionsArray.Prerequisites)
   }
+
+  endMove($event: any) {
+		let children = Array.from($event.target.parentNode.parentNode.children);
+		if (
+			children.indexOf($event.target.parentNode) >
+			children.indexOf(this.row)
+		)
+		{
+			$event.target.parentNode.after(this.row);
+			console.log()
+		}
+		else $event.target.parentNode.before(this.row);
+	}
+
+	move($event: any) {
+		this.row = $event.target;
+	}
 
 }

@@ -9,6 +9,7 @@ import { ConsultationDiagnosisiProblemListService } from '@services/consultation
 })
 export class TreatmentOutcomeComponent implements OnInit {
   title: string | undefined;
+  anticipatedProblemList: any[] = [];
 
   constructor(public router: Router, public treatmentOption: ConsultationDiagnosisiProblemListService) { }
 
@@ -22,6 +23,20 @@ export class TreatmentOutcomeComponent implements OnInit {
     treatmentVisitedArray.push("Expected Tx Outcome");
     localStorage.setItem("treatmentVisitedArray", JSON.stringify(treatmentVisitedArray));
     this.router.navigate(['/dashboard/patient/consultation/consultation/add/treatment/risk']);
+  }
+
+  addAnotherOption()
+  {
+    let Obj = {
+      input: true,
+      value: ''
+    }
+    this.anticipatedProblemList.push(Obj)
+  }
+
+  deleteAnticipatedProblem(index: any)
+  {
+    this.anticipatedProblemList.splice(index, 1);
   }
   
 }

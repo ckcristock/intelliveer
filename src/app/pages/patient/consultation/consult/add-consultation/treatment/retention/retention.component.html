@@ -3,51 +3,81 @@
     <hr />
     <div class="row" style="height: 40rem;">
         <div class="col">
-            <div class="row mb-3">
+            <div class="row">
                 <div class="col">
-                    <div class="box">
-                        <div class="search">
-                            <div class="search-results" *ngIf="searchFocus">
-                                <ul *ngIf="prerequisitesSearchLst?.length != 0">
-                                    <li *ngFor="let result of prerequisitesSearchLst">
-                                        <button class="d-flex justify-content-between"
-                                            (click)="handleSearchResultsClick(result)">
-                                            <span> {{ result.name }}</span>
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="input-group justify-content-between">
-                            <span class="input-group-text bg-transparent" id="basic-addon1" style="border-left-style: none; border-top: 0px;"><i
-                                    class="bi bi-search"></i></span>
-                            <input type="text" class="form-control" placeholder="Type Name" [(ngModel)]="searchWord" (click)="fetchSearch($event)"
-                                (keyup)="fetchSearch($event)" aria-describedby="basic-addon1"
-                                (focus)="searchFocus = true" style="border-left-style: none; border-right: 0px; border-top: 0px;"/>
-                        </div>
-                        <div class="row mb-3" style="padding: 5px;" *ngIf="searchResultLst?.length != 0">
-                            <div class="col-6 p-2" *ngFor="let searchResult of searchResultLst; let i = index">
-                                <div class="input-group flex-nowrap">
-                                    <span class="input-group-text" style="background-color: #faf2e9; border: 1px solid #f9b85f;" (click)="cancelSelection(searchResult, i)"><i class="bi bi-x-lg"></i></span>
-                                    <input type="text" class="form-control" value="{{searchResult.name}}" readonly style="border-color: #f9b85f; background-color: #faf2e9">
+                    <div class="row" *ngFor="let searchResult of searchResultLst; let i = index">
+                        <div class="col">
+                            <div class="row" draggable="true"
+                            (drag)="move($event)"
+                            (dragover)="endMove($event)" style="margin-bottom: -8px;">
+                                <div class="col-1">
+                                    <div style="margin: 10px;" (click)="cancelSelection(searchResult, i)"><i class="bi bi-x-circle" style="font-size: large;"></i></div>
+                                </div>
+                                <div class="col" style="border: 1px solid #bdbfc1; margin: auto;">
+                                    <div style="margin: 7px;"><img src="../../../../../../assets/icons/move.svg" width="20" height="20" /> {{searchResult.name}}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-            <div class="row mb-3">
-                <div class="col p-2" *ngFor="let result of retentionLst; let i = index">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" [checked]="result.checked" id="{{i}}" (click)="handleSearchResultsClick(result)">
-                        <label class="form-check-label" for="{{i}}">
-                            {{result.name}}
-                        </label>
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn dropdown-toggle-split" (click)="showMenu = !showMenu">
+                        <img src="/assets/icons/add.svg" alt="" width="20" height="20" /> Add
+                    </button>
+                    <div class="row mb-3" style="border: 1px solid #c3c4c5;" *ngIf="showMenu">
+                        <div class="col" style="border-right: 1px solid #c3c4c5;">
+                            <div class="row" style="border-bottom: 1px solid #c3c4c5;">
+                                <div class="col heading-box">
+                                    <p style="font-weight: bold;">Favorites</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col" style="margin: 1em;">
+                                    <p><i class="bi bi-x-circle"></i> &nbsp; Cavity Clearance</p>
+                                    <p><i class="bi bi-x-circle"></i> &nbsp; CT Scan</p>
+                                    <p><i class="bi bi-x-circle"></i> &nbsp; Lorem ipsum</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row" style="border-bottom: 1px solid #c3c4c5;">
+                                <div class="col heading-box">
+                                    <p style="font-weight: bold;">All</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col" style="margin: 1em;">
+                                    <div class="search">
+                                        <div class="search-results" *ngIf="searchFocus">
+                                            <ul *ngIf="prerequisitesSearchLst?.length != 0">
+                                                <li *ngFor="let result of prerequisitesSearchLst">
+                                                    <button class="d-flex justify-content-between"
+                                                        (click)="handleSearchResultsClick(result)">
+                                                        <span> {{ result.name }}</span>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="input-group justify-content-between">
+                                        <span class="input-group-text bg-transparent" id="basic-addon1" style="background-color: white;"><i
+                                                class="bi bi-search"></i></span>
+                                        <input type="text" class="form-control" placeholder="Type Name" [(ngModel)]="searchWord" (click)="fetchSearch($event)"
+                                            (keyup)="fetchSearch($event)" aria-describedby="basic-addon1"
+                                            (focus)="searchFocus = true" style="border-left: 0px;"/>
+                                    </div>
+                                    <br/>
+                                    <p><i class="bi bi-star"></i> &nbsp; Lorem ipsum</p>
+                                    <p><i class="bi bi-star-fill" style="color: #f8ab42;"></i> &nbsp; Lorem ipsum</p>
+                                    <p><i class="bi bi-star-fill" style="color: #f8ab42;"></i> &nbsp; Lorem ipsum</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
     <div class="row gap-3" [align]="'end'">

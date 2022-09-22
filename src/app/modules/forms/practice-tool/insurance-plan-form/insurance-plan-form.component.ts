@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CONFIG } from '@config/index';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
 import { AddressFormService } from '@services/forms/address-form/address-form.service';
@@ -40,16 +40,16 @@ export class InsurancePlanFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.formData)
     this.initForm(this.formData);
     this.getStaticData();
+    this.getRequiredFieldJson();
   }
 
   initForm(data?: any) {
 		data = data || {};
 		this.Form = this.fb.group({
 			logo: [data?.logo || 'null'],
-			insurancePlanName: [data?.insurancePlanName || '', Validators.required],
+			insurancePlanName: [data?.insurancePlanName || ''],
 			planType: [data?.planType || ''],
 			electronicId: [data?.electronicId || ''],
 			feeScheduleOffice: [data?.feeScheduleOffice || ''],
@@ -84,6 +84,57 @@ export class InsurancePlanFormComponent implements OnInit {
       note: [data?.note || '']
 		});
 	}
+
+  getRequiredFieldJson()
+  {
+    let jsonArray: any[] = [];
+    jsonArray.push(
+      {
+        fieldName: 'insurancePlanName',
+        required: true
+      }
+    );
+    jsonArray.push(
+      {
+        fieldName: 'emailId',
+        required: false
+      }
+    );
+    jsonArray.push(
+      {
+        fieldName: 'planType',
+        required: false
+      }
+    );
+    for (let i = 0; i < jsonArray.length; i++) {
+      console.log(jsonArray[i].required)
+      if(typeof jsonArray[i].required != "undefined")
+      {
+        if(jsonArray[i].required === true)
+        {
+          this.Form.controls[jsonArray[i].fieldName].setErrors({required: jsonArray[i].required});
+          this.Form.get(jsonArray[i].fieldName)?.addValidators([Validators.required]);
+          this.Form.get(jsonArray[i].fieldName)?.updateValueAndValidity();
+        }
+        if(jsonArray[i].required === false)
+        {
+          this.Form.controls[jsonArray[i].fieldName].setErrors({required: jsonArray[i].required});
+          this.Form.get(jsonArray[i].fieldName)?.addValidators([]);
+          this.Form.get(jsonArray[i].fieldName)?.updateValueAndValidity();
+        }
+      }
+      else
+      {
+        this.Form.controls[jsonArray[i].fieldName].setErrors({required: "null"});
+        this.Form.get(jsonArray[i].fieldName)?.addValidators([]);
+        this.Form.get(jsonArray[i].fieldName)?.updateValueAndValidity();
+      }
+    }
+    console.log(this.Form);
+    console.log(this.Form.controls['planType']);
+    console.log(this.Form.controls['insurancePlanName']);
+    console.log(this.Form.controls['emailId']);
+  }
 
   setUserDataToForm() {
 		this.Form.controls['insurancePlanName'].setValue(this.formData.profile.insurancePlanName);
