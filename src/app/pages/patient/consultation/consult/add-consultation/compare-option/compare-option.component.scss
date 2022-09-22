@@ -1,0 +1,30 @@
+@import 'navbar_pills';
+
+.nav-bar-left {
+	background: #f9f9f9;
+	height: 85%;
+	gap: 15px;
+	align-items: center;
+	padding-left: 10px;
+	margin-bottom: 10px;
+	border-radius: 6px;
+	padding-top: 6px;
+	width: 102%;
+	a {
+		padding: 0px 15px;
+		text-decoration: none;
+		color: #000;
+		line-height: 2.6;
+		border-bottom: 2px solid transparent;
+		&:hover {
+			cursor: pointer;
+			border-bottom: 2px solid var(--primary);
+			color: var(--primary) !important;
+		}
+	}
+	.active {
+		color: var(--primary) !important;
+		border-bottom: 2px solid var(--primary);
+		font-weight: normal;
+	}
+}

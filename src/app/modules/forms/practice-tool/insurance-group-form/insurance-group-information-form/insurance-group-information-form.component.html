@@ -15,7 +15,7 @@
 			scrollSpy
 			(sectionChange)="onSectionChange($event)"
 		>
-			<div class="section" id="eligibility">
+			<div class="section">
                 <div class="row">
 					<h6 class="heading">Insurance Group Information</h6>
 				</div>
@@ -35,6 +35,17 @@
 							class="form-control"
 							formControlName="groupName"
 						/>
+					</div>
+					<div class="col-3">
+						<label class="required">Insurance Plan</label>
+						<ng-select placeholder="Select" formControlName="insurancePlanId" class="mandatory-field">
+							<ng-option *ngFor="let insurancePLan of insuranceList"  [value]="insurancePLan._id">{{insurancePLan.profile.insurancePlanName}}</ng-option>
+						</ng-select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col" [align]="'end'">
+						<button type="button" class="btn btn-dark btn-dark-custom" [disabled]="Form.invalid" (click)="moveToOrthodontic()">Next</button>
 					</div>
 				</div>
 			</div>
