@@ -9,6 +9,7 @@ import { PatientUserService } from '@services/dashboard/patient/patient-user/pat
 import { AddPatientService } from '@services/add-patient/add-patient.service';
 import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
 import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
+import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
 
 @Component({
   selector: 'app-referer-form',
@@ -63,6 +64,9 @@ export class RefererFormComponent implements OnInit {
     },
   ];
   famiMembTitle!: any;
+  isSaveButton: boolean = false;
+	inEdit: boolean = false;
+	FormDisable!: boolean;
 
   constructor(
     private http: HttpClient,
@@ -73,6 +77,7 @@ export class RefererFormComponent implements OnInit {
     private addPatientServ: AddPatientService,
     private insuranceServ: InsuranceService,
     private onboardingServ: OnboardingService,
+		private contactPersonFormService: ContactPersonFormService,
   ) {
     this.idForm = this.fb.group({
       // name: '',
@@ -83,6 +88,7 @@ export class RefererFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm(this.formData);
+		this.enableAndDisableInputs();
 		this.patientUserServ.setFalseAllNotPristine();
     this.addPatientServ.setFalseAllNotPristineCWP();
 		this.insuranceServ.setFalseAllNotPristine();
@@ -98,6 +104,13 @@ export class RefererFormComponent implements OnInit {
 
   initForm(data?: any) {
     data = data || {};
+    if (Object.keys(data).length != 0) {
+			this.inEdit = true;
+			this.FormDisable = true;
+		} else if (Object.keys(data).length == 0) {
+			this.inEdit = false;
+			this.FormDisable = false;
+		}
     this.Form = this.fb.group({
       companyName: [data?.companyName || ''],
       title: [data?.title || ''],
@@ -117,6 +130,8 @@ export class RefererFormComponent implements OnInit {
         data?.address || {}
       )
     });
+    this.addressFormService.setDisabledOrEnabled(this.FormDisable);
+		this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
   }
 
   fieldValidation(field: any, notRequiredButPattern?: boolean) {
@@ -175,5 +190,24 @@ export class RefererFormComponent implements OnInit {
       inline: 'nearest',
     });
   }
+
+  checkPermission() {
+		this.isSaveButton = true;
+		this.enableAndDisableInputs();
+	}
+
+	enableAndDisableInputs() {
+		if (this.inEdit) {
+			if (!this.isSaveButton) {
+				this.Form?.disable();
+				this.FormDisable = true;
+			} else if (this.isSaveButton) {
+				this.Form?.enable();
+				this.FormDisable = false;
+			}
+			this.addressFormService.setDisabledOrEnabled(this.FormDisable);
+			this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
+		}
+	}
 
 }

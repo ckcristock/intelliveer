@@ -1,7 +1,26 @@
 <div class="row" *ngIf="Form">
-    <app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
-        (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills>
+    <!-- <app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
+        (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills> -->
     <form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
+        <div class="row sticky" style="width: 101%;">
+            <div [ngClass]="{'col-11':!isSaveButton, 'col-12':!inEdit }">
+                <div class="col">
+                    <!-- <app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection"
+                        [cancelBtn]="isSaveButton || !inEdit" [saveBtn]="isSaveButton || !inEdit"
+                        [disableSaveBtn]="BGForm.invalid || BGForm.pristine" (onCancel)="cancel()"
+                        (onSave)="save(BGForm.value)"></app-nav-bar-pills> -->
+                    <app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection"
+                        [cancelBtn]="isSaveButton || !inEdit" [saveBtn]="isSaveButton || !inEdit" (onCancel)="cancel()"
+                        (onSave)="save(Form.value)"></app-nav-bar-pills>
+                </div>
+                <!-- [disableSaveBtn]="BGForm.invalid || BGForm.pristine" -->
+            </div>
+            <div *ngIf="!isSaveButton && inEdit" class="col-1 d-flex justify-content-center align-items-start"
+                style="background-color: transparent;">
+                <img src="/assets/icons/Edit.svg" style="width: 37px; height: 37px; cursor: pointer;" alt=""
+                    (click)="checkPermission()" />
+            </div>
+        </div>
         <div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
             <div class="section-active" id="overview">
                 <div class="row">
@@ -89,35 +108,39 @@
                                 <div class="mainformset">
                                     <label class="label-input-gap">Log-in email</label>
                                     <input class="form-control" type="text" placeholder="" name="email"
-                                        [disabled]="true" [(ngModel)]="user?.profile.email"
-                                        [ngModelOptions]="{standalone: true}" />
+                                        formControlName="logInEmail" [(ngModel)]="user?.profile.email" />
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="mainformset">
                                     <label class="label-input-gap">Title</label>
-                                    <ng-select placeholder="Select">
+                                    <ng-select formControlName="title" placeholder="Select">
                                     </ng-select>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="mainformset">
                                     <label class="label-input-gap">First Name</label>
-                                    <input class="form-control mandatory-field" type="text" placeholder=""
-                                        name="firstName" [(ngModel)]="user?.profile.firstName"
-                                        formControlName="firstName" />
+                                    <input class="form-control " type="text" placeholder="" 
+                                    [ngClass]="{'mandatory-field-saved': trySaveFirstTime,
+                                'mandatory-field': !trySaveFirstTime}" name="firstName"
+                                        [(ngModel)]="user?.profile.firstName" formControlName="firstName" />
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="mainformset">
                                     <label class="label-input-gap">Middle Name</label>
-                                    <input class="form-control" type="text" placeholder="" name="" />
+                                    <input class="form-control" type="text" placeholder="" name=""
+                                        formControlName=middleName />
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="mainformset">
                                     <label class="label-input-gap">Last Name</label>
-                                    <input class="form-control mandatory-field" type="text" placeholder=""
+                                    {{Form.pristine}}
+                                    <input class="form-control" type="text" placeholder=""
+                                    [ngClass]="{'mandatory-field-saved': trySaveFirstTime,
+                                'mandatory-field': !trySaveFirstTime}"
                                         name="lastName" [(ngModel)]="user?.profile.lastName"
                                         formControlName="lastName" />
                                 </div>
@@ -131,20 +154,22 @@
                                 <div class="mainformset">
                                     <label class="label-input-gap" data-toggle="tooltip" title="Preferred Name">Date of
                                         Birth</label>
-                                    <input class="form-control" type="date" placeholder="" name="DOB" />
+                                    <input class="form-control" type="date" placeholder="" name="DOB"
+                                        formControlName="DOB" />
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="mainformset">
                                     <label class="label-input-gap">Gender</label>
-                                    <ng-select placeholder="Select">
+                                    <ng-select formControlName="gender" placeholder="Select">
                                     </ng-select>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="mainformset">
                                     <label class="label-input-gap">Abbreviation</label>
-                                    <input class="form-control" type="text" placeholder="" name="" />
+                                    <input class="form-control" type="text" placeholder="" name=""
+                                        formControlName="abbreviation" />
                                 </div>
                             </div>
                         </div>
@@ -161,20 +186,21 @@
                     <div class="col-4">
                         <div class="mainformset">
                             <label class=" label-input-gap">Primary Phone Type</label>
-                            <ng-select placeholder="Select">
+                            <ng-select formControlName="primaryPhoneType" placeholder="Select">
                             </ng-select>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="mainformset">
                             <label class=" label-input-gap">Primary Phone Number</label>
-                            <input class="form-control" type="text" placeholder="" name="" />
+                            <input class="form-control" type="text" placeholder="" name=""
+                                formControlName="primaryPhoneNumb" />
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="mainformset">
                             <label class=" label-input-gap">Email</label>
-                            <input class="form-control" type="text" placeholder="" name="" />
+                            <input class="form-control" type="text" placeholder="" name="" formControlName="email" />
                         </div>
                     </div>
                 </div>
@@ -182,20 +208,21 @@
                     <div class="col-4">
                         <div class="mainformset">
                             <label class="label-input-gap">Secondary Phone Type</label>
-                            <ng-select placeholder="Select">
+                            <ng-select formControlName="secondaryPhoneType" placeholder="Select">
                             </ng-select>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="mainformset">
                             <label class="label-input-gap">Secondary Phone Number</label>
-                            <input class="form-control" type="text" placeholder="" name="" />
+                            <input class="form-control" type="text" placeholder="" name=""
+                                formControlName="secondaryPhoneNumb" />
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="mainformset">
                             <label class=" label-input-gap">Preferred Communication Method</label>
-                            <ng-select placeholder="Select">
+                            <ng-select formControlName="primaryPreferredCommunicationMethod" placeholder="Select">
                             </ng-select>
                         </div>
                     </div>
@@ -207,21 +234,21 @@
                     <div class="col-3">
                         <div class="mainformset">
                             <label class="label-input-gap">Employee Flag</label>
-                            <ng-select placeholder="Select">
+                            <ng-select formControlName="employeeFlag" placeholder="Select">
                             </ng-select>
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="mainformset">
                             <label class="label-input-gap">Status</label>
-                            <ng-select placeholder="Select">
+                            <ng-select formControlName="status" placeholder="Select">
                             </ng-select>
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="mainformset">
                             <label class=" label-input-gap">Default Location</label>
-                            <ng-select placeholder="Select">
+                            <ng-select formControlName="defaultLocation" placeholder="Select">
                                 <ng-option *ngFor="let location of locationList;">{{location.name}}</ng-option>
                             </ng-select>
                         </div>
@@ -229,7 +256,7 @@
                     <div class="col-3">
                         <div class="mainformset">
                             <label class=" label-input-gap">Default Practice</label>
-                            <ng-select placeholder="Select">
+                            <ng-select formControlName="defaultPractice" placeholder="Select">
                                 <ng-option *ngFor="let practice of practiceList">{{practice.name}}</ng-option>
                             </ng-select>
                         </div>
@@ -239,21 +266,21 @@
                     <div class="col-3">
                         <div class="mainformset">
                             <label class="label-input-gap">Default Provider</label>
-                            <ng-select placeholder="Select">
+                            <ng-select formControlName="defaultProvider" placeholder="Select">
                             </ng-select>
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="mainformset">
                             <label class="label-input-gap">Time Card Flag</label>
-                            <ng-select placeholder="Select">
+                            <ng-select formControlName="timeCardFlag" placeholder="Select">
                             </ng-select>
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="mainformset">
                             <label class=" label-input-gap">Default Legal Entity</label>
-                            <ng-select placeholder="Select">
+                            <ng-select formControlName="defaultLegalEntity" placeholder="Select">
                                 <ng-option *ngFor="let legelEntity of legelEntityList;">{{legelEntity.name}}</ng-option>
                             </ng-select>
                         </div>
@@ -261,7 +288,7 @@
                     <div class="col-3">
                         <div class="mainformset">
                             <label class=" label-input-gap">Roles</label>
-                            <select class="form-select">
+                            <select formControlName="roles" class="form-select">
                                 <option [value]="role.name" *ngFor="let role of userRoles">
                                     {{role.name}}
                                 </option>
@@ -276,13 +303,15 @@
                     <div class="col-3">
                         <div class="mainformset">
                             <label class="label-input-gap">Emergency Contact Name</label>
-                            <input class="form-control" type="text" placeholder="" name="" />
+                            <input class="form-control" type="text" placeholder="" name=""
+                                formControlName="emergencyContactName" />
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="mainformset">
                             <label class="label-input-gap">Emergency Contact Number</label>
-                            <input class="form-control" type="text" placeholder="" name="" />
+                            <input class="form-control" type="text" placeholder="" name=""
+                                formControlName="emergencyContactNumb" />
                         </div>
                     </div>
                 </div>

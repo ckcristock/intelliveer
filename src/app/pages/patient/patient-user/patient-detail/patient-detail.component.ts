@@ -18,6 +18,7 @@ import { AddPatientService } from '@services/add-patient/add-patient.service';
 import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
 import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 import { Router } from '@angular/router';
+import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
 
 @Component({
 	selector: 'app-patient-detail',
@@ -31,7 +32,7 @@ export class PatientDetailComponent implements OnInit {
 	@Output() onCancel = new EventEmitter();
 	@Output() onSubmit = new EventEmitter();
 	Form!: FormGroup;
-    editButton = {isButton:true,url:"/dashboard/home/add-patient/coor-with-prospect/callers-info"}
+	editButton = { isButton: false, url: "/dashboard/home/add-patient/coor-with-prospect/callers-info" }
 	interestsLst: any[] = [
 		'option 1',
 		'option 2',
@@ -87,6 +88,26 @@ export class PatientDetailComponent implements OnInit {
 		{ label: 'Single', value: 'S' },
 	];
 
+	isSaveButton: boolean = false;
+	inEdit: boolean = true;
+	FormDisable: boolean = true;
+	validEmail: boolean | undefined;
+	validPrimaryPhoneType: boolean | undefined;
+	validPrimaryPhoneNumber: boolean | undefined;
+	validSecondaryPhoneType: boolean | undefined;
+	validSecondaryPhoneNumber: boolean | undefined;
+	validPrimaryPreferredCommunicationMethod: boolean | undefined;
+	validSecondaryPreferredCommunicationMethod: boolean | undefined;
+	validPreferredTimingForCall: boolean | undefined;
+	validDOB: boolean | undefined;
+	variableDiable: boolean = true;
+	validLocation: boolean | undefined;
+	validBilling: boolean | undefined;
+	validProvider: boolean | undefined;
+	validCPerson: boolean | undefined;
+	validName: boolean | undefined;
+	validEContact: boolean | undefined;
+
 	constructor(
 		private fb: FormBuilder,
 		private addressFormService: AddressFormService,
@@ -100,7 +121,8 @@ export class PatientDetailComponent implements OnInit {
 		private addPatientServ: AddPatientService,
 		private insuranceServ: InsuranceService,
 		private onboardingServ: OnboardingService,
-		private router: Router
+		private router: Router,
+		private contactPersonFormService: ContactPersonFormService,
 	) {
 		this.idForm = this.fb.group({
 			// name: '',
@@ -117,13 +139,15 @@ export class PatientDetailComponent implements OnInit {
 				});
 	}
 
-	ngOnInit(): void {
+	async ngOnInit() {
 		this.addId();
 		this.getStaticData();
 		this.userObj = JSON.parse(
 			localStorage.getItem('selectedPatient') || ''
 		);
 		this.initForm(this.formData);
+		await this.reviewInputs();
+		this.enableAndDisableInputs();
 		this.patientUserServ.setFalseAllNotPristine();
 		this.addPatientServ.setFalseAllNotPristineCWP();
 		this.insuranceServ.setFalseAllNotPristine();
@@ -168,28 +192,96 @@ export class PatientDetailComponent implements OnInit {
 			tags: [data?.tags || ''],
 			location: [data?.location || ''],
 			practice: [data?.practice || ''],
-			provider: [data?.provider || ''],
+			provider: [data?.provider || null],
 			idNumber: [data?.idNumber || ''],
 			idType: [data?.idType || ''],
 			patientCoordinator: [data?.patientCoordinator || ''],
 			treatmentCoordinator: [data?.treatmentCoordinator || ''],
 			CSAssistant: [data?.CSAssistant || ''],
-			cPerson: [data?.cPerson || ''],
+			cPerson: [data?.cPerson || null],
 			name: [
 				data?.name || '',
 				Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')
 			],
 			eContact: [data?.eContact || '', Validators.pattern('^[0-9]*$')],
 			note: [data?.note || ''],
-			billing: [data?.billing || '']
+			billing: [data?.billing || null]
 		});
+		this.addressFormService.setDisabledOrEnabled(this.FormDisable);
+		this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
 	}
 
-	fieldValidation(field: any, notRequiredButPattern?: boolean) {
+	async reviewInputs() {
+		await this.fieldValidation("emailId", true);
+		await this.fieldValidation("primaryPreferredCommunicationMethod", true);
+		await this.fieldValidation("DOB", true, true);
+		await this.fieldValidation("location", true);
+		await this.fieldValidation("billing", true);
+		await this.fieldValidation("provider", true);
+		await this.fieldValidation("cPerson", true);
+		await this.fieldValidation("name", true, true);
+		await this.fieldValidation("eContact", true, true);
+	}
+
+	async fieldValidation(field: any, notRequiredButPattern?: boolean, date?: boolean) {
+		let validator;
+
 		if (notRequiredButPattern) {
-			return (this.Form.get(field)?.valid && this.Form.get(field)?.value != null);
+			validator = (this.Form.get(field)?.valid && (this.Form.get(field)?.value != null));
+			if (date) {
+				validator = this.Form.get(field)?.value != 0;
+			}
 		} else {
-			return this.Form.get(field)?.value != null
+			validator = this.Form.get(field)?.value != null;
+		}
+
+		switch (field) {
+			case 'DOB':
+				this.validDOB = validator;
+				break;
+			case 'emailId':
+				this.validEmail = validator;
+				break;
+			case 'primaryPhoneType':
+				this.validPrimaryPhoneType = validator;
+				break;
+			case 'primaryPhoneNumber':
+				this.validPrimaryPhoneNumber = validator;
+				break;
+			case 'secondaryPhoneType':
+				this.validSecondaryPhoneType = validator;
+				break;
+			case 'secondaryPhoneNumber':
+				this.validSecondaryPhoneNumber = validator;
+				break;
+			case 'primaryPreferredCommunicationMethod':
+				this.validPrimaryPreferredCommunicationMethod = validator;
+				break;
+			case 'secondaryPreferredCommunicationMethod':
+				this.validSecondaryPreferredCommunicationMethod = validator;
+				break;
+			case 'preferredTimingForCall':
+				this.validPreferredTimingForCall = validator;
+				break;
+			case 'location':
+				this.validLocation = validator;
+				break;
+			case 'billing':
+				this.validBilling = validator;
+				break;
+			case 'provider':
+				this.validProvider = validator;
+				break;
+			case 'cPerson':
+				this.validCPerson = validator;
+				break;
+			case 'name':
+				this.validName = validator;
+				break;
+			case 'eContact':
+				this.validEContact = validator;
+				break;
+			default:
 		}
 	}
 
@@ -365,6 +457,35 @@ export class PatientDetailComponent implements OnInit {
 			.subscribe((data: any) => {
 				console.log(data);
 				this.patientObj = data;
+				if (Object.keys(data).length != 0) {
+					this.inEdit = true;
+					this.FormDisable = true;
+				} else if (Object.keys(data).length == 0) {
+					this.inEdit = false;
+					this.FormDisable = false;
+				}
+				console.log("formdisable", this.FormDisable);
+
 			});
+	}
+
+	checkPermission() {
+		this.isSaveButton = true;
+		this.editButton.isButton = true;
+		this.enableAndDisableInputs();
+	}
+
+	enableAndDisableInputs() {
+		if (this.inEdit) {
+			if (!this.isSaveButton) {
+				this.Form?.disable();
+				this.FormDisable = true;
+			} else if (this.isSaveButton) {
+				this.Form?.enable();
+				this.FormDisable = false;
+			}
+			this.addressFormService.setDisabledOrEnabled(this.FormDisable);
+			this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
+		}
 	}
 }

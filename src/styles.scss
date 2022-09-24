@@ -359,7 +359,7 @@ input[type='date'].form-control.value-must,
 input[type='text'].form-control-inline.value-must {
 	border: 1px solid #ed1c24;
 	box-shadow: 0 -0.5px 0pt 0.1pt #f7ebeb !important;
-	background: #ffffff;
+	background: #f7ebeb;
 	text-transform: uppercase;
 }
 
@@ -980,6 +980,15 @@ input[type='checkbox'] {
 }
 
 .mandatory-field.ng-valid {
+	border: 1px solid #3da336 !important;
+}
+
+.mandatory-field-saved.ng-invalid {
+	border: 1px solid #ed1c24 !important;
+	background-color: #f7ebeb;
+}
+
+.mandatory-field-saved.ng-valid {
 	border: 1px solid #3da336 !important;
 }
 

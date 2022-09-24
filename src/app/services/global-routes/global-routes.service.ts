@@ -20,7 +20,7 @@ export class GlobalRoutesService {
 	private urlPracticeInsurancePlan: string =
 		'/dashboard/practice-tool/practice/insurance-plan';
 
-	constructor() {}
+	constructor() { }
 
 	private routesPatientPatientUser: any[] = [
 		{
@@ -288,41 +288,35 @@ export class GlobalRoutesService {
 
 	private routesSettingsRoleManage: any[] = [
 		{
-			title: 'Manage Role Templates',
+			title: "Manage Role Templates",
 			url: `${this.urlRoleManage}/manage-role-template`,
 			isEnabled: true,
-			value: 'CAN_RETRIEVE_ROLE_TEMPLATE',
-			child: [
-				{
-					title: 'Add',
-					url: `${this.urlRoleManage}/manage-role-template/add`,
-					isEnabled: true,
-					value: 'CAN_CREATE_ROLE_TEMPLATE'
-				},
-				{
-					title: 'edit',
-					url: `${this.urlRoleManage}/manage-role-template/edit`,
-					isEnabled: true,
-					value: 'CAN_EDIT_ROLE_TEMPLATE'
-				}
-			]
+			value: "CAN_RETRIEVE_ROLE_TEMPLATE",
+			child: [{
+				title: "Add",
+				url: `${this.urlRoleManage}/manage-role-template/add`,
+				isEnabled: true,
+				value: "CAN_CREATE_ROLE_TEMPLATE",
+			}, {
+				title: "Edit",
+				url: `${this.urlRoleManage}/manage-role-template/edit`,
+				isEnabled: true,
+				value: "CAN_EDIT_ROLE_TEMPLATE",
+			},]
 		},
 		{
-			title: 'Manage Role',
+			title: "Manage Role",
 			url: `${this.urlRoleManage}/manage-role`,
 			isEnabled: true,
-			value: '',
-			child: [
-				{
-					title: 'Add',
-					url: `${this.urlRoleManage}/manage-role/add`
-				},
-				{
-					title: 'Edit',
-					url: `${this.urlRoleManage}/manage-role/edit`
-				}
-			]
-		}
+			value: "",
+			child: [{
+				title: "Add",
+				url: `${this.urlRoleManage}/manage-role/add`,
+			}, {
+				title: "Edit",
+				url: `${this.urlRoleManage}/manage-role/edit`,
+			}]
+		},
 	];
 
 	private routesPracticeToolInsurance: any[] = [

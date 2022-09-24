@@ -58,12 +58,8 @@ export class SettingsComponent implements OnInit {
   moduleName: string = '';
   currentRoute: string = "Onboarding";
   currentRouteChild1: string = "";
-  currentRouteChild2: string = "";
-  currentRouteChild3: string = "";
   urlSettings!: string;
-  urlRoleManagement!: string;
-  urlManageRole!: string;
-
+  urlCurrentRoute!: string;
 
 
   orgID: any;
@@ -115,96 +111,84 @@ export class SettingsComponent implements OnInit {
         this.businessGroupService.setBusinessGroup('');
         this.currentRoute = "Onboarding";
         this.currentRouteChild1 = "Business Group";
-        this.currentRouteChild2 = "";
-        this.currentRouteChild3 = "";
         if (event.url.includes("business-group")) {
+          this.urlCurrentRoute = this.routes.getSettingsOnboardingRoutes()[0].url;
           this.currentRouteChild1 = "Business Group";
-          this.currentRouteChild2 = "";
-          this.currentRouteChild3 = "";
-          this.urlRoleManagement = this.routes.getSettingsRoleManageUrl();
-          if (event.url.includes("business-group/edit")) {
-            this.currentRouteChild2 = "Edit Business Group";
-          } else if (event.url.includes("business-group/add")) {
-            this.currentRouteChild3 = "Add Business Group";
-          }
+          // if (event.url.includes("business-group/edit")) {
+          //   this.currentRouteChild2 = "Edit Business Group";
+          // } else if (event.url.includes("business-group/add")) {
+          //   this.currentRouteChild3 = "Add Business Group";
+          // }
         } else if (event.url.includes("legal-entity")) {
+          this.urlCurrentRoute = this.routes.getSettingsOnboardingRoutes()[1].url;
           this.currentRouteChild1 = "Legal Entity";
-          this.currentRouteChild2 = "";
-          this.currentRouteChild3 = "";
-          this.urlRoleManagement = this.routes.getSettingsRoleManageUrl();
-          if (event.url.includes("legal-entity/edit")) {
-            this.currentRouteChild2 = "Edit Legal Entity";
-          } else if (event.url.includes("legal-entity/add")) {
-            this.currentRouteChild3 = "Add Legal Entity";
-          }
+          // if (event.url.includes("legal-entity/edit")) {
+          //   this.currentRouteChild2 = "Edit Legal Entity";
+          // } else if (event.url.includes("legal-entity/add")) {
+          //   this.currentRouteChild3 = "Add Legal Entity";
+          // }
         } else if (event.url.includes("location")) {
+          this.urlCurrentRoute = this.routes.getSettingsOnboardingRoutes()[2].url;
           this.currentRouteChild1 = "Location";
-          this.currentRouteChild2 = "";
-          this.currentRouteChild3 = "";
-          this.urlRoleManagement = this.routes.getSettingsRoleManageUrl();
-          if (event.url.includes("location/edit")) {
-            this.currentRouteChild2 = "Edit Location";
-          } else if (event.url.includes("location/add")) {
-            this.currentRouteChild3 = "Add Location";
-          }
+          // if (event.url.includes("location/edit")) {
+          //   this.currentRouteChild2 = "Edit Location";
+          // } else if (event.url.includes("location/add")) {
+          //   this.currentRouteChild3 = "Add Location";
+          // }
         } else if (event.url.includes("practice")) {
+          this.urlCurrentRoute = this.routes.getSettingsOnboardingRoutes()[3].url;
           this.currentRouteChild1 = "Practice";
-          this.currentRouteChild2 = "";
-          this.currentRouteChild3 = "";
-          this.urlRoleManagement = this.routes.getSettingsRoleManageUrl();
-          if (event.url.includes("practice/edit")) {
-            this.currentRouteChild2 = "Edit Practice";
-          } else if (event.url.includes("practice/add")) {
-            this.currentRouteChild3 = "Add Practice";
-          }
+          // if (event.url.includes("practice/edit")) {
+          //   this.currentRouteChild2 = "Edit Practice";
+          // } else if (event.url.includes("practice/add")) {
+          //   this.currentRouteChild3 = "Add Practice";
+          // }
         } else if (event.url.includes("mapping")) {
+          this.urlCurrentRoute = this.routes.getSettingsOnboardingRoutes()[4].url;
           this.currentRouteChild1 = "Mapping";
-          this.currentRouteChild2 = "";
-          this.currentRouteChild3 = "";
-          this.urlRoleManagement = this.routes.getSettingsRoleManageUrl();
         }
 
-          ////// Role Management
-        } else if (event.url.includes("role-management")) {
-          this.currentRoute = "Role Management";
+        ////// Role Management
+      } else if (event.url.includes("role-management")) {
+        this.currentRoute = "Role Management";
+        this.currentRouteChild1 = "Manage Role Templates";
+        if (event.url.includes("role-management/manage-role-template")) {
+          this.urlCurrentRoute = this.routes.getSettingsRoleManageRoutes()[0].url;
           this.currentRouteChild1 = "Manage Role Templates";
-          this.currentRouteChild2 = "";
-          if (event.url.includes("role-management/manage-role-template")) {
-            this.currentRouteChild1 = "Manage Role Templates";
-            this.currentRouteChild2 = "";
-            this.currentRouteChild3 = "";
-            this.urlRoleManagement = this.routes.getSettingsRoleManageUrl();
-            if (event.url.includes("manage-role-template/edit?_id")) {
-              this.currentRouteChild2 = "Edit Role Template";
-            } else if (event.url.includes("add")) {
-              this.currentRouteChild3 = "Add Role Template";
-            }
-          } else if (event.url.includes("role-management/manage-role")) {
-            this.currentRouteChild1 = "Manage Role";
-            this.currentRouteChild2 = "";
-            this.currentRouteChild3 = "";
-            this.urlManageRole = this.routes.getSettingsRoleManageRoutes()[1].url;
-            if (event.url.includes("manage-role/edit")) {
-              this.currentRouteChild2 = "Edit Role";
-            } else if (event.url.includes("manage-role/add")) {
-              this.currentRouteChild3 = "Add Role";
-            }
-          }
+          // if (event.url.includes("manage-role-template/edit?_id")) {
+          //   this.currentRouteChild2 = "Edit Role Template";
+          // } else if (event.url.includes("add")) {
+          //   this.currentRouteChild3 = "Add Role Template";
+          // }
+        } else if (event.url.includes("role-management/manage-role")) {
+          this.urlCurrentRoute = this.routes.getSettingsRoleManageRoutes()[1].url;
+          this.currentRouteChild1 = "Manage Role";
+          // if (event.url.includes("manage-role/edit")) {
+          //   this.currentRouteChild2 = "Edit Role";
+          // } else if (event.url.includes("manage-role/add")) {
+          //   this.currentRouteChild3 = "Add Role";
+          // }
+        }
 
-          ////// User Management
-        } else if (event.url.includes("user-management")) {
-          this.currentRoute = "User Management";
-          this.currentRouteChild1 = " Management";
-          this.currentRouteChild1 = "Manage User";
-          this.currentRouteChild2 = "";
-          this.currentRouteChild3 = "";
-        }
-        if (event.url == this.globalRoutes.getSettingsUrl()) {
-          this.onSettingsPage = true;
-        } else {
-          this.onSettingsPage = false;
-        }
-      });
+        ////// User Management
+      } else if (event.url.includes("user-management")) {
+        this.urlCurrentRoute = this.routes.getSettingsUserManageRoutes()[0].url;
+        this.currentRoute = "User Management";
+        this.currentRouteChild1 = "Manage User";
+
+        // Preferences
+      } else if (event.url.includes("patient")) {
+        this.urlCurrentRoute = this.routes.getSettingsPreferencesUrl();
+        this.currentRoute = "Preferences";
+        this.currentRouteChild1 = "";
+      }
+
+      if (event.url == this.globalRoutes.getSettingsUrl()) {
+        this.onSettingsPage = true;
+      } else {
+        this.onSettingsPage = false;
+      }
+    });
   }
 
   ngOnInit(): void {

@@ -2,7 +2,7 @@
     <div style="text-align: center; padding-top: 7%;">
         <div>
             <h5><b>You haven’t added yet</b></h5>
-            <p>Click here, <img src="assets/icons/add.svg" width="36" height="36" *ngIf="!showRelationList" (click)="showRelationList = true" />
+            <p>Click here, <img class="pointer" src="assets/icons/add.svg" width="36" height="36" *ngIf="!showRelationList" (click)="showRelationList = true" />
                 <img src="assets/icons/add-disabled.png" width="36" height="36" *ngIf="showRelationList"/> to add
                 Family Member</p>
         </div>
@@ -90,7 +90,7 @@
             </div>
         </div>
         <div class="row section">
-            <div class="col-2" (click)="gotoDetails(familyMember)">
+            <div class="col-2 pointer" (click)="gotoDetails(familyMember)">
                 <div class="letter">
                     <p>{{ 'A' }}</p>
                     <div id="orange">
@@ -99,14 +99,14 @@
                 </div>
                 <!-- <img src="{{ familyMember.image || 'A' }}" width="78" height="90" /> -->
             </div>
-            <div class="col-3" (click)="gotoDetails(familyMember)">
+            <div class="col-3 pointer" (click)="gotoDetails(familyMember)">
                 <p>
                     {{ familyMember.user }}
                 </p>
                 <p>{{ familyMember.practiceName }}</p>
                 <p>{{ familyMember.specialty }}</p>
             </div>
-            <div class="col-6" (click)="gotoDetails(familyMember)">
+            <div class="col-6 pointer" (click)="gotoDetails(familyMember)">
                 <p>
                     Prefered mail method: <span>{{ familyMember.pemail }}</span>
                 </p>
@@ -136,7 +136,7 @@
     <div style="text-align: center; padding-top: 7%;">
         <div>
             <h5><b>Add more</b></h5>
-            <p>Click here, <img src="assets/icons/add.svg" width="36" height="36" *ngIf="!showRelationList" (click)="showRelationList = true" />
+            <p>Click here, <img class="pointer" src="assets/icons/add.svg" width="36" height="36" *ngIf="!showRelationList" (click)="showRelationList = true" />
                 <img src="assets/icons/add-disabled.png" width="36" height="36" *ngIf="showRelationList"/> to add
                 Family Member</p>
         </div>

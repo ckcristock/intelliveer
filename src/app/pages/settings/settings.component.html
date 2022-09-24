@@ -7,18 +7,18 @@
 		</div>
 		<!-- For Role Management -->
 
-		<div class="col" *ngIf="!onSettingsPage">
+		<div class="col" *ngIf="!onSettingsPage" style="margin-top: 18px;">
 			<span class="pointer" [routerLink]="urlSettings">Settings </span>
 			<span> / </span>
-			<span class="pointer" [routerLink]="urlRoleManagement">{{ currentRoute }}</span> <!-- role Management -->
+			<span class="pointer" [routerLink]="urlCurrentRoute">{{ currentRoute }}</span> <!-- role Management -->
 			<span> / </span>
-			<span class="pointer" [routerLink]="urlRoleManagement">{{ currentRouteChild1 }}</span>
+			<span>{{ currentRouteChild1 }}</span>
 			<!-- Management role or Template -->
 			<!-- <span *ngIf="currentRouteChild2 != ''"> / </span>
-			<span *ngIf="currentRouteChild2 != ''" class="pointer" [routerLink]="urlRoleManagement">{{
+			<span *ngIf="currentRouteChild2 != ''" class="pointer" [routerLink]="urlCurrentRoute">{{
 				currentRouteChild2 }}</span> For Add
 			<span *ngIf="currentRouteChild3 != ''"> / </span>
-			<span *ngIf="currentRouteChild3 != ''" class="pointer" [routerLink]="urlRoleManagement">{{
+			<span *ngIf="currentRouteChild3 != ''" class="pointer" [routerLink]="urlCurrentRoute">{{
 				currentRouteChild3 }}</span> For Edit -->
 		</div>
 		<!-- <div class="col-3" *ngIf="!onSettingsPage">
@@ -39,7 +39,7 @@
 	<hr style="margin-bottom: 25px;" />
 
 	<!-- squares -->
-	<div class="row" *ngIf="onSettingsPage">
+	<div class="row" *ngIf="onSettingsPage" style="margin-top: 18px;">
 		<div class="col component-view">
 			<div class="squares">
 				<div class="square" *ngFor="let menuItem of menuItems; let i = index" [routerLink]="menuItem.url">
@@ -50,7 +50,7 @@
 	</div>
 
 	<!-- content -->
-	<div class="row" *ngIf="!onSettingsPage">
+	<div class="row" *ngIf="!onSettingsPage" style="margin-top: 18px;">
 		<div class="col component-view">
 			<router-outlet></router-outlet>
 		</div>

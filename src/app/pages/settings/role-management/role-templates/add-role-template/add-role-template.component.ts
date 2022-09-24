@@ -3,11 +3,14 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AlertService } from '@services/alert/alert.service';
 import { BusinessGroupDropdownService } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { AddressFormService } from '@services/forms/address-form/address-form.service';
+import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
 import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 import { RolesUsersService } from '@services/settings/role-management/roles-users.service';
 import { filter } from 'rxjs';
 
 import { RolesTemplate, Section, Permissions } from 'src/app/interfaces/settings/role-management/roles-template.model.';
+import { SearchStringPipePipe } from 'src/app/pipes/stringSearch/search-string-pipe.pipe';
 
 @Component({
   selector: 'app-add-rol-template',
@@ -35,6 +38,9 @@ export class AddRoleTemplateComponent implements OnInit {
   manageRoleTemplateUrl!: string;
   isSaveButton: boolean = false;
   inEdit: boolean = false;
+  roleTemplateEdit!: any;
+  FormDisable!: boolean;
+  ngpanelDisabled: boolean = false;
 
 
   constructor(private router: Router,
@@ -44,19 +50,35 @@ export class AddRoleTemplateComponent implements OnInit {
     private businessGroupDropdownService: BusinessGroupDropdownService,
     private _ngZone: NgZone,
     private fb: FormBuilder,
-    private routes: GlobalRoutesService,) { }
-
-  ngOnInit(): void {
-    this.initForm(this.formData);
-    this.getRolePermissions();
-    this.getRoleTemplateID();
-    this.bussinesGroupList();
-    this.manageRoleTemplateUrl = this.routes.getSettingsRoleManageRoutes()[0].url;
-    this.roleTemplateName = "Add Role Template";
+    private globalRoutes: GlobalRoutesService,
+    private searchString: SearchStringPipePipe,
+    private addressFormService: AddressFormService,
+    private contactPersonFormService: ContactPersonFormService,
+  ) {
 
   }
 
-  initForm(data?: any) {
+  async ngOnInit() {
+    // this.router.events.pipe(
+    //   filter(event => event instanceof NavigationEnd)
+    // ).subscribe((event: any) => {
+
+    //   if (event.url.includes("manage-role-template/edit?_id")) {
+    //     this.inEdit = true;
+    //     console.log("ediiiiit", this.inEdit);
+
+    //   }
+    // });
+    await this.initForm(this.formData);
+    this.getRolePermissions();
+    this.getRoleTemplateID();
+    this.bussinesGroupList();
+    this.enableAndDisableInputs();
+    this.manageRoleTemplateUrl = this.globalRoutes.getSettingsRoleManageRoutes()[0].url;
+    this.roleTemplateName = "Add Role Template";
+  }
+
+  async initForm(data?: any) {
     data = data || {};
     this.roleTemplateForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
@@ -65,7 +87,6 @@ export class AddRoleTemplateComponent implements OnInit {
       isRestrictedTemplate: ['', Validators.required],
       type: ['', Validators.required],
       permissions: this.fb.array([
-
       ])
     });
   }
@@ -202,13 +223,18 @@ export class AddRoleTemplateComponent implements OnInit {
       setTimeout(() => {
         this.rolesUserServ.singleRoleTemplate(ID).subscribe((res: any) => {
           this.getRoleTemplateType = res.type;
-          this.roleTemplateName = res.name
+          this.roleTemplateName = res.name;
+
           if (this.roleTemplateName == '') {
           }
           this.rolesUserServ.setRoleTemplateName(res.name);
 
           this.setPermissionWithTemplateId(res);
-
+          if (this.roleTemplateForm.status == 'VALID') {
+            this.inEdit = true;
+          } else {
+            this.inEdit = false;
+          }
         })
       }, 500)
     })
@@ -401,7 +427,7 @@ export class AddRoleTemplateComponent implements OnInit {
     });
     this.getAllPermissionsTemplateID(permissions, permissionsObj);
     this.roleTemplateForm.patchValue({ name: data.name, description: data.description, businessGroups: data.businessGroups, type: data.type, isRestrictedTemplate: data.isRestrictedTemplate.toString() });
-    if (this.roleTemplateForm.value.businessGroups.length == 0) {
+    if (this.roleTemplateForm?.value.businessGroups.length == 0) {
       this.isTypeSpecific = false;
     } else {
       this.isTypeSpecific = true;
@@ -433,14 +459,13 @@ export class AddRoleTemplateComponent implements OnInit {
       permission.permissions.map((perm: any) => {
         if (permission.section == "templateBasedRestrictedRoles") {
           perm.enabled = false;
-          perm.locked = true;
+          perm.locked = false;
         } else if (permission.section == "templateBasedUnRestrictedRoles") {
           if (perm.name == "CAN_RETRIEVE_TEMPLATE_BASED_UNRESTRICTED_ROLE") {
             perm.enabled = true
-            perm.locked = true;
           } else {
             perm.enabled = false;
-            perm.locked = true;
+            perm.locked = false;
           }
 
         }
@@ -451,7 +476,34 @@ export class AddRoleTemplateComponent implements OnInit {
   }
 
   checkPermission() {
-    this.isSaveButton = true
+    // this.isSaveButton = true;
+    let roleTemplate = this.globalRoutes.getSettingsRoleManageRoutes();
+    let getRoleTemplate = this.searchString.transform('title', roleTemplate, 'Manage Role Templates');
+    this.roleTemplateEdit = this.searchString.transform('title', getRoleTemplate[0].child, 'Edit');
+    if (this.roleTemplateEdit[0].isEnabled) {
+      this.isSaveButton = true;
+      this.enableAndDisableInputs();
+    } else if (!this.roleTemplateEdit.isEnable) {
+      this.isSaveButton = false;
+    }
+  }
+
+  enableAndDisableInputs() {
+    console.log("inEdit", this.inEdit);
+
+    if (this.inEdit) {
+      if (!this.isSaveButton) {
+        this.roleTemplateForm?.disable();
+        this.FormDisable = true;
+        this.ngpanelDisabled = true;
+      } else if (this.isSaveButton) {
+        this.roleTemplateForm?.enable();
+        this.FormDisable = false;
+        this.ngpanelDisabled = false;
+      }
+      this.addressFormService.setDisabledOrEnabled(this.FormDisable);
+      this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
+    }
   }
 
 }

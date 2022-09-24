@@ -9,6 +9,7 @@ import { AlertService } from '@services/alert/alert.service';
 import { AddPatientService } from '@services/add-patient/add-patient.service';
 import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
 import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
+import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
 
 @Component({
 	selector: 'app-payment-party-form',
@@ -56,6 +57,19 @@ export class PaymentPartyFormComponent implements OnInit {
 		{ label: 'Single', value: 'S' },
 	];
 
+	isSaveButton: boolean = false;
+	inEdit: boolean = false;
+	FormDisable!: boolean;
+	validEmail: boolean | undefined;
+	validPrimaryPhoneType: boolean | undefined;
+	validPrimaryPhoneNumber: boolean | undefined;
+	validSecondaryPhoneType: boolean | undefined;
+	validSecondaryPhoneNumber: boolean | undefined;
+	validPrimaryPreferredCommunicationMethod: boolean | undefined;
+	validSecondaryPreferredCommunicationMethod: boolean | undefined;
+	validPreferredTimingForCall: boolean | undefined;
+	validDOB: boolean | undefined;
+
 	constructor(
 		private http: HttpClient,
 		private fb: FormBuilder,
@@ -65,6 +79,7 @@ export class PaymentPartyFormComponent implements OnInit {
 		private insuranceServ: InsuranceService,
 		private onboardingServ: OnboardingService,
 		private alertService: AlertService,
+		private contactPersonFormService: ContactPersonFormService,
 	) {
 		this.idForm = this.fb.group({
 			// name: '',
@@ -75,6 +90,9 @@ export class PaymentPartyFormComponent implements OnInit {
 
 	async ngOnInit() {
 		this.initForm(this.formData);
+		this.setUserDataToForm();
+		this.reviewInputs();
+		this.enableAndDisableInputs();
 		this.patientUserServ.setFalseAllNotPristine();
 		this.addPatientServ.setFalseAllNotPristineCWP();
 		this.insuranceServ.setFalseAllNotPristine();
@@ -92,11 +110,17 @@ export class PaymentPartyFormComponent implements OnInit {
 			localStorage.getItem('PaymPartyToPati')!
 		);
 		this.Form.controls['relationship'].setValue(this.relationship);
-		this.setUserDataToForm();
 	}
 
 	initForm(data?: any) {
 		data = data || {};
+		if (Object.keys(data).length != 0) {
+			this.inEdit = true;
+			this.FormDisable = true;
+		} else if (Object.keys(data).length == 0) {
+			this.inEdit = false;
+			this.FormDisable = false;
+		}
 		this.Form = this.fb.group({
 			relationship: [data?.relation || ''],
 			title: [data?.title || null],
@@ -108,7 +132,7 @@ export class PaymentPartyFormComponent implements OnInit {
 			pronoun: [data?.pronoun || null],
 			language: [data?.language || null],
 			maritalStatus: [data?.maritalStatus || null],
-			emailId: ['', Validators.minLength(2)],
+			emailId: [data?.emailId ||'', Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')],
 			primaryPhoneType: [data?.primaryPhoneType || null, Validators.required],
 			primaryPhoneNumber: [data?.primaryPhoneNumber || '', [Validators.required, Validators.pattern("^[0-9]*$")]],
 			secondaryPhoneType: [data?.secondaryPhoneType || ''],
@@ -126,6 +150,8 @@ export class PaymentPartyFormComponent implements OnInit {
 				data?.address || {}
 			)
 		});
+		this.addressFormService.setDisabledOrEnabled(this.FormDisable);
+		this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
 	}
 
 	setUserDataToForm() {
@@ -188,13 +214,56 @@ export class PaymentPartyFormComponent implements OnInit {
 		this.Form.controls['primaryPreferredCommunicationMethod'].setValue("");
 	}
 
-	fieldValidation(field: any, notRequiredButPattern?: boolean) {
+	async reviewInputs() {
+		await this.fieldValidation("emailId", true);
+		await this.fieldValidation("primaryPreferredCommunicationMethod", true);
+		await this.fieldValidation("DOB", true, true);
+	}
+
+	async fieldValidation(field: any, notRequiredButPattern?: boolean, date?:boolean) {
+		let validator;
+
 		if (notRequiredButPattern) {
-			return (this.Form.get(field)?.valid && this.Form.get(field)?.value != null);
-		} else {
-			return this.Form.get(field)?.value != null
+			validator = (this.Form.get(field)?.valid && (this.Form.get(field)?.value != null));
+			if(date){
+				validator = this.Form.get(field)?.value != 0;
+			}
+		} else  {
+			validator = this.Form.get(field)?.value != null;
+		}
+
+		switch (field) {
+			case 'DOB':
+				this.validDOB = validator;
+				break;
+			case 'emailId':
+				this.validEmail = validator;
+				break;
+			case 'primaryPhoneType':
+				this.validPrimaryPhoneType = validator;
+				break;
+			case 'primaryPhoneNumber':
+				this.validPrimaryPhoneNumber = validator;
+				break;
+			case 'secondaryPhoneType':
+				this.validSecondaryPhoneType = validator;
+				break;
+			case 'secondaryPhoneNumber':
+				this.validSecondaryPhoneNumber = validator;
+				break;
+			case 'primaryPreferredCommunicationMethod':
+				this.validPrimaryPreferredCommunicationMethod = validator;
+				break;
+			case 'secondaryPreferredCommunicationMethod':
+				this.validSecondaryPreferredCommunicationMethod = validator;
+				break;
+			case 'preferredTimingForCall':
+				this.validPreferredTimingForCall = validator;
+				break;
+			default:
 		}
 	}
+
 
 	async getStaticData() {
 		this.http
@@ -247,6 +316,25 @@ export class PaymentPartyFormComponent implements OnInit {
 	cancleImage() {
 		this.filePath = "";
 		this.fileName = "";
+	}
+
+	checkPermission() {
+		this.isSaveButton = true;
+		this.enableAndDisableInputs();
+	}
+
+	enableAndDisableInputs() {
+		if (this.inEdit) {
+			if (!this.isSaveButton) {
+				this.Form?.disable();
+				this.FormDisable = true;
+			} else if (this.isSaveButton) {
+				this.Form?.enable();
+				this.FormDisable = false;
+			}
+			this.addressFormService.setDisabledOrEnabled(this.FormDisable);
+			this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
+		}
 	}
 
 

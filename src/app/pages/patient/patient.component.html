@@ -1,19 +1,38 @@
 <div class="container content" style="padding-top: 0px; ">
 	<!-- Icons Menu -->
-	<div class="row mini-icon-navbar d-flex justify-content-center align-content-center mb-3" style="margin-top: 0px; border-bottom: 1px solid #d8d9da; height: 90px !important;">
+	<div class="row mini-icon-navbar d-flex justify-content-center align-content-center mb-3"
+		style="margin-top: 0px; height: 90px !important;">
 		<ul class="d-flex justify-content-center align-content-center" style="gap: 4.5rem;">
 			<li *ngFor="let item of menuItems" class="{{item?.class}}">
-				<img
-					src="{{item.icon}}"
-					alt=""
-					routerLinkActive="active"
-					[routerLink]="item.url"
-					ngbTooltip="{{ item.title }}"
-				/>
+				<img src="{{item.icon}}" alt="" routerLinkActive="active" [routerLink]="item.url"
+					ngbTooltip="{{ item.title }}" />
 				<!-- <span *ngIf="router.url.includes(item.url)" class="title" >{{ item.title }}</span> -->
 			</li>
 		</ul>
 	</div>
+
+
+	<div class="separator">
+		<span style="margin-left: 20px;">{{patientInfo[0].preferredName}}</span>
+		<span>&bull;</span>
+		<span>{{patientInfo[0].pronunciation}}</span>
+		<span>&bull;</span>
+		<span>{{patientInfo[0].time}}</span>
+		<span>&bull;</span>
+		<span>{{patientInfo[0].letter}}</span>
+		<span>&bull;</span>
+		<span>{{patientInfo[0].gender}}</span>
+		<span>&bull;</span>
+		<span>{{patientInfo[0].active}}</span>
+		<span>&bull;</span>
+		<span>{{patientInfo[0].phase}}</span>
+		<span>&bull;</span>
+		<span>{{patientInfo[0].hes}}</span>
+		<span>&bull;</span>
+		<span>{{patientInfo[0].js}}</span>
+	</div>
+
+
 	<div class="row">
 		<!-- Principal Content -->
 		<div class="col component-view">

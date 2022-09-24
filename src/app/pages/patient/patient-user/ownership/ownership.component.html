@@ -1,17 +1,33 @@
 <div>
-    <app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
-		[disableSaveBtn]="Form.invalid" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills>
+    <!-- <app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
+		[disableSaveBtn]="Form.invalid" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills> -->
+    <div class="row sticky" style="width: 101%;">
+        <div [ngClass]="{'col-11':!isSaveButton, 'col-12':!inEdit }">
+            <!-- [cancelBtn]="isSaveButton || !inEdit" -->
+            <div class="col">
+                <app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="isSaveButton || !inEdit"
+                    [saveBtn]="isSaveButton || !inEdit" [disableSaveBtn]="Form.invalid || Form.pristine" 
+                    (onCancel)="cancel()" (onSave)="save(Form.value)">
+                </app-nav-bar-pills>
+            </div>
+        </div>
+        <div *ngIf="!isSaveButton && inEdit" class="col-1 d-flex justify-content-center align-items-start"
+            style="background-color: transparent;">
+            <img src="/assets/icons/Edit.svg" style="width: 37px; height: 37px; cursor: pointer;" alt=""
+                (click)="checkPermission()" />
+        </div>
+    </div>
     <form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
         <div class="section" id="overview">
             <div class="row">
                 <div class="col-12">
                     <div class="letter">
-						<p>A</p>
-					</div>
+                        <p>A</p>
+                    </div>
                 </div>
             </div>
         </div>
-        
+
         <div class="section" id="ownership">
             <h6 class="heading">Ownership</h6>
             <div class="row">
@@ -26,8 +42,10 @@
                 <div class="col">
                     <div class="mainformset">
                         <label class="label-input-gap">Location</label>
-                        <ng-select placeholder="Select" formControlName="location" (change)="onSelectLocation($event)" class="mandatory-field">
-                            <ng-option [value]="item._id" *ngFor="let item of locationList" [class.valid-mandatory-field]="locationValid()">{{item.name}}</ng-option>
+                        <ng-select placeholder="Select" formControlName="location" (change)="onSelectLocation($event)"
+                            class="mandatory-field">
+                            <ng-option [value]="item._id" *ngFor="let item of locationList"
+                                [class.valid-mandatory-field]="locationValid()">{{item.name}}</ng-option>
                         </ng-select>
                     </div>
                 </div>

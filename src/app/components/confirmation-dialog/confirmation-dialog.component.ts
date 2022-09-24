@@ -73,6 +73,8 @@ export class ConfirmationDialogComponent implements OnInit {
 	getAlertValues(){
 		let conditions = this.addPatientServ.getConditions();
 		conditions.push(...this.insuranceServ.getConditions());
+		console.log("conditioooooons", conditions);
+		
 		for (let i = 0; i < conditions.length; i++) {
 			if (conditions[i].condition) {
 				switch (conditions[i].section) {
