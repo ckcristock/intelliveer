@@ -80,7 +80,6 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 	) { }
 
 	ngOnInit() {
-		
 		this.getCountries();
 		this.getIPAddress();
 		this.loadIp();
@@ -93,6 +92,7 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 		this.BGForm?.statusChanges.subscribe(
 			result => {
 				if (!this.BGForm?.pristine) {
+					console.log("entereeeed, BG, wrong");
 					this.onboardingServ.setbusinessGroupNotPristine(true);
 				}
 			}
@@ -218,7 +218,6 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 		} else if (!this.bussinessEdit.isEnable) {
 			this.isSaveButton = false;
 		}
-
 	}
 
 	enableAndDisableInputs() {

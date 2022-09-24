@@ -1,6 +1,22 @@
 <div class="row formrow" *ngIf="Form">
-	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="false" [saveBtn]="true" [editButton]="editButton"
-		[disableSaveBtn]="Form.invalid" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills>
+	<!-- <app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="false" [saveBtn]="true" [editButton]="editButton"
+		[disableSaveBtn]="Form.invalid" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills> -->
+	<div class="row sticky" style="width: 101%;">
+		<div [ngClass]="{'col-11':!isSaveButton, 'col-12':!inEdit }">
+			<!-- [cancelBtn]="isSaveButton || !inEdit" -->
+			<div class="col">
+				<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="false"
+					[saveBtn]="isSaveButton || !inEdit" [editButton]="editButton"
+					[disableSaveBtn]="Form.invalid || Form.pristine" (onCancel)="cancel()" (onSave)="save(Form.value)">
+				</app-nav-bar-pills>
+			</div>
+		</div>
+		<div *ngIf="!isSaveButton && inEdit" class="col-1 d-flex justify-content-center align-items-start"
+			style="background-color: transparent;">
+			<img src="/assets/icons/Edit.svg" style="width: 37px; height: 37px; cursor: pointer;" alt=""
+				(click)="checkPermission()" />
+		</div>
+	</div>
 	<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
 		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section" id="overview">
@@ -234,9 +250,9 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Location</label>
-						<ng-select class="input-upper red-bottom-line"
-							[class.valid-required-field]="fieldValidation('location')" formControlName="location"
-							placeholder="Select" [(ngModel)]="patientObj!.preferences!.location">
+						<ng-select class="input-upper red-bottom-line" formControlName="location"
+							(change)="fieldValidation('location',true)" [ngClass]="{'valid-required-field':validLocation && FormDisable == false, 
+							'red-bottom-line':validLocation==false  }" placeholder="Select" [(ngModel)]="patientObj!.preferences!.location">
 							<ng-option [value]="item._id" *ngFor="let item of locationList">
 								{{item.name}}
 							</ng-option>
@@ -244,9 +260,10 @@
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Billing Provider</label>
-						<ng-select class="input-upper red-bottom-line"
-							[class.valid-required-field]="fieldValidation('billing')" formControlName="billing"
-							placeholder="Select" [(ngModel)]="patientObj!.preferences!.billingProvider">
+						<ng-select class="input-upper red-bottom-line" formControlName="billing"
+							(change)="fieldValidation('billing',true)" [ngClass]="{'valid-required-field':validBilling && FormDisable == false, 
+							'red-bottom-line':validBilling==false  }" placeholder="Select"
+							[(ngModel)]="patientObj!.preferences!.billingProvider">
 							<ng-option value="s">
 								Select
 							</ng-option>
@@ -255,9 +272,10 @@
 
 					<div class="col">
 						<label class="label-input-gap">Treating Provider</label>
-						<ng-select class="input-upper red-bottom-line"
-							[class.valid-required-field]="fieldValidation('provider')" formControlName="provider"
-							placeholder="Select" [(ngModel)]="patientObj!.preferences!.treatingProvider">
+						<ng-select class="input-upper red-bottom-line" formControlName="provider"
+							(change)="fieldValidation('provider',true)" [ngClass]="{'valid-required-field':validProvider && FormDisable == false, 
+							'red-bottom-line':validProvider==false  }" placeholder="Select"
+							[(ngModel)]="patientObj!.preferences!.treatingProvider">
 							<ng-option value="s">
 								Select
 							</ng-option>
@@ -312,9 +330,10 @@
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Contact Person</label>
-						<ng-select class="input-upper red-bottom-line"
-							[class.valid-required-field]="fieldValidation('cPerson')" formControlName="cPerson"
-							placeholder="Select" [(ngModel)]="patientObj!.emergencyContact!.contactPerson">
+						<ng-select class="input-upper red-bottom-line" formControlName="cPerson"
+							(change)="fieldValidation('cPerson',true)" [ngClass]="{'valid-required-field':validCPerson && FormDisable == false, 
+							'red-bottom-line':validCPerson==false  }" placeholder="Select"
+							[(ngModel)]="patientObj!.emergencyContact!.contactPerson">
 							<ng-option value="s">
 								Select
 							</ng-option>
@@ -330,13 +349,15 @@
 						<label class="label-input-gap">Name</label>
 						<input class="form-control red-bottom-line" type="text" placeholder="" name="id"
 							formControlName="name" [(ngModel)]="patientObj!.emergencyContact!.name"
-							[class.valid-required-field]="fieldValidation('name', true)" />
+							(input)="fieldValidation('name',true, true)" [ngClass]="{'valid-required-field':validName && FormDisable == false, 
+							'red-bottom-line':validName==false  }" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Emergency Contact</label>
 						<input class="form-control red-bottom-line" type="text" placeholder="" name="name"
 							formControlName="eContact" [(ngModel)]="patientObj!.emergencyContact!.emergencyContact"
-							[class.valid-required-field]="fieldValidation('eContact', true)" />
+							(input)="fieldValidation('eContact',true, true)" [ngClass]="{'valid-required-field':validEContact && FormDisable == false, 
+							'red-bottom-line':validEContact==false  }" />
 					</div>
 					<div class="col"></div>
 					<div class="col"></div>

@@ -5,6 +5,7 @@
 			<p>
 				Click here,
 				<img
+					class="pointer"
 					src="assets/icons/add.svg"
 					width="36"
 					height="36"
@@ -143,7 +144,7 @@
 	>
 		<div class="section">
 			<div class="row">
-				<div class="col-2" routerLink="/dashboard/patient/patient-user/legal-guardian/edit/{{
+				<div class="col-2 pointer" routerLink="/dashboard/patient/patient-user/legal-guardian/edit/{{
                     legalGuardian._id
                 }}">
 					<div class="letter">
@@ -153,7 +154,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-3" routerLink="/dashboard/patient/patient-user/legal-guardian/edit/{{
+				<div class="col-3 pointer" routerLink="/dashboard/patient/patient-user/legal-guardian/edit/{{
                     legalGuardian._id
                 }}">
 					<p>
@@ -162,7 +163,7 @@
 					<p>{{ legalGuardian.practiceName }}</p>
 					<p>{{ legalGuardian.specialty }}</p>
 				</div>
-				<div class="col-6" routerLink="/dashboard/patient/patient-user/legal-guardian/edit/{{
+				<div class="col-6 pointer" routerLink="/dashboard/patient/patient-user/legal-guardian/edit/{{
                     legalGuardian._id
                 }}">
 					<p>
@@ -184,7 +185,7 @@
 				<div class="col-1">
 					<div ngbDropdown class="d-inline-block">
 						<i
-							class="bi bi-three-dots-vertical"
+							class="bi bi-three-dots-vertical pointer"
 							id="dropdownBasic"
 							ngbDropdownToggle
 						></i>

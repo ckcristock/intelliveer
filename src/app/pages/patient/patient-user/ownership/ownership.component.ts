@@ -1,46 +1,59 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
+import { AddressFormService } from '@services/forms/address-form/address-form.service';
+import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
 import { PatientDetailService } from '@services/patient/family/patient-detail.service';
 
 @Component({
-  selector: 'app-ownership',
-  templateUrl: './ownership.component.html',
-  styleUrls: ['./ownership.component.scss']
+	selector: 'app-ownership',
+	templateUrl: './ownership.component.html',
+	styleUrls: ['./ownership.component.scss']
 })
 export class OwnershipComponent implements OnInit {
 
-  formData: any | undefined = undefined;
+	formData: any | undefined = undefined;
 	Form!: FormGroup;
-  practiceList: any[] = [];
+	practiceList: any[] = [];
 	locationList: any[] = [];
 	legalEntityList: any[] = [];
-  menuItems: MenuItem[] = [
+	menuItems: MenuItem[] = [
 		{ title: 'Overview', id: 'overview' },
 		{ title: 'Ownership', id: 'ownership' }
 	];
-  currentSelection: string = 'overview';
+	currentSelection: string = 'overview';
 
-  constructor(private fb: FormBuilder,private patientDetailService: PatientDetailService) { }
+	isSaveButton: boolean = false;
+	inEdit: boolean = true;
+	FormDisable: boolean = true;
 
-  ngOnInit(): void {
-    this.initForm(this.formData);
-  }
+	constructor(private fb: FormBuilder, 
+		private patientDetailService: PatientDetailService,
+		private addressFormService: AddressFormService,
+		private contactPersonFormService: ContactPersonFormService,
+		) { }
 
-  initForm(data?: any) {
+	ngOnInit(): void {
+		this.initForm(this.formData);
+		this.enableAndDisableInputs();
+	}
+
+	initForm(data?: any) {
 		data = data || {};
-		this.Form = this.fb.group({		
-			location: [data?.location || '',  Validators.required],
+		this.Form = this.fb.group({
+			location: [data?.location || '', Validators.required],
 			practice: [data?.practice || ''],
 			legalEntity: [data?.legalEntity || '']
 		});
+		this.addressFormService.setDisabledOrEnabled(this.FormDisable);
+		this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
 	}
 
-  locationValid() {
+	locationValid() {
 		return this.Form.get('location')?.valid;
 	}
 
-  getPracticesList(bgId: any) {
+	getPracticesList(bgId: any) {
 		this.patientDetailService
 			.getPracticesList(bgId)
 			.subscribe((list: any) => {
@@ -67,7 +80,7 @@ export class OwnershipComponent implements OnInit {
 			});
 	}
 
-  onSelectPractice($event: any) {
+	onSelectPractice($event: any) {
 		console.log($event);
 	}
 
@@ -79,14 +92,31 @@ export class OwnershipComponent implements OnInit {
 		console.log($event);
 	}
 
-  save(data: any)
-  {
-    console.log(data);
-  }
+	save(data: any) {
+		console.log(data);
+	}
 
-  cancel()
-  {
+	cancel() {
 
-  }
+	}
+
+	checkPermission() {
+		this.isSaveButton = true;
+		this.enableAndDisableInputs();
+	}
+
+	enableAndDisableInputs() {
+		if (this.inEdit) {
+			if (!this.isSaveButton) {
+				this.Form?.disable();
+				this.FormDisable = true;
+			} else if (this.isSaveButton) {
+				this.Form?.enable();
+				this.FormDisable = false;
+			}
+			this.addressFormService.setDisabledOrEnabled(this.FormDisable);
+			this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
+		}
+	}
 
 }

@@ -17,6 +17,7 @@ export class ImageUploaderComponent implements OnInit {
 	processing: boolean = false;
 	@Input() imageUrl: string = '';
 	@Input() isPublicImage: boolean = false;
+	@Input() variableDiable: boolean = false;
 	@Output() onUpload = new EventEmitter<{ url: string }>();
 	constructor(private http: HttpClient) {}
 

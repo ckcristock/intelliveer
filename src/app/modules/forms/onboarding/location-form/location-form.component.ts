@@ -59,8 +59,8 @@ export class LocationFormComponent implements OnInit {
 		private globalRoutes: GlobalRoutesService
 	) { }
 
-	ngOnInit(): void {
-		this.initForm(this.formData);
+	async ngOnInit() {
+		await this.initForm(this.formData);
 		this.enableAndDisableInputs();
 		this.patientUserServ.setFalseAllNotPristine();
 		this.addPatientServ.setFalseAllNotPristineCWP();
@@ -69,15 +69,16 @@ export class LocationFormComponent implements OnInit {
 		this.Form?.statusChanges.subscribe(
 			result => {
 				if (!this.Form?.pristine) {
+					console.log("entereeeed, location, wrong");
+
 					this.onboardingServ.setlocationNotPristine(true);
 				}
 			}
 		);
 
 		this.urlLocation = this.globalRoutes.getSettingsOnboardingRoutes()[2].url;
-
 	}
-	initForm(data?: any) {
+	async initForm(data?: any) {
 		data = data || {};
 		if (Object.keys(data).length != 0) {
 			this.inEdit = true;
@@ -117,7 +118,6 @@ export class LocationFormComponent implements OnInit {
 				data?.contactPerson || {}
 			)
 		});
-
 		this.addressFormService.setDisabledOrEnabled(this.FormDisable);
 		this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
 		this.locationName = this.Form.get('name')?.value;

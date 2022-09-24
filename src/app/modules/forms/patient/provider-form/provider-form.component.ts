@@ -9,6 +9,7 @@ import { PatientUserService } from '@services/dashboard/patient/patient-user/pat
 import { AddPatientService } from '@services/add-patient/add-patient.service';
 import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
 import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
+import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
 
 @Component({
   selector: 'app-provider-form',
@@ -63,6 +64,22 @@ export class ProviderFormComponent implements OnInit {
   ];
   famiMembTitle!: any;
 
+  isSaveButton: boolean = false;
+  inEdit: boolean = false;
+  FormDisable!: boolean;
+  validEmail: boolean | undefined;
+  validPrimaryPhoneType: boolean | undefined;
+  validPrimaryPhoneNumber: boolean | undefined;
+  validSecondaryPhoneType: boolean | undefined;
+  validSecondaryPhoneNumber: boolean | undefined;
+  validPrimaryPreferredCommunicationMethod: boolean | undefined;
+  validSecondaryPreferredCommunicationMethod: boolean | undefined;
+  validPreferredTimingForCall: boolean | undefined;
+  validDOB: boolean | undefined;
+  variableDiable: boolean = true;
+  validPPhoneNumber: boolean | undefined;
+  validDMSchool: boolean | undefined;
+
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
@@ -72,6 +89,7 @@ export class ProviderFormComponent implements OnInit {
     private addPatientServ: AddPatientService,
     private insuranceServ: InsuranceService,
     private onboardingServ: OnboardingService,
+    private contactPersonFormService: ContactPersonFormService,
   ) {
     this.idForm = this.fb.group({
       // name: '',
@@ -81,23 +99,34 @@ export class ProviderFormComponent implements OnInit {
     this.getStaticData();
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.initForm(this.formData);
-		this.patientUserServ.setFalseAllNotPristine();
-		this.addPatientServ.setFalseAllNotPristineCWP();
-		this.insuranceServ.setFalseAllNotPristine();
-		this.onboardingServ.setFalseAllNotPristine();
-		this.Form?.statusChanges.subscribe(
-			result => {
-				if (!this.Form?.pristine) {
-					this.patientUserServ.setExterProvNotPristine(true);
-				}
-			}
-		);
+    this.reviewInputs();
+    this.enableAndDisableInputs();
+    this.patientUserServ.setFalseAllNotPristine();
+    this.addPatientServ.setFalseAllNotPristineCWP();
+    this.insuranceServ.setFalseAllNotPristine();
+    this.onboardingServ.setFalseAllNotPristine();
+    this.Form?.statusChanges.subscribe(
+      result => {
+        if (!this.Form?.pristine) {
+          this.patientUserServ.setExterProvNotPristine(true);
+        }
+      }
+    );
   }
 
   initForm(data?: any) {
     data = data || {};
+    if (Object.keys(data).length != 0) {
+      this.inEdit = true;
+      this.FormDisable = true;
+      console.log("YYYYYYYYYYYYHHHHH");
+
+    } else if (Object.keys(data).length == 0) {
+      this.inEdit = false;
+      this.FormDisable = false;
+    }
     this.Form = this.fb.group({
       provider: [data?.relation || ''],
       title: [data?.title || ''],
@@ -111,12 +140,12 @@ export class ProviderFormComponent implements OnInit {
       specialty: [data?.specialty || ''],
       specialtySchool: [data?.specialtySchool || ''],
       greeting: [data?.greeting || ''],
-      emailId: [data?.emailId || ''],
-      demailId: [data?.emailId || ''],
+      emailId: [data?.emailId || '', Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')],
+      demailId: [data?.demailId || ''],
       primaryPhoneType: [data?.primaryPhoneType || ''],
-      pPhoneNumber: [data?.pPhoneNumber || '',  Validators.pattern("^[0-9]*$")],
+      pPhoneNumber: [data?.pPhoneNumber || '', Validators.pattern("^[0-9]*$")],
       secondaryPhoneType: [data?.secondaryPhoneType || ''],
-      sPhoneNumber: [data?.sPhoneNumber || '', ],
+      sPhoneNumber: [data?.sPhoneNumber || '',],
       preferredMailMethod: [data?.preferredMailMethod || ''],
       website: [data?.website || ''],
       note: [data?.note || ''],
@@ -124,15 +153,72 @@ export class ProviderFormComponent implements OnInit {
         data?.address || {}
       )
     });
+    this.addressFormService.setDisabledOrEnabled(this.FormDisable);
+    this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
+
   }
 
-  fieldValidation(field: any, notRequiredButPattern?: boolean) {
-		if (notRequiredButPattern) {
-			return (this.Form.get(field)?.valid && this.Form.get(field)?.value != null);
-		} else {
-			return this.Form.get(field)?.value != null
-		}
-	}
+  async reviewInputs() {
+    await this.fieldValidation('DMSchool', undefined, undefined, true);
+    console.log(" this.validDMSchool", this.validDMSchool);
+
+    await this.fieldValidation("emailId", true, true);
+    await this.fieldValidation("primaryPreferredCommunicationMethod", true);
+    await this.fieldValidation("DOB", true, true);
+    await this.fieldValidation("pPhoneNumber", true);
+  }
+
+  async fieldValidation(field: any, notRequiredButPattern?: boolean, greaterZero?: boolean, mandatory?: boolean) {
+    let validator;
+    if (mandatory) {
+      validator = this.Form.get(field)?.valid;
+    }
+    if (notRequiredButPattern) {
+      validator = (this.Form.get(field)?.valid && (this.Form.get(field)?.value != null));
+      if (greaterZero) {
+        validator = this.Form.get(field)?.value != 0;
+      }
+    } else {
+      validator = this.Form.get(field)?.value != null;
+    }
+
+    switch (field) {
+      case 'DMSchool':
+        this.validDMSchool = validator;
+        break;
+      case 'DOB':
+        this.validDOB = validator;
+        break;
+      case 'emailId':
+        this.validEmail = validator;
+        break;
+      case 'primaryPhoneType':
+        this.validPrimaryPhoneType = validator;
+        break;
+      case 'primaryPhoneNumber':
+        this.validPrimaryPhoneNumber = validator;
+        break;
+      case 'secondaryPhoneType':
+        this.validSecondaryPhoneType = validator;
+        break;
+      case 'secondaryPhoneNumber':
+        this.validSecondaryPhoneNumber = validator;
+        break;
+      case 'primaryPreferredCommunicationMethod':
+        this.validPrimaryPreferredCommunicationMethod = validator;
+        break;
+      case 'secondaryPreferredCommunicationMethod':
+        this.validSecondaryPreferredCommunicationMethod = validator;
+        break;
+      case 'preferredTimingForCall':
+        this.validPreferredTimingForCall = validator;
+        break;
+      case 'pPhoneNumber':
+        this.validPPhoneNumber = validator;
+        break;
+      default:
+    }
+  }
 
   async getStaticData() {
     this.http
@@ -171,6 +257,25 @@ export class ProviderFormComponent implements OnInit {
   handleUploadedImage(e: { url: string }) {
     if (e && this.idForm) {
       this.idForm.controls['logo'].setValue(e.url);
+    }
+  }
+
+  checkPermission() {
+    this.isSaveButton = true;
+    this.enableAndDisableInputs();
+  }
+
+  enableAndDisableInputs() {
+    if (this.inEdit) {
+      if (!this.isSaveButton) {
+        this.Form?.disable();
+        this.FormDisable = true;
+      } else if (this.isSaveButton) {
+        this.Form?.enable();
+        this.FormDisable = false;
+      }
+      this.addressFormService.setDisabledOrEnabled(this.FormDisable);
+      this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
     }
   }
 

@@ -9,6 +9,7 @@ import { AlertService } from '@services/alert/alert.service';
 import { AddPatientService } from '@services/add-patient/add-patient.service';
 import { InsuranceService } from '@services/dashboard/patient/insurance/insurance.service';
 import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
+import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
 
 @Component({
   selector: 'app-family-member-form',
@@ -39,6 +40,9 @@ export class FamilyMemberFormComponent implements OnInit {
   idForm: FormGroup;
   familyMember: any[] = [];
   famiMembTitle!: any;
+  isSaveButton: boolean = false;
+	inEdit: boolean = false;
+	FormDisable!: boolean;
 
   constructor(
     private http: HttpClient,
@@ -49,6 +53,7 @@ export class FamilyMemberFormComponent implements OnInit {
     private insuranceServ: InsuranceService,
     private onboardingServ: OnboardingService,
     private alertService: AlertService,
+		private contactPersonFormService: ContactPersonFormService,
   ) {
     this.idForm = this.fb.group({
       // name: '',
@@ -59,6 +64,7 @@ export class FamilyMemberFormComponent implements OnInit {
 
   async ngOnInit() {
     this.initForm(this.formData);
+		this.enableAndDisableInputs();
     this.patientUserServ.setFalseAllNotPristine();
     this.addPatientServ.setFalseAllNotPristineCWP();
     this.insuranceServ.setFalseAllNotPristine();
@@ -87,6 +93,13 @@ export class FamilyMemberFormComponent implements OnInit {
 
   initForm(data?: any) {
     data = data || {};
+    if (Object.keys(data).length != 0) {
+			this.inEdit = true;
+			this.FormDisable = true;
+		} else if (Object.keys(data).length == 0) {
+			this.inEdit = false;
+			this.FormDisable = false;
+		}
     this.Form = this.fb.group({
       title: [data?.title || ''],
       firstName: [data?.firstName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
@@ -97,6 +110,8 @@ export class FamilyMemberFormComponent implements OnInit {
       pronoun: [data?.pronoun || ''],
       relationship: [data?.relation || ''],
     });
+    this.addressFormService.setDisabledOrEnabled(this.FormDisable);
+		this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
   }
 
   fieldValidation(field: any, notRequiredButPattern?: boolean) {
@@ -148,5 +163,24 @@ export class FamilyMemberFormComponent implements OnInit {
       this.idForm.controls['logo'].setValue(e.url);
     }
   }
+
+  checkPermission() {
+		this.isSaveButton = true;
+		this.enableAndDisableInputs();
+	}
+
+	enableAndDisableInputs() {
+		if (this.inEdit) {
+			if (!this.isSaveButton) {
+				this.Form?.disable();
+				this.FormDisable = true;
+			} else if (this.isSaveButton) {
+				this.Form?.enable();
+				this.FormDisable = false;
+			}
+			this.addressFormService.setDisabledOrEnabled(this.FormDisable);
+			this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
+		}
+	}
 
 }

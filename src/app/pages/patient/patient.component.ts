@@ -15,6 +15,18 @@ export class PatientComponent implements OnInit {
 
   navbarOpen = false;
   navbarNumb = 1;
+  patientInfo: any [] = [
+    {preferredName: "Preferred Name",
+    pronunciation: "Pronunciation",
+    time: "11 y 5 m",
+    letter: "M",
+    gender: "She",
+    active: "Active Tx",
+    phase: "Phase 1",
+    hes: "Hes.",
+    js: "Js"
+    },
+  ];
   // navbarOpen = !navbarOpen;
 
   constructor(public router: Router,

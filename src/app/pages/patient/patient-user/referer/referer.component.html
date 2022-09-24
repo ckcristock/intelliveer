@@ -2,7 +2,7 @@
     <div style="text-align: center; padding-top: 7%;">
         <div>
             <h5><b>You haven’t added yet</b></h5>
-            <p>Click here, <img src="assets/icons/add.svg" width="36" height="36" *ngIf="!showList" (click)="showList = true" />
+            <p>Click here, <img class="pointer" src="assets/icons/add.svg" width="36" height="36" *ngIf="!showList" (click)="showList = true" />
                 <img src="assets/icons/add-disabled.png" width="36" height="36" *ngIf="showList"/> to add
                  Referer</p>
         </div>
@@ -63,7 +63,7 @@
             </div>
         </div>
         <div class="row section">
-            <div class="col-2" (click)="gotoDetails(referer)">
+            <div class="col-2 pointer" (click)="gotoDetails(referer)">
                 <div class="letter">
                     <p>{{ 'A' }}</p>
                     <div id="orange">
@@ -72,14 +72,14 @@
                 </div>
                 <!-- <img src="{{ referer.image }}" width="78" height="90" /> -->
             </div>
-            <div class="col-3" (click)="gotoDetails(referer)">
+            <div class="col-3 pointer" (click)="gotoDetails(referer)">
                 <p>
                     {{ referer.user }}
                 </p>
                 <p>{{ referer.practiceName }}</p>
                 <p>{{ referer.specialty }}</p>
             </div>
-            <div class="col-6" (click)="gotoDetails(referer)">
+            <div class="col-6 pointer" (click)="gotoDetails(referer)">
                 <p>
                     Prefered mail method: <span>{{ referer.pemail }}</span>
                 </p>
@@ -96,7 +96,7 @@
             <div class="col-1">
                 <div ngbDropdown class="d-inline-block">
                     <i
-                        class="bi bi-three-dots-vertical"
+                        class="bi bi-three-dots-vertical pointer"
                         id="dropdownBasic"
                         ngbDropdownToggle
                     ></i>
@@ -113,7 +113,7 @@
     <div style="text-align: center; padding-top: 7%;">
         <div>
             <h5><b>Add more</b></h5>
-            <p>Click here, <img src="assets/icons/add.svg" width="36" height="36" *ngIf="!showList" (click)="showList = true" />
+            <p>Click here, <img class="pointer" src="assets/icons/add.svg" width="36" height="36" *ngIf="!showList" (click)="showList = true" />
                 <img src="assets/icons/add-disabled.png" width="36" height="36" *ngIf="showList"/> to add
                  Referer</p>
         </div>

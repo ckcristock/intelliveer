@@ -285,7 +285,7 @@ export class GlobalRoutesService {
         isEnabled: true,
         value: "CAN_CREATE_ROLE_TEMPLATE",
       },{
-        title: "edit",
+        title: "Edit",
         url: `${this.urlRoleManage}/manage-role-template/edit`,
         isEnabled: true,
         value: "CAN_EDIT_ROLE_TEMPLATE",

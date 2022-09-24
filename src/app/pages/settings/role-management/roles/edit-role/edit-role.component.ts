@@ -8,6 +8,8 @@ import { RoleTemplate } from '../add-role/add-role.component';
 import { AuthService } from '@services/auth/auth.service';
 import { Subscription } from 'rxjs';
 import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
+import { AddressFormService } from '@services/forms/address-form/address-form.service';
+import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
 @Component({
   selector: 'app-edit-role',
   templateUrl: './edit-role.component.html',
@@ -32,11 +34,16 @@ export class EditRoleComponent implements OnInit {
   selectedBusinessGroup: SelectedBusinessGroup | any;
   editRoleID: any;
   orgID: any;
-  isSaveButton: boolean = false;
   editRRT: any;
   editURRT: any;
   roleName: any;
   manageRoleUrl!: string;
+  isSaveButton: boolean = false;
+  inEdit: boolean = false;
+  roleEdit!: any;
+  FormDisable!: boolean;
+  ngpanelDisabled: boolean = false;
+
 
   constructor(
     private router: Router,
@@ -47,9 +54,11 @@ export class EditRoleComponent implements OnInit {
     private authService: AuthService,
     public route: ActivatedRoute,
     private routes: GlobalRoutesService,
+    private addressFormService: AddressFormService,
+    private contactPersonFormService: ContactPersonFormService,
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     (this.roleService.authService.getOrgId() === 'intelliveer')
       ? this.displayCreateRoleYesNoOption = true
       : this.displayCreateRoleYesNoOption = false;
@@ -59,10 +68,11 @@ export class EditRoleComponent implements OnInit {
     this.getLocationList();
     this.getPracticeList();
     this.getPermissionList();
-    this.getBgId();
+    await this.getBgId();
     this.manageRoleUrl = this.routes.getSettingsRoleManageRoutes()[1].url;
+
   }
-  getBgId() {
+  async getBgId() {
     this.businessGroupDropdownSupscription = this.businessGroupDropdownService
       .businessGroup()
       .subscribe((bg) => {
@@ -78,6 +88,12 @@ export class EditRoleComponent implements OnInit {
       this.roleObj = data;
       this.roleName = data.name;
       this.Form.patchValue(data);
+      if (this.Form.status == 'VALID') {
+        this.inEdit = true;
+      } else {
+        this.inEdit = false;
+      }
+      this.enableAndDisableInputs();
     }, error => {
       console.log(error)
     });
@@ -97,8 +113,8 @@ export class EditRoleComponent implements OnInit {
   initForm(data?: any) {
     data = data || {};
     this.Form = this.fb.group({
-      name: [data?.fName || '',  [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
-      description: [data?.lName || '',  [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
+      name: [data?.fName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
+      description: [data?.lName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
       permissions: this.fb.array([])
     });
   }
@@ -314,7 +330,7 @@ export class EditRoleComponent implements OnInit {
       if (bgOrdID == 'intelliveer' || bgOrdID == null) {
         bgOrdID = orgId
       }
-      this.getRoleByBgId(this.editRoleID, bgOrdID)
+      this.getRoleByBgId(this.editRoleID, bgOrdID);
     }
   }
   /** Update Role with Template  */
@@ -337,9 +353,11 @@ export class EditRoleComponent implements OnInit {
     user = JSON.parse(user);
     console.log(user)
     if (user.__ISSU__) {
-      this.isSaveButton = true
+      this.isSaveButton = true;
+      this.enableAndDisableInputs();
     } else if (user.isBGAdmin) {
-      this.isSaveButton = true
+      this.isSaveButton = true;
+      this.enableAndDisableInputs();
     } else {
       user?.roles[0]?.permissions[0]?.sections.forEach((element: any) => {
         if (element.section == 'templateBasedRestrictedRoles') {
@@ -348,7 +366,6 @@ export class EditRoleComponent implements OnInit {
               case "CAN_CREATE_TEMPLATE_BASED_RESTRICTED_ROLE":
                 this.isSaveButton = RRT.enabled;
                 break;
-
             }
           });
         } else if (element.section == 'templateBasedUnRestrictedRoles') {
@@ -357,13 +374,27 @@ export class EditRoleComponent implements OnInit {
               case "CAN_CREATE_TEMPLATE_BASED_UNRESTRICTED_ROLE":
                 this.isSaveButton = URRT.enabled;
                 break;
-
             }
           });
         }
       });
     }
+  }
 
+  enableAndDisableInputs() {
+    if (this.inEdit) {
+      if (!this.isSaveButton) {
+        this.Form?.disable();
+        this.FormDisable = true;
+        this.ngpanelDisabled = true;
+      } else if (this.isSaveButton) {
+        this.Form?.enable();
+        this.FormDisable = false;
+        this.ngpanelDisabled = false;
+      }
+      this.addressFormService.setDisabledOrEnabled(this.FormDisable);
+      this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
+    }
   }
 
 }

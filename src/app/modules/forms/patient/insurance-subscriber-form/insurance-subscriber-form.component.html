@@ -1,7 +1,22 @@
 <div class="row formrow" *ngIf="Form">
-	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
+	<!-- <app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
 		[disableSaveBtn]="Form.invalid || Form.pristine" (onCancel)="cancel()" (onSave)="save(Form.value)">
-	</app-nav-bar-pills>
+	</app-nav-bar-pills> -->
+	<div class="row sticky" style="width: 101%;">
+		<div [ngClass]="{'col-11':!isSaveButton, 'col-12':!inEdit }">
+			<div class="col">
+				<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection"
+					[cancelBtn]="isSaveButton || !inEdit" [saveBtn]="isSaveButton || !inEdit"
+					[disableSaveBtn]="Form.invalid || Form.pristine" (onCancel)="cancel()" (onSave)="save(Form.value)">
+				</app-nav-bar-pills>
+			</div>
+		</div>
+		<div *ngIf="!isSaveButton && inEdit" class="col-1 d-flex justify-content-center align-items-start"
+			style="background-color: transparent;">
+			<img src="/assets/icons/Edit.svg" style="width: 37px; height: 37px; cursor: pointer;" alt=""
+				(click)="checkPermission()" />
+		</div>
+	</div>
 	<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
 		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section" id="overview">
@@ -72,7 +87,8 @@
 					<div class="col-3">
 						<label class="label-input-gap">Date of Birth</label>
 						<input class="form-control red-bottom-line input-upper" type="date" placeholder="" name="DOB"
-							formControlName="DOB" [class.valid-required-field]="fieldValidation('DOB')" />
+							formControlName="DOB" (input)="fieldValidation('DOB',true, true)" [ngClass]="{'valid-required-field':validDOB && FormDisable == false, 
+							'red-bottom-line':validDOB==false  }" />
 					</div>
 					<div class="col-3">
 						<label class="label-input-gap">Gender</label>
@@ -142,7 +158,8 @@
 					<div class="col">
 						<label class="label-input-gap">Email</label>
 						<input class="form-control red-bottom-line input-upper" type="text" placeholder="" name="id"
-							formControlName="emailId" [class.valid-required-field]="fieldValidation('emailId')" />
+							formControlName="emailId" (input)="fieldValidation('emailId',true)" [ngClass]="{'valid-required-field':validEmail && FormDisable == false, 
+							'red-bottom-line':validEmail==false  }" />
 					</div>
 
 					<div class="col">
@@ -182,8 +199,8 @@
 						<label class="label-input-gap">Preferred Communication Method - Primary</label>
 						<ng-select class="input-upper red-bottom-line input-upper"
 							formControlName="primaryPreferredCommunicationMethod" placeholder="Select"
-							[class.valid-required-field]="fieldValidation('primaryPreferredCommunicationMethod')"
-							(clear)="clearCommPrimary()">
+							(change)="fieldValidation('primaryPreferredCommunicationMethod',true)" [ngClass]="{'valid-required-field':validPrimaryPreferredCommunicationMethod && FormDisable == false, 
+							'red-bottom-line':validPrimaryPreferredCommunicationMethod==false  }" (clear)="clearCommPrimary()">
 							<ng-option value="s">
 								Select
 							</ng-option>
@@ -238,8 +255,9 @@
 					<div class="col">
 						<label class="label-input-gap">Subscriber's ID</label>
 						<input class="form-control red-bottom-line input-upper" type="text" placeholder="" name="name"
-							formControlName="creditRating"
-							[class.valid-required-field]="fieldValidation('creditRating', true)" />
+							formControlName="creditRating" (input)="fieldValidation('creditRating',true, true)"
+							[ngClass]="{'valid-required-field':validCreditRating && FormDisable == false, 
+							'red-bottom-line':validCreditRating==false  }" />
 					</div>
 				</div>
 			</div>

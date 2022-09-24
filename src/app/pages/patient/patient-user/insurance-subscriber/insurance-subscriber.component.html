@@ -9,6 +9,7 @@
 			<p>
 				Click here,
 				<img
+					class="pointer"
 					src="assets/icons/add.svg"
 					width="36"
 					height="36"
@@ -159,7 +160,7 @@
 		<div class="section">
 			<div class="row">
 				<div
-					class="col-2"
+					class="col-2 pointer"
 					routerLink="/dashboard/patient/patient-user/insurance-subscriber/edit/{{
 						InsuranceSubscriber._id
 					}}"
@@ -172,7 +173,7 @@
 					</div>
 				</div>
 				<div
-					class="col-3"
+					class="col-3 pointer"
 					routerLink="/dashboard/patient/patient-user/insurance-subscriber/edit/{{
 						InsuranceSubscriber._id
 					}}"
@@ -185,7 +186,7 @@
 					<p>{{ InsuranceSubscriber.specialty }}</p>
 				</div>
 				<div
-					class="col-6"
+					class="col-6 pointer"
 					routerLink="/dashboard/patient/patient-user/insurance-subscriber/edit/{{
 						InsuranceSubscriber._id
 					}}"
@@ -209,7 +210,7 @@
 				<div class="col-1">
 					<div ngbDropdown class="d-inline-block">
 						<i
-							class="bi bi-three-dots-vertical"
+							class="bi bi-three-dots-vertical pointer"
 							id="dropdownBasic"
 							ngbDropdownToggle
 						></i>
