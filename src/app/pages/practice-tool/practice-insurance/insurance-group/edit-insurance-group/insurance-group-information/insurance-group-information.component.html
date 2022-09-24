@@ -1,0 +1,6 @@
+<app-insurance-group-information-form
+	*ngIf="data"
+	[formData]="data"
+	(onCancel)="handleCancel()"
+	(onSubmit)="update($event)"
+></app-insurance-group-information-form>

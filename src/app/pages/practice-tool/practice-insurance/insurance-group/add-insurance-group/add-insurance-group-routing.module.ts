@@ -15,17 +15,23 @@ const routes: Routes = [
 			{
 				path: 'insurance-group-information',
 				loadChildren: () =>
-				import('@pages/practice-tool/practice-insurance/insurance-group/add-insurance-group/insurance-group-information/insurance-group-information.module').then((m) => m.InsuranceGroupInformationModule)
+					import(
+						'@pages/practice-tool/practice-insurance/insurance-group/add-insurance-group/insurance-group-information/insurance-group-information.module'
+					).then((m) => m.InsuranceGroupInformationModule)
 			},
 			{
-				path: 'orthodontic',
+				path: 'orthodontic/:id',
 				loadChildren: () =>
-				import('@pages/practice-tool/practice-insurance/insurance-group/add-insurance-group/orthodontic/orthodontic.module').then((m) => m.OrthodonticModule)
+					import(
+						'@pages/practice-tool/practice-insurance/insurance-group/add-insurance-group/orthodontic/orthodontic.module'
+					).then((m) => m.OrthodonticModule)
 			},
 			{
-				path: 'dental',
+				path: 'dental/:id',
 				loadChildren: () =>
-				import('@pages/practice-tool/practice-insurance/insurance-group/add-insurance-group/dental/dental.module').then((m) => m.DentalModule)
+					import(
+						'@pages/practice-tool/practice-insurance/insurance-group/add-insurance-group/dental/dental.module'
+					).then((m) => m.DentalModule)
 			}
 		]
 	}

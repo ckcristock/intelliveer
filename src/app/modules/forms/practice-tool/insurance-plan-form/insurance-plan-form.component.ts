@@ -162,7 +162,6 @@ export class InsurancePlanFormComponent implements OnInit {
 
   save(data: any) {
     let saveObj = {
-      insuranceGroupId: "6321b374cc200afd53af7d03",
       profile: {
          insurancePlanName: data.insurancePlanName,
          planType: data.planType,

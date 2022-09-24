@@ -1,1 +1,32 @@
-<app-insurance-plan-form></app-insurance-plan-form>
+<div class="row">
+	<div class="col-2">
+		<div class="settings-row pointer" [routerLink]="urlInsuranceGroup">
+			<i
+				class="bi bi-arrow-left-circle"
+				style="font-size: 2rem; cursor: pointer"
+			></i>
+			<p class="">Insurance Groups</p>
+		</div>
+		<ul class="ul" style="margin-top: 27px">
+			{{
+				groupName | titlecase
+			}}
+			<div
+				*ngFor="let item of insuranceGroupMenu"
+				style="margin-left: 1em"
+			>
+				<li
+					class="pointer"
+					*ngIf="item.isEnabled"
+					routerLinkActive="active"
+					[routerLink]="item.url + '/' + id"
+				>
+					{{ item.title }}
+				</li>
+			</div>
+		</ul>
+	</div>
+	<div class="col-10 component-view">
+		<router-outlet></router-outlet>
+	</div>
+</div>
