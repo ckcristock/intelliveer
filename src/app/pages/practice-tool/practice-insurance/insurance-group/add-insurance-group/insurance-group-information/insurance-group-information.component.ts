@@ -2,20 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertService } from '@services/alert/alert.service';
 import { AuthService } from '@services/auth/auth.service';
-import { SelectedBusinessGroup, BusinessGroupDropdownService } from '@services/business-group-dropdown/business-group-dropdown.service';
+import {
+	SelectedBusinessGroup,
+	BusinessGroupDropdownService
+} from '@services/business-group-dropdown/business-group-dropdown.service';
 import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 import { InsuranceGroupService } from '@services/practice-tool/insurance-group/insurance-group.service';
 import { InsurancePlanService } from '@services/practice-tool/insurance/insurance-plan.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-insurance-group-information',
-  templateUrl: './insurance-group-information.component.html',
-  styleUrls: ['./insurance-group-information.component.scss']
+	selector: 'app-insurance-group-information',
+	templateUrl: './insurance-group-information.component.html',
+	styleUrls: ['./insurance-group-information.component.scss']
 })
 export class InsuranceGroupInformationComponent implements OnInit {
-
-  urlInsuranceGroup: string;
+	urlInsuranceGroup: string;
 	insurancePlanMenu: any[] = [];
 	businessGroupDropdownSupscription: Subscription = new Subscription();
 	selectedBusinessGroup: SelectedBusinessGroup | any;
@@ -29,7 +31,8 @@ export class InsuranceGroupInformationComponent implements OnInit {
 		private authService: AuthService,
 		private businessGroupDropdownService: BusinessGroupDropdownService
 	) {
-		this.urlInsuranceGroup = this.globalRoutes.getPracticeInsuranceGroupUrl();
+		this.urlInsuranceGroup =
+			this.globalRoutes.getPracticeInsuranceGroupUrl();
 		this.businessGroupDropdownSupscription =
 			this.businessGroupDropdownService
 				.businessGroup()
@@ -65,7 +68,6 @@ export class InsuranceGroupInformationComponent implements OnInit {
 	}
 
 	create(data: any) {
-    console.log(data);
 		this.alertService
 			.conformAlert('Are you sure', 'you want to save insurance group')
 			.then((value: any) => {
@@ -77,7 +79,8 @@ export class InsuranceGroupInformationComponent implements OnInit {
 								'Insurance group has been saved successfully'
 							);
 							this.router.navigate([
-								'/dashboard/practice-tool/practice/insurance-group'
+								'/dashboard/practice-tool/practice/insurance-group/add/orthodontic/' +
+									result._id
 							]);
 						},
 						(error: any) => {
@@ -93,5 +96,4 @@ export class InsuranceGroupInformationComponent implements OnInit {
 			'/dashboard/practice-tool/practice/insurance-group'
 		]);
 	}
-
 }

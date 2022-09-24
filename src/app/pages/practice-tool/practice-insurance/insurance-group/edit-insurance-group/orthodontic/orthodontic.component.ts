@@ -11,11 +11,11 @@ import { InsuranceGroupService } from '@services/practice-tool/insurance-group/i
 import { Subscription } from 'rxjs';
 
 @Component({
-	selector: 'app-dental',
-	templateUrl: './dental.component.html',
-	styleUrls: ['./dental.component.scss']
+	selector: 'app-orthodontic',
+	templateUrl: './orthodontic.component.html',
+	styleUrls: ['./orthodontic.component.scss']
 })
-export class DentalComponent implements OnInit {
+export class OrthodonticComponent implements OnInit {
 	urlInsuranceGroup: string;
 	insurancePlanMenu: any[] = [];
 	businessGroupDropdownSupscription: Subscription = new Subscription();
@@ -104,7 +104,7 @@ export class DentalComponent implements OnInit {
 	create(data: any) {
 		data._id = this.id;
 		this.alertService
-			.conformAlert('Are you sure', 'you want to save dental')
+			.conformAlert('Are you sure', 'you want to save orthodontic')
 			.then((value: any) => {
 				if (value.isConfirmed) {
 					this.insuranceGroupService
@@ -113,10 +113,11 @@ export class DentalComponent implements OnInit {
 							(result: any) => {
 								this.alertService.success(
 									'Success',
-									'Dental has been saved successfully'
+									'Orthodontic has been saved successfully'
 								);
 								this.router.navigate([
-									'/dashboard/practice-tool/practice/insurance-group'
+									'/dashboard/practice-tool/practice/insurance-group/add/dental/' +
+										result._id
 								]);
 							},
 							(error: any) => {
