@@ -3,7 +3,7 @@
 		<div class="nav-bar-left" style="margin-left: 0px">
 			<div
 				class="btn-group me-3"
-				*ngFor="let menu of menuItems"
+				*ngFor="let menu of menuItems; let i = index"
 				[ngClass]="{ active: currentSelection === menu.id }"
 				(click)="sectionMenu(menu)"
 			>
@@ -13,7 +13,12 @@
 						style="color: #00a651"
 						*ngIf="menu.showDone"
 					></i
-					>&nbsp;&nbsp;{{ menu.title }}
+					>&nbsp;&nbsp;<img
+						src="assets/icons/Checkmark-Orange.svg"
+						style="width: 20px"
+						*ngIf="i == 0"
+					/>
+					Tx {{ menu.title }}
 				</button>
 				<div
 					class="btn-group"
@@ -103,9 +108,13 @@
 	</div>
 </div>
 
-<div class="container">
+<div class="container px-0">
 	<div class="row" id="parent" *ngIf="!showCompareAll">
-		<div [ngClass]="router.url.includes('treatment-outcome') ? 'col-12' : 'col-6'">
+		<div
+			[ngClass]="
+				router.url.includes('treatment-outcome') ? 'col-12' : 'col-6'
+			"
+		>
 			<div class="section" id="child1">
 				<router-outlet></router-outlet>
 			</div>
