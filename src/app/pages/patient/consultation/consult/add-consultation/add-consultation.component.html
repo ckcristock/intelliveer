@@ -23,7 +23,7 @@
                             </ol>
                         </ul>
                     </div>
-                    <div class="col-2" *ngIf="item.title == 'Diagnosis'">
+                    <div class="col-2" *ngIf="item.title == 'Diagnosis' || item.title == 'Treatment Options'">
                         <span (click)="selectMenuItem(item)"><i class="bi bi-arrow-left-circle" style="font-size: x-large"></i></span>
                     </div>
                 </div>

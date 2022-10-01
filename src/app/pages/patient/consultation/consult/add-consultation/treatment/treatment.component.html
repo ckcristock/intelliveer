@@ -3,7 +3,7 @@
 		<div class="nav-bar-left" style="margin-left: 0px">
 			<div
 				class="btn-group me-3"
-				*ngFor="let menu of menuItems"
+				*ngFor="let menu of menuItems; let i = index"
 				[ngClass]="{ active: currentSelection === menu.id }"
 				(click)="sectionMenu(menu)"
 			>
@@ -13,7 +13,12 @@
 						style="color: #00a651"
 						*ngIf="menu.showDone"
 					></i
-					>&nbsp;&nbsp;{{ menu.title }}
+					>&nbsp;&nbsp;<img
+						src="assets/icons/Checkmark-Orange.svg"
+						style="width: 20px"
+						*ngIf="i == 0"
+					/>
+					Tx {{ menu.title }}
 				</button>
 				<div
 					class="btn-group"
@@ -103,9 +108,13 @@
 	</div>
 </div>
 
-<div class="container">
+<div class="container px-0">
 	<div class="row" id="parent" *ngIf="!showCompareAll">
-		<div [ngClass]="router.url.includes('treatment-outcome') ? 'col-12' : 'col-6'">
+		<div
+			[ngClass]="
+				router.url.includes('treatment-outcome') ? 'col-12' : 'col-6'
+			"
+		>
 			<div class="section" id="child1">
 				<router-outlet></router-outlet>
 			</div>
@@ -210,40 +219,15 @@
 								</td>
 							</tr>
 							<tr>
-								<th>Extractions</th>
+								<th>Treament Steps</th>
 								<td>
-									<div
-										*ngIf="
-											treatmentOptionObj.Extractions[0]
-												.adultTooth?.length != 0
+									<p
+										*ngFor="
+											let treament of treatmentOptionObj.Treament_Step
 										"
 									>
-										Adult Tooth
-										<p
-											*ngFor="
-												let adult of treatmentOptionObj
-													.Extractions[0].adultTooth
-											"
-										>
-											Tooth# {{ adult.title }}
-										</p>
-									</div>
-									<div
-										*ngIf="
-											treatmentOptionObj.Extractions[1]
-												.childTooth?.length != 0
-										"
-									>
-										Child Tooth
-										<p
-											*ngFor="
-												let child of treatmentOptionObj
-													.Extractions[1].childTooth
-											"
-										>
-											Tooth# {{ child.title }}
-										</p>
-									</div>
+										{{ treament.name }}
+									</p>
 								</td>
 							</tr>
 							<tr>
@@ -275,7 +259,7 @@
 								</td>
 							</tr>
 							<tr>
-								<th>Diagnosis</th>
+								<th>Problems</th>
 								<td>
 									<p>
 										Lorem ipsum dolor sit amet, consectetuer
@@ -368,6 +352,30 @@
 									<p
 										*ngFor="
 											let retent of treatmentOptionObj.Retention
+										"
+									>
+										{{ retent.name }}
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th>Consents and Agreement</th>
+								<td>
+									<p
+										*ngFor="
+											let retent of treatmentOptionObj.Consents_and_Agreement
+										"
+									>
+										{{ retent.name }}
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th>Appointment Sequence</th>
+								<td>
+									<p
+										*ngFor="
+											let retent of treatmentOptionObj.Appointment_Sequence
 										"
 									>
 										{{ retent.name }}

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TreatmentOutcomeComponent } from './treatment-outcome.component';
 import { TreatmentOutcomeRoutingModule } from './treatment-outcome-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -11,7 +12,9 @@ import { TreatmentOutcomeRoutingModule } from './treatment-outcome-routing.modul
   ],
   imports: [
     CommonModule,
-    TreatmentOutcomeRoutingModule
+    TreatmentOutcomeRoutingModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class TreatmentOutcomeModule { }

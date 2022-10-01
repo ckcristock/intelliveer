@@ -34,15 +34,16 @@
 						<label class="required">Insurance plan Name</label>
 						<input
 							type="text"
-							class="form-control mandatory-field"
+							class="form-control"
 							formControlName="insurancePlanName"
+							[ngClass]="!Form.controls['insurancePlanName'].errors != null ? Form.controls['insurancePlanName'].errors?.['required'] ? 'mandatory-field' : 'red-bottom-line' : ''"
 						/>
 					</div>
 					<div class="col-4">
 						<label class="required">Plan type</label>
 						<ng-select
 							formControlName="planType"
-							class="red-bottom-line"
+							[ngClass]="!Form.controls['planType'].errors != null ? Form.controls['planType'].errors?.['required'] ? 'mandatory-field' : 'red-bottom-line' : ''"
 						>
 							<ng-option>Select</ng-option>
 						</ng-select>
@@ -53,6 +54,7 @@
 							type="text"
 							class="form-control"
 							formControlName="electronicId"
+							[ngClass]="!Form.controls['electronicId'].errors != null ? Form.controls['electronicId'].errors?.['required'] ? 'mandatory-field' : 'red-bottom-line' : ''"
 						/>
 					</div>
 				</div>
@@ -104,6 +106,7 @@
 							placeholder=""
 							name="id"
 							formControlName="emailId"
+							[ngClass]="!Form.controls['emailId'].errors != null ? Form.controls['emailId'].errors?.['required'] ? 'mandatory-field' : 'red-bottom-line' : ''"
 						/>
 					</div>
 

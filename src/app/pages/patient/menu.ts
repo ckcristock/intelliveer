@@ -180,6 +180,11 @@ export const patientConsultationOptionsMenuItems = [
 		icon: 'bi bi-house-door',
 	},
 	{
+		title: 'Compare Options',
+		url: '/+',
+		icon: 'bi bi-house-door',
+	},
+	{
 		title: 'Conclusion',
 		url: '/dashboard/patient/consultation/consultation/add/conclusion',
 		icon: 'bi bi-house-door',
@@ -331,17 +336,17 @@ export const patientTreatmentMenuItems = [
 		child: []
 	},
 	{
-		title: 'Extractions',
+		title: 'Treatement Steps',
 		url: '/dashboard/patient/consultation/consultation/add/treatment/extractions',
 		icon: '/assets/icons/jar.svg',
 		child: []
 	},
-	{
-		title: 'Treatment Mechanics',
-		url: '/dashboard/patient/consultation/consultation/add/treatment/treatment-mechanics',
-		icon: '/assets/icons/jar.svg',
-		child: []
-	},
+	// {
+	// 	title: 'Treatement Steps',
+	// 	url: '/dashboard/patient/consultation/consultation/add/treatment/treatment-mechanics',
+	// 	icon: '/assets/icons/jar.svg',
+	// 	child: []
+	// },
 	{
 		title: 'Expected Tx Outcome',
 		url: '/dashboard/patient/consultation/consultation/add/treatment/treatment-outcome',
@@ -380,7 +385,13 @@ export const patientTreatmentMenuItems = [
 	},
 	{
 		title: 'Consents and Agreement',
-		url: '/+',
+		url: '/dashboard/patient/consultation/consultation/add/treatment/consents-and-agreement',
+		icon: '/assets/icons/jar.svg',
+		child: []
+	},
+	{
+		title: 'Appointment Sequence',
+		url: '/dashboard/patient/consultation/consultation/add/treatment/appointment-sequence',
 		icon: '/assets/icons/jar.svg',
 		child: []
 	}

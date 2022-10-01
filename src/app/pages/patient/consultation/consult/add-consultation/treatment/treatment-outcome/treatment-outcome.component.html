@@ -1,5 +1,8 @@
 <div class="container">
-    <h6 class="heading">{{title | titlecase}}</h6>
+    <div class="row" style="margin-bottom: -25px;">
+        <div class="col"><h6 class="heading">{{title | titlecase}}</h6></div>
+        <div class="col-1"><span style="text-decoration: underline; color: #ed8064">Clear all</span></div>
+    </div>
     <hr />
     <div class="row" style="height: 40rem;">
         <div class="col">
@@ -72,7 +75,7 @@
                                 <input class="form-check-input" type="radio" name="Chief" (change)="treatmentOption.treatmentOptionsArray.Chief_Concerns_1 = 'Fully Improved'">
                             </td>
                         </tr>
-                        <h6>Diagnosis</h6>
+                        <h6>Problems</h6>
                         <tr>
                             <td><span><i class="bi bi-x-circle"></i></span>&nbsp;&nbsp;Lorem ipsum dolor sit amet, consectetuer adipiscing</td>
                             <td style="text-align: center;">
@@ -91,9 +94,17 @@
                                 <input class="form-check-input" type="radio" name="Chief" (change)="treatmentOption.treatmentOptionsArray.Chief_Concerns_1 = 'Fully Improved'">
                             </td>
                         </tr>
-                        <h6>Problems which are not present but are anticipated</h6>
-                        <tr>
-                            <td><span><i class="bi bi-x-circle"></i></span>&nbsp;&nbsp;Black Triangles</td>
+                        <tr style="border: transparent;">
+                            <td colspan="5">
+                                <h6>Problems which are not present but are anticipated</h6>
+                            </td>
+                            <td><div [align]="'end'" (click)="addAnotherOption()"><span style="text-decoration: underline; color: #ed8064">+Add</span></div></td>
+                        </tr>
+                        <tr *ngFor="let item of anticipatedProblemList; let i = index;">
+                            <td>
+                                <input type="text" class="form-control" *ngIf="item.input" (blur)="item.input = !item.input" [(ngModel)]="item.value" />
+                                <span *ngIf="!item.input"><i class="bi bi-x-circle" (click)="deleteAnticipatedProblem(i)"></i>&nbsp;&nbsp;{{item.value | titlecase}}</span>
+                            </td>
                             <td style="text-align: center;">
                                 <input class="form-check-input" type="radio" name="Chief" (change)="treatmentOption.treatmentOptionsArray.Chief_Concerns_1 = 'Fully Improved'">
                             </td>

@@ -22,6 +22,7 @@ export class ApplianceSequenceComponent implements OnInit {
   applianceSearchLst: any[] = [];
   displayStage: any[] = [];
   applianceSequence: any[] = [];
+  public row: any;
 
   constructor(public router: Router, private treatmentOption: ConsultationDiagnosisiProblemListService) { }
 
@@ -36,7 +37,8 @@ export class ApplianceSequenceComponent implements OnInit {
         title: "Stage " + totalStage,
         searchFocus: false,
         searchWord: '',
-        searchResultLst: [] = []
+        searchResultLst: [] = [],
+        showMenu: false
       }
       this.displayStage.push(Obj);
       this.treatmentOption.treatmentOptionsArray.Appliance_Sequence = this.applianceSequence;
@@ -57,6 +59,7 @@ export class ApplianceSequenceComponent implements OnInit {
     Obj.checked = true;
     boxObj.searchWord = "";
     boxObj.searchFocus = false;
+    boxObj.showMenu = false;
     const findDuplicate = boxObj.searchResultLst.find((x: any) => x.id === Obj.id);
     (findDuplicate == undefined) ? boxObj.searchResultLst.push(Obj) : '';
     let applianceSequenceObj = {
@@ -98,5 +101,22 @@ export class ApplianceSequenceComponent implements OnInit {
     boxObj.searchResultLst.splice(index, 1);
     this.treatmentOption.treatmentOptionsArray.Appliance_Sequence = this.applianceSequence;
   }
+
+  endMove($event: any) {
+		let children = Array.from($event.target.parentNode.parentNode.children);
+		if (
+			children.indexOf($event.target.parentNode) >
+			children.indexOf(this.row)
+		)
+		{
+			$event.target.parentNode.after(this.row);
+			console.log()
+		}
+		else $event.target.parentNode.before(this.row);
+	}
+
+	move($event: any) {
+		this.row = $event.target;
+	}
 
 }
