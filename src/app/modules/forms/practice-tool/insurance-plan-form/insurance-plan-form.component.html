@@ -29,56 +29,10 @@
 				<div class="row">
 					<h6 class="heading">Profile</h6>
 				</div>
-				<div class="row mb-3">
-					<div class="col-4">
-						<label class="required">Insurance plan Name</label>
-						<input
-							type="text"
-							class="form-control mandatory-field"
-							formControlName="insurancePlanName"
-						/>
-					</div>
-					<div class="col-4">
-						<label class="required">Plan type</label>
-						<ng-select
-							formControlName="planType"
-							class="red-bottom-line"
-						>
-							<ng-option>Select</ng-option>
-						</ng-select>
-					</div>
-					<div class="col-4">
-						<label class="required">Electronic ID</label>
-						<input
-							type="text"
-							class="form-control"
-							formControlName="electronicId"
-						/>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-4">
-						<label class="required">Fee Schedule (Office)</label>
-						<ng-select
-							formControlName="feeScheduleOffice"
-							class="red-bottom-line"
-						>
-							<ng-option>Select</ng-option>
-						</ng-select>
-					</div>
-					<div class="col-4">
-						<label class="required">Fee Schedule (Insurance)</label>
-						<ng-select formControlName="feeScheduleInsurance">
-							<ng-option>Select</ng-option>
-						</ng-select>
-					</div>
-					<div class="col-4">
-						<label class="required">Fee Schedule (Co-pay)</label>
-						<ng-select formControlName="feeScheduleCoPay" >
-							<ng-option>Select</ng-option>
-						</ng-select>
-					</div>
-				</div>
+				<app-insurance-plan-profile-form
+					[parentGroup]="Form"
+					[formGroupName]="'profile'"
+				></app-insurance-plan-profile-form>
 			</div>
 			<!-- Physical Address -->
 			<div class="section" id="claimInformation">

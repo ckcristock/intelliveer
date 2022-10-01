@@ -1,0 +1,126 @@
+<div class="table-responsive">
+	<div class="row">
+		<div class="col-3">
+			<table class="table" style="margin-left: 18px">
+				<thead style="height: 5.3em"></thead>
+				<tbody>
+					<tr style="height: 5.4em">
+						<th style="border-bottom-color: white">
+							Payment Plan Type
+						</th>
+					</tr>
+					<tr style="height: 5.4em">
+						<th
+							style="
+								border-bottom-color: white;
+								border-top-color: white;
+							"
+						>
+							Payment Frequency
+						</th>
+					</tr>
+					<tr style="height: 11em">
+						<th
+							style="
+								border-bottom-color: white;
+								border-top-color: white;
+							"
+						>
+							Down Payment
+						</th>
+					</tr>
+					<tr style="height: 8em">
+						<th
+							style="
+								border-bottom-color: white;
+								border-top-color: white;
+							"
+						>
+							Payment Amount
+						</th>
+					</tr>
+					<tr style="height: 9.4em">
+						<th
+							style="
+								border-bottom-color: white;
+								border-top-color: white;
+							"
+						>
+							No. of Payments
+						</th>
+					</tr>
+					<tr style="height: 4.6em">
+						<th
+							style="
+								border-bottom-color: white;
+								border-top-color: white;
+							"
+						>
+							Last Payment
+						</th>
+					</tr>
+					<tr style="height: 3.8em">
+						<th
+							style="
+								border-bottom-color: white;
+								border-top-color: white;
+							"
+						>
+							<div class="form-check" [align]="'center'">
+								<input
+									class="form-check-input"
+									type="checkbox"
+									value=""
+									id="flexCheckChecked"
+									checked
+								/>
+								<label
+									class="form-check-label"
+									for="flexCheckChecked"
+								>
+									Add Remainder to Last Payment
+								</label>
+							</div>
+						</th>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div
+			class="col-3"
+			*ngIf="compareAllOptionArrayList.length > 0"
+			style="margin-left: -18px"
+		>
+			<app-payment-option1
+				[compareAllOptionArray]="compareAllOptionArray"
+			></app-payment-option1>
+		</div>
+		<div
+			class="col-3"
+			*ngIf="compareAllOptionArrayList.length > 1"
+			style="margin-left: -18px"
+		>
+			<app-payment-option1
+				[compareAllOptionArray]="compareAllOptionArray"
+			></app-payment-option1>
+		</div>
+		<div
+			class="col-3"
+			*ngIf="compareAllOptionArrayList.length > 2"
+			style="margin-left: -18px"
+		>
+			<app-payment-option1
+				[compareAllOptionArray]="compareAllOptionArray"
+			></app-payment-option1>
+		</div>
+		<div class="col-2" *ngIf="compareAllOptionArrayList?.length != 3">
+			<span (click)="addMoreOption()">
+				<img
+					src="assets/icons/add.svg"
+					width="20"
+					height="20"
+				/>&nbsp;Add more option
+			</span>
+		</div>
+	</div>
+</div>
