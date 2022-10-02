@@ -7,23 +7,21 @@ import { AddressFormModule } from '@modules/forms/address-form/address-form.modu
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ImageUploaderModule } from '@modules/image-uploader/image-uploader.module';
 import { ScrollspyModule } from '@modules/scrollspy/scrollspy.module';
-
-
+import { InsurancePlanProfileFormModule } from '../insurance-plan-profile-form/insurance-plan-profile-form.module';
 
 @NgModule({
-  declarations: [
-    InsurancePlanFormComponent
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
+	declarations: [InsurancePlanFormComponent],
+	imports: [
+		CommonModule,
+		FormsModule,
 		ReactiveFormsModule,
 		AddressFormModule,
-    NavBarPillsModule,
-    NgSelectModule,
-    ImageUploaderModule,
-    ScrollspyModule
-  ],
-  exports: [InsurancePlanFormComponent]
+		NavBarPillsModule,
+		NgSelectModule,
+		ImageUploaderModule,
+		ScrollspyModule,
+		InsurancePlanProfileFormModule
+	],
+	exports: [InsurancePlanFormComponent]
 })
-export class InsurancePlanFormModule { }
+export class InsurancePlanFormModule {}
