@@ -29,10 +29,58 @@
 				<div class="row">
 					<h6 class="heading">Profile</h6>
 				</div>
-				<app-insurance-plan-profile-form
-					[parentGroup]="Form"
-					[formGroupName]="'profile'"
-				></app-insurance-plan-profile-form>
+				<div class="row mb-3">
+					<div class="col-4">
+						<label class="required">Insurance plan Name</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="insurancePlanName"
+							[ngClass]="!Form.controls['insurancePlanName'].errors != null ? Form.controls['insurancePlanName'].errors?.['required'] ? 'mandatory-field' : 'red-bottom-line' : ''"
+						/>
+					</div>
+					<div class="col-4">
+						<label class="required">Plan type</label>
+						<ng-select
+							formControlName="planType"
+							[ngClass]="!Form.controls['planType'].errors != null ? Form.controls['planType'].errors?.['required'] ? 'mandatory-field' : 'red-bottom-line' : ''"
+						>
+							<ng-option>Select</ng-option>
+						</ng-select>
+					</div>
+					<div class="col-4">
+						<label class="required">Electronic ID</label>
+						<input
+							type="text"
+							class="form-control"
+							formControlName="electronicId"
+							[ngClass]="!Form.controls['electronicId'].errors != null ? Form.controls['electronicId'].errors?.['required'] ? 'mandatory-field' : 'red-bottom-line' : ''"
+						/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4">
+						<label class="required">Fee Schedule (Office)</label>
+						<ng-select
+							formControlName="feeScheduleOffice"
+							class="red-bottom-line"
+						>
+							<ng-option>Select</ng-option>
+						</ng-select>
+					</div>
+					<div class="col-4">
+						<label class="required">Fee Schedule (Insurance)</label>
+						<ng-select formControlName="feeScheduleInsurance">
+							<ng-option>Select</ng-option>
+						</ng-select>
+					</div>
+					<div class="col-4">
+						<label class="required">Fee Schedule (Co-pay)</label>
+						<ng-select formControlName="feeScheduleCoPay">
+							<ng-option>Select</ng-option>
+						</ng-select>
+					</div>
+				</div>
 			</div>
 			<!-- Physical Address -->
 			<div class="section" id="claimInformation">
@@ -58,6 +106,7 @@
 							placeholder=""
 							name="id"
 							formControlName="emailId"
+							[ngClass]="!Form.controls['emailId'].errors != null ? Form.controls['emailId'].errors?.['required'] ? 'mandatory-field' : 'red-bottom-line' : ''"
 						/>
 					</div>
 
