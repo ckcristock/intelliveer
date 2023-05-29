@@ -15,6 +15,7 @@
 
     .left {
         @include vertical;
+        padding: 10px 0px;
 
         .images {
             @include vertical;
@@ -24,11 +25,12 @@
         }
 
         .settings {
-            @include center;
 
             svg {
                 margin: 0px;
                 padding: 0px;
+                width: 12px;
+                height: 12px;
             }
         }
     }
