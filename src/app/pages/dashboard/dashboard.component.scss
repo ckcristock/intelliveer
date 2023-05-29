@@ -3,15 +3,14 @@
 .main {
     height: 100vh;
     display: grid;
-    grid-template-columns: 75px 1fr 75px;
+    grid-template-columns: 40px 1fr 40px;
 
-    div {
-        border: 1px solid;
-    }
-
+    svg,
     img {
         width: 18px;
         height: 18px;
+        cursor: pointer;
+
     }
 
     .left {
@@ -20,6 +19,8 @@
         .images {
             @include vertical;
             gap: 10px;
+
+
         }
 
         .settings {
