@@ -1,5 +1,10 @@
 @import '../../styles/mixins.scss';
 
+.navbar {
+    height: 40px;
+    width: 100%;
+}
+
 .main {
     height: 100vh;
     display: grid;
