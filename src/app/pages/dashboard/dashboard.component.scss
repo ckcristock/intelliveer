@@ -7,7 +7,7 @@
 @mixin vertical {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -23,17 +23,17 @@
     }
 
     img {
-        width: 30px;
-        height: 30px;
+        width: 18px;
+        height: 18px;
     }
 
     .left {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
+        @include vertical;
 
-        .images {}
+        .images {
+            @include vertical;
+            gap: 10px;
+        }
     }
 
     .center {
