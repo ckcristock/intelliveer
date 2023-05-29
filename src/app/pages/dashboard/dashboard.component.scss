@@ -34,6 +34,15 @@
             @include vertical;
             gap: 10px;
         }
+
+        .settings {
+            @include center;
+
+            svg {
+                margin: 0px;
+                padding: 0px;
+            }
+        }
     }
 
     .center {
