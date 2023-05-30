@@ -3,6 +3,23 @@
 .navbar {
     height: 40px;
     width: 100%;
+
+    .navbar-left {
+        .waffle {}
+
+        .logo {}
+
+        .dropdown {}
+
+        .search {}
+
+        .down-arrow {}
+    }
+
+    .navbar-right {
+        @include center;
+    }
+
 }
 
 .main {
