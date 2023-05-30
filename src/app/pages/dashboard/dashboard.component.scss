@@ -3,8 +3,19 @@
 .navbar {
     height: 40px;
     width: 100%;
+    @include horizontal;
+    justify-content: space-between;
+    background: linear-gradient(to right,
+            rgba(211, 181, 99, 0.35),
+            #eb4b4b,
+            rgba(225, 167, 35, 0.91),
+            rgba(225, 168, 35, 0.7));
+    ;
 
     .navbar-left {
+        @include horizontal;
+        border: 1px solid;
+
         .waffle {}
 
         .logo {}
@@ -17,13 +28,25 @@
     }
 
     .navbar-right {
-        @include center;
+        @include horizontal;
+        gap: 1.8rem;
+        margin-right: 1.8rem;
+        // border: 1px solid;
+
+        p,
+        img,
+        svg {
+            margin: 0px;
+            padding: 0px;
+            color: white;
+            font-weight: 700 !important;
+        }
     }
 
 }
 
 .main {
-    height: 100vh;
+    height: calc(100vh - 40px);
     display: grid;
     grid-template-columns: 40px 1fr 40px;
 
@@ -37,16 +60,18 @@
 
     .left {
         @include vertical;
-        padding: 10px 0px;
+        justify-content: space-between;
+        padding: 1rem 0rem 2rem 0rem;
 
         .images {
             @include vertical;
-            gap: 10px;
+            gap: 1rem;
 
 
         }
 
         .settings {
+            @include vertical;
 
             svg {
                 margin: 0px;
