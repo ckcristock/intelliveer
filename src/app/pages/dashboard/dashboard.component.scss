@@ -1,5 +1,7 @@
 @import '../../styles/mixins.scss';
 
+$gray-color: #e7e8e9;
+
 .navbar {
     height: 40px;
     width: 100%;
@@ -52,13 +54,17 @@
                 border-radius: 0px;
                 border: none;
                 font-size: 1rem;
-                border-left: 0.5px solid #e7e8e9;
+                margin-left: 0.5px;
+                border-left: 0.5px solid $gray-color;
+                border-right: 0.5px solid $gray-color;
                 outline: none;
+                color: #8f9498;
             }
         }
 
         .search-logo {
             width: 30px;
+            margin-left: 0.5rem;
             @include horizontal;
 
             svg,
@@ -67,9 +73,18 @@
             }
         }
 
-        .search {}
+        .search-input {
+            margin-left: 1rem;
+            outline: none;
+            border: none;
+        }
 
-        .down-arrow {}
+        .down-arrow {
+            height: 40px;
+            width: 40px;
+            background-color: #cfd0d2;
+            @include horizontal;
+        }
     }
 
     .navbar-right {
