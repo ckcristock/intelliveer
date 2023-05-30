@@ -109,6 +109,7 @@ $gray-color: #e7e8e9;
     height: calc(100vh - 40px);
     display: grid;
     grid-template-columns: 40px 1fr 40px;
+    background-color: #f2f2f2;
 
     svg,
     img {
@@ -122,12 +123,11 @@ $gray-color: #e7e8e9;
         @include vertical;
         justify-content: space-between;
         padding: 1rem 0rem 2rem 0rem;
+        background-color: white;
 
         .images {
             @include vertical;
             gap: 1rem;
-
-
         }
 
         .settings {
@@ -144,5 +144,10 @@ $gray-color: #e7e8e9;
 
     .center {
         background-color: black;
+        margin: 0rem 1rem;
+    }
+
+    .right {
+        background-color: white;
     }
 }
