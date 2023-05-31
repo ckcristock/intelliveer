@@ -3,28 +3,3 @@
 .settings {
     padding: 1.5rem 1rem;
 }
-
-.boxes {
-    // border: 1px solid white;
-    margin-top: 1rem;
-    height: calc(100vh - 145px);
-    display: grid;
-    grid-template-columns: auto auto auto;
-    grid-template-rows: auto;
-    gap: 1rem;
-
-    div {
-        background-color: #f9fafb;
-        @include horizontal;
-        cursor: pointer;
-
-        p {
-            color: black;
-            font-size: 2rem;
-            text-align: center;
-            max-width: 200px;
-            overflow-wrap: break-word;
-            word-wrap: break-word;
-        }
-    }
-}

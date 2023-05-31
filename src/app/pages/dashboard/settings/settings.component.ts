@@ -7,12 +7,6 @@ import { Component } from '@angular/core';
 })
 export class SettingsComponent {
 
-  boxes: any[] = [
-    { name: "Organization Onboarding" },
-    { name: "Role Management" },
-    { name: "User Management" },
-    { name: "Practice Onboarding" },
 
-  ];
 
 }
