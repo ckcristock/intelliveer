@@ -6,7 +6,15 @@ const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
-    children: []
+    children: [
+      {
+        path: 'settings',
+        loadChildren: () =>
+          import('@pages/dashboard/settings/settings.module').then(
+            (m) => m.SettingsModule
+          )
+      },
+    ]
   }
 ];
 
