@@ -108,7 +108,7 @@ $gray-color: #e7e8e9;
 .main {
     height: calc(100vh - 40px);
     display: grid;
-    grid-template-columns: 40px 1fr 40px;
+    grid-template-columns: 40px 1fr 75px;
     background-color: #f2f2f2;
 
     svg,
@@ -150,5 +150,6 @@ $gray-color: #e7e8e9;
 
     .right {
         background-color: white;
+        margin: 1rem 1rem 1rem 0rem;
     }
 }
