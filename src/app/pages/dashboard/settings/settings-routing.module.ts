@@ -19,6 +19,13 @@ const routes: Routes = [
             (m) => m.SettingsMenuModule
           )
       },
+      {
+        path: 'role-management',
+        loadChildren: () =>
+          import('@pages/dashboard/settings/role-management/role-management.module').then(
+            (m) => m.RoleManagementModule
+          )
+      },
     ]
   }
 ];
