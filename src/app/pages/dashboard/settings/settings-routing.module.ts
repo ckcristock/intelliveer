@@ -20,10 +20,31 @@ const routes: Routes = [
           )
       },
       {
+        path: 'org-onboarding',
+        loadChildren: () =>
+          import('@pages/dashboard/settings/onboarding/onboarding.module').then(
+            (m) => m.OnboardingModule
+          )
+      },
+      {
         path: 'role-management',
         loadChildren: () =>
           import('@pages/dashboard/settings/role-management/role-management.module').then(
             (m) => m.RoleManagementModule
+          )
+      },
+      {
+        path: 'user-management',
+        loadChildren: () =>
+          import('@pages/dashboard/settings/user-management/user-management.module').then(
+            (m) => m.UserManagementModule
+          )
+      },
+      {
+        path: 'practice-onboarding',
+        loadChildren: () =>
+          import('@pages/dashboard/settings/practice-onboarding/practice-onboarding.module').then(
+            (m) => m.PracticeOnboardingModule
           )
       },
     ]
