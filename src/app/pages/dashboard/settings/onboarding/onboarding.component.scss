@@ -1,3 +1,5 @@
+@import '../../../../styles/mixins.scss';
+
 .col-3 {
     margin: 0rem;
     padding: 0rem;
@@ -9,6 +11,11 @@
     max-height: calc(100vh - 155px);
     overflow: scroll;
     overflow-x: hidden;
+
+    .top {
+        @include horizontal;
+        justify-content: space-between;
+    }
 
     .table {
         margin-bottom: 0rem;
