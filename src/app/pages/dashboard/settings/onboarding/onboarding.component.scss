@@ -1,9 +1,21 @@
-.col-9,
 .col-3 {
     margin: 0rem;
     padding: 0rem;
 }
 
+.col-9 {
+    margin: 0rem;
+    padding: 0rem;
+    max-height: calc(100vh - 155px);
+    overflow: scroll;
+}
+
 .main {
     padding: 0rem 0.6rem;
+    max-height: calc(100vh - 155px);
+
+    // overflow-x: hidden;
+    .right {}
+
+    .left {}
 }
