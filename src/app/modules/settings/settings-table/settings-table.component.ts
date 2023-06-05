@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-settings-table',
@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./settings-table.component.scss']
 })
 export class SettingsTableComponent {
+
+  @Input() moduleData: any = undefined;
+
 
 }
