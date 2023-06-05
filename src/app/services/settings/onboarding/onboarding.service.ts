@@ -32,8 +32,25 @@ export class OnboardingService {
       createdOn: "22 Jan 2021"
     }
   ];
+  private onboardingData: any[] = [];
 
   constructor() { }
+
+  getOnboardingData() {
+    this.leftMenu.forEach((elemento) => {
+      this.onboardingData.push({ leftMenu: elemento });
+    });
+    this.onboardingData.push({ goBack: this.goBack });
+    this.rightHeaders.forEach((elemento) => {
+      this.onboardingData.push({ rightHeaders: elemento });
+    });
+    this.tableContent.forEach((elemento) => {
+      this.onboardingData.push({ tableContent: elemento });
+    });
+
+    return this.onboardingData;
+
+  }
 
   getLeftMenu() {
     return this.leftMenu;

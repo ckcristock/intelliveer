@@ -1,0 +1,54 @@
+@import '../../../styles/mixins.scss';
+
+.col-3 {
+    margin: 0rem;
+    padding: 0rem;
+
+    .top {}
+}
+
+.col-9 {
+    margin: 0rem;
+    padding: 0rem;
+    max-height: calc(100vh - 155px);
+    overflow: scroll;
+    overflow-x: hidden;
+
+    .top {
+        @include horizontal;
+        justify-content: space-between;
+    }
+
+    .table {
+        margin-bottom: 0rem;
+    }
+
+}
+
+.col-9::-webkit-scrollbar {
+    width: 5px;
+    /* Ancho de la barra de desplazamiento */
+}
+
+.col-9::-webkit-scrollbar-thumb {
+    background-color: #888;
+    /* Color del pulgar (parte desplazable de la barra) */
+    border-radius: 5px;
+    /* Borde redondeado del pulgar */
+}
+
+.col-9::-webkit-scrollbar-track {
+    background-color: #eee;
+    /* Color de fondo de la barra de desplazamiento */
+}
+
+
+.main {
+    padding: 0rem 0.6rem;
+    max-height: calc(100vh - 155px);
+
+    // overflow-x: hidden;
+    .right {}
+
+    .left {}
+}

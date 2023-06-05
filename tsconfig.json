@@ -21,7 +21,7 @@
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"],
     "paths": {
-      "@services/*": ["src/services/*"],
+      "@services/*": ["src/app/services/*"],
       "@config/*": ["src/app/config/*"],
       "@pages/*": ["src/app/pages/*"],
       "@styles/*": ["src/app/styles/*"],

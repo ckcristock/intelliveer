@@ -7,6 +7,7 @@ import { OnboardingComponent } from './onboarding/onboarding.component';
 import { RoleManagementComponent } from './role-management/role-management.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { PracticeOnboardingComponent } from './practice-onboarding/practice-onboarding.component';
+import { SettingsTableComponent } from '@modules/settings/settings-table/settings-table.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { PracticeOnboardingComponent } from './practice-onboarding/practice-onbo
     OnboardingComponent,
     RoleManagementComponent,
     UserManagementComponent,
-    PracticeOnboardingComponent
+    PracticeOnboardingComponent,
+    SettingsTableComponent
   ],
   imports: [
     CommonModule,
