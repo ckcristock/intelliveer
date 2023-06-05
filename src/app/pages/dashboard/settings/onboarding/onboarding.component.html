@@ -1,2 +1,5 @@
 <p>Onboarding works!</p>
-<app-settings-table></app-settings-table>
+<div *ngIf="onboardingData != undefined">
+    <app-settings-table></app-settings-table>
+
+</div>

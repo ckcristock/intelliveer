@@ -8,11 +8,13 @@ import { OnboardingService } from "@services/settings/onboarding/onboarding.serv
 })
 export class OnboardingComponent implements OnInit {
 
+  onboardingData: any = undefined;
+
   constructor(private onboardingServ: OnboardingService) { }
 
   ngOnInit(): void {
-    console.log(this.onboardingServ.getOnboardingData());
-
+    this.onboardingData = this.onboardingServ.getOnboardingData();
+    console.log(this.onboardingData);
   }
 
 }
