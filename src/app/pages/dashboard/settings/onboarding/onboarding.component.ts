@@ -12,8 +12,8 @@ export class OnboardingComponent implements OnInit {
 
   constructor(private onboardingServ: OnboardingService) { }
 
-  ngOnInit(): void {
-    this.onboardingData = this.onboardingServ.getOnboardingData();
+  async ngOnInit() {
+    this.onboardingData = await this.onboardingServ.getOnboardingData();
     console.log(this.onboardingData);
   }
 
