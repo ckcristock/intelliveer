@@ -1,5 +1,4 @@
 <div class="main" *ngIf="moduleData != undefined">
-
     <div class="row">
         <div class="col-3" style="border: 1px solid white;">
             <i class="bi bi-arrow-left-circle" style="font-size: 2rem"></i>
@@ -15,19 +14,15 @@
                     <img src="/assets/icons/add.svg" alt="" />
                 </button>
             </div>
-
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col" *ngFor="let header of moduleData.rightHeaders">{{header}}</th>
+                        <th scope="col" *ngFor="let header of moduleData.rightHeaders">{{header.value}}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let header of moduleData.rightHeaders">
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                    <tr *ngFor="let row of moduleData.tableContent; let i = index;">
+                        <td *ngFor="let property of moduleData.rightHeaders">{{ row[property.name] }}</td>
                     </tr>
                 </tbody>
             </table>
