@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RoleGuardGuard } from '@guards/role-based/role-guard.guard';
+// import { RoleGuardGuard } from '@guards/role-based/role-guard.guard';
 import { EditUserComponent } from './edit-user.component';
 
 const routes: Routes = [
@@ -15,7 +15,7 @@ const routes: Routes = [
       },
       {
         path: 'personal-info',
-        canActivate: [RoleGuardGuard],
+        // canActivate: [RoleGuardGuard],
         data:{
 					isEnabled: true,
 					value: "CAN_UPDATE_USER_PROFILE",
@@ -36,7 +36,7 @@ const routes: Routes = [
       },
       {
         path: 'assign-role',
-        canActivate: [RoleGuardGuard],
+        // canActivate: [RoleGuardGuard],
         data:{
 					isEnabled: true,
 					value: "CAN_UPDATE_USER_ROLE",

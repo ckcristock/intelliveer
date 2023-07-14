@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RoleGuardGuard } from '@guards/role-based/role-guard.guard';
+// import { RoleGuardGuard } from '@guards/role-based/role-guard.guard';
 import { OnboardingComponent } from './onboarding.component';
 
 const routes: Routes = [
