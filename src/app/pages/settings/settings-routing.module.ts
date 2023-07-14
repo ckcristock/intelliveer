@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     component: SettingsComponent,
-    canActivate: [RoleGuardGuard],
+    // canActivate: [RoleGuardGuard],
     data:{
       isEnabled: true, 
       value: "",
