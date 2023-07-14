@@ -11,6 +11,7 @@ import { AddressFormService } from '@services/forms/address-form/address-form.se
 import { ContactDetailsFormService } from '@services/forms/contact-details-form/contact-details-form.service';
 import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
 import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
+import { FieldValidationService } from '@services/global/field-validation/field-validation.service';
 import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 import { SearchStringPipePipe } from 'src/app/pipes/stringSearch/search-string-pipe.pipe';
 
@@ -58,6 +59,11 @@ export class PracticeFormComponent implements OnInit {
 	FormDisable!: boolean;
 	urlPractice!: string;
 	practiceName!: any;
+	imageUpLoaderDisable: boolean = true;
+	mandAndRequiredFields: any[] = [
+		{ name: 'name', type: 'dropdown', mandSaved: false, required: false, valid: false },
+		{ name: 'practiceType', type: 'dropdown', mandSaved: false, required: false, valid: false },
+	];
 
 	constructor(
 		private fb: FormBuilder,
@@ -71,7 +77,8 @@ export class PracticeFormComponent implements OnInit {
 		private insuranceServ: InsuranceService,
 		private onboardingServ: OnboardingService,
 		private searchString: SearchStringPipePipe,
-		private globalRoutes: GlobalRoutesService
+		private globalRoutes: GlobalRoutesService,
+		private fieldValidationServ: FieldValidationService,
 	) { }
 
 	ngOnInit() {
@@ -127,22 +134,19 @@ export class PracticeFormComponent implements OnInit {
 		this.practiceName = this.Form.get('name')?.value;
 	}
 
-	fieldValidation(field: any, notRequiredButPattern?: boolean) {
-		if (notRequiredButPattern) {
-			return (this.Form?.get(field)?.valid && this.Form?.get(field)?.value != null);
-		} else {
-			return this.Form?.get(field)?.value != null
-		}
-	}
-
 	save(data: any) {
-		this.onSubmit.emit(data);
-		this.Form?.markAsPristine();
-		this.alertService.success(
-			'Success',
-			'Practice has been updated successfully'
-		);
-		this.onboardingServ.setpracticeNotPristine(false);
+		this.mandAndRequiredFields.forEach(field => {
+			field.mandSaved = true;
+		});
+		if (this.Form?.valid && !this.Form?.pristine) {
+			this.onSubmit.emit(data);
+			this.Form?.markAsPristine();
+			this.alertService.success(
+				'Success',
+				'Practice has been updated successfully'
+			);
+			this.onboardingServ.setpracticeNotPristine(false);
+		}
 	}
 	cancel() {
 		this.onCancel.emit();
@@ -215,6 +219,10 @@ export class PracticeFormComponent implements OnInit {
 		this.currentSelection = sectionId;
 	}
 
+	async fieldValidation(field: any, notRequiredButPattern?: boolean) {
+		this.mandAndRequiredFields = this.fieldValidationServ.fieldValidation(field, notRequiredButPattern, this.Form);
+	}
+
 	checkPermission() {
 		let practice = this.globalRoutes.getSettingsOnboardingRoutes();
 		let getpractice = this.searchString.transform('title', practice, "Practice");
@@ -222,12 +230,12 @@ export class PracticeFormComponent implements OnInit {
 		if (this.practiceEdit[0].isEnabled) {
 			this.isSaveButton = true;
 			this.enableAndDisableInputs();
+			this.imageUpLoaderDisable = false;
 		} else if (!this.practiceEdit.isEnable) {
 			this.isSaveButton = false;
 		}
 
 	}
-
 	enableAndDisableInputs() {
 		if (this.inEdit) {
 			if (!this.isSaveButton) {
@@ -240,5 +248,12 @@ export class PracticeFormComponent implements OnInit {
 			this.addressFormService.setDisabledOrEnabled(this.FormDisable);
 			this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
 		}
+	}
+	inputChanged(fieldParam: any) {
+		this.mandAndRequiredFields.forEach(field => {
+			if (field.name == fieldParam) {
+				field.mandSaved = false;
+			}
+		});
 	}
 }
