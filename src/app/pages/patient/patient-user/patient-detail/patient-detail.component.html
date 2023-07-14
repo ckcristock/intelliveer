@@ -5,9 +5,9 @@
 		<div [ngClass]="{'col-11':!isSaveButton, 'col-12':!inEdit }">
 			<!-- [cancelBtn]="isSaveButton || !inEdit" -->
 			<div class="col">
-				<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="false"
-					[saveBtn]="isSaveButton || !inEdit" [editButton]="editButton"
-					[disableSaveBtn]="Form.invalid || Form.pristine" (onCancel)="cancel()" (onSave)="save(Form.value)">
+				<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection"
+					[cancelBtn]="isSaveButton || !inEdit" [saveBtn]="isSaveButton || !inEdit" [disableSaveBtn]="false"
+					(onCancel)="cancel()" (onSave)="save(Form.value)">
 				</app-nav-bar-pills>
 			</div>
 		</div>
@@ -15,6 +15,8 @@
 			style="background-color: transparent;">
 			<img src="/assets/icons/Edit.svg" style="width: 37px; height: 37px; cursor: pointer;" alt=""
 				(click)="checkPermission()" />
+			<img src="/assets/icons/Add-Patient-Wizard-Red.svg" style="width: 37px; height: 37px; cursor: pointer;"
+				[routerLink]="editButton.url" alt="" />
 		</div>
 	</div>
 	<form autocomplete="off" [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
@@ -23,7 +25,8 @@
 				<div class="row formrow">
 					<div class="col-2"></div>
 					<div class="principal">
-						<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
+						<app-image-uploader [imageUpLoaderDisable]="imageUpLoaderDisable"
+							[imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
 						</app-image-uploader>
 						<div class="colm" style="margin-left: 10px">
 							<div class="letterandtext">
@@ -119,8 +122,10 @@
 					</div>
 					<div class="col">
 						<label class="label-input-gap">First Name</label>
-						<input class="form-control mandatory-field" type="text" placeholder="" name="firstName"
-							formControlName="firstName" [(ngModel)]="patientObj!.profile!.firstName" />
+						<input class="form-control mandatory-field" (input)="inputChanged('firstName')" type="text"
+							placeholder="" name="firstName" formControlName="firstName"
+							[(ngModel)]="patientObj!.profile!.firstName" [ngClass]="{'mandatory-field-saved': mandatoryFirstNameSaved,
+                                'mandatory-field': !mandatoryFirstNameSaved}" />
 					</div>
 
 					<div class="col">
@@ -130,20 +135,25 @@
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Last Name</label>
-						<input class="form-control mandatory-field" type="text" placeholder="" name="lastName"
-							formControlName="lastName" [(ngModel)]="patientObj!.profile!.lastName" />
+						<input class="form-control mandatory-field" (input)="inputChanged('lastName')" type="text"
+							placeholder="" name="lastName" formControlName="lastName"
+							[(ngModel)]="patientObj!.profile!.lastName" [ngClass]="{'mandatory-field-saved': mandatoryLastNameSaved,
+                                'mandatory-field': !mandatoryLastNameSaved}" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Date of Birth</label>
-						<input class="form-control mandatory-field" type="date" placeholder="" name="DOB"
-							formControlName="DOB" [(ngModel)]="patientObj!.profile!.DOB" />
+						<input class="form-control mandatory-field" (input)="inputChanged('DOB')" type="date"
+							placeholder="" name="DOB" formControlName="DOB" [(ngModel)]="patientObj!.profile!.DOB"
+							[ngClass]="{'mandatory-field-saved': mandatoryDOBSaved,
+                                'mandatory-field': !mandatoryDOBSaved}" />
 					</div>
 				</div>
 				<div class="row formrow">
 					<div class="col">
 						<label class="label-input-gap">Gender</label>
-						<ng-select class="input-upper mandatory-field" formControlName="gender" placeholder="Select"
-							[(ngModel)]="patientObj!.profile!.gender">
+						<ng-select class="input-upper" formControlName="gender" placeholder="Select"
+							[(ngModel)]="patientObj!.profile!.gender" (change)="fieldValidation('gender')" [ngClass]="{'valid-required-field':validGender && FormDisable == false, 
+							'red-bottom-line':validGender==false  }" (clear)="clearGender()">
 							<ng-option [value]="gender.value" *ngFor="let gender of genders">
 								{{ gender.label }}
 							</ng-option>

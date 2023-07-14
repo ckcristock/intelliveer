@@ -36,8 +36,7 @@
 					<div class="col">
 						<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection"
 							[cancelBtn]="isSaveButton || !inEdit" [saveBtn]="isSaveButton || !inEdit"
-							[disableSaveBtn]="Form.invalid || Form.pristine" (onCancel)="cancel()"
-							(onSave)="save(Form.value)">
+							[disableSaveBtn]="false" (onCancel)="cancel()" (onSave)="save(Form.value)">
 						</app-nav-bar-pills>
 					</div>
 					<!-- [disableSaveBtn]="BGForm.invalid || BGForm.pristine" -->
@@ -55,8 +54,8 @@
 						<h6 class="heading">Logo</h6>
 					</div> -->
 						<div class="row">
-							<app-image-uploader [imageUrl]="formData?.logo || ''"
-								(onUpload)="handleUploadedImage($event)">
+							<app-image-uploader [imageUpLoaderDisable]="imageUpLoaderDisable"
+								[imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
 							</app-image-uploader>
 						</div>
 					</div>
@@ -68,7 +67,9 @@
 						<div class="row">
 							<div class="col">
 								<label class="required">Name</label>
-								<input type="text" class="form-control mandatory-field" formControlName="name" />
+								<input type="text" class="form-control mandatory-field" formControlName="name"
+									(input)="inputChanged('name')" [ngClass]="{'mandatory-field-saved': mandAndRequiredFields[0].mandSaved,
+                                'mandatory-field': !mandAndRequiredFields[0].mandSaved}" />
 							</div>
 							<div class="col">
 								<label class="required">Abbreviation</label>

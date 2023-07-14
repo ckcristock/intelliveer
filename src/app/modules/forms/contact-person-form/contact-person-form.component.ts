@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { ThisReceiver } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, Form, FormGroup } from '@angular/forms';
 import { CONFIG } from '@config/index';
@@ -14,12 +15,17 @@ export class ContactPersonFormComponent implements OnInit {
 	@Input() formGroupName!: string;
 	staticData: any;
 	formDisabled!: boolean;
-	validatorFirstName!: any;
-	validatorLastName!: any;
-	validatorEmail!: any;
-	validatorType!: any;
-	validatorCountryCode!: any;
-	validatorNumber!: any;
+	form_field!: any;
+	mandAndRequiredFields: any[] = [
+		{ name: 'designation', type: 'string', mandatory: false, mandSaved: false, required: false, valid: false },
+		{ name: 'title', type: 'dropdown', mandatory: false, mandSaved: false, required: false, valid: false },
+		{ name: 'firstName', type: 'string', mandatory: false, mandSaved: false, required: false, valid: false },
+		{ name: 'lastName', type: 'string', mandatory: false, mandSaved: false, required: false, valid: false },
+		{ name: 'email', type: 'email', mandatory: false, mandSaved: false, required: false, valid: false },
+		{ name: 'type', type: 'string', mandatory: false, mandSaved: false, required: false, valid: false },
+		{ name: 'countryCode', type: 'number', mandatory: false, mandSaved: false, required: false, valid: false },
+		{ name: 'number', type: 'number', mandatory: false, mandSaved: false, required: false, valid: false },
+	];
 
 	constructor(private http: HttpClient,
 		private contactPersonFormService: ContactPersonFormService,
@@ -37,86 +43,97 @@ export class ContactPersonFormComponent implements OnInit {
 	}
 
 	reviewInputs() {
-		this.isNotRequiredField("firstName", "string");
-		this.isNotRequiredField("lastName", "string");
-		this.isNotRequiredField("email", "email");
-		this.isNotRequiredField("type", "string");
-		this.isNotRequiredField("countryCode", "string");
-		this.isNotRequiredField("number", "string");
+		this.mandAndRequiredFields.forEach(field => {
+			this.isNotRequiredField(field.name, field.type);
+		});
+		this.mandAndRequiredFields.forEach(field => {
+			field.mandatory = this.isRequiredField(field.name);
+		});
 	}
 
-	isNotRequiredField(field: any, type?: any) {
+	isNotRequiredField(fieldParam: any, type?: any) {
 		const form = this.parentGroup.get(this.formGroupName) as FormGroup;
-		const form_field = form.get(field);
-		let validator;
-		if (!form_field?.value) {
+		const formPhone = this.parentGroup.get(this.formGroupName)?.get('phone') as FormGroup;
+		const form_field_main = form.get(fieldParam);
+		const form_field_phone = formPhone.get(fieldParam);
+
+		let validator: boolean;
+
+		if (!form_field_main?.value && !form_field_phone?.value) {
 			validator = false;
 		} else {
+			if (form_field_main?.value) {
+				this.form_field = form_field_main;
+			} else {
+				this.form_field = form_field_phone;
+			}
+
 			if (type == 'number') {
-				const num = Number(form_field?.value);
+				const num = Number(this.form_field?.value);
 				if (num) {
 					validator = true
-					form_field?.valid;
+					this.form_field?.valid;
 				} else {
 					validator = false;
-					form_field?.invalid;
+					this.form_field?.invalid;
 				}
 			} else if (type == 'string') {
-				const num = isNaN(form_field?.value); // Validate if it's string
+				const num = isNaN(this.form_field?.value); // Validate if it's string
 				if (num) {
 					validator = true;
-					form_field?.valid;
+					this.form_field?.valid;
 				} else {
 					validator = false;
-					form_field?.invalid;
+					this.form_field?.invalid;
+				}
+			} else if (type == 'dropdown') {
+				const num = isNaN(this.form_field?.value); // Validate if it's string
+				if (this.form_field?.value != null) {
+					validator = true;
+					this.form_field?.valid;
+				} else {
+					validator = false;
+					this.form_field?.invalid;
 				}
 			} else if (type == 'email') {
-				const num = (form_field?.value).includes('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'); // Validate if it's string
+				const num = (this.form_field?.value).match("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"); // Validate if it's email
 				if (num) {
 					validator = true;
-					form_field?.valid;
+					this.form_field?.valid;
 				} else {
 					validator = false;
-					form_field?.invalid;
+					this.form_field?.invalid;
 				}
 			}
 			else {
 				validator = true;
 			}
 		}
-		switch (field) {
-			case 'addressLine1':
-				this.validatorFirstName = validator;
-				break;
-			case 'country':
-				this.validatorLastName = validator;
-				break;
-			case 'state':
-				this.validatorEmail = validator;
-				break;
-			case 'city':
-				this.validatorType = validator;
-				break;
-			case 'zipCode':
-				this.validatorCountryCode = validator;
-				break;
-			case 'number':
-				this.validatorNumber = validator;
-				break;
-			default:
-		}
+		this.mandAndRequiredFields.forEach(field => {
+			if (field.name == fieldParam) {
+				field.valid = validator;
+			}
+		});
 	}
 
 	isRequiredField(field: string) {
 		const form = this.parentGroup.get(this.formGroupName) as FormGroup;
-		const form_field = form.get(field);
-		if (!form_field) {
+		const formPhone = this.parentGroup.get(this.formGroupName)?.get('phone') as FormGroup;
+		const form_field_main = form.get(field);
+		const form_field_phone = formPhone.get(field);
+		if (form_field_main?.value) {
+			this.form_field = form_field_main;
+		} else {
+			this.form_field = form_field_phone;
+		}
+		if (!this.form_field) {
 			return false;
 		}
-		if (!form_field.validator) {
+		if (!this.form_field.validator) {
 			return false;
 		}
-		const validator = form_field.validator({} as AbstractControl);
+		const validator = this.form_field.validator({} as AbstractControl);
+
 		if (!validator) {
 			return false;
 		}
@@ -132,5 +149,18 @@ export class ContactPersonFormComponent implements OnInit {
 				error: () => { },
 				complete: () => { }
 			});
+	}
+	inputChanged(fieldParam: any) {
+		this.mandAndRequiredFields.forEach(field => {
+			if (field.name == fieldParam) {
+				field.mandSaved = false;
+			}
+		});
+	}
+
+	saved() {
+		this.mandAndRequiredFields.forEach(field => {
+			field.mandSaved = true;
+		});
 	}
 }

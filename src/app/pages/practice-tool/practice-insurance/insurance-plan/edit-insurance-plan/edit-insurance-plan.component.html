@@ -1,23 +1,17 @@
 <div class="row">
 	<div class="col-2">
 		<div class="settings-row pointer" [routerLink]="urlInsurancePlan">
-			<i
-				class="bi bi-arrow-left-circle"
-				style="font-size: 2rem; cursor: pointer"
-			></i>
+			<i class="bi bi-arrow-left-circle" style="font-size: 2rem; cursor: pointer"></i>
 			<p class="">Insurance Plan</p>
 		</div>
-		<ul class="ul" style="margin-top: 27px">
+		<ul class="ul active" style="margin-top: 27px">
 			{{ data?.profile?.insurancePlanName | titlecase }}
 		</ul>
 	</div>
 	<div class="col-10 component-view">
 		<div *ngIf="data">
-			<app-insurance-plan-form
-				[formData]="data"
-				(onCancel)="handleCancel()"
-				(onSubmit)="update($event)"
-			></app-insurance-plan-form>
+			<app-insurance-plan-form [formData]="data" (onCancel)="handleCancel()" (onSubmit)="update($event)">
+			</app-insurance-plan-form>
 		</div>
 	</div>
 </div>

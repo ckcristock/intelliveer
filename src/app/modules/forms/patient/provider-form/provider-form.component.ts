@@ -79,6 +79,10 @@ export class ProviderFormComponent implements OnInit {
   variableDiable: boolean = true;
   validPPhoneNumber: boolean | undefined;
   validDMSchool: boolean | undefined;
+  imageUpLoaderDisable: boolean = true;
+  validRelationship: boolean | undefined;
+  mandatoryFirstNameSaved: boolean = false;
+  mandatoryLastNameSaved: boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -101,8 +105,6 @@ export class ProviderFormComponent implements OnInit {
 
   async ngOnInit() {
     this.initForm(this.formData);
-    this.reviewInputs();
-    this.enableAndDisableInputs();
     this.patientUserServ.setFalseAllNotPristine();
     this.addPatientServ.setFalseAllNotPristineCWP();
     this.insuranceServ.setFalseAllNotPristine();
@@ -114,6 +116,11 @@ export class ProviderFormComponent implements OnInit {
         }
       }
     );
+  }
+
+  async ngAfterViewInit() {
+    await this.reviewInputs();
+    this.enableAndDisableInputs();
   }
 
   initForm(data?: any) {
@@ -135,7 +142,7 @@ export class ProviderFormComponent implements OnInit {
       lastName: [data?.lastName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
       praticeName: [data?.praticeName || ''],
       degree: [data?.degree || ''],
-      DMSchool: [data?.DMSchool || '', Validators.required],
+      DMSchool: [data?.DMSchool || ''],
       language: [data?.language || ''],
       specialty: [data?.specialty || ''],
       specialtySchool: [data?.specialtySchool || ''],
@@ -162,9 +169,9 @@ export class ProviderFormComponent implements OnInit {
     await this.fieldValidation('DMSchool', undefined, undefined, true);
     console.log(" this.validDMSchool", this.validDMSchool);
 
-    await this.fieldValidation("emailId", true, true);
+    await this.fieldValidation("emailId", true);
     await this.fieldValidation("primaryPreferredCommunicationMethod", true);
-    await this.fieldValidation("DOB", true, true);
+    await this.fieldValidation("DOB", true);
     await this.fieldValidation("pPhoneNumber", true);
   }
 
@@ -174,15 +181,15 @@ export class ProviderFormComponent implements OnInit {
       validator = this.Form.get(field)?.valid;
     }
     if (notRequiredButPattern) {
-      validator = (this.Form.get(field)?.valid && (this.Form.get(field)?.value != null));
-      if (greaterZero) {
-        validator = this.Form.get(field)?.value != 0;
-      }
+      validator = (this.Form.get(field)?.valid && (this.Form.get(field)?.value != null) && this.Form.get(field)?.value != 0);
     } else {
       validator = this.Form.get(field)?.value != null;
     }
 
     switch (field) {
+      case 'relationship':
+        this.validRelationship = validator;
+        break;
       case 'DMSchool':
         this.validDMSchool = validator;
         break;
@@ -233,14 +240,19 @@ export class ProviderFormComponent implements OnInit {
   }
 
   save(data: any) {
-    this.onSubmit.emit(data);
-    this.Form.markAsPristine();
-    this.alertService.success(
-      'Success',
-      'Insurance Subscriber has been updated successfully'
-    );
-    this.patientUserServ.setExterProvNotPristine(false);
+    this.mandatoryFirstNameSaved = true;
+    this.mandatoryLastNameSaved = true;
+    if (this.Form?.valid && !this.Form.pristine) {
+      this.onSubmit.emit(data);
+      this.Form.markAsPristine();
+      this.alertService.success(
+        'Success',
+        'Insurance Subscriber has been updated successfully'
+      );
+      this.patientUserServ.setExterProvNotPristine(false);
+    }
   }
+
   cancel() {
     this.onCancel.emit();
   }
@@ -276,6 +288,19 @@ export class ProviderFormComponent implements OnInit {
       }
       this.addressFormService.setDisabledOrEnabled(this.FormDisable);
       this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
+    }
+  }
+
+  inputChanged(field: any) {
+    switch (field) {
+      // For Add Patient Module
+      case 'firstName':
+        this.mandatoryFirstNameSaved = false;
+        break;
+      case 'lastName':
+        this.mandatoryLastNameSaved = false;
+        break;
+      default:
     }
   }
 

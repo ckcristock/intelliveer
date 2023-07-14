@@ -17,7 +17,7 @@ export class ScrollSpyDirective {
 	@Output() public sectionChange = new EventEmitter<string>();
 	private currentSection: string = '';
 
-	constructor(private _el: ElementRef) {}
+	constructor(private _el: ElementRef) { }
 
 	@HostListener('scroll', ['$event'])
 	onScroll(event: any) {

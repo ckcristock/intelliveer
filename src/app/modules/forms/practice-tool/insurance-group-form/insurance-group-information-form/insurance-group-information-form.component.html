@@ -1,5 +1,5 @@
 <div class="row" *ngIf="Form">
-	<app-nav-bar-pills
+	<!-- <app-nav-bar-pills
 		[menuItems]="menuItems"
 		[activeClass]="currentSelection"
 		[cancelBtn]="true"
@@ -7,45 +7,52 @@
 		[disableSaveBtn]="Form.invalid || Form.pristine"
 		(onCancel)="cancel()"
 		(onSave)="save(Form.value)"
-	></app-nav-bar-pills>
+	></app-nav-bar-pills> -->
+	<div class="row sticky" style="width: 101%;">
+		<div [ngClass]="{'col-11':!isSaveButton, 'col-12':!inEdit }">
+			<div class="col">
+				<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection"
+					[cancelBtn]="isSaveButton || !inEdit" [saveBtn]="isSaveButton || !inEdit" [disableSaveBtn]="false"
+					(onCancel)="cancel()" (onSave)="save(Form.value)">
+				</app-nav-bar-pills>
+			</div>
+			<!-- [disableSaveBtn]="BGForm.invalid || BGForm.pristine" -->
+		</div>
+		<div *ngIf="!isSaveButton && inEdit" class="col-1 d-flex justify-content-center align-items-start"
+			style="background-color: transparent;">
+			<img src="/assets/icons/Edit.svg" style="width: 37px; height: 37px; cursor: pointer;" alt=""
+				(click)="checkPermission()" />
+		</div>
+	</div>
 	<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
-		<div
-			class="col-12"
-			id="main"
-			scrollSpy
-			(sectionChange)="onSectionChange($event)"
-		>
+		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section">
-                <div class="row">
+				<div class="row">
 					<h6 class="heading">Insurance Group Information</h6>
 				</div>
 				<div class="row mb-3">
-                    <div class="col-3">
+					<div class="col-3">
 						<label class="required">Group Number</label>
-						<input
-							type="text"
-							class="form-control"
-							formControlName="groupNumber"
-						/>
+						<input type="text" class="form-control" formControlName="groupNumber" />
 					</div>
-                    <div class="col-3">
+					<div class="col-3">
 						<label class="required">Group Name</label>
-						<input
-							type="text"
-							class="form-control"
-							formControlName="groupName"
-						/>
+						<input type="text" class="form-control" formControlName="groupName" />
 					</div>
 					<div class="col-3">
 						<label class="required">Insurance Plan</label>
-						<ng-select placeholder="Select" formControlName="insurancePlanId" class="mandatory-field">
-							<ng-option *ngFor="let insurancePLan of insuranceList"  [value]="insurancePLan._id">{{insurancePLan.profile.insurancePlanName}}</ng-option>
+						<ng-select placeholder="Select" formControlName="insurancePlanId" class="mandatory-field"
+							(change)="inputChanged('insurancePlanId')" [ngClass]="{'mandatory-field-saved': mandAndRequiredFields[0].mandSaved,
+                                'mandatory-field': !mandAndRequiredFields[0].mandSaved}">
+							<ng-option *ngFor="let insurancePLan of insuranceList" [value]="insurancePLan._id">
+								{{insurancePLan.profile.insurancePlanName}}</ng-option>
 						</ng-select>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col" [align]="'end'">
-						<button type="button" class="btn btn-dark btn-dark-custom" [disabled]="Form.invalid" (click)="moveToOrthodontic()">Next</button>
+						<button type="button" class="btn btn-dark btn-dark-custom" [disabled]="FormDisable"
+							(click)="moveToOrthodontic()">Next</button>
 					</div>
 				</div>
 			</div>

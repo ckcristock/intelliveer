@@ -6,6 +6,9 @@ import {
 	SelectedBusinessGroup,
 	BusinessGroupDropdownService
 } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { AddressFormService } from '@services/forms/address-form/address-form.service';
+import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
+import { FieldValidationService } from '@services/global/field-validation/field-validation.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -34,11 +37,20 @@ export class OrthodonticFormComponent implements OnInit {
 	insuranceList: any[] = [];
 	type: any = 'percentage';
 	preauthorizationRequirements: any;
+	isSaveButton: boolean = false;
+	inEdit: boolean = false;
+	FormDisable!: boolean;
+	imageUpLoaderDisable: boolean = true;
+	mandAndRequiredFields: any[] = [
+	];
 
 	constructor(
 		private fb: FormBuilder,
 		private authService: AuthService,
-		private businessGroupDropdownService: BusinessGroupDropdownService
+		private businessGroupDropdownService: BusinessGroupDropdownService,
+		private addressFormService: AddressFormService,
+		private contactPersonFormService: ContactPersonFormService,
+		private fieldValidationServ: FieldValidationService,
 	) {
 		this.businessGroupDropdownSupscription =
 			this.businessGroupDropdownService
@@ -55,16 +67,27 @@ export class OrthodonticFormComponent implements OnInit {
 		this.initForm(this.formData);
 	}
 
+	async ngAfterViewInit() {
+		this.enableAndDisableInputs();
+	}
+
 	initForm(data?: any) {
 		data = data || {};
+		if (Object.keys(data).length != 0) {
+			this.inEdit = true;
+			this.FormDisable = true;
+		} else if (Object.keys(data).length == 0) {
+			this.inEdit = false;
+			this.FormDisable = false;
+		}
 		this.Form = this.fb.group({
 			monthToMonthEligibility: [
 				data.orthodonticBenefits?.eligibility.monthToMonthEligibility ||
-					''
+				''
 			],
 			ageLimitForSubscriber: [
 				data.orthodonticBenefits?.eligibility.ageLimitForSubscriber ||
-					''
+				''
 			],
 			ageLimitForDependantChild: [
 				data.orthodonticBenefits?.eligibility
@@ -128,7 +151,7 @@ export class OrthodonticFormComponent implements OnInit {
 			],
 			paymentSchedule: [
 				data.orthodonticBenefits?.billingAndPayments.paymentSchedule ||
-					''
+				''
 			],
 			requiredSubmissions: [
 				data.orthodonticBenefits?.billingAndPayments
@@ -168,64 +191,101 @@ export class OrthodonticFormComponent implements OnInit {
 	}
 
 	save(data: any) {
-		if (typeof this.preauthorizationRequirements == 'undefined') {
-			this.preauthorizationRequirements =
-				data.preauthorizationRequirements[0];
-		}
-		let formObj = {
-			_id: this.formData._id,
-			insurancePlanId: localStorage.getItem('insurancePlanId'),
-			orthodonticBenefits: {
-				eligibility: {
-					monthToMonthEligibility: data.monthToMonthEligibility,
-					ageLimitForSubscriber: data.ageLimitForSubscriber,
-					ageLimitForDependantChild: data.ageLimitForDependantChild,
-					ageLimitForDependantStudent:
-						data.ageLimitForDependantStudent
-				},
-				COBorAssignment: {
-					coordinationBenefitTypes: data.coordinationBenefitTypes,
-					assignmentOfBenefits: data.assignmentOfBenefits
-				},
-				deductible: {
-					deductibleFamily: data.deductibleFamily,
-					deductibleIndividual: data.deductibleIndividual,
-					percentageCoveredForOrtho: data.percentageCoveredForOrtho
-				},
-				benefits: {
-					orthodonticMaximumTypeForLifetimeOrAnnual:
-						data.orthodonticMaximumTypeForLifetimeOrAnnual,
-					orthodonticMaximumAmountInNetwork:
-						data.orthodonticMaximumAmountInNetwork,
-					orthodonticMaximumAmountOutNetwork:
-						data.orthodonticMaximumAmountOutNetwork,
-					isWorkInProgressCovered: data.isWorkInProgressCovered,
-					anyExclusionForOrtho: data.anyExclusionForOrtho
-				},
-				preAuthorization: {
-					isPreauthorizationMandatory:
-						data.isPreauthorizationMandatory,
-					preauthorizationNeedsToBeSubmitted:
-						data.preauthorizationNeedsToBeSubmitted,
-					preauthorizationRequirements: [
-						this.preauthorizationRequirements
-					]
-				},
-				billingAndPayments: {
-					benefitsPaidAutomaticallyAfterInitialClaim:
-						data.benefitsPaidAutomaticallyAfterInitialClaim,
-					initialPayment: {
-						type: this.type,
-						value: data.value
-					},
-					paymentSchedule: data.paymentSchedule,
-					requiredSubmissions: data.requiredSubmissions
-				}
+		this.mandAndRequiredFields.forEach(field => {
+			field.mandSaved = true;
+		});
+		if (this.Form?.valid && !this.Form.pristine) {
+			if (typeof this.preauthorizationRequirements == 'undefined') {
+				this.preauthorizationRequirements =
+					data.preauthorizationRequirements[0];
 			}
-		};
-		this.onSubmit.emit(formObj);
+			let formObj = {
+				_id: this.formData._id,
+				insurancePlanId: localStorage.getItem('insurancePlanId'),
+				orthodonticBenefits: {
+					eligibility: {
+						monthToMonthEligibility: data.monthToMonthEligibility,
+						ageLimitForSubscriber: data.ageLimitForSubscriber,
+						ageLimitForDependantChild: data.ageLimitForDependantChild,
+						ageLimitForDependantStudent:
+							data.ageLimitForDependantStudent
+					},
+					COBorAssignment: {
+						coordinationBenefitTypes: data.coordinationBenefitTypes,
+						assignmentOfBenefits: data.assignmentOfBenefits
+					},
+					deductible: {
+						deductibleFamily: data.deductibleFamily,
+						deductibleIndividual: data.deductibleIndividual,
+						percentageCoveredForOrtho: data.percentageCoveredForOrtho
+					},
+					benefits: {
+						orthodonticMaximumTypeForLifetimeOrAnnual:
+							data.orthodonticMaximumTypeForLifetimeOrAnnual,
+						orthodonticMaximumAmountInNetwork:
+							data.orthodonticMaximumAmountInNetwork,
+						orthodonticMaximumAmountOutNetwork:
+							data.orthodonticMaximumAmountOutNetwork,
+						isWorkInProgressCovered: data.isWorkInProgressCovered,
+						anyExclusionForOrtho: data.anyExclusionForOrtho
+					},
+					preAuthorization: {
+						isPreauthorizationMandatory:
+							data.isPreauthorizationMandatory,
+						preauthorizationNeedsToBeSubmitted:
+							data.preauthorizationNeedsToBeSubmitted,
+						preauthorizationRequirements: [
+							this.preauthorizationRequirements
+						]
+					},
+					billingAndPayments: {
+						benefitsPaidAutomaticallyAfterInitialClaim:
+							data.benefitsPaidAutomaticallyAfterInitialClaim,
+						initialPayment: {
+							type: this.type,
+							value: data.value
+						},
+						paymentSchedule: data.paymentSchedule,
+						requiredSubmissions: data.requiredSubmissions
+					}
+				}
+			};
+			this.onSubmit.emit(formObj);
+		}
 	}
 	cancel() {
 		this.onCancel.emit();
+	}
+
+	async fieldValidation(field: any, notRequiredButPattern?: boolean) {
+		this.mandAndRequiredFields = this.fieldValidationServ.fieldValidation(field, notRequiredButPattern, this.Form);
+	}
+
+	checkPermission() {
+		this.isSaveButton = true;
+		this.enableAndDisableInputs();
+		this.imageUpLoaderDisable = false;
+	}
+
+	enableAndDisableInputs() {
+		if (this.inEdit) {
+			if (!this.isSaveButton) {
+				this.Form?.disable();
+				this.FormDisable = true;
+			} else if (this.isSaveButton) {
+				this.Form?.enable();
+				this.FormDisable = false;
+			}
+			this.addressFormService.setDisabledOrEnabled(this.FormDisable);
+			this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
+		}
+	}
+
+	inputChanged(fieldParam: any) {
+		this.mandAndRequiredFields.forEach(field => {
+			if (field.name == fieldParam) {
+				field.mandSaved = false;
+			}
+		});
 	}
 }

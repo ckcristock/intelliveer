@@ -5,59 +5,79 @@
 				<div class="col">
 					<label class="label-input-gap">Address Line 1</label>
 					<input type="text" class="form-control input-upper" formControlName="addressLine1"
-						placeholder="Street address, P.O box" (input)="isNotRequiredField('addressLine1', 'string')"
-						[ngClass]="{'valid-required-field':validatorAddressLine1 && formDisabled == false, 
-						'red-bottom-line':!validatorAddressLine1 }">
+						placeholder="Street address, P.O box"
+						(input)="isNotRequiredField('addressLine1', 'string');isRequiredField('addressLine1') ;inputChanged('addressLine1')"
+						[ngClass]="{'valid-required-field':mandAndRequiredFields[0].valid && formDisabled == false, 
+						'red-bottom-line':!mandAndRequiredFields[0].valid,
+						'valid-mandatory-field':mandAndRequiredFields[0].valid && !formDisabled && mandAndRequiredFields[0].mandatory, 
+						'mandatory-field ng-invalid':!mandAndRequiredFields[0].valid && mandAndRequiredFields[0].mandatory,
+						'mandatory-field-saved': mandAndRequiredFields[0].mandSaved && mandAndRequiredFields[0].mandatory }">
 				</div>
 				<div class="col">
 					<label class="label-input-gap">Address Line 2</label>
 					<input type="text" class="form-control input-upper" formControlName="addressLine2"
-						placeholder="Apartment, Suite, Unit, Building, Floor, etc." [ngClass]="{
-							'required-field':
-								isRequiredField('addressLine2') === true
-						}" />
+						placeholder="Apartment, Suite, Unit, Building, Floor, etc."
+						(input)="isNotRequiredField('addressLine2', 'string');isRequiredField('addressLine2') ;inputChanged('addressLine2')"
+						[ngClass]="{'valid-required-field':mandAndRequiredFields[1].valid && formDisabled == false, 
+						'red-bottom-line':!mandAndRequiredFields[1].valid,
+						'valid-mandatory-field':mandAndRequiredFields[1].valid && !formDisabled && mandAndRequiredFields[1].mandatory, 
+						'mandatory-field ng-invalid':!mandAndRequiredFields[1].valid && mandAndRequiredFields[1].mandatory,
+						'mandatory-field-saved': mandAndRequiredFields[1].mandSaved && mandAndRequiredFields[1].mandatory }" />
 				</div>
 			</div>
 			<div class="row formrow">
 				<div class="col">
-					<label class="label-input-gap">Country {{validatorCountry}}</label>
+					<label class="label-input-gap">Country</label>
 					<!-- <input type="text" class="form-control input-upper" formControlName="country" /> -->
 					<ng-select class="input-upper" formControlName="country" [(ngModel)]="selectedCountry"
 						(change)="getStates($event)" (clear)="resetState(); resetCity()" [searchFn]="customSearchFn"
-						(change)="isNotRequiredField('country', 'string')" 
-						[ngClass]="{'valid-required-field':validatorCountry && formDisabled == false, 
-						'red-bottom-line':!validatorCountry  }">>
+						(change)="isNotRequiredField('country', 'dropdown');isRequiredField('country') ;inputChanged('country')"
+						[ngClass]="{'valid-required-field':mandAndRequiredFields[2].valid && formDisabled == false, 
+						'red-bottom-line':!mandAndRequiredFields[2].valid,
+						'valid-mandatory-field':mandAndRequiredFields[2].valid && !formDisabled && mandAndRequiredFields[2].mandatory, 
+						'mandatory-field ng-invalid':!mandAndRequiredFields[2].valid && mandAndRequiredFields[2].mandatory,
+						'mandatory-field-saved': mandAndRequiredFields[2].mandSaved && mandAndRequiredFields[2].mandatory }">>
 						<ng-option *ngFor="let country of countries" [value]="country.iso3">{{ country.name }}
 						</ng-option>
 					</ng-select>
 				</div>
 				<div class="col">
-					<label class="label-input-gap">State {{validatorState}}</label>
+					<label class="label-input-gap">State {{mandAndRequiredFields[3].valid}}</label>
 					<!-- <input type="text" class="form-control input-upper" formControlName="state" /> -->
 					<ng-select [(ngModel)]="selectedState" class="input-upper" formControlName="state"
 						(change)="getCities($event)" (open)="stateOptionIsOpened()" (clear)="resetCity()"
-						(change)="isNotRequiredField('state', 'string')" 
-						[ngClass]="{'valid-required-field':validatorState && formDisabled == false, 
-						'red-bottom-line':!validatorState  }">>
+						(change)="isNotRequiredField('state', 'dropdown');isRequiredField('state') ;inputChanged('state')"
+						[ngClass]="{'valid-required-field':mandAndRequiredFields[3].valid && formDisabled == false && mandAndRequiredFields[3].required, 
+						'red-bottom-line':!mandAndRequiredFields[3].valid && mandAndRequiredFields[3].required,
+						'valid-mandatory-field':mandAndRequiredFields[3].valid && !formDisabled && mandAndRequiredFields[3].mandatory, 
+						'mandatory-field ng-invalid':!mandAndRequiredFields[3].valid && mandAndRequiredFields[3].mandatory,
+						'mandatory-field-saved': mandAndRequiredFields[3].mandSaved && mandAndRequiredFields[3].mandatory }">
 						<ng-option *ngFor="let state of states" [value]="state.state_code">{{ state.name }}</ng-option>
 					</ng-select>
 				</div>
 				<div class="col">
-					<label class="label-input-gap">City {{validatorCity}}</label>
+					<label class="label-input-gap">City {{mandAndRequiredFields[4].valid}}</label>
 					<!-- <input type="text" class="form-control input-upper" formControlName="city" /> -->
 					<ng-select [(ngModel)]="selectedCity" class=" input-upper" formControlName="city"
-						(open)="cityOptionIsOpened()" (change)="isNotRequiredField('city', 'string')"
-						 [ngClass]="{'valid-required-field':validatorCity && formDisabled == false, 
-						'red-bottom-line':!validatorCity  }">>
+						(open)="cityOptionIsOpened()"
+						(change)="isNotRequiredField('city', 'dropdown');isRequiredField('city') ;inputChanged('city')"
+						[ngClass]="{'valid-required-field':mandAndRequiredFields[4].valid && formDisabled == false, 
+						'red-bottom-line':!mandAndRequiredFields[4].valid,
+						'valid-mandatory-field':mandAndRequiredFields[4].valid && !formDisabled && mandAndRequiredFields[4].mandatory, 
+						'mandatory-field ng-invalid':!mandAndRequiredFields[4].valid && mandAndRequiredFields[4].mandatory,
+						'mandatory-field-saved': mandAndRequiredFields[4].mandSaved && mandAndRequiredFields[4].mandatory }">
 						<ng-option *ngFor="let city of cities" [value]="city.name">{{ city.name }}</ng-option>
 					</ng-select>
 				</div>
 				<div class="col">
 					<label class="label-input-gap">Zip Code</label>
 					<input type="text" class="form-control input-upper" formControlName="zipCode"
-						(input)="isNotRequiredField('zipCode', 'number')" 
-						[ngClass]="{'valid-required-field':validatorZipCode && formDisabled == false, 
-						'red-bottom-line':!validatorZipCode  }">
+						(input)="isNotRequiredField('zipCode', 'dropdown');isRequiredField('zipCode') ;inputChanged('zipCode')"
+						[ngClass]="{'valid-required-field':mandAndRequiredFields[5].valid && formDisabled == false, 
+					'red-bottom-line':!mandAndRequiredFields[5].valid,
+					'valid-mandatory-field':mandAndRequiredFields[5].valid && !formDisabled && mandAndRequiredFields[5].mandatory, 
+					'mandatory-field ng-invalid':!mandAndRequiredFields[5].valid && mandAndRequiredFields[5].mandatory,
+					'mandatory-field-saved': mandAndRequiredFields[5].mandSaved && mandAndRequiredFields[5].mandatory }">
 				</div>
 			</div>
 		</div>

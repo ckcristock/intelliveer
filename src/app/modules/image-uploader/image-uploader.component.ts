@@ -17,9 +17,9 @@ export class ImageUploaderComponent implements OnInit {
 	processing: boolean = false;
 	@Input() imageUrl: string = '';
 	@Input() isPublicImage: boolean = false;
-	@Input() variableDiable: boolean = false;
+	@Input() imageUpLoaderDisable: boolean = false;
 	@Output() onUpload = new EventEmitter<{ url: string }>();
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) { }
 
 	ngOnInit(): void {
 		if (this.imageUrl) {
@@ -57,14 +57,14 @@ export class ImageUploaderComponent implements OnInit {
 											url: res.filePath
 										});
 									},
-									error: () => {},
+									error: () => { },
 									complete: () => {
 										this.processing = false;
 									}
 								});
 						}
 					},
-					error: () => {}
+					error: () => { }
 				});
 		}
 	}
@@ -73,8 +73,7 @@ export class ImageUploaderComponent implements OnInit {
 		this.imageSrc = 'https://via.placeholder.com/150?text=...';
 		this.http
 			.get(
-				`${CONFIG.backend.host}/auth/storage/get-file?${
-					url.split('?').reverse('')[0]
+				`${CONFIG.backend.host}/auth/storage/get-file?${url.split('?').reverse('')[0]
 				}`
 			)
 			.subscribe({
@@ -83,7 +82,7 @@ export class ImageUploaderComponent implements OnInit {
 						this.imageSrc = data.signedUrl;
 					}
 				},
-				error: () => {},
+				error: () => { },
 				complete: () => {
 					this.processing = false;
 				}

@@ -58,7 +58,7 @@ export class BusinessGroupService {
 		this.BusinessGroup$.next(this.BusinessGroup);
 	}
 
-	getBusinessGroupSet(): Observable<any>{
+	getBusinessGroupSet(): Observable<any> {
 		return this.BusinessGroup$;
 	}
 
@@ -110,8 +110,9 @@ export class BusinessGroupService {
 	getOrgBgId() {
 		let user: any = this.cookieService.get('user');
 		let orgId = this.authService.getOrgId();
-		user = JSON.parse(user);
 		if (user) {
+			user = JSON.parse(user);
+
 			if (user?.__ISSU__) {
 				this.orgId = 'intelliveer';
 			} else if (user?._id) {

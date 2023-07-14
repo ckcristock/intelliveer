@@ -63,7 +63,8 @@ export class PersonalInfoComponent implements OnInit {
 	persInfoEdit: any;
 	inEdit: boolean = false;
 	FormDisable!: boolean;
-	trySaveFirstTime: boolean = false;
+	mandatoryFirstNameSaved: boolean = false;
+	mandatoryLastNameSaved: boolean = false;
 
 
 	constructor(
@@ -92,9 +93,7 @@ export class PersonalInfoComponent implements OnInit {
 		this.initForm(this.formData);
 		this.Form?.statusChanges.subscribe(
 			result => {
-				console.log("HHHHHHHHHH");
-				
-				this.Form?.markAsPristine();
+				//this.Form?.markAsPristine();
 			}
 		);
 	}
@@ -180,8 +179,9 @@ export class PersonalInfoComponent implements OnInit {
 
 	save(data: any) {
 		// this.onSubmit.emit(data);
-		this.trySaveFirstTime = true;
-		if (this.Form?.valid) {
+		this.mandatoryFirstNameSaved = true;
+		this.mandatoryLastNameSaved = true;
+		if (this.Form?.valid && !this.Form.pristine) {
 			this.userProfile = this.user.profile;
 			this.userProfile = {
 				firstName: this.user.profile.firstName,
@@ -232,6 +232,19 @@ export class PersonalInfoComponent implements OnInit {
 			}
 			this.addressFormService.setDisabledOrEnabled(this.FormDisable);
 			this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
+		}
+	}
+
+	inputChanged(field: any) {
+		switch (field) {
+			// For Add Patient Module
+			case 'firstName':
+				this.mandatoryFirstNameSaved = false;
+				break;
+			case 'lastName':
+				this.mandatoryLastNameSaved = false;
+				break;
+			default:
 		}
 	}
 

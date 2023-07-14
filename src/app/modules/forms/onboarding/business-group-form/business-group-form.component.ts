@@ -5,11 +5,13 @@ import {
 	OnInit,
 	Output,
 	EventEmitter,
-	AfterViewInit
+	AfterViewInit,
+	ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavigationEnd } from '@angular/router';
 import { CONFIG } from '@config/index';
+import { ContactPersonFormComponent } from '@modules/forms/contact-person-form/contact-person-form.component';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
 import { AddPatientService } from '@services/add-patient/add-patient.service';
 import { AlertService } from '@services/alert/alert.service';
@@ -31,6 +33,7 @@ import { SearchStringPipePipe } from 'src/app/pipes/stringSearch/search-string-p
 	styleUrls: ['./business-group-form.component.scss']
 })
 export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
+	@ViewChild(ContactPersonFormComponent) contactPersonComponent!: ContactPersonFormComponent;
 	@Input() title: string = '';
 	@Input() formData: any | undefined = undefined;
 	@Input() password: any;
@@ -59,6 +62,10 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 	businessGroupEditName!: string;
 	BGname!: string;
 	urlOnboarding!: any;
+	mandatoryBGNameSaved: boolean = false;
+	mandatoryCountrySaved: boolean = false;
+	mandatoryCurrencySaved: boolean = false;
+	imageUpLoaderDisable: boolean = true;
 
 
 	constructor(
@@ -136,6 +143,7 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 			contactPerson: this.contactPersonFormService.getContactPersonForm(
 				data?.contactPerson || {},
 				{
+					title: true,
 					firstName: true,
 					lastName: true,
 					phone: { type: true, number: true, countryCode: true },
@@ -160,13 +168,19 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 	}
 
 	save(data: any) {
-		this.onSubmit.emit(data);
-		this.BGForm?.markAsPristine();
-		this.alertService.success(
-			'Success',
-			'Business Group has been updated successfully'
-		);
-		this.onboardingServ.setbusinessGroupNotPristine(false);
+		this.mandatoryBGNameSaved = true;
+		this.mandatoryCountrySaved = true;
+		this.mandatoryCurrencySaved = true;
+		this.contactPersonComponent.saved();
+		if (this.BGForm?.valid && !this.BGForm.pristine) {
+			this.onSubmit.emit(data);
+			this.BGForm?.markAsPristine();
+			this.alertService.success(
+				'Success',
+				'Business Group has been updated successfully'
+			);
+			this.onboardingServ.setbusinessGroupNotPristine(false);
+		}
 	}
 	cancel() {
 		this.onCancel.emit();
@@ -215,6 +229,7 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 		if (this.bussinessEdit[0].isEnabled) {
 			this.isSaveButton = true;
 			this.enableAndDisableInputs();
+			this.imageUpLoaderDisable = false;
 		} else if (!this.bussinessEdit.isEnable) {
 			this.isSaveButton = false;
 		}
@@ -231,6 +246,22 @@ export class BusinessGroupFormComponent implements OnInit, AfterViewInit {
 			}
 			this.addressFormService.setDisabledOrEnabled(this.BGFormDisable);
 			this.contactPersonFormService.setDisabledOrEnabled(this.BGFormDisable);
+		}
+	}
+
+	inputChanged(field: any) {
+		switch (field) {
+			// For Add Patient Module
+			case 'name':
+				this.mandatoryBGNameSaved = false;
+				break;
+			case 'country':
+				this.mandatoryCountrySaved = false;
+				break;
+			case 'DOB':
+				this.mandatoryCurrencySaved = false;
+				break;
+			default:
 		}
 	}
 }

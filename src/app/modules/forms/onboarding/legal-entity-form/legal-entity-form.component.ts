@@ -12,6 +12,7 @@ import { ContactDetailsFormService } from '@services/forms/contact-details-form/
 import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
 import { GeoService } from '@services/global-data/public/geo/geo.service';
 import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
+import { FieldValidationService } from '@services/global/field-validation/field-validation.service';
 import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 import { SearchStringPipePipe } from 'src/app/pipes/stringSearch/search-string-pipe.pipe';
 
@@ -44,6 +45,11 @@ export class LegalEntityFormComponent implements OnInit {
 	FormDisable!: boolean;
 	urlLegalEntity!: string;
 	legalEntityName!: any;
+	imageUpLoaderDisable: boolean = true;
+	mandAndRequiredFields: any[] = [
+		{ name: 'name', type: 'string', mandSaved: false, required: false, valid: false },
+		{ name: 'TIN', type: 'string', mandSaved: false, required: false, valid: false },
+	];
 
 
 	constructor(
@@ -59,14 +65,15 @@ export class LegalEntityFormComponent implements OnInit {
 		private insuranceServ: InsuranceService,
 		private onboardingServ: OnboardingService,
 		private searchString: SearchStringPipePipe,
-		private globalRoutes: GlobalRoutesService
+		private globalRoutes: GlobalRoutesService,
+		private fieldValidationServ: FieldValidationService,
 	) {
 		this.getCountries();
 	}
 
 	ngOnInit(): void {
 		this.initForm(this.formData);
-		
+
 		this.enableAndDisableInputs();
 		this.patientUserServ.setFalseAllNotPristine();
 		this.addPatientServ.setFalseAllNotPristineCWP();
@@ -83,13 +90,18 @@ export class LegalEntityFormComponent implements OnInit {
 
 	}
 	save(data: any) {
-		this.onSubmit.emit(data);
-		this.Form?.markAsPristine();
-		this.alertService.success(
-			'Success',
-			'Legal Entity has been updated successfully'
-		);
-		this.onboardingServ.setlegalEntityBenfNotPristine(false);
+		this.mandAndRequiredFields.forEach(field => {
+			field.mandSaved = true;
+		});
+		if (this.Form?.valid && !this.Form?.pristine) {
+			this.onSubmit.emit(data);
+			this.Form?.markAsPristine();
+			this.alertService.success(
+				'Success',
+				'Legal Entity has been updated successfully'
+			);
+			this.onboardingServ.setlegalEntityBenfNotPristine(false);
+		}
 	}
 	cancel() {
 		this.onCancel.emit();
@@ -130,18 +142,14 @@ export class LegalEntityFormComponent implements OnInit {
 				data?.contactPerson || {}
 			)
 		});
-		
+
 		this.addressFormService.setDisabledOrEnabled(this.FormDisable);
 		this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
 		this.legalEntityName = this.Form.get('name')?.value;
 	}
 
-	fieldValidation(field: any, notRequiredButPattern?: boolean) {
-		if (notRequiredButPattern) {
-			return (this.Form?.get(field)?.valid && this.Form?.get(field)?.value != null);
-		} else {
-			return this.Form?.get(field)?.value != null
-		}
+	async fieldValidation(field: any, notRequiredButPattern?: boolean) {
+		this.mandAndRequiredFields = this.fieldValidationServ.fieldValidation(field, notRequiredButPattern, this.Form);
 	}
 
 	setAddress(type: string) {
@@ -171,6 +179,7 @@ export class LegalEntityFormComponent implements OnInit {
 		if (this.legalEdit[0].isEnabled) {
 			this.isSaveButton = true;
 			this.enableAndDisableInputs();
+			this.imageUpLoaderDisable = false;
 		} else if (!this.legalEdit.isEnable) {
 			this.isSaveButton = false;
 		}
@@ -188,5 +197,13 @@ export class LegalEntityFormComponent implements OnInit {
 			this.addressFormService.setDisabledOrEnabled(this.FormDisable);
 			this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
 		}
+	}
+
+	inputChanged(fieldParam: any) {
+		this.mandAndRequiredFields.forEach(field => {
+			if (field.name == fieldParam) {
+				field.mandSaved = false;
+			}
+		});
 	}
 }

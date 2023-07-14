@@ -6,8 +6,8 @@
 		<div [ngClass]="{'col-11':!isSaveButton, 'col-12':!inEdit }">
 			<div class="col">
 				<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection"
-					[cancelBtn]="isSaveButton || !inEdit" [saveBtn]="isSaveButton || !inEdit"
-					[disableSaveBtn]="Form.invalid || Form.pristine" (onCancel)="cancel()" (onSave)="save(Form.value)">
+					[cancelBtn]="isSaveButton || !inEdit" [saveBtn]="isSaveButton || !inEdit" [disableSaveBtn]="false"
+					(onCancel)="cancel()" (onSave)="save(Form.value)">
 				</app-nav-bar-pills>
 			</div>
 		</div>
@@ -41,8 +41,9 @@
 					</div>
 					<div class="col">
 						<label class="label-input-gap">First Name</label>
-						<input class="form-control mandatory-field input-upper" type="text" placeholder=""
-							name="firstName" formControlName="firstName" />
+						<input class="form-control input-upper mandatory-field" (input)="inputChanged('firstName')"
+							type="text" placeholder="" name="firstName" formControlName="firstName" [ngClass]="{'mandatory-field-saved': mandatoryFirstNameSaved,
+                                'mandatory-field': !mandatoryFirstNameSaved}" />
 					</div>
 
 					<div class="col">
@@ -52,8 +53,9 @@
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Last Name</label>
-						<input class="form-control mandatory-field input-upper" type="text" placeholder=""
-							name="lastName" formControlName="lastName" />
+						<input class="form-control mandatory-field input-upper" (input)="inputChanged('lastName')"
+							type="text" placeholder="" name="lastName" formControlName="lastName" [ngClass]="{'mandatory-field-saved': mandatoryLastNameSaved,
+                                'mandatory-field': !mandatoryLastNameSaved}" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Practice Name</label>
@@ -69,10 +71,8 @@
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Dental/Medical School</label>
-						<input class="form-control mandatory-field ng-invalid input-upper" type="text" placeholder=""
-							name="name" formControlName="DMSchool"
-							(input)="fieldValidation('DMSchool', undefined, undefined, true)"
-							[ngClass]="{'mandatory-field.ng-invalid':!validDMSchool  && FormDisable == true }" />
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
+							formControlName="DMSchool" />
 					</div>
 					<div class="col">
 						<label class="label-input-gap">Specialty</label>

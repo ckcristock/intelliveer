@@ -19,6 +19,7 @@ import { InsuranceService } from '@services/dashboard/patient/insurance/insuranc
 import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 import { Router } from '@angular/router';
 import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
+import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 
 @Component({
 	selector: 'app-patient-detail',
@@ -107,6 +108,12 @@ export class PatientDetailComponent implements OnInit {
 	validCPerson: boolean | undefined;
 	validName: boolean | undefined;
 	validEContact: boolean | undefined;
+	validGender: boolean | undefined;
+	imageUpLoaderDisable: boolean = true;
+	mandatoryFirstNameSaved: boolean = false;
+	mandatoryLastNameSaved: boolean = false;
+	mandatoryDOBSaved: boolean = false;
+
 
 	constructor(
 		private fb: FormBuilder,
@@ -123,6 +130,7 @@ export class PatientDetailComponent implements OnInit {
 		private onboardingServ: OnboardingService,
 		private router: Router,
 		private contactPersonFormService: ContactPersonFormService,
+		private globalRoutes: GlobalRoutesService,
 	) {
 		this.idForm = this.fb.group({
 			// name: '',
@@ -145,9 +153,7 @@ export class PatientDetailComponent implements OnInit {
 		this.userObj = JSON.parse(
 			localStorage.getItem('selectedPatient') || ''
 		);
-		this.initForm(this.formData);
-		await this.reviewInputs();
-		this.enableAndDisableInputs();
+		await this.initForm(this.formData);
 		this.patientUserServ.setFalseAllNotPristine();
 		this.addPatientServ.setFalseAllNotPristineCWP();
 		this.insuranceServ.setFalseAllNotPristine();
@@ -159,9 +165,15 @@ export class PatientDetailComponent implements OnInit {
 				}
 			}
 		);
+
 	}
 
-	initForm(data?: any) {
+	async ngAfterViewInit() {
+		await this.reviewInputs();
+		this.enableAndDisableInputs();
+	}
+
+	async initForm(data?: any) {
 		data = data || {};
 		this.Form = this.fb.group({
 			title: [data?.title || null],
@@ -181,7 +193,7 @@ export class PatientDetailComponent implements OnInit {
 				]
 			],
 			DOB: [data?.DOB || '', Validators.required],
-			gender: [data?.gender || null, Validators.required],
+			gender: [data?.gender || null],
 			pronoun: [data?.pronoun || null],
 			language: [data?.language || null],
 			maried: [data?.maried || null],
@@ -212,6 +224,7 @@ export class PatientDetailComponent implements OnInit {
 	}
 
 	async reviewInputs() {
+		await this.fieldValidation("gender");
 		await this.fieldValidation("emailId", true);
 		await this.fieldValidation("primaryPreferredCommunicationMethod", true);
 		await this.fieldValidation("DOB", true, true);
@@ -227,17 +240,23 @@ export class PatientDetailComponent implements OnInit {
 		let validator;
 
 		if (notRequiredButPattern) {
-			validator = (this.Form.get(field)?.valid && (this.Form.get(field)?.value != null));
-			if (date) {
-				validator = this.Form.get(field)?.value != 0;
-			}
+			validator = (this.Form.get(field)?.valid && (this.Form.get(field)?.value != null) && this.Form.get(field)?.value != 0);
+			console.log("1", field, validator);
+
 		} else {
 			validator = this.Form.get(field)?.value != null;
+			console.log("2", field, validator);
+			console.log(this.Form.get(field)?.value != null);
+
+
 		}
 
 		switch (field) {
 			case 'DOB':
 				this.validDOB = validator;
+				break;
+			case 'gender':
+				this.validGender = validator;
 				break;
 			case 'emailId':
 				this.validEmail = validator;
@@ -285,6 +304,10 @@ export class PatientDetailComponent implements OnInit {
 		}
 	}
 
+	clearGender() {
+		this.Form.controls['gender'].setValue(null);
+	}
+
 	get ids(): FormArray {
 		return this.idForm.get('info') as FormArray;
 	}
@@ -311,67 +334,74 @@ export class PatientDetailComponent implements OnInit {
 	}
 
 	save(data: any) {
-		let saveObj = {
-			_id: this.userObj.dbId,
-			profile: {
-				title: data.title,
-				firstName: data.firstName,
-				middleName: data.middleName,
-				lastName: data.lastName,
-				DOB: data.DOB,
-				gender: data.gender,
-				preferredPronoun: data.pronoun,
-				language: data.language,
-				maritalStatus: data.maried
-			},
-			information: {
-				preferredName: data.preferredName,
-				pronounciation: data.pronounciation,
-				school: data.school,
-				interests: data.interest,
-				tags: data.tags
-			},
-			preferences: {
-				location: data.location,
-				billingProvider: data.billing,
-				treatingProvider: data.provider,
-				newPatientCoordinator: data.patientCoordinator,
-				chairSideAssistant: data.CSAssistant,
-				treatmentCoordinator: data.treatmentCoordinator
-			},
-			emergencyContact: {
-				name: data.cPerson,
-				contactPerson: data.name,
-				emergencyContact: data.eContact
-			},
-			notes: data.note
-		};
-		this.alertService
-			.conformAlert('Are you sure', 'you want to update Patient')
-			.then((value: any) => {
-				if (value.isConfirmed) {
-					this.patientDetailService
-						.updatePatient(saveObj, this.bgId)
-						.subscribe(
-							(result: any) => {
-								this.alertService.success(
-									'Success',
-									'Patient has been updated successfully'
-								);
-								this.router.navigate([
-									'/dashboard/patient/patient-user/patient-detail'
-								]);
-							},
-							(error) => {
-								console.log(error);
-							}
-						);
-				}
-			});
-		this.patientUserServ.setpatientNotPristine(false);
+		this.mandatoryFirstNameSaved = true;
+		this.mandatoryLastNameSaved = true;
+		this.mandatoryDOBSaved = true;
+		if (this.Form?.valid && !this.Form.pristine) {
+			let saveObj = {
+				_id: this.userObj.dbId,
+				profile: {
+					title: data.title,
+					firstName: data.firstName,
+					middleName: data.middleName,
+					lastName: data.lastName,
+					DOB: data.DOB,
+					gender: data.gender,
+					preferredPronoun: data.pronoun,
+					language: data.language,
+					maritalStatus: data.maried
+				},
+				information: {
+					preferredName: data.preferredName,
+					pronounciation: data.pronounciation,
+					school: data.school,
+					interests: data.interest,
+					tags: data.tags
+				},
+				preferences: {
+					location: data.location,
+					billingProvider: data.billing,
+					treatingProvider: data.provider,
+					newPatientCoordinator: data.patientCoordinator,
+					chairSideAssistant: data.CSAssistant,
+					treatmentCoordinator: data.treatmentCoordinator
+				},
+				emergencyContact: {
+					name: data.cPerson,
+					contactPerson: data.name,
+					emergencyContact: data.eContact
+				},
+				notes: data.note
+			};
+			this.alertService
+				.conformAlert('Are you sure', 'you want to update Patient')
+				.then((value: any) => {
+					if (value.isConfirmed) {
+						this.patientDetailService
+							.updatePatient(saveObj, this.bgId)
+							.subscribe(
+								(result: any) => {
+									this.alertService.success(
+										'Success',
+										'Patient has been updated successfully'
+									);
+									this.router.navigate([
+										'/dashboard/patient/patient-user/patient-detail'
+									]);
+								},
+								(error) => {
+									console.log(error);
+								}
+							);
+					}
+				});
+			this.patientUserServ.setpatientNotPristine(false);
+		}
 	}
 	cancel() {
-		this.onCancel.emit();
+		this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+			this.router.navigate([this.globalRoutes.getPatientUserRoutes()[0].url]);
+		});
 	}
 	onSectionChange(sectionId: string) {
 		this.currentSelection = sectionId;
@@ -473,6 +503,7 @@ export class PatientDetailComponent implements OnInit {
 		this.isSaveButton = true;
 		this.editButton.isButton = true;
 		this.enableAndDisableInputs();
+		this.imageUpLoaderDisable = false;
 	}
 
 	enableAndDisableInputs() {
@@ -486,6 +517,22 @@ export class PatientDetailComponent implements OnInit {
 			}
 			this.addressFormService.setDisabledOrEnabled(this.FormDisable);
 			this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
+		}
+	}
+
+	inputChanged(field: any) {
+		switch (field) {
+			// For Add Patient Module
+			case 'firstName':
+				this.mandatoryFirstNameSaved = false;
+				break;
+			case 'lastName':
+				this.mandatoryLastNameSaved = false;
+				break;
+			case 'DOB':
+				this.mandatoryDOBSaved = false;
+				break;
+			default:
 		}
 	}
 }

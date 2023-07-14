@@ -6,9 +6,8 @@
 		<div [ngClass]="{'col-11':!isSaveButton, 'col-12':!inEdit }">
 			<div class="col">
 				<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection"
-					[cancelBtn]="isSaveButton || !inEdit" [saveBtn]="isSaveButton || !inEdit"
-					[disableSaveBtn]="Form.invalid || Form.pristine" (onCancel)="cancel()"
-					(onSave)="save(Form.value)"></app-nav-bar-pills>
+					[cancelBtn]="isSaveButton || !inEdit" [saveBtn]="isSaveButton || !inEdit" [disableSaveBtn]="false"
+					(onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills>
 			</div>
 		</div>
 		<div *ngIf="!isSaveButton && inEdit" class="col-1 d-flex justify-content-center align-items-start"

@@ -6,6 +6,7 @@ import {
 	BusinessGroupDropdownService,
 	SelectedBusinessGroup
 } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 import { InsurancePlanService } from '@services/practice-tool/insurance/insurance-plan.service';
 import { Subscription } from 'rxjs';
 
@@ -20,14 +21,18 @@ export class InsuranceComponent implements OnInit {
 	businessGroupDropdownSupscription: Subscription = new Subscription();
 	selectedBusinessGroup: SelectedBusinessGroup | any;
 	bgId: any;
+	practiceInsuranceMenu: any[];
+	urlPracticeTool: string;
 
 	constructor(
 		private router: Router,
 		private insurancePlanService: InsurancePlanService,
 		private authService: AuthService,
 		private alertService: AlertService,
-		private businessGroupDropdownService: BusinessGroupDropdownService
+		private businessGroupDropdownService: BusinessGroupDropdownService,
+		private globalRoutes: GlobalRoutesService,
 	) {
+		this.urlPracticeTool = this.globalRoutes.getPracticeToolUrl();
 		this.businessGroupDropdownSupscription =
 			this.businessGroupDropdownService
 				.businessGroup()
@@ -37,9 +42,10 @@ export class InsuranceComponent implements OnInit {
 						this.getOrgBgId();
 					}
 				});
+		this.practiceInsuranceMenu = this.globalRoutes.getPracticeToolInsuranceRoutes();
 	}
 
-	ngOnInit(): void {}
+	ngOnInit(): void { }
 
 	onAdd() {
 		this.router.navigate([
@@ -49,7 +55,7 @@ export class InsuranceComponent implements OnInit {
 
 	onEdit(id: any) {
 		this.router.navigate([
-			'/dashboard/practice-tool/practice/insurance-plan/edit/'+id
+			'/dashboard/practice-tool/practice/insurance-plan/edit/' + id
 		]);
 	}
 

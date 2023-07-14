@@ -162,61 +162,61 @@ export class PatientUserService {
   familyMembNotPristi: boolean = false;
 
   //Conditions for canDeactive Popup
-  conditions:any [] = [];
+  conditions: any[] = [];
 
-  setpatientNotPristine(value: boolean){
+  setpatientNotPristine(value: boolean) {
     this.patientNotPristi = value;
   }
 
-  getpatientNotPristine(){
+  getpatientNotPristine() {
     return this.patientNotPristi;
   }
 
-  setlegalGuardNotPristine(value: boolean){
+  setlegalGuardNotPristine(value: boolean) {
     this.legalGuardNotPristi = value;
   }
 
-  getlegalGuardNotPristine(){
+  getlegalGuardNotPristine() {
     return this.legalGuardNotPristi;
   }
 
-  setpaymentPartyNotPristine(value: boolean){
+  setpaymentPartyNotPristine(value: boolean) {
     this.paymentPartyNotPristi = value;
   }
 
-  getpaymentPartyNotPristine(){
+  getpaymentPartyNotPristine() {
     return this.paymentPartyNotPristi;
   }
 
-  setinsuranSubscNotPristine(value: boolean){
+  setinsuranSubscNotPristine(value: boolean) {
     this.insuranSubscNotPristi = value;
   }
 
-  getinsuranSubscNotPristine(){
+  getinsuranSubscNotPristine() {
     return this.insuranSubscNotPristi;
   }
 
-  setExterProvNotPristine(value: boolean){
+  setExterProvNotPristine(value: boolean) {
     this.exterProvNotPristi = value;
   }
 
-  getExterProvNotPristine(){
+  getExterProvNotPristine() {
     return this.exterProvNotPristi;
   }
 
-  setReferrerNotPristine(value: boolean){
+  setReferrerNotPristine(value: boolean) {
     this.referrerNotPristi = value;
   }
 
-  getReferrerNotPristine(){
+  getReferrerNotPristine() {
     return this.referrerNotPristi;
   }
 
-  setFamilyMembNotPristine(value: boolean){
+  setFamilyMembNotPristine(value: boolean) {
     this.familyMembNotPristi = value;
   }
 
-  getFamilyMembNotPristine(){
+  getFamilyMembNotPristine() {
     return this.familyMembNotPristi;
   }
 
@@ -230,18 +230,18 @@ export class PatientUserService {
     this.setFamilyMembNotPristine(false);
   }
 
-  setConditions(){
+  setConditions() {
     this.conditions = [];
-		this.conditions.push({ section: "patient", condition: this.getpatientNotPristine() });
-		this.conditions.push({ section: "legalGuard", condition: this.getlegalGuardNotPristine() });
-		this.conditions.push({ section: "referrer", condition: this.getReferrerNotPristine() });
-		this.conditions.push({ section: "insuranSubsc", condition: this.getinsuranSubscNotPristine() });
-		this.conditions.push({ section: "exterprov", condition: this.getExterProvNotPristine() });
-		this.conditions.push({ section: "paymentParty", condition: this.getpaymentPartyNotPristine() });
-		this.conditions.push({ section: "familyMemb", condition: this.getFamilyMembNotPristine() });
+    this.conditions.push({ section: "patient", condition: this.getpatientNotPristine() });
+    this.conditions.push({ section: "legalGuard", condition: this.getlegalGuardNotPristine() });
+    this.conditions.push({ section: "referrer", condition: this.getReferrerNotPristine() });
+    this.conditions.push({ section: "insuranSubsc", condition: this.getinsuranSubscNotPristine() });
+    this.conditions.push({ section: "exterprov", condition: this.getExterProvNotPristine() });
+    this.conditions.push({ section: "paymentParty", condition: this.getpaymentPartyNotPristine() });
+    this.conditions.push({ section: "familyMemb", condition: this.getFamilyMembNotPristine() });
   }
 
-  getConditions(){
+  getConditions() {
     return this.conditions;
   }
 

@@ -121,9 +121,9 @@
                             <div class="col">
                                 <div class="mainformset">
                                     <label class="label-input-gap">First Name</label>
-                                    <input class="form-control " type="text" placeholder="" 
-                                    [ngClass]="{'mandatory-field-saved': trySaveFirstTime,
-                                'mandatory-field': !trySaveFirstTime}" name="firstName"
+                                    <input class="form-control " type="text" placeholder=""
+                                        (input)="inputChanged('firstName')" [ngClass]="{'mandatory-field-saved': mandatoryFirstNameSaved,
+                                'mandatory-field': !mandatoryFirstNameSaved}" name="firstName"
                                         [(ngModel)]="user?.profile.firstName" formControlName="firstName" />
                                 </div>
                             </div>
@@ -138,11 +138,10 @@
                                 <div class="mainformset">
                                     <label class="label-input-gap">Last Name</label>
                                     {{Form.pristine}}
-                                    <input class="form-control" type="text" placeholder=""
-                                    [ngClass]="{'mandatory-field-saved': trySaveFirstTime,
-                                'mandatory-field': !trySaveFirstTime}"
-                                        name="lastName" [(ngModel)]="user?.profile.lastName"
-                                        formControlName="lastName" />
+                                    <input class="form-control" type="text" (input)="inputChanged('lastName')"
+                                        placeholder="" [ngClass]="{'mandatory-field-saved': mandatoryLastNameSaved,
+                                'mandatory-field': !mandatoryLastNameSaved}" name="lastName"
+                                        [(ngModel)]="user?.profile.lastName" formControlName="lastName" />
                                 </div>
                             </div>
                         </div>

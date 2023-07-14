@@ -6,9 +6,9 @@
 		<div [ngClass]="{'col-11':!isSaveButton, 'col-12':!inEdit }">
 			<div class="col">
 				<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection"
-					[cancelBtn]="isSaveButton || !inEdit" [saveBtn]="isSaveButton || !inEdit"
-					[disableSaveBtn]="Form.invalid || Form.pristine" (onCancel)="cancel()"
-					(onSave)="save(Form.value)"></app-nav-bar-pills>
+					[cancelBtn]="isSaveButton || !inEdit" [saveBtn]="isSaveButton || !inEdit" [disableSaveBtn]="false"
+					(onCancel)="cancel()" (onSave)="save(Form.value)">
+				</app-nav-bar-pills>
 			</div>
 			<!-- [disableSaveBtn]="BGForm.invalid || BGForm.pristine" -->
 		</div>
@@ -52,8 +52,10 @@
 				<div class="row formrow">
 					<div class="col-3">
 						<label class="label-input-gap">Relationship with Patient</label>
-						<ng-select class="input-upper" formControlName="relationship">
-							<ng-option [value]="relationship" *ngFor="let relationship of relationshipArray">
+						<ng-select class="red-bottom-line input-upper" formControlName="relationship"
+							(change)="fieldValidation('relationship',true)" [ngClass]="{'valid-required-field':validRelationship && FormDisable == false, 
+							'red-bottom-line':validRelationship==false  }">
+							<ng-option [value]="relationship">
 								{{relationship}}
 							</ng-option>
 						</ng-select>
@@ -68,8 +70,9 @@
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">First Name</label>
-						<input class="form-control mandatory-field input-upper" type="text" placeholder=""
-							name="firstName" formControlName="firstName" />
+						<input class="form-control input-upper mandatory-field" (input)="inputChanged('firstName')"
+							type="text" placeholder="" name="firstName" formControlName="firstName" [ngClass]="{'mandatory-field-saved': mandatoryFirstNameSaved,
+                                'mandatory-field': !mandatoryFirstNameSaved}" />
 					</div>
 
 					<div class="col-2">
@@ -79,17 +82,16 @@
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Last Name</label>
-						<input class="form-control  mandatory-field input-upper" type="text" placeholder=""
-							name="lastName" formControlName="lastName" />
+						<input class="form-control mandatory-field input-upper" (input)="inputChanged('lastName')"
+							type="text" placeholder="" name="lastName" formControlName="lastName" [ngClass]="{'mandatory-field-saved': mandatoryLastNameSaved,
+                                'mandatory-field': !mandatoryLastNameSaved}" />
 					</div>
 				</div>
 				<div class="row formrow">
 					<div class="col-3">
 						<label class="label-input-gap">Date of Birth</label>
 						<input class="form-control red-bottom-line input-upper" type="date" placeholder="" name="DOB"
-							formControlName="DOB" 
-							(input)="fieldValidation('DOB',true, true)"
-							[ngClass]="{'valid-required-field':validDOB && FormDisable == false, 
+							formControlName="DOB" (input)="fieldValidation('DOB',true, true)" [ngClass]="{'valid-required-field':validDOB && FormDisable == false, 
 							'red-bottom-line':validDOB==false  }" />
 					</div>
 					<div class="col-3">
@@ -153,16 +155,16 @@
 					<div class="col">
 						<label class="label-input-gap">Email</label>
 						<input class="form-control red-bottom-line input-upper" type="text" placeholder="" name="id"
-							formControlName="emailId" 
-							(input)="fieldValidation('emailId',true)"
-							[ngClass]="{'valid-required-field':validEmail && FormDisable == false, 
+							formControlName="emailId" (input)="fieldValidation('emailId',true)" [ngClass]="{'valid-required-field':validEmail && FormDisable == false, 
 							'red-bottom-line':validEmail==false  }" />
 					</div>
 
 					<div class="col">
 						<label class="label-input-gap">Primary Phone Type</label>
-						<ng-select class="input-upper mandatory-field input-upper" placeholder="Select"
-							formControlName="primaryPhoneType">
+						<ng-select class="input-upper mandatory-field input-upper"
+							(change)="inputChanged('primaryPhoneType')" placeholder="Select"
+							formControlName="primaryPhoneType" [ngClass]="{'mandatory-field-saved': mandatoryPrimaryPhoneTypeSaved,
+							'mandatory-field': !mandatoryPrimaryPhoneTypeSaved}">
 							<ng-option [value]="phone.value" *ngFor="let phone of famiMembTitle.phone">
 								{{ phone.label }}
 							</ng-option>
@@ -171,8 +173,10 @@
 
 					<div class="col">
 						<label class="label-input-gap">Primary Phone Number</label>
-						<input class="form-control mandatory-field input-upper" type="text" placeholder="" name="name"
-							formControlName="primaryPhoneNumber" />
+						<input class="form-control mandatory-field input-upper"
+							(input)="inputChanged('primaryPhoneNumber')" type="text" placeholder="" name="name"
+							formControlName="primaryPhoneNumber" [ngClass]="{'mandatory-field-saved': mandatoryPrimaryPhoneNumberSaved,
+							'mandatory-field': !mandatoryPrimaryPhoneNumberSaved}" />
 					</div>
 				</div>
 
@@ -196,9 +200,8 @@
 						<label class="label-input-gap">Preferred Communication Method - Primary</label>
 						<ng-select class="input-upper red-bottom-line input-upper"
 							formControlName="primaryPreferredCommunicationMethod" placeholder="Select"
-							(change)="fieldValidation('primaryPreferredCommunicationMethod',true)"
-							[ngClass]="{'valid-required-field':validPrimaryPreferredCommunicationMethod && FormDisable == false, 
-							'red-bottom-line':validPrimaryPreferredCommunicationMethod==false  }" 
+							(change)="fieldValidation('primaryPreferredCommunicationMethod',true)" [ngClass]="{'valid-required-field':validPrimaryPreferredCommunicationMethod && FormDisable == false, 
+							'red-bottom-line':validPrimaryPreferredCommunicationMethod==false  }"
 							(clear)="clearprimaryPreferredCommunicationMethod()">
 							<ng-option value="s">
 								Select

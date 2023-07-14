@@ -3,9 +3,11 @@
 			? '42px 1fr 75px'
 			: '200px 1fr 200px'
 	}">
+	<!-- top menu, top bar -->
 	<div class="__navbar">
 		<top-navbar></top-navbar>
 	</div>
+	<!-- left side bar -->
 	<div class="__sidebar">
 		<ul>
 			<li class="d-flex justify-content-end" [ngStyle]="{
@@ -38,8 +40,10 @@
 					</li>
 					<li class="icon mb-3" ngbTooltip="{{ 'Practice Tool' }}" routerLinkActive="active"
 						[routerLink]="'/dashboard/practice-tool'" placement="right">
-						<img src="assets/icons/practice_tools-disable.svg" *ngIf="router.url != '/dashboard/practice-tool'" />
-						<img src="assets/icons/practice_tools-colour.svg" *ngIf="router.url == '/dashboard/practice-tool'" />
+						<img src="assets/icons/practice_tools-disable.svg"
+							*ngIf="router.url != '/dashboard/practice-tool'" />
+						<img src="assets/icons/practice_tools-colour.svg"
+							*ngIf="router.url == '/dashboard/practice-tool'" />
 					</li>
 					<li class="icon mb-3" ngbTooltip="{{ 'Practice Management' }}" routerLinkActive="active"
 						[routerLink]="'NA'" placement="right">
@@ -155,6 +159,7 @@
 			</li>
 		</ul>
 	</div>
+	<!-- center -->
 	<div class="__content">
 		<!-- <nav aria-label="breadcrumb" *ngIf="router.url.includes('onboarding')">
 			<ol class="breadcrumb">
@@ -166,6 +171,7 @@
 
 		<router-outlet></router-outlet>
 	</div>
+	<!-- right sidebar -->
 	<div class="__tray">
 		<ul>
 			<li class="d-flex justify-content-start" [ngStyle]="{

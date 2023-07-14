@@ -3,64 +3,43 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr style="border: none" *ngIf="showBestOptionCss">
-					<td
-						*ngFor="
+					<td *ngFor="
 							let treatmentOptionObj of compareAllOptionArray;
 							let i = index
-						"
-						[ngClass]="
+						" [ngClass]="
 							treatmentOptionObj.count === 3
 								? 'show-best-value-yes'
 								: 'show-best-value-no'
-						"
-					>
-						<p
-							style="
+						">
+						<p style="
 								color: white;
 								text-align: center;
 								font-size: large;
 								font-weight: bold;
-							"
-						>
+							">
 							Best Value
 						</p>
 					</td>
 				</tr>
 				<tr>
-					<th
-						*ngFor="
+					<th *ngFor="
 							let treatmentOptionObj of compareAllOptionArray;
 							let i = index
-						"
-						[ngClass]="
+						" [ngClass]="
 							treatmentOptionObj.count === 3
 								? 'best-value-yes'
 								: 'best-value-no'
-						"
-						style="text-align: center"
-					>
+						" style="text-align: center">
 						<div class="btn-group" style="margin-left: 2rem">
 							<button type="button" class="btn">
 								<b>Payment Option {{ i + 1 }}</b>
 							</button>
-							<div
-								class="btn-group"
-								ngbDropdown
-								role="group"
-								aria-label="Button group with nested dropdown"
-							>
-								<button
-									type="button"
-									class="btn dropdown-toggle-split"
-									ngbDropdownToggle
-								>
+							<div class="btn-group" ngbDropdown role="group"
+								aria-label="Button group with nested dropdown">
+								<button type="button" class="btn dropdown-toggle-split" ngbDropdownToggle>
 									<i class="bi bi-three-dots-vertical"></i>
 								</button>
-								<div
-									class="dropdown-menu"
-									ngbDropdownMenu
-									style="background-color: white"
-								>
+								<div class="dropdown-menu" ngbDropdownMenu style="background-color: white">
 									<button ngbDropdownItem>Rename</button>
 									<button ngbDropdownItem>Hide</button>
 								</div>
@@ -68,63 +47,46 @@
 						</div>
 						<br />
 						<span style="font-size: medium">
-							<i
-								[ngClass]="
+							<i [ngClass]="
 									treatmentOptionObj.count === 1 ||
 									treatmentOptionObj.count > 1
 										? 'bi bi-hand-thumbs-up-fill'
 										: 'bi bi-hand-thumbs-up'
-								"
-								[ngStyle]="{
+								" [ngStyle]="{
 									color: '#e96247'
-								}"
-								(click)="countTreatment(treatmentOptionObj)"
-							></i>
+								}" (click)="countTreatment(treatmentOptionObj)"></i>
 							&nbsp;
-							<i
-								[ngClass]="
+							<i [ngClass]="
 									treatmentOptionObj.count === 2 ||
 									treatmentOptionObj.count > 2
 										? 'bi bi-hand-thumbs-up-fill'
 										: 'bi bi-hand-thumbs-up'
-								"
-								[ngStyle]="{
+								" [ngStyle]="{
 									color: '#e96247'
-								}"
-								(click)="countTreatment(treatmentOptionObj)"
-							></i>
+								}" (click)="countTreatment(treatmentOptionObj)"></i>
 							&nbsp;
-							<i
-								[ngClass]="
+							<i [ngClass]="
 									treatmentOptionObj.count === 3
 										? 'bi bi-hand-thumbs-up-fill'
 										: 'bi bi-hand-thumbs-up'
-								"
-								[ngStyle]="{
+								" [ngStyle]="{
 									color: '#e96247'
-								}"
-								(click)="countTreatment(treatmentOptionObj)"
-							></i>
+								}" (click)="countTreatment(treatmentOptionObj)"></i>
 						</span>
 					</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
-					<td
-						*ngFor="let treatmentOptionObj of compareAllOptionArray"
-						[ngClass]="
+					<td *ngFor="let treatmentOptionObj of compareAllOptionArray" [ngClass]="
 							treatmentOptionObj.count === 3
 								? 'best-value-yes'
 								: 'best-value-no'
-						"
-						[style.background-color]="
+						" [style.background-color]="
 							treatmentOptionObj.count === 3
 								? '#ffffff'
 								: '#ffffff'
-						"
-						style="padding: 1rem 2rem 1rem 2rem"
-					>
+						" style="padding: 1rem 2rem 1rem 2rem">
 						<select class="form-select">
 							<option *ngFor="let paymentPlan of paymentPlanType">
 								{{ paymentPlan }}
@@ -133,147 +95,170 @@
 					</td>
 				</tr>
 				<tr>
-					<td
-						*ngFor="let treatmentOptionObj of compareAllOptionArray"
-						[ngClass]="
+					<td *ngFor="let treatmentOptionObj of compareAllOptionArray" [ngClass]="
 							treatmentOptionObj.count === 3
 								? 'best-value-yes'
 								: 'best-value-no'
-						"
-						[style.background-color]="
+						" [style.background-color]="
 							treatmentOptionObj.count === 3
 								? '#ffffff'
 								: '#ffffff'
-						"
-						style="padding: 1rem 2rem 1rem 2rem"
-					>
+						" style="padding: 1rem 2rem 1rem 2rem">
 						<select class="form-select"></select>
 					</td>
 				</tr>
+				<!-- squares -->
 				<tr>
-					<td
-						*ngFor="let treatmentOptionObj of compareAllOptionArray"
-						[ngClass]="
+					<div class="row d-flex justify-content-center" style="margin: 0px 30px;">
+						<td *ngFor="let treatmentOptionObj of compareAllOptionArray" [ngClass]="
 							treatmentOptionObj.count === 3
 								? 'best-value-yes'
 								: 'best-value-no'
-						"
-						[style.background-color]="
+						" [style.background-color]="
 							treatmentOptionObj.count === 3
 								? '#ffffff'
 								: '#ffffff'
-						"
-						style="padding: 1rem 2rem 1rem 2rem"
-					>
-						<div
-							class="row text-center custom-downpayment"
-							*ngIf="!isDownPayment2"
-						>
-							<div class="col-md-6 text-start my-2">
-								<img
-									src="../../../../../assets/icons/split-payment.svg"
-									width="20"
-									height="20"
-									*ngIf="!splitPayment"
-									(click)="changeOptions('two')"
-								/>
+						" style="">
+							<div class="row text-center custom-downpayment" *ngIf="!isDownPayment2">
+								<!-- <div class="col-md-6 text-start my-2">
+									<img src="../../../../../assets/icons/split-payment.svg" width="20" height="20"
+										*ngIf="!splitPayment" (click)="changeOptions('two')" />
+								</div>
+								<div class="col-md-6 text-end my-2">
+									<img src="../../../../../assets/icons/locked.svg" width="20" height="20" />
+								</div> -->
+								<div class="col-md-12 px-0 mt-0">
+									<p style="font-weight: bold; font-size: 14px; margin-top: 15px;">
+										${{ downPayment | number: '1.2-2' }}
+									</p>
+									<p>Due by 08/15/2022</p>
+									<!-- PIIIIIINK -->
+								</div>
 							</div>
-							<div class="col-md-6 text-end my-2">
-								<img
-									src="../../../../../assets/icons/locked.svg"
-									width="20"
-									height="20"
-								/>
-							</div>
-							<div class="col-md-12 px-0 mt-0">
-								<p style="font-weight: bold; font-size: 14px">
-									${{ downPayment | number: '1.2-2' }}
+
+
+							<div class="row" *ngIf="!isDownPayment2">
+								<!-- <div class="col-md-3 px-0 my-1">
+									{{ minDownPayment }}
+								</div> -->
+								<p *ngIf="tabDate" class="my-0 col-md-6" style="font-size: 10px; padding-top: 4px">
+									Due by
+									{{ tabDate | date: 'MM/d/yyyy' }}
 								</p>
-								<div class="range__slider">
-									<input
-										type="range"
-										value="{{ downPayment }}"
-										class="range-slider__range"
-										min="{{ minDownPayment }}"
-										max="{{ maximumDownPaymentTotal }}"
-										step="25"
-										[style.background]="sliderBackground"
-										(input)="downPaymentValues($event)"
-									/>
+								<!-- <div class="col px-0 my-1 col" [align]="'end'">
+									{{ totalAmount }}
+								</div> -->
+							</div>
+						</td>
+					</div>
+					<div class="row">
+						<div style="height: 120px;" class="col-6 d-flex flex-column"
+							*ngFor="let treatmentOptionObj of compareAllOptionArray" [ngClass]="
+							treatmentOptionObj.count === 3
+								? 'best-value-yes'
+								: 'best-value-no'
+						" [style.background-color]="
+							treatmentOptionObj.count === 3
+								? '#ffffff'
+								: '#ffffff'
+						" style="">
+							<p style="text-align: center;">No. of Payments</p>
+							<div class="row pt-4 text-center custom-downpayment numberofpayment"
+								style="margin-left: 5px;">
+								<div class="col-md-12 px-0">
+									<p style="font-weight: bold; font-size: 14px">
+										{{ month }}
+									</p>
+								</div>
+							</div>
+							<!-- <div class="row">
+								<div class="col">0</div>
+								<div class="col" [align]="'end'">
+									{{ totalMonth }}
+								</div>
+							</div> -->
+						</div>
+						<div style="height: 120px;" class="col-6 d-flex flex-column"
+							*ngFor="let treatmentOptionObj of compareAllOptionArray" [ngClass]="
+							treatmentOptionObj.count === 3
+								? 'best-value-yes'
+								: 'best-value-no'
+						" [style.background-color]="
+							treatmentOptionObj.count === 3
+								? '#ffffff'
+								: '#ffffff'
+						">
+							<p style="text-align: center;">Payment Amount</p>
+							<div class="row pt-4 text-center custom-downpayment paymentamount"
+								style="margin-right: 5px;">
+								<div class="col-md-12 px-0">
+									<p style="font-weight: bold; font-size: 14px">
+										${{ emi | number: '1.2-2' }}
+									</p>
+									<!-- rightttttttt -->
+								</div>
+								<div class="row">
+									<p *ngIf="tabThreeDate" class="my-0 text-center"
+										style="font-size: 10px; padding-top: 4px">
+										Due by
+										{{ tabThreeDate | date: 'MM/d/yyyy' }}
+									</p>
 								</div>
 							</div>
 						</div>
-
-						<div class="row" *ngIf="!isDownPayment2">
-							<div class="col-md-3 px-0 my-1">
-								{{ minDownPayment }}
-							</div>
-							<p
-								*ngIf="tabDate"
-								class="my-0 col-md-6"
-								style="font-size: 10px; padding-top: 4px"
-							>
-								Due by
-								{{ tabDate | date: 'MM/d/yyyy' }}
-							</p>
-							<div class="col px-0 my-1 col" [align]="'end'">
-								{{ totalAmount }}
-							</div>
-						</div>
-					</td>
+					</div>
 				</tr>
+				<div class="range__slider">
+					<div class="principal">
+						<input type="range" value="{{downPayment}}" id="slider" min="{{minDownPayment}}"
+							max="{{maximumDownPaymentTotal}}" step="25" (input)="downPaymentValues($event)" />
+						<div id="progressBar" [style.width.px]="progressBar/divider"></div>
+						<!-- rangebar1 -->
+					</div>
+				</div>
+
+				<!-- <div class="range__slider month">
+					<p>No. of payments</p>
+					<input class="range-slider__range" type="range" value="{{ emi }}" min="{{ minPaymentAmountEmi }}"
+						max="{{ maxPaymentAmountEmi }}" step="25" [style.background]="noOfMonthSlider"
+						(input)="calculatePaymentAmount($event)" />
+				</div> -->
+				<!-- rangebar2blue -->
+				<div class="range__slider month">
+					<p>No. of payments</p>
+					<input class="range-slider__range" type="range" value="{{ month }}" min="0" max="{{ totalMonth }}"
+						step="1" [style.background]="sliderBGMonth" (input)="
+							calculateNoOfPaymentValue($event)
+						" />
+					<!-- rangebar3 -->
+				</div>
 				<tr *ngIf="isDownPayment2">
-					<td
-						*ngFor="let treatmentOptionObj of compareAllOptionArray"
-						[ngClass]="
+					<td *ngFor="let treatmentOptionObj of compareAllOptionArray" [ngClass]="
 							treatmentOptionObj.count === 3
 								? 'best-value-yes'
 								: 'best-value-no'
-						"
-						[style.background-color]="
+						" [style.background-color]="
 							treatmentOptionObj.count === 3
 								? '#ffffff'
 								: '#ffffff'
-						"
-						style="padding: 1rem 2rem 1rem 2rem"
-					>
-						<div
-							class="row text-center custom-downpayment"
-							*ngIf="isDownPayment2"
-						>
+						" style="padding: 1rem 2rem 1rem 2rem">
+						<div class="row text-center custom-downpayment" *ngIf="isDownPayment2">
 							<div class="col-md-6 text-start my-2">
-								<img
-									src="../../../../../assets/icons/Close.svg"
-									width="20"
-									height="20"
-									*ngIf="splitPayment"
-								/>
+								<img src="../../../../../assets/icons/Close.svg" width="20" height="20"
+									*ngIf="splitPayment" />
 							</div>
 							<div class="col-md-6 text-end my-2">
-								<img
-									src="../../../../../assets/icons/locked.svg"
-									width="20"
-									height="20"
-								/>
+								<img src="../../../../../assets/icons/locked.svg" width="20" height="20" />
 							</div>
 							<div class="col-md-12 px-0">
-								<p
-									class="my-0"
-									style="font-weight: bold; font-size: 14px"
-								>
+								<p class="my-0" style="font-weight: bold; font-size: 14px">
 									${{ downPayment | number: '1.2-2' }}
 								</p>
 								<p style="font-size: 11px">Down Payment 1</p>
 								<div class="range__slider">
-									<input
-										type="range"
-										value="{{ downPayment }}"
-										class="range-slider__range"
-										min="{{ minDownPayment }}"
-										max="{{ totalAmount }}"
-										step="25"
-										[style.background]="sliderBackground"
-									/>
+									<input type="range" value="{{ downPayment }}" class="range-slider__range"
+										min="{{ minDownPayment }}" max="{{ totalAmount }}" step="25"
+										[style.background]="sliderBackground" />aaaaa
 								</div>
 							</div>
 						</div>
@@ -282,11 +267,7 @@
 							<div class="col-md-3 px-0 my-1">
 								{{ downPayment }}
 							</div>
-							<p
-								*ngIf="tabDate"
-								class="my-0 col-md-6"
-								style="font-size: 10px; padding-top: 4px"
-							>
+							<p *ngIf="tabDate" class="my-0 col-md-6" style="font-size: 10px; padding-top: 4px">
 								Due by
 								{{ tabDate | date: 'MM/d/yyyy' }}
 							</p>
@@ -297,60 +278,34 @@
 					</td>
 				</tr>
 				<tr *ngIf="isDownPayment2">
-					<td
-						*ngFor="let treatmentOptionObj of compareAllOptionArray"
-						[ngClass]="
+					<td *ngFor="let treatmentOptionObj of compareAllOptionArray" [ngClass]="
 							treatmentOptionObj.count === 3
 								? 'best-value-yes'
 								: 'best-value-no'
-						"
-						[style.background-color]="
+						" [style.background-color]="
 							treatmentOptionObj.count === 3
 								? '#ffffff'
 								: '#ffffff'
-						"
-						style="padding: 1rem 2rem 1rem 2rem"
-					>
-						<div
-							class="row text-center custom-downpayment"
-							*ngIf="isDownPayment2"
-						>
+						" style="padding: 1rem 2rem 1rem 2rem">
+						<div class="row text-center custom-downpayment" *ngIf="isDownPayment2">
 							<div class="col-md-6 text-start my-2">
-								<img
-									src="../../../../../assets/icons/Close.svg"
-									width="20"
-									height="20"
-									*ngIf="splitPayment"
-									(click)="changeOptions('one')"
-								/>
+								<img src="../../../../../assets/icons/Close.svg" width="20" height="20"
+									*ngIf="splitPayment" (click)="changeOptions('one')" />
 							</div>
 							<div class="col-md-6 text-end my-2">
-								<img
-									src="../../../../../assets/icons/locked.svg"
-									width="20"
-									height="20"
-									(click)="openModel(content)"
-								/>
+								<img src="../../../../../assets/icons/locked.svg" width="20" height="20"
+									(click)="openModel(content)" />
 							</div>
 							<div class="col-md-12 px-0">
-								<p
-									class="my-0"
-									style="font-weight: bold; font-size: 14px"
-								>
+								<p class="my-0" style="font-weight: bold; font-size: 14px">
 									${{ downPayment | number: '1.2-2' }}
 								</p>
 								<p style="font-size: 11px">Down Payment 1</p>
 								<div class="range__slider">
-									<input
-										type="range"
-										value="{{ downPayment }}"
-										class="range-slider__range"
-										min="{{ minDownPayment }}"
-										max="{{ totalAmount }}"
-										step="25"
-										[style.background]="sliderBackground"
-										(input)="downPaymentValues($event)"
-									/>
+									<input type="range" value="{{ downPayment }}" class="range-slider__range"
+										min="{{ minDownPayment }}" max="{{ totalAmount }}" step="25"
+										[style.background]="sliderBackground" (input)="downPaymentValues($event)" />
+									SSSSSSSSSSSSSSSS
 								</div>
 							</div>
 						</div>
@@ -359,11 +314,7 @@
 							<div class="col-md-3 px-0 my-1">
 								{{ downPayment }}
 							</div>
-							<p
-								*ngIf="tabDate"
-								class="my-0 col-md-6"
-								style="font-size: 10px; padding-top: 4px"
-							>
+							<p *ngIf="tabDate" class="my-0 col-md-6" style="font-size: 10px; padding-top: 4px">
 								Due by
 								{{ tabDate | date: 'MM/d/yyyy' }}
 							</p>
@@ -374,67 +325,38 @@
 					</td>
 				</tr>
 				<tr *ngIf="isDownPayment2">
-					<th
-						style="
+					<th style="
 							border-bottom-color: white;
 							border-top-color: white;
-						"
-					></th>
-					<td
-						*ngFor="let treatmentOptionObj of compareAllOptionArray"
-						[ngClass]="
+						"></th>
+					<td *ngFor="let treatmentOptionObj of compareAllOptionArray" [ngClass]="
 							treatmentOptionObj.count === 3
 								? 'best-value-yes'
 								: 'best-value-no'
-						"
-						[style.background-color]="
+						" [style.background-color]="
 							treatmentOptionObj.count === 3
 								? '#ffffff'
 								: '#ffffff'
-						"
-						style="padding: 1rem 2rem 1rem 2rem"
-					>
-						<div
-							class="row text-center custom-downpayment"
-							*ngIf="isDownPayment2"
-						>
+						" style="padding: 1rem 2rem 1rem 2rem">
+						<div class="row text-center custom-downpayment" *ngIf="isDownPayment2">
 							<div class="col-md-6 text-start my-2">
-								<img
-									src="../../../../../assets/icons/Close.svg"
-									width="20"
-									height="20"
-									*ngIf="splitPayment"
-									(click)="changeOptions('one')"
-								/>
+								<img src="../../../../../assets/icons/Close.svg" width="20" height="20"
+									*ngIf="splitPayment" (click)="changeOptions('one')" />
 							</div>
 							<div class="col-md-6 text-end my-2">
-								<img
-									src="../../../../../assets/icons/unlocked.svg"
-									width="20"
-									height="20"
-								/>
+								<img src="../../../../../assets/icons/unlocked.svg" width="20" height="20" />
 							</div>
 							<div class="col-md-12 px-0">
-								<p
-									class="my-0"
-									style="font-weight: bold; font-size: 14px"
-								>
+								<p class="my-0" style="font-weight: bold; font-size: 14px">
 									${{ downPayment2 | number: '1.2-2' }}
 								</p>
 								<p style="font-size: 11px">Down Payment 2</p>
 								<div class="range__slider">
-									<input
-										type="range"
-										value="{{ downPaymentOneVal }}"
-										class="range-slider__range"
-										min="{{ minDownPayment1 }}"
-										max="{{ downPaymentOneMax }}"
-										step="25"
-										[style.background]="downPayment1BG"
-										(input)="
+									<input type="range" value="{{ downPaymentOneVal }}" class="range-slider__range"
+										min="{{ minDownPayment1 }}" max="{{ downPaymentOneMax }}" step="25"
+										[style.background]="downPayment1BG" (input)="
 											downPaymentOneValues($event, '25')
-										"
-									/>
+										" />
 								</div>
 							</div>
 						</div>
@@ -443,11 +365,7 @@
 							<div class="col-md-3 px-0 my-1">
 								{{ minDownPayment1 }}
 							</div>
-							<p
-								*ngIf="tabDate"
-								class="my-0 col-md-6"
-								style="font-size: 10px; padding-top: 4px"
-							>
+							<p *ngIf="tabDate" class="my-0 col-md-6" style="font-size: 10px; padding-top: 4px">
 								Due by
 								{{ tabDate | date: 'MM/d/yyyy' }}
 							</p>
@@ -458,144 +376,38 @@
 					</td>
 				</tr>
 				<tr>
-					<td
-						*ngFor="let treatmentOptionObj of compareAllOptionArray"
-						[ngClass]="
-							treatmentOptionObj.count === 3
-								? 'best-value-yes'
-								: 'best-value-no'
-						"
-						[style.background-color]="
-							treatmentOptionObj.count === 3
-								? '#ffffff'
-								: '#ffffff'
-						"
-						style="padding: 1rem 2rem 1rem 2rem"
-					>
-						<div
-							class="row pt-4 text-center custom-downpayment paymentamount"
-						>
-							<div class="col-md-12 px-0">
-								<p style="font-weight: bold; font-size: 14px">
-									${{ emi | number: '1.2-2' }}
-								</p>
-								<div class="range__slider month">
-									<input
-										class="range-slider__range"
-										type="range"
-										value="{{ emi }}"
-										min="{{ minPaymentAmountEmi }}"
-										max="{{ maxPaymentAmountEmi }}"
-										step="25"
-										[style.background]="noOfMonthSlider"
-										(input)="calculatePaymentAmount($event)"
-									/>
-								</div>
-							</div>
-							<div class="row">
-								<p
-									*ngIf="tabThreeDate"
-									class="my-0 text-center"
-									style="font-size: 10px; padding-top: 4px"
-								>
-									Due by
-									{{ tabThreeDate | date: 'MM/d/yyyy' }}
-								</p>
-							</div>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td
-						*ngFor="let treatmentOptionObj of compareAllOptionArray"
-						[ngClass]="
-							treatmentOptionObj.count === 3
-								? 'best-value-yes'
-								: 'best-value-no'
-						"
-						[style.background-color]="
-							treatmentOptionObj.count === 3
-								? '#ffffff'
-								: '#ffffff'
-						"
-						style="padding: 1rem 2rem 1rem 2rem"
-					>
-						<div
-							class="row pt-4 text-center custom-downpayment numberofpayment"
-						>
-							<div class="col-md-12 px-0">
-								<p style="font-weight: bold; font-size: 14px">
-									{{ month }}
-								</p>
 
-								<div class="range__slider month">
-									<input
-										class="range-slider__range"
-										type="range"
-										value="{{ month }}"
-										min="0"
-										max="{{ totalMonth }}"
-										step="1"
-										[style.background]="sliderBGMonth"
-										(input)="
-											calculateNoOfPaymentValue($event)
-										"
-									/>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col">0</div>
-							<div class="col" [align]="'end'">
-								{{ totalMonth }}
-							</div>
-						</div>
-					</td>
 				</tr>
 				<tr>
-					<td
-						*ngFor="let treatmentOptionObj of compareAllOptionArray"
-						[ngClass]="
+
+				</tr>
+				<tr>
+					<td *ngFor="let treatmentOptionObj of compareAllOptionArray" [ngClass]="
 							treatmentOptionObj.count === 3
 								? 'best-value-yes'
 								: 'best-value-no'
-						"
-						[style.background-color]="
+						" [style.background-color]="
 							treatmentOptionObj.count === 3
 								? '#ffffff'
 								: '#ffffff'
-						"
-						style="padding: 1rem 2rem 1rem 2rem"
-					>
+						" style="padding: 1rem 2rem 1rem 2rem">
 						<p style="padding-left: 0.5rem" *ngIf="lastPayment">
 							${{ lastPayment | number: '1.2-2' }}
 						</p>
 					</td>
 				</tr>
 				<tr>
-					<td
-						*ngFor="let treatmentOptionObj of compareAllOptionArray"
-						[ngClass]="
+					<td *ngFor="let treatmentOptionObj of compareAllOptionArray" [ngClass]="
 							treatmentOptionObj.count === 3
 								? 'best-value-yes'
 								: 'best-value-no'
-						"
-						style="
+						" style="
 							background-color: white;
 							padding: 1rem 2rem 1rem 2rem;
-						"
-					>
+						">
 						<div [align]="'center'">
-							<img
-								src="../../../../../assets/icons/calendar.svg"
-								width="20"
-								height="20"
-							/>
-							<img
-								src="../../../../../assets/icons/Calc-Setting.svg"
-								width="20"
-								height="20"
-							/>
+							<img src="../../../../../assets/icons/calendar.svg" width="20" height="20" />
+							<img src="../../../../../assets/icons/Calc-Setting.svg" width="20" height="20" />
 						</div>
 					</td>
 				</tr>
@@ -606,12 +418,7 @@
 <ng-template #content let-modal>
 	<div class="modal-header">
 		<h4 class="modal-title"></h4>
-		<button
-			type="button"
-			class="btn-close"
-			aria-label="Close"
-			(click)="modal.dismiss('Cross click')"
-		></button>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
 	</div>
 	<div class="modal-body">
 		<div class="row">
@@ -620,19 +427,11 @@
 				<div class="row">
 					<div class="col-md-6">
 						<label for="default">Default</label>
-						<input
-							type="text"
-							class="form-control"
-							name="downPayment1"
-						/>
+						<input type="text" class="form-control" name="downPayment1" />
 					</div>
 					<div class="col-md-6">
 						<label for="default">Minimum</label>
-						<input
-							type="text"
-							class="form-control"
-							name="downPayment1"
-						/>
+						<input type="text" class="form-control" name="downPayment1" />
 					</div>
 				</div>
 			</div>
@@ -641,11 +440,7 @@
 			<div class="col">
 				<p>Split Down Payment</p>
 				<div class="input-group mb-3">
-					<input
-						type="text"
-						class="form-control"
-						name="minDownPayment1"
-					/>
+					<input type="text" class="form-control" name="minDownPayment1" />
 				</div>
 			</div>
 		</div>
@@ -653,12 +448,8 @@
 			<div class="col">
 				<p>Minimum Payment Amount</p>
 				<div class="input-group mb-3">
-					<input
-						type="text"
-						class="form-control"
-						name="minPaymentAmountEmi"
-						[(ngModel)]="minPaymentAmountEmi"
-					/>
+					<input type="text" class="form-control" name="minPaymentAmountEmi"
+						[(ngModel)]="minPaymentAmountEmi" />
 				</div>
 			</div>
 		</div>
@@ -671,36 +462,24 @@
 					</div>
 					<div class="col-md-4">
 						<label for="default">Default</label>
-						<input
-							type="text"
-							class="form-control"
-							name="downPayment1"
-						/>
+						<input type="text" class="form-control" name="downPayment1" />
 					</div>
 					<div class="col-md-4">
 						<label for="default">Minimum</label>
-						<input
-							type="text"
-							class="form-control"
-							name="downPayment1"
-						/>
+						<input type="text" class="form-control" name="downPayment1" />
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="row mt-3">
-			<div class="col">
+			<div class="col">Down Payment
 				<p>Maximum No. of Payments</p>
 				<p>{{ totalMonth }}</p>
 			</div>
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button
-			type="button"
-			class="btn btn-dark"
-			(click)="modal.close('Close click')"
-		>
+		<button type="button" class="btn btn-dark" (click)="modal.close('Close click')">
 			Save
 		</button>
 	</div>
@@ -708,102 +487,43 @@
 <ng-template #calendar let-modal>
 	<div class="modal-header">
 		<h4 class="modal-title" id="modal-basic-title">Payment Date</h4>
-		<button
-			type="button"
-			class="btn-close"
-			aria-label="Close"
-			(click)="modal.dismiss('Cross click')"
-		></button>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
 	</div>
 	<div class="modal-body">
 		<div class="row" *ngIf="!tabDate || !tabTwoDate || !tabThreeDate">
 			<!-- Tabs navs -->
 			<ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
 				<li class="nav-item" role="presentation">
-					<a
-						class="nav-link"
-						id="ex1-tab-1"
-						data-mdb-toggle="tab"
-						role="tab"
-						aria-controls="ex1-tabs-1"
-						aria-selected="true"
-						[ngClass]="[tab ? 'active' : '']"
-						>Down Payment</a
-					>
+					<a class="nav-link" id="ex1-tab-1" data-mdb-toggle="tab" role="tab" aria-controls="ex1-tabs-1"
+						aria-selected="true" [ngClass]="[tab ? 'active' : '']">Down Payment</a>
 				</li>
 				<li class="nav-item" role="presentation">
-					<a
-						class="nav-link"
-						id="ex1-tab-2"
-						data-mdb-toggle="tab"
-						role="tab"
-						aria-controls="ex1-tabs-2"
-						aria-selected="false"
-						[ngClass]="[tabTwo ? 'active' : '']"
-						>Down Payment 2</a
-					>
+					<a class="nav-link" id="ex1-tab-2" data-mdb-toggle="tab" role="tab" aria-controls="ex1-tabs-2"
+						aria-selected="false" [ngClass]="[tabTwo ? 'active' : '']">Down Payment 2</a>
 				</li>
 				<li class="nav-item" role="presentation">
-					<a
-						class="nav-link"
-						id="ex1-tab-3"
-						data-mdb-toggle="tab"
-						role="tab"
-						aria-controls="ex1-tabs-3"
-						aria-selected="false"
-						[ngClass]="[tabThree ? 'active' : '']"
-						>Installment</a
-					>
+					<a class="nav-link" id="ex1-tab-3" data-mdb-toggle="tab" role="tab" aria-controls="ex1-tabs-3"
+						aria-selected="false" [ngClass]="[tabThree ? 'active' : '']">Installment</a>
 				</li>
 			</ul>
 			<!-- Tabs navs -->
 			<!-- Tabs content -->
 			<div class="tab-content" id="ex1-content">
-				<div
-					class="tab-pane fade show active"
-					id="ex1-tabs-1"
-					role="tabpanel"
-					aria-labelledby="ex1-tab-1"
-					*ngIf="tab"
-				>
-					<ngb-datepicker
-						#dp
-						[(ngModel)]="model"
-						(click)="getDate('tab', model)"
-						(navigate)="date = $event.next"
-					></ngb-datepicker>
+				<div class="tab-pane fade show active" id="ex1-tabs-1" role="tabpanel" aria-labelledby="ex1-tab-1"
+					*ngIf="tab">
+					<ngb-datepicker #dp [(ngModel)]="model" (click)="getDate('tab', model)"
+						(navigate)="date = $event.next"></ngb-datepicker>
 				</div>
-				<div
-					class="tab-pane fade show active"
-					id="ex1-tabs-2"
-					role="tabpanel"
-					aria-labelledby="ex1-tab-2"
-					*ngIf="tabTwo"
-				>
-					<ngb-datepicker
-						#dp
-						[(ngModel)]="modelTwo"
-						(click)="getDate('tabTwo', modelTwo)"
-						(navigate)="date = $event.next"
-					></ngb-datepicker>
+				<div class="tab-pane fade show active" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2"
+					*ngIf="tabTwo">
+					<ngb-datepicker #dp [(ngModel)]="modelTwo" (click)="getDate('tabTwo', modelTwo)"
+						(navigate)="date = $event.next"></ngb-datepicker>
 				</div>
-				<div
-					class="tab-pane fade show active"
-					id="ex1-tabs-3"
-					role="tabpanel"
-					aria-labelledby="ex1-tab-3"
-					*ngIf="tabThree"
-				>
-					<ngb-datepicker
-						#dp
-						[(ngModel)]="modelThree"
-						(click)="getDate('tabThree', modelThree)"
-						(navigate)="date = $event.next"
-					></ngb-datepicker>
-					<ng-select
-						placeholder="Select Type"
-						(change)="checkMonthlyValue($event)"
-					>
+				<div class="tab-pane fade show active" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3"
+					*ngIf="tabThree">
+					<ngb-datepicker #dp [(ngModel)]="modelThree" (click)="getDate('tabThree', modelThree)"
+						(navigate)="date = $event.next"></ngb-datepicker>
+					<ng-select placeholder="Select Type" (change)="checkMonthlyValue($event)">
 						<ng-option value="monthly">Monthly</ng-option>
 						<ng-option value="byMonthly">Bi-Monthly</ng-option>
 						<ng-option value="weekly">Weekly</ng-option>
@@ -833,21 +553,10 @@
 						<td>${{ downPayment }}</td>
 						<td>{{ tabDate | date: 'MM/d/yyyy' }}</td>
 						<td>
-							<img
-								src="assets/icons/Edit.svg"
-								(click)="d.toggle()"
-								style="width: 20px"
-							/>
-							<input
-								type="hidden"
-								class="form-control"
-								placeholder="yyyy-mm-dd"
-								name="dp"
-								[(ngModel)]="model"
-								(dateSelect)="getDate('tab', model)"
-								ngbDatepicker
-								#d="ngbDatepicker"
-							/>
+							<img src="assets/icons/Edit.svg" (click)="d.toggle()" style="width: 20px" />
+							<input type="hidden" class="form-control" placeholder="yyyy-mm-dd" name="dp"
+								[(ngModel)]="model" (dateSelect)="getDate('tab', model)" ngbDatepicker
+								#d="ngbDatepicker" />
 						</td>
 					</tr>
 					<tr>
@@ -855,21 +564,10 @@
 						<td>${{ downPayment2 }}</td>
 						<td>{{ tabTwoDate | date: 'MM/d/yyyy' }}</td>
 						<td>
-							<img
-								src="assets/icons/Edit.svg"
-								(click)="d2.toggle()"
-								style="width: 20px"
-							/>
-							<input
-								type="hidden"
-								class="form-control"
-								placeholder="yyyy-mm-dd"
-								name="dp"
-								[(ngModel)]="modelTwo"
-								(dateSelect)="getDate('tabTwo', modelTwo)"
-								ngbDatepicker
-								#d2="ngbDatepicker"
-							/>
+							<img src="assets/icons/Edit.svg" (click)="d2.toggle()" style="width: 20px" />
+							<input type="hidden" class="form-control" placeholder="yyyy-mm-dd" name="dp"
+								[(ngModel)]="modelTwo" (dateSelect)="getDate('tabTwo', modelTwo)" ngbDatepicker
+								#d2="ngbDatepicker" />
 						</td>
 					</tr>
 				</tbody>
@@ -890,21 +588,10 @@
 						<td>{{ item.date | date: 'MM/d/yyyy' }}</td>
 						<!-- <td *ngIf="i % 2 !=0">{{monthDateObj[i].date  | date: 'dd MMMM YYYY'}}</td> -->
 						<td *ngIf="i == 0">
-							<img
-								src="assets/icons/Edit.svg"
-								(click)="d3.toggle()"
-								style="width: 20px"
-							/>
-							<input
-								type="hidden"
-								class="form-control"
-								placeholder="yyyy-mm-dd"
-								name="dp"
-								[(ngModel)]="modelThree"
-								(dateSelect)="getDate('tabThree', modelThree)"
-								ngbDatepicker
-								#d3="ngbDatepicker"
-							/>
+							<img src="assets/icons/Edit.svg" (click)="d3.toggle()" style="width: 20px" />
+							<input type="hidden" class="form-control" placeholder="yyyy-mm-dd" name="dp"
+								[(ngModel)]="modelThree" (dateSelect)="getDate('tabThree', modelThree)" ngbDatepicker
+								#d3="ngbDatepicker" />
 						</td>
 						<td *ngIf="i != 0"></td>
 					</tr>

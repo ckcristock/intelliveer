@@ -28,6 +28,15 @@ export class AddressFormComponent implements OnInit {
 	validatorState!: any;
 	validatorCity!: any;
 	validatorZipCode!: any;
+	form_field!: any;
+	mandAndRequiredFields: any[] = [
+		{ name: 'addressLine1', type: 'string', mandatory: false, mandSaved: false, required: true, valid: false },
+		{ name: 'addressLine2', type: 'string', mandatory: false, mandSaved: false, required: false, valid: false },
+		{ name: 'country', type: 'dropdown', mandatory: false, mandSaved: false, required: true, valid: false },
+		{ name: 'state', type: 'dropdown', mandatory: false, mandSaved: false, required: true, valid: false },
+		{ name: 'city', type: 'dropdown', mandatory: false, mandSaved: false, required: true, valid: false },
+		{ name: 'zipCode', type: 'number', mandatory: false, mandSaved: false, required: true, valid: false },
+	];
 
 
 	constructor(
@@ -55,100 +64,106 @@ export class AddressFormComponent implements OnInit {
 				this.formDisabled = false;
 			}
 		});
-		this.reviewInputs();
+
+
 	}
 
 	async reviewInputs() {
-		await this.isNotRequiredField("addressLine1", "string");
-		await this.isNotRequiredField("country", "string");
-		await this.isNotRequiredField("state", "string");
-		await this.isNotRequiredField("city", "string");
-		await this.isNotRequiredField("zipCode", "number");
+		this.mandAndRequiredFields.forEach(async field => {
+			await this.isNotRequiredField(field.name, field.type);
+		});
+		this.mandAndRequiredFields.forEach(field => {
+			if (this.isRequiredField(field.name)) {
+				field.mandatory = true;
+				field.required = false;
+			}
+		});
 	}
 
-	async isNotRequiredField(field: any, type?: any) {
-
+	async isNotRequiredField(fieldParam: any, type?: any) {
 		const form = this.parentGroup.get(this.formGroupName) as FormGroup;
-		const form_field = form.get(field);
-		let validator;
-		if (!form_field?.value) {
+		const form_field_main = form.get(fieldParam);
+		this.form_field = form_field_main;
+		if (fieldParam == 'state') {
+			console.log("form_field_main", form_field_main?.value);
+
+		}
+
+		let validator: boolean;
+
+		if (!form_field_main?.value) {
 			validator = false;
 		} else {
 			if (type == 'number') {
-
-				const num = Number(form_field?.value);
+				const num = Number(this.form_field?.value);
 				if (num) {
 					validator = true
-					form_field?.valid;
+					this.form_field?.valid;
 				} else {
 					validator = false;
-					form_field?.invalid;
+					this.form_field?.invalid;
 				}
 			} else if (type == 'string') {
-
-				const num = isNaN(form_field?.value); // Validate if it's string
+				const num = isNaN(this.form_field?.value); // Validate if it's string
 				if (num) {
 					validator = true;
-					form_field?.valid;
+					this.form_field?.valid;
 				} else {
 					validator = false;
-					form_field?.invalid;
+					this.form_field?.invalid;
+				}
+			} else if (type == 'dropdown') {
+				console.log("droooop", this.form_field?.value);
+
+				const num = isNaN(this.form_field?.value); // Validate if it's string
+				console.log("num", num);
+
+				if (this.form_field?.value != null) {
+					validator = true;
+					this.form_field?.valid;
+				} else {
+					validator = false;
+					this.form_field?.invalid;
+				}
+			} else if (type == 'email') {
+				const num = (this.form_field?.value).match("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"); // Validate if it's email
+				if (num) {
+					validator = true;
+					this.form_field?.valid;
+				} else {
+					validator = false;
+					this.form_field?.invalid;
 				}
 			}
 			else {
 				validator = true;
 			}
 		}
-		switch (field) {
-			case 'addressLine1':
-				this.validatorAddressLine1 = validator;
-				break;
-			case 'country':
-				this.validatorCountry = validator;
-				break;
-			case 'state':
-				this.validatorState = validator;
-				break;
-			case 'city':
-				this.validatorCity = validator;
-				break;
-			case 'zipCode':
-				this.validatorZipCode = validator;
-				break;
-			default:
-		}
+		this.mandAndRequiredFields.forEach(field => {
+			if (field.name == fieldParam) {
+				// console.log("validatooooooooooor", validator, fieldParam, this.form_field.value);
+
+				field.valid = validator;
+				this.form_field = null;
+			}
+		});
 	}
 
 	isRequiredField(field: string) {
-
 		const form = this.parentGroup.get(this.formGroupName) as FormGroup;
-		const form_field = form.get(field);
+		const form_field_main = form.get(field);
+		this.form_field = form_field_main;
 
-
-		if (!form_field) {
+		if (!this.form_field) {
 			return false;
 		}
-		if (!form_field.validator) {
+		if (!this.form_field.validator) {
 			return false;
 		}
-		const validator = form_field.validator({} as AbstractControl);
+		const validator = this.form_field.validator({} as AbstractControl);
 
 		if (!validator) {
 			return false;
-		}
-
-		if (validator) {
-			if (form.get(field)?.value != 0 && form.get(field)?.valid) {
-				switch (field) {
-					// For Add Patient Module
-					case 'addressLine1':
-						return field;
-					case 'addressLine2':
-						return field;
-					case 'country':
-						return field;
-				}
-			}
 		}
 		return validator && validator['required'];
 	}
@@ -185,6 +200,10 @@ export class AddressFormComponent implements OnInit {
 						})
 						this.selectedCity = city[0].name;
 						this.validatorCity = true;
+						setTimeout(() => {
+							this.reviewInputs();
+
+						}, 110);
 					},
 				});
 			}
@@ -271,5 +290,18 @@ export class AddressFormComponent implements OnInit {
 					this.getCities(this.selectedState);
 				}, 1000);
 			});
+	}
+	inputChanged(fieldParam: any) {
+		this.mandAndRequiredFields.forEach(field => {
+			if (field.name == fieldParam) {
+				field.mandSaved = false;
+			}
+		});
+	}
+
+	saved() {
+		this.mandAndRequiredFields.forEach(field => {
+			field.mandSaved = true;
+		});
 	}
 }

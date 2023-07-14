@@ -3,13 +3,6 @@
 		<div class="lds-dual-ring"></div>
 	</div>
 	<img [src]="imageSrc || '/assets/images/img_upload_placeholder.png'" />
-	<input
-		type="file"
-		accept="image/*"
-		#uploader
-		[hidden]="true"
-		(change)="uploadImage($event)"
-		style="font-size: 11px; margin-top: 5px"
-		[disabled]="variableDiable"
-	/>
+	<input type="file" accept="image/*" #uploader [hidden]="true" (change)="uploadImage($event)"
+		style="font-size: 11px; margin-top: 5px" [disabled]="imageUpLoaderDisable" />
 </div>

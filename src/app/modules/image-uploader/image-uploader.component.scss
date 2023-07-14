@@ -4,6 +4,7 @@ div.img-uploader-main {
   width: 100px;
   border-radius: 8px;
   overflow: hidden;
+
   .loader-overlay {
     position: absolute;
     background: rgba(255, 255, 255, 0.7);
@@ -15,6 +16,7 @@ div.img-uploader-main {
     justify-content: center;
     align-items: center;
   }
+
   img {
     height: 100%;
     width: 100%;
@@ -28,6 +30,7 @@ div.img-uploader-main {
   width: 40px;
   height: 40px;
 }
+
 .lds-dual-ring:after {
   content: " ";
   display: block;
@@ -39,10 +42,12 @@ div.img-uploader-main {
   border-color: var(--primary) transparent var(--primary) transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
+
 @keyframes lds-dual-ring {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }

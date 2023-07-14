@@ -1,6 +1,22 @@
 <div class="row" *ngIf="Form">
-	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
-		[disableSaveBtn]="Form.invalid" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills>
+	<!-- <app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
+		[disableSaveBtn]="Form.invalid" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills> -->
+	<div class="row sticky" style="width: 101%;">
+		<div [ngClass]="{'col-11':!isSaveButton, 'col-12':!inEdit }">
+			<div class="col">
+				<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection"
+					[cancelBtn]="isSaveButton || !inEdit" [saveBtn]="isSaveButton || !inEdit" [disableSaveBtn]="false"
+					(onCancel)="cancel()" (onSave)="save(Form.value)">
+				</app-nav-bar-pills>
+			</div>
+			<!-- [disableSaveBtn]="BGForm.invalid || BGForm.pristine" -->
+		</div>
+		<div *ngIf="!isSaveButton && inEdit" class="col-1 d-flex justify-content-center align-items-start"
+			style="background-color: transparent;">
+			<img src="/assets/icons/Edit.svg" style="width: 37px; height: 37px; cursor: pointer;" alt=""
+				(click)="checkPermission()" />
+		</div>
+	</div>
 	<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
 		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section" id="eligibility">
@@ -15,12 +31,12 @@
 								<div class="two-radios">
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="eligible" id="eligible1"
-											autocomplete="off" checked />
+											autocomplete="off" [disabled]="FormDisable" checked />
 										<label class="" for="eligible1">Yes</label>
 									</div>
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="eligible" id="eligible2"
-											autocomplete="off" />
+											autocomplete="off" [disabled]="FormDisable" />
 										<label class="" for="eligible2">No</label>
 									</div>
 								</div>
@@ -197,12 +213,12 @@
 									<div class="two-radios">
 										<div class="yes-no-radio">
 											<input class="form-check-input" type="radio" name="waitingper"
-												id="waitingper1" autocomplete="off" checked />
+												id="waitingper1" autocomplete="off" [disabled]="FormDisable" checked />
 											<label class="" for="waitingper1">Yes</label>
 										</div>
 										<div class="yes-no-radio">
 											<input class="form-check-input" type="radio" name="waitingper"
-												id="waitingper2" autocomplete="off" />
+												id="waitingper2" autocomplete="off" [disabled]="FormDisable" />
 											<label class="" for="waitingper2">No</label>
 										</div>
 									</div>
@@ -367,7 +383,7 @@
 										</div>
 										<div class="row">
 											<div class="btn-group btn-group-select">
-												<button class="btn btn-light">
+												<button class="btn btn-light" [disabled]="FormDisable">
 													Select
 												</button>
 												<select class="form-select" formControlName="timeFrameExams">
@@ -403,7 +419,7 @@
 										</div>
 										<div class="row">
 											<div class="btn-group btn-group-select">
-												<button class="btn btn-light">
+												<button class="btn btn-light" [disabled]="FormDisable">
 													Select
 												</button>
 												<select class="form-select" formControlName="timeFrameProphy">
@@ -446,7 +462,7 @@
 										</div>
 										<div class="row">
 											<div class="btn-group btn-group-select">
-												<button class="btn btn-light">
+												<button class="btn btn-light" [disabled]="FormDisable">
 													Select
 												</button>
 												<select class="form-select" formControlName="timeFramePerio">
@@ -483,8 +499,8 @@
 										<div class="mainformsetdefalt">
 											<label class="required py-1"></label>
 											<div class="form-check">
-												<input class="form-check-input" type="radio" name="flexRadioDefault"
-													id="flexRadioDefault1" />
+												<input class="form-check-input" type="radio" [disabled]="FormDisable"
+													name="flexRadioDefault" id="flexRadioDefault1" />
 												<label class="form-check-label" for="flexRadioDefault1">
 													Either/or
 												</label>
@@ -493,8 +509,8 @@
 
 										<div class="form-check">
 											<div class="mainformset">
-												<input class="form-check-input" type="radio" name="flexRadioDefault"
-													id="flexRadioDefault2" checked />
+												<input class="form-check-input" type="radio" [disabled]="FormDisable"
+													name="flexRadioDefault" id="flexRadioDefault2" checked />
 												<label class="form-check-label" for="flexRadioDefault2">
 													In addition to
 												</label>
@@ -525,7 +541,7 @@
 										</div>
 										<div class="row">
 											<div class="btn-group btn-group-select">
-												<button class="btn btn-light">
+												<button class="btn btn-light" [disabled]="FormDisable">
 													Select
 												</button>
 												<select class="form-select" formControlName="timeFrameFMX">
@@ -561,7 +577,7 @@
 										</div>
 										<div class="row">
 											<div class="btn-group btn-group-select">
-												<button class="btn btn-light">
+												<button class="btn btn-light" [disabled]="FormDisable">
 													Select
 												</button>
 												<select class="form-select" formControlName="timeFramePano">
@@ -591,7 +607,8 @@
 								<div class="mainformsetdefalt">
 									<label class="required py-1"></label>
 									<div class="form-check">
-										<input class="form-check-input" type="radio" name="fmxr" id="fmxr1" />
+										<input class="form-check-input" type="radio" [disabled]="FormDisable"
+											name="fmxr" id="fmxr1" />
 										<label class="form-check-label" for="fmxr1">
 											Either/or
 										</label>
@@ -600,7 +617,8 @@
 
 								<div class="form-check">
 									<div class="mainformset">
-										<input class="form-check-input" type="radio" name="fmxr" id="fmxr2" checked />
+										<input class="form-check-input" type="radio" [disabled]="FormDisable"
+											name="fmxr" id="fmxr2" checked />
 										<label class="form-check-label" for="fmxr2">
 											Both
 										</label>
@@ -627,7 +645,7 @@
 										</div>
 										<div class="row">
 											<div class="btn-group btn-group-select">
-												<button class="btn btn-light">
+												<button class="btn btn-light" [disabled]="FormDisable">
 													Select
 												</button>
 												<select class="form-select" formControlName="timeFrameBWX">
@@ -659,12 +677,13 @@
 										<div class="two-radios">
 											<div class="yes-no-radio">
 												<input class="form-check-input" type="radio" name="intaoralimgs"
-													id="intaoralimgs1" autocomplete="off" checked />
+													id="intaoralimgs1" autocomplete="off" [disabled]="FormDisable"
+													checked />
 												<label class="" for="intaoralimgs1">Yes</label>
 											</div>
 											<div class="yes-no-radio">
 												<input class="form-check-input" type="radio" name="intaoralimgs"
-													id="intaoralimgs2" autocomplete="off" />
+													id="intaoralimgs2" autocomplete="off" [disabled]="FormDisable" />
 												<label class="" for="intaoralimgs2">No</label>
 											</div>
 										</div>
@@ -691,7 +710,7 @@
 										</div>
 										<div class="row">
 											<div class="btn-group btn-group-select">
-												<button class="btn btn-light">
+												<button class="btn btn-light" [disabled]="FormDisable">
 													Select
 												</button>
 												<select class="form-select" formControlName="timeFrameScalRoot">
@@ -723,12 +742,13 @@
 										<div class="two-radios">
 											<div class="yes-no-radio">
 												<input class="form-check-input" type="radio" name="quadssamed"
-													id="quadssamed1" autocomplete="off" checked />
+													id="quadssamed1" autocomplete="off" [disabled]="FormDisable"
+													checked />
 												<label class="" for="quadssamed1">Yes</label>
 											</div>
 											<div class="yes-no-radio">
 												<input class="form-check-input" type="radio" name="quadssamed"
-													id="quadssamed2" autocomplete="off" />
+													id="quadssamed2" autocomplete="off" [disabled]="FormDisable" />
 												<label class="" for="quadssamed2">No</label>
 											</div>
 										</div>
@@ -757,7 +777,7 @@
 										</div>
 										<div class="row">
 											<div class="btn-group btn-group-select">
-												<button class="btn btn-light">
+												<button class="btn btn-light" [disabled]="FormDisable">
 													Select
 												</button>
 												<select class="form-select" formControlName="timeFrameResto">
@@ -793,7 +813,7 @@
 										</div>
 										<div class="row">
 											<div class="btn-group btn-group-select">
-												<button class="btn btn-light">
+												<button class="btn btn-light" [disabled]="FormDisable">
 													Select
 												</button>
 												<select class="form-select" formControlName="timeFrameCrowns">
@@ -838,7 +858,7 @@
 										</div>
 										<div class="row">
 											<div class="btn-group btn-group-select">
-												<button class="btn btn-light">
+												<button class="btn btn-light" [disabled]="FormDisable">
 													Select
 												</button>
 												<select class="form-select" formControlName="timeFrameBridges">
@@ -874,7 +894,7 @@
 										</div>
 										<div class="row">
 											<div class="btn-group btn-group-select">
-												<button class="btn btn-light">
+												<button class="btn btn-light" [disabled]="FormDisable">
 													Select
 												</button>
 												<select class="form-select" formControlName="timeFrameDentures">
@@ -919,7 +939,7 @@
 										</div>
 										<div class="row">
 											<div class="btn-group btn-group-select">
-												<button class="btn btn-light">
+												<button class="btn btn-light" [disabled]="FormDisable">
 													Select
 												</button>
 												<select class="form-select" formControlName="timeFramePartials">
@@ -1005,12 +1025,12 @@
 								<div class="two-radios">
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="porcelpost" id="porcelpost1"
-											autocomplete="off" checked />
+											autocomplete="off" [disabled]="FormDisable" checked />
 										<label class="" for="porcelpost1">Yes</label>
 									</div>
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="porcelpost" id="porcelpost2"
-											autocomplete="off" />
+											autocomplete="off" [disabled]="FormDisable" />
 										<label class="btn btn-light" for="porcelpost2">No</label>
 									</div>
 								</div>
@@ -1022,12 +1042,12 @@
 								<div class="two-radios">
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="gcd27901" id="gcd279011"
-											autocomplete="off" checked />
+											autocomplete="off" [disabled]="FormDisable" checked />
 										<label class="" for="gcd279011">Yes</label>
 									</div>
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="gcd27901" id="gcd279012"
-											autocomplete="off" />
+											autocomplete="off" [disabled]="FormDisable" />
 										<label class="" for="gcd279012">No</label>
 									</div>
 								</div>
@@ -1039,12 +1059,12 @@
 								<div class="two-radios">
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="postcomp1" id="postcomp11"
-											autocomplete="off" checked />
+											autocomplete="off" [disabled]="FormDisable" checked />
 										<label class="" for="postcomp11">Yes</label>
 									</div>
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="postcomp1" id="postcomp12"
-											autocomplete="off" />
+											autocomplete="off" [disabled]="FormDisable" />
 										<label class="" for="postcomp12">No</label>
 									</div>
 								</div>
@@ -1073,12 +1093,12 @@
 								<div class="two-radios">
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="nightguards"
-											id="nightguards1" autocomplete="off" checked />
+											id="nightguards1" autocomplete="off" [disabled]="FormDisable" checked />
 										<label class="" for="nightguards1">Yes</label>
 									</div>
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="nightguards"
-											id="nightguards2" autocomplete="off" />
+											id="nightguards2" autocomplete="off" [disabled]="FormDisable" />
 										<label class="" for="nightguards2">No</label>
 									</div>
 								</div>
@@ -1094,13 +1114,14 @@
 										<div class="col-6">
 											<div class="">
 												<input class="form-check-input" type="radio" name="paidat" id="paidat"
-													autocomplete="off" checked formControlName="paidAtGenerProv" />
+													autocomplete="off" [disabled]="FormDisable" checked
+													formControlName="paidAtGenerProv" />
 												<label class="form-check-label" for="paidat">Paid at</label>
 											</div>
 										</div>
 										<div class="col-6" style="margin-left: -30px">
 											<input class="form-control" type="text" placeholder="" name=""
-												style="margin-top: -6px" />
+												style="margin-top: -6px" [disabled]="FormDisable" />
 										</div>
 									</div>
 								</div>
@@ -1110,12 +1131,12 @@
 								<div class="two-radios">
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="restora" id="restora1"
-											autocomplete="off" checked />
+											autocomplete="off" [disabled]="FormDisable" checked />
 										<label class="" for="restora1">Yes</label>
 									</div>
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="restora" id="restora2"
-											autocomplete="off" />
+											autocomplete="off" [disabled]="FormDisable" />
 										<label class="" for="restora2">No</label>
 									</div>
 								</div>
@@ -1127,12 +1148,12 @@
 								<div class="two-radios">
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="missingtc" id="missingtc1"
-											autocomplete="off" checked />
+											autocomplete="off" [disabled]="FormDisable" checked />
 										<label class="" for="missingtc1">Yes</label>
 									</div>
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="missingtc" id="missingtc2"
-											autocomplete="off" />
+											autocomplete="off" [disabled]="FormDisable" />
 										<label class="" for="missingtc2">No</label>
 									</div>
 								</div>
@@ -1154,12 +1175,12 @@
 								<div class="two-radios">
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="ppc" id="ppc1"
-											autocomplete="off" checked />
+											autocomplete="off" [disabled]="FormDisable" checked />
 										<label class="" for="ppc1">Yes</label>
 									</div>
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="ppc" id="ppc2"
-											autocomplete="off" />
+											autocomplete="off" [disabled]="FormDisable" />
 										<label class="" for="ppc2">No</label>
 									</div>
 								</div>
@@ -1172,26 +1193,29 @@
 									<div class="two-radios">
 										<div class="yes-no-radio">
 											<input class="form-check-input" type="radio" name="gcd27902" id="gcd279021"
-												autocomplete="off" checked />
+												autocomplete="off" [disabled]="FormDisable" checked />
 											<label class="" for="gcd279021">Yes</label>
 										</div>
 										<div class="yes-no-radio">
 											<input class="form-check-input" type="radio" name="gcd27902" id="gcd279022"
-												autocomplete="off" />
+												autocomplete="off" [disabled]="FormDisable" />
 											<label class="" for="gcd279022">No</label>
 										</div>
 									</div>
 									<div class="btn-group" role="group" ngbRadioGroup name="radioBasic2">
 										<label ngbButtonLabel class="btn-dark-brown label-radio-square">
-											<input ngbButton type="radio" class="btn-check" [value]="1" />
+											<input ngbButton type="radio" [disabled]="FormDisable" class="btn-check"
+												[value]="1" />
 											Year
 										</label>
 										<label ngbButtonLabel class="btn-dark-brown-center label-radio-square">
-											<input ngbButton type="radio" class="btn-check" value="middle" true />
+											<input ngbButton type="radio" [disabled]="FormDisable" class="btn-check"
+												value="middle" true />
 											Lifetime
 										</label>
 										<label ngbButtonLabel class="btn-dark-brown-right label-radio-square">
-											<input ngbButton type="radio" class="btn-check" [value]="false" />
+											<input ngbButton type="radio" [disabled]="FormDisable" class="btn-check"
+												[value]="false" />
 											$2500
 										</label>
 									</div>
@@ -1207,26 +1231,29 @@
 									<div class="two-radios">
 										<div class="yes-no-radio">
 											<input class="form-check-input" type="radio" name="postcompos"
-												id="postcompos1" autocomplete="off" checked />
+												id="postcompos1" autocomplete="off" [disabled]="FormDisable" checked />
 											<label class="" for="postcompos1">Yes</label>
 										</div>
 										<div class="yes-no-radio">
 											<input class="form-check-input" type="radio" name="postcompos"
-												id="postcompos2" autocomplete="off" />
+												id="postcompos2" autocomplete="off" [disabled]="FormDisable" />
 											<label class="" for="postcompos2">No</label>
 										</div>
 									</div>
 									<div class="btn-group" role="group" ngbRadioGroup name="radioBasic1">
 										<label ngbButtonLabel class="btn-dark-brown label-radio-square">
-											<input ngbButton type="radio" class="btn-check" [value]="1" />
+											<input ngbButton type="radio" [disabled]="FormDisable" class="btn-check"
+												[value]="1" />
 											Year
 										</label>
 										<label ngbButtonLabel class="btn-dark-brown-center label-radio-square">
-											<input ngbButton type="radio" class="btn-check" [value]="2" />
+											<input ngbButton type="radio" [disabled]="FormDisable" class="btn-check"
+												[value]="2" />
 											Lifetime
 										</label>
 										<label ngbButtonLabel class="btn-dark-brown-right label-radio-square">
-											<input ngbButton type="radio" class="btn-check" [value]="3" />
+											<input ngbButton type="radio" [disabled]="FormDisable" class="btn-check"
+												[value]="3" />
 											$250
 										</label>
 									</div>

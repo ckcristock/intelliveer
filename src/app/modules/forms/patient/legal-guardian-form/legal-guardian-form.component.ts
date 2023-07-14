@@ -20,6 +20,7 @@ import { InsuranceService } from '@services/dashboard/patient/insurance/insuranc
 import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
 import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
 import { SearchStringPipePipe } from 'src/app/pipes/stringSearch/search-string-pipe.pipe';
+import { FieldValidationService } from "@services/global/field-validation/field-validation.service";
 
 @Component({
 	selector: 'app-legal-guardian-form',
@@ -82,7 +83,12 @@ export class LegalGuardianFormComponent implements OnInit {
 	validSecondaryPreferredCommunicationMethod: boolean | undefined;
 	validPreferredTimingForCall: boolean | undefined;
 	validDOB: boolean | undefined;
-	variableDiable: boolean = true;
+	imageUpLoaderDisable: boolean = true;
+	validRelationship: boolean | undefined;
+	mandatoryFirstNameSaved: boolean = false;
+	mandatoryPrimaryPhoneNumberSaved: boolean = false;
+	mandatoryLastNameSaved: boolean = false;
+	mandatoryPrimaryPhoneTypeSaved: boolean = false;
 
 	constructor(
 		private http: HttpClient,
@@ -96,6 +102,7 @@ export class LegalGuardianFormComponent implements OnInit {
 		private contactPersonFormService: ContactPersonFormService,
 		private globalRoutes: GlobalRoutesService,
 		private searchString: SearchStringPipePipe,
+		private fieldValidationServ: FieldValidationService,
 	) {
 		this.idForm = this.fb.group({
 			// name: '',
@@ -109,8 +116,6 @@ export class LegalGuardianFormComponent implements OnInit {
 		if (this.formData) {
 			this.setUserDataToForm();
 		}
-		await this.reviewInputs();
-		this.enableAndDisableInputs();
 		this.patientUserServ.setFalseAllNotPristine();
 		this.addPatientServ.setFalseAllNotPristineCWP();
 		this.insuranceServ.setFalseAllNotPristine();
@@ -124,6 +129,11 @@ export class LegalGuardianFormComponent implements OnInit {
 		);
 		// this.Form.get('emailId')?.markAsDirty();
 		this.legalGuard.push(await this.patientUserServ.getLegalGuardFamiMemb());
+	}
+
+	async ngAfterViewInit() {
+		await this.reviewInputs();
+		this.enableAndDisableInputs();
 	}
 
 	initForm(data?: any) {
@@ -229,53 +239,16 @@ export class LegalGuardianFormComponent implements OnInit {
 	}
 
 	async reviewInputs() {
+		await this.fieldValidation("relationship", true);
 		await this.fieldValidation("emailId", true);
 		await this.fieldValidation("primaryPreferredCommunicationMethod", true);
-		await this.fieldValidation("DOB", true, true);
+		await this.fieldValidation("DOB", true);
 	}
 
-	async fieldValidation(field: any, notRequiredButPattern?: boolean, date?: boolean) {
-		let validator;
+	async fieldValidation(field: any, notRequiredButPattern?: boolean) {
+		const aa = this.fieldValidationServ.fieldValidation(field, notRequiredButPattern, this.Form);
+		console.log("this.fieldValidationServ.fieldValidation(field, notRequiredButPattern, this.Form)", aa);
 
-		if (notRequiredButPattern) {
-			validator = (this.Form.get(field)?.valid && (this.Form.get(field)?.value != null));
-			if (date) {
-				validator = this.Form.get(field)?.value != 0;
-			}
-		} else {
-			validator = this.Form.get(field)?.value != null;
-		}
-
-		switch (field) {
-			case 'DOB':
-				this.validDOB = validator;
-				break;
-			case 'emailId':
-				this.validEmail = validator;
-				break;
-			case 'primaryPhoneType':
-				this.validPrimaryPhoneType = validator;
-				break;
-			case 'primaryPhoneNumber':
-				this.validPrimaryPhoneNumber = validator;
-				break;
-			case 'secondaryPhoneType':
-				this.validSecondaryPhoneType = validator;
-				break;
-			case 'secondaryPhoneNumber':
-				this.validSecondaryPhoneNumber = validator;
-				break;
-			case 'primaryPreferredCommunicationMethod':
-				this.validPrimaryPreferredCommunicationMethod = validator;
-				break;
-			case 'secondaryPreferredCommunicationMethod':
-				this.validSecondaryPreferredCommunicationMethod = validator;
-				break;
-			case 'preferredTimingForCall':
-				this.validPreferredTimingForCall = validator;
-				break;
-			default:
-		}
 	}
 
 	async getStaticData() {
@@ -287,11 +260,17 @@ export class LegalGuardianFormComponent implements OnInit {
 	}
 
 	save(data: any) {
-		this.onSubmit.emit(data);
-		this.patientUserServ.setLegalGuard(data);
-		this.patientUserServ.setPatientFamiMemb(data.relationship, data);
-		this.Form.markAsPristine();
-		this.patientUserServ.setlegalGuardNotPristine(false);
+		this.mandatoryFirstNameSaved = true;
+		this.mandatoryLastNameSaved = true;
+		this.mandatoryPrimaryPhoneTypeSaved = true;
+		this.mandatoryPrimaryPhoneNumberSaved = true;
+		if (this.Form?.valid && !this.Form.pristine) {
+			this.onSubmit.emit(data);
+			this.patientUserServ.setLegalGuard(data);
+			this.patientUserServ.setPatientFamiMemb(data.relationship, data);
+			this.Form.markAsPristine();
+			this.patientUserServ.setlegalGuardNotPristine(false);
+		}
 	}
 	cancel() {
 		this.onCancel.emit();
@@ -310,7 +289,7 @@ export class LegalGuardianFormComponent implements OnInit {
 	checkPermission() {
 		this.isSaveButton = true;
 		this.enableAndDisableInputs();
-		this.variableDiable = false;
+		this.imageUpLoaderDisable = false;
 	}
 
 	enableAndDisableInputs() {
@@ -324,6 +303,25 @@ export class LegalGuardianFormComponent implements OnInit {
 			}
 			this.addressFormService.setDisabledOrEnabled(this.FormDisable);
 			this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
+		}
+	}
+
+	inputChanged(field: any) {
+		switch (field) {
+			// For Add Patient Module
+			case 'firstName':
+				this.mandatoryFirstNameSaved = false;
+				break;
+			case 'lastName':
+				this.mandatoryLastNameSaved = false;
+				break;
+			case 'primaryPhoneType':
+				this.mandatoryPrimaryPhoneTypeSaved = false;
+				break;
+			case 'primaryPhoneNumber':
+				this.mandatoryPrimaryPhoneNumberSaved = false;
+				break;
+			default:
 		}
 	}
 }

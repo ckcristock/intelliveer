@@ -13,7 +13,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="vertical-line-not-active" *ngIf="menu.url === router.url  && (i < menuItems!.length - 1)"></div>
+                <div class="vertical-line-not-active" *ngIf="menu.url === router.url  && (i < menuItems!.length - 1)">
+                </div>
 
                 <div *ngFor="let item of menu.child">
                     <div class="step step-active" *ngIf="item.url === router.url; else subMenuFalseBlock">
@@ -61,8 +62,11 @@
                         </div>
                     </div>
                     <div class="vertical-line-active"
-                        *ngIf="(sessionArray.indexOf(menu.title) != -1) && (i < menuItems!.length - 1) && menu.child?.length == 0"></div>
-                    <div class="small-vertical-line-active" *ngIf="(sessionArray.indexOf(menu.title) != -1) && (i < menuItems!.length - 1) && menu.child?.length != 0"></div>
+                        *ngIf="(sessionArray.indexOf(menu.title) != -1) && (i < menuItems!.length - 1) && menu.child?.length == 0">
+                    </div>
+                    <div class="small-vertical-line-active"
+                        *ngIf="(sessionArray.indexOf(menu.title) != -1) && (i < menuItems!.length - 1) && menu.child?.length != 0">
+                    </div>
 
                     <div class="step" *ngIf="(sessionArray.indexOf(menu.title) == -1)">
                         <div>
@@ -73,8 +77,11 @@
                         </div>
                     </div>
                     <div class="vertical-line-not-active"
-                        *ngIf="(sessionArray.indexOf(menu.title) == -1) && (i < menuItems!.length - 1) && menu.child?.length == 0"></div>
-                    <div class="small-vertical-line-not-active" *ngIf="(sessionArray.indexOf(menu.title) != -1) && (i < menuItems!.length - 1) && menu.child?.length != 0"></div>
+                        *ngIf="(sessionArray.indexOf(menu.title) == -1) && (i < menuItems!.length - 1) && menu.child?.length == 0">
+                    </div>
+                    <div class="small-vertical-line-not-active"
+                        *ngIf="(sessionArray.indexOf(menu.title) != -1) && (i < menuItems!.length - 1) && menu.child?.length != 0">
+                    </div>
 
                 </ng-template>
             </div>

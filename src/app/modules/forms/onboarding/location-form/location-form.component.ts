@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CONFIG } from '@config/index';
+import { AddressFormComponent } from '@modules/forms/address-form/address-form.component';
 import { MenuItem } from '@modules/nav-bar-pills/nav-bar-pills.component';
 import { AddPatientService } from '@services/add-patient/add-patient.service';
 import { AlertService } from '@services/alert/alert.service';
@@ -11,6 +12,7 @@ import { AddressFormService } from '@services/forms/address-form/address-form.se
 import { ContactDetailsFormService } from '@services/forms/contact-details-form/contact-details-form.service';
 import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
 import { GlobalRoutesService } from '@services/global-routes/global-routes.service';
+import { FieldValidationService } from '@services/global/field-validation/field-validation.service';
 import { OnboardingService } from '@services/settings/onboarding/onboarding.service';
 import { SearchStringPipePipe } from 'src/app/pipes/stringSearch/search-string-pipe.pipe';
 
@@ -20,6 +22,7 @@ import { SearchStringPipePipe } from 'src/app/pipes/stringSearch/search-string-p
 	styleUrls: ['./location-form.component.scss']
 })
 export class LocationFormComponent implements OnInit {
+	@ViewChild(AddressFormComponent) AddressFormComponent!: AddressFormComponent;
 	Form: FormGroup | undefined;
 	@Input() title: string = '';
 	@Input() formData: any | undefined = undefined;
@@ -43,6 +46,12 @@ export class LocationFormComponent implements OnInit {
 	FormDisable!: boolean;
 	urlLocation!: any;
 	locationName!: any;
+	locationTimeZoneData!: any;
+	imageUpLoaderDisable: boolean = true;
+	mandAndRequiredFields: any[] = [
+		{ name: 'name', type: 'string', mandSaved: false, required: false, valid: false },
+	];
+
 
 	constructor(
 		private fb: FormBuilder,
@@ -56,7 +65,8 @@ export class LocationFormComponent implements OnInit {
 		private insuranceServ: InsuranceService,
 		private onboardingServ: OnboardingService,
 		private searchString: SearchStringPipePipe,
-		private globalRoutes: GlobalRoutesService
+		private globalRoutes: GlobalRoutesService,
+		private fieldValidationServ: FieldValidationService,
 	) { }
 
 	async ngOnInit() {
@@ -68,16 +78,14 @@ export class LocationFormComponent implements OnInit {
 		this.onboardingServ.setFalseAllNotPristine();
 		this.Form?.statusChanges.subscribe(
 			result => {
-				if (!this.Form?.pristine) {
-					console.log("entereeeed, location, wrong");
-
+				if (!this.Form?.pristine && this.Form?.controls['locationTimeZone'].value != null) {
 					this.onboardingServ.setlocationNotPristine(true);
 				}
 			}
 		);
-
 		this.urlLocation = this.globalRoutes.getSettingsOnboardingRoutes()[2].url;
 	}
+
 	async initForm(data?: any) {
 		data = data || {};
 		if (Object.keys(data).length != 0) {
@@ -123,22 +131,20 @@ export class LocationFormComponent implements OnInit {
 		this.locationName = this.Form.get('name')?.value;
 	}
 
-	fieldValidation(field: any, notRequiredButPattern?: boolean) {
-		if (notRequiredButPattern) {
-			return (this.Form?.get(field)?.valid && this.Form?.get(field)?.value != null);
-		} else {
-			return this.Form?.get(field)?.value != null
-		}
-	}
-
 	save(data: any) {
-		this.onSubmit.emit(data);
-		this.Form?.markAsPristine();
-		this.alertService.success(
-			'Success',
-			'Location has been updated successfully'
-		);
-		this.onboardingServ.setlocationNotPristine(false);
+		this.mandAndRequiredFields.forEach(field => {
+			field.mandSaved = true;
+		});
+		this.AddressFormComponent.saved();
+		if (this.Form?.valid && !this.Form?.pristine) {
+			this.onSubmit.emit(data);
+			this.Form?.markAsPristine();
+			this.alertService.success(
+				'Success',
+				'Location has been updated successfully'
+			);
+			this.onboardingServ.setlocationNotPristine(false);
+		}
 	}
 	cancel() {
 		this.onCancel.emit();
@@ -156,6 +162,10 @@ export class LocationFormComponent implements OnInit {
 		this.currentSelection = sectionId;
 	}
 
+	async fieldValidation(field: any, notRequiredButPattern?: boolean) {
+		this.mandAndRequiredFields = this.fieldValidationServ.fieldValidation(field, notRequiredButPattern, this.Form);
+	}
+
 	checkPermission() {
 		let location = this.globalRoutes.getSettingsOnboardingRoutes();
 		let getlocation = this.searchString.transform('title', location, "Location");
@@ -163,6 +173,7 @@ export class LocationFormComponent implements OnInit {
 		if (this.locationEdit[0].isEnabled) {
 			this.isSaveButton = true;
 			this.enableAndDisableInputs();
+			this.imageUpLoaderDisable = false;
 		} else if (!this.locationEdit.isEnable) {
 			this.isSaveButton = false;
 		}
@@ -180,5 +191,13 @@ export class LocationFormComponent implements OnInit {
 			this.addressFormService.setDisabledOrEnabled(this.FormDisable);
 			this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
 		}
+	}
+
+	inputChanged(fieldParam: any) {
+		this.mandAndRequiredFields.forEach(field => {
+			if (field.name == fieldParam) {
+				field.mandSaved = false;
+			}
+		});
 	}
 }

@@ -1,3 +1,32 @@
 @import 'buttons';
 @import 'inputs';
 @import 'table';
+
+#main {
+    height: calc(100vh - 310px);
+    overflow: auto;
+    padding-bottom: 5rem;
+
+    form {
+
+        input,
+        select {
+            margin-bottom: 5px;
+        }
+    }
+}
+
+ul {
+    font-size: 13px;
+    font-weight: bold;
+
+    li {
+        line-height: 3.2;
+    }
+}
+
+.component-view {
+    height: calc(100vh - 200px);
+    overflow-x: hidden;
+    overflow-y: auto;
+}

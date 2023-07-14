@@ -1,5 +1,5 @@
 <div class="row" *ngIf="Form">
-	<app-nav-bar-pills
+	<!-- <app-nav-bar-pills
 		[menuItems]="menuItems"
 		[activeClass]="currentSelection"
 		[cancelBtn]="true"
@@ -7,14 +7,25 @@
 		[disableSaveBtn]="Form.invalid || Form.pristine"
 		(onCancel)="cancel()"
 		(onSave)="save(Form.value)"
-	></app-nav-bar-pills>
+	></app-nav-bar-pills> -->
+	<div class="row sticky" style="width: 101%;">
+		<div [ngClass]="{'col-11':!isSaveButton, 'col-12':!inEdit }">
+			<div class="col">
+				<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection"
+					[cancelBtn]="isSaveButton || !inEdit" [saveBtn]="isSaveButton || !inEdit" [disableSaveBtn]="false"
+					(onCancel)="cancel()" (onSave)="save(Form.value)">
+				</app-nav-bar-pills>
+			</div>
+			<!-- [disableSaveBtn]="BGForm.invalid || BGForm.pristine" -->
+		</div>
+		<div *ngIf="!isSaveButton && inEdit" class="col-1 d-flex justify-content-center align-items-start"
+			style="background-color: transparent;">
+			<img src="/assets/icons/Edit.svg" style="width: 37px; height: 37px; cursor: pointer;" alt=""
+				(click)="checkPermission()" />
+		</div>
+	</div>
 	<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
-		<div
-			class="col-12"
-			id="main"
-			scrollSpy
-			(sectionChange)="onSectionChange($event)"
-		>
+		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section" id="eligibility">
 				<div class="row">
 					<h6 class="heading">Eligibility</h6>
@@ -22,31 +33,15 @@
 				<div class="row mb-3">
 					<div class="col-3">
 						<label class="required">Age limit for subscriber</label>
-						<input
-							type="text"
-							class="form-control"
-							formControlName="ageLimitForSubscriber"
-						/>
+						<input type="text" class="form-control" formControlName="ageLimitForSubscriber" />
 					</div>
 					<div class="col-3">
-						<label class="required"
-							>Age limit for dependant (Child)</label
-						>
-						<input
-							type="text"
-							class="form-control"
-							formControlName="ageLimitForDependantChild"
-						/>
+						<label class="required">Age limit for dependant (Child)</label>
+						<input type="text" class="form-control" formControlName="ageLimitForDependantChild" />
 					</div>
 					<div class="col-3">
-						<label class="required"
-							>Age limit for dependant (Student)</label
-						>
-						<input
-							type="text"
-							class="form-control"
-							formControlName="ageLimitForDependantStudent"
-						/>
+						<label class="required">Age limit for dependant (Student)</label>
+						<input type="text" class="form-control" formControlName="ageLimitForDependantStudent" />
 					</div>
 				</div>
 			</div>
@@ -56,22 +51,14 @@
 				</div>
 				<div class="row mb-3">
 					<div class="col-3">
-						<label class="required"
-							>Type of Coordination of benefits</label
-						>
-						<ng-select
-							formControlName="coordinationBenefitTypes"
-							class="form-control"
-						>
+						<label class="required">Type of Coordination of benefits</label>
+						<ng-select formControlName="coordinationBenefitTypes" class="form-control">
 							<ng-option>Select</ng-option>
 						</ng-select>
 					</div>
 					<div class="col-3">
 						<label class="required">Assignment of Benefits</label>
-						<ng-select
-							formControlName="assignmentOfBenefits"
-							class="form-control"
-						>
+						<ng-select formControlName="assignmentOfBenefits" class="form-control">
 							<ng-option>Select</ng-option>
 						</ng-select>
 					</div>
@@ -85,58 +72,30 @@
 				<div class="row mb-3">
 					<div class="col-3">
 						<label class="required">Deductible (Family)</label>
-						<input
-							type="text"
-							class="form-control"
-							formControlName="deductibleFamily"
-						/>
+						<input type="text" class="form-control" formControlName="deductibleFamily" />
 					</div>
 					<div class="col-3">
 						<label class="required">Deductible (Individual)</label>
-						<input
-							type="text"
-							class="form-control"
-							formControlName="deductibleIndividual"
-						/>
+						<input type="text" class="form-control" formControlName="deductibleIndividual" />
 					</div>
 					<div class="col-3">
-						<label class="required"
-							>Deductible waived on Preventative?</label
-						>
-						<input
-							type="text"
-							class="form-control"
-							formControlName="deductibleWaivedOnPreventative"
-						/>
+						<label class="required">Deductible waived on Preventative?</label>
+						<input type="text" class="form-control" formControlName="deductibleWaivedOnPreventative" />
 					</div>
 				</div>
 				<div class="row mb-3">
 					<h6>PERCENTAGE COVERED</h6>
 					<div class="col-3">
-						<label class="required"
-							>Preventative/Diagnostic (%)</label
-						>
-						<input
-							type="text"
-							class="form-control"
-							formControlName="preventativeOrDiagnosticPercentage"
-						/>
+						<label class="required">Preventative/Diagnostic (%)</label>
+						<input type="text" class="form-control" formControlName="preventativeOrDiagnosticPercentage" />
 					</div>
 					<div class="col-3">
 						<label class="required">Basic (%)</label>
-						<input
-							type="text"
-							class="form-control"
-							formControlName="basicPercentage"
-						/>
+						<input type="text" class="form-control" formControlName="basicPercentage" />
 					</div>
 					<div class="col-3">
 						<label class="required">Major (%)</label>
-						<input
-							type="text"
-							class="form-control"
-							formControlName="majorPercentage"
-						/>
+						<input type="text" class="form-control" formControlName="majorPercentage" />
 					</div>
 				</div>
 			</div>
@@ -147,90 +106,37 @@
 				<div class="row mb-3">
 					<div class="col-2">
 						<label class="required">Dental annual maximum</label>
-						<input
-							type="text"
-							class="form-control"
-							formControlName="dentalAnnualMaximum"
-						/>
+						<input type="text" class="form-control" formControlName="dentalAnnualMaximum" />
 					</div>
 					<div class="col-8">
 						<p>Basic includes</p>
 						<div class="form-check form-check-inline">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								id="inlineCheckbox1"
-								value="Restorative"
-								formControlName="basicIncludes"
-							/>
-							<label
-								class="form-check-label"
-								for="inlineCheckbox1"
-								>Restorative</label
-							>
+							<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Restorative"
+								formControlName="basicIncludes" />
+							<label class="form-check-label" for="inlineCheckbox1">Restorative</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								id="inlineCheckbox2"
-								value="Endo"
-								formControlName="basicIncludes"
-							/>
-							<label
-								class="form-check-label"
-								for="inlineCheckbox2"
-								>Endo</label
-							>
+							<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Endo"
+								formControlName="basicIncludes" />
+							<label class="form-check-label" for="inlineCheckbox2">Endo</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								id="inlineCheckbox3"
-								value="Perio"
-								formControlName="basicIncludes"
-							/>
-							<label
-								class="form-check-label"
-								for="inlineCheckbox3"
-								>Perio</label
-							>
+							<input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Perio"
+								formControlName="basicIncludes" />
+							<label class="form-check-label" for="inlineCheckbox3">Perio</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								id="inlineCheckbox4"
-								value="Oral Surgery"
-								formControlName="basicIncludes"
-							/>
-							<label
-								class="form-check-label"
-								for="inlineCheckbox4"
-								>Oral Surgery</label
-							>
+							<input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="Oral Surgery"
+								formControlName="basicIncludes" />
+							<label class="form-check-label" for="inlineCheckbox4">Oral Surgery</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								id="inlineCheckbox5"
-								value="Other"
-								formControlName="basicIncludes"
-							/>
-							<label
-								class="form-check-label"
-								for="inlineCheckbox5"
-								>Other</label
-							>
+							<input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="Other"
+								formControlName="basicIncludes" />
+							<label class="form-check-label" for="inlineCheckbox5">Other</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input
-								type="text"
-								class="form-control"
-								formControlName="basicIncludesOtherValue"
-							/>
+							<input type="text" class="form-control" formControlName="basicIncludesOtherValue" />
 						</div>
 					</div>
 				</div>
@@ -238,95 +144,37 @@
 					<div class="col-10">
 						<p>Basic includes</p>
 						<div class="form-check form-check-inline">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								id="inlineCheckbox1"
-								value="Crowns"
-								formControlName="majorIncludes"
-							/>
-							<label
-								class="form-check-label"
-								for="inlineCheckbox1"
-								>Crowns</label
-							>
+							<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Crowns"
+								formControlName="majorIncludes" />
+							<label class="form-check-label" for="inlineCheckbox1">Crowns</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								id="inlineCheckbox2"
-								value="Bridges"
-								formControlName="majorIncludes"
-							/>
-							<label
-								class="form-check-label"
-								for="inlineCheckbox2"
-								>Bridges</label
-							>
+							<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Bridges"
+								formControlName="majorIncludes" />
+							<label class="form-check-label" for="inlineCheckbox2">Bridges</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								id="inlineCheckbox3"
-								value="Dentures"
-								formControlName="majorIncludes"
-							/>
-							<label
-								class="form-check-label"
-								for="inlineCheckbox3"
-								>Dentures</label
-							>
+							<input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Dentures"
+								formControlName="majorIncludes" />
+							<label class="form-check-label" for="inlineCheckbox3">Dentures</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								id="inlineCheckbox4"
-								value="Partials"
-								formControlName="majorIncludes"
-							/>
-							<label
-								class="form-check-label"
-								for="inlineCheckbox4"
-								>Partials</label
-							>
+							<input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="Partials"
+								formControlName="majorIncludes" />
+							<label class="form-check-label" for="inlineCheckbox4">Partials</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								id="inlineCheckbox5"
-								value="Implants"
-								formControlName="majorIncludes"
-							/>
-							<label
-								class="form-check-label"
-								for="inlineCheckbox5"
-								>Implants</label
-							>
+							<input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="Implants"
+								formControlName="majorIncludes" />
+							<label class="form-check-label" for="inlineCheckbox5">Implants</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								id="inlineCheckbox6"
-								value="Other"
-								formControlName="majorIncludes"
-							/>
-							<label
-								class="form-check-label"
-								for="inlineCheckbox6"
-								>Other</label
-							>
+							<input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="Other"
+								formControlName="majorIncludes" />
+							<label class="form-check-label" for="inlineCheckbox6">Other</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input
-								type="text"
-								class="form-control"
-								formControlName="majorIncludesOtherValue"
-							/>
+							<input type="text" class="form-control" formControlName="majorIncludesOtherValue" />
 						</div>
 					</div>
 				</div>
@@ -346,63 +194,41 @@
 				<div class="row mb-3">
 					<div class="col-1">
 						<label class="label-input-gap">Frequency</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="examsFrequency"
-							style="width: 150%"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select" formControlName="examsFrequency"
+							style="width: 150%">
 							<ng-option> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Time Frame</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="examsTimeFrame"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select"
+							formControlName="examsTimeFrame">
 							<ng-option value="s"> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Exceptions</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							formControlName="examsExceptions"
-						/>
+						<input class="form-control input-upper" type="text" placeholder=""
+							formControlName="examsExceptions" />
 					</div>
 					<div class="col-1">
 						<label class="label-input-gap">Frequency</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="prophylaxisFrequency"
-							style="width: 150%"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select"
+							formControlName="prophylaxisFrequency" style="width: 150%">
 							<ng-option> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Time Frame</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="prophylaxisTimeFrame"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select"
+							formControlName="prophylaxisTimeFrame">
 							<ng-option value="s"> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Exceptions</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							formControlName="prophylaxisExceptions"
-						/>
+						<input class="form-control input-upper" type="text" placeholder=""
+							formControlName="prophylaxisExceptions" />
 					</div>
 				</div>
 
@@ -410,81 +236,49 @@
 					<div class="col-6">
 						<h6>PERIO. MAINTENANCE</h6>
 					</div>
-					<div class="col-6"><h6></h6></div>
+					<div class="col-6">
+						<h6></h6>
+					</div>
 				</div>
 				<div class="row mb-3">
 					<div class="col-1">
 						<label class="label-input-gap">Frequency</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="perioMaintenanceFrequency"
-							style="width: 150%"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select"
+							formControlName="perioMaintenanceFrequency" style="width: 150%">
 							<ng-option> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Time Frame</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="perioMaintenanceTimeFrame"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select"
+							formControlName="perioMaintenanceTimeFrame">
 							<ng-option> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Exceptions</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							formControlName="perioMaintenanceExceptions"
-						/>
+						<input class="form-control input-upper" type="text" placeholder=""
+							formControlName="perioMaintenanceExceptions" />
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Paid at</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							formControlName="perioMaintenancePaidAt"
-						/>
+						<input class="form-control input-upper" type="text" placeholder=""
+							formControlName="perioMaintenancePaidAt" />
 					</div>
 					<div class="col-2">
 						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="radio"
-								name="perioMaintenanceCondition"
-								id="flexRadioDefault1"
-								checked
-								formControlName="perioMaintenanceCondition"
-								value="Either/or"
-								(change)="getPerioMaintenanceCondition($event)"
-							/>
-							<label
-								class="form-check-label"
-								for="flexRadioDefault1"
-							>
+							<input class="form-check-input" type="radio" name="perioMaintenanceCondition"
+								id="flexRadioDefault1" checked formControlName="perioMaintenanceCondition"
+								value="Either/or" (change)="getPerioMaintenanceCondition($event)" />
+							<label class="form-check-label" for="flexRadioDefault1">
 								Either/or
 							</label>
 						</div>
 						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="radio"
-								name="perioMaintenanceCondition"
-								id="flexRadioDefault2"
-								formControlName="perioMaintenanceCondition"
-								value="In addition to"
-								(change)="getPerioMaintenanceCondition($event)"
-							/>
-							<label
-								class="form-check-label"
-								for="flexRadioDefault2"
-							>
+							<input class="form-check-input" type="radio" name="perioMaintenanceCondition"
+								id="flexRadioDefault2" formControlName="perioMaintenanceCondition"
+								value="In addition to" (change)="getPerioMaintenanceCondition($event)" />
+							<label class="form-check-label" for="flexRadioDefault2">
 								In addition to
 							</label>
 						</div>
@@ -502,97 +296,53 @@
 				<div class="row mb-3">
 					<div class="col-1">
 						<label class="label-input-gap">Frequency</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="fmxFrequency"
-							style="width: 150%"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select" formControlName="fmxFrequency"
+							style="width: 150%">
 							<ng-option> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Time Frame</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="fmxTimeFrame"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select" formControlName="fmxTimeFrame">
 							<ng-option value="s"> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Exceptions</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							formControlName="fmxExceptions"
-						/>
+						<input class="form-control input-upper" type="text" placeholder=""
+							formControlName="fmxExceptions" />
 					</div>
 					<div class="col-1">
 						<label class="label-input-gap">Frequency</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="panoFrequency"
-							style="width: 150%"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select" formControlName="panoFrequency"
+							style="width: 150%">
 							<ng-option> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Time Frame</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="panoTimeFrame"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select" formControlName="panoTimeFrame">
 							<ng-option value="s"> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Exceptions</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							formControlName="panoExceptions"
-						/>
+						<input class="form-control input-upper" type="text" placeholder=""
+							formControlName="panoExceptions" />
 					</div>
 					<div class="col-2">
 						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="radio"
-								name="panoCondition"
-								id="flexRadioDefault1"
-								checked
-								formControlName="panoCondition"
-								value="Either/or"
-								(change)="getPanoCondition($event)"
-							/>
-							<label
-								class="form-check-label"
-								for="flexRadioDefault1"
-							>
+							<input class="form-check-input" type="radio" name="panoCondition" id="flexRadioDefault1"
+								checked formControlName="panoCondition" value="Either/or"
+								(change)="getPanoCondition($event)" />
+							<label class="form-check-label" for="flexRadioDefault1">
 								Either/or
 							</label>
 						</div>
 						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="radio"
-								name="panoCondition"
-								id="flexRadioDefault2"
-								formControlName="panoCondition"
-								value="Both"
-								(change)="getPanoCondition($event)"
-							/>
-							<label
-								class="form-check-label"
-								for="flexRadioDefault2"
-							>
+							<input class="form-check-input" type="radio" name="panoCondition" id="flexRadioDefault2"
+								formControlName="panoCondition" value="Both" (change)="getPanoCondition($event)" />
+							<label class="form-check-label" for="flexRadioDefault2">
 								Both
 							</label>
 						</div>
@@ -610,63 +360,35 @@
 				<div class="row mb-3">
 					<div class="col-1">
 						<label class="label-input-gap">Frequency</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="bwxFrequency"
-							style="width: 150%"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select" formControlName="bwxFrequency"
+							style="width: 150%">
 							<ng-option> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Time Frame</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="bwxTimeFrame"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select" formControlName="bwxTimeFrame">
 							<ng-option value="s"> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Exceptions</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							formControlName="bwxExceptions"
-						/>
+						<input class="form-control input-upper" type="text" placeholder=""
+							formControlName="bwxExceptions" />
 					</div>
 					<div class="col-6">
 						<p class="label-input-gap">
 							Intra oral images covered?
 						</p>
 						<div class="form-check form-check-inline">
-							<input
-								class="form-check-input"
-								type="radio"
-								name="bwxIsIntraOralImagesCovered"
-								id="inlineRadio1"
-								value="option1"
-								formControlName="bwxIsIntraOralImagesCovered"
-							/>
-							<label class="form-check-label" for="inlineRadio1"
-								>Yes</label
-							>
+							<input class="form-check-input" type="radio" name="bwxIsIntraOralImagesCovered"
+								id="inlineRadio1" value="option1" formControlName="bwxIsIntraOralImagesCovered" />
+							<label class="form-check-label" for="inlineRadio1">Yes</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input
-								class="form-check-input"
-								type="radio"
-								name="bwxIsIntraOralImagesCovered"
-								id="inlineRadio2"
-								value="option2"
-								formControlName="bwxIsIntraOralImagesCovered"
-							/>
-							<label class="form-check-label" for="inlineRadio2"
-								>No</label
-							>
+							<input class="form-check-input" type="radio" name="bwxIsIntraOralImagesCovered"
+								id="inlineRadio2" value="option2" formControlName="bwxIsIntraOralImagesCovered" />
+							<label class="form-check-label" for="inlineRadio2">No</label>
 						</div>
 					</div>
 				</div>
@@ -682,63 +404,38 @@
 				<div class="row mb-3">
 					<div class="col-1">
 						<label class="label-input-gap">Frequency</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="scalingAndRootPlanningFrequency"
-							style="width: 150%"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select"
+							formControlName="scalingAndRootPlanningFrequency" style="width: 150%">
 							<ng-option> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Time Frame</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="scalingAndRootPlanningTimeFrame"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select"
+							formControlName="scalingAndRootPlanningTimeFrame">
 							<ng-option value="s"> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Exceptions</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							formControlName="scalingAndRootPlanningExceptions"
-						/>
+						<input class="form-control input-upper" type="text" placeholder=""
+							formControlName="scalingAndRootPlanningExceptions" />
 					</div>
 					<div class="col-6">
 						<p class="label-input-gap">
 							Can all quads be on same day?
 						</p>
 						<div class="form-check form-check-inline">
-							<input
-								class="form-check-input"
-								type="radio"
-								name="scalingAndRootPlanningCanAllQuadsBeOnSameDay"
-								id="inlineRadio1"
-								value="option1"
-								formControlName="scalingAndRootPlanningCanAllQuadsBeOnSameDay"
-							/>
-							<label class="form-check-label" for="inlineRadio1"
-								>Yes</label
-							>
+							<input class="form-check-input" type="radio"
+								name="scalingAndRootPlanningCanAllQuadsBeOnSameDay" id="inlineRadio1" value="option1"
+								formControlName="scalingAndRootPlanningCanAllQuadsBeOnSameDay" />
+							<label class="form-check-label" for="inlineRadio1">Yes</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input
-								class="form-check-input"
-								type="radio"
-								name="scalingAndRootPlanningCanAllQuadsBeOnSameDay"
-								id="inlineRadio2"
-								value="option2"
-								formControlName="scalingAndRootPlanningCanAllQuadsBeOnSameDay"
-							/>
-							<label class="form-check-label" for="inlineRadio2"
-								>No</label
-							>
+							<input class="form-check-input" type="radio"
+								name="scalingAndRootPlanningCanAllQuadsBeOnSameDay" id="inlineRadio2" value="option2"
+								formControlName="scalingAndRootPlanningCanAllQuadsBeOnSameDay" />
+							<label class="form-check-label" for="inlineRadio2">No</label>
 						</div>
 					</div>
 				</div>
@@ -754,63 +451,41 @@
 				<div class="row mb-3">
 					<div class="col-1">
 						<label class="label-input-gap">Frequency</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="restorationsFrequency"
-							style="width: 150%"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select"
+							formControlName="restorationsFrequency" style="width: 150%">
 							<ng-option> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Time Frame</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="restorationsTimeFrame"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select"
+							formControlName="restorationsTimeFrame">
 							<ng-option value="s"> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Exceptions</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							formControlName="restorationsExceptions"
-						/>
+						<input class="form-control input-upper" type="text" placeholder=""
+							formControlName="restorationsExceptions" />
 					</div>
 					<div class="col-1">
 						<label class="label-input-gap">Frequency</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="crownsFrequency"
-							style="width: 150%"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select"
+							formControlName="crownsFrequency" style="width: 150%">
 							<ng-option> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Time Frame</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="crownsTimeFrame"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select"
+							formControlName="crownsTimeFrame">
 							<ng-option value="s"> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Exceptions</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							formControlName="crownsExceptions"
-						/>
+						<input class="form-control input-upper" type="text" placeholder=""
+							formControlName="crownsExceptions" />
 					</div>
 				</div>
 
@@ -825,63 +500,41 @@
 				<div class="row mb-3">
 					<div class="col-1">
 						<label class="label-input-gap">Frequency</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="bridgesFrequency"
-							style="width: 150%"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select"
+							formControlName="bridgesFrequency" style="width: 150%">
 							<ng-option> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Time Frame</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="bridgesTimeFrame"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select"
+							formControlName="bridgesTimeFrame">
 							<ng-option value="s"> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Exceptions</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							formControlName="bridgesExceptions"
-						/>
+						<input class="form-control input-upper" type="text" placeholder=""
+							formControlName="bridgesExceptions" />
 					</div>
 					<div class="col-1">
 						<label class="label-input-gap">Frequency</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="denturesFrequency"
-							style="width: 150%"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select"
+							formControlName="denturesFrequency" style="width: 150%">
 							<ng-option> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Time Frame</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="denturesTimeFrame"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select"
+							formControlName="denturesTimeFrame">
 							<ng-option value="s"> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Exceptions</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							formControlName="denturesExceptions"
-						/>
+						<input class="form-control input-upper" type="text" placeholder=""
+							formControlName="denturesExceptions" />
 					</div>
 				</div>
 
@@ -896,33 +549,22 @@
 				<div class="row mb-3">
 					<div class="col-1">
 						<label class="label-input-gap">Frequency</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="partialsFrequency"
-							style="width: 150%"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select"
+							formControlName="partialsFrequency" style="width: 150%">
 							<ng-option> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Time Frame</label>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="partialsTimeFrame"
-						>
+						<ng-select class="input-upper input-upper" placeholder="Select"
+							formControlName="partialsTimeFrame">
 							<ng-option value="s"> Select </ng-option>
 						</ng-select>
 					</div>
 					<div class="col-2">
 						<label class="label-input-gap">Exceptions</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							formControlName="partialsExceptions"
-						/>
+						<input class="form-control input-upper" type="text" placeholder=""
+							formControlName="partialsExceptions" />
 					</div>
 				</div>
 				<div class="row">
@@ -938,31 +580,16 @@
 						</p>
 						<div class="two-radios">
 							<div class="yes-no-radio">
-								<input
-									class="form-check-input"
-									type="radio"
-									id="facialapp1"
-									name="porcelainOnPosteriorCrowns"
-									value="yes"
-									checked
-									formControlName="porcelainOnPosteriorCrowns"
-								/>
-								<label class="form-check-label" for="facialapp1"
-									>Yes</label
-								>
+								<input class="form-check-input" type="radio" id="facialapp1"
+									name="porcelainOnPosteriorCrowns" value="yes" checked
+									formControlName="porcelainOnPosteriorCrowns" />
+								<label class="form-check-label" for="facialapp1">Yes</label>
 							</div>
 							<div class="yes-no-radio">
-								<input
-									class="form-check-input"
-									type="radio"
-									id="facialapp2"
-									name="porcelainOnPosteriorCrowns"
-									value="no"
-									formControlName="porcelainOnPosteriorCrowns"
-								/>
-								<label class="form-check-label" for="facialapp2"
-									>No</label
-								>
+								<input class="form-check-input" type="radio" id="facialapp2"
+									name="porcelainOnPosteriorCrowns" value="no"
+									formControlName="porcelainOnPosteriorCrowns" />
+								<label class="form-check-label" for="facialapp2">No</label>
 							</div>
 						</div>
 					</div>
@@ -970,31 +597,14 @@
 						<p class="label-input-gap">Gold Coverage (D2790)?</p>
 						<div class="two-radios">
 							<div class="yes-no-radio">
-								<input
-									class="form-check-input"
-									type="radio"
-									id="facialapp1"
-									name="goldCoverageD2790"
-									value="yes"
-									checked
-									formControlName="goldCoverageD2790"
-								/>
-								<label class="form-check-label" for="facialapp1"
-									>Yes</label
-								>
+								<input class="form-check-input" type="radio" id="facialapp1" name="goldCoverageD2790"
+									value="yes" checked formControlName="goldCoverageD2790" />
+								<label class="form-check-label" for="facialapp1">Yes</label>
 							</div>
 							<div class="yes-no-radio">
-								<input
-									class="form-check-input"
-									type="radio"
-									id="facialapp2"
-									name="goldCoverageD2790"
-									value="no"
-									formControlName="goldCoverageD2790"
-								/>
-								<label class="form-check-label" for="facialapp2"
-									>No</label
-								>
+								<input class="form-check-input" type="radio" id="facialapp2" name="goldCoverageD2790"
+									value="no" formControlName="goldCoverageD2790" />
+								<label class="form-check-label" for="facialapp2">No</label>
 							</div>
 						</div>
 					</div>
@@ -1002,48 +612,24 @@
 						<p class="label-input-gap">Posterior Composites?</p>
 						<div class="two-radios">
 							<div class="yes-no-radio">
-								<input
-									class="form-check-input"
-									type="radio"
-									id="facialapp1"
-									name="posteriorComposites"
-									value="yes"
-									checked
-									formControlName="posteriorComposites"
-								/>
-								<label class="form-check-label" for="facialapp1"
-									>Yes</label
-								>
+								<input class="form-check-input" type="radio" id="facialapp1" name="posteriorComposites"
+									value="yes" checked formControlName="posteriorComposites" />
+								<label class="form-check-label" for="facialapp1">Yes</label>
 							</div>
 							<div class="yes-no-radio">
-								<input
-									class="form-check-input"
-									type="radio"
-									id="facialapp2"
-									name="posteriorComposites"
-									value="no"
-									formControlName="posteriorComposites"
-								/>
-								<label class="form-check-label" for="facialapp2"
-									>No</label
-								>
+								<input class="form-check-input" type="radio" id="facialapp2" name="posteriorComposites"
+									value="no" formControlName="posteriorComposites" />
+								<label class="form-check-label" for="facialapp2">No</label>
 							</div>
 						</div>
 					</div>
 					<div class="col-3">
 						<label class="required">Fluoride to the age of</label>
-						<input
-							type="text"
-							class="form-control"
-							formControlName="fluorideToTheAgeOf"
-						/>
+						<input type="text" class="form-control" formControlName="fluorideToTheAgeOf" />
 					</div>
 					<div class="col-2">
 						<label class="required">Sealants</label>
-						<ng-select
-							class="form-control"
-							formControlName="sealants"
-						>
+						<ng-select class="form-control" formControlName="sealants">
 							<ng-option>Select</ng-option>
 						</ng-select>
 					</div>
@@ -1052,48 +638,21 @@
 					<div class="col-6">
 						<p class="label-input-gap">Night guards?</p>
 						<div class="form-check form-check-inline">
-							<input
-								class="form-check-input"
-								type="radio"
-								name="nightGuardType"
-								id="inlineRadio1"
-								value="yes"
-								formControlName="nightGuardType"
-							/>
-							<label class="form-check-label" for="inlineRadio1"
-								>Yes</label
-							>
+							<input class="form-check-input" type="radio" name="nightGuardType" id="inlineRadio1"
+								value="yes" formControlName="nightGuardType" />
+							<label class="form-check-label" for="inlineRadio1">Yes</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input
-								class="form-check-input"
-								type="radio"
-								name="nightGuardType"
-								id="inlineRadio2"
-								value="no"
-								formControlName="nightGuardType"
-							/>
-							<label class="form-check-label" for="inlineRadio2"
-								>No</label
-							>
+							<input class="form-check-input" type="radio" name="nightGuardType" id="inlineRadio2"
+								value="no" formControlName="nightGuardType" />
+							<label class="form-check-label" for="inlineRadio2">No</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input
-								class="form-check-input"
-								type="radio"
-								name="nightGuardType"
-								id="inlineRadio3"
-								value="Paid at"
-								formControlName="nightGuardType"
-							/>
-							<label class="form-check-label" for="inlineRadio3"
-								>Paid at
+							<input class="form-check-input" type="radio" name="nightGuardType" id="inlineRadio3"
+								value="Paid at" formControlName="nightGuardType" />
+							<label class="form-check-label" for="inlineRadio3">Paid at
 								<div class="form-check form-check-inline">
-									<input
-										type="text"
-										class="form-control"
-										formControlName="nightGuardValue"
-									/>
+									<input type="text" class="form-control" formControlName="nightGuardValue" />
 								</div>
 							</label>
 						</div>
@@ -1102,31 +661,14 @@
 						<p class="label-input-gap">Restorations</p>
 						<div class="two-radios">
 							<div class="yes-no-radio">
-								<input
-									class="form-check-input"
-									type="radio"
-									id="facialapp1"
-									name="restorations"
-									value="yes"
-									checked
-									formControlName="restorations"
-								/>
-								<label class="form-check-label" for="facialapp1"
-									>Yes</label
-								>
+								<input class="form-check-input" type="radio" id="facialapp1" name="restorations"
+									value="yes" checked formControlName="restorations" />
+								<label class="form-check-label" for="facialapp1">Yes</label>
 							</div>
 							<div class="yes-no-radio">
-								<input
-									class="form-check-input"
-									type="radio"
-									id="facialapp2"
-									name="restorations"
-									value="no"
-									formControlName="restorations"
-								/>
-								<label class="form-check-label" for="facialapp2"
-									>No</label
-								>
+								<input class="form-check-input" type="radio" id="facialapp2" name="restorations"
+									value="no" formControlName="restorations" />
+								<label class="form-check-label" for="facialapp2">No</label>
 							</div>
 						</div>
 					</div>
@@ -1134,31 +676,14 @@
 						<p class="label-input-gap">Missing Tooth Clause?</p>
 						<div class="two-radios">
 							<div class="yes-no-radio">
-								<input
-									class="form-check-input"
-									type="radio"
-									id="facialapp1"
-									name="missingToothClause"
-									value="yes"
-									checked
-									formControlName="missingToothClause"
-								/>
-								<label class="form-check-label" for="facialapp1"
-									>Yes</label
-								>
+								<input class="form-check-input" type="radio" id="facialapp1" name="missingToothClause"
+									value="yes" checked formControlName="missingToothClause" />
+								<label class="form-check-label" for="facialapp1">Yes</label>
 							</div>
 							<div class="yes-no-radio">
-								<input
-									class="form-check-input"
-									type="radio"
-									id="facialapp2"
-									name="missingToothClause"
-									value="no"
-									formControlName="missingToothClause"
-								/>
-								<label class="form-check-label" for="facialapp2"
-									>No</label
-								>
+								<input class="form-check-input" type="radio" id="facialapp2" name="missingToothClause"
+									value="no" formControlName="missingToothClause" />
+								<label class="form-check-label" for="facialapp2">No</label>
 							</div>
 						</div>
 					</div>
@@ -1171,31 +696,14 @@
 						<p class="label-input-gap">Covered benefits?</p>
 						<div class="two-radios">
 							<div class="yes-no-radio">
-								<input
-									class="form-check-input"
-									type="radio"
-									id="facialapp1"
-									name="coveredBenefits"
-									value="yes"
-									checked
-									formControlName="coveredBenefits"
-								/>
-								<label class="form-check-label" for="facialapp1"
-									>Yes</label
-								>
+								<input class="form-check-input" type="radio" id="facialapp1" name="coveredBenefits"
+									value="yes" checked formControlName="coveredBenefits" />
+								<label class="form-check-label" for="facialapp1">Yes</label>
 							</div>
 							<div class="yes-no-radio">
-								<input
-									class="form-check-input"
-									type="radio"
-									id="facialapp2"
-									name="coveredBenefits"
-									value="no"
-									formControlName="coveredBenefits"
-								/>
-								<label class="form-check-label" for="facialapp2"
-									>No</label
-								>
+								<input class="form-check-input" type="radio" id="facialapp2" name="coveredBenefits"
+									value="no" formControlName="coveredBenefits" />
+								<label class="form-check-label" for="facialapp2">No</label>
 							</div>
 						</div>
 					</div>
@@ -1203,67 +711,38 @@
 						<p class="label-input-gap">Separate Maximum?</p>
 						<div class="two-radios">
 							<div class="yes-no-radio">
-								<input
-									class="form-check-input"
-									type="radio"
-									id="facialapp1"
-									name="separate"
-									value="yes"
-									checked
-									formControlName="separate"
-								/>
-								<label class="form-check-label" for="facialapp1"
-									>Yes</label
-								>
+								<input class="form-check-input" type="radio" id="facialapp1" name="separate" value="yes"
+									checked formControlName="separate" />
+								<label class="form-check-label" for="facialapp1">Yes</label>
 							</div>
 							<div class="yes-no-radio">
-								<input
-									class="form-check-input"
-									type="radio"
-									id="facialapp2"
-									name="separate"
-									value="no"
-									formControlName="separate"
-								/>
-								<label class="form-check-label" for="facialapp2"
-									>No</label
-								>
+								<input class="form-check-input" type="radio" id="facialapp2" name="separate" value="no"
+									formControlName="separate" />
+								<label class="form-check-label" for="facialapp2">No</label>
 							</div>
 							&nbsp;&nbsp;
 							<div class="yes-no-radio">
 								<div (click)="maximumSelect = !maximumSelect">
-									<button
-										type="button"
-										[ngClass]="
+									<button type="button" [disabled]="FormDisable" [ngClass]="
 											maximumSelect == false
 												? 'btn btn-dark'
 												: 'btn btn-light'
-										"
-										style="border-radius: 1px; height: 3em"
-									>
+										" style="border-radius: 1px; height: 3em">
 										Year
 									</button>
 								</div>
 								<div (click)="maximumSelect = !maximumSelect">
-									<button
-										type="button"
-										[ngClass]="
+									<button type="button" [disabled]="FormDisable" [ngClass]="
 											maximumSelect == true
 												? 'btn btn-dark'
 												: 'btn btn-light'
-										"
-										style="border-radius: 1px; height: 3em"
-									>
+										" style="border-radius: 1px; height: 3em">
 										Lifetime
 									</button>
 								</div>
 								<div>
-									<input
-										type="text"
-										class="form-control"
-										style="width: 6em; border-radius: 0px"
-										formControlName="separateValue"
-									/>
+									<input type="text" class="form-control" style="width: 6em; border-radius: 0px"
+										formControlName="separateValue" />
 								</div>
 							</div>
 						</div>
@@ -1272,75 +751,42 @@
 						<p class="label-input-gap">Deductible?</p>
 						<div class="two-radios">
 							<div class="yes-no-radio">
-								<input
-									class="form-check-input"
-									type="radio"
-									id="facialapp1"
-									name="deductible"
-									value="yes"
-									checked
-									formControlName="deductible"
-								/>
-								<label class="form-check-label" for="facialapp1"
-									>Yes</label
-								>
+								<input class="form-check-input" type="radio" id="facialapp1" name="deductible"
+									value="yes" checked formControlName="deductible" />
+								<label class="form-check-label" for="facialapp1">Yes</label>
 							</div>
 							<div class="yes-no-radio">
-								<input
-									class="form-check-input"
-									type="radio"
-									id="facialapp2"
-									name="deductible"
-									value="no"
-									formControlName="deductible"
-								/>
-								<label class="form-check-label" for="facialapp2"
-									>No</label
-								>
+								<input class="form-check-input" type="radio" id="facialapp2" name="deductible"
+									value="no" formControlName="deductible" />
+								<label class="form-check-label" for="facialapp2">No</label>
 							</div>
 							&nbsp;&nbsp;
 							<div class="yes-no-radio">
-								<div
-									(click)="
+								<div (click)="
 										deductibleSelect = !deductibleSelect
-									"
-								>
-									<button
-										type="button"
-										[ngClass]="
+									">
+									<button type="button" [disabled]="FormDisable" [ngClass]="
 											deductibleSelect == false
 												? 'btn btn-dark'
 												: 'btn btn-light'
-										"
-										style="border-radius: 1px; height: 3em"
-									>
+										" style="border-radius: 1px; height: 3em">
 										Year
 									</button>
 								</div>
-								<div
-									(click)="
+								<div (click)="
 										deductibleSelect = !deductibleSelect
-									"
-								>
-									<button
-										type="button"
-										[ngClass]="
+									">
+									<button type="button" [disabled]="FormDisable" [ngClass]="
 											deductibleSelect == true
 												? 'btn btn-dark'
 												: 'btn btn-light'
-										"
-										style="border-radius: 1px; height: 3em"
-									>
+										" style="border-radius: 1px; height: 3em">
 										Lifetime
 									</button>
 								</div>
 								<div>
-									<input
-										type="text"
-										class="form-control"
-										style="width: 6em; border-radius: 0px"
-										formControlName="deductibleValue"
-									/>
+									<input type="text" class="form-control" style="width: 6em; border-radius: 0px"
+										formControlName="deductibleValue" />
 								</div>
 							</div>
 						</div>

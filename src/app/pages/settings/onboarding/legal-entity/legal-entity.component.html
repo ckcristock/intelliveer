@@ -60,7 +60,8 @@
 										}}</span></td>
 								<td><span class="pointer" (click)="editLegalEntity(d?._id)">{{ d?.name
 										}}</span></td>
-								<td><span class="pointer" (click)="editLegalEntity(d?._id)">{{ d?.contactPerson?.firstName
+								<td><span class="pointer" (click)="editLegalEntity(d?._id)">{{
+										d?.contactPerson?.firstName
 										}}&nbsp;{{
 										d?.contactPerson?.lastName
 										}}</span></td>
@@ -79,7 +80,8 @@
 												}}" *ngIf="legalEdit[0].isEnabled">
 												Edit
 											</button> -->
-											<button ngbDropdownItem (click)="delete(d._id)" *ngIf="legalDelete[0].isEnabled">
+											<button ngbDropdownItem (click)="delete(d._id)"
+												*ngIf="legalDelete[0].isEnabled">
 												Delete
 											</button>
 										</div>
@@ -90,11 +92,7 @@
 					</table>
 				</div>
 			</div>
-		
+
 		</div>
 	</div>
 </div>
-
-
-
-

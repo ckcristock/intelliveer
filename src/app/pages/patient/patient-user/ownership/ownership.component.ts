@@ -27,11 +27,11 @@ export class OwnershipComponent implements OnInit {
 	inEdit: boolean = true;
 	FormDisable: boolean = true;
 
-	constructor(private fb: FormBuilder, 
+	constructor(private fb: FormBuilder,
 		private patientDetailService: PatientDetailService,
 		private addressFormService: AddressFormService,
 		private contactPersonFormService: ContactPersonFormService,
-		) { }
+	) { }
 
 	ngOnInit(): void {
 		this.initForm(this.formData);
@@ -93,7 +93,9 @@ export class OwnershipComponent implements OnInit {
 	}
 
 	save(data: any) {
-		console.log(data);
+		if (this.Form?.valid && !this.Form.pristine) {
+			console.log(data);
+		}
 	}
 
 	cancel() {

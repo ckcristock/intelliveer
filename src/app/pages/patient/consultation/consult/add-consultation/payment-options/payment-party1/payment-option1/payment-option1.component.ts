@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertService } from '@services/alert/alert.service';
 
@@ -62,10 +62,18 @@ export class PaymentOption1Component implements OnInit {
 	modelThree!: NgbDateStruct;
 	date: any;
 	isMonthlyStatus: boolean = false;
+	progressBar: any = 0;
+	divider: any = 1;
+	@ViewChild('slider') slider!: ElementRef;
+	// @ViewChild('slider', { static: true }) slider!: ElementRef;
+	// @ViewChild('slider') slider!: { nativeElement: { value: any; }; };
+	@ViewChild('selector') selector!: ElementRef;
+	@ViewChild('selectValue') selectValue!: ElementRef;
+
 	constructor(
 		private modalService: NgbModal,
 		private alertService: AlertService
-	) {}
+	) { }
 
 	ngOnInit(): void {
 		console.log(this.compareAllOptionArray);
@@ -88,6 +96,10 @@ export class PaymentOption1Component implements OnInit {
 			'%, #ECF7F3 ' +
 			percentageMonth +
 			'%, #ECF7F3 100%)';
+	}
+
+	ngAfterViewInit() {
+		// this.slider.nativeElement.value = this.progressBar;
 	}
 
 	countTreatment(Obj: any) {
@@ -131,10 +143,10 @@ export class PaymentOption1Component implements OnInit {
 			case 'tabThree':
 				let monthDate = new Date(
 					this.modelThree.month +
-						'-' +
-						this.modelThree.day +
-						'-' +
-						this.modelThree.year
+					'-' +
+					this.modelThree.day +
+					'-' +
+					this.modelThree.year
 				);
 				this.calculateInstallments(monthDate);
 				break;
@@ -162,10 +174,10 @@ export class PaymentOption1Component implements OnInit {
 			case 'tabThree':
 				this.tabThreeDate = new Date(
 					this.modelThree.month +
-						'-' +
-						this.modelThree.day +
-						'-' +
-						this.modelThree.year
+					'-' +
+					this.modelThree.day +
+					'-' +
+					this.modelThree.year
 				);
 				this.calculateInstallments(date);
 				this.modalService.dismissAll('Save click');
@@ -191,6 +203,9 @@ export class PaymentOption1Component implements OnInit {
 	/** range slider */
 	downPaymentValues(event: any) {
 		let data = event.target.value;
+		console.log("DATAAAAAAAAAAA", this.maximumDownPaymentTotal);
+		this.divider = (this.maximumDownPaymentTotal - this.minDownPayment) / 200;
+		this.progressBar = data - this.minDownPayment;
 		// if(this.month == 0){
 		//   if(data > 0){
 		// 	this.month = this.totalMonth;
@@ -447,6 +462,19 @@ export class PaymentOption1Component implements OnInit {
 			'%, #dee1e2 100%)';
 	}
 	calculateNoOfPaymentValue(event: any) {
+		var element: any = document.getElementById('slider');
+		let data2 = event.target.value;
+		console.log("data2", data2);
+		this.divider = (this.maximumDownPaymentTotal - this.minDownPayment) / 200;
+		this.progressBar = (this.maximumDownPaymentTotal - this.minDownPayment) - (data2 * 83.34);
+		console.log("progressBar", this.progressBar);
+		element.value = this.progressBar + 500;
+
+
+
+
+
+
 		this.month = event.target.value;
 		let data = this.downPayment;
 		if (this.emi == 0) {
@@ -498,10 +526,10 @@ export class PaymentOption1Component implements OnInit {
 		if (date == undefined && this.modelThree?.month) {
 			date = new Date(
 				this.modelThree.month +
-					'-' +
-					this.modelThree.day +
-					'-' +
-					this.modelThree.year
+				'-' +
+				this.modelThree.day +
+				'-' +
+				this.modelThree.year
 			);
 		}
 		this.monthDateObj = [];

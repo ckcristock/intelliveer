@@ -1,6 +1,22 @@
 <div class="row" *ngIf="Form">
-	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
-		[disableSaveBtn]="Form.invalid" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills>
+	<!-- <app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
+		[disableSaveBtn]="Form.invalid" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills> -->
+	<div class="row sticky" style="width: 101%;">
+		<div [ngClass]="{'col-11':!isSaveButton, 'col-12':!inEdit }">
+			<div class="col">
+				<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection"
+					[cancelBtn]="isSaveButton || !inEdit" [saveBtn]="isSaveButton || !inEdit" [disableSaveBtn]="false"
+					(onCancel)="cancel()" (onSave)="save(Form.value)">
+				</app-nav-bar-pills>
+			</div>
+			<!-- [disableSaveBtn]="BGForm.invalid || BGForm.pristine" -->
+		</div>
+		<div *ngIf="!isSaveButton && inEdit" class="col-1 d-flex justify-content-center align-items-start"
+			style="background-color: transparent;">
+			<img src="/assets/icons/Edit.svg" style="width: 37px; height: 37px; cursor: pointer;" alt=""
+				(click)="checkPermission()" />
+		</div>
+	</div>
 	<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
 		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section" id="eligibility">
@@ -15,12 +31,12 @@
 								<div class="two-radios">
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="patielegp" id="patielegp1"
-											autocomplete="off" checked />
+											[disabled]="FormDisable" checked />
 										<label class="" for="patielegp1">Yes</label>
 									</div>
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="patielegp" id="patielegp2"
-											autocomplete="off" />
+											[disabled]="FormDisable" />
 										<label class="" for="patielegp2">No</label>
 									</div>
 								</div>
@@ -168,12 +184,12 @@
 								<div class="two-radios">
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="waitingpe" id="waitingpe1"
-											autocomplete="off" checked />
+											[disabled]="FormDisable" checked />
 										<label class="" for="waitingpe1">Yes</label>
 									</div>
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="waitingpe" id="waitingpe2"
-											autocomplete="off" />
+											[disabled]="FormDisable" />
 										<label class="" for="waitingpe2">No</label>
 									</div>
 								</div>
@@ -253,12 +269,12 @@
 								<div class="two-radios">
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="workprog" id="workprog1"
-											autocomplete="off" checked />
+											[disabled]="FormDisable" checked />
 										<label class="" for="workprog1">Yes</label>
 									</div>
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="workprog" id="workprog2"
-											autocomplete="off" />
+											[disabled]="FormDisable" />
 										<label class="" for="workprog2">No</label>
 									</div>
 								</div>
@@ -270,12 +286,12 @@
 								<div class="two-radios">
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="exclusorth" id="exclusorth1"
-											autocomplete="off" checked />
+											[disabled]="FormDisable" checked />
 										<label class="" for="exclusorth1">Yes</label>
 									</div>
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="exclusorth" id="exclusorth2"
-											autocomplete="off" />
+											[disabled]="FormDisable" />
 										<label class="" for="exclusorth2">No</label>
 									</div>
 								</div>
@@ -296,12 +312,12 @@
 								<div class="two-radios">
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="preauthmand"
-											id="preauthmand1" autocomplete="off" checked />
+											id="preauthmand1" [disabled]="FormDisable" checked />
 										<label class="" for="preauthmand1">Yes</label>
 									</div>
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="preauthmand"
-											id="preauthmand2" autocomplete="off" />
+											id="preauthmand2" [disabled]="FormDisable" />
 										<label class="" for="preauthmand2">No</label>
 									</div>
 								</div>
@@ -314,12 +330,12 @@
 								<div class="two-radios">
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="preauthsubm"
-											id="preauthsubm1" autocomplete="off" checked />
+											id="preauthsubm1" [disabled]="FormDisable" checked />
 										<label class="" for="preauthsubm1">Yes</label>
 									</div>
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="preauthsubm"
-											id="preauthsubm2" autocomplete="off" />
+											id="preauthsubm2" [disabled]="FormDisable" />
 										<label class="" for="preauthsubm2">No</label>
 									</div>
 								</div>
@@ -382,12 +398,12 @@
 								<div class="two-radios">
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="benefauto" id="benefauto1"
-											autocomplete="off" checked />
+											[disabled]="FormDisable" checked />
 										<label class="" for="benefauto1">Yes</label>
 									</div>
 									<div class="yes-no-radio">
 										<input class="form-check-input" type="radio" name="benefauto" id="benefauto2"
-											autocomplete="off" />
+											[disabled]="FormDisable" />
 										<label class="" for="benefauto2">No</label>
 									</div>
 								</div>
@@ -399,16 +415,18 @@
 									</p>
 									<div class="btn-group" role="group" ngbRadioGroup name="radioBasic3">
 										<label ngbButtonLabel class="btn-dark-brown label-radio-square">
-											<input ngbButton type="radio" class="btn-check" [value]="1" />
+											<input ngbButton type="radio" class="btn-check" [disabled]="FormDisable"
+												[value]="1" />
 											Percentage (%)
 										</label>
 										<label ngbButtonLabel class="btn-dark-brown-right label-radio-square">
-											<input ngbButton type="radio" class="btn-check" value="middle" true />
+											<input ngbButton type="radio" class="btn-check" [disabled]="FormDisable"
+												value="middle" true />
 											Amount ($)
 										</label>
 									</div>
 									<input class="btnoutlinesecondary3" value="50%" type="text" placeholder="" name=""
-										style="width: 100px" />
+										style="width: 100px" [disabled]="FormDisable" />
 								</div>
 							</div>
 						</div>
@@ -423,27 +441,27 @@
 									<div class="more-two-radios" style="width: 530px;">
 										<div class="rowinputs">
 											<input class="form-check-input" name="paymentsche" type="radio"
-												id="paymentsche1" value="option1" />
+												[disabled]="FormDisable" id="paymentsche1" value="option1" />
 											<label class="form-check-label" for="paymentsche1">Monthly</label>
 										</div>
 										<div class="rowinputs">
 											<input class="form-check-input" name="paymentsche" type="radio"
-												id="paymentsche2" value="option2" />
+												[disabled]="FormDisable" id="paymentsche2" value="option2" />
 											<label class="form-check-label" for="paymentsche2">Quarterly</label>
 										</div>
 										<div class="rowinputs">
 											<input class="form-check-input" name="paymentsche" type="radio"
-												id="paymentsche3" value="option3" />
+												[disabled]="FormDisable" id="paymentsche3" value="option3" />
 											<label class="form-check-label" for="paymentsche3">Semi-annual</label>
 										</div>
 										<div class="rowinputs">
 											<input class="form-check-input" name="paymentsche" type="radio"
-												id="paymentsche4" value="option4" checked />
+												[disabled]="FormDisable" id="paymentsche4" value="option4" checked />
 											<label class="form-check-label" for="paymentsche4">Annual</label>
 										</div>
 										<div class="rowinputs">
 											<input class="form-check-input" name="paymentsche" type="radio"
-												id="paymentsche5" value="option5" />
+												[disabled]="FormDisable" id="paymentsche5" value="option5" />
 											<label class="form-check-label" for="paymentsche5">Lump Sum</label>
 										</div>
 									</div>
@@ -457,13 +475,13 @@
 							<div class="more-two-radios" style="width: 300px;">
 								<div class="rowinputs">
 									<input class="form-check-input" type="radio" name="wesubmit" id="wesubmit1"
-										autocomplete="off" checked />
+										[disabled]="FormDisable" checked />
 									<label class="form-check-label" for="wesubmit1">Periodic Claims</label>
 								</div>
 
 								<div class="rowinputs">
 									<input class="form-check-input" type="radio" name="wesubmit" id="wesubmit2"
-										autocomplete="off" />
+										[disabled]="FormDisable" />
 									<label class="form-check-label" for="wesubmit2">Recertification Forms?</label>
 								</div>
 							</div>

@@ -41,8 +41,8 @@ export class FamilyMemberFormComponent implements OnInit {
   familyMember: any[] = [];
   famiMembTitle!: any;
   isSaveButton: boolean = false;
-	inEdit: boolean = false;
-	FormDisable!: boolean;
+  inEdit: boolean = false;
+  FormDisable!: boolean;
 
   constructor(
     private http: HttpClient,
@@ -53,7 +53,7 @@ export class FamilyMemberFormComponent implements OnInit {
     private insuranceServ: InsuranceService,
     private onboardingServ: OnboardingService,
     private alertService: AlertService,
-		private contactPersonFormService: ContactPersonFormService,
+    private contactPersonFormService: ContactPersonFormService,
   ) {
     this.idForm = this.fb.group({
       // name: '',
@@ -64,7 +64,7 @@ export class FamilyMemberFormComponent implements OnInit {
 
   async ngOnInit() {
     this.initForm(this.formData);
-		this.enableAndDisableInputs();
+    this.enableAndDisableInputs();
     this.patientUserServ.setFalseAllNotPristine();
     this.addPatientServ.setFalseAllNotPristineCWP();
     this.insuranceServ.setFalseAllNotPristine();
@@ -94,12 +94,12 @@ export class FamilyMemberFormComponent implements OnInit {
   initForm(data?: any) {
     data = data || {};
     if (Object.keys(data).length != 0) {
-			this.inEdit = true;
-			this.FormDisable = true;
-		} else if (Object.keys(data).length == 0) {
-			this.inEdit = false;
-			this.FormDisable = false;
-		}
+      this.inEdit = true;
+      this.FormDisable = true;
+    } else if (Object.keys(data).length == 0) {
+      this.inEdit = false;
+      this.FormDisable = false;
+    }
     this.Form = this.fb.group({
       title: [data?.title || ''],
       firstName: [data?.firstName || '', [Validators.required, Validators.pattern('[A-Za-z]+[0-9]|[0-9]+[A-Za-z]|[A-Za-z]')]],
@@ -111,7 +111,7 @@ export class FamilyMemberFormComponent implements OnInit {
       relationship: [data?.relation || ''],
     });
     this.addressFormService.setDisabledOrEnabled(this.FormDisable);
-		this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
+    this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
   }
 
   fieldValidation(field: any, notRequiredButPattern?: boolean) {
@@ -135,15 +135,17 @@ export class FamilyMemberFormComponent implements OnInit {
   }
 
   save(data: any) {
-    this.onSubmit.emit(data);
-    this.patientUserServ.setFamyMemb(data);
-    this.patientUserServ.setPatientFamiMemb(data.relationship, data);
-    this.Form.markAsPristine();
-    this.alertService.success(
-      'Success',
-      'Family Members has been updated successfully'
-    );
-    this.patientUserServ.setFamilyMembNotPristine(false);
+    if (this.Form?.valid && !this.Form.pristine) {
+      this.onSubmit.emit(data);
+      this.patientUserServ.setFamyMemb(data);
+      this.patientUserServ.setPatientFamiMemb(data.relationship, data);
+      this.Form.markAsPristine();
+      this.alertService.success(
+        'Success',
+        'Family Members has been updated successfully'
+      );
+      this.patientUserServ.setFamilyMembNotPristine(false);
+    }
   }
   cancel() {
     this.onCancel.emit();
@@ -165,22 +167,22 @@ export class FamilyMemberFormComponent implements OnInit {
   }
 
   checkPermission() {
-		this.isSaveButton = true;
-		this.enableAndDisableInputs();
-	}
+    this.isSaveButton = true;
+    this.enableAndDisableInputs();
+  }
 
-	enableAndDisableInputs() {
-		if (this.inEdit) {
-			if (!this.isSaveButton) {
-				this.Form?.disable();
-				this.FormDisable = true;
-			} else if (this.isSaveButton) {
-				this.Form?.enable();
-				this.FormDisable = false;
-			}
-			this.addressFormService.setDisabledOrEnabled(this.FormDisable);
-			this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
-		}
-	}
+  enableAndDisableInputs() {
+    if (this.inEdit) {
+      if (!this.isSaveButton) {
+        this.Form?.disable();
+        this.FormDisable = true;
+      } else if (this.isSaveButton) {
+        this.Form?.enable();
+        this.FormDisable = false;
+      }
+      this.addressFormService.setDisabledOrEnabled(this.FormDisable);
+      this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
+    }
+  }
 
 }

@@ -36,13 +36,13 @@ export class NavBarPillsComponent implements OnInit, AfterContentInit {
 	@Output() public onAdd = new EventEmitter<string>();
 
 	@Input() menuItems: MenuItem[] = [];
-	constructor(public router: Router,) {}
+	constructor(public router: Router,) { }
 
-	ngOnInit(): void {}
+	ngOnInit(): void { }
 	ngAfterContentInit(): void {
 		(this.menuItems.length != 0) ?
-		this.activeClass = this.menuItems[0]['id'] :
-		this.activeClass = '';
+			this.activeClass = this.menuItems[0]['id'] :
+			this.activeClass = '';
 	}
 	scroll(menu: any) {
 		const element: HTMLElement = document.getElementById(
@@ -65,7 +65,7 @@ export class NavBarPillsComponent implements OnInit, AfterContentInit {
 	handleAddCancelClicked() {
 		this.onAdd.emit();
 	}
-	editButtonURL(URL:any){
+	editButtonURL(URL: any) {
 		this.router.navigate([URL]);
 	}
 }

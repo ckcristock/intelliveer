@@ -76,6 +76,12 @@ export class InsuranceSubscriberFormComponent implements OnInit {
   validDOB: boolean | undefined;
   variableDiable: boolean = true;
   validCreditRating: boolean | undefined;
+  imageUpLoaderDisable: boolean = true;
+  validRelationship: boolean | undefined;
+  mandatoryFirstNameSaved: boolean = false;
+  mandatoryPrimaryPhoneNumberSaved: boolean = false;
+  mandatoryLastNameSaved: boolean = false;
+  mandatoryPrimaryPhoneTypeSaved: boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -98,8 +104,6 @@ export class InsuranceSubscriberFormComponent implements OnInit {
   async ngOnInit() {
     this.initForm(this.formData);
     this.setUserDataToForm();
-    await this.reviewInputs();
-    this.enableAndDisableInputs();
     this.patientUserServ.setFalseAllNotPristine();
     this.addPatientServ.setFalseAllNotPristineCWP();
     this.insuranceServ.setFalseAllNotPristine();
@@ -115,7 +119,11 @@ export class InsuranceSubscriberFormComponent implements OnInit {
 
     this.relationship = await this.patientUserServ.getInsuSubscToPati();
     this.Form.controls['relationship'].setValue(this.relationship);
+  }
 
+  async ngAfterViewInit() {
+    await this.reviewInputs();
+    this.enableAndDisableInputs();
   }
 
   initForm(data?: any) {
@@ -222,25 +230,26 @@ export class InsuranceSubscriberFormComponent implements OnInit {
   }
 
   async reviewInputs() {
+    await this.fieldValidation("relationship", true);
     await this.fieldValidation("emailId", true);
     await this.fieldValidation("primaryPreferredCommunicationMethod", true);
-    await this.fieldValidation("DOB", true, true);
-    await this.fieldValidation("creditRating", true, true);
+    await this.fieldValidation("DOB", true);
+    await this.fieldValidation("creditRating", true);
   }
 
-  async fieldValidation(field: any, notRequiredButPattern?: boolean, date?: boolean) {
+  async fieldValidation(field: any, notRequiredButPattern?: boolean) {
     let validator;
 
     if (notRequiredButPattern) {
-      validator = (this.Form.get(field)?.valid && (this.Form.get(field)?.value != null));
-      if (date) {
-        validator = this.Form.get(field)?.value != 0;
-      }
+      validator = (this.Form.get(field)?.valid && (this.Form.get(field)?.value != null) && this.Form.get(field)?.value != 0);
     } else {
       validator = this.Form.get(field)?.value != null;
     }
 
     switch (field) {
+      case 'relationship':
+        this.validRelationship = validator;
+        break;
       case 'DOB':
         this.validDOB = validator;
         break;
@@ -289,13 +298,19 @@ export class InsuranceSubscriberFormComponent implements OnInit {
   }
 
   save(data: any) {
-    this.onSubmit.emit(data);
-    this.Form.markAsPristine();
-    this.alertService.success(
-      'Success',
-      'Insurance Subscriber has been updated successfully'
-    );
-    this.patientUserServ.setinsuranSubscNotPristine(false);
+    this.mandatoryFirstNameSaved = true;
+    this.mandatoryLastNameSaved = true;
+    this.mandatoryPrimaryPhoneTypeSaved = true;
+    this.mandatoryPrimaryPhoneNumberSaved = true;
+    if (this.Form?.valid && !this.Form.pristine) {
+      this.onSubmit.emit(data);
+      this.Form.markAsPristine();
+      this.alertService.success(
+        'Success',
+        'Insurance Subscriber has been updated successfully'
+      );
+      this.patientUserServ.setinsuranSubscNotPristine(false);
+    }
   }
   cancel() {
     this.onCancel.emit();
@@ -345,6 +360,25 @@ export class InsuranceSubscriberFormComponent implements OnInit {
       }
       this.addressFormService.setDisabledOrEnabled(this.FormDisable);
       this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
+    }
+  }
+
+  inputChanged(field: any) {
+    switch (field) {
+      // For Add Patient Module
+      case 'firstName':
+        this.mandatoryFirstNameSaved = false;
+        break;
+      case 'lastName':
+        this.mandatoryLastNameSaved = false;
+        break;
+      case 'primaryPhoneType':
+        this.mandatoryPrimaryPhoneTypeSaved = false;
+        break;
+      case 'primaryPhoneNumber':
+        this.mandatoryPrimaryPhoneNumberSaved = false;
+        break;
+      default:
     }
   }
 

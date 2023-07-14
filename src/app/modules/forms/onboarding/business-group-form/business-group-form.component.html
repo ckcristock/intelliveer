@@ -8,7 +8,7 @@
 
 <div class="row">
 	<div class="col-2">
-		<div class="settings-row pointer" [routerLink]="urlOnboarding" >
+		<div class="settings-row pointer" [routerLink]="urlOnboarding">
 			<!-- [routerLink]="urlOnboarding" -->
 			<i class="bi bi-arrow-left-circle" style="font-size: 2rem; cursor: pointer;"></i>
 			<!-- [routerLink]="urlSettings" -->
@@ -34,8 +34,8 @@
 					<div class="col">
 						<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection"
 							[cancelBtn]="isSaveButton || !inEdit" [saveBtn]="isSaveButton || !inEdit"
-							[disableSaveBtn]="BGForm.invalid || BGForm.pristine" (onCancel)="cancel()"
-							(onSave)="save(BGForm.value)"></app-nav-bar-pills>
+							[disableSaveBtn]="false" (onCancel)="cancel()" (onSave)="save(BGForm.value)">
+						</app-nav-bar-pills>
 					</div>
 					<!-- [disableSaveBtn]="BGForm.invalid || BGForm.pristine" -->
 				</div>
@@ -49,7 +49,8 @@
 				<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 					<div class="section" id="overview">
 						<div class="row">
-							<app-image-uploader [imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
+							<app-image-uploader [imageUpLoaderDisable]="imageUpLoaderDisable"
+								[imageUrl]="formData?.logo || ''" (onUpload)="handleUploadedImage($event)">
 							</app-image-uploader>
 						</div>
 					</div>
@@ -61,7 +62,9 @@
 						<div class="row">
 							<div class="col-3">
 								<label class="required">Business Group Name</label>
-								<input type="text" class="form-control mandatory-field" formControlName="name" />
+								<input class="form-control input-upper mandatory-field" (input)="inputChanged('name')"
+									type="text" placeholder="" name="name" formControlName="name" [ngClass]="{'mandatory-field-saved': mandatoryBGNameSaved,
+                                'mandatory-field': !mandatoryBGNameSaved}" />
 							</div>
 							<div class="col-3">
 								<label class="required">TIN</label>
@@ -69,14 +72,18 @@
 							</div>
 							<div class="col-3">
 								<label class="required">Country</label>
-								<ng-select formControlName="country" class="mandatory-field">
+								<ng-select class="mandatory-field" formControlName="country"
+									(change)="inputChanged('country')" [ngClass]="{'mandatory-field-saved':mandatoryCountrySaved, 
+						'mandatory-field':!mandatoryCountrySaved  }">
 									<ng-option *ngFor="let country of countries" [value]="country.iso3"
 										aria-selected="country.name==='Afghanistan'">{{ country.name }}</ng-option>
 								</ng-select>
 							</div>
 							<div class="col-3">
 								<label class="required">Currency</label>
-								<ng-select formControlName="currency" class="mandatory-field">
+								<ng-select formControlName="currency" class="mandatory-field"
+									(change)="inputChanged('currency')" [ngClass]="{'mandatory-field-saved':mandatoryCurrencySaved, 
+						'mandatory-field':!mandatoryCurrencySaved  }">
 									<ng-option>USD</ng-option>
 								</ng-select>
 							</div>
@@ -123,7 +130,8 @@
 								</button>
 							</div>
 						</div> -->
-						<app-address-form [parentGroup]="BGForm" [formGroupName]="'insuranceBillingAddress'"></app-address-form>
+						<app-address-form [parentGroup]="BGForm" [formGroupName]="'insuranceBillingAddress'">
+						</app-address-form>
 					</div>
 					<!-- Contact -->
 					<div class="section" id="contactDetails">
@@ -143,7 +151,8 @@
 						<div class="row mt-3" *ngIf="password">
 							<div class="col-4">
 								<label class="required">Password</label>
-								<input type="password" class="form-control mandatory-field" formControlName="password" />
+								<input type="password" class="form-control mandatory-field"
+									formControlName="password" />
 							</div>
 						</div>
 					</div>

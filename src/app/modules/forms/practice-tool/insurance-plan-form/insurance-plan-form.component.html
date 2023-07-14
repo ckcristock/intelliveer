@@ -1,5 +1,5 @@
 <div class="row" *ngIf="Form">
-	<app-nav-bar-pills
+	<!-- <app-nav-bar-pills
 		[menuItems]="menuItems"
 		[activeClass]="currentSelection"
 		[cancelBtn]="true"
@@ -7,20 +7,29 @@
 		[disableSaveBtn]="Form.invalid || Form.pristine"
 		(onCancel)="cancel()"
 		(onSave)="save(Form.value)"
-	></app-nav-bar-pills>
+	></app-nav-bar-pills> -->
+	<div class="row sticky" style="width: 101%;">
+		<div [ngClass]="{'col-11':!isSaveButton, 'col-12':!inEdit }">
+			<div class="col">
+				<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection"
+					[cancelBtn]="isSaveButton || !inEdit" [saveBtn]="isSaveButton || !inEdit" [disableSaveBtn]="false"
+					(onCancel)="cancel()" (onSave)="save(Form.value)">
+				</app-nav-bar-pills>
+			</div>
+			<!-- [disableSaveBtn]="BGForm.invalid || BGForm.pristine" -->
+		</div>
+		<div *ngIf="!isSaveButton && inEdit" class="col-1 d-flex justify-content-center align-items-start"
+			style="background-color: transparent;">
+			<img src="/assets/icons/Edit.svg" style="width: 37px; height: 37px; cursor: pointer;" alt=""
+				(click)="checkPermission()" />
+		</div>
+	</div>
 	<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
-		<div
-			class="col-12"
-			id="main"
-			scrollSpy
-			(sectionChange)="onSectionChange($event)"
-		>
+		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section" id="overview">
 				<div class="row">
-					<app-image-uploader
-						[imageUrl]="formData?.logo || ''"
-						(onUpload)="handleUploadedImage($event)"
-					>
+					<app-image-uploader [imageUpLoaderDisable]="imageUpLoaderDisable" [imageUrl]="formData?.logo || ''"
+						(onUpload)="handleUploadedImage($event)">
 					</app-image-uploader>
 				</div>
 			</div>
@@ -32,39 +41,27 @@
 				<div class="row mb-3">
 					<div class="col-4">
 						<label class="required">Insurance plan Name</label>
-						<input
-							type="text"
-							class="form-control"
-							formControlName="insurancePlanName"
-							[ngClass]="!Form.controls['insurancePlanName'].errors != null ? Form.controls['insurancePlanName'].errors?.['required'] ? 'mandatory-field' : 'red-bottom-line' : ''"
-						/>
+						<input type="text" class="form-control" formControlName="insurancePlanName"
+							(input)="inputChanged('insurancePlanName')" [ngClass]="{'mandatory-field-saved': mandAndRequiredFields[0].mandSaved,
+                                'mandatory-field': !mandAndRequiredFields[0].mandSaved}" />
 					</div>
 					<div class="col-4">
 						<label class="required">Plan type</label>
-						<ng-select
-							formControlName="planType"
-							[ngClass]="!Form.controls['planType'].errors != null ? Form.controls['planType'].errors?.['required'] ? 'mandatory-field' : 'red-bottom-line' : ''"
-						>
+						<ng-select formControlName="planType"
+							[ngClass]="!Form.controls['planType'].errors != null ? Form.controls['planType'].errors?.['required'] ? 'mandatory-field' : 'red-bottom-line' : ''">
 							<ng-option>Select</ng-option>
 						</ng-select>
 					</div>
 					<div class="col-4">
 						<label class="required">Electronic ID</label>
-						<input
-							type="text"
-							class="form-control"
-							formControlName="electronicId"
-							[ngClass]="!Form.controls['electronicId'].errors != null ? Form.controls['electronicId'].errors?.['required'] ? 'mandatory-field' : 'red-bottom-line' : ''"
-						/>
+						<input type="text" class="form-control" formControlName="electronicId"
+							[ngClass]="!Form.controls['electronicId'].errors != null ? Form.controls['electronicId'].errors?.['required'] ? 'mandatory-field' : 'red-bottom-line' : ''" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-4">
 						<label class="required">Fee Schedule (Office)</label>
-						<ng-select
-							formControlName="feeScheduleOffice"
-							class="red-bottom-line"
-						>
+						<ng-select formControlName="feeScheduleOffice" class="red-bottom-line">
 							<ng-option>Select</ng-option>
 						</ng-select>
 					</div>
@@ -90,94 +87,53 @@
 				<div class="row">
 					<h6>ADDRESS</h6>
 				</div>
-				<app-address-form
-					[parentGroup]="Form"
-					[formGroupName]="'claimInformation'"
-				></app-address-form>
+				<app-address-form [parentGroup]="Form" [formGroupName]="'claimInformation'"></app-address-form>
 				<div class="row">
 					<h6>CONTACT</h6>
 				</div>
 				<div class="row mb-3">
 					<div class="col-4">
 						<label class="label-input-gap">Email</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							name="id"
+						<input class="form-control input-upper" type="text" placeholder="" name="id"
 							formControlName="emailId"
-							[ngClass]="!Form.controls['emailId'].errors != null ? Form.controls['emailId'].errors?.['required'] ? 'mandatory-field' : 'red-bottom-line' : ''"
-						/>
+							[ngClass]="!Form.controls['emailId'].errors != null ? Form.controls['emailId'].errors?.['required'] ? 'mandatory-field' : 'red-bottom-line' : ''" />
 					</div>
 
 					<div class="col-4">
-						<label class="label-input-gap"
-							>Primary Phone Type</label
-						>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="primaryPhoneType"
-						>
-							<ng-option
-								[value]="phone.value"
-								*ngFor="let phone of famiMembTitle?.phone"
-							>
+						<label class="label-input-gap">Primary Phone Type</label>
+						<ng-select class="input-upper input-upper" placeholder="Select"
+							formControlName="primaryPhoneType">
+							<ng-option [value]="phone.value" *ngFor="let phone of famiMembTitle?.phone">
 								{{ phone.label }}
 							</ng-option>
 						</ng-select>
 					</div>
 
 					<div class="col-4">
-						<label class="label-input-gap"
-							>Primary Phone Number</label
-						>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="primaryPhoneNumber"
-						/>
+						<label class="label-input-gap">Primary Phone Number</label>
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
+							formControlName="primaryPhoneNumber" />
 					</div>
 				</div>
 
 				<div class="row mb-3">
 					<div class="col-4">
-						<label class="label-input-gap"
-							>Secondary Phone Type</label
-						>
-						<ng-select
-							class="input-upper"
-							formControlName="secondaryPhoneType"
-							placeholder="Select"
-						>
+						<label class="label-input-gap">Secondary Phone Type</label>
+						<ng-select class="input-upper" formControlName="secondaryPhoneType" placeholder="Select">
 							<ng-option> Select </ng-option>
 						</ng-select>
 					</div>
 
 					<div class="col-4">
-						<label class="label-input-gap"
-							>Secondary Phone Number</label
-						>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="secondaryPhoneNumber"
-						/>
+						<label class="label-input-gap">Secondary Phone Number</label>
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
+							formControlName="secondaryPhoneNumber" />
 					</div>
 
 					<div class="col-4">
-						<label class="label-input-gap"
-							>Preferred Mail Method</label
-						>
-						<ng-select
-							class="input-upper input-upper"
-							formControlName="preferedMailMethodClaim"
-							placeholder="Select"
-						>
+						<label class="label-input-gap">Preferred Mail Method</label>
+						<ng-select class="input-upper input-upper" formControlName="preferedMailMethodClaim"
+							placeholder="Select">
 							<ng-option value="s"> Select </ng-option>
 						</ng-select>
 					</div>
@@ -187,29 +143,16 @@
 						<label class="label-input-gap">Website</label>
 						<div class="input-group mb-3" style="border: 0">
 							<span class="input-group-text">https://</span>
-							<input
-								type="text"
-								class="form-control input-upper"
-								name="website"
-								formControlName="websiteClaim"
-								style="border-right: 0px"
-							/>
-							<span
-								class="input-group-text"
-								style="background-color: white"
-								><i class="bi bi-box-arrow-up-right"></i
-							></span>
+							<input type="text" class="form-control input-upper" name="website"
+								formControlName="websiteClaim" style="border-right: 0px" />
+							<span class="input-group-text" style="background-color: white"><i
+									class="bi bi-box-arrow-up-right"></i></span>
 						</div>
 					</div>
 					<div class="col-4">
 						<label class="label-input-gap">Fax</label>
-						<input
-							class="form-control input-upper"
-							type="number"
-							placeholder=""
-							name="fax"
-							formControlName="faxClaim"
-						/>
+						<input class="form-control input-upper" type="number" placeholder="" name="fax"
+							formControlName="faxClaim" />
 					</div>
 					<div class="col"></div>
 				</div>
@@ -221,93 +164,53 @@
 				<div class="row">
 					<h6>ADDRESS</h6>
 				</div>
-				<app-address-form
-					[parentGroup]="Form"
-					[formGroupName]="'physicalAddress'"
-				></app-address-form>
+				<app-address-form [parentGroup]="Form" [formGroupName]="'physicalAddress'"></app-address-form>
 				<div class="row">
 					<h6>CONTACT</h6>
 				</div>
 				<div class="row mb-3">
 					<div class="col-4">
 						<label class="label-input-gap">Email</label>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							name="id"
-							formControlName="emailIdProvider"
-						/>
+						<input class="form-control input-upper" type="text" placeholder="" name="id"
+							formControlName="emailIdProvider" />
 					</div>
 
 					<div class="col-4">
-						<label class="label-input-gap"
-							>Primary Phone Type</label
-						>
-						<ng-select
-							class="input-upper input-upper"
-							placeholder="Select"
-							formControlName="primaryPhoneTypeProvider"
-						>
-							<ng-option
-								[value]="phone.value"
-								*ngFor="let phone of famiMembTitle?.phone"
-							>
+						<label class="label-input-gap">Primary Phone Type</label>
+						<ng-select class="input-upper input-upper" placeholder="Select"
+							formControlName="primaryPhoneTypeProvider">
+							<ng-option [value]="phone.value" *ngFor="let phone of famiMembTitle?.phone">
 								{{ phone.label }}
 							</ng-option>
 						</ng-select>
 					</div>
 
 					<div class="col-4">
-						<label class="label-input-gap"
-							>Primary Phone Number</label
-						>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="primaryPhoneNumberProvider"
-						/>
+						<label class="label-input-gap">Primary Phone Number</label>
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
+							formControlName="primaryPhoneNumberProvider" />
 					</div>
 				</div>
 
 				<div class="row mb-3">
 					<div class="col-4">
-						<label class="label-input-gap"
-							>Secondary Phone Type</label
-						>
-						<ng-select
-							class="input-upper"
-							formControlName="secondaryPhoneTypeProvider"
-							placeholder="Select"
-						>
+						<label class="label-input-gap">Secondary Phone Type</label>
+						<ng-select class="input-upper" formControlName="secondaryPhoneTypeProvider"
+							placeholder="Select">
 							<ng-option> Select </ng-option>
 						</ng-select>
 					</div>
 
 					<div class="col-4">
-						<label class="label-input-gap"
-							>Secondary Phone Number</label
-						>
-						<input
-							class="form-control input-upper"
-							type="text"
-							placeholder=""
-							name="name"
-							formControlName="secondaryPhoneNumberProvider"
-						/>
+						<label class="label-input-gap">Secondary Phone Number</label>
+						<input class="form-control input-upper" type="text" placeholder="" name="name"
+							formControlName="secondaryPhoneNumberProvider" />
 					</div>
 
 					<div class="col-4">
-						<label class="label-input-gap"
-							>Preferred Mail Method</label
-						>
-						<ng-select
-							class="input-upper input-upper"
-							formControlName="preferedMailMethodProvider"
-							placeholder="Select"
-						>
+						<label class="label-input-gap">Preferred Mail Method</label>
+						<ng-select class="input-upper input-upper" formControlName="preferedMailMethodProvider"
+							placeholder="Select">
 							<ng-option value="s"> Select </ng-option>
 						</ng-select>
 					</div>
@@ -317,29 +220,16 @@
 						<label class="label-input-gap">Website</label>
 						<div class="input-group mb-3" style="border: 0">
 							<span class="input-group-text">https://</span>
-							<input
-								type="text"
-								class="form-control input-upper"
-								name="website"
-								formControlName="website"
-								style="border-right: 0px"
-							/>
-							<span
-								class="input-group-text"
-								style="background-color: white"
-								><i class="bi bi-box-arrow-up-right"></i
-							></span>
+							<input type="text" class="form-control input-upper" name="website" formControlName="website"
+								style="border-right: 0px" />
+							<span class="input-group-text" style="background-color: white"><i
+									class="bi bi-box-arrow-up-right"></i></span>
 						</div>
 					</div>
 					<div class="col-4">
 						<label class="label-input-gap">Fax</label>
-						<input
-							class="form-control input-upper"
-							type="number"
-							placeholder=""
-							name="fax"
-							formControlName="fax"
-						/>
+						<input class="form-control input-upper" type="number" placeholder="" name="fax"
+							formControlName="fax" />
 					</div>
 					<div class="col"></div>
 				</div>
@@ -356,7 +246,9 @@
 						<tr>
 							<td>Jalpan Shah</td>
 							<td>
-								<ng-select><ng-option></ng-option></ng-select>
+								<ng-select formControlName="nn">
+									<ng-option></ng-option>
+								</ng-select>
 							</td>
 							<td>1234456</td>
 						</tr>
@@ -372,41 +264,23 @@
 						<label class="label-input-gap">Website</label>
 						<div class="input-group mb-3" style="border: 0">
 							<span class="input-group-text">https://</span>
-							<input
-								type="text"
-								class="form-control input-upper"
-								name="website"
-								formControlName="websiteInsurance"
-								style="border-right: 0px"
-							/>
-							<span
-								class="input-group-text"
-								style="background-color: white"
-								><i class="bi bi-box-arrow-up-right"></i
-							></span>
+							<input type="text" class="form-control input-upper" name="website"
+								formControlName="websiteInsurance" style="border-right: 0px" />
+							<span class="input-group-text" style="background-color: white"><i
+									class="bi bi-box-arrow-up-right"></i></span>
 						</div>
 					</div>
 				</div>
 				<div class="row mb-3">
 					<div class="col-4">
 						<label class="label-input-gap">Username</label>
-						<input
-							class="form-control input-upper"
-							type="number"
-							placeholder=""
-							name="username"
-							formControlName="username"
-						/>
+						<input class="form-control input-upper" type="number" placeholder="" name="username"
+							formControlName="username" />
 					</div>
 					<div class="col-4">
 						<label class="label-input-gap">Password</label>
-						<input
-							class="form-control input-upper"
-							type="number"
-							placeholder=""
-							name="password"
-							formControlName="password"
-						/>
+						<input class="form-control input-upper" type="number" placeholder="" name="password"
+							formControlName="password" />
 					</div>
 				</div>
 			</div>
@@ -414,14 +288,8 @@
 				<h6 class="heading">Notes</h6>
 				<div class="row formrow">
 					<div class="col-6">
-						<textarea
-							class="form-control input-upper"
-							name="note"
-							id=""
-							cols="70"
-							rows="5"
-							formControlName="note"
-						></textarea>
+						<textarea class="form-control input-upper" name="note" id="" cols="70" rows="5"
+							formControlName="note"></textarea>
 					</div>
 				</div>
 			</div>

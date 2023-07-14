@@ -1,7 +1,23 @@
 <div class="row" *ngIf="Form">
-	<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
-		[disableSaveBtn]="Form.invalid" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills>
+	<!-- <app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection" [cancelBtn]="true" [saveBtn]="true"
+		[disableSaveBtn]="Form.invalid" (onCancel)="cancel()" (onSave)="save(Form.value)"></app-nav-bar-pills> -->
 	<form [formGroup]="Form" #f="ngForm" (submit)="save(f.value)">
+		<div class="row sticky" style="width: 101%;">
+			<div [ngClass]="{'col-11':!isSaveButton, 'col-12':!inEdit }">
+				<div class="col">
+					<app-nav-bar-pills [menuItems]="menuItems" [activeClass]="currentSelection"
+						[cancelBtn]="isSaveButton || !inEdit" [saveBtn]="isSaveButton || !inEdit"
+						[disableSaveBtn]="false" (onCancel)="cancel()" (onSave)="save(Form.value)">
+					</app-nav-bar-pills>
+				</div>
+				<!-- [disableSaveBtn]="BGForm.invalid || BGForm.pristine" -->
+			</div>
+			<div *ngIf="!isSaveButton && inEdit" class="col-1 d-flex justify-content-center align-items-start"
+				style="background-color: transparent;">
+				<img src="/assets/icons/Edit.svg" style="width: 37px; height: 37px; cursor: pointer;" alt=""
+					(click)="checkPermission()" />
+			</div>
+		</div>
 		<div class="col-12" id="main" scrollSpy (sectionChange)="onSectionChange($event)">
 			<div class="section-active" id="overview">
 				<div class="row">
@@ -135,8 +151,8 @@
 							<div class="col-4">
 								<div class="mainformset">
 									<label class="label-input-gap">Policy Termination Date</label>
-									<input class="form-control" type="date" placeholder="" name="" 
-									formControlName="policyTermiDate"/>
+									<input class="form-control" type="date" placeholder="" name=""
+										formControlName="policyTermiDate" />
 								</div>
 							</div>
 						</div>

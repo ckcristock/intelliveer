@@ -69,6 +69,12 @@ export class PaymentPartyFormComponent implements OnInit {
 	validSecondaryPreferredCommunicationMethod: boolean | undefined;
 	validPreferredTimingForCall: boolean | undefined;
 	validDOB: boolean | undefined;
+	imageUpLoaderDisable: boolean = true;
+	validRelationship: boolean | undefined;
+	mandatoryFirstNameSaved: boolean = false;
+	mandatoryPrimaryPhoneNumberSaved: boolean = false;
+	mandatoryLastNameSaved: boolean = false;
+	mandatoryPrimaryPhoneTypeSaved: boolean = false;
 
 	constructor(
 		private http: HttpClient,
@@ -91,8 +97,6 @@ export class PaymentPartyFormComponent implements OnInit {
 	async ngOnInit() {
 		this.initForm(this.formData);
 		this.setUserDataToForm();
-		this.reviewInputs();
-		this.enableAndDisableInputs();
 		this.patientUserServ.setFalseAllNotPristine();
 		this.addPatientServ.setFalseAllNotPristineCWP();
 		this.insuranceServ.setFalseAllNotPristine();
@@ -110,6 +114,11 @@ export class PaymentPartyFormComponent implements OnInit {
 			localStorage.getItem('PaymPartyToPati')!
 		);
 		this.Form.controls['relationship'].setValue(this.relationship);
+	}
+
+	async ngAfterViewInit() {
+		await this.reviewInputs();
+		this.enableAndDisableInputs();
 	}
 
 	initForm(data?: any) {
@@ -132,7 +141,7 @@ export class PaymentPartyFormComponent implements OnInit {
 			pronoun: [data?.pronoun || null],
 			language: [data?.language || null],
 			maritalStatus: [data?.maritalStatus || null],
-			emailId: [data?.emailId ||'', Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')],
+			emailId: [data?.emailId || '', Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')],
 			primaryPhoneType: [data?.primaryPhoneType || null, Validators.required],
 			primaryPhoneNumber: [data?.primaryPhoneNumber || '', [Validators.required, Validators.pattern("^[0-9]*$")]],
 			secondaryPhoneType: [data?.secondaryPhoneType || ''],
@@ -215,24 +224,25 @@ export class PaymentPartyFormComponent implements OnInit {
 	}
 
 	async reviewInputs() {
+		await this.fieldValidation("relationship", true, true);
 		await this.fieldValidation("emailId", true);
 		await this.fieldValidation("primaryPreferredCommunicationMethod", true);
 		await this.fieldValidation("DOB", true, true);
 	}
 
-	async fieldValidation(field: any, notRequiredButPattern?: boolean, date?:boolean) {
+	async fieldValidation(field: any, notRequiredButPattern?: boolean, date?: boolean) {
 		let validator;
 
 		if (notRequiredButPattern) {
-			validator = (this.Form.get(field)?.valid && (this.Form.get(field)?.value != null));
-			if(date){
-				validator = this.Form.get(field)?.value != 0;
-			}
-		} else  {
+			validator = (this.Form.get(field)?.valid && (this.Form.get(field)?.value != null) && this.Form.get(field)?.value != 0);
+		} else {
 			validator = this.Form.get(field)?.value != null;
 		}
 
 		switch (field) {
+			case 'relationship':
+				this.validRelationship = validator;
+				break;
 			case 'DOB':
 				this.validDOB = validator;
 				break;
@@ -278,11 +288,17 @@ export class PaymentPartyFormComponent implements OnInit {
 	}
 
 	save(data: any) {
-		this.onSubmit.emit(data);
-		this.patientUserServ.setPaymParty(data);
-		this.patientUserServ.setPatientFamiMemb(data.relationship, data);
-		this.Form.markAsPristine();
-		this.patientUserServ.setpaymentPartyNotPristine(false);
+		this.mandatoryFirstNameSaved = true;
+		this.mandatoryLastNameSaved = true;
+		this.mandatoryPrimaryPhoneTypeSaved = true;
+		this.mandatoryPrimaryPhoneNumberSaved = true;
+		if (this.Form?.valid && !this.Form.pristine) {
+			this.onSubmit.emit(data);
+			this.patientUserServ.setPaymParty(data);
+			this.patientUserServ.setPatientFamiMemb(data.relationship, data);
+			this.Form.markAsPristine();
+			this.patientUserServ.setpaymentPartyNotPristine(false);
+		}
 	}
 	cancel() {
 		this.onCancel.emit();
@@ -337,5 +353,23 @@ export class PaymentPartyFormComponent implements OnInit {
 		}
 	}
 
+	inputChanged(field: any) {
+		switch (field) {
+			// For Add Patient Module
+			case 'firstName':
+				this.mandatoryFirstNameSaved = false;
+				break;
+			case 'lastName':
+				this.mandatoryLastNameSaved = false;
+				break;
+			case 'primaryPhoneType':
+				this.mandatoryPrimaryPhoneTypeSaved = false;
+				break;
+			case 'primaryPhoneNumber':
+				this.mandatoryPrimaryPhoneNumberSaved = false;
+				break;
+			default:
+		}
+	}
 
 }

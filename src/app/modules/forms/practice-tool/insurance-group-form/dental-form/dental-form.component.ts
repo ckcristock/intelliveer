@@ -6,6 +6,9 @@ import {
 	SelectedBusinessGroup,
 	BusinessGroupDropdownService
 } from '@services/business-group-dropdown/business-group-dropdown.service';
+import { AddressFormService } from '@services/forms/address-form/address-form.service';
+import { ContactPersonFormService } from '@services/forms/contact-person-form/contact-person-form.service';
+import { FieldValidationService } from '@services/global/field-validation/field-validation.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -36,11 +39,20 @@ export class DentalFormComponent implements OnInit {
 	bgId: any;
 	insuranceList: any[] = [];
 	type: any = 'percentage';
+	isSaveButton: boolean = false;
+	inEdit: boolean = false;
+	FormDisable!: boolean;
+	imageUpLoaderDisable: boolean = true;
+	mandAndRequiredFields: any[] = [
+	];
 
 	constructor(
 		private fb: FormBuilder,
 		private authService: AuthService,
-		private businessGroupDropdownService: BusinessGroupDropdownService
+		private businessGroupDropdownService: BusinessGroupDropdownService,
+		private contactPersonFormService: ContactPersonFormService,
+		private fieldValidationServ: FieldValidationService,
+		private addressFormService: AddressFormService,
 	) {
 		this.businessGroupDropdownSupscription =
 			this.businessGroupDropdownService
@@ -57,8 +69,19 @@ export class DentalFormComponent implements OnInit {
 		this.initForm(this.formData.dentalBenefits);
 	}
 
+	async ngAfterViewInit() {
+		this.enableAndDisableInputs();
+	}
+
 	initForm(data?: any) {
 		data = data || {};
+		if (Object.keys(data).length != 0) {
+			this.inEdit = true;
+			this.FormDisable = true;
+		} else if (Object.keys(data).length == 0) {
+			this.inEdit = false;
+			this.FormDisable = false;
+		}
 		this.Form = this.fb.group({
 			ageLimitForSubscriber: [
 				data?.eligibility?.ageLimitForSubscriber || ''
@@ -231,132 +254,168 @@ export class DentalFormComponent implements OnInit {
 	}
 
 	save(data: any) {
-		console.log(data);
-		let formObj = {
-			_id: this.formData._id,
-			insurancePlanId: localStorage.getItem('insurancePlanId'),
-			dentalBenefits: {
-				eligibility: {
-					ageLimitForSubscriber: data.ageLimitForSubscriber,
-					ageLimitForDependantChild: data.ageLimitForDependantChild,
-					ageLimitForDependantStudent:
-						data.ageLimitForDependantStudent
-				},
-				COBorAssignment: {
-					coordinationBenefitTypes: data.coordinationBenefitTypes,
-					assignmentOfBenefits: data.assignmentOfBenefits
-				},
-				deductible: {
-					deductibleFamily: data.deductibleFamily,
-					deductibleIndividual: data.deductibleIndividual,
-					deductibleWaivedOnPreventative:
-						data.deductibleWaivedOnPreventative,
-					percentageCovered: {
-						preventativeOrDiagnosticPercentage:
-							data.preventativeOrDiagnosticPercentage,
-						basicPercentage: data.basicPercentage,
-						majorPercentage: data.majorPercentage
+		this.mandAndRequiredFields.forEach(field => {
+			field.mandSaved = true;
+		});
+		if (this.Form?.valid && !this.Form.pristine) {
+			let formObj = {
+				_id: this.formData._id,
+				insurancePlanId: localStorage.getItem('insurancePlanId'),
+				dentalBenefits: {
+					eligibility: {
+						ageLimitForSubscriber: data.ageLimitForSubscriber,
+						ageLimitForDependantChild: data.ageLimitForDependantChild,
+						ageLimitForDependantStudent:
+							data.ageLimitForDependantStudent
+					},
+					COBorAssignment: {
+						coordinationBenefitTypes: data.coordinationBenefitTypes,
+						assignmentOfBenefits: data.assignmentOfBenefits
+					},
+					deductible: {
+						deductibleFamily: data.deductibleFamily,
+						deductibleIndividual: data.deductibleIndividual,
+						deductibleWaivedOnPreventative:
+							data.deductibleWaivedOnPreventative,
+						percentageCovered: {
+							preventativeOrDiagnosticPercentage:
+								data.preventativeOrDiagnosticPercentage,
+							basicPercentage: data.basicPercentage,
+							majorPercentage: data.majorPercentage
+						}
+					},
+					benefits: {
+						dentalAnnualMaximum: data.dentalAnnualMaximum,
+						basicIncludes: data.basicIncludes,
+						basicIncludesOtherValue: data.basicIncludesOtherValue,
+						majorIncludes: data.majorIncludes,
+						majorIncludesOtherValue: data.majorIncludesOtherValue
+					},
+					frequencies: {
+						exams: {
+							frequency: data.examsFrequency,
+							timeFrame: data.examsTimeFrame,
+							exceptions: data.examsExceptions
+						},
+						prophylaxis: {
+							frequency: data.prophylaxisFrequency,
+							timeFrame: data.prophylaxisTimeFrame,
+							exceptions: data.prophylaxisExceptions
+						},
+						perioMaintenance: {
+							frequency: data.perioMaintenanceFrequency,
+							timeFrame: data.perioMaintenanceTimeFrame,
+							exceptions: data.perioMaintenanceExceptions,
+							paidAt: data.perioMaintenancePaidAt,
+							condition: data.perioMaintenanceCondition
+						},
+						fmx: {
+							frequency: data.fmxFrequency,
+							timeFrame: data.fmxTimeFrame,
+							exceptions: data.fmxExceptions
+						},
+						pano: {
+							frequency: data.panoFrequency,
+							timeFrame: data.panoTimeFrame,
+							exceptions: data.panoExceptions,
+							condition: data.panoCondition
+						},
+						bwx: {
+							frequency: data.bwxFrequency,
+							timeFrame: data.bwxTimeFrame,
+							exceptions: data.bwxExceptions,
+							isIntraOralImagesCovered:
+								data.bwxIsIntraOralImagesCovered
+						},
+						scalingAndRootPlanning: {
+							frequency: data.scalingAndRootPlanningFrequency,
+							timeFrame: data.scalingAndRootPlanningTimeFrame,
+							exceptions: data.scalingAndRootPlanningExceptions,
+							canAllQuadsBeOnSameDay:
+								data.scalingAndRootPlanningCanAllQuadsBeOnSameDay
+						},
+						restorations: {
+							frequency: data.restorationsFrequency,
+							timeFrame: data.restorationsTimeFrame,
+							exceptions: data.restorationsExceptions
+						},
+						crowns: {
+							frequency: data.crownsFrequency,
+							timeFrame: data.crownsTimeFrame,
+							exceptions: data.crownsExceptions
+						},
+						bridges: {
+							frequency: data.bridgesFrequency,
+							timeFrame: data.bridgesTimeFrame,
+							exceptions: data.bridgesExceptions
+						},
+						dentures: {
+							frequency: data.denturesFrequency,
+							timeFrame: data.denturesTimeFrame,
+							exceptions: data.denturesExceptions
+						},
+						partials: {
+							frequency: data.partialsFrequency,
+							timeFrame: data.partialsTimeFrame,
+							exceptions: data.partialsExceptions
+						}
+					},
+					generalProvisions: {
+						porcelainOnPosteriorCrowns: data.porcelainOnPosteriorCrowns,
+						goldCoverageD2790: data.goldCoverageD2790,
+						posteriorComposites: data.posteriorComposites,
+						fluorideToTheAgeOf: data.fluorideToTheAgeOf,
+						sealants: data.sealants,
+						restorations: data.restorations,
+						missingToothClause: data.missingToothClause,
+						nightGuardType: data.nightGuardType,
+						nightGuardValue: data.nightGuardValue
+					},
+					implantBenefits: {
+						coveredBenefits: data.coveredBenefits,
+						separate: data.separate,
+						separateValue: data.separateValue,
+						deductible: data.deductible,
+						deductibleValue: data.deductibleValue
 					}
-				},
-				benefits: {
-					dentalAnnualMaximum: data.dentalAnnualMaximum,
-					basicIncludes: data.basicIncludes,
-					basicIncludesOtherValue: data.basicIncludesOtherValue,
-					majorIncludes: data.majorIncludes,
-					majorIncludesOtherValue: data.majorIncludesOtherValue
-				},
-				frequencies: {
-					exams: {
-						frequency: data.examsFrequency,
-						timeFrame: data.examsTimeFrame,
-						exceptions: data.examsExceptions
-					},
-					prophylaxis: {
-						frequency: data.prophylaxisFrequency,
-						timeFrame: data.prophylaxisTimeFrame,
-						exceptions: data.prophylaxisExceptions
-					},
-					perioMaintenance: {
-						frequency: data.perioMaintenanceFrequency,
-						timeFrame: data.perioMaintenanceTimeFrame,
-						exceptions: data.perioMaintenanceExceptions,
-						paidAt: data.perioMaintenancePaidAt,
-						condition: data.perioMaintenanceCondition
-					},
-					fmx: {
-						frequency: data.fmxFrequency,
-						timeFrame: data.fmxTimeFrame,
-						exceptions: data.fmxExceptions
-					},
-					pano: {
-						frequency: data.panoFrequency,
-						timeFrame: data.panoTimeFrame,
-						exceptions: data.panoExceptions,
-						condition: data.panoCondition
-					},
-					bwx: {
-						frequency: data.bwxFrequency,
-						timeFrame: data.bwxTimeFrame,
-						exceptions: data.bwxExceptions,
-						isIntraOralImagesCovered:
-							data.bwxIsIntraOralImagesCovered
-					},
-					scalingAndRootPlanning: {
-						frequency: data.scalingAndRootPlanningFrequency,
-						timeFrame: data.scalingAndRootPlanningTimeFrame,
-						exceptions: data.scalingAndRootPlanningExceptions,
-						canAllQuadsBeOnSameDay:
-							data.scalingAndRootPlanningCanAllQuadsBeOnSameDay
-					},
-					restorations: {
-						frequency: data.restorationsFrequency,
-						timeFrame: data.restorationsTimeFrame,
-						exceptions: data.restorationsExceptions
-					},
-					crowns: {
-						frequency: data.crownsFrequency,
-						timeFrame: data.crownsTimeFrame,
-						exceptions: data.crownsExceptions
-					},
-					bridges: {
-						frequency: data.bridgesFrequency,
-						timeFrame: data.bridgesTimeFrame,
-						exceptions: data.bridgesExceptions
-					},
-					dentures: {
-						frequency: data.denturesFrequency,
-						timeFrame: data.denturesTimeFrame,
-						exceptions: data.denturesExceptions
-					},
-					partials: {
-						frequency: data.partialsFrequency,
-						timeFrame: data.partialsTimeFrame,
-						exceptions: data.partialsExceptions
-					}
-				},
-				generalProvisions: {
-					porcelainOnPosteriorCrowns: data.porcelainOnPosteriorCrowns,
-					goldCoverageD2790: data.goldCoverageD2790,
-					posteriorComposites: data.posteriorComposites,
-					fluorideToTheAgeOf: data.fluorideToTheAgeOf,
-					sealants: data.sealants,
-					restorations: data.restorations,
-					missingToothClause: data.missingToothClause,
-					nightGuardType: data.nightGuardType,
-					nightGuardValue: data.nightGuardValue
-				},
-				implantBenefits: {
-					coveredBenefits: data.coveredBenefits,
-					separate: data.separate,
-					separateValue: data.separateValue,
-					deductible: data.deductible,
-					deductibleValue: data.deductibleValue
 				}
-			}
-		};
-		this.onSubmit.emit(formObj);
+			};
+			this.onSubmit.emit(formObj);
+		}
 	}
 	cancel() {
 		this.onCancel.emit();
+	}
+
+	async fieldValidation(field: any, notRequiredButPattern?: boolean) {
+		this.mandAndRequiredFields = this.fieldValidationServ.fieldValidation(field, notRequiredButPattern, this.Form);
+	}
+
+	checkPermission() {
+		this.isSaveButton = true;
+		this.enableAndDisableInputs();
+		this.imageUpLoaderDisable = false;
+	}
+
+	enableAndDisableInputs() {
+		if (this.inEdit) {
+			if (!this.isSaveButton) {
+				this.Form?.disable();
+				this.FormDisable = true;
+			} else if (this.isSaveButton) {
+				this.Form?.enable();
+				this.FormDisable = false;
+			}
+			this.addressFormService.setDisabledOrEnabled(this.FormDisable);
+			this.contactPersonFormService.setDisabledOrEnabled(this.FormDisable);
+		}
+	}
+
+	inputChanged(fieldParam: any) {
+		this.mandAndRequiredFields.forEach(field => {
+			if (field.name == fieldParam) {
+				field.mandSaved = false;
+			}
+		});
 	}
 }
