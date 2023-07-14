@@ -16,7 +16,7 @@ const routes: Routes = [
      
       {
         path: 'manage-user',
-        canActivate: [RoleGuardGuard],
+        // canActivate: [RoleGuardGuard],
         data:{
 					isEnabled: true,
 					value: "CAN_RETRIEVE_USER",
@@ -29,7 +29,7 @@ const routes: Routes = [
       },
       {
         path: 'manage-user/add-user',
-        canActivate: [RoleGuardGuard],
+        // canActivate: [RoleGuardGuard],
         data:{
 					isEnabled: true,
 					value: "CAN_CREATE_USER",

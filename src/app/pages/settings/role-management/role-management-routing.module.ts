@@ -15,7 +15,7 @@ const routes: Routes = [
       },
       {
         path: 'manage-role-template',
-        canActivate: [RoleGuardGuard],
+        // canActivate: [RoleGuardGuard],
 				data:{
 					isEnabled: true,
 					value: "CAN_RETRIEVE_ROLE_TEMPLATE",
@@ -27,7 +27,7 @@ const routes: Routes = [
       },
       {
         path: 'manage-role-template/add',
-        canActivate: [RoleGuardGuard],
+        // canActivate: [RoleGuardGuard],
 				data:{
 					isEnabled: true,
 					value: "CAN_CREATE_ROLE_TEMPLATE",
@@ -39,7 +39,7 @@ const routes: Routes = [
       },
       {
         path: 'manage-role-template/edit',
-        canActivate: [RoleGuardGuard],
+        // canActivate: [RoleGuardGuard],
 				data:{
 					isEnabled: true,
 					value: "CAN_EDIT_ROLE_TEMPLATE",

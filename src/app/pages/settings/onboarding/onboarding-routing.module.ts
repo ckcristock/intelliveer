@@ -15,7 +15,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'business-group',
-				canActivate: [RoleGuardGuard],
+				// canActivate: [RoleGuardGuard],
 				data:{
 					isEnabled: true,
 					value: "CAN_RETRIEVE_BUSINESS_GROUP",
@@ -27,7 +27,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'business-group/add',
-				canActivate: [RoleGuardGuard],
+				// canActivate: [RoleGuardGuard],
 				data:{
 					isEnabled: true,
 					value: "CAN_CREATE_BUSINESS_GROUP",
@@ -39,7 +39,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'business-group/edit/:id',
-				canActivate: [RoleGuardGuard],
+				// canActivate: [RoleGuardGuard],
 				data:{
 					isEnabled: true,
 					value: "CAN_EDIT_BUSINESS_GROUP",
@@ -51,7 +51,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'legal-entity',
-				canActivate: [RoleGuardGuard],
+				// canActivate: [RoleGuardGuard],
 				data:{
 					isEnabled: true,
 					value: "CAN_RETRIEVE_LEGAL_ENTITY",
@@ -63,7 +63,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'legal-entity/add',
-				canActivate: [RoleGuardGuard],
+				// canActivate: [RoleGuardGuard],
 				data:{
 					isEnabled: true,
 					value: "CAN_CREATE_LEGAL_ENTITY",
@@ -75,7 +75,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'legal-entity/edit/:id',
-				canActivate: [RoleGuardGuard],
+				// canActivate: [RoleGuardGuard],
 				data:{
 					isEnabled: true,
 					value: "CAN_EDIT_LEGAL_ENTITY",
@@ -87,7 +87,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'location',
-				canActivate: [RoleGuardGuard],
+				// canActivate: [RoleGuardGuard],
 				data:{
 					isEnabled: true,
 					value: "CAN_RETRIEVE_LOCATION",
@@ -99,7 +99,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'location/add',
-				canActivate: [RoleGuardGuard],
+				// canActivate: [RoleGuardGuard],
 				data:{
 					isEnabled: true,
 					value: "CAN_CREATE_LOCATION",
@@ -111,7 +111,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'location/edit/:id',
-				canActivate: [RoleGuardGuard],
+				// canActivate: [RoleGuardGuard],
 				data:{
 					isEnabled: true,
 					value: "CAN_EDIT_LOCATION",
@@ -123,7 +123,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'practice',
-				canActivate: [RoleGuardGuard],
+				// canActivate: [RoleGuardGuard],
 				data:{
 					isEnabled: true,
 					value: "CAN_RETRIEVE_PRACTICE",
@@ -135,7 +135,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'practice/add',
-				canActivate: [RoleGuardGuard],
+				// canActivate: [RoleGuardGuard],
 				data:{
 					isEnabled: true,
 					value: "CAN_CREATE_PRACTICE",
@@ -147,7 +147,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'practice/edit/:id',
-				canActivate: [RoleGuardGuard],
+				// canActivate: [RoleGuardGuard],
 				data:{
 					isEnabled: true,
 					value: "CAN_EDIT_PRACTICE",
